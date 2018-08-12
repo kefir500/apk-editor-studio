@@ -1,0 +1,47 @@
+#CMake files
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+cmake_install.cmake
+
+#Keychain temporary files
+Qt5KeychainBuildTreeSettings.cmake
+Qt5KeychainConfig.cmake
+Qt5KeychainConfigVersion.cmake
+QtKeychainBuildTreeSettings.cmake
+QtKeychainConfig.cmake
+QtKeychainConfigVersion.cmake
+kwallet_interface.cpp
+kwallet_interface.h
+kwallet_interface.moc
+moc_keychain.*
+moc_keychain_p.*
+
+#Qt files
+*_parameters
+*.qm
+
+#General build files
+Debug
+Release
+Makefile
+
+#Linux build files
+libqt5keychain.*
+testclient
+
+#Windows build files
+install_manifest.txt
+*.manifest
+*.lib
+*.exe
+
+#Mac build files
+qtkeychain.xcodeproj
+qtkeychain.build
+
+#Temporary files
+*.sw?
+*~
+
+

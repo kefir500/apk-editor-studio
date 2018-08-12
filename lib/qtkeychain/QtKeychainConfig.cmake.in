@@ -1,0 +1,22 @@
+# - Config file for the QtKeychain package
+# It defines the following variables
+#  QTKEYCHAIN_INCLUDE_DIRS - include directories for QtKeychain
+#  QTKEYCHAIN_LIBRARIES    - libraries to link against
+
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/Qt@QTKEYCHAIN_VERSION_INFIX@KeychainLibraryDepends.cmake")
+
+
+if("@QTKEYCHAIN_VERSION_INFIX@" STREQUAL "5")
+    find_dependency(Qt5Core)
+    
+    if(UNIX AND NOT APPLE)
+        find_dependency(Qt5DBus)
+    endif()
+else()
+    find_dependency(Qt4 COMPONENTS QtCore)
+endif()
+
+set(QTKEYCHAIN_LIBRARIES "@QTKEYCHAIN_TARGET_NAME@")
+get_target_property(QTKEYCHAIN_INCLUDE_DIRS "@QTKEYCHAIN_TARGET_NAME@" INTERFACE_INCLUDE_DIRECTORIES)

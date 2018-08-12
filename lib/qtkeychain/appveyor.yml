@@ -1,0 +1,31 @@
+version: '{build}'
+   
+build_script:
+    - ps: |
+        $ErrorActionPreference="Stop"
+        Import-Module $env:APPVEYOR_BUILD_FOLDER\appveyorHelp.psm1
+        
+        Init @("ninja")
+        mkdir -Force $env:APPVEYOR_BUILD_FOLDER\work\build\$env:APPVEYOR_PROJECT_NAME
+        cd $env:APPVEYOR_BUILD_FOLDER\work\build\$env:APPVEYOR_PROJECT_NAME
+        LogExec cmake -G"Ninja" $env:APPVEYOR_BUILD_FOLDER -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$CMAKE_INSTALL_ROOT"
+        
+        CmakeImageInstall
+
+test: off
+
+cache:
+    - work\install -> appveyor.yml
+    - C:\ProgramData\chocolatey\bin -> appveyor.yml
+    - C:\ProgramData\chocolatey\lib -> appveyor.yml
+    
+environment:
+    QT_VER: 5.7
+    
+    matrix:
+    - COMPILER: msvc2015
+    - COMPILER: msvc2015_64
+    - COMPILER: mingw53_32 
+
+
+    
