@@ -138,8 +138,7 @@ bool Dialogs::replaceFile(const QString &path, QWidget *parent)
 
 int Dialogs::detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon, QWidget *parent)
 {
-    QMessageBox dialog;
-    dialog.setParent(parent);
+    QMessageBox dialog(parent);
     dialog.setText(text);
     dialog.setDetailedText(detailed);
     dialog.setIcon(icon);
