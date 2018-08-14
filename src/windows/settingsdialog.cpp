@@ -64,6 +64,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
     QFormLayout *layoutSign = new QFormLayout(groupSign);
     QPushButton *btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
     btnKeyManager->setIcon(app->loadIcon("key.png"));
+    btnKeyManager->setMinimumHeight(30);
     connect(btnKeyManager, &QPushButton::clicked, [=]() {
         KeyManager keyManager(this);
         keyManager.exec();
@@ -88,6 +89,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
     fileboxAdb = new FileBox(QString(), QString(), false, this);
     QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
     btnDeviceManager->setIcon(app->loadIcon("device.png"));
+    btnDeviceManager->setMinimumHeight(30);
     connect(btnDeviceManager, &QPushButton::clicked, [=]() {
         DeviceManager deviceManager(this);
         deviceManager.exec();
