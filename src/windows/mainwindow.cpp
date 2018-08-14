@@ -191,8 +191,6 @@ void MainWindow::initMenus()
     actionOptions->setIcon(app->loadIcon("settings.png"));
     actionOptions->setShortcut(QKeySequence("Ctrl+P"));
     menuLanguage = new QMenu(this);
-    actionAssociate = new QAction(this);
-    actionAssociate->setIcon(app->loadIcon("application.png"));
     actionSettingsReset = new QAction(this);
     actionSettingsReset->setIcon(app->loadIcon("close.png"));
 
@@ -251,8 +249,6 @@ void MainWindow::initMenus()
     menuSettings->addSeparator();
     menuSettings->addMenu(menuLanguage);
     menuSettings->addSeparator();
-    menuSettings->addAction(actionAssociate);
-    menuSettings->addSeparator();
     menuSettings->addAction(actionSettingsReset);
     menuWindow = menuBar()->addMenu(QString());
     menuHelp = menuBar()->addMenu(QString());
@@ -293,7 +289,6 @@ void MainWindow::initMenus()
         DeviceManager deviceManager(this);
         deviceManager.exec();
     });
-    connect(actionAssociate, &QAction::triggered, app, &Application::associate);
     connect(actionSettingsReset, &QAction::triggered, this, &MainWindow::resetSettings);
     connect(actionWebsite, &QAction::triggered, app, &Application::visitWebPage);
     connect(actionUpdate, &QAction::triggered, [=]() {
@@ -378,7 +373,6 @@ void MainWindow::retranslate()
     actionOptions->setText(tr("&Options..."));
     menuLanguage->setTitle(tr("&Language"));
     actionSettingsReset->setText(tr("&Reset Settings..."));
-    actionAssociate->setText(tr("Set as Default &Program"));
 
     // Window Menu:
 

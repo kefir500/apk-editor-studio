@@ -326,18 +326,22 @@ bool Application::addToRecent(const Project *project)
     return recent->add(project->getOriginalPath(), project->getThumbnail().pixmap(32, 32));
 }
 
-void Application::associate() const
+bool Application::associate() const
 {
 #ifdef Q_OS_WIN
+    QSettings registry("HKEY_CURRENT_USER\\Software\\Classes", QSettings::NativeFormat);
+    if (!registry.isWritable()) {
+        return false;
+    }
     const QString format = "apk";
     const QString description = "Android Application Package";
     const QString progid = QString("%1.%2").arg(getTitleNoSpaces(), format);
     const QString executable = QString("\"%1\"").arg(QDir::toNativeSeparators(QApplication::applicationFilePath()));
-    QSettings registry("HKEY_CURRENT_USER\\Software\\Classes", QSettings::NativeFormat);
     registry.setValue(QString(".%1/Default").arg(format), progid);
     registry.setValue(progid + "/Default", description);
     registry.setValue(progid + "/Shell/Open/Command/Default", executable + " \"%1\"");
     registry.setValue(progid + "/DefaultIcon/Default", executable + ",0");
+    return true;
 #endif
 }
 

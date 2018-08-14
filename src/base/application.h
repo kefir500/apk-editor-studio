@@ -71,7 +71,7 @@ public:
     void setLanguage(const QString &locale);
     bool addToRecent(const Project *project);
 
-    void associate() const;
+    bool associate() const;
     bool explore(const QString &path);
     void visitWebPage() const;
     void visitContactPage() const;

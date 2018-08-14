@@ -19,6 +19,16 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 
     QFormLayout *pageGeneral = new QFormLayout;
     checkboxUpdates = new QCheckBox(tr("Check for updates automatically"), this);
+    btnAssociate = new QPushButton(tr("Set as default program for APK files"), this);
+    btnAssociate->setIcon(app->loadIcon("application.png"));
+    btnAssociate->setMinimumHeight(30);
+    connect(btnAssociate, &QPushButton::clicked, [this]() {
+        if (app->associate()) {
+            QMessageBox::information(this, QString(), tr("File association has been created."));
+        } else {
+            QMessageBox::warning(this, QString(), tr("Could not register file assocation."));
+        }
+    });
     comboLanguages = new QComboBox(this);
     QList<Language> languages = app->getLanguages();
     foreach (const Language &language, languages) {
@@ -30,6 +40,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
     pageGeneral->addRow(checkboxUpdates);
     pageGeneral->addRow(tr("Language:"), comboLanguages);
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
+    pageGeneral->addRow(btnAssociate);
 
     // Repacking
 
