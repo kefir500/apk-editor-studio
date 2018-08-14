@@ -276,6 +276,7 @@ void SettingsDialog::save()
 QListWidgetItem *SettingsDialog::createToolbarSeparatorItem() const
 {
     QIcon icon = app->loadIcon("separator.png");
+    //: Separator is a toolbar element which divides buttons with a vertical line.
     QListWidgetItem *separator = new QListWidgetItem(icon, tr("Separator"));
     separator->setData(PoolListWidget::IdentifierRole, "separator");
     separator->setData(PoolListWidget::ReusableRole, true);
@@ -285,6 +286,7 @@ QListWidgetItem *SettingsDialog::createToolbarSeparatorItem() const
 QListWidgetItem *SettingsDialog::createToolbarSpacerItem() const
 {
     QIcon icon = app->loadIcon("spacer.png");
+    //: Spacer is a toolbar element which divides buttons with an empty space.
     QListWidgetItem *spacer = new QListWidgetItem(icon, tr("Spacer"));
     spacer->setData(PoolListWidget::IdentifierRole, "spacer");
     spacer->setData(PoolListWidget::ReusableRole, true);

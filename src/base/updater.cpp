@@ -23,7 +23,8 @@ Updater::Updater(bool verbose, QWidget *parent) : QObject(parent)
                     notify(latestVersion);
                 } else {
                     if (verbose) {
-                        QMessageBox::information(parent, QString(), tr("You are using the latest version of %1."));
+                        //: Don't translate the "APK Editor Studio" part.
+                        QMessageBox::information(parent, QString(), tr("You are using the latest version of APK Editor Studio."));
                     }
                 }
             } else {
@@ -35,6 +36,7 @@ Updater::Updater(bool verbose, QWidget *parent) : QObject(parent)
         } else {
             qDebug() << qPrintable(QString("Updater: Could not check for updates (%1).\n").arg(error));
             if (verbose) {
+                //: %1 will be replaced with an error code.
                 QMessageBox::warning(parent, QString(), tr("Could not check for updates (error %1).").arg(error));
             }
         }
@@ -104,7 +106,11 @@ bool Updater::compare(const QString &currentVersion, const QString &latestVersio
 void Updater::notify(const QString &version) const
 {
     QWidget *parentWidget = static_cast<QWidget *>(parent());
-    const int answer = QMessageBox::question(parentWidget, tr("Update"), tr("%1 v%2 is avaiable.\nDownload?").arg(APPLICATION, version));
+    //: This is a noun.
+    const QString title = tr("Update");
+    //: "v%1" will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the "APK Editor Studio" part.
+    const QString question = tr("APK Editor Studio v%1 is avaiable.\nDownload?").arg(version);
+    const int answer = QMessageBox::question(parentWidget, title, question);
     if (answer == QMessageBox::Yes) {
         download();
     }

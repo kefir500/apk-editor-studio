@@ -5,7 +5,9 @@
 #include "apk/titlenode.h"
 #include <QAbstractTableModel>
 
-class TitlesModel : public QAbstractTableModel {
+class TitlesModel : public QAbstractTableModel
+{
+    Q_OBJECT
 
 public:
     enum TitleColumn {

@@ -187,9 +187,9 @@ void MainWindow::initMenus()
 
     // Settings Menu:
 
-    actionSettings = new QAction(this);
-    actionSettings->setIcon(app->loadIcon("settings.png"));
-    actionSettings->setShortcut(QKeySequence("Ctrl+P"));
+    actionOptions = new QAction(this);
+    actionOptions->setIcon(app->loadIcon("settings.png"));
+    actionOptions->setShortcut(QKeySequence("Ctrl+P"));
     menuLanguage = new QMenu(this);
     actionAssociate = new QAction(this);
     actionAssociate->setIcon(app->loadIcon("application.png"));
@@ -219,7 +219,7 @@ void MainWindow::initMenus()
     app->toolbar.insert("title-editor", actionTitleEditor);
     app->toolbar.insert("device-manager", actionDeviceManager);
     app->toolbar.insert("key-manager", actionKeyManager);
-    app->toolbar.insert("settings", actionSettings);
+    app->toolbar.insert("settings", actionOptions);
     app->toolbar.insert("donate", actionDonate);
     addToolBar(toolbar);
 
@@ -247,7 +247,7 @@ void MainWindow::initMenus()
     menuTools->addAction(actionProjectManager);
     menuTools->addAction(actionTitleEditor);
     menuSettings = menuBar()->addMenu(QString());
-    menuSettings->addAction(actionSettings);
+    menuSettings->addAction(actionOptions);
     menuSettings->addSeparator();
     menuSettings->addMenu(menuLanguage);
     menuSettings->addSeparator();
@@ -280,7 +280,7 @@ void MainWindow::initMenus()
     connect(actionResourceSave, &QAction::triggered, [=]() { getCurrentProjectWidget()->saveTab(); });
     connect(actionResourceSaveAs, &QAction::triggered, [=]() { getCurrentProjectWidget()->saveTabAs(); });
     connect(actionRecentClear, &QAction::triggered, app->recent, &Recent::clear);
-    connect(actionSettings, &QAction::triggered, [=]() {
+    connect(actionOptions, &QAction::triggered, [=]() {
         SettingsDialog settings(this);
         settings.exec();
         toolbar->reinitialize();
@@ -352,7 +352,7 @@ void MainWindow::retranslate()
     // File Menu:
 
     actionApkOpen->setText(tr("&Open APK..."));
-    actionApkExplore->setText(tr("Open Contents"));
+    actionApkExplore->setText(tr("Open Con&tents"));
     actionResourceSave->setText(tr("&Save Resource"));
     actionResourceSaveAs->setText(tr("Save Resource &As..."));
     actionApkSave->setText(tr("Save A&PK..."));
@@ -375,7 +375,7 @@ void MainWindow::retranslate()
 
     // Settings Menu:
 
-    actionSettings->setText(tr("&Preferences..."));
+    actionOptions->setText(tr("&Options..."));
     menuLanguage->setTitle(tr("&Language"));
     actionSettingsReset->setText(tr("&Reset Settings..."));
     actionAssociate->setText(tr("Set as Default &Program"));

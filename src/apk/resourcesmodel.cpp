@@ -69,6 +69,7 @@ QVariant ResourcesModel::headerData(int section, Qt::Orientation orientation, in
             case NodeCaption:        return tr("Resource");
             case ResourceLanguage:   return tr("Language");
             case ResourceLocale:     return tr("Locale");
+            //: This string refers to the Android qualifiers (https://developer.android.com/guide/topics/resources/providing-resources).
             case ResourceQualifiers: return tr("Qualifiers");
             case ResourcePath:       return tr("Path");
             case ResourceApi:        return "API";

@@ -115,6 +115,7 @@ QVariant TitlesModel::headerData(int section, Qt::Orientation orientation, int r
         switch (section) {
             case Value:              return tr("Application Title");
             case ResourceLanguage:   return tr("Language");
+            //: This string refers to the Android qualifiers (https://developer.android.com/guide/topics/resources/providing-resources).
             case ResourceQualifiers: return tr("Qualifiers");
             case ResourcePath:       return tr("Path");
         }

@@ -6,7 +6,9 @@
 #include "editors/welcometab.h"
 #include <QTabWidget>
 
-class ProjectWidget : public QTabWidget {
+class ProjectWidget : public QTabWidget
+{
+    Q_OBJECT
 
 public:
     explicit ProjectWidget(Project *project, QWidget *parent = 0);

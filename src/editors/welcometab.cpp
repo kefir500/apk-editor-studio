@@ -13,7 +13,8 @@ WelcomeTab::WelcomeTab(QWidget *parent) : QuickTab(parent)
 void WelcomeTab::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
-        setTitle(tr("Welcome to the %1.").arg(app->getTitle()));
+        //: Don't translate the "APK Editor Studio" part.
+        setTitle(tr("Welcome to the APK Editor Studio."));
         btnOpen->setText(tr("Open APK"));
         btnInstall->setText(tr("Install APK"));
     } else {

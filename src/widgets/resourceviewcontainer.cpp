@@ -29,9 +29,10 @@ QAbstractItemModel *ResourceViewContainer::model() const
 void ResourceViewContainer::openContextMenu(const QPoint &point, const QModelIndex &index)
 {
     QMenu menu(this);
-    QAction *actionResourceReplace = new QAction(app->loadIcon("replace.png"), tr("Replace Resource..."), this);
-    QAction *actionResourceEdit = new QAction(app->loadIcon("edit.png"), tr("Edit Resource"), this);
-    QAction *actionResourceOpenDirectory = new QAction(app->loadIcon("explore.png"), tr("Open Containing Directory"), this);
+    QAction *actionResourceReplace = new QAction(app->loadIcon("replace.png"), tr("&Replace Resource..."), this);
+    QAction *actionResourceEdit = new QAction(app->loadIcon("edit.png"), tr("&Edit Resource"), this);
+    //: "Resource" is a singular noun in this context.
+    QAction *actionResourceOpenDirectory = new QAction(app->loadIcon("explore.png"), tr("&Open Resource Directory"), this);
 
     connect(actionResourceReplace, &QAction::triggered, [=]() {
         const QString path = getResourcePath(index);

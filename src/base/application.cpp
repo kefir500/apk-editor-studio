@@ -261,7 +261,7 @@ Project *Application::openApk(const QString &filename, bool unpack)
 {
     Project *existing = projects.get(filename);
     if (existing) {
-        const int answer = QMessageBox::question(window, QString(), tr("APK is already open.\nDo you want to reopen it and lose any unsaved changes?"));
+        const int answer = QMessageBox::question(window, QString(), tr("This APK is already open.\nDo you want to reopen it and lose any unsaved changes?"));
         if (answer != QMessageBox::Yes) {
             return existing;
         }

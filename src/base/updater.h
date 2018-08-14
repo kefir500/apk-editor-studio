@@ -3,7 +3,9 @@
 
 #include <QtNetwork/QNetworkAccessManager>
 
-class Updater : public QObject {
+class Updater : public QObject
+{
+    Q_OBJECT
 
 public:
     explicit Updater(bool verbose = false, QWidget *parent = 0);

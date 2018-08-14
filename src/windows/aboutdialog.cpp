@@ -63,9 +63,9 @@ GradientWidget *AboutDialog::createAboutTab()
     const QString tableRow("<tr><td>%1</td><td><a href=\"%2\">%2</a></td></tr>");
     text->setText(
         QString("<h4>%1</h4>").arg(app->getTitleAndVersion()) +
-        QString("<p>%1</p>").arg(tr("Author: %1").arg("Alexander Gorishnyak")) +
+        QString("<p>%1 %2</p>").arg(tr("Author:"), "Alexander Gorishnyak") +
         QString("<p><table>") +
-        QString(tableRow).arg(tr("Homepage:"), app->getWebPage()) +
+        QString(tableRow).arg(tr("Website:"), app->getWebPage()) +
         QString(tableRow).arg(tr("Bug Tracker:"), app->getIssuesPage()) +
         QString(tableRow).arg(tr("Translation:"), app->getTranslatePage()) +
         QString("</table></p>") +
@@ -182,10 +182,10 @@ QWidget *AboutDialog::createLibrariesTab()
     layout->setFieldGrowthPolicy(QFormLayout::FieldsStayAtSizeHint);
     layout->setFormAlignment(Qt::AlignCenter);
     layout->setLabelAlignment(Qt::AlignRight);
-    layout->addRow(new QLabel(tr("Qt"), this), labelQt);
-    layout->addRow(new QLabel(tr("Java"), this), labelJava);
-    layout->addRow(new QLabel(tr("Apktool"), this), labelApktool);
-    layout->addRow(new QLabel(tr("ADB"), this), labelAdb);
+    layout->addRow(new QLabel("Qt", this), labelQt);
+    layout->addRow(new QLabel("Java", this), labelJava);
+    layout->addRow(new QLabel("Apktool", this), labelApktool);
+    layout->addRow(new QLabel("ADB", this), labelAdb);
 
     // Set versions:
 

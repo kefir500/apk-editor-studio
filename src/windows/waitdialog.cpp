@@ -3,10 +3,10 @@
 
 WaitDialog::WaitDialog(QWidget *parent) : QMessageBox(parent)
 {
-    const QString message = tr("Please wait...");
     parent->setEnabled(false);
-    setWindowTitle(message);
-    setText(message);
+    //: This is an imperative mood verb (as in "please wait").
+    setWindowTitle(tr("Wait"));
+    setText(tr("Please wait..."));
     setIconPixmap(app->loadPixmap("wait.png"));
     setStandardButtons(QMessageBox::NoButton);
     setWindowModality(Qt::ApplicationModal);

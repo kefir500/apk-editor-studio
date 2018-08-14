@@ -4,7 +4,9 @@
 #include "base/device.h"
 #include <QAbstractTableModel>
 
-class DevicesModel : public QAbstractTableModel {
+class DevicesModel : public QAbstractTableModel
+{
+    Q_OBJECT
 
 public:
     enum DeviceColumn {

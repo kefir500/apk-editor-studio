@@ -102,8 +102,8 @@ private:
     QAction *actionDeviceManager;
     QAction *actionProjectManager;
     QAction *actionTitleEditor;
-    QAction *actionSettings;
     QAction *actionAssociate;
+    QAction *actionOptions;
     QAction *actionSettingsReset;
     QAction *actionAboutQt;
     QActionGroup *actionsLanguage;

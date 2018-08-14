@@ -34,22 +34,31 @@ QString XmlNode::getReadableType() const
 {
     const QString tag = getTagName();
     if (tag == "string") {
+        //: This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/string-resource).
         return tr("String");
     } else if (tag == "string-array") {
+        //: This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/string-resource#StringArray).
         return tr("String array");
     } else if (tag == "color") {
+        //: This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#Color).
         return tr("Color");
     } else if (tag == "dimen") {
+        //: This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#Dimension).
         return tr("Dimension");
     } else if (tag == "plurals") {
-        return tr("Plurals");
+        //: This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/string-resource#Plurals).
+        return tr("Plurals"); // TODO Rename to "Quantity Strings"?
     } else if (tag == "item") {
-        return tr("Item");
+        //: This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#Id).
+        return tr("ID");
     } else if (tag == "integer") {
+        //: This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#Integer).
         return tr("Integer");
     } else if (tag == "integer-array") {
+        //: This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#IntegerArray).
         return tr("Integer Array");
     } else if (tag == "array") {
+        //: This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#TypedArray).
         return tr("Array");
     } else {
         return tag;
