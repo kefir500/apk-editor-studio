@@ -143,7 +143,7 @@ Result<QStringList> KeyManager::getCertificates(const QString &keystore, const Q
         if (result.value.contains("Keystore was tampered with, or password was incorrect")) {
             text = tr("Could not read keystore: incorrect password.");
         } else {
-            text = tr("Could not read keystore. See details for more information.");
+            text = tr("Could not read keystore.\nSee details for more information.");
         }
         Dialogs::detailed(text, result.value, QMessageBox::Warning, parent);
         return Result<QStringList>(false, QStringList());
@@ -253,7 +253,7 @@ bool KeyCreator::create()
             editAlias->selectAll();
             text = tr("Could not write to keystore: alias already exists.");
         } else {
-            text = tr("Could not write to keystore. See details for more information.");
+            text = tr("Could not write to keystore.\nSee details for more information.");
         }
         Dialogs::detailed(text, result.value, QMessageBox::Warning, this);
         return false;
