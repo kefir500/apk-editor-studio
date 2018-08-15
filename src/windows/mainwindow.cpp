@@ -3,7 +3,7 @@
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
 #include "windows/keymanager.h"
-#include "windows/settingsdialog.h"
+#include "windows/optionsdialog.h"
 #include "windows/waitdialog.h"
 #include "widgets/decorationdelegate.h"
 #include "widgets/logdelegate.h"
@@ -277,7 +277,7 @@ void MainWindow::initMenus()
     connect(actionResourceSaveAs, &QAction::triggered, [=]() { getCurrentProjectWidget()->saveTabAs(); });
     connect(actionRecentClear, &QAction::triggered, app->recent, &Recent::clear);
     connect(actionOptions, &QAction::triggered, [=]() {
-        SettingsDialog settings(this);
+        OptionsDialog settings(this);
         settings.exec();
         toolbar->reinitialize();
     });

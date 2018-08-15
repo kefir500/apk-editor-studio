@@ -1,4 +1,4 @@
-#include "windows/settingsdialog.h"
+#include "windows/optionsdialog.h"
 #include "windows/devicemanager.h"
 #include "windows/keymanager.h"
 #include "widgets/toolbar.h"
@@ -8,9 +8,9 @@
 #include <QAbstractButton>
 #include <QDialogButtonBox>
 
-SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
+OptionsDialog::OptionsDialog(QWidget *parent) : QDialog(parent)
 {
-    setWindowTitle(tr("Preferences"));
+    setWindowTitle(tr("Options"));
     setWindowIcon(app->loadIcon("settings.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     resize(app->dpiAwareSize(800, 400));
@@ -150,13 +150,13 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
     load();
 
     connect(pageList, &QListWidget::currentRowChanged, pageStack, &QStackedWidget::setCurrentIndex);
-    connect(buttons, &QDialogButtonBox::accepted, this, &SettingsDialog::accept);
-    connect(buttons, &QDialogButtonBox::rejected, this, &SettingsDialog::reject);
-    connect(btnApply, &QPushButton::clicked, this, &SettingsDialog::save);
-    connect(this, &SettingsDialog::accepted, this, &SettingsDialog::save);
+    connect(buttons, &QDialogButtonBox::accepted, this, &OptionsDialog::accept);
+    connect(buttons, &QDialogButtonBox::rejected, this, &OptionsDialog::reject);
+    connect(btnApply, &QPushButton::clicked, this, &OptionsDialog::save);
+    connect(this, &OptionsDialog::accepted, this, &OptionsDialog::save);
 }
 
-void SettingsDialog::addPage(const QString &title, QLayout *page, bool stretch)
+void OptionsDialog::addPage(const QString &title, QLayout *page, bool stretch)
 {
     QWidget *container = new QWidget(this);
     QVBoxLayout *containerLayout = new QVBoxLayout(container);
@@ -177,7 +177,7 @@ void SettingsDialog::addPage(const QString &title, QLayout *page, bool stretch)
     pageStack->addWidget(container);
 }
 
-void SettingsDialog::load()
+void OptionsDialog::load()
 {
     // General
 
@@ -247,7 +247,7 @@ void SettingsDialog::load()
     listToolbarUnused->addItem(createToolbarSpacerItem());
 }
 
-void SettingsDialog::save()
+void OptionsDialog::save()
 {
     // General
 
@@ -286,7 +286,7 @@ void SettingsDialog::save()
     app->settings->setToolbar(toolbar);
 }
 
-QListWidgetItem *SettingsDialog::createToolbarSeparatorItem() const
+QListWidgetItem *OptionsDialog::createToolbarSeparatorItem() const
 {
     QIcon icon = app->loadIcon("separator.png");
     //: Separator is a toolbar element which divides buttons with a vertical line.
@@ -296,7 +296,7 @@ QListWidgetItem *SettingsDialog::createToolbarSeparatorItem() const
     return separator;
 }
 
-QListWidgetItem *SettingsDialog::createToolbarSpacerItem() const
+QListWidgetItem *OptionsDialog::createToolbarSpacerItem() const
 {
     QIcon icon = app->loadIcon("spacer.png");
     //: Spacer is a toolbar element which divides buttons with an empty space.

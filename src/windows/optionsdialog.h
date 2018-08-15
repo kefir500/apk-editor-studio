@@ -1,5 +1,5 @@
-#ifndef SETTINGSDIALOG_H
-#define SETTINGSDIALOG_H
+#ifndef OPTIONSDIALOG_H
+#define OPTIONSDIALOG_H
 
 #include "widgets/filebox.h"
 #include "widgets/poollistwidget.h"
@@ -12,12 +12,12 @@
 #include <QComboBox>
 #include <QSpinBox>
 
-class SettingsDialog : public QDialog
+class OptionsDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit SettingsDialog(QWidget *parent = 0);
+    explicit OptionsDialog(QWidget *parent = 0);
     void addPage(const QString &title, QLayout *layout, bool stretch = true);
     void load();
     void save();
@@ -51,4 +51,4 @@ private:
     PoolListWidget *listToolbarUnused;
 };
 
-#endif // SETTINGSDIALOG_H
+#endif // OPTIONSDIALOG_H

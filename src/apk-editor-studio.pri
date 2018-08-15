@@ -59,7 +59,7 @@ SOURCES += \
     $$PWD/widgets/resourceviewcontainer.cpp \
     $$PWD/windows/mainwindow.cpp \
     $$PWD/windows/dialogs.cpp \
-    $$PWD/windows/settingsdialog.cpp \
+    $$PWD/windows/optionsdialog.cpp \
     $$PWD/windows/aboutdialog.cpp \
     $$PWD/windows/waitdialog.cpp \
     $$PWD/windows/keymanager.cpp \
@@ -131,7 +131,7 @@ HEADERS += \
     $$PWD/widgets/resourceviewcontainer.h \
     $$PWD/windows/mainwindow.h \
     $$PWD/windows/dialogs.h \
-    $$PWD/windows/settingsdialog.h \
+    $$PWD/windows/optionsdialog.h \
     $$PWD/windows/aboutdialog.h \
     $$PWD/windows/waitdialog.h \
     $$PWD/windows/keymanager.h \
