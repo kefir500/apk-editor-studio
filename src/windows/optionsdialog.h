@@ -22,9 +22,16 @@ public:
     void load();
     void save();
 
+protected:
+    void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
+
 private:
+    void initialize();
     QListWidgetItem *createToolbarSeparatorItem() const;
     QListWidgetItem *createToolbarSpacerItem() const;
+
+    QWidget *widget;
+    QVBoxLayout *layout;
 
     QListWidget *pageList;
     QStackedWidget *pageStack;
