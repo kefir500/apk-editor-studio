@@ -30,10 +30,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) : QDialog(parent)
         }
     });
     comboLanguages = new QComboBox(this);
-    QList<Language> languages = app->getLanguages();
-    foreach (const Language &language, languages) {
-        comboLanguages->addItem(language.getFlag(), language.getTitle(), language.getCode());
-    }
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
     spinboxRecent->setMaximum(50);
@@ -183,6 +179,22 @@ void OptionsDialog::load()
 
     checkboxUpdates->setChecked(app->settings->getAutoUpdates());
     spinboxRecent->setValue(app->settings->getRecentLimit());
+
+    // Languages
+
+    QList<Language> languages = app->getLanguages();
+    comboLanguages->clear();
+    const QString currentLocale = app->settings->getLanguage();
+    foreach (const Language &language, languages) {
+        const QPixmap flag = language.getFlag();
+        const QString title = language.getTitle();
+        const QString code = language.getCode();
+        comboLanguages->addItem(flag, title, code);
+        if (code == currentLocale) {
+            comboLanguages->setCurrentIndex(comboLanguages->count() - 1);
+        }
+    }
+    comboLanguages->setCurrentText(app->settings->getLanguage());
 
     // Repacking
 
