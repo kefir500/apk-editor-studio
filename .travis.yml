@@ -1,0 +1,12 @@
+language: cpp
+
+compiler:
+  - gcc
+  - clang
+
+install:
+  - sudo apt-get install qt5-default
+
+script:
+  - qmake "QMAKE_CXX=$CXX" "QMAKE_CC=$CC"
+  - make
