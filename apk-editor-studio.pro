@@ -1,5 +1,6 @@
 TEMPLATE = app
 QT += core gui widgets xml network
+CONFIG += c++11
 
 TARGET = apk-editor-studio
 VERSION = 0.1.0
