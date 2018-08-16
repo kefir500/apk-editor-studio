@@ -33,7 +33,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
     qDebug();
 
 #ifdef Q_OS_LINUX
-    setWindowIcon(app->loadIcon("application.png"));
+    setWindowIcon(loadIcon("application.png"));
 #endif
 
     QPixmapCache::setCacheLimit(1024 * 100); // 100 MiB
