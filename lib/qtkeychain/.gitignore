@@ -11,8 +11,6 @@ Qt5KeychainConfigVersion.cmake
 QtKeychainBuildTreeSettings.cmake
 QtKeychainConfig.cmake
 QtKeychainConfigVersion.cmake
-kwallet_interface.cpp
-kwallet_interface.h
 kwallet_interface.moc
 moc_keychain.*
 moc_keychain_p.*
