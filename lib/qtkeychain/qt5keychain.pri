@@ -20,13 +20,25 @@ SOURCES += \
 
 unix:!macx:!ios {
     QT += dbus
+    packagesExist(libsecret-1) {
+        message(Building with libsecret support)
+        CONFIG += link_pkgconfig
+        PKGCONFIG += libsecret-1
+        DEFINES += HAVE_LIBSECRET
+    } else {
+        message(Building without libsecret support)
+    }
     HEADERS += \
         $$QT5KEYCHAIN_PWD/gnomekeyring_p.h \
-        $$QT5KEYCHAIN_PWD/plaintextstore_p.h
+        $$QT5KEYCHAIN_PWD/plaintextstore_p.h \
+        $$QT5KEYCHAIN_PWD/libsecret_p.h \
+        $$QT5KEYCHAIN_PWD/kwallet_interface.h
     SOURCES += \
-        $$QT5KEYCHAIN_PWD/gnomekeyring.cpp \
         $$QT5KEYCHAIN_PWD/keychain_unix.cpp \
-        $$QT5KEYCHAIN_PWD/plaintextstore.cpp
+        $$QT5KEYCHAIN_PWD/plaintextstore.cpp \
+        $$QT5KEYCHAIN_PWD/gnomekeyring.cpp \
+        $$QT5KEYCHAIN_PWD/libsecret.cpp \
+        $$QT5KEYCHAIN_PWD/kwallet_interface.cpp
 }
 
 win32 {
@@ -35,8 +47,10 @@ win32 {
     # instead of the Windows Credential Store.
     DEFINES += USE_CREDENTIAL_STORE
     contains(DEFINES, USE_CREDENTIAL_STORE) {
+        message(Building with Windows Credential Store support)
         LIBS += -lAdvapi32
     } else {
+        message(Building without Windows Credential Store support)
         LIBS += -lCrypt32
         HEADERS += $$QT5KEYCHAIN_PWD/plaintextstore_p.h
         SOURCES += $$QT5KEYCHAIN_PWD/plaintextstore.cpp
