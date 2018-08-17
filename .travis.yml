@@ -1,12 +1,14 @@
 language: cpp
 
-compiler:
-  - gcc
-  - clang
+matrix:
+  include:
+  - compiler: gcc
+  - compiler: clang
+    env: QMAKE_FLAGS="QMAKE_CXXFLAGS+=-Wno-inconsistent-missing-override"
 
 install:
-  - sudo apt-get install qt5-default
+  - sudo apt-get install qt5-default libsecret-1-dev
 
 script:
-  - qmake "QMAKE_CXX=$CXX" "QMAKE_CC=$CC"
+  - qmake "QMAKE_CXX=$CXX" "QMAKE_CC=$CC" $QMAKE_FLAGS
   - make
