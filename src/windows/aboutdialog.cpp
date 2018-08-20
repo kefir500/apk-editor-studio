@@ -214,7 +214,7 @@ QWidget *AboutDialog::createLicenseTab()
     tab->setReadOnly(true);
     tab->setOpenExternalLinks(true);
 
-    QFile file(app->getSharedPath("docs/license.html"));
+    QFile file(app->getSharedPath("docs/licenses/apk-editor-studio.html"));
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         QTextStream stream(&file);
         stream.setCodec("UTF-8");
