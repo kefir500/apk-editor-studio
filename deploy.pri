@@ -17,6 +17,7 @@ win32 {
 
 unix:!macx {
     DESTDIR = $$PWD/bin/linux/bin
+    QMAKE_POST_LINK += $$QMAKE_MKDIR $$shell_quote($$DESTDIR/../share/$$TARGET) $$escape_expand(\\n\\t)
     QMAKE_POST_LINK += $$copy(all, ../share/$$TARGET)
     QMAKE_POST_LINK += $$copy(linux, ..)
 }
