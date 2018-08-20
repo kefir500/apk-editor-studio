@@ -14,3 +14,9 @@ win32 {
     QMAKE_POST_LINK += $$copy(win32, .)
     RC_ICONS = $$PWD/res/logo/application.ico
 }
+
+unix:!macx {
+    DESTDIR = $$PWD/bin/linux/bin
+    QMAKE_POST_LINK += $$copy(all, ../share/$$TARGET)
+    QMAKE_POST_LINK += $$copy(linux, ..)
+}

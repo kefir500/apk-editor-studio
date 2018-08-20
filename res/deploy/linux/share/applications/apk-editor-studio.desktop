@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=APK Editor Studio
+Comment=APK resource editor
+GenericName=APK resource editor
+Exec=/usr/bin/apk-editor-studio %F
+Path=/usr/share/apk-editor-studio
+Icon=apk-editor-studio
+Categories=Utility;
+Terminal=false
+MimeType=application/vnd.android.package-archive;
