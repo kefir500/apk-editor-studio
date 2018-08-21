@@ -52,6 +52,10 @@ int Application::exec()
 
     setLanguage(settings->getLanguage());
 
+    MainWindow mainwindow;
+    mainwindow.show();
+    window = &mainwindow;
+
     QStringList args = arguments();
     if (args.size() > 1) {
         args.removeFirst();
@@ -59,10 +63,6 @@ int Application::exec()
             openApk(arg);
         }
     }
-
-    MainWindow mainwindow;
-    mainwindow.show();
-    window = &mainwindow;
 
     return QApplication::exec();
 }
