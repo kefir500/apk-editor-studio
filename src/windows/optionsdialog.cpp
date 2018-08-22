@@ -219,6 +219,7 @@ void OptionsDialog::initialize()
     fileboxOutput = new FileBox(QString(), QString(), true, this);
     fileboxFrameworks = new FileBox(QString(), QString(), true, this);
     checkboxSources = new QCheckBox(tr("Decompile source code (smali)"), this);
+    //: "Apktool" is the name of the tool, don't translate it.
     pageRepack->addRow(tr("Apktool path:"), fileboxApktool);
     pageRepack->addRow(tr("Extraction path:"), fileboxOutput);
     pageRepack->addRow(tr("Frameworks path:"), fileboxFrameworks);
@@ -239,7 +240,8 @@ void OptionsDialog::initialize()
         KeyManager keyManager(this);
         keyManager.exec();
     });
-    layoutSign->addRow(tr("Tool:"), fileboxApksigner);
+    //: "Apksigner" is the name of the tool, don't translate it.
+    layoutSign->addRow(tr("Apksigner path:"), fileboxApksigner);
     layoutSign->addRow(btnKeyManager);
     pageSign->addWidget(groupSign);
 
@@ -250,7 +252,8 @@ void OptionsDialog::initialize()
     groupZipalign->setCheckable(true);
     fileboxZipalign = new FileBox(QString(), QString(), false, this);
     QFormLayout *layoutZipalign = new QFormLayout(groupZipalign);
-    layoutZipalign->addRow("Zipalign:", fileboxZipalign);
+    //: "Zipalign" is the name of the tool, don't translate it.
+    layoutZipalign->addRow(tr("Zipalign path:"), fileboxZipalign);
     pageZipalign->addWidget(groupZipalign);
 
     // Installing
@@ -264,7 +267,8 @@ void OptionsDialog::initialize()
         DeviceManager deviceManager(this);
         deviceManager.exec();
     });
-    pageInstall->addRow("ADB:", fileboxAdb);
+    //: "ADB" is the name of the tool, don't translate it.
+    pageInstall->addRow(tr("ADB path:"), fileboxAdb);
     pageInstall->addRow(btnDeviceManager);
 
     // Toolbar
