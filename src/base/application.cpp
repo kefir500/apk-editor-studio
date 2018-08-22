@@ -312,9 +312,9 @@ void Application::setLanguage(const QString &locale)
 
     const QString path = getSharedPath("resources/translations");
     if (translator.load(QString("%1.%2").arg(getTitleNoSpaces(), locale), path)) {
-        qDebug() << translatorQt.load(QString("qt.%1").arg(locale), path);
-        qDebug() << installTranslator(&translator);
-        qDebug() << installTranslator(&translatorQt);
+        translatorQt.load(QString("qt.%1").arg(locale), path);
+        installTranslator(&translator);
+        installTranslator(&translatorQt);
         settings->setLanguage(locale);
     } else {
         settings->setLanguage("en");

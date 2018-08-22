@@ -1,5 +1,4 @@
 #include "apk/xmlnode.h"
-#include "base/debug.h"
 
 XmlNode::XmlNode(const QDomElement &node, bool keepDocument)
 {
