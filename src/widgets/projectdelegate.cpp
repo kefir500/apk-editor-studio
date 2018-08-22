@@ -16,7 +16,19 @@ ProjectDelegate::ProjectDelegate(QObject *parent) : QStyledItemDelegate(parent)
 
 void ProjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QStyledItemDelegate::paint(painter, option, index);
+    // Draw base control:
+
+    QStyleOptionViewItem itemOption = option;
+    initStyleOption(&itemOption, index);
+    QRect textRect = itemOption.rect;
+    textRect.setLeft(option.decorationSize.width() + 8);
+    textRect.setWidth(itemOption.rect.width() - iconReady.width() - 8 * 2);
+    const QString text = painter->fontMetrics().elidedText(itemOption.text, Qt::ElideMiddle, textRect.width());
+    itemOption.text.clear();
+    QApplication::style()->drawControl(QStyle::CE_ItemViewItem, &itemOption, painter);
+    painter->drawText(textRect, text, QTextOption(Qt::AlignVCenter));
+
+    // Draw state icon:
 
     const int projectState = index.data(ProjectsModel::ProjectStateRole).toInt();
     const bool projectError = index.data(ProjectsModel::ProjectErrorRole).toBool();
