@@ -402,7 +402,6 @@ void MainWindow::resetSettings()
         restoreGeometry(QByteArray());
         restoreState(defaultState);
         toolbar->reinitialize();
-        restoreState(defaultState);
         setInitialSize();
     }
 }
