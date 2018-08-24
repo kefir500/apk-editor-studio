@@ -342,6 +342,8 @@ bool Application::associate() const
     registry.setValue(progid + "/Shell/Open/Command/Default", executable + " \"%1\"");
     registry.setValue(progid + "/DefaultIcon/Default", executable + ",0");
     return true;
+#else
+    return false;
 #endif
 }
 
