@@ -18,6 +18,30 @@
 - APK Optimizer
 - APK Installer
 
+## Compilation
+
+### Requirements
+
+- Qt 5
+- C++11 compiler
+
+### Linux
+
+- `qmake`
+- `make`
+- `make install`
+
+##### Notes:
+
+- **APK Editor Studio** uses tools from `adb` (`android-tools-adb`) and `zipalign`, however the precompiled binaries are already included in the repository in case of absence of these packages.
+- Install `libsecret` development library to use it as a password storage.  
+  Otherwise GNOME Keyring / KWallet will be used.  
+  Package aliases:
+  - `libsecret-1-dev` (Debian-based distributions)
+  - `libsecret-devel` (RPM-based distributions)
+- By default `make install` installs APK Editor Studio to `/usr`.  
+  Pass `PREFIX` variable to `qmake` in order to define   another installation directory.
+
 ## Notice
 
 - You may not use **APK Editor Studio** for any illegal purposes.
