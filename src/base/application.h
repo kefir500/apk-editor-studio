@@ -57,6 +57,7 @@ public:
     QMovie *loadMovie(const QString &filename);
 
     QString getWebPage() const;
+    QString getSourcePage() const;
     QString getIssuesPage() const;
     QString getContactPage() const;
     QString getTranslatePage() const;

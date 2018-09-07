@@ -229,9 +229,14 @@ QString Application::getWebPage() const
     return QString("https://kefir500.github.io/%1/").arg(getTitleNoSpaces());
 }
 
+QString Application::getSourcePage() const
+{
+    return QString("https://github.com/kefir500/%1/").arg(getTitleNoSpaces());
+}
+
 QString Application::getIssuesPage() const
 {
-    return getWebPage() + "issues";
+    return getSourcePage() + "issues";
 }
 
 QString Application::getContactPage() const
