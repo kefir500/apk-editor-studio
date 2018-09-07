@@ -187,7 +187,7 @@ void OptionsDialog::initialize()
     setWindowTitle(tr("Options"));
     setWindowIcon(app->loadIcon("settings.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->dpiAwareSize(800, 400));
+    resize(app->scale(800, 400));
 
     // General
 
@@ -195,7 +195,7 @@ void OptionsDialog::initialize()
     checkboxUpdates = new QCheckBox(tr("Check for updates automatically"), this);
     btnAssociate = new QPushButton(tr("Set as default program for APK files"), this);
     btnAssociate->setIcon(app->loadIcon("application.png"));
-    btnAssociate->setMinimumHeight(30);
+    btnAssociate->setMinimumHeight(app->scale(30));
     connect(btnAssociate, &QPushButton::clicked, [this]() {
         if (app->associate()) {
             QMessageBox::information(this, QString(), tr("File association has been created."));
@@ -235,7 +235,7 @@ void OptionsDialog::initialize()
     QFormLayout *layoutSign = new QFormLayout(groupSign);
     QPushButton *btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
     btnKeyManager->setIcon(app->loadIcon("key.png"));
-    btnKeyManager->setMinimumHeight(30);
+    btnKeyManager->setMinimumHeight(app->scale(30));
     connect(btnKeyManager, &QPushButton::clicked, [=]() {
         KeyManager keyManager(this);
         keyManager.exec();
@@ -262,7 +262,7 @@ void OptionsDialog::initialize()
     fileboxAdb = new FileBox(QString(), QString(), false, this);
     QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
     btnDeviceManager->setIcon(app->loadIcon("device.png"));
-    btnDeviceManager->setMinimumHeight(30);
+    btnDeviceManager->setMinimumHeight(app->scale(30));
     connect(btnDeviceManager, &QPushButton::clicked, [=]() {
         DeviceManager deviceManager(this);
         deviceManager.exec();
@@ -275,10 +275,11 @@ void OptionsDialog::initialize()
 
     QHBoxLayout *pageToolbar = new QHBoxLayout;
     listToolbarUsed = new QListWidget(this);
-    listToolbarUsed->setIconSize(QSize(20, 20));
+    listToolbarUsed->setIconSize(app->scale(20, 20));
     listToolbarUsed->setDragDropMode(QAbstractItemView::DragDrop);
     listToolbarUsed->setDefaultDropAction(Qt::MoveAction);
     listToolbarUnused = new PoolListWidget(this);
+    listToolbarUnused->setIconSize(app->scale(20, 20));
     connect(listToolbarUsed, &QListWidget::doubleClicked, [=](const QModelIndex &index) {
         QListWidgetItem *item = listToolbarUsed->takeItem(index.row());
         const bool reusable = item->data(PoolListWidget::ReusableRole).toBool();

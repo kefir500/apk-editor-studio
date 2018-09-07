@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 void MainWindow::setInitialSize()
 {
-    resize(app->dpiAwareSize(1200, 650));
+    resize(app->scale(1100, 600));
 }
 
 void MainWindow::initWidgets()
@@ -62,8 +62,8 @@ void MainWindow::initWidgets()
     QVBoxLayout *projectsLayout = new QVBoxLayout(dockProjectsWidget);
     projectsList = new QComboBox(this);
     projectsList->setModel(&app->projects);
-    projectsList->setMinimumHeight(38);
-    projectsList->setIconSize(QSize(32, 32));
+    projectsList->setMinimumHeight(app->scale(38));
+    projectsList->setIconSize(app->scale(32, 32));
     projectsList->setItemDelegate(new ProjectDelegate(this));
     logView = new LogView(this);
     logView->setItemDelegate(new LogDelegate(this));
@@ -94,7 +94,6 @@ void MainWindow::initWidgets()
     QWidget *dockIconsWidget = new QWidget(this);
     QVBoxLayout *iconsLayout = new QVBoxLayout(dockIconsWidget);
     iconsList = new IconList(this);
-    iconsList->setIconSize(QSize(32, 32));
     iconsList->setContextMenuPolicy(Qt::CustomContextMenu);
     ResourceViewContainer *iconsListContainer = new ResourceViewContainer(iconsList, this);
     iconsLayout->addWidget(iconsListContainer);

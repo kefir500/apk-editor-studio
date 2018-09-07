@@ -14,7 +14,7 @@
 
 KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
 {
-    resize(app->dpiAwareSize(500, 0));
+    resize(app->scale(500, 0));
     setWindowTitle(tr("Key Manager"));
     setWindowIcon(app->loadIcon("key.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

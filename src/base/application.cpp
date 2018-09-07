@@ -36,6 +36,13 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
     setWindowIcon(loadIcon("application.png"));
 #endif
 
+#ifndef Q_OS_OSX
+    const qreal dpi = this->primaryScreen()->logicalDotsPerInch();
+    scaleFactor = dpi / 100.0;
+#else
+    scaleFactor = 1;
+#endif
+
     QPixmapCache::setCacheLimit(1024 * 100); // 100 MiB
 }
 
@@ -185,14 +192,14 @@ QColor Application::getColor(Color color) const
     return QColor();
 }
 
-QSize Application::dpiAwareSize(int w, int h) const
+int Application::scale(int value) const
 {
-#ifndef Q_OS_OSX
-    const qreal dpi = this->primaryScreen()->logicalDotsPerInch();
-#else
-    const qreal dpi = 100;
-#endif
-    return QSize(w, h) * dpi / 100.0;
+    return value * scaleFactor;
+}
+
+QSize Application::scale(int width, int height) const
+{
+    return QSize(width, height) * scaleFactor;
 }
 
 QIcon Application::loadIcon(const QString &filename) const
@@ -323,7 +330,7 @@ void Application::setLanguage(const QString &locale)
 
 bool Application::addToRecent(const Project *project)
 {
-    return recent->add(project->getOriginalPath(), project->getThumbnail().pixmap(32, 32));
+    return recent->add(project->getOriginalPath(), project->getThumbnail().pixmap(scale(32, 32)));
 }
 
 bool Application::associate() const

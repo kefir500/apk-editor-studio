@@ -151,7 +151,7 @@ int Dialogs::log(const QString &text, QWidget *parent)
 {
     QDialog dialog(parent);
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    dialog.resize(app->dpiAwareSize(600, 360));
+    dialog.resize(app->scale(600, 360));
 
     QPlainTextEdit *textBox = new QPlainTextEdit(text, &dialog);
     textBox->setReadOnly(true);

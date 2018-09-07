@@ -1,4 +1,5 @@
 #include "editors/quicktab.h"
+#include "base/application.h"
 #include <QPainter>
 #include <QPaintEvent>
 
@@ -42,7 +43,7 @@ QPushButton *QuickTab::addButton(const QString &title)
     );
     QPushButton *button = new QPushButton(this);
     button->setText(title);
-    button->setMinimumHeight(34);
+    button->setMinimumHeight(app->scale(34));
     button->setStyleSheet(btnStyle);
     layout->removeItem(layout->itemAt(layout->count() - 1));
     layout->addWidget(button);

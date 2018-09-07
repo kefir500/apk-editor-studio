@@ -10,6 +10,7 @@ ResourceViewContainer::ResourceViewContainer(QAbstractItemView *view, QWidget *p
     layout->setMargin(0);
     layout->addWidget(view);
     view->setParent(this);
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     connect(view, &QAbstractItemView::activated, [=](const QModelIndex &index) {
         emit requestForEdit(index);
     });

@@ -11,6 +11,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
 {
     setWindowTitle(tr("Device Manager"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    resize(app->scale(560, 300));
 
     QLabel *caption = new QLabel(tr("Select a device:"));
 

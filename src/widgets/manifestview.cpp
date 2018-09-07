@@ -1,6 +1,6 @@
 #include "widgets/manifestview.h"
 #include "widgets/buttondelegate.h"
-#include "base/debug.h"
+#include "base/application.h"
 #include <QEvent>
 #include <QHeaderView>
 
@@ -24,5 +24,5 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
 
 QSize ManifestView::sizeHint() const
 {
-    return QSize(0, 117);
+    return QSize(app->scale(240), 117);
 }

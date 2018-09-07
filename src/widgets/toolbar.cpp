@@ -5,7 +5,7 @@
 Toolbar::Toolbar(QWidget *parent) : QToolBar(parent)
 {
     setMovable(false);
-    setIconSize(QSize(30, 30));
+    setIconSize(app->scale(30, 30));
 }
 
 void Toolbar::reinitialize()

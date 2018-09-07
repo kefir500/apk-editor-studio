@@ -1,5 +1,5 @@
 #include "apk/iconsproxy.h"
-#include <QDebug>
+#include "base/application.h"
 
 IconsProxy::IconsProxy(QObject *parent) : QAbstractProxyModel(parent)
 {
@@ -49,7 +49,7 @@ QVariant IconsProxy::data(const QModelIndex &index, int role) const
         } else if (role == Qt::ToolTipRole) {
             return sourceIndex.sibling(sourceIndex.row(), ResourcesModel::ResourcePath).data().toString();
         } else if (role == Qt::DecorationRole) {
-            return sourceIndex.sibling(sourceIndex.row(), ResourcesModel::NodeCaption).data(Qt::DecorationRole).value<QPixmap>().scaled(32, 32, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            return sourceIndex.sibling(sourceIndex.row(), ResourcesModel::NodeCaption).data(Qt::DecorationRole).value<QPixmap>().scaled(app->scale(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
     }
     return QVariant();

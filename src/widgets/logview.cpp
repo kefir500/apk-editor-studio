@@ -32,7 +32,7 @@ void LogView::setModel(QAbstractItemModel *model)
 
 QSize LogView::sizeHint() const
 {
-    return QSize();
+    return app->scale(240, 0);
 }
 
 void LogView::paintEvent(QPaintEvent *event)

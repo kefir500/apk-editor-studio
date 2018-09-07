@@ -3,7 +3,6 @@
 
 PoolListWidget::PoolListWidget(QWidget *parent) : QListWidget(parent)
 {
-    setIconSize(QSize(20, 20));
     setDragDropMode(QAbstractItemView::DragDrop);
     setDefaultDropAction(Qt::MoveAction);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

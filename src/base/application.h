@@ -49,7 +49,8 @@ public:
     QList<Language> getLanguages() const;
     QColor getColor(Color color) const;
 
-    QSize dpiAwareSize(int w, int h) const;
+    int scale(int value) const;
+    QSize scale(int width, int height) const;
 
     QIcon loadIcon(const QString &filename) const;
     QPixmap loadPixmap(const QString &filename) const;
@@ -91,6 +92,9 @@ public:
 
 protected:
     bool event(QEvent *event) Q_DECL_OVERRIDE;
+
+private:
+    qreal scaleFactor;
 };
 
 #define app (static_cast<Application *>(qApp))
