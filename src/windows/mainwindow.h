@@ -33,9 +33,8 @@ public:
     void onProjectRemoved(Project *project);
     void setCurrentProject(Project *project);
     void setCurrentProject(int index);
-    void hello(const Project *project);
     void setActionsEnabled(const Project *project);
-
+    void updateWindowForProject(const Project *project);
     void updateRecentMenu();
 
 protected:

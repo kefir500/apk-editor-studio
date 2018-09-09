@@ -464,7 +464,7 @@ void MainWindow::onProjectAdded(Project *project)
     projectsList->setCurrentIndex(app->projects.indexOf(project));
     connect(project, &Project::dataChanged, [=]() {
         if (project == getCurrentProject()) {
-            hello(project);
+            updateWindowForProject(project);
         }
     });
 }
@@ -477,7 +477,7 @@ void MainWindow::onProjectRemoved(Project *project)
 
 void MainWindow::setCurrentProject(Project *project)
 {
-    hello(project);
+    updateWindowForProject(project);
 
     if (!project) {
         tabs->setCurrentWidget(welcome);
@@ -507,19 +507,6 @@ void MainWindow::setCurrentProject(int index)
         project = static_cast<Project *>(modelIndex.internalPointer());
     }
     return setCurrentProject(project);
-}
-
-void MainWindow::hello(const Project *project)
-{
-    if (project) {
-        setWindowTitle(QString("%1 [*]").arg(project->getOriginalPath()));
-        setWindowModified(project->getModifiedState());
-        setActionsEnabled(project);
-    } else {
-        setWindowTitle(QString());
-        setWindowModified(false);
-        setActionsEnabled(nullptr);
-    }
 }
 
 void MainWindow::setActionsEnabled(const Project *project)
@@ -557,6 +544,19 @@ void MainWindow::setActionsEnabled(const Project *project)
         if (project->getErroredState()) {
             actionApkClose->setEnabled(true);
         }
+    }
+}
+
+void MainWindow::updateWindowForProject(const Project *project)
+{
+    if (project) {
+        setWindowTitle(QString("%1 [*]").arg(project->getOriginalPath()));
+        setWindowModified(project->getModifiedState());
+        setActionsEnabled(project);
+    } else {
+        setWindowTitle(QString());
+        setWindowModified(false);
+        setActionsEnabled(nullptr);
     }
 }
 
