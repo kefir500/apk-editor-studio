@@ -1,5 +1,5 @@
 install:
-  - call "C:\Qt\5.11.1\msvc2015\bin\qtenv2.bat"
+  - set PATH=C:\Qt\5.11.1\msvc2015\bin;%PATH%
   - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
 
 build_script:
