@@ -4,6 +4,10 @@ defineReplace(path) {
     return($$shell_quote($$shell_path($$1)))
 }
 
+defineReplace(mkdir) {
+    return($$QMAKE_MKDIR $$path($$1) $$escape_expand(\\n\\t))
+}
+
 defineReplace(copy) {
     return($$QMAKE_COPY_DIR $$path($$PWD/res/deploy/$$1) $$path($$DESTDIR/$$2) $$escape_expand(\\n\\t))
 }
@@ -17,7 +21,7 @@ win32 {
 
 unix:!macx {
     DESTDIR = $$PWD/bin/linux/bin
-    QMAKE_POST_LINK += $$QMAKE_MKDIR $$shell_quote($$DESTDIR/../share/$$TARGET) $$escape_expand(\\n\\t)
+    QMAKE_POST_LINK += $$mkdir($$DESTDIR/../share/$$TARGET)
     QMAKE_POST_LINK += $$copy(all, ../share/$$TARGET)
     QMAKE_POST_LINK += $$copy(linux, ..)
 }
