@@ -21,12 +21,12 @@ SOURCES += \
 unix:!macx:!ios {
     QT += dbus
     packagesExist(libsecret-1) {
-        message(Building with libsecret support)
+        message("Libsecret support: on")
         CONFIG += link_pkgconfig
         PKGCONFIG += libsecret-1
         DEFINES += HAVE_LIBSECRET
     } else {
-        message(Building without libsecret support)
+        message("Libsecret support: off")
     }
     HEADERS += \
         $$QT5KEYCHAIN_PWD/gnomekeyring_p.h \
@@ -47,10 +47,10 @@ win32 {
     # instead of the Windows Credential Store.
     DEFINES += USE_CREDENTIAL_STORE
     contains(DEFINES, USE_CREDENTIAL_STORE) {
-        message(Building with Windows Credential Store support)
+        message("Windows Credential Store support: on")
         LIBS += -lAdvapi32
     } else {
-        message(Building without Windows Credential Store support)
+        message("Windows Credential Store support: off")
         LIBS += -lCrypt32
         HEADERS += $$QT5KEYCHAIN_PWD/plaintextstore_p.h
         SOURCES += $$QT5KEYCHAIN_PWD/plaintextstore.cpp
