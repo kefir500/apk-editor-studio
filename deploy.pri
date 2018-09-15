@@ -22,8 +22,9 @@ win32 {
 unix:!macx {
     DESTDIR = $$PWD/bin/linux/bin
     QMAKE_POST_LINK += $$mkdir($$DESTDIR/../share/$$TARGET)
-    QMAKE_POST_LINK += $$copy(all, ../share/$$TARGET)
-    QMAKE_POST_LINK += $$copy(linux, ..)
+    QMAKE_POST_LINK += $$copy(all/., ../share/$$TARGET)
+    QMAKE_POST_LINK += $$copy(linux/share, ..)
+    isEmpty(PACKAGE): QMAKE_POST_LINK += $$copy(linux/bin, ..)
 }
 
 macx {
