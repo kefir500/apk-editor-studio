@@ -1,0 +1,17 @@
+Source: apk-editor-studio
+Section: editors
+Priority: optional
+Maintainer: Alexander Gorishnyak <kefir500@gmail.com>
+Build-Depends: debhelper (>=9)
+Standards-Version: 3.9.7
+Homepage: https://kefir500.github.io/apk-editor-studio
+Vcs-Git: git://github.com/kefir500/apk-editor-studio.git
+Vcs-Browser: https://github.com/kefir500/apk-editor-studio
+
+Package: apk-editor-studio
+Architecture: any
+Depends: android-tools-adb, zipalign, ${shlibs:Depends}, ${misc:Depends}
+Recommends: default-jre-headless | java8-runtime-headless
+Description: Powerful yet simple APK editor
+ APK reverse-engineering tool for editing Android application
+ title, icons, images, strings and other resources.
