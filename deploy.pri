@@ -25,6 +25,19 @@ unix:!macx {
     QMAKE_POST_LINK += $$copy(all/., ../share/$$TARGET)
     QMAKE_POST_LINK += $$copy(linux/share, ..)
     isEmpty(PACKAGE): QMAKE_POST_LINK += $$copy(linux/bin, ..)
+    # Install:
+    isEmpty(PREFIX): PREFIX = /usr
+    target.path   = $$PREFIX/bin
+    share1.files  = $$PWD/res/deploy/all/*
+    share1.path   = $$PREFIX/share/apk-editor-studio
+    share2.files  = $$PWD/res/deploy/linux/share/*
+    share2.path   = $$PREFIX/share
+    INSTALLS     += target share1 share2
+    isEmpty(PACKAGE) {
+        bin.files  = $$PWD/res/deploy/linux/bin/*
+        bin.path   = $$PREFIX/bin
+        INSTALLS  += bin
+    }
 }
 
 macx {
