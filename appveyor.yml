@@ -5,3 +5,34 @@ install:
 build_script:
   - qmake
   - nmake
+
+artifacts:
+  - path: scripts\win32\installers\apk-editor-studio_win32_dev.msi
+    name: APK Editor Studio - Windows Installer (MSI)
+  - path: scripts\win32\installers\apk-editor-studio_win32_dev.zip
+    name: APK Editor Studio - Windows Portable (ZIP)
+
+after_build:
+  - cd scripts\win32
+  - set QTDIR=C:\Qt\5.11.1\msvc2015
+  - set OPENSSL=C:\OpenSSL-Win32\bin
+  - set VCREDIST=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT
+  - set WIXDIR=C:\Program Files (x86)\WiX Toolset v3.11\bin
+  - set SEVENZIP=7z
+  - set VERSION=dev
+  - call deploy.bat
+  - cd installers
+  - call build.msi.bat
+  - call build.zip.bat
+  - cd ..
+
+deploy:
+  - provider: GitHub
+    tag: development
+    release: Developer Build
+    description: Developer alpha build from the latest commit. Contains the most recent features and bug fixes. Use at your own risk.
+    draft: false
+    prerelease: true
+    force_update: true
+    auth_token:
+      secure: IUIw6ywl0fQ4qv+inaEF2qxlJ57FuaCbCW+1TVsp/HmifJxBFPAoDCqTUYYDtL/u
