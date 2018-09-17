@@ -4,4 +4,4 @@ if not defined VCREDIST set VCREDIST=C:\Program Files (x86)\Microsoft Visual Stu
 if not defined WIXDIR   set WIXDIR=C:\Program Files (x86)\WiX Toolset v3.11\bin
 if not defined SEVENZIP set SEVENZIP=C:\Program Files\7-Zip\7z.exe
 
-for /f %%i in ('type %0\..\..\..\VERSION') do (set VERSION=%%i)
+if not defined VERSION for /f %%i in ('type %0\..\..\..\VERSION') do (set VERSION=%%i)
