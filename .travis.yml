@@ -30,5 +30,5 @@ deploy:
   overwrite: true
   skip_cleanup: true
   on:
-    condition: CXX = g++
+    condition: $CXX = g++
     tags: false
