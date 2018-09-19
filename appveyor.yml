@@ -35,4 +35,4 @@ deploy:
     prerelease: true
     force_update: true
     auth_token:
-      secure: IUIw6ywl0fQ4qv+inaEF2qxlJ57FuaCbCW+1TVsp/HmifJxBFPAoDCqTUYYDtL/u
+      secure: F4j34oc5G2EocYZKQVCbPpEM3wH9h20rCsQ8WhSHZ5dlg2SqtRDmQi13+CScmhYn
