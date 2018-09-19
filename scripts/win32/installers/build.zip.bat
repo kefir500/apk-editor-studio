@@ -2,11 +2,11 @@ call ..\environment.bat
 
 set FOLDER="APK Editor Studio v%VERSION%"
 
-del apk-editor-studio_%VERSION%.zip
+del apk-editor-studio_win32_%VERSION%.zip
 rmdir /s /q %FOLDER%
 
 xcopy /s ..\..\..\bin\win32 %FOLDER%\
 
-"%SEVENZIP%" a -tzip -mx=9 apk-editor-studio_%VERSION%.zip %FOLDER%\* -xr!*.pdb
+"%SEVENZIP%" a -tzip -mx=9 apk-editor-studio_win32_%VERSION%.zip %FOLDER%\* -xr!*.pdb
 
 rmdir /s /q %FOLDER%
