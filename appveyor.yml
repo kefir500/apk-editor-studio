@@ -30,7 +30,6 @@ deploy:
   - provider: GitHub
     tag: development
     release: Developer Build
-    description: Developer alpha build from the latest commit. Contains the most recent features and bug fixes. Use at your own risk.
     draft: false
     prerelease: true
     force_update: true
