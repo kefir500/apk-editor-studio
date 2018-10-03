@@ -41,7 +41,7 @@
   - `libsecret-1-dev` (Debian-based distributions)
   - `libsecret-devel` (RPM-based distributions)
 - By default `make install` installs APK Editor Studio to `/usr`.  
-  Pass `PREFIX` variable to `qmake` in order to define   another installation directory.
+  Pass `PREFIX` variable to `qmake` in order to define a different installation directory.
 
 ## Notice
 
