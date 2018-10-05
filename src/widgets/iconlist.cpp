@@ -37,17 +37,17 @@ void IconList::dropEvent(QDropEvent *event)
     if (mimeData->hasUrls()) {
         event->acceptProposedAction();
         if (model()) {
-            QPixmap iconSource(mimeData->urls().at(0).toLocalFile());
-            if (!iconSource.isNull()) {
+            QString iconSource(mimeData->urls().at(0).toLocalFile());
+            if (!iconSource.isEmpty()) {
                 bool success = false;
                 const QModelIndex index = indexAt(event->pos());
                 if (index.isValid()) {
                     const QString iconTarget = model()->index(index.row(), IconsProxy::IconPath).data().toString();
-                    success = iconSource.save(iconTarget);
+                    success = app->replaceImage(iconTarget, iconSource);
                 } else {
                     for (int row = 0; row < model()->rowCount(); ++row) {
                         const QString iconTarget = model()->index(row, IconsProxy::IconPath).data().toString();
-                        success = iconSource.save(iconTarget);
+                        success = app->replaceImage(iconTarget, iconSource);
                     }
                 }
                 if (success) {

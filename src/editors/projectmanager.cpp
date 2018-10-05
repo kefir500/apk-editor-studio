@@ -16,11 +16,11 @@ ProjectManager::ProjectManager(Project *project, QWidget *parent) : QuickTab(par
 
     btnEditIcon = addButton();
     connect(btnEditIcon, &QPushButton::clicked, [=]() {
-        const QPixmap iconSource(Dialogs::getOpenImageFilename(this));
-        if (!iconSource.isNull()) {
+        const QString iconSource(Dialogs::getOpenImageFilename(this));
+        if (!iconSource.isEmpty()) {
             for (int row = 0; row < project->iconsProxy.rowCount(); ++row) {
                 const QString iconTarget = project->iconsProxy.index(row, IconsProxy::IconPath).data().toString();
-                iconSource.save(iconTarget);
+                app->replaceImage(iconTarget, iconSource);
             }
         }
     });

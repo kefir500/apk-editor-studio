@@ -124,16 +124,29 @@ QString Dialogs::combo(const QStringList &options, const QString &current, const
 
 bool Dialogs::replaceFile(const QString &path, QWidget *parent)
 {
-    const QString newfile = Dialogs::getOpenFilename(parent, path, true);
-    if (newfile.isEmpty() || !QFile::exists(newfile)) {
+    const QString newFile = Dialogs::getOpenFilename(parent, path, true);
+    if (newFile.isEmpty() || !QFile::exists(newFile)) {
         return false;
     }
     QFile::remove(path);
-    const bool success = QFile::copy(newfile, path);
+    const bool success = QFile::copy(newFile, path);
     if (!success) {
         QMessageBox::warning(parent, QString(), app->translate("Dialogs", "Could not replace the file."));
     }
     return success;
+}
+
+bool Dialogs::replaceImage(const QString &path, QWidget *parent)
+{
+    const QString newFile = Dialogs::getOpenImageFilename(parent, path);
+    if (newFile.isEmpty() || !QFile::exists(newFile)) {
+        return false;
+    }
+    if (!app->replaceImage(path, newFile)) {
+        QMessageBox::warning(parent, QString(), app->translate("Dialogs", "Could not replace the file."));
+        return false;
+    }
+    return true;
 }
 
 int Dialogs::detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon, QWidget *parent)

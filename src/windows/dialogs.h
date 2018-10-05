@@ -23,6 +23,7 @@ namespace Dialogs {
     QString combo(const QStringList &options, const QString &current, const QString &title, QWidget *parent = 0);
 
     bool replaceFile(const QString &path, QWidget *parent = 0);
+    bool replaceImage(const QString &path, QWidget *parent = 0);
     int detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon = QMessageBox::Warning, QWidget *parent = 0);
     int log(const QString &log, QWidget *parent = 0);
 }

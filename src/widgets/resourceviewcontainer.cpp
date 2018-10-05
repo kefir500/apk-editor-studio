@@ -38,7 +38,8 @@ void ResourceViewContainer::openContextMenu(const QPoint &point, const QModelInd
     connect(actionResourceReplace, &QAction::triggered, [=]() {
         const QString path = getResourcePath(index);
         if (!path.isEmpty()) {
-            if (Dialogs::replaceFile(path, this)) {
+            const bool isImage = app->formats.extensionsImages().contains(QFileInfo(path).suffix());
+            if (isImage ? Dialogs::replaceImage(path, this) : Dialogs::replaceFile(path, this)) {
                 emit model()->dataChanged(index, index);
             }
         }
