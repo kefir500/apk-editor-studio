@@ -13,6 +13,7 @@ public:
 
     QStringList extensionsPng() const;
     QStringList extensionsJpeg() const;
+    QStringList extensionsBmp() const;
     QStringList extensionsGif() const;
     QStringList extensionsImages() const;
 

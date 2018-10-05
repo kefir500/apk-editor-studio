@@ -16,6 +16,11 @@ QStringList Formats::extensionsJpeg() const
                          << "jpeg";
 }
 
+QStringList Formats::extensionsBmp() const
+{
+    return QStringList() << "bmp";
+}
+
 QStringList Formats::extensionsGif() const
 {
     return QStringList() << "gif";
@@ -25,6 +30,7 @@ QStringList Formats::extensionsImages() const
 {
     return QStringList() << extensionsPng()
                          << extensionsJpeg()
+                         << extensionsBmp()
                          << extensionsGif();
 }
 
@@ -65,10 +71,11 @@ QString Formats::filterApk() const
 QString Formats::filterImages() const
 {
     QString filter;
+    filter.append(constructFilter(tr("All supported images"), extensionsImages()));
     filter.append(constructFilter("PNG", extensionsPng()));
     filter.append(constructFilter("JPEG", extensionsJpeg()));
+    filter.append(constructFilter("BMP", extensionsBmp()));
     filter.append(constructFilter("GIF", extensionsGif()));
-    filter.append(constructFilter(tr("All supported images"), extensionsImages()));
     filter.append(filterAllFiles());
     return filter;
 }
