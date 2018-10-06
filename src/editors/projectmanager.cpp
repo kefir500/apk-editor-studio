@@ -5,6 +5,7 @@
 
 ProjectManager::ProjectManager(Project *project, QWidget *parent) : QuickTab(parent)
 {
+    //: "Project" is a singular noun in this context.
     this->title = tr("Project Manager");
     this->icon = app->loadIcon("project.png");
     this->project = project;

@@ -9,6 +9,7 @@
 
 DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
 {
+    //: "Device" is a plural noun in this context.
     setWindowTitle(tr("Device Manager"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     resize(app->scale(560, 300));

@@ -15,6 +15,7 @@
 KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
 {
     resize(app->scale(500, 0));
+    //: "Key" is a plural noun in this context.
     setWindowTitle(tr("Key Manager"));
     setWindowIcon(app->loadIcon("key.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

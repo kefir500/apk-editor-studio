@@ -233,6 +233,7 @@ void OptionsDialog::initialize()
     groupSign->setCheckable(true);
     fileboxApksigner = new FileBox(QString(), QString(), false, this);
     QFormLayout *layoutSign = new QFormLayout(groupSign);
+    //: "Key" is a plural noun in this context.
     QPushButton *btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
     btnKeyManager->setIcon(app->loadIcon("key.png"));
     btnKeyManager->setMinimumHeight(app->scale(30));
@@ -260,6 +261,7 @@ void OptionsDialog::initialize()
 
     QFormLayout *pageInstall = new QFormLayout;
     fileboxAdb = new FileBox(QString(), QString(), false, this);
+    //: "Device" is a plural noun in this context.
     QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
     btnDeviceManager->setIcon(app->loadIcon("device.png"));
     btnDeviceManager->setMinimumHeight(app->scale(30));
