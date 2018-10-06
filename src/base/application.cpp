@@ -217,13 +217,6 @@ QPixmap Application::loadPixmap(const QString &filename) const
     return QPixmap(getSharedPath() + "/resources/icons/static/" + filename);
 }
 
-QMovie *Application::loadMovie(const QString &filename)
-{
-    QMovie *movie = new QMovie(this);
-    movie->setFileName(getSharedPath() + "/resources/animations/" + filename);
-    return movie;
-}
-
 bool Application::replaceImage(const QString &targetPath, const QString &sourcePath) const
 {
     if (targetPath.isEmpty() || sourcePath.isEmpty() || !QFile::exists(targetPath)) {

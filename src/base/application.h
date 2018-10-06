@@ -54,7 +54,6 @@ public:
 
     QIcon loadIcon(const QString &filename) const;
     QPixmap loadPixmap(const QString &filename) const;
-    QMovie *loadMovie(const QString &filename);
     bool replaceImage(const QString &targetPath, const QString &sourcePath) const;
 
     QString getWebPage() const;
