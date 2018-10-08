@@ -15,7 +15,7 @@ class Recent : public QObject
     Q_OBJECT
 
 public:
-    Recent(const QString &identifier, QObject *parent = 0);
+    Recent(const QString &identifier, QObject *parent = nullptr);
 
     bool add(const QString &filename, const QPixmap &thumbnail);
     bool remove(int index);

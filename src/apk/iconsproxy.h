@@ -15,7 +15,7 @@ public:
         ColumnCount
     };
 
-    explicit IconsProxy(QObject *parent = 0);
+    explicit IconsProxy(QObject *parent = nullptr);
 
     bool addIcon(const QPersistentModelIndex &index);
 

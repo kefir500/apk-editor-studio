@@ -12,7 +12,7 @@ class GraphicsView : public QGraphicsView
     Q_OBJECT
 
 public:
-    explicit GraphicsView(QWidget *parent = 0);
+    explicit GraphicsView(QWidget *parent = nullptr);
     void zoomIn();
     void zoomOut();
     void zoomReset();
@@ -37,7 +37,7 @@ class ZoomGroup : public QWidget
     Q_OBJECT
 
 public:
-    explicit ZoomGroup(QWidget *parent = 0);
+    explicit ZoomGroup(QWidget *parent = nullptr);
     void setZoomInfo(qreal factor);
 
 signals:
@@ -56,7 +56,7 @@ class ImageEditor : public BaseEditor
     Q_OBJECT
 
 public:
-    ImageEditor(const QString &filename, QWidget *parent = 0);
+    ImageEditor(const QString &filename, QWidget *parent = nullptr);
 
     bool load() Q_DECL_OVERRIDE;
     bool save(const QString &as = QString()) Q_DECL_OVERRIDE;

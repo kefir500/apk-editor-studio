@@ -8,7 +8,7 @@ class WaitDialog : public QMessageBox
     Q_OBJECT
 
 public:
-    explicit WaitDialog(QWidget *parent = 0);
+    explicit WaitDialog(QWidget *parent = nullptr);
     ~WaitDialog();
 };
 

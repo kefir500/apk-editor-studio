@@ -12,7 +12,7 @@ class DeviceManager : public QDialog
     Q_OBJECT
 
 public:
-    explicit DeviceManager(QWidget *parent = 0);
+    explicit DeviceManager(QWidget *parent = nullptr);
 
     void refreshDevices();
     const Device *getDevice();

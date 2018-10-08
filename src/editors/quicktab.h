@@ -12,7 +12,7 @@ class QuickTab : public BaseEditor
     Q_OBJECT
 
 public:
-    explicit QuickTab(QWidget *parent = 0);
+    explicit QuickTab(QWidget *parent = nullptr);
     void setTitle(const QString &title);
     bool load() Q_DECL_OVERRIDE;
     bool save(const QString &as = QString()) Q_DECL_OVERRIDE;

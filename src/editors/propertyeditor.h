@@ -10,7 +10,7 @@ class PropertyEditor : public BaseEditor
     Q_OBJECT
 
 public:
-    explicit PropertyEditor(const QString &filename = QString(), QWidget *parent = 0);
+    explicit PropertyEditor(const QString &filename = QString(), QWidget *parent = nullptr);
     ~PropertyEditor();
 
     bool save(const QString &as = QString()) Q_DECL_OVERRIDE;

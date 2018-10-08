@@ -8,7 +8,7 @@ class ResourceViewContainer : public QWidget
     Q_OBJECT
 
 public:
-    explicit ResourceViewContainer(QAbstractItemView *view, QWidget *parent = 0);
+    explicit ResourceViewContainer(QAbstractItemView *view, QWidget *parent = nullptr);
     QAbstractItemModel *model() const;
 
 signals:

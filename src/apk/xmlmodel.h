@@ -16,7 +16,7 @@ public:
         ColumnCount
     };
 
-    XmlResourceModel(const QString &path, QObject *parent = 0);
+    XmlResourceModel(const QString &path, QObject *parent = nullptr);
     ~XmlResourceModel();
 
     bool save(const QString &as = QString()) const;

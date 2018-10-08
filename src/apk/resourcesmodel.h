@@ -19,7 +19,7 @@ public:
         ColumnCount
     };
 
-    ResourcesModel(QObject *parent = 0);
+    ResourcesModel(QObject *parent = nullptr);
     ~ResourcesModel();
 
     QModelIndex addNode(ResourceNode *node, const QModelIndex &parent = QModelIndex());

@@ -7,7 +7,7 @@
 class Toolbar : public QToolBar {
 
 public:
-    explicit Toolbar(QWidget *parent = 0);
+    explicit Toolbar(QWidget *parent = nullptr);
     void reinitialize();
 };
 

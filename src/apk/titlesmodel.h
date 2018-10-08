@@ -18,7 +18,7 @@ public:
         ColumnCount
     };
 
-    explicit TitlesModel(const Project *apk, QObject *parent = 0);
+    explicit TitlesModel(const Project *apk, QObject *parent = nullptr);
     ~TitlesModel();
 
     bool save() const;

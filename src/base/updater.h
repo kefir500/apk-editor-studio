@@ -8,7 +8,7 @@ class Updater : public QObject
     Q_OBJECT
 
 public:
-    explicit Updater(bool verbose = false, QWidget *parent = 0);
+    explicit Updater(bool verbose = false, QWidget *parent = nullptr);
     void checkAndDelete();
     void download() const;
 

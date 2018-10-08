@@ -10,7 +10,7 @@ class BaseEditor : public QWidget
     Q_OBJECT
 
 public:
-    explicit BaseEditor(const QString &filename = QString(), const QPixmap &icon = QPixmap(), QWidget *parent = 0);
+    explicit BaseEditor(const QString &filename = QString(), const QPixmap &icon = QPixmap(), QWidget *parent = nullptr);
     virtual ~BaseEditor() {}
 
     virtual bool load() = 0;

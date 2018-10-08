@@ -11,7 +11,7 @@ class ProjectWidget : public QTabWidget
     Q_OBJECT
 
 public:
-    explicit ProjectWidget(Project *project, QWidget *parent = 0);
+    explicit ProjectWidget(Project *project, QWidget *parent = nullptr);
 
     bool openProject();
     bool saveProject();

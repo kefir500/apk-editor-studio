@@ -9,7 +9,7 @@ class ProjectManager : public QuickTab
     Q_OBJECT
 
 public:
-    explicit ProjectManager(Project *project, QWidget *parent = 0);
+    explicit ProjectManager(Project *project, QWidget *parent = nullptr);
 
     void setSaveButtonEnabled(bool enabled);
     void setInstallButtonEnabled(bool enabled);

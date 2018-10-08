@@ -8,7 +8,7 @@
 class CodeEditor : public BaseEditor {
 
 public:
-    CodeEditor(const QString &filename, const QPixmap &icon = QPixmap(), QWidget *parent = 0);
+    CodeEditor(const QString &filename, const QPixmap &icon = QPixmap(), QWidget *parent = nullptr);
     bool load() Q_DECL_OVERRIDE;
     bool save(const QString &as = QString()) Q_DECL_OVERRIDE;
 

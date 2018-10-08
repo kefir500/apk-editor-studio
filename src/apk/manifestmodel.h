@@ -23,7 +23,7 @@ public:
         ReferenceRole = Qt::UserRole + 1
     };
 
-    explicit ManifestModel(QObject *parent = 0);
+    explicit ManifestModel(QObject *parent = nullptr);
 
     void initialize(Manifest *manifest);
 

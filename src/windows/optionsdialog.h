@@ -17,7 +17,7 @@ class OptionsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit OptionsDialog(QWidget *parent = 0);
+    explicit OptionsDialog(QWidget *parent = nullptr);
     void addPage(const QString &title, QLayout *layout, bool stretch = true);
     void load();
     void save();

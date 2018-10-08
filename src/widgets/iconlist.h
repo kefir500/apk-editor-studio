@@ -8,7 +8,7 @@ class IconList : public QListView
     Q_OBJECT
 
 public:
-    explicit IconList(QWidget *parent = 0);
+    explicit IconList(QWidget *parent = nullptr);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;

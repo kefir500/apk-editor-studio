@@ -8,7 +8,7 @@ class GradientWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit GradientWidget(QWidget *parent = 0) : QWidget(parent) {}
+    explicit GradientWidget(QWidget *parent = nullptr) : QWidget(parent) {}
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;

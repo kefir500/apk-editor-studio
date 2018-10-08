@@ -11,7 +11,7 @@ public:
     Settings();
     ~Settings();
 
-    bool reset(QWidget *parent = 0);
+    bool reset(QWidget *parent = nullptr);
 
     QString getApktoolPath();
     QString getOutputDirectory();

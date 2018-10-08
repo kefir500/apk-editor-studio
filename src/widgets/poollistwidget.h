@@ -13,7 +13,7 @@ public:
         ReusableRole
     };
 
-    PoolListWidget(QWidget *parent = 0);
+    PoolListWidget(QWidget *parent = nullptr);
     void addItem(QListWidgetItem *item, bool reusable);
     void startDrag(Qt::DropActions supportedActions) Q_DECL_OVERRIDE;
     void dropEvent(QDropEvent *event) Q_DECL_OVERRIDE;

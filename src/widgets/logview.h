@@ -10,7 +10,7 @@ class LogView : public QListView
     Q_OBJECT
 
 public:
-    explicit LogView(QWidget *parent = 0);
+    explicit LogView(QWidget *parent = nullptr);
     void setModel(QAbstractItemModel *model) Q_DECL_OVERRIDE;
     QSize sizeHint() const Q_DECL_OVERRIDE;
 

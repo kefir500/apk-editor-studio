@@ -15,7 +15,7 @@ class KeyManager : public QDialog
     Q_OBJECT
 
 public:
-    explicit KeyManager(QWidget *parent = 0);
+    explicit KeyManager(QWidget *parent = nullptr);
 
     void load();
     void save();
@@ -23,8 +23,8 @@ public:
     bool createKeystore();
     bool createKey();
 
-    static QString selectKey(const QString &keystore, const QString &password, const QString &currentAlias = QString(), QWidget *parent = 0);
-    static Result<QStringList> getCertificates(const QString &keystore, const QString &password, QWidget *parent = 0);
+    static QString selectKey(const QString &keystore, const QString &password, const QString &currentAlias = QString(), QWidget *parent = nullptr);
+    static Result<QStringList> getCertificates(const QString &keystore, const QString &password, QWidget *parent = nullptr);
 
 private:
 //    QStringList fetchCertificates();
@@ -52,8 +52,8 @@ public:
         TypeKey
     };
 
-    explicit KeyCreator(QWidget *parent = 0);
-    KeyCreator(const QString &keystorePath, const QString &keystorePassword, QWidget *parent = 0);
+    explicit KeyCreator(QWidget *parent = nullptr);
+    KeyCreator(const QString &keystorePath, const QString &keystorePassword, QWidget *parent = nullptr);
 
 signals:
     void createdKeystore(const QString &path);

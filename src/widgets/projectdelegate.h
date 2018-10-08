@@ -6,7 +6,7 @@
 class ProjectDelegate : public QStyledItemDelegate {
 
 public:
-    explicit ProjectDelegate(QObject *parent = 0);
+    explicit ProjectDelegate(QObject *parent = nullptr);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;

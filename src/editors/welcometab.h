@@ -8,7 +8,7 @@ class WelcomeTab : public QuickTab
     Q_OBJECT
 
 public:
-    explicit WelcomeTab(QWidget *parent = 0);
+    explicit WelcomeTab(QWidget *parent = nullptr);
 
 protected:
     void changeEvent(QEvent *event) Q_DECL_OVERRIDE;

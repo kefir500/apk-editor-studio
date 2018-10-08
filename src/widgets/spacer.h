@@ -5,7 +5,7 @@
 
 class Spacer : public QWidget {
 public:
-    explicit Spacer(QWidget *parent = 0);
+    explicit Spacer(QWidget *parent = nullptr);
 };
 
 #endif // SPACER_H
