@@ -20,7 +20,7 @@ public:
     };
 
     ResourcesModel(QObject *parent = nullptr);
-    ~ResourcesModel();
+    ~ResourcesModel() Q_DECL_OVERRIDE;
 
     QModelIndex addNode(ResourceNode *node, const QModelIndex &parent = QModelIndex());
 

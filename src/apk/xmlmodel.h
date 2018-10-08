@@ -17,7 +17,7 @@ public:
     };
 
     XmlResourceModel(const QString &path, QObject *parent = nullptr);
-    ~XmlResourceModel();
+    ~XmlResourceModel() Q_DECL_OVERRIDE;
 
     bool save(const QString &as = QString()) const;
     QString getFilename() const;

@@ -26,7 +26,7 @@ public:
     };
 
     Project(const QString &path);
-    ~Project();
+    ~Project() Q_DECL_OVERRIDE;
 
     void unpack();
     void pack(const QString &path);

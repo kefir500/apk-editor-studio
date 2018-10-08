@@ -28,7 +28,7 @@ public:
     };
 
     Application(int &argc, char **argv);
-    ~Application();
+    ~Application() Q_DECL_OVERRIDE;
 
     int exec();
 

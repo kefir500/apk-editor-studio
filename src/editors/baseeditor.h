@@ -11,7 +11,7 @@ class BaseEditor : public QWidget
 
 public:
     explicit BaseEditor(const QString &filename = QString(), const QPixmap &icon = QPixmap(), QWidget *parent = nullptr);
-    virtual ~BaseEditor() {}
+    ~BaseEditor() Q_DECL_OVERRIDE {}
 
     virtual bool load() = 0;
     virtual bool save(const QString &as = QString()) = 0;

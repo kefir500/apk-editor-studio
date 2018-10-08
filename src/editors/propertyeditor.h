@@ -11,7 +11,7 @@ class PropertyEditor : public BaseEditor
 
 public:
     explicit PropertyEditor(const QString &filename = QString(), QWidget *parent = nullptr);
-    ~PropertyEditor();
+    ~PropertyEditor() Q_DECL_OVERRIDE;
 
     bool save(const QString &as = QString()) Q_DECL_OVERRIDE;
 

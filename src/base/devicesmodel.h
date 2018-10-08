@@ -18,7 +18,7 @@ public:
         ColumnCount
     };
 
-    ~DevicesModel();
+    ~DevicesModel() Q_DECL_OVERRIDE;
 
     const Device *get(const QModelIndex &index) const;
     void refresh();

@@ -16,7 +16,7 @@ public:
     };
 
     LogModel();
-    ~LogModel();
+    ~LogModel() Q_DECL_OVERRIDE;
 
     bool add(LogEntry *entry);
     bool add(const QString &brief, const QString &descriptive, LogEntry::Type type);

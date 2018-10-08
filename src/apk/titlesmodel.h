@@ -19,7 +19,7 @@ public:
     };
 
     explicit TitlesModel(const Project *apk, QObject *parent = nullptr);
-    ~TitlesModel();
+    ~TitlesModel() Q_DECL_OVERRIDE;
 
     bool save() const;
 

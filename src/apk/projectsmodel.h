@@ -20,7 +20,7 @@ public:
         ProjectErrorRole
     };
 
-    ~ProjectsModel();
+    ~ProjectsModel() Q_DECL_OVERRIDE;
 
     Project *open(const QString &filename, bool unpack = true);
     bool close(Project *project);

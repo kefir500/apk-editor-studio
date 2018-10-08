@@ -92,7 +92,7 @@ namespace Tasks {
         void add(Task *task, bool critical = false);
         void run() Q_DECL_OVERRIDE;
     private:
-        ~Batch();
+        ~Batch() Q_DECL_OVERRIDE;
         QQueue<Task *> tasks;
     };
 }
