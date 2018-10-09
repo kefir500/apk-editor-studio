@@ -18,6 +18,7 @@ public:
     explicit IconsProxy(QObject *parent = nullptr);
 
     bool addIcon(const QPersistentModelIndex &index);
+    QString getIconPath(const QModelIndex &index) const;
 
     void setSourceModel(QAbstractItemModel *sourceModel) Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
@@ -27,8 +28,6 @@ public:
     QModelIndex mapToSource(const QModelIndex &proxyIndex) const Q_DECL_OVERRIDE;
     int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     int columnCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
-
-    QString getIconPath(const QModelIndex &index);
 
 private:
     void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);

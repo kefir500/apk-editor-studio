@@ -35,6 +35,14 @@ bool IconsProxy::addIcon(const QPersistentModelIndex &index)
     return false;
 }
 
+QString IconsProxy::getIconPath(const QModelIndex &index) const
+{
+    if (!index.isValid()) {
+        return QString();
+    }
+    return this->index(index.row(), IconsProxy::IconPath).data().toString();
+}
+
 QVariant IconsProxy::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
@@ -97,14 +105,6 @@ int IconsProxy::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return 1;
-}
-
-QString IconsProxy::getIconPath(const QModelIndex &index)
-{
-    if (!index.isValid()) {
-        return QString();
-    }
-    return this->index(index.row(), IconsProxy::IconPath).data().toString();
 }
 
 void IconsProxy::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
