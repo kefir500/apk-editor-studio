@@ -3,8 +3,8 @@
 
 #include "apk/resourcefile.h"
 
-class ResourceNode {
-
+class ResourceNode
+{
 public:
     ResourceNode(const QString &caption = QString(), ResourceFile *file = nullptr);
     ~ResourceNode();

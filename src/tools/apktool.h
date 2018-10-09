@@ -3,8 +3,8 @@
 
 #include "tools/jar.h"
 
-class Apktool : public Jar {
-
+class Apktool : public Jar
+{
 public:
     explicit Apktool(const QString &jar, QObject *parent = nullptr) : Jar(jar, parent) {}
 

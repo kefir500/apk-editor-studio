@@ -3,8 +3,8 @@
 
 #include <QColor>
 
-class LogEntry {
-
+class LogEntry
+{
 public:
     enum Type {
         Information,

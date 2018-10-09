@@ -3,8 +3,8 @@
 
 #include "tools/java.h"
 
-class Jar : public Java {
-
+class Jar : public Java
+{
 public:
     explicit Jar(const QString &jar, QObject *parent = nullptr);
 

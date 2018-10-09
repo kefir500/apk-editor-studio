@@ -3,8 +3,8 @@
 
 #include <QListWidget>
 
-class PoolListWidget : public QListWidget {
-
+class PoolListWidget : public QListWidget
+{
 public:
     using QListWidget::addItem;
 

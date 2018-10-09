@@ -3,8 +3,8 @@
 
 #include <QSyntaxHighlighter>
 
-class YamlHighlighter : public QSyntaxHighlighter {
-
+class YamlHighlighter : public QSyntaxHighlighter
+{
 public:
     YamlHighlighter(QTextDocument *parent);
 

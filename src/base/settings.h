@@ -5,8 +5,8 @@
 #include <QMutex>
 #include <QAction>
 
-class Settings {
-
+class Settings
+{
 public:
     Settings();
     ~Settings();

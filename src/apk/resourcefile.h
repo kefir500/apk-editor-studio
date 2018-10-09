@@ -4,8 +4,8 @@
 #include <QString>
 #include <QPixmap>
 
-class ResourceFile {
-
+class ResourceFile
+{
 public:
     ResourceFile(const QString &path);
 

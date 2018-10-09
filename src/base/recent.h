@@ -4,7 +4,8 @@
 #include <QPixmap>
 #include <QDebug>
 
-struct RecentFile {
+struct RecentFile
+{
     RecentFile(const QString &filename, const QPixmap &thumbnail) : filename(filename), thumbnail(thumbnail) {}
     const QString filename;
     const QPixmap thumbnail;

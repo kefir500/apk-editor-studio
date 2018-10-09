@@ -3,8 +3,8 @@
 
 #include <QString>
 
-class Device {
-
+class Device
+{
 public:
     Device(const QString &serial);
 

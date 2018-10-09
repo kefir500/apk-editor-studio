@@ -4,7 +4,8 @@
 #include "apk/project.h"
 #include <QMessageBox>
 
-namespace Dialogs {
+namespace Dialogs
+{
     bool openApk(QWidget *parent = nullptr, const QString &defaultPath = QString());
     QStringList getOpenApkFilenames(QWidget *parent = nullptr, const QString &defaultPath = QString());
     QString getSaveApkFilename(const Project *project, QWidget *parent = nullptr, const QString &defaultPath = QString());

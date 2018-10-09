@@ -3,7 +3,8 @@
 
 #include <QString>
 
-struct Dname {
+struct Dname
+{
     QString name;
     QString org;
     QString orgUnit;
@@ -12,7 +13,8 @@ struct Dname {
     QString countryCode;
 };
 
-struct Keystore {
+struct Keystore
+{
     QString keystorePath;
     QString keystorePassword;
     QString keyAlias;

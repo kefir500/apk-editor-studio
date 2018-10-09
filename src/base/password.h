@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-class Password {
-
+class Password
+{
 public:
     Password(const QString &key) : key(key) {}
 

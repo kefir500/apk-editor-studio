@@ -4,8 +4,8 @@
 #include "tools/executable.h"
 #include "base/device.h"
 
-class Adb : public Executable {
-
+class Adb : public Executable
+{
 public:
     explicit Adb(const QString &executable, QObject *parent = nullptr);
 

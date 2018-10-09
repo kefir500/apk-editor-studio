@@ -5,8 +5,8 @@
 #include <QDomDocument>
 #include <QRegularExpression>
 
-class Manifest {
-
+class Manifest
+{
 public:
     Manifest(const QString &xmlPath, const QString &ymlPath);
     ~Manifest();

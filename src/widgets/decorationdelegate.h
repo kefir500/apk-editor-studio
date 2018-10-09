@@ -3,8 +3,8 @@
 
 #include <QStyledItemDelegate>
 
-class DecorationDelegate : public QStyledItemDelegate {
-
+class DecorationDelegate : public QStyledItemDelegate
+{
 public:
     explicit DecorationDelegate(const QSize &size, QObject *parent = nullptr);
 

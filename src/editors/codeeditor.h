@@ -5,8 +5,8 @@
 #include <QPlainTextEdit>
 #include <QSyntaxHighlighter>
 
-class CodeEditor : public BaseEditor {
-
+class CodeEditor : public BaseEditor
+{
 public:
     CodeEditor(const QString &filename, const QPixmap &icon = QPixmap(), QWidget *parent = nullptr);
     bool load() Q_DECL_OVERRIDE;

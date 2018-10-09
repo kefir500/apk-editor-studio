@@ -3,8 +3,8 @@
 
 #include <QStyledItemDelegate>
 
-class ProjectDelegate : public QStyledItemDelegate {
-
+class ProjectDelegate : public QStyledItemDelegate
+{
 public:
     explicit ProjectDelegate(QObject *parent = nullptr);
 

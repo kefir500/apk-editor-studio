@@ -5,11 +5,12 @@
 #include <QQueue>
 #include "tools/keystore.h"
 
-namespace Tasks {
-
+namespace Tasks
+{
     // Task
 
-    class Task : public QObject {
+    class Task : public QObject
+    {
         Q_OBJECT
     public:
         Task();
@@ -26,7 +27,8 @@ namespace Tasks {
 
     // Unpack
 
-    class Unpack : public Task {
+    class Unpack : public Task
+    {
     public:
         Unpack(const QString &source, const QString &target, const QString &frameworks, bool resources, bool sources);
         void run() Q_DECL_OVERRIDE;
@@ -40,7 +42,8 @@ namespace Tasks {
 
     // Pack
 
-    class Pack : public Task {
+    class Pack : public Task
+    {
     public:
         Pack(const QString &source, const QString &target, const QString &frameworks, bool resources, bool sources);
         void run() Q_DECL_OVERRIDE;
@@ -54,7 +57,8 @@ namespace Tasks {
 
     // Zipalign
 
-    class Align : public Task {
+    class Align : public Task
+    {
     public:
         Align(const QString &target);
         void run() Q_DECL_OVERRIDE;
@@ -64,7 +68,8 @@ namespace Tasks {
 
     // Sign
 
-    class Sign : public Task {
+    class Sign : public Task
+    {
     public:
         Sign(const QString &target, const Keystore *keystore);
         void run() Q_DECL_OVERRIDE;
@@ -75,7 +80,8 @@ namespace Tasks {
 
     // Install
 
-    class Install : public Task {
+    class Install : public Task
+    {
     public:
         Install(const QString &apk, const QString &serial);
         void run() Q_DECL_OVERRIDE;
@@ -86,7 +92,8 @@ namespace Tasks {
 
     // Batch
 
-    class Batch : public Task {
+    class Batch : public Task
+    {
         Q_OBJECT
     public:
         void add(Task *task, bool critical = false);

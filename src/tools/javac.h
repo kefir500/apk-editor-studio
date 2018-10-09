@@ -3,8 +3,8 @@
 
 #include "tools/executable.h"
 
-class Javac : public Executable {
-
+class Javac : public Executable
+{
 public:
     explicit Javac(QObject *parent = nullptr) : Executable("javac", parent) {}
     explicit Javac(const QString &path, QObject *parent = nullptr) : Executable(path, parent) {}

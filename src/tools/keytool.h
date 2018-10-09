@@ -4,8 +4,8 @@
 #include "tools/executable.h"
 #include "tools/keystore.h"
 
-class Keytool : public Executable {
-
+class Keytool : public Executable
+{
 public:
     explicit Keytool(QObject *parent = nullptr) : Executable("keytool", parent) {}
     explicit Keytool(const QString &executable, QObject *parent = nullptr) : Executable(executable, parent) {}

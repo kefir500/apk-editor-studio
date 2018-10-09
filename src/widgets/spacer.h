@@ -3,7 +3,8 @@
 
 #include <QWidget>
 
-class Spacer : public QWidget {
+class Spacer : public QWidget
+{
 public:
     explicit Spacer(QWidget *parent = nullptr);
 };

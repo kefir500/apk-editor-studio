@@ -4,7 +4,8 @@
 #include <QString>
 
 template <typename T = QString>
-struct Result {
+struct Result
+{
     explicit Result(bool success, const T &message) : success(success), value(message) {}
     const bool success;
     const T value;

@@ -4,8 +4,8 @@
 #include "apk/xmlnode.h"
 #include "apk/resourcefile.h"
 
-class TitleNode {
-
+class TitleNode
+{
 public:
     TitleNode(XmlNode *node, ResourceFile *file);
     ~TitleNode();

@@ -3,7 +3,8 @@
 
 #include "tools/executable.h"
 
-class Which : public Executable {
+class Which : public Executable
+{
 public:
     Which(QObject *parent)
 #ifndef Q_OS_WIN

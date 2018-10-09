@@ -4,8 +4,8 @@
 #include "tools/jar.h"
 #include "tools/keystore.h"
 
-class Apksigner : public Jar {
-
+class Apksigner : public Jar
+{
 public:
     explicit Apksigner(const QString &jar, QObject *parent = nullptr) : Jar(jar, parent) {}
 

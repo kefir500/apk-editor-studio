@@ -4,8 +4,8 @@
 #include <QLocale>
 #include <QPixmap>
 
-class Language {
-
+class Language
+{
 public:
     Language(const QString &path);
 
