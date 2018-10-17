@@ -1,5 +1,4 @@
 #include "widgets/filesystemtree.h"
-#include <QFileSystemModel>
 
 FilesystemTree::FilesystemTree(QWidget *parent) : QTreeView(parent)
 {
@@ -10,11 +9,21 @@ FilesystemTree::FilesystemTree(QWidget *parent) : QTreeView(parent)
     connect(this, &FilesystemTree::customContextMenuRequested, [=](const QPoint &point) {
         const QModelIndex index = indexAt(point);
         if (!model()->hasChildren(index)) {
-            const QString path = static_cast<QFileSystemModel *>(model())->filePath(index);
+            const QString path = model()->filePath(index);
             auto menu = generateContextMenu(index, path, this);
             if (menu) {
                 menu->exec(viewport()->mapToGlobal(point));
             }
         }
     });
+}
+
+QFileSystemModel *FilesystemTree::model()
+{
+    return static_cast<QFileSystemModel *>(QTreeView::model());
+}
+
+void FilesystemTree::setModel(QFileSystemModel *model)
+{
+    QTreeView::setModel(model);
 }

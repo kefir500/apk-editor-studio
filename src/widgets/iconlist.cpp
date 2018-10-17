@@ -1,5 +1,4 @@
 #include "widgets/iconlist.h"
-#include "apk/iconsproxy.h"
 #include "base/application.h"
 #include <QDragEnterEvent>
 #include <QMimeData>
@@ -13,12 +12,22 @@ IconList::IconList(QWidget *parent) : QListView(parent)
     });
     connect(this, &IconList::customContextMenuRequested, [=](const QPoint &point) {
         const QModelIndex index = indexAt(point);
-        const QString path = static_cast<IconsProxy *>(model())->getIconPath(index);
+        const QString path = model()->getIconPath(index);
         auto menu = generateContextMenu(index, path, this);
         if (menu) {
             menu.data()->exec(viewport()->mapToGlobal(point));
         }
     });
+}
+
+IconsProxy *IconList::model()
+{
+    return static_cast<IconsProxy *>(QListView::model());
+}
+
+void IconList::setModel(IconsProxy *model)
+{
+    QListView::setModel(model);
 }
 
 void IconList::dragEnterEvent(QDragEnterEvent *event)

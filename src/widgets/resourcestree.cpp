@@ -1,6 +1,5 @@
 #include "widgets/resourcestree.h"
 #include "widgets/decorationdelegate.h"
-#include "apk/resourcesmodel.h"
 
 ResourcesTree::ResourcesTree(QWidget *parent) : QTreeView(parent)
 {
@@ -13,11 +12,21 @@ ResourcesTree::ResourcesTree(QWidget *parent) : QTreeView(parent)
     connect(this, &ResourcesTree::customContextMenuRequested, [=](const QPoint &point) {
         const QModelIndex index = indexAt(point);
         if (!model()->hasChildren(index)) {
-            const QString path = static_cast<ResourcesModel *>(model())->getResourcePath(index);
+            const QString path = model()->getResourcePath(index);
             auto menu = generateContextMenu(index, path, this);
             if (menu) {
                 menu->exec(viewport()->mapToGlobal(point));
             }
         }
     });
+}
+
+ResourcesModel *ResourcesTree::model()
+{
+    return static_cast<ResourcesModel *>(QTreeView::model());
+}
+
+void ResourcesTree::setModel(ResourcesModel *model)
+{
+    QTreeView::setModel(model);
 }

@@ -405,7 +405,7 @@ void MainWindow::saveSettings()
 
 BaseEditor *MainWindow::openResourceItem(const QModelIndex &index)
 {
-    const ResourcesModel *model = static_cast<ResourcesModel *>(resourcesTree->model());
+    const ResourcesModel *model = resourcesTree->model();
     if (model->hasChildren(index)) {
         return nullptr;
     }
@@ -416,14 +416,14 @@ BaseEditor *MainWindow::openResourceItem(const QModelIndex &index)
 
 BaseEditor *MainWindow::openIconItem(const QModelIndex &index)
 {
-    const IconsProxy *proxy = static_cast<IconsProxy *>(iconsList->model());
+    const IconsProxy *proxy = iconsList->model();
     const QModelIndex sourceIndex = proxy->mapToSource(index);
     return openResourceItem(sourceIndex);
 }
 
 BaseEditor *MainWindow::openFilesystemItem(const QModelIndex &index)
 {
-    const QFileSystemModel *model = static_cast<QFileSystemModel *>(filesystemTree->model());
+    const QFileSystemModel *model = filesystemTree->model();
     if (model->hasChildren(index)) {
         return nullptr;
     }
