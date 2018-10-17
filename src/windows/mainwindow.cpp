@@ -5,10 +5,8 @@
 #include "windows/keymanager.h"
 #include "windows/optionsdialog.h"
 #include "windows/waitdialog.h"
-#include "widgets/decorationdelegate.h"
 #include "widgets/logdelegate.h"
 #include "widgets/projectdelegate.h"
-#include "widgets/resourceviewcontainer.h"
 #include "base/application.h"
 #include "base/debug.h"
 #include <QBoxLayout>
@@ -73,32 +71,24 @@ void MainWindow::initWidgets()
 
     QWidget *dockResourceWidget = new QWidget(this);
     QVBoxLayout *resourceLayout = new QVBoxLayout(dockResourceWidget);
-    resourcesTree = new QTreeView(this);
-    resourcesTree->setContextMenuPolicy(Qt::CustomContextMenu);
-    resourcesTree->setSelectionBehavior(QAbstractItemView::SelectRows);
-    resourcesTree->setItemDelegate(new DecorationDelegate(QSize(16, 16), this));
-    ResourceViewContainer *resourceTreeContainer = new ResourceViewContainer(resourcesTree, this);
-    resourceLayout->addWidget(resourceTreeContainer);
+    resourcesTree = new ResourcesTree(this);
+    resourceLayout->addWidget(resourcesTree);
     resourceLayout->setMargin(0);
-    connect(resourceTreeContainer, &ResourceViewContainer::requestForEdit, this, &MainWindow::openResourceItem);
+    connect(resourcesTree, SIGNAL(editRequested(QModelIndex)), this, SLOT(openResourceItem(QModelIndex)));
 
     QWidget *dockFilesystemWidget = new QWidget(this);
     QVBoxLayout *filesystemLayout = new QVBoxLayout(dockFilesystemWidget);
-    filesystemTree = new QTreeView(this);
-    filesystemTree->setContextMenuPolicy(Qt::CustomContextMenu);
-    ResourceViewContainer *filesystemTreeContainer = new ResourceViewContainer(filesystemTree, this);
-    filesystemLayout->addWidget(filesystemTreeContainer);
+    filesystemTree = new FilesystemTree(this);
+    filesystemLayout->addWidget(filesystemTree);
     filesystemLayout->setMargin(0);
-    connect(filesystemTreeContainer, &ResourceViewContainer::requestForEdit, this, &MainWindow::openFilesystemItem);
+    connect(filesystemTree, SIGNAL(editRequested(QModelIndex)), this, SLOT(openFilesystemItem(QModelIndex)));
 
     QWidget *dockIconsWidget = new QWidget(this);
     QVBoxLayout *iconsLayout = new QVBoxLayout(dockIconsWidget);
     iconsList = new IconList(this);
-    iconsList->setContextMenuPolicy(Qt::CustomContextMenu);
-    ResourceViewContainer *iconsListContainer = new ResourceViewContainer(iconsList, this);
-    iconsLayout->addWidget(iconsListContainer);
+    iconsLayout->addWidget(iconsList);
     iconsLayout->setMargin(0);
-    connect(iconsListContainer, &ResourceViewContainer::requestForEdit, this, &MainWindow::openIconItem);
+    connect(iconsList, SIGNAL(editRequested(QModelIndex)), this, SLOT(openIconItem(QModelIndex)));
 
     QWidget *dockManifestWidget = new QWidget(this);
     QVBoxLayout *manifestLayout = new QVBoxLayout(dockManifestWidget);
@@ -149,9 +139,6 @@ void MainWindow::initMenus()
     actionApkOpen->setShortcut(QKeySequence::Open);
     actionApkExplore = new QAction(app->loadIcon("explore.png"), QString(), this);
     actionApkExplore->setShortcut(QKeySequence("Ctrl+E"));
-    actionResourceSave = new QAction(app->loadIcon("save.png"), QString(), this);
-    actionResourceSave->setShortcut(QKeySequence::Save);
-    actionResourceSaveAs = new QAction(app->loadIcon("save-as.png"), QString(), this);
     actionApkSave = new QAction(app->loadIcon("pack.png"), QString(), this);
     actionApkSave->setShortcut(QKeySequence("Ctrl+Shift+S"));
     actionApkInstall = new QAction(app->loadIcon("device.png"), QString(), this);
@@ -201,25 +188,6 @@ void MainWindow::initMenus()
     actionAbout = new QAction(app->loadIcon("application.png"), QString(), this);
     actionAboutQt = new QAction(app->loadIcon("qt.png"), QString(), this);
 
-    // Tool Bar:
-
-    toolbar = new Toolbar(this);
-    toolbar->setObjectName("Toolbar");
-    app->toolbar.insert("open-project", actionApkOpen);
-    app->toolbar.insert("save-project", actionApkSave);
-    app->toolbar.insert("close-project", actionApkClose);
-    app->toolbar.insert("save-resource", actionResourceSave);
-    app->toolbar.insert("save-resource-as", actionResourceSaveAs);
-    app->toolbar.insert("install-project", actionApkInstall);
-    app->toolbar.insert("open-contents", actionApkExplore);
-    app->toolbar.insert("project-manager", actionProjectManager);
-    app->toolbar.insert("title-editor", actionTitleEditor);
-    app->toolbar.insert("device-manager", actionDeviceManager);
-    app->toolbar.insert("key-manager", actionKeyManager);
-    app->toolbar.insert("settings", actionOptions);
-    app->toolbar.insert("donate", actionDonate);
-    addToolBar(toolbar);
-
     // Menu Bar:
 
     menuFile = menuBar()->addMenu(QString());
@@ -228,15 +196,17 @@ void MainWindow::initMenus()
     menuFile->addSeparator();
     menuFile->addAction(actionApkExplore);
     menuFile->addSeparator();
-    menuFile->addAction(actionResourceSave);
-    menuFile->addAction(actionResourceSaveAs);
-    menuFile->addSeparator();
     menuFile->addAction(actionApkSave);
     menuFile->addAction(actionApkInstall);
     menuFile->addSeparator();
     menuFile->addAction(actionApkClose);
     menuFile->addSeparator();
     menuFile->addAction(actionExit);
+    menuResource = new ResourceMenu(this);
+    menuResource->getEditAction()->setVisible(false);
+    menuResource->getReplaceAction()->setShortcut(QKeySequence("Ctrl+R"));
+    menuResource->getSaveAction()->setShortcut(QKeySequence::Save);
+    menuBar()->addMenu(menuResource);
     menuTools = menuBar()->addMenu(QString());
     menuTools->addAction(actionKeyManager);
     menuTools->addAction(actionDeviceManager);
@@ -258,11 +228,30 @@ void MainWindow::initMenus()
     menuHelp->addAction(actionAboutQt);
     menuHelp->addAction(actionAbout);
 
+    // Tool Bar:
+
+    toolbar = new Toolbar(this);
+    toolbar->setObjectName("Toolbar");
+    app->toolbar.insert("open-project", actionApkOpen);
+    app->toolbar.insert("save-project", actionApkSave);
+    app->toolbar.insert("close-project", actionApkClose);
+    app->toolbar.insert("save-resource", menuResource->getSaveAction());
+    app->toolbar.insert("save-resource-as", menuResource->getSaveAsAction());
+    app->toolbar.insert("install-project", actionApkInstall);
+    app->toolbar.insert("open-contents", actionApkExplore);
+    app->toolbar.insert("project-manager", actionProjectManager);
+    app->toolbar.insert("title-editor", actionTitleEditor);
+    app->toolbar.insert("device-manager", actionDeviceManager);
+    app->toolbar.insert("key-manager", actionKeyManager);
+    app->toolbar.insert("settings", actionOptions);
+    app->toolbar.insert("donate", actionDonate);
+    addToolBar(toolbar);
+
     setActionsEnabled(nullptr);
 
     // Signals / Slots
 
-    connect(actionApkOpen, &QAction::triggered, [=]() { getCurrentProjectWidget()->openProject(); });
+    connect(actionApkOpen, &QAction::triggered, [=]() { Dialogs::openApk(this); });
     connect(actionApkSave, &QAction::triggered, [=]() { getCurrentProjectWidget()->saveProject(); });
     connect(actionApkInstall, &QAction::triggered, [=]() {
         const bool isProjectOpen = projectWidgets.count();
@@ -270,16 +259,13 @@ void MainWindow::initMenus()
     });
     connect(actionApkClose, &QAction::triggered, [=]() { getCurrentProjectWidget()->closeProject(); });
     connect(actionApkExplore, &QAction::triggered, [=]() { getCurrentProjectWidget()->exploreProject(); });
-    connect(actionProjectManager, &QAction::triggered, [=]() { getCurrentProjectWidget()->openProjectTab(); });
-    connect(actionTitleEditor, &QAction::triggered, [=]() { getCurrentProjectWidget()->openTitlesTab(); });
-    connect(actionResourceSave, &QAction::triggered, [=]() { getCurrentProjectWidget()->saveTab(); });
-    connect(actionResourceSaveAs, &QAction::triggered, [=]() { getCurrentProjectWidget()->saveTabAs(); });
     connect(actionRecentClear, &QAction::triggered, app->recent, &Recent::clear);
-    connect(actionOptions, &QAction::triggered, [=]() {
-        OptionsDialog settings(this);
-        settings.exec();
-        toolbar->reinitialize();
-    });
+    connect(menuResource, &ResourceMenu::replaceClicked, [=]() { getCurrentProjectWidget()->currentTab()->replace(); });
+    connect(menuResource, &ResourceMenu::saveClicked, [=]() { getCurrentProjectWidget()->currentTab()->save(); });
+    connect(menuResource, &ResourceMenu::saveAsClicked, [=]() { getCurrentProjectWidget()->currentTab()->saveAs(); });
+    connect(menuResource, &ResourceMenu::exploreClicked, [=]() { getCurrentProjectWidget()->currentTab()->explore(); });
+    connect(actionTitleEditor, &QAction::triggered, [=]() { getCurrentProjectWidget()->openTitlesTab(); });
+    connect(actionProjectManager, &QAction::triggered, [=]() { getCurrentProjectWidget()->openProjectTab(); });
     connect(actionKeyManager, &QAction::triggered, [=]() {
         KeyManager keyManager(this);
         keyManager.exec();
@@ -287,6 +273,11 @@ void MainWindow::initMenus()
     connect(actionDeviceManager, &QAction::triggered, [=]() {
         DeviceManager deviceManager(this);
         deviceManager.exec();
+    });
+    connect(actionOptions, &QAction::triggered, [=]() {
+        OptionsDialog settings(this);
+        settings.exec();
+        toolbar->reinitialize();
     });
     connect(actionSettingsReset, &QAction::triggered, this, &MainWindow::resetSettings);
     connect(actionWebsite, &QAction::triggered, app, &Application::visitWebPage);
@@ -347,8 +338,6 @@ void MainWindow::retranslate()
 
     actionApkOpen->setText(tr("&Open APK..."));
     actionApkExplore->setText(tr("Open Con&tents"));
-    actionResourceSave->setText(tr("&Save Resource"));
-    actionResourceSaveAs->setText(tr("Save Resource &As..."));
     actionApkSave->setText(tr("Save A&PK..."));
     actionApkClose->setText(tr("&Close APK..."));
     actionApkInstall->setText(tr("&Install APK..."));
@@ -470,6 +459,12 @@ void MainWindow::onProjectAdded(Project *project)
             updateWindowForProject(project);
         }
     });
+    connect(projectWidget, &ProjectWidget::currentChanged, [=](int index) {
+        if (project == getCurrentProject()) {
+            const bool editable = index != -1 ? projectWidget->currentTab()->isEditable() : false;
+            menuResource->setEnabled(editable);
+        }
+    });
 }
 
 void MainWindow::onProjectRemoved(Project *project)
@@ -518,10 +513,9 @@ void MainWindow::setActionsEnabled(const Project *project)
     actionApkClose->setEnabled(false);
     actionApkInstall->setEnabled(false);
     actionApkExplore->setEnabled(false);
-    actionResourceSave->setEnabled(false);
-    actionResourceSaveAs->setEnabled(false);
     actionProjectManager->setEnabled(false);
     actionTitleEditor->setEnabled(false);
+    menuResource->setEnabled(false);
 
     if (!project) {
         actionApkInstall->setEnabled(true);
@@ -537,9 +531,11 @@ void MainWindow::setActionsEnabled(const Project *project)
         actionTitleEditor->setEnabled(true);
     case Project::ProjectPacking:
     case Project::ProjectSigning:
-    case Project::ProjectOptimizing:
-        actionResourceSave->setEnabled(true);
-        actionResourceSaveAs->setEnabled(true);
+    case Project::ProjectOptimizing: {
+        auto tab = getCurrentProjectWidget()->currentTab();
+        menuResource->setEnabled(tab ? tab->isEditable() : false);
+        Q_FALLTHROUGH();
+    }
     case Project::ProjectUnpacking:
         actionApkExplore->setEnabled(true);
     case Project::ProjectNone:

@@ -11,9 +11,10 @@ class ProjectWidget : public QTabWidget
     Q_OBJECT
 
 public:
-    explicit ProjectWidget(Project *project, QWidget *parent = nullptr);
+    ProjectWidget(Project *project, QWidget *parent = nullptr);
 
-    bool openProject();
+    BaseEditor *currentTab() const;
+
     bool saveProject();
     bool installProject();
     bool exploreProject();
@@ -23,8 +24,6 @@ public:
     TitleEditor *openTitlesTab();
     BaseEditor *openResourceTab(const QString &path, const QPixmap &icon = QPixmap());
 
-    bool saveTab();
-    bool saveTabAs();
     bool saveTabs();
     bool closeTab(BaseEditor *editor);
 

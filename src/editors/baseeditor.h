@@ -17,8 +17,11 @@ public:
     virtual bool save(const QString &as = QString()) = 0;
     bool saveAs();
     bool commit();
+    bool replace();
+    void explore();
 
     bool isModified() const;
+    bool isEditable() const;
 
     const QString &getTitle() const;
     const QIcon &getIcon() const;

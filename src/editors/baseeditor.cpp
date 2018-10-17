@@ -50,9 +50,25 @@ bool BaseEditor::commit()
     return true;
 }
 
+bool BaseEditor::replace()
+{
+    const bool isImage = app->formats.extensionsImages().contains(QFileInfo(filename).suffix());
+    return isImage ? Dialogs::replaceImage(filename, this) : Dialogs::replaceFile(filename, this);
+}
+
+void BaseEditor::explore()
+{
+    app->explore(filename);
+}
+
 bool BaseEditor::isModified() const
 {
     return modified;
+}
+
+bool BaseEditor::isEditable() const
+{
+    return !filename.isEmpty();
 }
 
 const QString &BaseEditor::getTitle() const

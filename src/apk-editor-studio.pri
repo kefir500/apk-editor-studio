@@ -51,20 +51,23 @@ SOURCES += \
     $$PWD/widgets/decorationdelegate.cpp \
     $$PWD/widgets/gradientwidget.cpp \
     $$PWD/widgets/iconlist.cpp \
+    $$PWD/widgets/filesystemtree.cpp \
+    $$PWD/widgets/resourcestree.cpp \
     $$PWD/widgets/buttondelegate.cpp \
     $$PWD/widgets/logview.cpp \
     $$PWD/widgets/manifestview.cpp \
     $$PWD/widgets/projectdelegate.cpp \
     $$PWD/widgets/poollistwidget.cpp \
-    $$PWD/widgets/resourceviewcontainer.cpp \
+    $$PWD/widgets/projectwidget.cpp \
+    $$PWD/widgets/resourcesbaseview.cpp \
+    $$PWD/widgets/resourcemenu.cpp \
     $$PWD/windows/mainwindow.cpp \
     $$PWD/windows/dialogs.cpp \
     $$PWD/windows/optionsdialog.cpp \
     $$PWD/windows/aboutdialog.cpp \
     $$PWD/windows/waitdialog.cpp \
     $$PWD/windows/keymanager.cpp \
-    $$PWD/windows/devicemanager.cpp \
-    $$PWD/widgets/projectwidget.cpp
+    $$PWD/windows/devicemanager.cpp
 
 HEADERS += \
     $$PWD/apk/project.h \
@@ -123,19 +126,22 @@ HEADERS += \
     $$PWD/widgets/gradientwidget.h \
     $$PWD/widgets/editors.h \
     $$PWD/widgets/iconlist.h \
+    $$PWD/widgets/filesystemtree.h \
+    $$PWD/widgets/resourcestree.h \
     $$PWD/widgets/buttondelegate.h \
     $$PWD/widgets/logview.h \
     $$PWD/widgets/manifestview.h \
     $$PWD/widgets/projectdelegate.h \
     $$PWD/widgets/poollistwidget.h \
-    $$PWD/widgets/resourceviewcontainer.h \
+    $$PWD/widgets/projectwidget.h \
+    $$PWD/widgets/resourcesbaseview.h \
+    $$PWD/widgets/resourcemenu.h \
     $$PWD/windows/mainwindow.h \
     $$PWD/windows/dialogs.h \
     $$PWD/windows/optionsdialog.h \
     $$PWD/windows/aboutdialog.h \
     $$PWD/windows/waitdialog.h \
     $$PWD/windows/keymanager.h \
-    $$PWD/windows/devicemanager.h \
-    $$PWD/widgets/projectwidget.h
+    $$PWD/windows/devicemanager.h
 
 INCLUDEPATH += $$PWD

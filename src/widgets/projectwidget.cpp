@@ -24,9 +24,9 @@ ProjectWidget::ProjectWidget(Project *project, QWidget *parent) : QTabWidget(par
     connect(projectManager, &ProjectManager::apkInstallRequested, this, &ProjectWidget::installProject);
 }
 
-bool ProjectWidget::openProject()
+BaseEditor *ProjectWidget::currentTab() const
 {
-    return Dialogs::openApk(this);
+    return static_cast<BaseEditor *>(currentWidget());
 }
 
 bool ProjectWidget::saveProject()
@@ -158,18 +158,6 @@ BaseEditor *ProjectWidget::openResourceTab(const QString &path, const QPixmap &i
     addTab(editor);
 
     return editor;
-}
-
-bool ProjectWidget::saveTab()
-{
-    BaseEditor *tab = static_cast<BaseEditor *>(currentWidget());
-    return tab->save();
-}
-
-bool ProjectWidget::saveTabAs()
-{
-    BaseEditor *tab = static_cast<BaseEditor *>(currentWidget());
-    return tab->saveAs();
 }
 
 bool ProjectWidget::saveTabs()

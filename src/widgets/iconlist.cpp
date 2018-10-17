@@ -1,13 +1,24 @@
 #include "widgets/iconlist.h"
 #include "apk/iconsproxy.h"
 #include "base/application.h"
-#include "base/debug.h"
 #include <QDragEnterEvent>
 #include <QMimeData>
 
 IconList::IconList(QWidget *parent) : QListView(parent)
 {
     setAcceptDrops(true);
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, &IconList::activated, [this](const QModelIndex &index) {
+        emit editRequested(index);
+    });
+    connect(this, &IconList::customContextMenuRequested, [=](const QPoint &point) {
+        const QModelIndex index = indexAt(point);
+        const QString path = static_cast<IconsProxy *>(model())->getIconPath(index);
+        auto menu = generateContextMenu(index, path, this);
+        if (menu) {
+            menu.data()->exec(viewport()->mapToGlobal(point));
+        }
+    });
 }
 
 void IconList::dragEnterEvent(QDragEnterEvent *event)
