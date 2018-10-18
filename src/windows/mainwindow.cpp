@@ -534,7 +534,6 @@ void MainWindow::setActionsEnabled(const Project *project)
     case Project::ProjectOptimizing: {
         auto tab = getCurrentProjectWidget()->currentTab();
         menuResource->setEnabled(tab ? tab->isEditable() : false);
-        Q_FALLTHROUGH();
     }
     case Project::ProjectUnpacking:
         actionApkExplore->setEnabled(true);
