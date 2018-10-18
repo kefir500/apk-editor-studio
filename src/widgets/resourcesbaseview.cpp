@@ -6,7 +6,7 @@
 QSharedPointer<ResourceMenu> ResourcesBaseView::generateContextMenu(const QPersistentModelIndex &resourceIndex, const QString &resourcePath, QWidget *parent)
 {
     if (resourcePath.isEmpty()) {
-        return nullptr;
+        return QSharedPointer<ResourceMenu>(nullptr);
     }
 
     auto menu = new ResourceMenu(parent);
