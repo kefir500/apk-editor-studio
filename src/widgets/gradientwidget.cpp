@@ -1,27 +1,28 @@
 #include "widgets/gradientwidget.h"
+#include "base/application.h"
 #include <QPainter>
 #include <QPaintEvent>
 
 void GradientWidget::paintEvent(QPaintEvent *event)
 {
-    Q_UNUSED(event)
-
-    QLinearGradient gradient1(0, 0, width(), height());
-    gradient1.setColorAt(0, Qt::white);
-    gradient1.setColorAt(1, QColor(220, 230, 190));
-
-    QLinearGradient gradient2(0, 0, width(), height());
-    gradient2.setColorAt(0, Qt::white);
-    gradient2.setColorAt(1, QColor(245, 255, 225));
-
-    const qreal ellipseCenterX = rect().right();
-    const qreal ellipseCenterY = rect().top();
-    const qreal ellipseRadiusX = rect().width() * 1.05;
-    const qreal ellipseRadiusY = rect().height() / 1.3;
+    const int w = width();
+    const int h = height();
+    const int min = qMin(w, h);
+    const QColor color1(app->getColor(app->ColorBackgroundStart));
+    const QColor color2(app->getColor(app->ColorBackgroundEnd));
 
     QPainter painter(this);
-    painter.fillRect(rect(), gradient1);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(gradient2);
-    painter.drawEllipse(QPointF(ellipseCenterX, ellipseCenterY), ellipseRadiusX, ellipseRadiusY);
+    painter.fillRect(event->rect(), color1);
+
+    const QPoint points[] = {
+        QPoint(0, min),
+        QPoint(0, h),
+        QPoint(w, h),
+        QPoint(w, 0),
+        QPoint(min, 0)
+    };
+    painter.translate(w / 2.0 - min / 2.0, h / 2.0 - min / 2.0);
+    painter.setBrush(color2);
+    painter.drawPolygon(points, 5);
 }

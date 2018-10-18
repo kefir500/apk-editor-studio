@@ -36,10 +36,9 @@ bool QuickTab::save(const QString &as)
 QPushButton *QuickTab::addButton(const QString &title)
 {
     const QString btnStyle(
-        "QPushButton { background: rgb(230, 240, 200); border: none; } "
-        "QPushButton:hover { background: rgb(220, 230, 190); }"
-        "QPushButton:pressed { background: rgb(210, 220, 180); }"
-        //"QPushButton:focus { border: 2px solid rgb(200, 210, 170); }"
+        "QPushButton { background: rgb(225, 240, 190); border: none; } "
+        "QPushButton:hover { background: rgb(215, 230, 180); }"
+        "QPushButton:pressed { background: rgb(205, 220, 170); }"
     );
     QPushButton *button = new QPushButton(this);
     button->setText(title);
@@ -53,22 +52,23 @@ QPushButton *QuickTab::addButton(const QString &title)
 
 void QuickTab::paintEvent(QPaintEvent *event)
 {
-    QLinearGradient gradient1(event->rect().bottomLeft(), event->rect().topRight());
-    gradient1.setColorAt(0, Qt::white);
-    gradient1.setColorAt(1, QColor(220, 230, 190));
 
-    QLinearGradient gradient2(event->rect().topLeft(), event->rect().bottomRight());
-    gradient2.setColorAt(0, Qt::white);
-    gradient2.setColorAt(1, QColor(245, 255, 225));
-
-    const qreal ellipseCenterX = event->rect().right();
-    const qreal ellipseCenterY = event->rect().top();
-    const qreal ellipseRadiusX = event->rect().width() * 1.05;
-    const qreal ellipseRadiusY = event->rect().height() / 1.3;
+    const int w = width();
+    const int h = height();
+    const QColor color1(app->getColor(app->ColorBackgroundStart));
+    const QColor color2(app->getColor(app->ColorBackgroundEnd));
 
     QPainter painter(this);
-    painter.fillRect(event->rect(), gradient1);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(gradient2);
-    painter.drawEllipse(QPointF(ellipseCenterX, ellipseCenterY), ellipseRadiusX, ellipseRadiusY);
+    painter.fillRect(event->rect(), color1);
+
+    const QPoint points[] = {
+        QPoint(0, h / 2 + 150),
+        QPoint(0, h),
+        QPoint(w, h),
+        QPoint(w, h / 2 - 130),
+    };
+
+    painter.setBrush(color2);
+    painter.drawPolygon(points, 4);
 }

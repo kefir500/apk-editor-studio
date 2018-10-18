@@ -185,7 +185,9 @@ QColor Application::getColor(Color color) const
             color.setAlpha(30);
             return color;
         }
-        case ColorSuccess: return QColor(230, 255, 200);
+        case ColorBackgroundStart: return QColor(250, 255, 230);
+        case ColorBackgroundEnd:   return QColor(245, 250, 225);
+        case ColorSuccess: return QColor(235, 250, 200);
         case ColorWarning: return QColor(255, 255, 200);
         case ColorError:   return QColor(255, 200, 200);
     }

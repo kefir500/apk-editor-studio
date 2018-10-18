@@ -22,6 +22,8 @@ public:
         ColorLogoSecondary,
         ColorAndroid,
         ColorHighlight,
+        ColorBackgroundStart,
+        ColorBackgroundEnd,
         ColorSuccess,
         ColorWarning,
         ColorError,
