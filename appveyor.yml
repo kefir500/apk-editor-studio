@@ -7,9 +7,9 @@ build_script:
   - nmake
 
 artifacts:
-  - path: scripts\win32\installers\apk-editor-studio_win32_dev.msi
+  - path: scripts\win32\packages\apk-editor-studio_win32_dev.msi
     name: APK Editor Studio - Windows Installer (MSI)
-  - path: scripts\win32\installers\apk-editor-studio_win32_dev.zip
+  - path: scripts\win32\packages\apk-editor-studio_win32_dev.zip
     name: APK Editor Studio - Windows Portable (ZIP)
 
 after_build:
@@ -21,7 +21,7 @@ after_build:
   - set SEVENZIP=7z
   - set VERSION=dev
   - call deploy.bat
-  - cd installers
+  - cd packages
   - call build.msi.bat
   - call build.zip.bat
   - cd ..
