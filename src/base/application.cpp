@@ -102,10 +102,11 @@ QString Application::getDirectory() const
 QString Application::getTemporaryPath() const
 {
 #ifndef PORTABLE
-    return QString("%1/%2").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getTitle());
+    const QString path = QString("%1/%2").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getTitle());
 #else
-    return QString("%1/data/temp").arg(app->getDirectory(), subdirectory);
+    const QString path = QString("%1/data/temp").arg(app->getDirectory(), subdirectory);
 #endif
+    return QDir::cleanPath(path);
 }
 
 QString Application::getOutputPath() const
@@ -121,19 +122,21 @@ QString Application::getFrameworksPath() const
 QString Application::getLocalConfigPath(QString subdirectory) const
 {
 #ifndef PORTABLE
-    return QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getTitle(), subdirectory);
+    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getTitle(), subdirectory);
 #else
-    return QString("%1/data/%2").arg(app->getDirectory(), subdirectory);
+    const QString path = QString("%1/data/%2").arg(app->getDirectory(), subdirectory);
 #endif
+    return QDir::cleanPath(path);
 }
 
 QString Application::getSharedPath(const QString &resource) const
 {
 #ifndef Q_OS_LINUX
-    return getDirectory() + resource;
+    const QString path = getDirectory() + resource;
 #else
-    return QString("%1../share/%2/%3/").arg(getDirectory(), getTitleNoSpaces(), resource);
+    const QString path = QString("%1/../share/%2/%3").arg(getDirectory(), getTitleNoSpaces(), resource);
 #endif
+    return QDir::cleanPath(path);
 }
 
 QString Application::getToolPath(const QString &tool) const
@@ -142,10 +145,10 @@ QString Application::getToolPath(const QString &tool) const
     QFileInfo fileInfo(tool);
     const QString suffix = fileInfo.suffix();
     if (suffix.isEmpty()) {
-        return getSharedPath() + "tools/" + tool + ".exe";
+        return getSharedPath("tools/" + tool + ".exe");
     }
 #endif
-    return getSharedPath() + "tools/" + tool;
+    return getSharedPath("tools/" + tool);
 }
 
 QPixmap Application::getLocaleFlag(const QLocale &locale) const
@@ -154,7 +157,7 @@ QPixmap Application::getLocaleFlag(const QLocale &locale) const
     const QLocale::Country localeCountry = locale.country();
     const QStringList localeSegments = QLocale(localeLanguage, localeCountry).name().split('_');
     if (localeSegments.count() > 1) {
-        return QPixmap(QString(getSharedPath("/resources/flags/%1.png")).arg(localeSegments.at(1).toLower()));
+        return QPixmap(QString(getSharedPath("resources/flags/%1.png")).arg(localeSegments.at(1).toLower()));
     } else {
         return QPixmap();
     }
@@ -207,7 +210,7 @@ QSize Application::scale(int width, int height) const
 QIcon Application::loadIcon(const QString &filename) const
 {
     QIcon icon;
-    QDirIterator it(getSharedPath() + "/resources/icons", QStringList() << filename, QDir::Files, QDirIterator::Subdirectories);
+    QDirIterator it(getSharedPath("resources/icons"), QStringList() << filename, QDir::Files, QDirIterator::Subdirectories);
     while (it.hasNext()) {
         icon.addFile(it.next());
     }
@@ -216,7 +219,7 @@ QIcon Application::loadIcon(const QString &filename) const
 
 QPixmap Application::loadPixmap(const QString &filename) const
 {
-    return QPixmap(getSharedPath() + "/resources/icons/static/" + filename);
+    return QPixmap(getSharedPath("resources/icons/static/") + filename);
 }
 
 bool Application::replaceImage(const QString &targetPath, const QString &sourcePath) const

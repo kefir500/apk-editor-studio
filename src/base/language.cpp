@@ -16,7 +16,7 @@ Language::Language(const QString &path)
     const QLocale::Country localeCountry = locale.country();
     const QStringList localeSegments = QLocale(localeLanguage, localeCountry).name().split('_');
     if (localeSegments.count() > 1) {
-        flag = QPixmap(QString(app->getSharedPath("/resources/flags/%1.png")).arg(localeSegments.at(1).toLower()));
+        flag = QPixmap(QString(app->getSharedPath("resources/flags/%1.png")).arg(localeSegments.at(1).toLower()));
     }
 }
 
