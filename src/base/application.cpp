@@ -102,7 +102,7 @@ QString Application::getDirectory() const
 QString Application::getTemporaryPath() const
 {
 #ifndef PORTABLE
-    const QString path = QString("%1/%2").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getTitle());
+    const QString path = QString("%1/%2").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getTitleNoSpaces());
 #else
     const QString path = QString("%1/data/temp").arg(app->getDirectory(), subdirectory);
 #endif
@@ -122,7 +122,7 @@ QString Application::getFrameworksPath() const
 QString Application::getLocalConfigPath(QString subdirectory) const
 {
 #ifndef PORTABLE
-    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getTitle(), subdirectory);
+    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getTitleNoSpaces(), subdirectory);
 #else
     const QString path = QString("%1/data/%2").arg(app->getDirectory(), subdirectory);
 #endif
@@ -359,7 +359,7 @@ bool Application::associate() const
     const QString format = "apk";
     const QString description = "Android Application Package";
     const QString progid = QString("%1.%2").arg(getTitleNoSpaces(), format);
-    const QString executable = QString("\"%1\"").arg(QDir::toNativeSeparators(QApplication::applicationFilePath()));
+    const QString executable = QString("\"%1\"").arg(QDir::toNativeSeparators(applicationFilePath()));
     registry.setValue(QString(".%1/Default").arg(format), progid);
     registry.setValue(progid + "/Default", description);
     registry.setValue(progid + "/Shell/Open/Command/Default", executable + " \"%1\"");
