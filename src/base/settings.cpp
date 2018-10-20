@@ -162,10 +162,10 @@ QStringList Settings::getToolbar()
 {
     QMutexLocker locker(&mutex);
     QStringList defaults;
-    defaults << "open-project" << "save-project" << "separator"
-             << "install-project" << "separator"
-             << "save-resource" << "separator"
-             << "project-manager" << "open-contents" << "separator"
+    defaults << "open-project" << "save-project" << "install-project" << "separator"
+             << "save-resource" << "save-resource-as" << "separator"
+             << "project-manager" << "separator"
+             << "close-project" << "separator"
              << "settings" << "spacer" << "donate";
     return settings->value("MainWindow/Toolbar", defaults).toStringList();
 }
