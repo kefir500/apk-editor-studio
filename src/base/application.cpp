@@ -139,16 +139,22 @@ QString Application::getSharedPath(const QString &resource) const
     return QDir::cleanPath(path);
 }
 
-QString Application::getToolPath(const QString &tool) const
+QString Application::getBinaryPath(const QString &executable) const
 {
+#ifndef Q_OS_LINUX
+    QString path = getSharedPath("tools/" + executable);
+#else
+    const QString path = getDirectory() + executable;
+#endif
+
+    QFileInfo fileInfo(path);
 #ifdef Q_OS_WIN
-    QFileInfo fileInfo(tool);
-    const QString suffix = fileInfo.suffix();
-    if (suffix.isEmpty()) {
-        return getSharedPath("tools/" + tool + ".exe");
+    if (fileInfo.suffix().isEmpty()) {
+        path.append(".exe");
+        fileInfo.setFile(path);
     }
 #endif
-    return getSharedPath("tools/" + tool);
+    return fileInfo.exists() ? path : fileInfo.fileName();
 }
 
 QPixmap Application::getLocaleFlag(const QLocale &locale) const

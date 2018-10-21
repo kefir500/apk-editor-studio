@@ -62,7 +62,7 @@ void OptionsDialog::load()
     // Repacking
 
     fileboxApktool->setCurrentPath(app->settings->getApktoolPath());
-    fileboxApktool->setDefaultPath(app->getToolPath("apktool.jar"));
+    fileboxApktool->setDefaultPath(app->getSharedPath("tools/apktool.jar"));
     fileboxOutput->setCurrentPath(app->settings->getOutputDirectory());
     fileboxOutput->setDefaultPath(app->getOutputPath());
     fileboxFrameworks->setCurrentPath(app->settings->getFrameworksDirectory());
@@ -73,18 +73,18 @@ void OptionsDialog::load()
 
     groupSign->setChecked(app->settings->getSignApk());
     fileboxApksigner->setCurrentPath(app->settings->getApksignerPath());
-    fileboxApksigner->setDefaultPath(app->getToolPath("apksigner.jar"));
+    fileboxApksigner->setDefaultPath(app->getSharedPath("tools/apksigner.jar"));
 
     // Optimizing
 
     groupZipalign->setChecked(app->settings->getOptimizeApk());
     fileboxZipalign->setCurrentPath(app->settings->getZipalignPath());
-    fileboxZipalign->setDefaultPath(app->getToolPath("zipalign"));
+    fileboxZipalign->setDefaultPath(app->getBinaryPath("zipalign"));
 
     // Installing
 
     fileboxAdb->setCurrentPath(app->settings->getAdbPath());
-    fileboxAdb->setDefaultPath(app->getToolPath("adb"));
+    fileboxAdb->setDefaultPath(app->getBinaryPath("adb"));
 
     // Toolbar
 

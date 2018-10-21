@@ -196,11 +196,11 @@ QWidget *AboutDialog::createLibrariesTab()
         const QString versionJava = java.version();
         labelJava->setText(!versionJava.isEmpty() ? versionJava : mdash);
 
-        Apktool apktool(app->getToolPath("apktool.jar"));
+        Apktool apktool(app->settings->getApktoolPath());
         const QString versionApktool = apktool.version();
         labelApktool->setText(!versionApktool.isEmpty() ? versionApktool : mdash);
 
-        Adb adb(app->getToolPath("adb"));
+        Adb adb(app->settings->getAdbPath());
         const QString versionAdb = adb.version();
         labelAdb->setText(!versionAdb.isEmpty() ? versionAdb : mdash);
     });

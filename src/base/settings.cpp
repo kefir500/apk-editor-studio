@@ -23,7 +23,7 @@ bool Settings::reset(QWidget *parent)
 {
     const int answer = QMessageBox::question(parent, QString(), app->translate("Settings", "Are you sure you want to reset settings?"));
     if (answer == QMessageBox::Yes) {
-        Apktool apktool(app->getToolPath("apktool.jar"));
+        Apktool apktool(app->getSharedPath("tools/apktool.jar"));
         apktool.reset();
         settings->clear();
         app->recent->clear();
@@ -41,7 +41,7 @@ bool Settings::reset(QWidget *parent)
 QString Settings::getApktoolPath()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("Apktool/Path", app->getToolPath("apktool.jar")).toString();
+    return settings->value("Apktool/Path", app->getSharedPath("tools/apktool.jar")).toString();
 }
 
 QString Settings::getOutputDirectory()
@@ -71,19 +71,19 @@ bool Settings::getOptimizeApk()
 QString Settings::getApksignerPath()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("Signer/Path", app->getToolPath("apksigner.jar")).toString();
+    return settings->value("Signer/Path", app->getSharedPath("tools/apksigner.jar")).toString();
 }
 
 QString Settings::getZipalignPath()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("Zipalign/Path", app->getToolPath("zipalign")).toString();
+    return settings->value("Zipalign/Path", app->getBinaryPath("zipalign")).toString();
 }
 
 QString Settings::getAdbPath()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("ADB/Path", app->getToolPath("adb")).toString();
+    return settings->value("ADB/Path", app->getBinaryPath("adb")).toString();
 }
 
 bool Settings::getCustomKeystore()

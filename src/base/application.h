@@ -45,7 +45,7 @@ public:
     QString getFrameworksPath() const;
     QString getLocalConfigPath(QString subdirectory = QString()) const;
     QString getSharedPath(const QString &resource = QString()) const;
-    QString getToolPath(const QString &tool) const;
+    QString getBinaryPath(const QString &executable) const;
     QPixmap getLocaleFlag(const QLocale &locale) const;
 
     QList<Language> getLanguages() const;
