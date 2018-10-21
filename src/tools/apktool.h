@@ -11,8 +11,7 @@ public:
     void build(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources);
     void decode(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources);
     QString version() const;
-
-    static void reset(const QString &currentVersion = QString());
+    void reset() const;
 
 private:
     void run(const QString &action, const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources);

@@ -63,6 +63,9 @@ int Application::exec()
     mainwindow.show();
     window = &mainwindow;
 
+    Apktool apktool(getSharedPath("tools/apktool.jar"));
+    apktool.reset();
+
     QStringList args = arguments();
     if (args.size() > 1) {
         args.removeFirst();

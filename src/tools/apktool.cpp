@@ -1,6 +1,7 @@
 #include "tools/apktool.h"
-#include "base/application.h"
 #include <QStringList>
+#include <QtConcurrent/QtConcurrent>
+#include "base/application.h"
 
 void Apktool::build(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources)
 {
@@ -42,12 +43,15 @@ void Apktool::run(const QString &action, const QString &source, const QString &d
     Jar::startAsync(arguments);
 }
 
-void Apktool::reset(const QString &currentVersion)
+void Apktool::reset() const
 {
-    const QString previousVersion = app->settings->getApktoolVersion();
-    if (currentVersion.isNull() || currentVersion != previousVersion) {
-        qDebug() << qPrintable(QString("New Apktool version (from \"%1\" to \"%2\"). Removing 1.apk...").arg(previousVersion, currentVersion));
-        QFile::remove(app->settings->getFrameworksDirectory() + "/1.apk");
-        app->settings->setApktoolVersion(currentVersion);
-    }
+    QtConcurrent::run([=]() {
+        const QString currentVersion = version();
+        const QString previousVersion = app->settings->getApktoolVersion();
+        if (currentVersion.isNull() || currentVersion != previousVersion) {
+            qDebug() << qPrintable(QString("New Apktool version (from \"%1\" to \"%2\"). Removing 1.apk...").arg(previousVersion, currentVersion));
+            QFile::remove(app->settings->getFrameworksDirectory() + "/1.apk");
+            app->settings->setApktoolVersion(currentVersion);
+        }
+    });
 }
