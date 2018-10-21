@@ -25,10 +25,17 @@ ProjectManager::ProjectManager(Project *project, QWidget *parent) : QuickTab(par
             }
         }
     });
+
+    btnExplore = addButton();
+    connect(btnExplore, &QPushButton::clicked, [=]() {
+        app->explore(project->getContentsPath());
+    });
+
     btnSave = addButton();
     connect(btnSave, &QPushButton::clicked, [=]() {
         emit apkSaveRequested();
     });
+
     btnInstall = addButton();
     connect(btnInstall, &QPushButton::clicked, [=]() {
         emit apkInstallRequested();
@@ -68,6 +75,7 @@ void ProjectManager::retranslate()
     tr("Edit APK"); // TODO For future use
     btnEditTitle->setText(tr("Application Title"));
     btnEditIcon->setText(tr("Application Icon"));
+    btnExplore->setText(tr("Open Contents"));
     btnSave->setText(tr("Save APK"));
     btnInstall->setText(tr("Install APK"));
 }

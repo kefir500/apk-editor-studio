@@ -29,6 +29,7 @@ private:
 
     QPushButton *btnEditIcon;
     QPushButton *btnEditTitle;
+    QPushButton *btnExplore;
     QPushButton *btnSave;
     QPushButton *btnInstall;
 };
