@@ -77,6 +77,7 @@ public:
 
     bool associate() const;
     bool explore(const QString &path);
+    void removeDirectory(const QString &path);
     void visitWebPage() const;
     void visitContactPage() const;
     void visitTranslatePage() const;

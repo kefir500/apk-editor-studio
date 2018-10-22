@@ -34,7 +34,7 @@ Project::~Project()
         qDebug() << qPrintable(QString("Removing \"%1\"...").arg(contentsPath));
         // Additional check to prevent accidental recursive deletion of the wrong directory:
         if (QFile::exists(QString("%1/%2").arg(contentsPath, "AndroidManifest.xml"))) {
-            QDir(contentsPath).removeRecursively();
+            app->removeDirectory(contentsPath);
         } else {
             QDir().rmdir(contentsPath);
         }

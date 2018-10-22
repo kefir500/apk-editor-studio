@@ -1,4 +1,5 @@
 #include "base/application.h"
+#undef app
 #include "base/debug.h"
 #include "tools/adb.h"
 #include "tools/apktool.h"
@@ -10,7 +11,6 @@
 #include <QPixmapCache>
 #include <QMovie>
 #include <QScreen>
-#undef app
 #include <QtConcurrent/QtConcurrent>
 
 Application::Application(int &argc, char **argv) : QApplication(argc, argv)
@@ -403,6 +403,13 @@ bool Application::explore(const QString &path)
     // TODO Check on Linux
     return QDesktopServices::openUrl(QUrl::fromLocalFile(fileInfo.absolutePath()));
 #endif
+}
+
+void Application::removeDirectory(const QString &path)
+{
+    QtConcurrent::run([=]() {
+        QDir(path).removeRecursively();
+    });
 }
 
 void Application::visitWebPage() const
