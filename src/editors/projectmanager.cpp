@@ -50,16 +50,6 @@ ProjectManager::ProjectManager(Project *project, QWidget *parent) : QuickTab(par
     retranslate();
 }
 
-void ProjectManager::setSaveButtonEnabled(bool enabled)
-{
-    btnSave->setEnabled(enabled);
-}
-
-void ProjectManager::setInstallButtonEnabled(bool enabled)
-{
-    btnInstall->setEnabled(enabled);
-}
-
 void ProjectManager::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {

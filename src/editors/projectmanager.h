@@ -11,9 +11,6 @@ class ProjectManager : public QuickTab
 public:
     explicit ProjectManager(Project *project, QWidget *parent = nullptr);
 
-    void setSaveButtonEnabled(bool enabled);
-    void setInstallButtonEnabled(bool enabled);
-
 signals:
     void apkSaveRequested() const;
     void apkInstallRequested() const;
