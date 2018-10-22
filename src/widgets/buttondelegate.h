@@ -8,7 +8,7 @@ class ButtonDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    explicit ButtonDelegate(QObject *parent = 0);
+    explicit ButtonDelegate(QObject *parent = nullptr);
 
     static QRect buttonRect(const QRect &rect);
 

@@ -6,7 +6,7 @@
 class ResourcesBaseView
 {
 public:
-    virtual ~ResourcesBaseView() {}
+    virtual ~ResourcesBaseView() = default;
 
 signals:
     virtual void editRequested(const QModelIndex &index) const = 0;

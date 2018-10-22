@@ -11,7 +11,7 @@ class Executable : public QObject
 public:
     Executable(QObject *parent = nullptr);
     Executable(const QString &executable, QObject *parent = nullptr);
-    ~Executable() Q_DECL_OVERRIDE {}
+    ~Executable() Q_DECL_OVERRIDE = default;
 
 signals:
     void success(const QString &message) const;
