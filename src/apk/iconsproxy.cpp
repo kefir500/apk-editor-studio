@@ -57,7 +57,8 @@ QVariant IconsProxy::data(const QModelIndex &index, int role) const
         } else if (role == Qt::ToolTipRole) {
             return sourceIndex.sibling(sourceIndex.row(), ResourcesModel::ResourcePath).data().toString();
         } else if (role == Qt::DecorationRole) {
-            return sourceIndex.sibling(sourceIndex.row(), ResourcesModel::NodeCaption).data(Qt::DecorationRole).value<QPixmap>().scaled(app->scale(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            const QPixmap pixmap = sourceIndex.sibling(sourceIndex.row(), ResourcesModel::NodeCaption).data(Qt::DecorationRole).value<QPixmap>();
+            return !pixmap.isNull() ? pixmap.scaled(app->scale(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation) : QPixmap();
         }
     }
     return QVariant();
