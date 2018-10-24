@@ -19,9 +19,7 @@ ProjectWidget::ProjectWidget(Project *project, QWidget *parent) : QTabWidget(par
         closeTab(tab);
     });
 
-    ProjectManager *projectManager = openProjectTab();
-    connect(projectManager, &ProjectManager::apkSaveRequested, this, &ProjectWidget::saveProject);
-    connect(projectManager, &ProjectManager::apkInstallRequested, this, &ProjectWidget::installProject);
+    openProjectTab();
 }
 
 BaseEditor *ProjectWidget::currentTab() const
@@ -116,6 +114,8 @@ ProjectManager *ProjectWidget::openProjectTab()
     ProjectManager *tab = new ProjectManager(project, this);
     tab->setProperty("identifier", identifier);
     connect(tab, &ProjectManager::titleEditorRequested, this, &ProjectWidget::openTitlesTab);
+    connect(tab, &ProjectManager::apkSaveRequested, this, &ProjectWidget::saveProject);
+    connect(tab, &ProjectManager::apkInstallRequested, this, &ProjectWidget::installProject);
     addTab(tab);
     return tab;
 }
