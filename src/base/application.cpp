@@ -405,11 +405,15 @@ bool Application::explore(const QString &path)
 #endif
 }
 
-void Application::removeDirectory(const QString &path)
+void Application::rmdir(const QString &path, bool recursive)
 {
-    QtConcurrent::run([=]() {
-        QDir(path).removeRecursively();
-    });
+    if (!recursive) {
+        QDir().rmdir(path);
+    } else if (!path.isEmpty()) {
+        QtConcurrent::run([=]() {
+            QDir(path).removeRecursively();
+        });
+    }
 }
 
 void Application::visitWebPage() const
