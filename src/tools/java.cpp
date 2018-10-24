@@ -9,7 +9,7 @@ QString Java::version()
     if (!result.success) {
         return QString();
     }
-    QRegularExpression regex("java version \"(.+)\"");
+    QRegularExpression regex("version \"(.+)\"");
     const QString version = regex.match(result.value).captured(1);
     return version;
 }
