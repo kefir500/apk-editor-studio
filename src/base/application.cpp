@@ -228,7 +228,7 @@ QIcon Application::loadIcon(const QString &filename) const
 
 QPixmap Application::loadPixmap(const QString &filename) const
 {
-    return QPixmap(getSharedPath("resources/icons/static/") + filename);
+    return QPixmap(getSharedPath(QString("resources/icons/static/%1").arg(filename)));
 }
 
 bool Application::replaceImage(const QString &targetPath, const QString &sourcePath) const
