@@ -15,7 +15,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 {
     setWindowTitle(tr("About"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(640, 400));
+    resize(app->scale(700, 400));
 
     QTabWidget *tabs = new QTabWidget(this);
     tabs->addTab(createAboutTab(), tr("About"));
