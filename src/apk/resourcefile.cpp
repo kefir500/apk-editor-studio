@@ -5,7 +5,8 @@
 #include <QLocale>
 #include <QRegularExpression>
 
-namespace Qualifiers {
+namespace Qualifiers
+{
     // Read more: https://developer.android.com/guide/topics/resources/providing-resources.html?hl=en
     const QStringList layoutDirection = QStringList() << "ldrtl" << "ldltr";
     const QStringList screenSize = QStringList() << "small" << "normal" << "large" << "xlarge";

@@ -95,10 +95,6 @@ private:
     QAction *actionApkInstall;
     QAction *actionApkClose;
     QAction *actionExit;
-    QAction *actionWebsite;
-    QAction *actionUpdate;
-    QAction *actionDonate;
-    QAction *actionAbout;
     QAction *actionRecentClear;
     QAction *actionRecentNone;
     QAction *actionKeyManager;
@@ -107,7 +103,11 @@ private:
     QAction *actionTitleEditor;
     QAction *actionOptions;
     QAction *actionSettingsReset;
+    QAction *actionWebsite;
+    QAction *actionUpdate;
+    QAction *actionDonate;
     QAction *actionAboutQt;
+    QAction *actionAbout;
     QActionGroup *actionsLanguage;
 
     QByteArray defaultState;
