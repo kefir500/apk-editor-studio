@@ -13,13 +13,13 @@ IconsProxy::IconsProxy(QObject *parent) : QAbstractProxyModel(parent)
     });
 }
 
-void IconsProxy::setSourceModel(QAbstractItemModel *sourceModel)
+void IconsProxy::setSourceModel(ResourcesModel *sourceModel)
 {
     if (this->sourceModel()) {
-        disconnect(this->sourceModel(), &QAbstractItemModel::dataChanged, this, &IconsProxy::sourceDataChanged);
+        disconnect(this->sourceModel(), &ResourcesModel::dataChanged, this, &IconsProxy::sourceDataChanged);
     }
     QAbstractProxyModel::setSourceModel(sourceModel);
-    connect(sourceModel, &QAbstractItemModel::dataChanged, this, &IconsProxy::sourceDataChanged);
+    connect(sourceModel, &ResourcesModel::dataChanged, this, &IconsProxy::sourceDataChanged);
 }
 
 bool IconsProxy::addIcon(const QPersistentModelIndex &index)

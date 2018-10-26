@@ -20,7 +20,7 @@ public:
     bool addIcon(const QPersistentModelIndex &index);
     QString getIconPath(const QModelIndex &index) const;
 
-    void setSourceModel(QAbstractItemModel *sourceModel) Q_DECL_OVERRIDE;
+    void setSourceModel(ResourcesModel *sourceModel);
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     QModelIndex parent(const QModelIndex &child) const Q_DECL_OVERRIDE;
