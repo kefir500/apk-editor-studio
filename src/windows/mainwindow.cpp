@@ -140,7 +140,7 @@ void MainWindow::initMenus()
     actionApkExplore = new QAction(app->loadIcon("explore.png"), QString(), this);
     actionApkExplore->setShortcut(QKeySequence("Ctrl+E"));
     actionApkSave = new QAction(app->loadIcon("pack.png"), QString(), this);
-    actionApkSave->setShortcut(QKeySequence("Ctrl+Shift+S"));
+    actionApkSave->setShortcut(QKeySequence("Ctrl+Alt+S"));
     actionApkInstall = new QAction(app->loadIcon("device.png"), QString(), this);
     actionApkInstall->setShortcut(QKeySequence("Ctrl+I"));
     actionApkClose = new QAction(app->loadIcon("close-project.png"), QString(), this);
@@ -166,7 +166,7 @@ void MainWindow::initMenus()
     actionDeviceManager->setShortcut(QKeySequence("Ctrl+D"));
     actionProjectManager = new QAction(this);
     actionProjectManager->setIcon(app->loadIcon("project.png"));
-    actionProjectManager->setShortcut(QKeySequence("Ctrl+R"));
+    actionProjectManager->setShortcut(QKeySequence("Ctrl+M"));
     actionTitleEditor = new QAction(this);
     actionTitleEditor->setIcon(app->loadIcon("title.png"));
     actionTitleEditor->setShortcut(QKeySequence("Ctrl+T"));
@@ -206,6 +206,7 @@ void MainWindow::initMenus()
     menuResource->getEditAction()->setVisible(false);
     menuResource->getReplaceAction()->setShortcut(QKeySequence("Ctrl+R"));
     menuResource->getSaveAction()->setShortcut(QKeySequence::Save);
+    menuResource->getSaveAsAction()->setShortcut(QKeySequence("Ctrl+Shift+S"));
     menuBar()->addMenu(menuResource);
     menuTools = menuBar()->addMenu(QString());
     menuTools->addAction(actionKeyManager);
