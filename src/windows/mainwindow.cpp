@@ -340,7 +340,7 @@ void MainWindow::retranslate()
     actionApkOpen->setText(tr("&Open APK..."));
     actionApkExplore->setText(tr("Open Con&tents"));
     actionApkSave->setText(tr("Save A&PK..."));
-    actionApkClose->setText(tr("&Close APK..."));
+    actionApkClose->setText(tr("&Close APK"));
     actionApkInstall->setText(tr("&Install APK..."));
     actionExit->setText(tr("E&xit"));
 
