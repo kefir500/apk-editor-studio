@@ -19,7 +19,7 @@ Project::Project(const QString &path)
     originalPath = path;
     manifest = nullptr;
     isUnpacked = false;
-    setState(ProjectNone);
+    setState(ProjectEmpty);
     setErrored(false);
     setModified(false);
     iconsProxy.setSourceModel(&resourcesModel);
@@ -54,7 +54,7 @@ void Project::unpack()
     }, Qt::QueuedConnection);
 
     connect(taskOpen, &Tasks::Task::error, this, [=]() {
-        setState(ProjectNone);
+        setState(ProjectEmpty);
         setErrored(true);
     }, Qt::QueuedConnection);
 
@@ -135,7 +135,7 @@ void Project::install(const QString &serial)
     }, Qt::QueuedConnection);
 
     connect(taskInstall, &Tasks::Install::error, this, [=]() {
-        setState(isUnpacked ? ProjectReady : ProjectNone);
+        setState(isUnpacked ? ProjectReady : ProjectEmpty);
         setErrored(true);
     }, Qt::QueuedConnection);
 
@@ -497,7 +497,7 @@ void Project::setState(State state)
     this->state = state;
 
     switch (state) {
-    case ProjectNone:
+    case ProjectEmpty:
     case ProjectReady:
         logModel.setLoadingState(false);
         break;

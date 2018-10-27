@@ -41,7 +41,7 @@ ProjectManager::ProjectManager(Project *project, QWidget *parent) : QuickTab(par
         emit apkInstallRequested();
     });
 
-    setEnabled(project->getState() != Project::ProjectNone);
+    setEnabled(project->getState() != Project::ProjectEmpty);
     connect(project, &Project::unpacked, this, &ProjectManager::setEnabled, Qt::QueuedConnection);
     connect(project, &Project::dataChanged, this, [=]() {
         setTitle(project->getTitle());

@@ -16,7 +16,7 @@ class Project : public QObject
 
 public:
     enum State {
-        ProjectNone,
+        ProjectEmpty,
         ProjectReady,
         ProjectUnpacking,
         ProjectPacking,

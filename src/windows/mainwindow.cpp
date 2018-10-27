@@ -537,7 +537,7 @@ void MainWindow::setActionsEnabled(const Project *project)
     }
     case Project::ProjectUnpacking:
         actionApkExplore->setEnabled(true);
-    case Project::ProjectNone:
+    case Project::ProjectEmpty:
         actionProjectManager->setEnabled(true);
         if (project->getErroredState()) {
             actionApkClose->setEnabled(true);
