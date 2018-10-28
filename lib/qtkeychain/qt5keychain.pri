@@ -19,26 +19,37 @@ SOURCES += \
     $$QT5KEYCHAIN_PWD/keychain.cpp
 
 unix:!macx:!ios {
-    QT += dbus
-    packagesExist(libsecret-1) {
-        message("Libsecret support: on")
-        CONFIG += link_pkgconfig
-        PKGCONFIG += libsecret-1
-        DEFINES += HAVE_LIBSECRET
+    # Remove the following LIBSECRET_SUPPORT line
+    # to build without libsecret support.
+    DEFINES += LIBSECRET_SUPPORT
+    contains(DEFINES, LIBSECRET_SUPPORT) {
+        packagesExist(libsecret-1) {
+            !build_pass:message("Libsecret support: on")
+            CONFIG += link_pkgconfig
+            PKGCONFIG += libsecret-1
+            DEFINES += HAVE_LIBSECRET
+        } else {
+            !build_pass:warning("Libsecret not found.")
+            !build_pass:message("Libsecret support: off")
+        }
     } else {
-        message("Libsecret support: off")
+        !build_pass:message("Libsecret support: off")
     }
+
+    # Generate D-Bus interface:
+    QT += dbus
+    kwallet_interface.files = $$PWD/org.kde.KWallet.xml
+    DBUS_INTERFACES += kwallet_interface
+
     HEADERS += \
         $$QT5KEYCHAIN_PWD/gnomekeyring_p.h \
         $$QT5KEYCHAIN_PWD/plaintextstore_p.h \
-        $$QT5KEYCHAIN_PWD/libsecret_p.h \
-        $$QT5KEYCHAIN_PWD/kwallet_interface.h
+        $$QT5KEYCHAIN_PWD/libsecret_p.h
     SOURCES += \
         $$QT5KEYCHAIN_PWD/keychain_unix.cpp \
         $$QT5KEYCHAIN_PWD/plaintextstore.cpp \
         $$QT5KEYCHAIN_PWD/gnomekeyring.cpp \
-        $$QT5KEYCHAIN_PWD/libsecret.cpp \
-        $$QT5KEYCHAIN_PWD/kwallet_interface.cpp
+        $$QT5KEYCHAIN_PWD/libsecret.cpp
 }
 
 win32 {
@@ -47,10 +58,10 @@ win32 {
     # instead of the Windows Credential Store.
     DEFINES += USE_CREDENTIAL_STORE
     contains(DEFINES, USE_CREDENTIAL_STORE) {
-        message("Windows Credential Store support: on")
+        !build_pass:message("Windows Credential Store support: on")
         LIBS += -lAdvapi32
     } else {
-        message("Windows Credential Store support: off")
+        !build_pass:message("Windows Credential Store support: off")
         LIBS += -lCrypt32
         HEADERS += $$QT5KEYCHAIN_PWD/plaintextstore_p.h
         SOURCES += $$QT5KEYCHAIN_PWD/plaintextstore.cpp

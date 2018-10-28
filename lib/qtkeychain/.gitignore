@@ -11,9 +11,14 @@ Qt5KeychainConfigVersion.cmake
 QtKeychainBuildTreeSettings.cmake
 QtKeychainConfig.cmake
 QtKeychainConfigVersion.cmake
+kwallet_interface.cpp
+kwallet_interface.h
 kwallet_interface.moc
 moc_keychain.*
 moc_keychain_p.*
+moc_gnomekeyring_p.*
+qkeychain_export.h
+qt_Qt5Keychain.pri
 
 #Qt files
 *_parameters

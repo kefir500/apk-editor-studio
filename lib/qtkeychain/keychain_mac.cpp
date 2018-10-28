@@ -92,6 +92,7 @@ static QKeychain::Error deleteEntryImpl( const QString& service, const QString& 
         return NoError; // No item stored, we're done
     if ( ret1 != noErr ) {
         *err = strForStatus( ret1 );
+        //TODO map error code, set errstr
         return OtherError;
     }
     const Releaser<SecKeychainItemRef> releaser( ref );
@@ -100,6 +101,7 @@ static QKeychain::Error deleteEntryImpl( const QString& service, const QString& 
 
     if ( ret2 == noErr )
         return NoError;
+    //TODO map error code
     *err = strForStatus( ret2 );
     return CouldNotDeleteEntry;
 }
