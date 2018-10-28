@@ -2,15 +2,10 @@
 #include "base/application.h"
 #include "tools/adb.h"
 
-DevicesModel::~DevicesModel()
-{
-    qDeleteAll(devices);
-}
-
 const Device *DevicesModel::get(const QModelIndex &index) const
 {
     if (index.isValid()) {
-        return devices.at(index.row());
+        return devices.at(index.row()).data();
     }
     return nullptr;
 }
@@ -23,10 +18,10 @@ void DevicesModel::refresh()
             devices.clear();
         endRemoveRows();
     }
-    QList<Device *> list = adb.devices();
+    const QList<QSharedPointer<Device> > list = adb.devices();
     if (!list.isEmpty()) {
         beginInsertRows(QModelIndex(), 0, list.size() - 1);
-            foreach (Device *device, list) {
+            foreach (const QSharedPointer<Device> &device, list) {
                 const QString serial = device->getSerial();
                 const QString alias = app->settings->getDeviceAlias(serial);
                 if (!alias.isEmpty()) {
@@ -40,7 +35,7 @@ void DevicesModel::refresh()
 
 void DevicesModel::save()
 {
-    foreach (const Device *device, devices) {
+    foreach (const QSharedPointer<Device> &device, devices) {
         const QString alias = device->getAlias();
         if (!alias.isEmpty()) {
             app->settings->setDeviceAlias(device->getSerial(), alias);
@@ -61,7 +56,7 @@ bool DevicesModel::setData(const QModelIndex &index, const QVariant &value, int 
 QVariant DevicesModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid() && role == Qt::DisplayRole) {
-        const Device *device = devices.at(index.row());
+        auto device = devices.at(index.row());
         switch (index.column()) {
         case DeviceAlias: {
             const QString alias = device->getAlias();
@@ -100,7 +95,7 @@ QModelIndex DevicesModel::index(int row, int column, const QModelIndex &parent) 
 {
     Q_UNUSED(parent);
     if (row >= 0 && row < devices.count()) {
-        return createIndex(row, column, devices.at(row));
+        return createIndex(row, column, devices.at(row).data());
     }
     return QModelIndex();
 }

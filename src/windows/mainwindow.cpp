@@ -562,12 +562,12 @@ void MainWindow::updateWindowForProject(const Project *project)
 void MainWindow::updateRecentMenu()
 {
     menuRecent->clear();
-    QList<RecentFile> recentList = app->recent->all();
-    foreach (const RecentFile &recentEntry, recentList) {
-        QAction *action = new QAction(recentEntry.thumbnail, recentEntry.filename, this);
+    auto recentList = app->recent->all();
+    foreach (const QSharedPointer<RecentFile> &recentEntry, recentList) {
+        QAction *action = new QAction(recentEntry->thumbnail, recentEntry->filename, this);
         menuRecent->addAction(action);
-        connect(action, &QAction::triggered, [&]() {
-            app->openApk(recentEntry.filename);
+        connect(action, &QAction::triggered, [=]() {
+            app->openApk(recentEntry->filename);
         });
     }
     menuRecent->addSeparator();

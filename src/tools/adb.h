@@ -10,7 +10,7 @@ public:
     explicit Adb(const QString &executable, QObject *parent = nullptr);
 
     void install(const QString &apk, const QString &serial = QString());
-    QList<Device *> devices() const; // TODO Potential memory leak
+    QList<QSharedPointer<Device> > devices() const;
     QString version() const;
 };
 

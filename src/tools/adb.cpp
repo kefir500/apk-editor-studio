@@ -1,5 +1,6 @@
 #include "tools/adb.h"
 #include "base/debug.h"
+#include <QSharedPointer>
 #include <QRegularExpression>
 
 Adb::Adb(const QString &executable, QObject *parent) : Executable(executable, parent)
@@ -22,9 +23,9 @@ void Adb::install(const QString &apk, const QString &serial)
     Executable::startAsync(arguments);
 }
 
-QList<Device *> Adb::devices() const
+QList<QSharedPointer<Device> > Adb::devices() const
 {
-    QList<Device *> list;
+    QList<QSharedPointer<Device> > list;
     QStringList arguments;
     arguments << "devices" << "-l";
     Result<QString> result = Executable::startSync(arguments);
@@ -41,7 +42,7 @@ QList<Device *> Adb::devices() const
                 device->setModelString(modelString);
                 device->setDeviceString(deviceString);
                 device->setProductString(productString);
-                list.append(device);
+                list.append(QSharedPointer<Device>(device));
             }
         }
     }

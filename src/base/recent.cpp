@@ -17,7 +17,7 @@ Recent::Recent(const QString &identifier, QObject *parent) : QObject(parent)
     ini.endGroup();
 
     foreach (const QString &file, files) {
-        recent.append(RecentFile(file, thumbnailPath(file)));
+        recent.append(QSharedPointer<RecentFile>(new RecentFile(file, thumbnailPath(file))));
     }
     emit changed();
 }
@@ -36,14 +36,14 @@ bool Recent::add(const QString &filename, const QPixmap &thumbnail)
     // Remove duplicates:
 
     for (int i = 0; i < recent.size(); ++i) {
-        if (recent[i].filename == filename) {
+        if (recent[i]->filename == filename) {
             recent.removeAt(i);
         }
     }
 
     // Create recent entry:
 
-    recent.prepend(RecentFile(filename, thumbnail));
+    recent.prepend(QSharedPointer<RecentFile>(new RecentFile(filename, thumbnail)));
     while (recent.size() > limit) {
         remove(recent.size() - 1);
     }
@@ -58,7 +58,7 @@ bool Recent::remove(int index)
     if (index >= recent.size()) {
         return false;
     }
-    const QString filename = recent[index].filename;
+    const QString filename = recent[index]->filename;
     QFile::remove(thumbnailPath(filename));
     recent.removeAt(index);
     saveToFile();
@@ -82,7 +82,7 @@ void Recent::setLimit(int limit)
     app->settings->setRecentLimit(limit);
 }
 
-const QList<RecentFile> &Recent::all() const
+const QList<QSharedPointer<RecentFile> > &Recent::all() const
 {
     return recent;
 }
@@ -90,8 +90,8 @@ const QList<RecentFile> &Recent::all() const
 QStringList Recent::filenames() const
 {
     QStringList result;
-    foreach (const RecentFile &entry, recent) {
-        result << entry.filename;
+    foreach (const QSharedPointer<RecentFile> &entry, recent) {
+        result << entry->filename;
     }
     return result;
 }
@@ -99,8 +99,8 @@ QStringList Recent::filenames() const
 QList<QPixmap> Recent::thumbnails() const
 {
     QList<QPixmap> result;
-    foreach (const RecentFile &entry, recent) {
-        result << entry.thumbnail;
+    foreach (const QSharedPointer<RecentFile> &entry, recent) {
+        result << entry->thumbnail;
     }
     return result;
 }

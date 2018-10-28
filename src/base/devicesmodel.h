@@ -18,8 +18,6 @@ public:
         ColumnCount
     };
 
-    ~DevicesModel() Q_DECL_OVERRIDE;
-
     const Device *get(const QModelIndex &index) const;
     void refresh();
     void save();
@@ -32,7 +30,7 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
 
 private:
-    QList<Device *> devices;
+    QList<QSharedPointer<Device> > devices;
 };
 
 #endif // DEVICESMODEL_H

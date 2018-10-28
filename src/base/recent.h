@@ -24,7 +24,7 @@ public:
 
     void setLimit(int limit);
 
-    const QList<RecentFile> &all() const;
+    const QList<QSharedPointer<RecentFile> > &all() const;
     QStringList filenames() const;
     QList<QPixmap> thumbnails() const;
 
@@ -36,7 +36,7 @@ private:
     QString thumbnailPath(const QString &filename) const;
     QString hash(const QString &string) const;
 
-    QList<RecentFile> recent;
+    QList<QSharedPointer<RecentFile> > recent;
     QString identifier;
     QString thumbsPath;
     int limit;
