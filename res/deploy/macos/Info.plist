@@ -9,17 +9,17 @@
 	<key>CFBundleName</key>
 	<string>APK Editor Studio</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+	<string>@FULL_VERSION@</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>@FULL_VERSION@</string>
 	<key>CFBundleExecutable</key>
 	<string>apk-editor-studio</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.qminds.apk-editor-studio</string>
+	<string>com.qwertycube.apk-editor-studio</string>
 	<key>CFBundleIconFile</key>
-	<string>application.icns</string>
+	<string>apk-editor-studio.icns</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (C) Alexander Gorishnyak 2014-2018</string>
+	<string>Copyright (C) Alexander Gorishnyak 2018</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -30,7 +30,7 @@
 				<string>apk</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>application.icns</string>
+			<string>apk-editor-studio.icns</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSTypeIsPackage</key>
