@@ -3,6 +3,7 @@
 
 #include "base/device.h"
 #include <QAbstractTableModel>
+#include <QSharedPointer>
 
 class DevicesModel : public QAbstractTableModel
 {
