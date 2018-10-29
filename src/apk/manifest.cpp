@@ -11,8 +11,8 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
         QTextStream stream(xmlFile);
         stream.setCodec("UTF-8");
         xml.setContent(stream.readAll());
-        applicationLabel = getXmlAttribute(QStringList() << "application" << "android:label");
-        applicationIcon = getXmlAttribute(QStringList() << "application" << "android:icon");
+        applicationLabel = getXmlAttribute({"application", "android:label"});
+        applicationIcon = getXmlAttribute({"application", "android:icon"});
 #ifdef QT_DEBUG
         qDebug() << "Parsed app label:   " << applicationLabel.value();
         qDebug() << "Parsed app icon:    " << applicationIcon.value();
@@ -54,7 +54,7 @@ Manifest::~Manifest()
     delete ymlFile;
 }
 
-QDomAttr Manifest::getXmlAttribute(QStringList &tree) const
+QDomAttr Manifest::getXmlAttribute(QStringList tree) const
 {
     if (!tree.isEmpty()) {
         const QString attribute = tree.takeLast();

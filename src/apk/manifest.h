@@ -11,7 +11,7 @@ public:
     Manifest(const QString &xmlPath, const QString &ymlPath);
     ~Manifest();
 
-    QDomAttr getXmlAttribute(QStringList &tree) const;
+    QDomAttr getXmlAttribute(QStringList tree) const;
 
     QString getApplicationLabel() const;
     QString getApplicationIcon() const;

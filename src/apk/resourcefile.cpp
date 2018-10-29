@@ -8,21 +8,21 @@
 namespace Qualifiers
 {
     // Read more: https://developer.android.com/guide/topics/resources/providing-resources.html?hl=en
-    const QStringList layoutDirection = QStringList() << "ldrtl" << "ldltr";
-    const QStringList screenSize = QStringList() << "small" << "normal" << "large" << "xlarge";
-    const QStringList screenAspect = QStringList() << "long" << "notlong";
-    const QStringList roundScreen = QStringList() << "round" << "notround";
-    const QStringList wideColorGamut = QStringList() << "widecg" << "nowidecg";
-    const QStringList hdr = QStringList() << "highdr" << "lowdr";
-    const QStringList screenOrientation = QStringList() << "port" << "land";
-    const QStringList uiMode = QStringList() << "car" << "desk" << "television" << "appliance" << "watch" << "vrheadset";
-    const QStringList nightMode = QStringList() << "night" << "notnight";
-    const QStringList dpi = QStringList() << "ldpi" << "mdpi" << "hdpi" << "xhdpi" << "xxhdpi" << "xxxhdpi" << "nodpi" << "tvdpi" << "anydpi";
-    const QStringList touchscreenType = QStringList() << "notouch" << "finger";
-    const QStringList keyboardAvailability = QStringList() << "keysexposed" << "keyshidden" << "keyssoft";
-    const QStringList inputMethod = QStringList() << "nokeys" << "qwerty" << "12key";
-    const QStringList navigationAvailability = QStringList() << "navexposed" << "navhidden";
-    const QStringList navigationMethod = QStringList() << "nonav" << "dpad" << "trackball" << "wheel";
+    const QStringList layoutDirection = {"ldrtl", "ldltr"};
+    const QStringList screenSize = {"small", "normal", "large", "xlarge"};
+    const QStringList screenAspect = {"long", "notlong"};
+    const QStringList roundScreen = {"round", "notround"};
+    const QStringList wideColorGamut = {"widecg", "nowidecg"};
+    const QStringList hdr = {"highdr", "lowdr"};
+    const QStringList screenOrientation = {"port", "land"};
+    const QStringList uiMode = {"car", "desk", "television", "appliance", "watch", "vrheadset"};
+    const QStringList nightMode = {"night", "notnight"};
+    const QStringList dpi = {"ldpi", "mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi", "nodpi", "tvdpi", "anydpi"};
+    const QStringList touchscreenType = {"notouch", "finger"};
+    const QStringList keyboardAvailability = {"keysexposed", "keyshidden", "keyssoft"};
+    const QStringList inputMethod = {"nokeys", "qwerty", "12key"};
+    const QStringList navigationAvailability = {"navexposed", "navhidden"};
+    const QStringList navigationMethod = {"nonav", "dpad", "trackball", "wheel"};
 }
 
 ResourceFile::ResourceFile(const QString &path)

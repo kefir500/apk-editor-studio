@@ -3,5 +3,5 @@
 
 Result<QString> Which::find(const QString &application) const
 {
-    return startSync(QStringList() << application);
+    return startSync({application});
 }

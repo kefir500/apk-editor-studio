@@ -30,7 +30,7 @@ bool ManifestModel::setData(const QModelIndex &index, const QVariant &value, int
         } else {
             return false;
         }
-        emit dataChanged(index, index, QVector<int>() << role);
+        emit dataChanged(index, index, {role});
         return true;
     }
     return false;

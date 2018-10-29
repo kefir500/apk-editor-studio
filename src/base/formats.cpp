@@ -46,15 +46,12 @@ QStringList Formats::extensionsImages() const
 
 QStringList Formats::extensionsXml() const
 {
-    return QStringList() << "xml"
-                         << "htm"
-                         << "html";
+    return {"xml", "htm", "html"};
 }
 
 QStringList Formats::extensionsYaml() const
 {
-    return QStringList() << "yml"
-                         << "yaml";
+    return {"yml", "yaml"};
 }
 
 QStringList Formats::extensionsCode() const
@@ -66,8 +63,7 @@ QStringList Formats::extensionsCode() const
 
 QStringList Formats::extensionsKeystore() const
 {
-    return QStringList() << "jks"
-                         << "keystore";
+    return {"jks", "keystore"};
 }
 
 QString Formats::filterApk() const

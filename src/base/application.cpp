@@ -178,7 +178,7 @@ QList<Language> Application::getLanguages() const
     languages.append(QString("%1.en.qm").arg(getTitleNoSpaces()));
 
     const QDir directory(getSharedPath("resources/translations/"));
-    QStringList paths = directory.entryList(QStringList() << QString("%1.*.qm").arg(getTitleNoSpaces()));
+    QStringList paths = directory.entryList({QString("%1.*.qm").arg(getTitleNoSpaces())});
     foreach (const QString &path, paths) {
         languages.append(Language(path));
     }
@@ -219,7 +219,7 @@ QSize Application::scale(int width, int height) const
 QIcon Application::loadIcon(const QString &filename) const
 {
     QIcon icon;
-    QDirIterator it(getSharedPath("resources/icons"), QStringList() << filename, QDir::Files, QDirIterator::Subdirectories);
+    QDirIterator it(getSharedPath("resources/icons"), {filename}, QDir::Files, QDirIterator::Subdirectories);
     while (it.hasNext()) {
         icon.addFile(it.next());
     }
