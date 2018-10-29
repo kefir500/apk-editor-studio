@@ -7,7 +7,6 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QLineEdit>
-#include <QFileDialog>
 #include <QDialogButtonBox>
 
 // KeyManager

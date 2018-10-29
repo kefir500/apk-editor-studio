@@ -1,5 +1,6 @@
 #include "widgets/iconlist.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QDragEnterEvent>
 #include <QMimeData>
 
@@ -63,11 +64,11 @@ void IconList::dropEvent(QDropEvent *event)
                 const QModelIndex index = indexAt(event->pos());
                 if (index.isValid()) {
                     const QString iconTarget = model()->index(index.row(), IconsProxy::IconPath).data().toString();
-                    success = app->replaceImage(iconTarget, iconSource);
+                    success = Utils::copyImage(iconSource, iconTarget);
                 } else {
                     for (int row = 0; row < model()->rowCount(); ++row) {
                         const QString iconTarget = model()->index(row, IconsProxy::IconPath).data().toString();
-                        success = app->replaceImage(iconTarget, iconSource);
+                        success = Utils::copyImage(iconSource, iconTarget);
                     }
                 }
                 if (success) {

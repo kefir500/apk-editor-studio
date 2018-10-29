@@ -1,7 +1,6 @@
 #include "widgets/resourcesbaseview.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
-#include <QFileDialog>
 
 QSharedPointer<ResourceMenu> ResourcesBaseView::generateContextMenu(const QPersistentModelIndex &resourceIndex, const QString &resourcePath, QWidget *parent)
 {
@@ -17,19 +16,14 @@ QSharedPointer<ResourceMenu> ResourcesBaseView::generateContextMenu(const QPersi
     });
 
     menu->connect(menu, &ResourceMenu::replaceClicked, [=]() {
-        const bool isImage = app->formats.extensionsImages().contains(QFileInfo(resourcePath).suffix());
-        if (isImage ? Dialogs::replaceImage(resourcePath, menu) : Dialogs::replaceFile(resourcePath, menu)) {
+        if (Dialogs::replaceFile(resourcePath, parent)) {
             auto model = const_cast<QAbstractItemModel *>(resourceIndex.model());
             emit model->dataChanged(resourceIndex, resourceIndex);
         }
     });
 
     menu->connect(menu, &ResourceMenu::saveAsClicked, [=]() {
-        const QString src = resourcePath;
-        const QString dst = QFileDialog::getSaveFileName(parent, QString(), src);
-        if (!dst.isEmpty()) {
-            QFile::copy(src, dst);
-        }
+        Dialogs::copyFile(resourcePath, parent);
     });
 
     menu->connect(menu, &ResourceMenu::exploreClicked, [=]() {

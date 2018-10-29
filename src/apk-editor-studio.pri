@@ -15,6 +15,7 @@ SOURCES += \
     $$PWD/apk/titlenode.cpp \
     $$PWD/base/main.cpp \
     $$PWD/base/application.cpp \
+    $$PWD/base/utils.cpp \
     $$PWD/base/settings.cpp \
     $$PWD/base/recent.cpp \
     $$PWD/base/language.cpp \
@@ -85,6 +86,7 @@ HEADERS += \
     $$PWD/apk/titlesmodel.h \
     $$PWD/apk/titlenode.h \
     $$PWD/base/application.h \
+    $$PWD/base/utils.h \
     $$PWD/base/settings.h \
     $$PWD/base/recent.h \
     $$PWD/base/language.h \

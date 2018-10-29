@@ -1,5 +1,15 @@
 #include "base/formats.h"
 
+bool Formats::isImage(const QString &format) const
+{
+    return extensionsImages().contains(format, Qt::CaseInsensitive);
+}
+
+bool Formats::isCode(const QString &format) const
+{
+    return extensionsCode().contains(format, Qt::CaseInsensitive);
+}
+
 QStringList Formats::extensionsApk() const
 {
     return QStringList() << "apk";

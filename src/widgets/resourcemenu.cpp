@@ -1,7 +1,6 @@
 #include "widgets/resourcemenu.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
-#include <QFileDialog>
 
 ResourceMenu::ResourceMenu(QWidget *parent) : QMenu(parent)
 {

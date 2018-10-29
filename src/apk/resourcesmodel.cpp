@@ -45,7 +45,7 @@ QVariant ResourcesModel::data(const QModelIndex &index, int role) const
                     case NodeCaption: {
                         QFileInfo fileInfo(file->getFilePath());
                         const QString suffix = fileInfo.suffix();
-                        if (app->formats.extensionsImages().contains(suffix, Qt::CaseInsensitive)) {
+                        if (app->formats.isImage(suffix)) {
                             QPixmap thumbnail(file->getFilePath());
                             return thumbnail;
                         } else {

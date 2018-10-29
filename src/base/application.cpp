@@ -231,19 +231,6 @@ QPixmap Application::loadPixmap(const QString &filename) const
     return QPixmap(getSharedPath(QString("resources/icons/static/%1").arg(filename)));
 }
 
-bool Application::replaceImage(const QString &targetPath, const QString &sourcePath) const
-{
-    if (targetPath.isEmpty() || sourcePath.isEmpty() || !QFile::exists(targetPath)) {
-        qWarning() << "Could not replace image: invalid path to file(s).";
-        return false;
-    }
-    if (!formats.extensionsImages().contains(QFileInfo(targetPath).suffix())) {
-        qWarning() << "Could not replace image: target format is not supported.";
-        return false;
-    }
-    return QImage(sourcePath).save(targetPath);
-}
-
 QString Application::getWebPage() const
 {
     return QString("https://kefir500.github.io/%1/").arg(getTitleNoSpaces());

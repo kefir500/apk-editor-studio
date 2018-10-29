@@ -9,6 +9,9 @@ class Formats
     Q_DECLARE_TR_FUNCTIONS(Formats)
 
 public:
+     bool isImage(const QString &format) const;
+     bool isCode(const QString &format) const;
+
     QStringList extensionsApk() const;
 
     QStringList extensionsPng() const;

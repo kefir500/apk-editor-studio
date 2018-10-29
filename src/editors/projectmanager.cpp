@@ -1,6 +1,7 @@
 #include "editors/projectmanager.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QEvent>
 
 ProjectManager::ProjectManager(Project *project, QWidget *parent) : QuickTab(parent)
@@ -21,7 +22,7 @@ ProjectManager::ProjectManager(Project *project, QWidget *parent) : QuickTab(par
         if (!iconSource.isEmpty()) {
             for (int row = 0; row < project->iconsProxy.rowCount(); ++row) {
                 const QString iconTarget = project->iconsProxy.index(row, IconsProxy::IconPath).data().toString();
-                app->replaceImage(iconTarget, iconSource);
+                Utils::copyImage(iconSource, iconTarget);
             }
         }
     });

@@ -52,8 +52,7 @@ bool BaseEditor::commit()
 
 bool BaseEditor::replace()
 {
-    const bool isImage = app->formats.extensionsImages().contains(QFileInfo(filename).suffix());
-    return isImage ? Dialogs::replaceImage(filename, this) : Dialogs::replaceFile(filename, this);
+    return Dialogs::replaceFile(filename, this);
 }
 
 void BaseEditor::explore()

@@ -146,9 +146,9 @@ BaseEditor *ProjectWidget::openResourceTab(const QString &path, const QPixmap &i
 
     BaseEditor *editor = nullptr;
     const QString fileSuffix = QFileInfo(path).suffix();
-    if (app->formats.extensionsCode().contains(fileSuffix, Qt::CaseInsensitive)) {
+    if (app->formats.isCode(fileSuffix)) {
         editor = new CodeEditor(path, icon, this);
-    } else if (app->formats.extensionsImages().contains(fileSuffix, Qt::CaseInsensitive)) {
+    } else if (app->formats.isImage(fileSuffix)) {
         editor = new ImageEditor(path, this);
     } else {
         qDebug() << "No suitable editor found for" << fileSuffix;
