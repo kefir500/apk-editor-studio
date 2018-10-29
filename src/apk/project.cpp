@@ -201,7 +201,6 @@ Manifest *Project::initialize()
             const QStringList allowedIconFiles = QStringList() << (iconFilename + ".png") << (iconFilename + ".jpg") << (iconFilename + ".gif") << (iconFilename + ".xml"); // Read more: https://developer.android.com/guide/topics/resources/drawable-resource.html
             if (categoryTitle == iconCategory && allowedIconFiles.contains(resourceFile)) {
                 qDebug() << "Parsed application icon:" << fileNode->getFile()->getFilePath();
-                thumbnail.addFile(fileNode->getFile()->getFilePath());
                 iconsProxy.addIcon(fileIndex);
             }
         }
@@ -241,14 +240,19 @@ const QString &Project::getContentsPath() const
     return contentsPath;
 }
 
-const QIcon &Project::getThumbnail() const
-{
-    return thumbnail;
-}
-
 const Manifest *Project::getManifest() const
 {
     return manifest;
+}
+
+QIcon Project::getThumbnail() const
+{
+    QIcon thumbnail;
+    const int rows = iconsProxy.rowCount();
+    for (int i = 0; i < rows; ++i) {
+        thumbnail.addPixmap(iconsProxy.index(i, 0).data(Qt::DecorationRole).value<QPixmap>());
+    }
+    return thumbnail;
 }
 
 Project::State Project::getState() const

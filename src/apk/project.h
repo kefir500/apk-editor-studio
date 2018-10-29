@@ -38,8 +38,8 @@ public:
     const QString &getTitle() const;
     const QString &getOriginalPath() const;
     const QString &getContentsPath() const;
-    const QIcon &getThumbnail() const;
     const Manifest *getManifest() const;
+    QIcon getThumbnail() const;
 
     State getState() const;
     bool getErroredState() const;

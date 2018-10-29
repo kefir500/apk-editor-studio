@@ -75,11 +75,7 @@ QVariant ProjectsModel::data(const QModelIndex &index, int role) const
             switch (column) {
                 case ProjectTitle:
                     QPixmap thumbnail = project->getThumbnail().pixmap(app->scale(32, 32));
-                    if (!thumbnail.isNull()) {
-                        return thumbnail;
-                    } else {
-                        return app->loadPixmap("loading.png");
-                    }
+                    return !thumbnail.isNull() ? thumbnail : app->loadPixmap("loading.png");
             }
         } else if (role == ProjectStateRole) {
             return project->getState();
