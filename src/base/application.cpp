@@ -144,7 +144,7 @@ QString Application::getSharedPath(const QString &resource) const
 
 QString Application::getBinaryPath(const QString &executable) const
 {
-#ifndef Q_OS_LINUX
+#ifdef Q_OS_WIN
     QString path = getSharedPath("tools/" + executable);
 #else
     const QString path = getDirectory() + executable;
