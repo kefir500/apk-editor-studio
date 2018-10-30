@@ -329,6 +329,7 @@ void Application::setLanguage(const QString &locale)
     removeTranslator(&translator);
     removeTranslator(&translatorQt);
 
+    QLocale::setDefault(locale);
     const QString path = getSharedPath("resources/translations");
     if (translator.load(QString("%1.%2").arg(getTitleNoSpaces(), locale), path)) {
         translatorQt.load(QString("qt.%1").arg(locale), path);
