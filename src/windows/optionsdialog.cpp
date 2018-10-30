@@ -207,6 +207,9 @@ void OptionsDialog::initialize()
             QMessageBox::warning(this, QString(), tr("Could not register file assocation."));
         }
     });
+#ifndef Q_OS_WIN
+    btnAssociate->hide();
+#endif
     comboLanguages = new QComboBox(this);
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
