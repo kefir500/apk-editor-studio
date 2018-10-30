@@ -4,6 +4,14 @@
 #include <QImageReader>
 #include <QDebug>
 
+QString Utils::capitalize(QString string)
+{
+    if (!string.isEmpty()) {
+        string[0] = string[0].toUpper();
+    }
+    return string;
+}
+
 bool Utils::copyFile(const QString &src, const QString &dst)
 {
     if (src.isEmpty() || dst.isEmpty() || !QFile::exists(src)) {

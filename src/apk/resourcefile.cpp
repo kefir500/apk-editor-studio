@@ -1,5 +1,6 @@
 #include "apk/resourcefile.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include "base/debug.h"
 #include <QFileInfo>
 #include <QLocale>
@@ -131,11 +132,7 @@ QString ResourceFile::getLocaleCode() const
 QString ResourceFile::getLanguageName() const
 {
     QString native = QLocale(localeLegacy).nativeLanguageName();
-    if (native.isEmpty()) {
-        return "";
-    }
-    native[0] = native[0].toUpper();
-    return native;
+    return Utils::capitalize(native);
 }
 
 QPixmap ResourceFile::getLanguageIcon() const

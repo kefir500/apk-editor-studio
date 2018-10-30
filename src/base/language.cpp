@@ -1,16 +1,13 @@
 #include "base/language.h"
 #include "base/application.h"
+#include "base/utils.h"
 
 Language::Language(const QString &path)
 {
     code = path.split('.').at(1);
 
     locale = QLocale(code);
-
-    title = locale.nativeLanguageName();
-    if (!title.isEmpty()) {
-        title[0] = title[0].toUpper();
-    }
+    title = Utils::capitalize(locale.nativeLanguageName());
 
     const QLocale::Language localeLanguage = locale.language();
     const QLocale::Country localeCountry = locale.country();
