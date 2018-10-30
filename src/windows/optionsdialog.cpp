@@ -120,6 +120,8 @@ void OptionsDialog::load()
     }
     listToolbarUnused->addItem(createToolbarSeparatorItem());
     listToolbarUnused->addItem(createToolbarSpacerItem());
+
+    emit loaded();
 }
 
 void OptionsDialog::save()
@@ -159,6 +161,8 @@ void OptionsDialog::save()
         toolbar.append(identifier);
     }
     app->settings->setToolbar(toolbar);
+
+    emit saved();
 }
 
 void OptionsDialog::changeEvent(QEvent *event)

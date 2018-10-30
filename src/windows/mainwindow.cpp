@@ -277,8 +277,10 @@ void MainWindow::initMenus()
     });
     connect(actionOptions, &QAction::triggered, [=]() {
         OptionsDialog settings(this);
+        connect(&settings, &OptionsDialog::saved, [=]() {
+            toolbar->reinitialize();
+        });
         settings.exec();
-        toolbar->reinitialize();
     });
     connect(actionSettingsReset, &QAction::triggered, this, &MainWindow::resetSettings);
     connect(actionWebsite, &QAction::triggered, app, &Application::visitWebPage);

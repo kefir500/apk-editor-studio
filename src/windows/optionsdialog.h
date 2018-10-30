@@ -22,6 +22,10 @@ public:
     void load();
     void save();
 
+signals:
+    void loaded() const;
+    void saved() const;
+
 protected:
     void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
 
