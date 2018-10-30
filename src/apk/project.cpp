@@ -198,7 +198,7 @@ Manifest *Project::initialize()
 
             // Parse application icons:
 
-            const QStringList allowedIconFiles = QStringList() << (iconFilename + ".png") << (iconFilename + ".jpg") << (iconFilename + ".gif") << (iconFilename + ".xml"); // Read more: https://developer.android.com/guide/topics/resources/drawable-resource.html
+            const QStringList allowedIconFiles = {(iconFilename + ".png"), (iconFilename + ".jpg"), (iconFilename + ".gif"), (iconFilename + ".xml")}; // Read more: https://developer.android.com/guide/topics/resources/drawable-resource.html
             if (categoryTitle == iconCategory && allowedIconFiles.contains(resourceFile)) {
                 qDebug() << "Parsed application icon:" << fileNode->getFile()->getFilePath();
                 iconsProxy.addIcon(fileIndex);
