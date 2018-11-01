@@ -9,6 +9,10 @@ namespace Utils
 
     QString capitalize(QString string);
 
+    // Math utils:
+
+    int roundToNearest(int number, QList<int> numbers);
+
     // File utils:
 
     bool copyFile(const QString &src, const QString &dst);

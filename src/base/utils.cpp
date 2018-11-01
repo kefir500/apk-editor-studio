@@ -12,6 +12,37 @@ QString Utils::capitalize(QString string)
     return string;
 }
 
+int Utils::roundToNearest(int number, QList<int> numbers)
+{
+    if (numbers.isEmpty()) {
+        return number;
+    }
+    std::sort(numbers.begin(), numbers.end());
+    const int first = numbers.at(0);
+    const int last = numbers.at(numbers.size() - 1);
+    if (number <= first) {
+        return first;
+    }
+    if (number >= last) {
+        return last;
+    }
+    for (int i = 0; i < numbers.count() - 1; ++i) {
+        const int prev = numbers.at(i);
+        const int next = numbers.at(i + 1);
+        if (number < prev || number > next) {
+            // Number is not in the range; continue loop
+            continue;
+        }
+        const qreal middle = (prev + next) / 2.0;
+        if (number <= middle) {
+            return prev;
+        } else {
+            return next;
+        }
+    }
+    return number;
+}
+
 bool Utils::copyFile(const QString &src, const QString &dst)
 {
     if (src.isEmpty() || dst.isEmpty() || !QFile::exists(src)) {

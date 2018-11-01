@@ -1,11 +1,15 @@
 #include "widgets/toolbar.h"
 #include "widgets/spacer.h"
 #include "base/application.h"
+#include "base/utils.h"
 
 Toolbar::Toolbar(QWidget *parent) : QToolBar(parent)
 {
     setMovable(false);
-    setIconSize(app->scale(30, 30));
+
+    const QList<int> availableSizes = {16, 30, 40}; // Hardcoded icon sizes
+    const int closestSize = Utils::roundToNearest(app->scale(30, 30).width(), availableSizes);
+    setIconSize(QSize(closestSize, closestSize));
 }
 
 void Toolbar::reinitialize()
