@@ -21,7 +21,7 @@ public:
 
     const Device *get(const QModelIndex &index) const;
     void refresh();
-    void save();
+    void save() const;
 
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;

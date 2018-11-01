@@ -33,7 +33,7 @@ void DevicesModel::refresh()
     }
 }
 
-void DevicesModel::save()
+void DevicesModel::save() const
 {
     foreach (const QSharedPointer<Device> &device, devices) {
         const QString alias = device->getAlias();
