@@ -16,7 +16,7 @@ void Toolbar::reinitialize()
 {
     clear();
     QStringList entries = app->settings->getToolbar();
-    foreach (const QString &entry, entries) {
+    for (const QString &entry : entries) {
         if (entry == "separator") {
             addSeparator();
         } else if (entry == "spacer") {

@@ -32,7 +32,7 @@ QList<QSharedPointer<Device> > Adb::devices() const
     if (result.success) {
         QStringList lines = result.value.split('\n');
         lines.removeFirst();
-        foreach (const QString &line, lines) {
+        for (const QString &line : lines) {
             const QString serial = QRegularExpression("^(\\S+)\\s+device(\\s|$)").match(line).captured(1);
             if (!serial.isEmpty()) {
                 const QString modelString = QRegularExpression("\\s+model:(\\S+)(\\s|$)").match(line).captured(1);

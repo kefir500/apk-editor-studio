@@ -48,7 +48,7 @@ void OptionsDialog::load()
     QList<Language> languages = app->getLanguages();
     comboLanguages->clear();
     const QString currentLocale = app->settings->getLanguage();
-    foreach (const Language &language, languages) {
+    for (const Language &language : languages) {
         const QPixmap flag = language.getFlag();
         const QString title = language.getTitle();
         const QString code = language.getCode();
@@ -91,7 +91,7 @@ void OptionsDialog::load()
     listToolbarUsed->clear();
     QMap<QString, QAction *> unusedToolbarActions = app->toolbar;
     QStringList usedToolbarActions = app->settings->getToolbar();
-    foreach (const QString &identifier, usedToolbarActions) {
+    for (const QString &identifier : usedToolbarActions) {
         unusedToolbarActions.remove(identifier);
         if (identifier == "separator") {
             listToolbarUsed->addItem(createToolbarSeparatorItem());

@@ -59,7 +59,7 @@ QDomAttr Manifest::getXmlAttribute(QStringList tree) const
     if (!tree.isEmpty()) {
         const QString attribute = tree.takeLast();
         QDomElement node = xml.firstChildElement("manifest");
-        foreach (const QString &element, tree) {
+        for (const QString &element : tree) {
             node = node.firstChildElement(element);
         }
         return node.attributeNode(attribute);

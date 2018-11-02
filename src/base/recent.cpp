@@ -16,7 +16,7 @@ Recent::Recent(const QString &identifier, QObject *parent) : QObject(parent)
     QStringList files = ini.value(identifier).toStringList();
     ini.endGroup();
 
-    foreach (const QString &file, files) {
+    for (const QString &file : files) {
         recent.append(QSharedPointer<RecentFile>(new RecentFile(file, thumbnailPath(file))));
     }
     emit changed();
@@ -90,7 +90,7 @@ const QList<QSharedPointer<RecentFile> > &Recent::all() const
 QStringList Recent::filenames() const
 {
     QStringList result;
-    foreach (const QSharedPointer<RecentFile> &entry, recent) {
+    for (const QSharedPointer<RecentFile> &entry : recent) {
         result << entry->filename;
     }
     return result;
@@ -99,7 +99,7 @@ QStringList Recent::filenames() const
 QList<QPixmap> Recent::thumbnails() const
 {
     QList<QPixmap> result;
-    foreach (const QSharedPointer<RecentFile> &entry, recent) {
+    for (const QSharedPointer<RecentFile> &entry : recent) {
         result << entry->thumbnail;
     }
     return result;

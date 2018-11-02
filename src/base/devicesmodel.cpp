@@ -21,7 +21,7 @@ void DevicesModel::refresh()
     const QList<QSharedPointer<Device> > list = adb.devices();
     if (!list.isEmpty()) {
         beginInsertRows(QModelIndex(), 0, list.size() - 1);
-            foreach (const QSharedPointer<Device> &device, list) {
+            for (const QSharedPointer<Device> &device : list) {
                 const QString serial = device->getSerial();
                 const QString alias = app->settings->getDeviceAlias(serial);
                 if (!alias.isEmpty()) {
@@ -35,7 +35,7 @@ void DevicesModel::refresh()
 
 void DevicesModel::save() const
 {
-    foreach (const QSharedPointer<Device> &device, devices) {
+    for (const QSharedPointer<Device> &device : devices) {
         const QString alias = device->getAlias();
         if (!alias.isEmpty()) {
             app->settings->setDeviceAlias(device->getSerial(), alias);

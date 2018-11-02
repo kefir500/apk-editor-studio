@@ -71,7 +71,7 @@ void TitlesModel::add(const QString &filepath, const QString &key)
 
 bool TitlesModel::save() const
 {
-    foreach (TitleNode *title, nodes) {
+    for (const TitleNode *title : nodes) {
         title->save();
     }
     return true;

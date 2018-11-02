@@ -69,7 +69,7 @@ int Application::exec()
     QStringList args = arguments();
     if (args.size() > 1) {
         args.removeFirst();
-        foreach (const QString &arg, args) {
+        for (const QString &arg : args) {
             openApk(arg);
         }
     }
@@ -179,7 +179,7 @@ QList<Language> Application::getLanguages() const
 
     const QDir directory(getSharedPath("resources/translations/"));
     QStringList paths = directory.entryList({QString("%1.*.qm").arg(getTitleNoSpaces())});
-    foreach (const QString &path, paths) {
+    for (const QString &path : paths) {
         languages.append(Language(path));
     }
 
@@ -312,7 +312,7 @@ bool Application::installExternalApk()
     if (!device) {
         return false;
     }
-    foreach (const QString &path, paths) {
+    for (const QString &path : paths) {
         Project *project = openApk(path, false);
         project->install(device->getSerial());
     }

@@ -302,7 +302,7 @@ void MainWindow::initLanguages()
 
     actionsLanguage = new QActionGroup(this);
     actionsLanguage->setExclusive(true);
-    foreach (const Language &language, languages) {
+    for (const Language &language : languages) {
         const QString localeTitle = language.getTitle();
         const QString localeCode = language.getCode();
         const QPixmap localeFlag = language.getFlag();
@@ -565,7 +565,7 @@ void MainWindow::updateRecentMenu()
 {
     menuRecent->clear();
     auto recentList = app->recent->all();
-    foreach (const QSharedPointer<RecentFile> &recentEntry, recentList) {
+    for (const QSharedPointer<RecentFile> &recentEntry : recentList) {
         QAction *action = new QAction(recentEntry->thumbnail, recentEntry->filename, this);
         menuRecent->addAction(action);
         connect(action, &QAction::triggered, [=]() {
@@ -594,7 +594,7 @@ void MainWindow::changeEvent(QEvent *event)
         const QString currentLocale = app->settings->getLanguage();
         QIcon flag(app->getLocaleFlag(currentLocale));
         menuLanguage->setIcon(flag);
-        foreach (QAction *action, actionsLanguage->actions()) {
+        for (QAction *action : actionsLanguage->actions()) {
             if (action->property("locale") == currentLocale) {
                 action->setChecked(true);
                 break;
@@ -623,7 +623,7 @@ void MainWindow::dropEvent(QDropEvent *event)
     const QMimeData *mimeData = event->mimeData();
     if (mimeData->hasUrls()) {
         QList<QUrl> urls = mimeData->urls();
-        foreach (const QUrl &url, urls) {
+        for (const QUrl &url : urls) {
             const QString file = url.toLocalFile();
             const QMimeType mime = QMimeDatabase().mimeTypeForFile(file);
             if (mime.inherits("application/zip")) {
@@ -638,7 +638,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     bool unsaved = false;
     QList<ProjectWidget *> tabs = projectWidgets.values();
-    foreach (ProjectWidget *tab, tabs) {
+    for (const ProjectWidget *tab : tabs) {
         if (tab->hasUnsavedProject()) {
             setCurrentProject(tab->getProject());
             unsaved = true;
