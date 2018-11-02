@@ -1,6 +1,5 @@
 #include "apk/resourcesmodel.h"
-#include "base/application.h"
-#include "base/debug.h"
+#include "base/utils.h"
 #include <QFileIconProvider>
 
 ResourcesModel::ResourcesModel(QObject *parent) : QAbstractItemModel(parent)
@@ -43,13 +42,12 @@ QVariant ResourcesModel::data(const QModelIndex &index, int role) const
             } else if (role == Qt::DecorationRole) {
                 switch (column) {
                     case NodeCaption: {
-                        QFileInfo fileInfo(file->getFilePath());
-                        const QString suffix = fileInfo.suffix();
-                        if (app->formats.isImage(suffix)) {
-                            QPixmap thumbnail(file->getFilePath());
+                        const QString filePath = file->getFilePath();
+                        if (Utils::isImageReadable(filePath)) {
+                            QPixmap thumbnail(filePath);
                             return thumbnail;
                         } else {
-                            return QFileIconProvider().icon(fileInfo);
+                            return QFileIconProvider().icon(QFileInfo(filePath));
                         }
                         break;
                     }

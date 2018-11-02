@@ -1,8 +1,8 @@
 #include "editors/baseeditor.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QMessageBox>
-#include <QFileDialog>
 
 BaseEditor::BaseEditor(const QString &filename, const QPixmap &icon, QWidget *parent) : QWidget(parent)
 {
@@ -23,14 +23,15 @@ BaseEditor::BaseEditor(const QString &filename, const QPixmap &icon, QWidget *pa
 
 bool BaseEditor::saveAs()
 {
-    if (this->filename.isEmpty()) {
-        return false;
-    }
-    const QString filename = QFileDialog::getSaveFileName(this, QString(), this->filename, filter());
     if (filename.isEmpty()) {
         return false;
     }
-    return save(filename);
+    const bool isImage = Utils::isImageReadable(filename);
+    const QString destination = isImage ? Dialogs::getSaveImageFilename(this, filename) : Dialogs::getSaveFilename(this, filename);
+    if (destination.isEmpty()) {
+        return false;
+    }
+    return save(destination);
 }
 
 bool BaseEditor::commit()

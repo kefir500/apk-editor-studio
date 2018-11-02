@@ -1,7 +1,7 @@
 #include "base/utils.h"
 #include <QFileInfo>
-#include <QImageWriter>
 #include <QImageReader>
+#include <QImageWriter>
 #include <QDebug>
 
 QString Utils::capitalize(QString string)
@@ -65,11 +65,23 @@ bool Utils::copyImage(const QString &src, const QString &dst)
     if (sameFormats) {
         return copyFile(src, dst);
     }
-    const bool isSrcReadableImage = QImageReader::supportedImageFormats().contains(srcSuffix.toLocal8Bit());
-    const bool isDstWritableImage = QImageWriter::supportedImageFormats().contains(dstSuffix.toLocal8Bit());
+    const bool isSrcReadableImage = isImageReadable(src);
+    const bool isDstWritableImage = isImageWritable(dst);
     if (isSrcReadableImage && isDstWritableImage) {
         return QImage(src).save(dst);
     }
     qWarning() << "Could not replace image: format not supported.";
     return false;
+}
+
+bool Utils::isImageReadable(const QString &path)
+{
+    const QString extension = QFileInfo(path).suffix();
+    return QImageReader::supportedImageFormats().contains(extension.toLocal8Bit());
+}
+
+bool Utils::isImageWritable(const QString &path)
+{
+    const QString extension = QFileInfo(path).suffix();
+    return QImageWriter::supportedImageFormats().contains(extension.toLocal8Bit());
 }
