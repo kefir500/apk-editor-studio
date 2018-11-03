@@ -1,4 +1,5 @@
 #include "base/fileformatlist.h"
+#include <QByteArrayList>
 #include <QMimeDatabase>
 #include <QImageReader>
 #include <QImageWriter>
