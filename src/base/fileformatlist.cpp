@@ -1,5 +1,4 @@
 #include "base/fileformatlist.h"
-#include <QByteArrayList>
 #include <QMimeDatabase>
 #include <QImageReader>
 #include <QImageWriter>
@@ -23,7 +22,7 @@ FileFormatList FileFormatList::forKeystore()
 FileFormatList FileFormatList::forReadableImages()
 {
     FileFormatList filter;
-    QByteArrayList mimeList = QImageReader::supportedMimeTypes();
+    QList<QByteArray> mimeList = QImageReader::supportedMimeTypes();
     QMimeDatabase database;
     for (const QByteArray &entry : mimeList) {
         const QMimeType mimeType = database.mimeTypeForName(entry);
