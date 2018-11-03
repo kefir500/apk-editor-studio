@@ -2,6 +2,7 @@
 #define FILEFORMAT_H
 
 #include <QMimeType>
+#include <QStringList>
 
 class FileFormat
 {
