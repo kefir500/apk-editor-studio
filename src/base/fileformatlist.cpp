@@ -34,7 +34,7 @@ FileFormatList FileFormatList::forReadableImages()
 FileFormatList FileFormatList::forWritableImages()
 {
     FileFormatList filter;
-    QByteArrayList mimeList = QImageWriter::supportedMimeTypes();
+    QList<QByteArray> mimeList = QImageWriter::supportedMimeTypes();
     QMimeDatabase database;
     for (const QByteArray &entry : mimeList) {
         const QMimeType mimeType = database.mimeTypeForName(entry);
