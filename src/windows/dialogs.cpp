@@ -7,59 +7,76 @@
 #include <QDialogButtonBox>
 #include <QPlainTextEdit>
 
-QString Dialogs::getOpenFilename(QWidget *parent, const QString &defaultPath, bool filterExtension)
+namespace
 {
-    const QString caption = app->translate("Dialogs", "Open File");
-    const QString filter = !filterExtension ? app->formats.filterAllFiles() : app->formats.filterExtension(QFileInfo(defaultPath).suffix());
-    const QString path = defaultPath.isEmpty() ? app->settings->getLastDirectory() : defaultPath;
-    return QFileDialog::getOpenFileName(parent, caption, path, filter);
+    QString makePath(const QString &path)
+    {
+        return (!path.isEmpty() ? path : app->settings->getLastDirectory());
 }
 
-QString Dialogs::getSaveFilename(QWidget *parent, const QString &defaultPath, bool filterExtension)
+    QString makeFilter(const QString &path, const FileFormatList &formats)
 {
-    const QString caption = app->translate("Dialogs", "Save File");
-    const QString filter = !filterExtension ? app->formats.filterAllFiles() : app->formats.filterExtension(QFileInfo(defaultPath).suffix());
-    const QString path = defaultPath.isEmpty() ? app->settings->getLastDirectory() : defaultPath;
-    return QFileDialog::getSaveFileName(parent, caption, path, filter);
+        return (formats.isEmpty() ? FileFormatList({FileFormat::fromFilename(path)}) : formats).getFilterString();
+}
 }
 
-QStringList Dialogs::getOpenFilenames(QWidget *parent, const QString &defaultPath, bool filterExtension)
+QString Dialogs::getOpenFilename(QWidget *parent, const QString &defaultPath, const FileFormatList &formats)
 {
-    const QString caption = app->translate("Dialogs", "Open Files");
-    const QString filter = !filterExtension ? app->formats.filterAllFiles() : app->formats.filterExtension(QFileInfo(defaultPath).suffix());
-    const QString path = defaultPath.isEmpty() ? app->settings->getLastDirectory() : defaultPath;
-    return QFileDialog::getOpenFileNames(parent, caption, path, filter);
+    const QString path = makePath(defaultPath);
+    const QString filter = makeFilter(defaultPath, formats);
+    return QFileDialog::getOpenFileName(parent, QString(), path, filter);
 }
 
-QString Dialogs::getOpenDirectory(QWidget *parent, const QString &defaultPath)
+QString Dialogs::getSaveFilename(QWidget *parent, const QString &defaultPath, const FileFormatList &formats)
 {
-    const QString caption = QString();
-    const QString path = defaultPath.isEmpty() ? app->settings->getLastDirectory() : defaultPath;
-    return QFileDialog::getExistingDirectory(parent, caption, path);
+    const QString path = makePath(defaultPath);
+    const QString filter = makeFilter(defaultPath, formats);
+    return QFileDialog::getSaveFileName(parent, QString(), path, filter);
+}
+
+QStringList Dialogs::getOpenFilenames(QWidget *parent, const QString &defaultPath, const FileFormatList &formats)
+{
+    const QString path = makePath(defaultPath);
+    const QString filter = makeFilter(defaultPath, formats);
+    return QFileDialog::getOpenFileNames(parent, QString(), path, filter);
 }
 
 QString Dialogs::getOpenImageFilename(QWidget *parent, const QString &defaultPath)
 {
-    const QString caption = app->translate("Dialogs", "Open Image");
-    const QString filter = app->formats.filterImages();
-    const QString path = defaultPath.isEmpty() ? app->settings->getLastDirectory() : defaultPath;
-    return QFileDialog::getOpenFileName(parent, caption, path, filter);
+    return Dialogs::getOpenFilename(parent, defaultPath, FileFormatList::forReadableImages());
 }
 
 QString Dialogs::getSaveImageFilename(QWidget *parent, const QString &defaultPath)
 {
-    const QString caption = app->translate("Dialogs", "Save Image");
-    const QString filter = app->formats.filterImages();
-    const QString path = defaultPath.isEmpty() ? app->settings->getLastDirectory() : defaultPath;
-    return QFileDialog::getSaveFileName(parent, caption, path, filter);
+    return Dialogs::getSaveFilename(parent, defaultPath, FileFormatList::forWritableImages());
 }
 
 QStringList Dialogs::getOpenImageFilenames(QWidget *parent, const QString &defaultPath)
 {
-    const QString caption = app->translate("Dialogs", "Open Images");
-    const QString filter = app->formats.filterImages();
-    const QString path = defaultPath.isEmpty() ? app->settings->getLastDirectory() : defaultPath;
-    return QFileDialog::getOpenFileNames(parent, caption, path, filter);
+    return Dialogs::getOpenFilenames(parent, defaultPath, FileFormatList::forReadableImages());
+}
+
+QStringList Dialogs::getOpenApkFilenames(QWidget *parent, const QString &defaultPath)
+{
+    return Dialogs::getOpenFilenames(parent, defaultPath, FileFormatList::forApk());
+}
+
+QString Dialogs::getSaveApkFilename(const Project *project, QWidget *parent, const QString &defaultPath)
+{
+    const QString directory = makePath(defaultPath);
+    const QString filename = QFileInfo(project->getOriginalPath()).fileName();
+    const QString path = QString("%1/%2").arg(directory, filename);
+    return Dialogs::getSaveFilename(parent, path, FileFormatList::forApk());
+}
+
+QString Dialogs::getOpenKeystoreFilename(QWidget *parent, const QString &defaultPath)
+{
+    return Dialogs::getOpenFilename(parent, defaultPath, FileFormatList::forKeystore());
+}
+
+QString Dialogs::getSaveKeystoreFilename(QWidget *parent, const QString &defaultPath)
+{
+    return Dialogs::getSaveFilename(parent, defaultPath, FileFormatList::forKeystore());
 }
 
 bool Dialogs::openApk(QWidget *parent, const QString &defaultPath)
@@ -68,44 +85,16 @@ bool Dialogs::openApk(QWidget *parent, const QString &defaultPath)
     if (paths.isEmpty()) {
         return false;
     }
-    foreach (const QString &path, paths) {
+    for (const QString &path : paths) {
         app->openApk(path);
     }
     return true;
 }
 
-QStringList Dialogs::getOpenApkFilenames(QWidget *parent, const QString &defaultPath)
+QString Dialogs::getOpenDirectory(QWidget *parent, const QString &defaultPath)
 {
-    const QString caption = app->translate("Dialogs", "Open APK");
-    const QString filter = app->formats.filterApk();
-    const QString path = defaultPath.isEmpty() ? app->settings->getLastDirectory() : defaultPath;
-    return QFileDialog::getOpenFileNames(parent, caption, path, filter);
-}
-
-QString Dialogs::getSaveApkFilename(const Project *project, QWidget *parent, const QString &defaultPath)
-{
-    const QString caption = app->translate("Dialogs", "Save APK");
-    const QString filter = app->formats.filterApk();
-    const QString directory = defaultPath.isEmpty() ? app->settings->getLastDirectory() : defaultPath;
-    const QString filename = QFileInfo(project->getOriginalPath()).fileName();
-    const QString path = QString("%1/%2").arg(directory, filename);
-    return QFileDialog::getSaveFileName(parent, caption, path, filter);
-}
-
-QString Dialogs::getOpenKeystoreFilename(QWidget *parent, const QString &defaultPath)
-{
-    const QString caption = app->translate("Dialogs", "Open Keystore");
-    const QString filter = app->formats.filterKeystore();
-    const QString path = defaultPath.isEmpty() ? app->settings->getLastDirectory() : defaultPath;
-    return QFileDialog::getOpenFileName(parent, caption, path, filter);
-}
-
-QString Dialogs::getSaveKeystoreFilename(QWidget *parent, const QString &defaultPath)
-{
-    const QString caption = app->translate("Dialogs", "Save Keystore");
-    const QString filter = app->formats.filterKeystore();
-    const QString path = defaultPath.isEmpty() ? app->settings->getLastDirectory() : defaultPath;
-    return QFileDialog::getSaveFileName(parent, caption, path, filter);
+    const QString path = makePath(defaultPath);
+    return QFileDialog::getExistingDirectory(parent, QString(), path);
 }
 
 QString Dialogs::combo(const QStringList &options, QWidget *parent)

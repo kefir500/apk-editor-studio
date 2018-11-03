@@ -63,8 +63,9 @@ public:
 
     void setHighlight(bool value);
 
+    static QStringList supportedFormats();
+
 protected:
-    QString filter() Q_DECL_OVERRIDE;
     void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
     void dragLeaveEvent(QDragLeaveEvent *event) Q_DECL_OVERRIDE;
     void dropEvent(QDropEvent *event) Q_DECL_OVERRIDE;

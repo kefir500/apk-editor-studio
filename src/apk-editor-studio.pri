@@ -17,12 +17,13 @@ SOURCES += \
     $$PWD/base/application.cpp \
     $$PWD/base/utils.cpp \
     $$PWD/base/settings.cpp \
+    $$PWD/base/fileformat.cpp \
+    $$PWD/base/fileformatlist.cpp \
     $$PWD/base/recent.cpp \
     $$PWD/base/language.cpp \
     $$PWD/base/tasks.cpp \
     $$PWD/base/xmlhighlighter.cpp \
     $$PWD/base/yamlhighlighter.cpp \
-    $$PWD/base/formats.cpp \
     $$PWD/base/updater.cpp \
     $$PWD/base/password.cpp \
     $$PWD/base/device.cpp \
@@ -88,12 +89,13 @@ HEADERS += \
     $$PWD/base/application.h \
     $$PWD/base/utils.h \
     $$PWD/base/settings.h \
+    $$PWD/base/fileformat.h \
+    $$PWD/base/fileformatlist.h \
     $$PWD/base/recent.h \
     $$PWD/base/language.h \
     $$PWD/base/tasks.h \
     $$PWD/base/xmlhighlighter.h \
     $$PWD/base/yamlhighlighter.h \
-    $$PWD/base/formats.h \
     $$PWD/base/updater.h \
     $$PWD/base/password.h \
     $$PWD/base/result.h \

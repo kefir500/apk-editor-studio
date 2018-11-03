@@ -2,7 +2,6 @@
 #define APPLICATION_H
 
 #include "apk/projectsmodel.h"
-#include "base/formats.h"
 #include "base/language.h"
 #include "base/recent.h"
 #include "base/settings.h"
@@ -86,7 +85,6 @@ public:
 
     MainWindow *window;
     ProjectsModel projects;
-    Formats formats;
     Settings *settings; // TODO Check on macOS: See https://github.com/kefir500/apk-icon-editor/commit/6ac051d
     Recent *recent;
     QMap<QString, QAction *> toolbar;

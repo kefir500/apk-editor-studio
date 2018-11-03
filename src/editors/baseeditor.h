@@ -25,6 +25,8 @@ public:
     const QString &getTitle() const;
     const QIcon &getIcon() const;
 
+    static QStringList supportedFormats();
+
 signals:
     void savedStateChanged(bool saved) const;
     void titleChanged(const QString &title) const;
@@ -32,7 +34,6 @@ signals:
 
 protected:
     void setModified(bool value);
-    virtual QString filter();
 
     QString filename;
     QString title;

@@ -81,15 +81,13 @@ const QIcon &BaseEditor::getIcon() const
     return icon;
 }
 
+QStringList BaseEditor::supportedFormats()
+{
+    return QStringList();
+}
+
 void BaseEditor::setModified(bool value)
 {
     modified = value;
     emit savedStateChanged(!value);
-}
-
-QString BaseEditor::filter()
-{
-    const QString suffix = QFileInfo(filename).suffix();
-    const QString filters = app->formats.filterExtension(suffix);
-    return filters;
 }

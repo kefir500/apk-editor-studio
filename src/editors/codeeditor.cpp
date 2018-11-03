@@ -1,5 +1,6 @@
 #include "editors/codeeditor.h"
 #include "base/application.h"
+#include "base/fileformatlist.h"
 #include "base/yamlhighlighter.h"
 #include "base/xmlhighlighter.h"
 #include <QBoxLayout>
@@ -21,9 +22,9 @@ CodeEditor::CodeEditor(const QString &filename, const QPixmap &icon, QWidget *pa
     editor->setTabStopWidth(4 * QFontMetrics(font).width(' '));
 
     const QString suffix = QFileInfo(filename).suffix().toLower();
-    if (app->formats.extensionsXml().contains(suffix)) {
+    if (FileFormat::fromExtension("xml").hasExtension(suffix) || FileFormat::fromExtension("html").hasExtension(suffix)) {
         syntax = new XmlHighlighter(editor->document());
-    } else if (app->formats.extensionsYaml().contains(suffix)) {
+    } else if (FileFormat::fromExtension("yml").getExtensions().contains(suffix)) {
         syntax = new YamlHighlighter(editor->document());
     }
 
@@ -80,4 +81,13 @@ bool CodeEditor::save(const QString &as)
         delete file;
     }
     return result;
+}
+
+QStringList CodeEditor::supportedFormats()
+{
+    FileFormatList filter;
+    filter.add(FileFormat::fromExtension("xml"));
+    filter.add(FileFormat::fromExtension("html"));
+    filter.add(FileFormat::fromExtension("yml"));
+    return filter.getExtensions();
 }

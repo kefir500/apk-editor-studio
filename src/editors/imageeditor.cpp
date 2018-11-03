@@ -1,5 +1,6 @@
 #include "editors/imageeditor.h"
 #include "base/application.h"
+#include "base/fileformatlist.h"
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsColorizeEffect>
@@ -88,9 +89,9 @@ void ImageEditor::setHighlight(bool value)
     view->setHighlight(value);
 }
 
-QString ImageEditor::filter()
+QStringList ImageEditor::supportedFormats()
 {
-    return app->formats.filterImages();
+    return FileFormatList::forReadableImages().getExtensions();
 }
 
 void ImageEditor::setSizeInfo(int width, int height)
