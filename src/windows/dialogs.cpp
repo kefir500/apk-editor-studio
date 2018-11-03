@@ -16,7 +16,7 @@ namespace
 
     QString makeFilter(const QString &path, const FileFormatList &formats)
 {
-        return (formats.isEmpty() ? FileFormatList({FileFormat::fromFilename(path)}) : formats).getFilterString();
+        return (formats.isEmpty() ? FileFormatList(FileFormat::fromFilename(path)) : formats).getFilterString();
 }
 }
 
