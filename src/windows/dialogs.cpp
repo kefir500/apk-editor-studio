@@ -1,7 +1,6 @@
 #include "windows/dialogs.h"
 #include "base/application.h"
 #include "base/utils.h"
-#include "base/debug.h"
 #include <QFileDialog>
 #include <QBoxLayout>
 #include <QDialogButtonBox>
@@ -12,12 +11,12 @@ namespace
     QString makePath(const QString &path)
     {
         return (!path.isEmpty() ? path : app->settings->getLastDirectory());
-}
+    }
 
     QString makeFilter(const QString &path, const FileFormatList &formats)
-{
+    {
         return (formats.isEmpty() ? FileFormatList(FileFormat::fromFilename(path)) : formats).getFilterString();
-}
+    }
 }
 
 QString Dialogs::getOpenFilename(QWidget *parent, const QString &defaultPath, const FileFormatList &formats)

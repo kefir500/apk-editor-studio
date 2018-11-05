@@ -13,7 +13,6 @@
 #include <QHeaderView>
 #include <QMenuBar>
 #include <QDockWidget>
-#include <QFileInfo>
 #include <QDirIterator>
 #include <QMimeData>
 #include <QMimeDatabase>
