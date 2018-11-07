@@ -231,6 +231,7 @@ void OptionsDialog::initialize()
     pageRepack->addRow(tr("Extraction path:"), fileboxOutput);
     pageRepack->addRow(tr("Frameworks path:"), fileboxFrameworks);
     pageRepack->addRow(checkboxSources);
+    pageRepack->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
     tr("Java path:"); // TODO For future usage
 
     // Signing
@@ -251,6 +252,7 @@ void OptionsDialog::initialize()
     //: "Apksigner" is the name of the tool, don't translate it.
     layoutSign->addRow(tr("Apksigner path:"), fileboxApksigner);
     layoutSign->addRow(btnKeyManager);
+    layoutSign->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
     pageSign->addWidget(groupSign);
 
     // Optimizing
@@ -262,6 +264,7 @@ void OptionsDialog::initialize()
     QFormLayout *layoutZipalign = new QFormLayout(groupZipalign);
     //: "Zipalign" is the name of the tool, don't translate it.
     layoutZipalign->addRow(tr("Zipalign path:"), fileboxZipalign);
+    layoutZipalign->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
     pageZipalign->addWidget(groupZipalign);
 
     // Installing
@@ -279,6 +282,7 @@ void OptionsDialog::initialize()
     //: "ADB" is the name of the tool, don't translate it.
     pageInstall->addRow(tr("ADB path:"), fileboxAdb);
     pageInstall->addRow(btnDeviceManager);
+    pageInstall->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
     // Toolbar
 

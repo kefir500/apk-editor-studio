@@ -46,6 +46,7 @@ KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
     customKeystoreLayout->addRow(tr("Key alias:"), layoutKeyAlias);
     customKeystoreLayout->addWidget(btnCreateKey);
     customKeystoreLayout->addRow(tr("Key password:"), editKeyPassword);
+    customKeystoreLayout->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(groupKeystore);
@@ -312,6 +313,7 @@ bool KeyCreator::validateFields()
 QFormLayout *KeyCreator::createKeyLayout()
 {
     QFormLayout *layout = new QFormLayout;
+    layout->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
     editAlias = new QLineEdit(this);
     editKeyPassword = new QLineEdit(this);
