@@ -21,7 +21,7 @@ void ProjectDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     QStyleOptionViewItem itemOption = option;
     initStyleOption(&itemOption, index);
     QRect textRect = itemOption.rect;
-    textRect.setLeft(option.decorationSize.width() + 8);
+    textRect.setLeft(itemOption.decorationSize.width() + 8);
     textRect.setWidth(itemOption.rect.width() - iconReady.width() - 8 * 2);
     const QString text = painter->fontMetrics().elidedText(itemOption.text, Qt::ElideMiddle, textRect.width());
     itemOption.text.clear();
