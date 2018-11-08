@@ -40,6 +40,7 @@ public:
 
     QString getDirectory() const;
     QString getTemporaryPath() const;
+    QString getOutputPath() const;
     QString getLocalConfigPath(QString subdirectory = QString()) const;
     QString getSharedPath(const QString &resource = QString()) const;
     QString getBinaryPath(const QString &executable) const;
