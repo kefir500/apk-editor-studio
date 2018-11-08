@@ -66,7 +66,7 @@ void OptionsDialog::load()
     fileboxOutput->setCurrentPath(app->settings->getOutputDirectory());
     fileboxOutput->setDefaultPath(app->getOutputPath());
     fileboxFrameworks->setCurrentPath(app->settings->getFrameworksDirectory());
-    fileboxFrameworks->setDefaultPath(app->getFrameworksPath());
+    fileboxFrameworks->setDefaultPath(app->getLocalConfigPath("frameworks"));
     checkboxSources->setChecked(app->settings->getDecompileSources());
 
     // Signing

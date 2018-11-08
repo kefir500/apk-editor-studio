@@ -53,7 +53,7 @@ QString Settings::getOutputDirectory()
 QString Settings::getFrameworksDirectory()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("Apktool/Frameworks", app->getFrameworksPath()).toString();
+    return settings->value("Apktool/Frameworks", app->getLocalConfigPath("frameworks")).toString();
 }
 
 bool Settings::getSignApk()

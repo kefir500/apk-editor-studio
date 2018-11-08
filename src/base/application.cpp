@@ -117,11 +117,6 @@ QString Application::getOutputPath() const
     return QString("%1/apk").arg(getTemporaryPath());
 }
 
-QString Application::getFrameworksPath() const
-{
-    return QString("%1/frameworks").arg(getTemporaryPath());
-}
-
 QString Application::getLocalConfigPath(QString subdirectory) const
 {
 #ifndef PORTABLE
