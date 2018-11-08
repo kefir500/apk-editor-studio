@@ -57,6 +57,9 @@ int Application::exec()
     settings = new Settings();
     recent = new Recent("apk");
 
+    QDir().mkpath(settings->getOutputDirectory());
+    QDir().mkpath(settings->getFrameworksDirectory());
+
     setLanguage(settings->getLanguage());
 
     MainWindow mainwindow;

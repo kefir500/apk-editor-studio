@@ -27,6 +27,8 @@ bool Settings::reset(QWidget *parent)
         apktool.reset();
         settings->clear();
         app->recent->clear();
+        QDir().mkpath(getOutputDirectory());
+        QDir().mkpath(getFrameworksDirectory());
         Password passwordKeystore("keystore");
         Password passwordKey("key");
         passwordKeystore.remove();
