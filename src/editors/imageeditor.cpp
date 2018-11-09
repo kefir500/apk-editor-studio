@@ -65,11 +65,10 @@ bool ImageEditor::load()
 void ImageEditor::setImage(const QPixmap &image)
 {
     scene->clear();
-    view->resetTransform();
+    view->zoomReset();
     pixmapItem = scene->addPixmap(image);
     pixmapItem->setTransformationMode(Qt::SmoothTransformation);
     setSizeInfo(image.size());
-    zoomGroup->setZoomInfo(1);
 }
 
 bool ImageEditor::save(const QString &as)
@@ -172,7 +171,7 @@ void ZoomGroup::setZoomInfo(qreal factor)
 
 // GraphicsView
 
-GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
+GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent), zoomDelta(1.25)
 {
     zoomFactor = 1.0;
     zoomDelta = 1.25;
@@ -180,6 +179,7 @@ GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
     setDragMode(QGraphicsView::ScrollHandDrag);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setHighlight(false);
+    zoomReset();
 }
 
 void GraphicsView::zoomIn()
@@ -202,6 +202,7 @@ void GraphicsView::zoomOut()
 
 void GraphicsView::zoomReset()
 {
+    zoomFactor = 1.0;
     resetTransform();
     emit zoomed(1);
 }
