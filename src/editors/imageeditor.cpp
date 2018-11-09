@@ -173,8 +173,6 @@ void ZoomGroup::setZoomInfo(qreal factor)
 
 GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent), zoomDelta(1.25)
 {
-    zoomFactor = 1.0;
-    zoomDelta = 1.25;
     setAcceptDrops(false);
     setDragMode(QGraphicsView::ScrollHandDrag);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
