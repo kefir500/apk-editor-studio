@@ -13,7 +13,7 @@
 #include <QScreen>
 #include <QtConcurrent/QtConcurrent>
 
-Application::Application(int &argc, char **argv) : QApplication(argc, argv)
+Application::Application(int &argc, char **argv) : QtSingleApplication(argc, argv)
 {
     qsrand(QDateTime::currentMSecsSinceEpoch());
 
@@ -35,15 +35,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 #ifdef Q_OS_LINUX
     setWindowIcon(loadIcon("application.png"));
 #endif
-
-#ifndef Q_OS_OSX
-    const qreal dpi = this->primaryScreen()->logicalDotsPerInch();
-    scaleFactor = dpi / 100.0;
-#else
-    scaleFactor = 1;
-#endif
-
-    QPixmapCache::setCacheLimit(1024 * 100); // 100 MiB
 }
 
 Application::~Application()
@@ -54,8 +45,20 @@ Application::~Application()
 
 int Application::exec()
 {
+#ifndef Q_OS_OSX
+    const qreal dpi = this->primaryScreen()->logicalDotsPerInch();
+    scaleFactor = dpi / 100.0;
+#else
+    scaleFactor = 1;
+#endif
+
+    QPixmapCache::setCacheLimit(1024 * 100); // 100 MiB
+
     settings = new Settings();
     recent = new Recent("apk");
+
+    Apktool apktool(getSharedPath("tools/apktool.jar"));
+    apktool.reset();
 
     QDir().mkpath(settings->getOutputDirectory());
     QDir().mkpath(settings->getFrameworksDirectory());
@@ -65,9 +68,7 @@ int Application::exec()
     MainWindow mainwindow;
     mainwindow.show();
     window = &mainwindow;
-
-    Apktool apktool(getSharedPath("tools/apktool.jar"));
-    apktool.reset();
+    setActivationWindow(window);
 
     QStringList args = arguments();
     if (args.size() > 1) {
@@ -76,6 +77,15 @@ int Application::exec()
             openApk(arg);
         }
     }
+
+    connect(this, &Application::messageReceived, [this](const QString &message) {
+        if (!message.isEmpty()) {
+            const QStringList paths = message.split('\n');
+            for (const QString &path : paths) {
+                openApk(path);
+            }
+        }
+    });
 
     return QApplication::exec();
 }
@@ -395,7 +405,6 @@ bool Application::explore(const QString &path)
     QProcess::execute(QLatin1String("/usr/bin/osascript"), arguments);
     return true;
 #else
-    // TODO Check on Linux
     return QDesktopServices::openUrl(QUrl::fromLocalFile(fileInfo.absolutePath()));
 #endif
 }
