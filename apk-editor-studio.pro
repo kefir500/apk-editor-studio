@@ -17,6 +17,7 @@ DEFINES += VERSION=\\\"$$VERSION\\\"
 
 include($$PWD/src/apk-editor-studio.pri)
 include($$PWD/lib/qtkeychain/qt5keychain.pri)
+include($$PWD/lib/qtsingleapplication/src/qtsingleapplication.pri)
 include($$PWD/deploy.pri)
 
 TRANSLATIONS = $$PWD/res/translations/apk-editor-studio.en.ts
