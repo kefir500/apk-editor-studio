@@ -7,11 +7,11 @@
 #include "base/settings.h"
 #include "base/updater.h"
 #include "windows/mainwindow.h"
-#include <QApplication>
+#include <QtSingleApplication>
 #include <QTranslator>
 #include <QMessageBox>
 
-class Application : public QApplication
+class Application : public QtSingleApplication
 {
     Q_OBJECT
 
