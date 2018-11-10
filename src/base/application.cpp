@@ -9,7 +9,7 @@
 #include <QDesktopServices>
 #include <QFileOpenEvent>
 #include <QPixmapCache>
-#include <QMovie>
+#include <QPainter>
 #include <QScreen>
 #include <QtConcurrent/QtConcurrent>
 
@@ -164,7 +164,16 @@ QPixmap Application::getLocaleFlag(const QLocale &locale) const
     const QLocale::Country localeCountry = locale.country();
     const QStringList localeSegments = QLocale(localeLanguage, localeCountry).name().split('_');
     if (localeSegments.count() > 1) {
-        return QPixmap(QString(getSharedPath("resources/flags/%1.png")).arg(localeSegments.at(1).toLower()));
+        QPixmap flag(QString(getSharedPath("resources/flags/%1.png")).arg(localeSegments.at(1).toLower()));
+        const int flagWidth = flag.width();
+        const int flagHeight = flag.height();
+        const int longSide = qMax(flagWidth, flagHeight);
+        QPixmap result(longSide, longSide);
+        result.fill(Qt::transparent);
+        QPainter painter(&result);
+        painter.translate((longSide - flagWidth) / 2.0, (longSide - flagHeight) / 2.0);
+        painter.drawPixmap(0, 0, flag);
+        return result;
     } else {
         return QPixmap();
     }
