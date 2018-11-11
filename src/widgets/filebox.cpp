@@ -15,6 +15,7 @@ FileBox::FileBox(const QString &currentPath, const QString &defaultPath, bool is
     btnOpen = new QToolButton(this);
 
     this->isDirectory = isDirectory;
+    setCurrentPath(currentPath);
     setDefaultPath(defaultPath);
 
     QHBoxLayout *layout = new QHBoxLayout(this);
@@ -22,8 +23,6 @@ FileBox::FileBox(const QString &currentPath, const QString &defaultPath, bool is
     layout->addWidget(btnReset);
     layout->addWidget(btnOpen);
     layout->setContentsMargins(0, 0, 0, 0);
-
-    input->setText(currentPath);
 
     connect(btnOpen, &QToolButton::clicked, this, &FileBox::openPath);
     connect(btnReset, &QToolButton::clicked, this, &FileBox::resetPath);
@@ -41,12 +40,14 @@ QString FileBox::getCurrentPath() const
 void FileBox::setCurrentPath(const QString &path)
 {
     input->setText(path);
+    input->setToolTip(path);
 }
 
 void FileBox::setDefaultPath(const QString &path)
 {
     defaultPath = path;
     btnReset->setVisible(!path.isEmpty());
+    btnReset->setToolTip(path);
 }
 
 void FileBox::openPath()
@@ -54,7 +55,7 @@ void FileBox::openPath()
     const QString oldPath = input->text();
     const QString newPath = isDirectory ? Dialogs::getOpenDirectory(this, oldPath) : Dialogs::getOpenFilename(this, oldPath);
     if (!newPath.isEmpty()) {
-        input->setText(newPath);
+        setCurrentPath(newPath);
     }
 }
 
@@ -73,7 +74,7 @@ void FileBox::checkPath()
 
 void FileBox::resetPath()
 {
-    input->setText(defaultPath);
+    setCurrentPath(defaultPath);
 }
 
 void FileBox::retranslate()
