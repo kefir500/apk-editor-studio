@@ -81,13 +81,13 @@ void ButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         QStyleOptionButton button;
         button.text = "@";
         button.rect = buttonRect(option.rect);
-        button.state = QStyle::State_Enabled | buttonState;
+        button.state = QStyle::State_Enabled | QStyle::State_On | buttonState;
         // Paint base:
         QStyleOptionViewItem base = option;
         base.rect.setWidth(base.rect.width() - button.rect.width());
         QStyledItemDelegate::paint(painter, base, index);
         // Paint button:
-        QApplication::style()->drawControl(QStyle::CE_PushButton, &button, painter);
+        app->style()->drawControl(QStyle::CE_PushButton, &button, painter);
     } else {
         QStyledItemDelegate::paint(painter, option, index);
     }
