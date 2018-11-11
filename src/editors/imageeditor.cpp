@@ -19,7 +19,6 @@ ImageEditor::ImageEditor(const QString &filename, QWidget *parent) : BaseEditor(
 
     scene = new QGraphicsScene(this);
     view = new GraphicsView(this);
-    view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     view->setScene(scene);
 
     zoomGroup = new ZoomGroup(this);
@@ -66,6 +65,7 @@ void ImageEditor::setImage(const QPixmap &image)
 {
     scene->clear();
     view->zoomReset();
+    view->setSceneRect(0, 0, image.width(), image.height());
     pixmapItem = scene->addPixmap(image);
     pixmapItem->setTransformationMode(Qt::SmoothTransformation);
     setSizeInfo(image.size());
@@ -176,6 +176,7 @@ GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent), zoomDelta(1
     setAcceptDrops(false);
     setDragMode(QGraphicsView::ScrollHandDrag);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setHighlight(false);
     zoomReset();
 }
