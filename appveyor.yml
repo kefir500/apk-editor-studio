@@ -1,5 +1,5 @@
 install:
-  - set PATH=C:\Qt\5.11.1\msvc2015\bin;%PATH%
+  - set PATH=C:\Qt\5.11\msvc2015\bin;%PATH%
   - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
 
 build_script:
@@ -14,7 +14,7 @@ artifacts:
 
 after_build:
   - cd scripts\win32
-  - set QTDIR=C:\Qt\5.11.1\msvc2015
+  - set QTDIR=C:\Qt\5.11\msvc2015
   - set OPENSSL=C:\OpenSSL-Win32\bin
   - set VCREDIST=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT
   - set WIXDIR=C:\Program Files (x86)\WiX Toolset v3.11\bin
