@@ -6,7 +6,7 @@
 #include "windows/optionsdialog.h"
 #include "windows/waitdialog.h"
 #include "widgets/logdelegate.h"
-#include "widgets/projectdelegate.h"
+#include "widgets/projectlistitemdelegate.h"
 #include "base/application.h"
 #include "base/debug.h"
 #include <QBoxLayout>
