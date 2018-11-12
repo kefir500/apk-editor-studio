@@ -58,7 +58,7 @@ SOURCES += \
     $$PWD/widgets/buttondelegate.cpp \
     $$PWD/widgets/logview.cpp \
     $$PWD/widgets/manifestview.cpp \
-    $$PWD/widgets/projectdelegate.cpp \
+    $$PWD/widgets/projectlistitemdelegate.cpp \
     $$PWD/widgets/poollistwidget.cpp \
     $$PWD/widgets/projectwidget.cpp \
     $$PWD/widgets/resourcesbaseview.cpp \
@@ -135,7 +135,7 @@ HEADERS += \
     $$PWD/widgets/buttondelegate.h \
     $$PWD/widgets/logview.h \
     $$PWD/widgets/manifestview.h \
-    $$PWD/widgets/projectdelegate.h \
+    $$PWD/widgets/projectlistitemdelegate.h \
     $$PWD/widgets/poollistwidget.h \
     $$PWD/widgets/projectwidget.h \
     $$PWD/widgets/resourcesbaseview.h \

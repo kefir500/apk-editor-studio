@@ -59,13 +59,16 @@ void MainWindow::initWidgets()
     QVBoxLayout *projectsLayout = new QVBoxLayout(dockProjectsWidget);
     projectsList = new QComboBox(this);
     projectsList->setModel(&app->projects);
-#ifndef Q_OS_OSX
-    projectsList->setMinimumHeight(app->scale(42));
+#if defined(Q_OS_WIN)
+    projectsList->setMinimumHeight(app->scale(40));
     projectsList->setIconSize(app->scale(32, 32));
-#else
+#elif defined(Q_OS_OSX)
     projectsList->setIconSize(app->scale(16, 16));
+#else
+    projectsList->setMinimumHeight(app->scale(46));
+    projectsList->setIconSize(app->scale(32, 32));
 #endif
-    projectsList->setItemDelegate(new ProjectDelegate(this));
+    projectsList->setItemDelegate(new ProjectListItemDelegate(this));
     logView = new LogView(this);
     logView->setItemDelegate(new LogDelegate(this));
     projectsLayout->addWidget(projectsList);

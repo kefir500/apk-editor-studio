@@ -3,20 +3,20 @@
 
 #include <QStyledItemDelegate>
 
-class ProjectDelegate : public QStyledItemDelegate
+class ProjectListItemDelegate : public QStyledItemDelegate
 {
 public:
-    explicit ProjectDelegate(QObject *parent = nullptr);
+    explicit ProjectListItemDelegate(QObject *parent = nullptr);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
 
 private:
-    QPixmap iconReady;
-    QPixmap iconUnpacking;
-    QPixmap iconPacking;
-    QPixmap iconInstalling;
-    QPixmap iconError;
+    QIcon iconReady;
+    QIcon iconUnpacking;
+    QIcon iconPacking;
+    QIcon iconInstalling;
+    QIcon iconError;
 };
 
 #endif // PROJECTDELEGATE_H
