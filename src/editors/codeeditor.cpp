@@ -17,7 +17,11 @@ CodeEditor::CodeEditor(const QString &filename, const QPixmap &icon, QWidget *pa
     editor = new QPlainTextEdit(this);
     editor->setLineWrapMode(QPlainTextEdit::NoWrap);
     QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+#ifndef Q_OS_OSX
     font.setPointSize(10);
+#else
+    font.setPointSize(12);
+#endif
     editor->setFont(font);
     editor->setTabStopWidth(4 * QFontMetrics(font).width(' '));
 

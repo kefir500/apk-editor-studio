@@ -30,7 +30,11 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QLabel *title = new QLabel(app->getTitleAndVersion(), this);
     QFont titleFont = title->font();
+#ifndef Q_OS_OSX
     titleFont.setPointSize(11);
+#else
+    titleFont.setPointSize(16);
+#endif
     titleFont.setBold(true);
     title->setFont(titleFont);
     title->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);

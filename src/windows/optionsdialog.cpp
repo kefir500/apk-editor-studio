@@ -24,7 +24,11 @@ void OptionsDialog::addPage(const QString &title, QLayout *page, bool stretch)
     titleLine->setFrameShape(QFrame::HLine);
     titleLine->setFrameShadow(QFrame::Sunken);
     QFont titleFont = titleLabel->font();
+#ifndef Q_OS_OSX
     titleFont.setPointSize(13);
+#else
+    titleFont.setPointSize(17);
+#endif
     titleLabel->setFont(titleFont);
     containerLayout->addWidget(titleLabel);
     containerLayout->addWidget(titleLine);

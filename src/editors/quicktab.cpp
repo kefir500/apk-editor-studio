@@ -2,11 +2,20 @@
 #include "base/application.h"
 #include <QPainter>
 #include <QPaintEvent>
+#include <QFontDatabase>
 
 QuickTab::QuickTab(QWidget *parent) : BaseEditor(QString(), QPixmap(), parent)
 {
     label = new QLabel(this);
+#if defined(Q_OS_WIN)
     label->setFont(QFont("Segoe UI", 14));
+#elif defined(Q_OS_OSX)
+    label->setFont(QFont(".SF NS Text", 18));
+#else
+    QFont font = QFontDatabase::systemFont(QFontDatabase::TitleFont);
+    font.setPointSize(14);
+    label->setFont(font);
+#endif
     label->setAlignment(Qt::AlignCenter);
     label->setStyleSheet("margin-bottom: 6px;");
 
