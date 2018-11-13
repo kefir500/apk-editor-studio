@@ -16,7 +16,7 @@ Project::Project(const QString &path)
 {
     QFileInfo fileInfo(path);
     title = fileInfo.fileName();
-    originalPath = path;
+    originalPath = QDir::toNativeSeparators(fileInfo.canonicalFilePath());
     manifest = nullptr;
     isUnpacked = false;
     setState(ProjectEmpty);
@@ -291,7 +291,7 @@ Tasks::Task *Project::createUnpackTask(const QString &source)
     QString target;
     do {
         const QString uuid = QUuid::createUuid().toString();
-        target = QString("%1/%2").arg(app->settings->getOutputDirectory(), uuid);
+        target = QDir::toNativeSeparators(QString("%1/%2").arg(app->settings->getOutputDirectory(), uuid));
     } while (target.isEmpty() || QDir(target).exists());
     const QString frameworks = app->settings->getFrameworksDirectory();
     const bool resources = true;
@@ -375,7 +375,7 @@ Tasks::Task *Project::createSaveTask(const QString &target) // Combines Pack, Zi
 
 Tasks::Task *Project::createPackTask(const QString &target)
 {
-    const QString source = getContentsPath();
+    const QString source = QDir::toNativeSeparators(getContentsPath());
     const QString frameworks = app->settings->getFrameworksDirectory();
     const bool resources = true;
     const bool sources = !app->settings->getDecompileSources();
