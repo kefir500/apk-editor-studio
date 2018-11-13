@@ -487,6 +487,11 @@
               <File Source="$(env.QTDIR)\plugins\platforms\qwindows.dll" />
             </Component>
           </Directory>
+          <Directory Id="StylesFolder" Name="styles">
+            <Component Id="StylesComponent" Guid="10940243-0FF5-4977-AF38-30BE68F867E1">
+              <File Source="$(env.QTDIR)\plugins\styles\qwindowsvistastyle.dll" />
+            </Component>
+          </Directory>
         </Directory>
       </Directory>
     </Directory>
@@ -525,9 +530,10 @@
     </ComponentGroup>
     <ComponentGroup Id="DllComponents">
       <ComponentRef Id="QtComponent" />
-      <ComponentRef Id="PlatformsComponent" />
-      <ComponentRef Id="ImageFormatsComponent" />
       <ComponentRef Id="SslComponent" />
+      <ComponentRef Id="ImageFormatsComponent" />
+      <ComponentRef Id="PlatformsComponent" />
+      <ComponentRef Id="StylesComponent" />
     </ComponentGroup>
     <ComponentGroup Id="InstallerComponents">
       <ComponentRef Id="UninstallComponent" />

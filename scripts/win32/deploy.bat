@@ -11,6 +11,7 @@ xcopy /y "%QTDIR%\plugins\imageformats\qgif.dll" ..\..\bin\win32\imageformats\
 xcopy /y "%QTDIR%\plugins\imageformats\qico.dll" ..\..\bin\win32\imageformats\
 xcopy /y "%QTDIR%\plugins\imageformats\qjpeg.dll" ..\..\bin\win32\imageformats\
 xcopy /y "%QTDIR%\plugins\platforms\qwindows.dll" ..\..\bin\win32\platforms\
+xcopy /y "%QTDIR%\plugins\styles\qwindowsvistastyle.dll" ..\..\bin\win32\styles\
 
 rem Deploy Visual C++ Redistributable
 
