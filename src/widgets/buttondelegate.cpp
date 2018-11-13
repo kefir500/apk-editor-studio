@@ -81,7 +81,7 @@ void ButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         QStyleOptionButton button;
         button.text = "@";
         button.rect = buttonRect(option.rect);
-        button.state = QStyle::State_Enabled | QStyle::State_On | buttonState;
+        button.state = QStyle::State_Enabled | QStyle::State_Raised | buttonState;
         // Paint base:
         QStyleOptionViewItem base = option;
         base.rect.setWidth(base.rect.width() - button.rect.width());
