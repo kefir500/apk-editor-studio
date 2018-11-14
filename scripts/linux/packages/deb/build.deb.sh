@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 
 export DEBEMAIL="kefir500@gmail.com"
 export DEBFULLNAME="Alexander Gorishnyak"
-if [ -z "$VERSION" ]; then VERSION=$(cat ../../../../VERSION); fi
+VERSION=$(cat ../../../../VERSION)
 
 clean() {
     rm -rf apk-editor-studio-$VERSION 2> /dev/null

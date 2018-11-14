@@ -7,7 +7,7 @@ matrix:
     env: QMAKE_FLAGS="QMAKE_CXXFLAGS+=-Wno-inconsistent-missing-override"
 
 install:
-  - sudo apt-get install qt5-default libsecret-1-dev
+  - sudo apt-get install qt5-default libsecret-1-dev dh-make devscripts
 
 script:
   - qmake "QMAKE_CXX=$CXX" "QMAKE_CC=$CC" $QMAKE_FLAGS
@@ -16,13 +16,19 @@ script:
 before_deploy:
   - export VERSION=dev
   - export TRAVIS_TAG=development
-  - scripts/linux/packages/tar.xz/build.tar.xz.sh
+  - cd scripts/linux/packages
+  - tar.xz/build.tar.xz.sh
+  - deb/build.deb.sh
+  - mv deb/apk-editor-studio_*.deb deb/apk-editor-studio_linux_dev.deb
+  - cd -
 
 deploy:
   provider: releases
   api_key:
     secure: "WtUyLKiBPfQsGQo5Mg/SfdyPoUhsrx0bMMNOw21PO2I8GYeMrwq/SiWjS9kDdUaQ1rZ2EHq25nAiX5Ndcw3Am6ivrHvKpu9nbCeTZ+d5GQ9d2YjE3yHushpGbVZ5z1yy9dg4QBEN55Vo4OLTe5HsaYFW1QKIebHUCA3l0O7u/h8wdM3qtiNdb0I1RTsqvdARtZiUpY0843k1Mni4j2RIzrepEpZsv42/rcsomJ+8A/DoMss+AIv1eySyxD3uZuKVFpUEofCNOhU0ZR3B4MQlf6gtc290H4fOJpjYnEACI+ZM9XlLX2AououJbTSsDuJo1w7e/Pw6hNIp+7qEyS5zkGHrqVfP3LldMtPCf8EJymSUlIo1XeSjXAkJ8RHcHASP5u2N85mO0MibFPwB0zQwxReh1OYGM4aDF83LtKYJsDHjV8vv1EjpRcKOxfI0YBD9VaTjvY/ReYFKdTtN+hKh6pGF+1dRsWts9nId+r16ItiLCUE8k/97a2VCBpygDs7JhvuHperlD2dixnqw9YYZZ204hUVZPF+mImx3zEJXmkXsunmX174G1nEMQnAWHK+SVRX2MAE0PEJeuBlAPWVPZDmv08CV+e1qHvboFlEw5WrYqJcKfC1gyqyKipAer+6zH7Ke9iCsnqL9zRlpnXgIbXubgCLMOyLa5FXHb2RgkpE="
-  file: "scripts/linux/packages/tar.xz/apk-editor-studio_linux_dev.tar.xz"
+  file:
+    - "scripts/linux/packages/tar.xz/apk-editor-studio_linux_dev.tar.xz"
+    - "scripts/linux/packages/deb/apk-editor-studio_linux_dev.deb"
   name: Developer Build
   draft: false
   prerelease: true
