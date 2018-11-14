@@ -6,8 +6,8 @@ if /i not "%VERSION%"=="dev" (
     set FOLDER="APK Editor Studio - Dev"
 )
 
-del apk-editor-studio_win32_%VERSION%.zip
-rmdir /s /q %FOLDER%
+if exist apk-editor-studio_win32_%VERSION%.zip del apk-editor-studio_win32_%VERSION%.zip
+if exist %FOLDER% rmdir /s /q %FOLDER%
 
 xcopy /s ..\..\..\bin\win32 %FOLDER%\
 
