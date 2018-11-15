@@ -66,7 +66,6 @@ void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     // Draw base control:
 
     const QStyle *style = option.widget ? option.widget->style() : app->style();
-    qDebug() << style;
     style->drawControl(QStyle::CE_ItemViewItem, &itemOption, painter);
 
     // Draw text:

@@ -1,5 +1,6 @@
 #include "apk/iconsproxy.h"
 #include "base/application.h"
+#include <QDebug>
 
 IconsProxy::IconsProxy(QObject *parent) : QAbstractProxyModel(parent)
 {

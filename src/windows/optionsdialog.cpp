@@ -8,6 +8,10 @@
 #include <QAbstractButton>
 #include <QDialogButtonBox>
 
+#ifdef QT_DEBUG
+    #include <QDebug>
+#endif
+
 OptionsDialog::OptionsDialog(QWidget *parent) : QDialog(parent)
 {
     widget = nullptr;

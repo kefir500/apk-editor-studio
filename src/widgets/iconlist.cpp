@@ -4,6 +4,10 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 
+#ifdef QT_DEBUG
+    #include <QDebug>
+#endif
+
 IconList::IconList(QWidget *parent) : QListView(parent)
 {
     setAcceptDrops(true);

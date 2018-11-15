@@ -8,7 +8,6 @@
 #include "widgets/logdelegate.h"
 #include "widgets/projectlistitemdelegate.h"
 #include "base/application.h"
-#include "base/debug.h"
 #include <QBoxLayout>
 #include <QHeaderView>
 #include <QMenuBar>
@@ -16,8 +15,7 @@
 #include <QDirIterator>
 #include <QMimeData>
 #include <QMimeDatabase>
-
-// TODO Add SVG support
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {

@@ -2,6 +2,8 @@
 #include "base/debug.h"
 #include <QFile>
 #include <QDirIterator>
+#include <QTextStream>
+#include <QDebug>
 
 TitlesModel::TitlesModel(const Project *apk, QObject *parent) : QAbstractTableModel(parent)
 {

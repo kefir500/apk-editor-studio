@@ -2,7 +2,6 @@
 #define RECENT_H
 
 #include <QPixmap>
-#include <QDebug>
 
 struct RecentFile
 {

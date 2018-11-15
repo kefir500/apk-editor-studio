@@ -7,6 +7,7 @@
 #include "base/application.h"
 #include <QModelIndex>
 #include <QFileInfo>
+#include <QDebug>
 
 ProjectWidget::ProjectWidget(Project *project, QWidget *parent) : QTabWidget(parent)
 {

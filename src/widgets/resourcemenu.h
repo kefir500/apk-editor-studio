@@ -2,8 +2,6 @@
 #define RESOURCEMENU_H
 
 #include <QMenu>
-#include <QAbstractItemView>
-#include <QDebug>
 
 class ResourceMenu : public QMenu
 {

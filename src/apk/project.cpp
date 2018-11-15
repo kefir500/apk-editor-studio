@@ -7,10 +7,10 @@
 #include "tools/adb.h"
 #include "windows/dialogs.h"
 #include "windows/keymanager.h"
-#include <QThreadPool>
 #include <QUuid>
 #include <QDirIterator>
 #include <QInputDialog>
+#include <QDebug>
 
 Project::Project(const QString &path)
 {

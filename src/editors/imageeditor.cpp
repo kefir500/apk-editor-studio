@@ -9,6 +9,10 @@
 #include <QFormLayout>
 #include <QToolButton>
 
+#ifdef QT_DEBUG
+    #include <QDebug>
+#endif
+
 // ImageEditor
 
 ImageEditor::ImageEditor(const QString &filename, QWidget *parent) : BaseEditor(filename, QPixmap(), parent)

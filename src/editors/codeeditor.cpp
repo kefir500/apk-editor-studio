@@ -6,6 +6,7 @@
 #include <QBoxLayout>
 #include <QFileIconProvider>
 #include <QTextStream>
+#include <QDebug>
 
 CodeEditor::CodeEditor(const QString &filename, const QPixmap &icon, QWidget *parent) : BaseEditor(filename, icon, parent)
 {

@@ -1,6 +1,5 @@
 #include "tools/jar.h"
 #include <QStringList>
-#include <QDebug>
 
 Jar::Jar(const QString &jar, QObject *parent) : Java(parent)
 {

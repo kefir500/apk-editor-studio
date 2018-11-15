@@ -7,7 +7,6 @@
 #include "apk/logmodel.h"
 #include "base/tasks.h"
 #include <QIcon>
-#include <QFuture>
 #include <QFileSystemModel>
 
 class Project : public QObject
@@ -50,9 +49,9 @@ public:
     void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
 
     ResourcesModel resourcesModel;
-    ManifestModel manifestModel;
     QFileSystemModel filesystemModel;
     IconsProxy iconsProxy;
+    ManifestModel manifestModel;
     LogModel logModel;
 
 signals:

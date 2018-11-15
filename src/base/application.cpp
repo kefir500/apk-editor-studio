@@ -1,9 +1,7 @@
 #include "base/application.h"
 #undef app
 #include "base/debug.h"
-#include "tools/adb.h"
 #include "tools/apktool.h"
-#include "tools/java.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
 #include <QDesktopServices>
