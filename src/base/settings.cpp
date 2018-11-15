@@ -1,6 +1,5 @@
 #include "base/settings.h"
 #include "base/application.h"
-#include "base/debug.h"
 #include "base/password.h"
 #include "tools/apktool.h"
 #include <QMessageBox>

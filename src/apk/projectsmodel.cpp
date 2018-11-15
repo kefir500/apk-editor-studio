@@ -1,6 +1,5 @@
 #include "apk/projectsmodel.h"
 #include "base/application.h"
-#include "base/debug.h"
 
 ProjectsModel::~ProjectsModel()
 {

@@ -1,5 +1,4 @@
 #include "apk/manifestmodel.h"
-#include "base/debug.h"
 
 ManifestModel::ManifestModel(QObject *parent) : QAbstractListModel(parent)
 {

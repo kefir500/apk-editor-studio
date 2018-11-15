@@ -1,5 +1,4 @@
 #include "tools/zipalign.h"
-#include "base/debug.h"
 #include <QFile>
 #include <QStringList>
 

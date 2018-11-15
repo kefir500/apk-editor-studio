@@ -1,6 +1,5 @@
 #include "widgets/logdelegate.h"
 #include "base/application.h"
-#include "base/debug.h"
 #include <QPainter>
 
 LogDelegate::LogDelegate(QObject *parent) : QStyledItemDelegate(parent)

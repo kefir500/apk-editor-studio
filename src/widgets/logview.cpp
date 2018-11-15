@@ -1,6 +1,5 @@
 #include "widgets/logview.h"
 #include "base/application.h"
-#include "base/debug.h"
 #include <QPainter>
 
 LogView::LogView(QWidget *parent) : QListView(parent)

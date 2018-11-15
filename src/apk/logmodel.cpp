@@ -1,5 +1,4 @@
 #include "apk/logmodel.h"
-#include "base/debug.h"
 #include <QBrush>
 
 LogModel::LogModel()

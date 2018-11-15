@@ -2,6 +2,7 @@
 #define RESOURCESBASEVIEW_H
 
 #include "widgets/resourcemenu.h"
+#include <QModelIndex>
 
 class ResourcesBaseView
 {

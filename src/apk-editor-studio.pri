@@ -99,7 +99,6 @@ HEADERS += \
     $$PWD/base/updater.h \
     $$PWD/base/password.h \
     $$PWD/base/result.h \
-    $$PWD/base/debug.h \
     $$PWD/base/device.h \
     $$PWD/base/devicesmodel.h \
     $$PWD/editors/baseeditor.h \

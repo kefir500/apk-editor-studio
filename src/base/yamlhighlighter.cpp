@@ -1,5 +1,4 @@
 #include "base/yamlhighlighter.h"
-#include "base/debug.h"
 #include <QRegularExpression>
 
 YamlHighlighter::YamlHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent)

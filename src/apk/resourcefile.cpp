@@ -1,7 +1,6 @@
 #include "apk/resourcefile.h"
 #include "base/application.h"
 #include "base/utils.h"
-#include "base/debug.h"
 #include <QFileInfo>
 #include <QLocale>
 #include <QRegularExpression>

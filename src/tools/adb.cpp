@@ -1,5 +1,4 @@
 #include "tools/adb.h"
-#include "base/debug.h"
 #include <QSharedPointer>
 #include <QRegularExpression>
 

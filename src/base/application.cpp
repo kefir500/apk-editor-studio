@@ -1,6 +1,5 @@
 #include "base/application.h"
 #undef app
-#include "base/debug.h"
 #include "tools/apktool.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"

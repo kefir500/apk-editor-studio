@@ -1,6 +1,5 @@
 #include "apk/project.h"
 #include "base/application.h"
-#include "base/debug.h"
 #include "tools/apktool.h"
 #include "tools/apksigner.h"
 #include "tools/zipalign.h"

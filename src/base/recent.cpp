@@ -1,6 +1,5 @@
 #include "base/recent.h"
 #include "base/application.h"
-#include "base/debug.h"
 #include <QCryptographicHash>
 #include <QSettings>
 #include <QDir>

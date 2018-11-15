@@ -1,5 +1,4 @@
 #include "base/xmlhighlighter.h"
-#include "base/debug.h"
 #include <QRegularExpression>
 
 XmlHighlighter::XmlHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent)

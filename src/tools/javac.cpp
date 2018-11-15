@@ -1,5 +1,4 @@
 #include "tools/javac.h"
-#include "base/debug.h"
 #include <QRegularExpression>
 
 QString Javac::version() const

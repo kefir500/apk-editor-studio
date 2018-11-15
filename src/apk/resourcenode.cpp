@@ -1,5 +1,4 @@
 #include "apk/resourcenode.h"
-#include "base/debug.h"
 
 ResourceNode::ResourceNode(const QString &caption, ResourceFile *file)
 {

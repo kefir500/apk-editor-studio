@@ -1,5 +1,4 @@
 #include "apk/titlesmodel.h"
-#include "base/debug.h"
 #include <QFile>
 #include <QDirIterator>
 #include <QTextStream>
