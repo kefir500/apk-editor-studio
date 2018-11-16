@@ -246,12 +246,7 @@ const Manifest *Project::getManifest() const
 
 QIcon Project::getThumbnail() const
 {
-    QIcon thumbnail;
-    const int rows = iconsProxy.rowCount();
-    for (int i = 0; i < rows; ++i) {
-        thumbnail.addPixmap(iconsProxy.index(i, 0).data(Qt::DecorationRole).value<QPixmap>());
-    }
-    return thumbnail;
+    return iconsProxy.getIcon();
 }
 
 Project::State Project::getState() const

@@ -73,7 +73,7 @@ QVariant ProjectsModel::data(const QModelIndex &index, int role) const
         } else if (role == Qt::DecorationRole) {
             switch (column) {
                 case ProjectTitle:
-                    QPixmap thumbnail = project->getThumbnail().pixmap(app->scale(32, 32));
+                    QIcon thumbnail = project->getThumbnail();
                     return !thumbnail.isNull() ? thumbnail : app->loadPixmap("loading.png");
             }
         } else if (role == ProjectStateRole) {

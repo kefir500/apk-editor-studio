@@ -18,8 +18,10 @@ public:
     explicit IconsProxy(QObject *parent = nullptr);
 
     bool addIcon(const QPersistentModelIndex &index);
+    QIcon getIcon() const;
     QString getIconPath(const QModelIndex &index) const;
 
+    ResourcesModel *sourceModel() const;
     void setSourceModel(ResourcesModel *sourceModel);
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;

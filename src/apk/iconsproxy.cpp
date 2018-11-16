@@ -36,12 +36,29 @@ bool IconsProxy::addIcon(const QPersistentModelIndex &index)
     return false;
 }
 
+QIcon IconsProxy::getIcon() const
+{
+    QIcon icon;
+    const int rows = rowCount();
+    for (int i = 0; i < rows; ++i) {
+        const QModelIndex sourceIndex = mapToSource(index(i, ResourcesModel::NodeCaption));
+        const QPixmap pixmap = sourceIndex.data(Qt::DecorationRole).value<QPixmap>();
+        icon.addPixmap(pixmap);
+    }
+    return icon;
+}
+
 QString IconsProxy::getIconPath(const QModelIndex &index) const
 {
     if (!index.isValid()) {
         return QString();
     }
     return this->index(index.row(), IconsProxy::IconPath).data().toString();
+}
+
+ResourcesModel *IconsProxy::sourceModel() const
+{
+    return static_cast<ResourcesModel *>(QAbstractProxyModel::sourceModel());
 }
 
 QVariant IconsProxy::data(const QModelIndex &index, int role) const
