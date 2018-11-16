@@ -4,7 +4,7 @@
 #include <QPaintEvent>
 #include <QFontDatabase>
 
-QuickTab::QuickTab(QWidget *parent) : BaseEditor(QString(), QPixmap(), parent)
+QuickTab::QuickTab(QWidget *parent) : BaseEditor(parent)
 {
     label = new QLabel(this);
 #if defined(Q_OS_WIN)
@@ -29,11 +29,6 @@ QuickTab::QuickTab(QWidget *parent) : BaseEditor(QString(), QPixmap(), parent)
 void QuickTab::setTitle(const QString &title)
 {
     label->setText(title);
-}
-
-bool QuickTab::load()
-{
-    return true;
 }
 
 bool QuickTab::save(const QString &as)

@@ -4,16 +4,14 @@
 #include "base/yamlhighlighter.h"
 #include "base/xmlhighlighter.h"
 #include <QBoxLayout>
-#include <QFileIconProvider>
 #include <QTextStream>
 #include <QDebug>
 
-CodeEditor::CodeEditor(const QString &filename, const QPixmap &icon, QWidget *parent) : BaseEditor(filename, icon, parent)
+CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileEditor(index, parent)
 {
+    const QString filename = index.path();
     title = filename.section('/', -2);
-    if (icon.isNull()) {
-        this->icon = QFileIconProvider().icon(QFileInfo(filename));
-    }
+    icon = index.icon();
 
     editor = new QPlainTextEdit(this);
     editor->setLineWrapMode(QPlainTextEdit::NoWrap);

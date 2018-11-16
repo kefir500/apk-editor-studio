@@ -11,7 +11,6 @@ class TitleEditor : public BaseEditor
 
 public:
     TitleEditor(const Project *project, QWidget *parent = nullptr);
-    bool load() Q_DECL_OVERRIDE;
     bool save(const QString &as = QString()) Q_DECL_OVERRIDE;
 
 private:

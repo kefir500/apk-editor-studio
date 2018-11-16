@@ -1,7 +1,7 @@
 #ifndef IMAGEEDITOR_H
 #define IMAGEEDITOR_H
 
-#include "editors/baseeditor.h"
+#include "editors/fileeditor.h"
 #include <QGraphicsView>
 #include <QLabel>
 
@@ -51,12 +51,12 @@ private:
 
 // ImageEditor
 
-class ImageEditor : public BaseEditor
+class ImageEditor : public FileEditor
 {
     Q_OBJECT
 
 public:
-    ImageEditor(const QString &filename, QWidget *parent = nullptr);
+    ImageEditor(const ResourceModelIndex &index, QWidget *parent = nullptr);
 
     bool load() Q_DECL_OVERRIDE;
     bool save(const QString &as = QString()) Q_DECL_OVERRIDE;

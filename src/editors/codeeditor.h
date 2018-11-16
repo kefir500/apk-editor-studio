@@ -1,14 +1,14 @@
 #ifndef CODEEDITOR_H
 #define CODEEDITOR_H
 
-#include "editors/baseeditor.h"
+#include "editors/fileeditor.h"
 #include <QPlainTextEdit>
 #include <QSyntaxHighlighter>
 
-class CodeEditor : public BaseEditor
+class CodeEditor : public FileEditor
 {
 public:
-    CodeEditor(const QString &filename, const QPixmap &icon = QPixmap(), QWidget *parent = nullptr);
+    CodeEditor(const ResourceModelIndex &index, QWidget *parent = nullptr);
 
     bool load() Q_DECL_OVERRIDE;
     bool save(const QString &as = QString()) Q_DECL_OVERRIDE;

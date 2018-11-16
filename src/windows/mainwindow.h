@@ -38,9 +38,7 @@ public:
     void updateRecentMenu();
 
 public slots:
-    BaseEditor *openResourceItem(const QModelIndex &index);
-    BaseEditor *openIconItem(const QModelIndex &index);
-    BaseEditor *openFilesystemItem(const QModelIndex &index);
+    BaseEditor *openResource(const QModelIndex &index);
 
 protected:
     void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
@@ -62,6 +60,12 @@ private:
 
     Project *getCurrentProject() const;
     ProjectWidget *getCurrentProjectWidget() const;
+    BaseEditor *getCurrentProjectTab() const;
+
+    bool saveCurrentTab();
+    bool saveCurrentTabAs();
+    bool replaceCurrentTab();
+    bool exploreCurrentTab();
 
     QMap<Project *, ProjectWidget *> projectWidgets;
     WelcomeTab *welcome;

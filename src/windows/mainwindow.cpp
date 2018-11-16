@@ -78,21 +78,21 @@ void MainWindow::initWidgets()
     resourcesTree = new ResourcesTree(this);
     resourceLayout->addWidget(resourcesTree);
     resourceLayout->setMargin(0);
-    connect(resourcesTree, SIGNAL(editRequested(QModelIndex)), this, SLOT(openResourceItem(QModelIndex)));
+    connect(resourcesTree, SIGNAL(editRequested(QModelIndex)), this, SLOT(openResource(QModelIndex)));
 
     QWidget *dockFilesystemWidget = new QWidget(this);
     QVBoxLayout *filesystemLayout = new QVBoxLayout(dockFilesystemWidget);
     filesystemTree = new FilesystemTree(this);
     filesystemLayout->addWidget(filesystemTree);
     filesystemLayout->setMargin(0);
-    connect(filesystemTree, SIGNAL(editRequested(QModelIndex)), this, SLOT(openFilesystemItem(QModelIndex)));
+    connect(filesystemTree, SIGNAL(editRequested(QModelIndex)), this, SLOT(openResource(QModelIndex)));
 
     QWidget *dockIconsWidget = new QWidget(this);
     QVBoxLayout *iconsLayout = new QVBoxLayout(dockIconsWidget);
     iconsList = new IconList(this);
     iconsLayout->addWidget(iconsList);
     iconsLayout->setMargin(0);
-    connect(iconsList, SIGNAL(editRequested(QModelIndex)), this, SLOT(openIconItem(QModelIndex)));
+    connect(iconsList, SIGNAL(editRequested(QModelIndex)), this, SLOT(openResource(QModelIndex)));
 
     QWidget *dockManifestWidget = new QWidget(this);
     QVBoxLayout *manifestLayout = new QVBoxLayout(dockManifestWidget);
@@ -265,10 +265,10 @@ void MainWindow::initMenus()
     connect(actionApkClose, &QAction::triggered, [=]() { getCurrentProjectWidget()->closeProject(); });
     connect(actionApkExplore, &QAction::triggered, [=]() { getCurrentProjectWidget()->exploreProject(); });
     connect(actionRecentClear, &QAction::triggered, app->recent, &Recent::clear);
-    connect(menuResource, &ResourceMenu::replaceClicked, [=]() { getCurrentProjectWidget()->currentTab()->replace(); });
-    connect(menuResource, &ResourceMenu::saveClicked, [=]() { getCurrentProjectWidget()->currentTab()->save(); });
-    connect(menuResource, &ResourceMenu::saveAsClicked, [=]() { getCurrentProjectWidget()->currentTab()->saveAs(); });
-    connect(menuResource, &ResourceMenu::exploreClicked, [=]() { getCurrentProjectWidget()->currentTab()->explore(); });
+    connect(menuResource, &ResourceMenu::replaceClicked, this, &MainWindow::replaceCurrentTab);
+    connect(menuResource, &ResourceMenu::saveClicked, this, &MainWindow::saveCurrentTab);
+    connect(menuResource, &ResourceMenu::saveAsClicked, this, &MainWindow::saveCurrentTabAs);
+    connect(menuResource, &ResourceMenu::exploreClicked, this, &MainWindow::exploreCurrentTab);
     connect(actionTitleEditor, &QAction::triggered, [=]() { getCurrentProjectWidget()->openTitlesTab(); });
     connect(actionProjectManager, &QAction::triggered, [=]() { getCurrentProjectWidget()->openProjectTab(); });
     connect(actionKeyManager, &QAction::triggered, [=]() {
@@ -410,34 +410,6 @@ void MainWindow::saveSettings()
     app->settings->setMainWindowState(saveState());
 }
 
-BaseEditor *MainWindow::openResourceItem(const QModelIndex &index)
-{
-    const ResourcesModel *model = resourcesTree->model();
-    if (model->hasChildren(index)) {
-        return nullptr;
-    }
-    const QString path = model->getResourcePath(index);
-    const QPixmap icon = model->getResourceFlag(index);
-    return getCurrentProjectWidget()->openResourceTab(path, icon);
-}
-
-BaseEditor *MainWindow::openIconItem(const QModelIndex &index)
-{
-    const IconsProxy *proxy = iconsList->model();
-    const QModelIndex sourceIndex = proxy->mapToSource(index);
-    return openResourceItem(sourceIndex);
-}
-
-BaseEditor *MainWindow::openFilesystemItem(const QModelIndex &index)
-{
-    const QFileSystemModel *model = filesystemTree->model();
-    if (model->hasChildren(index)) {
-        return nullptr;
-    }
-    const QString path = model->filePath(index);
-    return getCurrentProjectWidget()->openResourceTab(path);
-}
-
 BaseEditor *MainWindow::openManifestEditor(ManifestModel::ManifestRow manifestField)
 {
     if (manifestField == ManifestModel::ApplicationLabel) {
@@ -468,7 +440,7 @@ void MainWindow::onProjectAdded(Project *project)
     });
     connect(projectWidget, &ProjectWidget::currentChanged, [=](int index) {
         if (project == getCurrentProject()) {
-            const bool editable = index != -1 ? projectWidget->currentTab()->isEditable() : false;
+            const bool editable = index != -1 ? qobject_cast<FileEditor *>(getCurrentProjectTab()) : false;
             menuResource->setEnabled(editable);
         }
     });
@@ -539,8 +511,8 @@ void MainWindow::setActionsEnabled(const Project *project)
     case Project::ProjectPacking:
     case Project::ProjectSigning:
     case Project::ProjectOptimizing: {
-        auto tab = getCurrentProjectWidget()->currentTab();
-        menuResource->setEnabled(tab ? tab->isEditable() : false);
+        bool tabEditable = qobject_cast<FileEditor *>(getCurrentProjectTab());
+        menuResource->setEnabled(tabEditable);
     }
     case Project::ProjectUnpacking:
         actionApkExplore->setEnabled(true);
@@ -580,6 +552,14 @@ void MainWindow::updateRecentMenu()
     menuRecent->addAction(recentList.isEmpty() ? actionRecentNone : actionRecentClear);
 }
 
+BaseEditor *MainWindow::openResource(const QModelIndex &index)
+{
+    if (!index.model()->hasChildren(index)) {
+        return getCurrentProjectWidget()->openResourceTab(index);
+    }
+    return nullptr;
+}
+
 Project *MainWindow::getCurrentProject() const
 {
     const QModelIndex index = projectsList->model()->index(projectsList->currentIndex(), 0);
@@ -589,6 +569,45 @@ Project *MainWindow::getCurrentProject() const
 ProjectWidget *MainWindow::getCurrentProjectWidget() const
 {
     return static_cast<ProjectWidget *>(tabs->currentWidget());
+}
+
+BaseEditor *MainWindow::getCurrentProjectTab() const
+{
+    auto currentProjectWidget = getCurrentProjectWidget();
+    return currentProjectWidget ? currentProjectWidget->currentTab() : nullptr;
+}
+
+bool MainWindow::saveCurrentTab()
+{
+    return getCurrentProjectTab()->save();
+}
+
+bool MainWindow::saveCurrentTabAs()
+{
+    auto resourceTab = qobject_cast<FileEditor *>(getCurrentProjectTab());
+    if (!resourceTab) {
+        return false;
+    }
+    return resourceTab->saveAs();
+}
+
+bool MainWindow::replaceCurrentTab()
+{
+    auto resourceTab = qobject_cast<FileEditor *>(getCurrentProjectTab());
+    if (!resourceTab) {
+        return false;
+    }
+    return resourceTab->replace();
+}
+
+bool MainWindow::exploreCurrentTab()
+{
+    auto resourceTab = qobject_cast<FileEditor *>(getCurrentProjectTab());
+    if (!resourceTab) {
+        return false;
+    }
+    resourceTab->explore();
+    return true;
 }
 
 void MainWindow::changeEvent(QEvent *event)

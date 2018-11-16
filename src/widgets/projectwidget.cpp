@@ -136,8 +136,9 @@ TitleEditor *ProjectWidget::openTitlesTab()
     return editor;
 }
 
-BaseEditor *ProjectWidget::openResourceTab(const QString &path, const QPixmap &icon)
+BaseEditor *ProjectWidget::openResourceTab(const ResourceModelIndex &index)
 {
+    const QString path = index.path();
     const QString identifier = path;
     BaseEditor *existing = getTabByIdentifier(identifier);
     if (existing) {
@@ -146,13 +147,13 @@ BaseEditor *ProjectWidget::openResourceTab(const QString &path, const QPixmap &i
     }
 
     BaseEditor *editor = nullptr;
-    const QString fileSuffix = QFileInfo(path).suffix();
-    if (CodeEditor::supportedFormats().contains(fileSuffix)) {
-        editor = new CodeEditor(path, icon, this);
-    } else if (ImageEditor::supportedFormats().contains(fileSuffix)) {
-        editor = new ImageEditor(path, this);
+    const QString extension = QFileInfo(path).suffix();
+    if (CodeEditor::supportedFormats().contains(extension)) {
+        editor = new CodeEditor(index, this);
+    } else if (ImageEditor::supportedFormats().contains(extension)) {
+        editor = new ImageEditor(index, this);
     } else {
-        qDebug() << "No suitable editor found for" << fileSuffix;
+        qDebug() << "No suitable editor found for" << extension;
         return nullptr;
     }
     editor->setProperty("identifier", identifier);

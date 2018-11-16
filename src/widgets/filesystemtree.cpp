@@ -1,4 +1,5 @@
 #include "widgets/filesystemtree.h"
+#include "apk/resourcemodelindex.h"
 
 FilesystemTree::FilesystemTree(QWidget *parent) : QTreeView(parent)
 {
@@ -8,11 +9,13 @@ FilesystemTree::FilesystemTree(QWidget *parent) : QTreeView(parent)
     });
     connect(this, &FilesystemTree::customContextMenuRequested, [=](const QPoint &point) {
         const QModelIndex index = indexAt(point);
-        if (!model()->hasChildren(index)) {
-            const QString path = model()->filePath(index);
-            auto menu = generateContextMenu(index, path, this);
-            if (menu) {
-                menu->exec(viewport()->mapToGlobal(point));
+        if (index.isValid() && !model()->hasChildren(index)) {
+            const QString path = ResourceModelIndex(index).path();
+            if (!path.isEmpty()) {
+                auto menu = generateContextMenu(index, path, this);
+                if (menu) {
+                    menu->exec(viewport()->mapToGlobal(point));
+                }
             }
         }
     });

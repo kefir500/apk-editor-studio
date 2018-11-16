@@ -5,6 +5,7 @@ SOURCES += \
     $$PWD/apk/xmlnode.cpp \
     $$PWD/apk/xmlmodel.cpp \
     $$PWD/apk/resourcesmodel.cpp \
+    $$PWD/apk/resourcemodelindex.cpp \
     $$PWD/apk/manifestmodel.cpp \
     $$PWD/apk/titlesmodel.cpp \
     $$PWD/apk/resourcenode.cpp \
@@ -32,7 +33,6 @@ SOURCES += \
     $$PWD/editors/codeeditor.cpp \
     $$PWD/editors/imageeditor.cpp \
     $$PWD/editors/projectmanager.cpp \
-    $$PWD/editors/propertyeditor.cpp \
     $$PWD/editors/titleeditor.cpp \
     $$PWD/editors/quicktab.cpp \
     $$PWD/editors/welcometab.cpp \
@@ -69,7 +69,8 @@ SOURCES += \
     $$PWD/windows/aboutdialog.cpp \
     $$PWD/windows/waitdialog.cpp \
     $$PWD/windows/keymanager.cpp \
-    $$PWD/windows/devicemanager.cpp
+    $$PWD/windows/devicemanager.cpp \
+    $$PWD/editors/fileeditor.cpp
 
 HEADERS += \
     $$PWD/apk/project.h \
@@ -78,6 +79,7 @@ HEADERS += \
     $$PWD/apk/xmlnode.h \
     $$PWD/apk/xmlmodel.h \
     $$PWD/apk/resourcesmodel.h \
+    $$PWD/apk/resourcemodelindex.h \
     $$PWD/apk/manifestmodel.h \
     $$PWD/apk/resourcenode.h \
     $$PWD/apk/iconsproxy.h \
@@ -105,7 +107,6 @@ HEADERS += \
     $$PWD/editors/codeeditor.h \
     $$PWD/editors/imageeditor.h \
     $$PWD/editors/projectmanager.h \
-    $$PWD/editors/propertyeditor.h \
     $$PWD/editors/quicktab.h \
     $$PWD/editors/titleeditor.h \
     $$PWD/editors/welcometab.h \
@@ -145,6 +146,7 @@ HEADERS += \
     $$PWD/windows/aboutdialog.h \
     $$PWD/windows/waitdialog.h \
     $$PWD/windows/keymanager.h \
-    $$PWD/windows/devicemanager.h
+    $$PWD/windows/devicemanager.h \
+    $$PWD/editors/fileeditor.h
 
 INCLUDEPATH += $$PWD

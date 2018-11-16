@@ -2,6 +2,7 @@
 #define PROJECTWIDGET_H
 
 #include "editors/projectmanager.h"
+#include "editors/fileeditor.h"
 #include "editors/titleeditor.h"
 #include "editors/welcometab.h"
 #include <QTabWidget>
@@ -22,7 +23,7 @@ public:
 
     ProjectManager *openProjectTab();
     TitleEditor *openTitlesTab();
-    BaseEditor *openResourceTab(const QString &path, const QPixmap &icon = QPixmap());
+    BaseEditor *openResourceTab(const ResourceModelIndex &index);
 
     bool saveTabs();
     bool closeTab(BaseEditor *editor);

@@ -15,9 +15,9 @@
 
 // ImageEditor
 
-ImageEditor::ImageEditor(const QString &filename, QWidget *parent) : BaseEditor(filename, QPixmap(), parent)
+ImageEditor::ImageEditor(const ResourceModelIndex &index, QWidget *parent) : FileEditor(index, parent)
 {
-    title = filename.section('/', -2);
+    title = index.path().section('/', -2);
 
     setAcceptDrops(true);
 
@@ -47,7 +47,7 @@ ImageEditor::ImageEditor(const QString &filename, QWidget *parent) : BaseEditor(
 
 bool ImageEditor::load()
 {
-    QPixmap pixmap(filename);
+    QPixmap pixmap(index.path());
     if (pixmap.isNull()) {
         return false;
     }
@@ -78,7 +78,7 @@ void ImageEditor::setImage(const QPixmap &image)
 bool ImageEditor::save(const QString &as)
 {
     if (as.isEmpty()) {
-        const bool success = pixmapItem->pixmap().save(filename);
+        const bool success = pixmapItem->pixmap().save(index.path());
         setModified(!success);
         return success;
     } else {
