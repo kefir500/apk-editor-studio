@@ -440,8 +440,11 @@ void MainWindow::onProjectAdded(Project *project)
     });
     connect(projectWidget, &ProjectWidget::currentChanged, [=](int index) {
         if (project == getCurrentProject()) {
-            const bool editable = index != -1 ? qobject_cast<FileEditor *>(getCurrentProjectTab()) : false;
-            menuResource->setEnabled(editable);
+            if (index != -1 && qobject_cast<FileEditor *>(getCurrentProjectTab())) {
+                menuResource->setEnabled(true);
+            } else {
+                menuResource->setEnabled(false);
+            }
         }
     });
 }
