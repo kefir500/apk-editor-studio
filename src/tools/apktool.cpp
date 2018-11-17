@@ -49,7 +49,6 @@ void Apktool::reset() const
         const QString currentVersion = version();
         const QString previousVersion = app->settings->getApktoolVersion();
         if (currentVersion.isNull() || currentVersion != previousVersion) {
-            qDebug() << qPrintable(QString("New Apktool version (from \"%1\" to \"%2\"). Removing 1.apk...").arg(previousVersion, currentVersion));
             QFile::remove(app->settings->getFrameworksDirectory() + "/1.apk");
             app->settings->setApktoolVersion(currentVersion);
         }

@@ -26,6 +26,13 @@ Application::Application(int &argc, char **argv) : QtSingleApplication(argc, arg
 #endif
 
     qDebug() << qPrintable(applicationDisplayName());
+#if defined(Q_OS_WIN)
+    qDebug() << "Platform: Windows";
+#elif defined(Q_OS_OSX)
+    qDebug() << "Platform: macOS";
+#else
+    qDebug() << "Platform: Unix";
+#endif
     qDebug() << qPrintable(QString("Qt %1").arg(QT_VERSION_STR));
     qDebug();
 

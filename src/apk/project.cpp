@@ -30,7 +30,7 @@ Project::~Project()
         delete manifest;
     }
     if (!contentsPath.isEmpty()) {
-        qDebug() << qPrintable(QString("Removing \"%1\"...").arg(contentsPath));
+        qDebug() << qPrintable(QString("Removing \"%1\"...\n").arg(contentsPath));
         // Additional check to prevent accidental recursive deletion of the wrong directory:
         const bool recursive = QFile::exists(QString("%1/%2").arg(contentsPath, "AndroidManifest.xml"));
         app->rmdir(contentsPath, recursive);
@@ -143,6 +143,8 @@ void Project::install(const QString &serial)
 
 Manifest *Project::initialize()
 {
+    qDebug() << qPrintable(QString("Initializing \"%1\"...").arg(originalPath));
+
     filesystemModel.setRootPath(contentsPath);
 
     // Parse application manifest:

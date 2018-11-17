@@ -13,10 +13,6 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
         xml.setContent(stream.readAll());
         applicationLabel = getXmlAttribute({"application", "android:label"});
         applicationIcon = getXmlAttribute({"application", "android:icon"});
-#ifdef QT_DEBUG
-        qDebug() << "Parsed app label:   " << applicationLabel.value();
-        qDebug() << "Parsed app icon:    " << applicationIcon.value();
-#endif
     }
 
     // YAML:
@@ -39,12 +35,6 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
         targetSdk = regexTargetSdk.match(yml).captured().toInt();
         versionCode = regexVersionCode.match(yml).captured().toInt();
         versionName = regexVersionName.match(yml).captured();
-#ifdef QT_DEBUG
-        qDebug() << "Parsed target SDK:  " << targetSdk;
-        qDebug() << "Parsed minimum SDK: " << minSdk;
-        qDebug() << "Parsed version code:" << versionCode;
-        qDebug() << "Parsed version name:" << versionName;
-#endif
     }
 }
 

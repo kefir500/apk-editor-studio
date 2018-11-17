@@ -36,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         Updater *updater = new Updater(false, this);
         updater->checkAndDelete();
     }
+
+    qDebug();
 }
 
 void MainWindow::setInitialSize()
@@ -45,6 +47,7 @@ void MainWindow::setInitialSize()
 
 void MainWindow::initWidgets()
 {
+    qDebug() << "Initializing widgets...";
     setInitialSize();
 
     tabs = new QStackedWidget(this);
@@ -302,6 +305,7 @@ void MainWindow::initMenus()
 
 void MainWindow::initLanguages()
 {
+    qDebug() << "Initializing languages...";
     QList<Language> languages = app->getLanguages();
 
     actionsLanguage = new QActionGroup(this);
