@@ -1,22 +1,16 @@
 #ifndef ICONLIST_H
 #define ICONLIST_H
 
-#include "widgets/resourcesbaseview.h"
 #include "apk/iconsproxy.h"
 #include <QListView>
 
-class IconList : public QListView, public ResourcesBaseView
+class IconList : public QListView
 {
-    Q_OBJECT
-
 public:
     explicit IconList(QWidget *parent = nullptr);
 
     IconsProxy *model();
     void setModel(IconsProxy *model);
-
-signals:
-    void editRequested(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;

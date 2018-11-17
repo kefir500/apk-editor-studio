@@ -2,13 +2,11 @@
 #define MAINWINDOW_H
 
 #include "apk/project.h"
-#include "widgets/filesystemtree.h"
-#include "widgets/iconlist.h"
 #include "widgets/logview.h"
 #include "widgets/manifestview.h"
 #include "widgets/projectwidget.h"
 #include "widgets/resourcemenu.h"
-#include "widgets/resourcestree.h"
+#include "widgets/resourcesview.h"
 #include "widgets/toolbar.h"
 #include <QMainWindow>
 #include <QStackedWidget>
@@ -26,6 +24,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
+    BaseEditor *openResource(const QModelIndex &index);
     BaseEditor *openManifestEditor(ManifestModel::ManifestRow manifestField);
     void openLogEntry(const QModelIndex &index);
 
@@ -36,9 +35,6 @@ public:
     void setActionsEnabled(const Project *project);
     void updateWindowForProject(const Project *project);
     void updateRecentMenu();
-
-public slots:
-    BaseEditor *openResource(const QModelIndex &index);
 
 protected:
     void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
@@ -73,10 +69,10 @@ private:
     QStackedWidget *tabs;
     QComboBox *projectsList;
     LogView *logView;
-    ResourcesTree *resourcesTree;
-    FilesystemTree *filesystemTree;
     ManifestView *manifestTable;
-    IconList *iconsList;
+    ResourcesView *resourcesTree;
+    ResourcesView *filesystemTree;
+    ResourcesView *iconsList;
 
     Toolbar *toolbar;
     QDockWidget *dockProjects;

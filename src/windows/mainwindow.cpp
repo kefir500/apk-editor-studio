@@ -5,6 +5,9 @@
 #include "windows/keymanager.h"
 #include "windows/optionsdialog.h"
 #include "windows/waitdialog.h"
+#include "widgets/resourcestree.h"
+#include "widgets/filesystemtree.h"
+#include "widgets/iconlist.h"
 #include "widgets/logdelegate.h"
 #include "widgets/projectlistitemdelegate.h"
 #include "base/application.h"
@@ -78,24 +81,24 @@ void MainWindow::initWidgets()
 
     QWidget *dockResourceWidget = new QWidget(this);
     QVBoxLayout *resourceLayout = new QVBoxLayout(dockResourceWidget);
-    resourcesTree = new ResourcesTree(this);
+    resourcesTree = new ResourcesView(new ResourcesTree, this);
     resourceLayout->addWidget(resourcesTree);
     resourceLayout->setMargin(0);
-    connect(resourcesTree, SIGNAL(editRequested(QModelIndex)), this, SLOT(openResource(QModelIndex)));
+    connect(resourcesTree, &ResourcesView::editRequested, this, &MainWindow::openResource);
 
     QWidget *dockFilesystemWidget = new QWidget(this);
     QVBoxLayout *filesystemLayout = new QVBoxLayout(dockFilesystemWidget);
-    filesystemTree = new FilesystemTree(this);
+    filesystemTree = new ResourcesView(new FilesystemTree, this);
     filesystemLayout->addWidget(filesystemTree);
     filesystemLayout->setMargin(0);
-    connect(filesystemTree, SIGNAL(editRequested(QModelIndex)), this, SLOT(openResource(QModelIndex)));
+    connect(filesystemTree, &ResourcesView::editRequested, this, &MainWindow::openResource);
 
     QWidget *dockIconsWidget = new QWidget(this);
     QVBoxLayout *iconsLayout = new QVBoxLayout(dockIconsWidget);
-    iconsList = new IconList(this);
+    iconsList = new ResourcesView(new IconList, this);
     iconsLayout->addWidget(iconsList);
     iconsLayout->setMargin(0);
-    connect(iconsList, SIGNAL(editRequested(QModelIndex)), this, SLOT(openResource(QModelIndex)));
+    connect(iconsList, &ResourcesView::editRequested, this, &MainWindow::openResource);
 
     QWidget *dockManifestWidget = new QWidget(this);
     QVBoxLayout *manifestLayout = new QVBoxLayout(dockManifestWidget);
@@ -414,6 +417,14 @@ void MainWindow::saveSettings()
     app->settings->setMainWindowState(saveState());
 }
 
+BaseEditor *MainWindow::openResource(const QModelIndex &index)
+{
+    if (!index.model()->hasChildren(index)) {
+        return getCurrentProjectWidget()->openResourceTab(index);
+    }
+    return nullptr;
+}
+
 BaseEditor *MainWindow::openManifestEditor(ManifestModel::ManifestRow manifestField)
 {
     if (manifestField == ManifestModel::ApplicationLabel) {
@@ -472,12 +483,8 @@ void MainWindow::setCurrentProject(Project *project)
     tabs->setCurrentWidget(projectWidget);
 
     resourcesTree->setModel(&project->resourcesModel);
-    resourcesTree->sortByColumn(0, Qt::DescendingOrder);
-    resourcesTree->setColumnWidth(ResourcesModel::NodeCaption, 120);
-    resourcesTree->setColumnWidth(ResourcesModel::ResourceLocale, 64);
-    resourcesTree->setColumnWidth(ResourcesModel::ResourcePath, 500);
     filesystemTree->setModel(&project->filesystemModel);
-    filesystemTree->setRootIndex(project->filesystemModel.index(project->getContentsPath()));
+    filesystemTree->getView<FilesystemTree *>()->setRootIndex(project->filesystemModel.index(project->getContentsPath()));
     iconsList->setModel(&project->iconsProxy);
     logView->setModel(&project->logModel);
     manifestTable->setModel(&project->manifestModel);
@@ -557,14 +564,6 @@ void MainWindow::updateRecentMenu()
     }
     menuRecent->addSeparator();
     menuRecent->addAction(recentList.isEmpty() ? actionRecentNone : actionRecentClear);
-}
-
-BaseEditor *MainWindow::openResource(const QModelIndex &index)
-{
-    if (!index.model()->hasChildren(index)) {
-        return getCurrentProjectWidget()->openResourceTab(index);
-    }
-    return nullptr;
 }
 
 Project *MainWindow::getCurrentProject() const

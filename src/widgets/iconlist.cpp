@@ -12,21 +12,6 @@ IconList::IconList(QWidget *parent) : QListView(parent)
 {
     setAcceptDrops(true);
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, &IconList::activated, [this](const QModelIndex &index) {
-        emit editRequested(index);
-    });
-    connect(this, &IconList::customContextMenuRequested, [=](const QPoint &point) {
-        const QModelIndex index = indexAt(point);
-        if (index.isValid() && !model()->hasChildren(index)) {
-            const QString path = ResourceModelIndex(index).path();
-            if (!path.isEmpty()) {
-                auto menu = generateContextMenu(index, path, this);
-                if (menu) {
-                    menu->exec(viewport()->mapToGlobal(point));
-                }
-            }
-        }
-    });
 }
 
 IconsProxy *IconList::model()
