@@ -11,11 +11,8 @@
 #include "widgets/logdelegate.h"
 #include "widgets/projectlistitemdelegate.h"
 #include "base/application.h"
-#include <QBoxLayout>
-#include <QHeaderView>
 #include <QMenuBar>
 #include <QDockWidget>
-#include <QDirIterator>
 #include <QMimeData>
 #include <QMimeDatabase>
 #include <QDebug>
@@ -53,26 +50,13 @@ void MainWindow::initWidgets()
     qDebug() << "Initializing widgets...";
     setInitialSize();
 
-    tabs = new QStackedWidget(this);
-    setCentralWidget(tabs);
-
-    welcome = new WelcomeTab(this);
-    tabs->addWidget(welcome);
+    projectsWidget = new ProjectsWidget(this);
+    setCentralWidget(projectsWidget);
 
     QWidget *dockProjectsWidget = new QWidget(this);
     QVBoxLayout *projectsLayout = new QVBoxLayout(dockProjectsWidget);
-    projectsList = new QComboBox(this);
+    projectsList = new ProjectList(this);
     projectsList->setModel(&app->projects);
-#if defined(Q_OS_WIN)
-    projectsList->setMinimumHeight(app->scale(40));
-    projectsList->setIconSize(app->scale(32, 32));
-#elif defined(Q_OS_OSX)
-    projectsList->setIconSize(app->scale(16, 16));
-#else
-    projectsList->setMinimumHeight(app->scale(46));
-    projectsList->setIconSize(app->scale(32, 32));
-#endif
-    projectsList->setItemDelegate(new ProjectListItemDelegate(this));
     logView = new LogView(this);
     logView->setItemDelegate(new LogDelegate(this));
     projectsLayout->addWidget(projectsList);
@@ -132,11 +116,29 @@ void MainWindow::initWidgets()
 
     defaultState = saveState();
 
-    connect(projectsList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, static_cast<void (MainWindow::*)(int)>(&MainWindow::setCurrentProject));
+    connect(&app->projects, &ProjectsModel::added, [=](Project *project) {
+        projectsWidget->addProject(project);
+        projectsList->setCurrentProject(project);
+    });
+    connect(&app->projects, &ProjectsModel::removed, projectsWidget, &ProjectsWidget::removeProject);
+    connect(projectsList, &ProjectList::currentProjectChanged, [=](Project *project) {
+        setCurrentProject(project);
+    });
+    connect(projectsWidget, &ProjectsWidget::tabChanged, [=](BaseEditor *editor) {
+        if (editor) {
+            menuEditor->clear();
+            menuEditor->addActions(editor->actions());
+        }
+    });
+    connect(&app->projects, &ProjectsModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight) {
+        Q_UNUSED(bottomRight)
+        if (topLeft.row() == projectsList->currentIndex()) {
+            Project *project = static_cast<Project *>(topLeft.internalPointer());
+            updateWindowForProject(project);
+        }
+    });
     connect(logView, &QListView::clicked, this, &MainWindow::openLogEntry);
     connect(logView, &QListView::clicked, logView, &QListView::clearSelection);
-    connect(&app->projects, &ProjectsModel::added, this, &MainWindow::onProjectAdded);
-    connect(&app->projects, &ProjectsModel::removed, this, &MainWindow::onProjectRemoved);
 }
 
 void MainWindow::initMenus()
@@ -212,7 +214,7 @@ void MainWindow::initMenus()
     menuFile->addAction(actionApkClose);
     menuFile->addSeparator();
     menuFile->addAction(actionExit);
-    menuResource = menuBar()->addMenu(QString());
+    menuEditor = menuBar()->addMenu(QString());
     menuTools = menuBar()->addMenu(QString());
     menuTools->addAction(actionKeyManager);
     menuTools->addAction(actionDeviceManager);
@@ -241,8 +243,8 @@ void MainWindow::initMenus()
     app->toolbar.insert("open-project", actionApkOpen);
     app->toolbar.insert("save-project", actionApkSave);
     app->toolbar.insert("close-project", actionApkClose);
-//    app->toolbar.insert("save-resource", menuResource->getSaveAction());
-//    app->toolbar.insert("save-resource-as", menuResource->getSaveAsAction());
+//    app->toolbar.insert("save-resource", actionEditorSave);
+//    app->toolbar.insert("save-resource-as", actionEditorSaveAs);
     app->toolbar.insert("install-project", actionApkInstall);
     app->toolbar.insert("open-contents", actionApkExplore);
     app->toolbar.insert("project-manager", actionProjectManager);
@@ -258,16 +260,16 @@ void MainWindow::initMenus()
     // Signals / Slots
 
     connect(actionApkOpen, &QAction::triggered, [=]() { Dialogs::openApk(this); });
-    connect(actionApkSave, &QAction::triggered, [=]() { getCurrentProjectWidget()->saveProject(); });
+    connect(actionApkSave, &QAction::triggered, projectsWidget, &ProjectsWidget::saveCurrentProject);
     connect(actionApkInstall, &QAction::triggered, [=]() {
-        const bool isProjectOpen = projectWidgets.count();
-        isProjectOpen ? getCurrentProjectWidget()->installProject() : app->installExternalApk();
+        const bool isProjectOpen = projectsWidget->getCurrentProject();
+        isProjectOpen ? projectsWidget->installCurrentProject() : app->installExternalApk();
     });
-    connect(actionApkClose, &QAction::triggered, [=]() { getCurrentProjectWidget()->closeProject(); });
-    connect(actionApkExplore, &QAction::triggered, [=]() { getCurrentProjectWidget()->exploreProject(); });
+    connect(actionApkClose, &QAction::triggered, projectsWidget, &ProjectsWidget::closeCurrentProject);
+    connect(actionApkExplore, &QAction::triggered, projectsWidget, &ProjectsWidget::exploreCurrentProject);
     connect(actionRecentClear, &QAction::triggered, app->recent, &Recent::clear);
-    connect(actionTitleEditor, &QAction::triggered, [=]() { getCurrentProjectWidget()->openTitlesTab(); });
-    connect(actionProjectManager, &QAction::triggered, [=]() { getCurrentProjectWidget()->openProjectTab(); });
+    connect(actionTitleEditor, &QAction::triggered, projectsWidget, &ProjectsWidget::openTitlesTab);
+    connect(actionProjectManager, &QAction::triggered, projectsWidget, &ProjectsWidget::openProjectTab);
     connect(actionKeyManager, &QAction::triggered, [=]() {
         KeyManager keyManager(this);
         keyManager.exec();
@@ -334,7 +336,7 @@ void MainWindow::retranslate()
     // Menu Bar:
 
     menuFile->setTitle(tr("&File"));
-    menuResource->setTitle(tr("&Editor"));
+    menuEditor->setTitle(tr("&Editor"));
     menuTools->setTitle(tr("&Tools"));
     menuSettings->setTitle(tr("&Settings"));
     menuWindow->setTitle(tr("&Window"));
@@ -412,7 +414,7 @@ void MainWindow::saveSettings()
 BaseEditor *MainWindow::openResource(const QModelIndex &index)
 {
     if (!index.model()->hasChildren(index)) {
-        return getCurrentProjectWidget()->openResourceTab(index);
+        return projectsWidget->openResourceTab(index);
     }
     return nullptr;
 }
@@ -420,7 +422,7 @@ BaseEditor *MainWindow::openResource(const QModelIndex &index)
 BaseEditor *MainWindow::openManifestEditor(ManifestModel::ManifestRow manifestField)
 {
     if (manifestField == ManifestModel::ApplicationLabel) {
-        return getCurrentProjectWidget()->openTitlesTab();
+        return projectsWidget->openTitlesTab();
     }
     return nullptr;
 }
@@ -433,66 +435,20 @@ void MainWindow::openLogEntry(const QModelIndex &index)
     }
 }
 
-void MainWindow::onProjectAdded(Project *project)
-{
-    ProjectWidget *projectWidget = new ProjectWidget(project, this);
-    projectWidgets.insert(project, projectWidget);
-    tabs->addWidget(projectWidget);
-
-    projectsList->setCurrentIndex(app->projects.indexOf(project));
-    connect(project, &Project::dataChanged, [=]() {
-        if (project == getCurrentProject()) {
-            updateWindowForProject(project);
-        }
-    });
-    connect(projectWidget, &ProjectWidget::currentChanged, [=](int index) {
-        Q_UNUSED(index)
-        menuResource->clear();
-        auto actions = projectWidget->currentTab()->actions();
-        if (!actions.isEmpty()) {
-            menuResource->addActions(actions);
-        } else {
-            QAction *noActions = new QAction(tr("No actions"), this);
-            noActions->setEnabled(false);
-            menuResource->addAction(noActions);
-        }
-    });
-}
-
-void MainWindow::onProjectRemoved(Project *project)
-{
-    delete projectWidgets.value(project);
-    projectWidgets.remove(project);
-}
-
-void MainWindow::setCurrentProject(Project *project)
+bool MainWindow::setCurrentProject(Project *project)
 {
     updateWindowForProject(project);
-
+    projectsWidget->setCurrentProject(project);
     if (!project) {
-        tabs->setCurrentWidget(welcome);
-        return;
+        return false;
     }
-
-    ProjectWidget *projectWidget = projectWidgets.value(project, nullptr);
-    tabs->setCurrentWidget(projectWidget);
-
     resourcesTree->setModel(&project->resourcesModel);
     filesystemTree->setModel(&project->filesystemModel);
     filesystemTree->getView<FilesystemTree *>()->setRootIndex(project->filesystemModel.index(project->getContentsPath()));
     iconsList->setModel(&project->iconsProxy);
     logView->setModel(&project->logModel);
     manifestTable->setModel(&project->manifestModel);
-}
-
-void MainWindow::setCurrentProject(int index)
-{
-    Project *project = nullptr;
-    const QModelIndex modelIndex = projectsList->model()->index(index, 0);
-    if (modelIndex.isValid()) {
-        project = static_cast<Project *>(modelIndex.internalPointer());
-    }
-    return setCurrentProject(project);
+    return true;
 }
 
 void MainWindow::setActionsEnabled(const Project *project)
@@ -557,28 +513,6 @@ void MainWindow::updateRecentMenu()
     menuRecent->addAction(recentList.isEmpty() ? actionRecentNone : actionRecentClear);
 }
 
-Project *MainWindow::getCurrentProject() const
-{
-    const QModelIndex index = projectsList->model()->index(projectsList->currentIndex(), 0);
-    return static_cast<Project *>(index.internalPointer());
-}
-
-ProjectWidget *MainWindow::getCurrentProjectWidget() const
-{
-    return static_cast<ProjectWidget *>(tabs->currentWidget());
-}
-
-BaseEditor *MainWindow::getCurrentProjectTab() const
-{
-    if (getCurrentProject()) {
-        auto currentProjectWidget = getCurrentProjectWidget();
-        if (currentProjectWidget) {
-            return currentProjectWidget->currentTab();
-        }
-    }
-    return nullptr;
-}
-
 void MainWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
@@ -628,16 +562,9 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    bool unsaved = false;
-    QList<ProjectWidget *> tabs = projectWidgets.values();
-    for (const ProjectWidget *tab : tabs) {
-        if (tab->hasUnsavedProject()) {
-            setCurrentProject(tab->getProject());
-            unsaved = true;
-            break;
-        }
-    }
+    Project *unsaved = projectsWidget->hasUnsavedProjects();
     if (unsaved) {
+        projectsList->setCurrentProject(unsaved);
         const QString question = tr("You have unsaved changes.\nDo you want to discard them and exit?");
         const int answer = QMessageBox::question(this, QString(), question, QMessageBox::Discard, QMessageBox::Cancel);
         if (answer != QMessageBox::Discard) {

@@ -53,6 +53,9 @@ SOURCES += \
     $$PWD/widgets/spacer.cpp \
     $$PWD/widgets/decorationdelegate.cpp \
     $$PWD/widgets/gradientwidget.cpp \
+    $$PWD/widgets/projecttabswidget.cpp \
+    $$PWD/widgets/projectlist.cpp \
+    $$PWD/widgets/projectswidget.cpp \
     $$PWD/widgets/iconlist.cpp \
     $$PWD/widgets/filesystemtree.cpp \
     $$PWD/widgets/resourcestree.cpp \
@@ -61,7 +64,6 @@ SOURCES += \
     $$PWD/widgets/manifestview.cpp \
     $$PWD/widgets/projectlistitemdelegate.cpp \
     $$PWD/widgets/poollistwidget.cpp \
-    $$PWD/widgets/projectwidget.cpp \
     $$PWD/widgets/resourcesview.cpp \
     $$PWD/widgets/resourcemenu.cpp \
     $$PWD/windows/mainwindow.cpp \
@@ -129,6 +131,9 @@ HEADERS += \
     $$PWD/widgets/spacer.h \
     $$PWD/widgets/decorationdelegate.h \
     $$PWD/widgets/gradientwidget.h \
+    $$PWD/widgets/projecttabswidget.h \
+    $$PWD/widgets/projectlist.h \
+    $$PWD/widgets/projectswidget.h \
     $$PWD/widgets/editors.h \
     $$PWD/widgets/iconlist.h \
     $$PWD/widgets/filesystemtree.h \
@@ -138,7 +143,6 @@ HEADERS += \
     $$PWD/widgets/manifestview.h \
     $$PWD/widgets/projectlistitemdelegate.h \
     $$PWD/widgets/poollistwidget.h \
-    $$PWD/widgets/projectwidget.h \
     $$PWD/widgets/resourcesview.h \
     $$PWD/widgets/resourcemenu.h \
     $$PWD/windows/mainwindow.h \

@@ -1,44 +1,41 @@
-#ifndef PROJECTWIDGET_H
-#define PROJECTWIDGET_H
+#ifndef PROJECTSWIDGET_H
+#define PROJECTSWIDGET_H
 
-#include "editors/projectmanager.h"
-#include "editors/fileeditor.h"
-#include "editors/titleeditor.h"
+#include "widgets/projecttabswidget.h"
 #include "editors/welcometab.h"
-#include <QTabWidget>
+#include <QStackedWidget>
 
-class ProjectWidget : public QTabWidget
+class ProjectsWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    ProjectWidget(Project *project, QWidget *parent = nullptr);
+    ProjectsWidget(QWidget *parent = nullptr);
 
-    BaseEditor *currentTab() const;
+    void addProject(Project *project);
+    bool setCurrentProject(Project *project);
+    void removeProject(Project *project);
 
-    bool saveProject();
-    bool installProject();
-    bool exploreProject();
-    bool closeProject();
+    bool saveCurrentProject();
+    bool installCurrentProject();
+    bool exploreCurrentProject();
+    bool closeCurrentProject();
 
     ProjectManager *openProjectTab();
     TitleEditor *openTitlesTab();
-    BaseEditor *openResourceTab(const ResourceModelIndex &index);
+    BaseEditor *openResourceTab(const QModelIndex &index);
 
-    bool saveTabs();
-    bool closeTab(BaseEditor *editor);
+    Project *hasUnsavedProjects() const;
+    Project *getCurrentProject() const;
+    ProjectTabsWidget *getCurrentTabs() const;
 
-    bool hasUnsavedProject() const;
-    bool hasUnsavedTabs() const;
-
-    Project *getProject() const;
+signals:
+    void tabChanged(BaseEditor *tab) const;
 
 private:
-    int addTab(BaseEditor *tab);
-
-    BaseEditor *getTabByIdentifier(const QString &identifier);
-
-    Project *project;
+    QStackedWidget *stack;
+    QMap<Project *, ProjectTabsWidget *> map;
+    WelcomeTab *welcome;
 };
 
-#endif // PROJECTWIDGET_H
+#endif // PROJECTSWIDGET_H

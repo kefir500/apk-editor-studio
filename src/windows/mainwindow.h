@@ -4,17 +4,14 @@
 #include "apk/project.h"
 #include "widgets/logview.h"
 #include "widgets/manifestview.h"
-#include "widgets/projectwidget.h"
+#include "widgets/projectswidget.h"
 #include "widgets/resourcesview.h"
+#include "widgets/projectlist.h"
 #include "widgets/toolbar.h"
 #include <QMainWindow>
-#include <QStackedWidget>
-#include <QTreeView>
-#include <QComboBox>
 #include <QActionGroup>
 #include <QDragEnterEvent>
 #include <QDropEvent>
-#include <QSortFilterProxyModel>
 
 class MainWindow : public QMainWindow
 {
@@ -27,10 +24,7 @@ public:
     BaseEditor *openManifestEditor(ManifestModel::ManifestRow manifestField);
     void openLogEntry(const QModelIndex &index);
 
-    void onProjectAdded(Project *project);
-    void onProjectRemoved(Project *project);
-    void setCurrentProject(Project *project);
-    void setCurrentProject(int index);
+    bool setCurrentProject(Project *project);
     void setActionsEnabled(const Project *project);
     void updateWindowForProject(const Project *project);
     void updateRecentMenu();
@@ -53,15 +47,9 @@ private:
     void resetSettings();
     void saveSettings();
 
-    Project *getCurrentProject() const;
-    ProjectWidget *getCurrentProjectWidget() const;
-    BaseEditor *getCurrentProjectTab() const;
+    ProjectsWidget *projectsWidget;
 
-    QMap<Project *, ProjectWidget *> projectWidgets;
-    WelcomeTab *welcome;
-
-    QStackedWidget *tabs;
-    QComboBox *projectsList;
+    ProjectList *projectsList;
     LogView *logView;
     ManifestView *manifestTable;
     ResourcesView *resourcesTree;
@@ -76,13 +64,13 @@ private:
     QDockWidget *dockIcons;
 
     QMenu *menuFile;
+    QMenu *menuEditor;
     QMenu *menuTools;
     QMenu *menuSettings;
     QMenu *menuWindow;
     QMenu *menuHelp;
     QMenu *menuRecent;
     QMenu *menuLanguage;
-    QMenu *menuResource;
     QAction *actionApkOpen;
     QAction *actionApkSave;
     QAction *actionApkExplore;
