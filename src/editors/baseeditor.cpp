@@ -1,9 +1,14 @@
 #include "editors/baseeditor.h"
 #include <QMessageBox>
+#include <QAction>
 
 BaseEditor::BaseEditor(QWidget *parent) : QWidget(parent)
 {
     setModified(false);
+
+    QAction *noAction = new QAction(tr("No actions"));
+    noAction->setEnabled(false);
+    addAction(noAction);
 }
 
 bool BaseEditor::commit()

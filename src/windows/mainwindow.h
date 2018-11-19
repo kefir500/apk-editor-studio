@@ -5,7 +5,6 @@
 #include "widgets/logview.h"
 #include "widgets/manifestview.h"
 #include "widgets/projectwidget.h"
-#include "widgets/resourcemenu.h"
 #include "widgets/resourcesview.h"
 #include "widgets/toolbar.h"
 #include <QMainWindow>
@@ -58,11 +57,6 @@ private:
     ProjectWidget *getCurrentProjectWidget() const;
     BaseEditor *getCurrentProjectTab() const;
 
-    bool saveCurrentTab();
-    bool saveCurrentTabAs();
-    bool replaceCurrentTab();
-    bool exploreCurrentTab();
-
     QMap<Project *, ProjectWidget *> projectWidgets;
     WelcomeTab *welcome;
 
@@ -88,7 +82,7 @@ private:
     QMenu *menuHelp;
     QMenu *menuRecent;
     QMenu *menuLanguage;
-    ResourceMenu *menuResource;
+    QMenu *menuResource;
     QAction *actionApkOpen;
     QAction *actionApkSave;
     QAction *actionApkExplore;

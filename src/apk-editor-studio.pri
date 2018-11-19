@@ -30,6 +30,7 @@ SOURCES += \
     $$PWD/base/device.cpp \
     $$PWD/base/devicesmodel.cpp \
     $$PWD/editors/baseeditor.cpp \
+    $$PWD/editors/fileeditor.cpp \
     $$PWD/editors/codeeditor.cpp \
     $$PWD/editors/imageeditor.cpp \
     $$PWD/editors/projectmanager.cpp \
@@ -69,8 +70,7 @@ SOURCES += \
     $$PWD/windows/aboutdialog.cpp \
     $$PWD/windows/waitdialog.cpp \
     $$PWD/windows/keymanager.cpp \
-    $$PWD/windows/devicemanager.cpp \
-    $$PWD/editors/fileeditor.cpp
+    $$PWD/windows/devicemanager.cpp
 
 HEADERS += \
     $$PWD/apk/project.h \
@@ -104,6 +104,7 @@ HEADERS += \
     $$PWD/base/device.h \
     $$PWD/base/devicesmodel.h \
     $$PWD/editors/baseeditor.h \
+    $$PWD/editors/fileeditor.h \
     $$PWD/editors/codeeditor.h \
     $$PWD/editors/imageeditor.h \
     $$PWD/editors/projectmanager.h \
@@ -146,7 +147,6 @@ HEADERS += \
     $$PWD/windows/aboutdialog.h \
     $$PWD/windows/waitdialog.h \
     $$PWD/windows/keymanager.h \
-    $$PWD/windows/devicemanager.h \
-    $$PWD/editors/fileeditor.h
+    $$PWD/windows/devicemanager.h
 
 INCLUDEPATH += $$PWD

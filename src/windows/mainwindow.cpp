@@ -212,12 +212,7 @@ void MainWindow::initMenus()
     menuFile->addAction(actionApkClose);
     menuFile->addSeparator();
     menuFile->addAction(actionExit);
-    menuResource = new ResourceMenu(this);
-    menuResource->getEditAction()->setVisible(false);
-    menuResource->getReplaceAction()->setShortcut(QKeySequence("Ctrl+R"));
-    menuResource->getSaveAction()->setShortcut(QKeySequence::Save);
-    menuResource->getSaveAsAction()->setShortcut(QKeySequence("Ctrl+Shift+S"));
-    menuBar()->addMenu(menuResource);
+    menuResource = menuBar()->addMenu(QString());
     menuTools = menuBar()->addMenu(QString());
     menuTools->addAction(actionKeyManager);
     menuTools->addAction(actionDeviceManager);
@@ -246,8 +241,8 @@ void MainWindow::initMenus()
     app->toolbar.insert("open-project", actionApkOpen);
     app->toolbar.insert("save-project", actionApkSave);
     app->toolbar.insert("close-project", actionApkClose);
-    app->toolbar.insert("save-resource", menuResource->getSaveAction());
-    app->toolbar.insert("save-resource-as", menuResource->getSaveAsAction());
+//    app->toolbar.insert("save-resource", menuResource->getSaveAction());
+//    app->toolbar.insert("save-resource-as", menuResource->getSaveAsAction());
     app->toolbar.insert("install-project", actionApkInstall);
     app->toolbar.insert("open-contents", actionApkExplore);
     app->toolbar.insert("project-manager", actionProjectManager);
@@ -271,10 +266,6 @@ void MainWindow::initMenus()
     connect(actionApkClose, &QAction::triggered, [=]() { getCurrentProjectWidget()->closeProject(); });
     connect(actionApkExplore, &QAction::triggered, [=]() { getCurrentProjectWidget()->exploreProject(); });
     connect(actionRecentClear, &QAction::triggered, app->recent, &Recent::clear);
-    connect(menuResource, &ResourceMenu::replaceClicked, this, &MainWindow::replaceCurrentTab);
-    connect(menuResource, &ResourceMenu::saveClicked, this, &MainWindow::saveCurrentTab);
-    connect(menuResource, &ResourceMenu::saveAsClicked, this, &MainWindow::saveCurrentTabAs);
-    connect(menuResource, &ResourceMenu::exploreClicked, this, &MainWindow::exploreCurrentTab);
     connect(actionTitleEditor, &QAction::triggered, [=]() { getCurrentProjectWidget()->openTitlesTab(); });
     connect(actionProjectManager, &QAction::triggered, [=]() { getCurrentProjectWidget()->openProjectTab(); });
     connect(actionKeyManager, &QAction::triggered, [=]() {
@@ -343,6 +334,7 @@ void MainWindow::retranslate()
     // Menu Bar:
 
     menuFile->setTitle(tr("&File"));
+    menuResource->setTitle(tr("&Editor"));
     menuTools->setTitle(tr("&Tools"));
     menuSettings->setTitle(tr("&Settings"));
     menuWindow->setTitle(tr("&Window"));
@@ -454,12 +446,15 @@ void MainWindow::onProjectAdded(Project *project)
         }
     });
     connect(projectWidget, &ProjectWidget::currentChanged, [=](int index) {
-        if (project == getCurrentProject()) {
-            if (index != -1 && qobject_cast<FileEditor *>(getCurrentProjectTab())) {
-                menuResource->setEnabled(true);
-            } else {
-                menuResource->setEnabled(false);
-            }
+        Q_UNUSED(index)
+        menuResource->clear();
+        auto actions = projectWidget->currentTab()->actions();
+        if (!actions.isEmpty()) {
+            menuResource->addActions(actions);
+        } else {
+            QAction *noActions = new QAction(tr("No actions"), this);
+            noActions->setEnabled(false);
+            menuResource->addAction(noActions);
         }
     });
 }
@@ -508,7 +503,6 @@ void MainWindow::setActionsEnabled(const Project *project)
     actionApkExplore->setEnabled(false);
     actionProjectManager->setEnabled(false);
     actionTitleEditor->setEnabled(false);
-    menuResource->setEnabled(false);
 
     if (!project) {
         actionApkInstall->setEnabled(true);
@@ -524,10 +518,7 @@ void MainWindow::setActionsEnabled(const Project *project)
         actionTitleEditor->setEnabled(true);
     case Project::ProjectPacking:
     case Project::ProjectSigning:
-    case Project::ProjectOptimizing: {
-        bool tabEditable = qobject_cast<FileEditor *>(getCurrentProjectTab());
-        menuResource->setEnabled(tabEditable);
-    }
+    case Project::ProjectOptimizing:
     case Project::ProjectUnpacking:
         actionApkExplore->setEnabled(true);
     case Project::ProjectEmpty:
@@ -579,41 +570,13 @@ ProjectWidget *MainWindow::getCurrentProjectWidget() const
 
 BaseEditor *MainWindow::getCurrentProjectTab() const
 {
-    auto currentProjectWidget = getCurrentProjectWidget();
-    return currentProjectWidget ? currentProjectWidget->currentTab() : nullptr;
-}
-
-bool MainWindow::saveCurrentTab()
-{
-    return getCurrentProjectTab()->save();
-}
-
-bool MainWindow::saveCurrentTabAs()
-{
-    auto resourceTab = qobject_cast<FileEditor *>(getCurrentProjectTab());
-    if (!resourceTab) {
-        return false;
+    if (getCurrentProject()) {
+        auto currentProjectWidget = getCurrentProjectWidget();
+        if (currentProjectWidget) {
+            return currentProjectWidget->currentTab();
+        }
     }
-    return resourceTab->saveAs();
-}
-
-bool MainWindow::replaceCurrentTab()
-{
-    auto resourceTab = qobject_cast<FileEditor *>(getCurrentProjectTab());
-    if (!resourceTab) {
-        return false;
-    }
-    return resourceTab->replace();
-}
-
-bool MainWindow::exploreCurrentTab()
-{
-    auto resourceTab = qobject_cast<FileEditor *>(getCurrentProjectTab());
-    if (!resourceTab) {
-        return false;
-    }
-    resourceTab->explore();
-    return true;
+    return nullptr;
 }
 
 void MainWindow::changeEvent(QEvent *event)
