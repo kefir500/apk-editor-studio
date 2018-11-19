@@ -92,7 +92,7 @@ Project *ProjectsWidget::hasUnsavedProjects() const
             return project;
         }
     }
-    return false;
+    return nullptr;
 }
 
 Project *ProjectsWidget::getCurrentProject() const
