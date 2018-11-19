@@ -6,7 +6,7 @@ BaseEditor::BaseEditor(QWidget *parent) : QWidget(parent)
 {
     setModified(false);
 
-    QAction *noAction = new QAction(tr("No actions"));
+    QAction *noAction = new QAction(tr("No actions"), this);
     noAction->setEnabled(false);
     addAction(noAction);
 }
