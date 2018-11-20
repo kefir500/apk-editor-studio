@@ -124,11 +124,9 @@ void MainWindow::initWidgets()
     connect(projectsList, &ProjectList::currentProjectChanged, [=](Project *project) {
         setCurrentProject(project);
     });
-    connect(projectsWidget, &ProjectsWidget::tabChanged, [=](BaseEditor *editor) {
-        if (editor) {
-            menuEditor->clear();
-            menuEditor->addActions(editor->actions());
-        }
+    connect(projectsWidget, &ProjectsWidget::tabChanged, [=]() {
+        menuEditor->clear();
+        menuEditor->addActions(projectsWidget->getCurrentTabActions());
     });
     connect(&app->projects, &ProjectsModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight) {
         Q_UNUSED(bottomRight)
@@ -215,6 +213,7 @@ void MainWindow::initMenus()
     menuFile->addSeparator();
     menuFile->addAction(actionExit);
     menuEditor = menuBar()->addMenu(QString());
+    menuEditor->addActions(projectsWidget->getCurrentTabActions());
     menuTools = menuBar()->addMenu(QString());
     menuTools->addAction(actionKeyManager);
     menuTools->addAction(actionDeviceManager);

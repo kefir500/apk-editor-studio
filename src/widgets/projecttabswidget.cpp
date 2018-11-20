@@ -81,7 +81,7 @@ bool ProjectTabsWidget::saveTabs()
 {
     bool result = true;
     for (int index = 0; index < count(); ++index) {
-        BaseEditor *tab = static_cast<BaseEditor *>(widget(index));
+        SaveableEditor *tab = static_cast<SaveableEditor *>(widget(index));
         if (!tab->save()) {
             result = false;
         }
@@ -173,24 +173,27 @@ int ProjectTabsWidget::addTab(BaseEditor *tab)
 {
     const int tabIndex = QTabWidget::addTab(tab, tab->getIcon(), tab->getTitle());
     setCurrentIndex(tabIndex);
-    connect(tab, &BaseEditor::savedStateChanged, [=](bool tabSaved) {
-        // Project save indicator:
-        if (!tabSaved) {
-            project->setModified(true);
-        }
-        // Tab save indicator:
-        const QString indicator = QString(" %1").arg(QChar(0x2022));
-        const int tabIndex = indexOf(tab);
-        QString tabTitle = tabText(tabIndex);
-        const bool titleModified = tabTitle.endsWith(indicator);
-        if (!tabSaved && !titleModified) {
-            tabTitle.append(indicator);
-            setTabText(tabIndex, tabTitle);
-        } else if (tabSaved && titleModified) {
-            tabTitle.chop(indicator.length());
-            setTabText(tabIndex, tabTitle);
-        }
-    });
+    auto saveableTab = qobject_cast<SaveableEditor *>(tab);
+    if (saveableTab) {
+        connect(saveableTab, &SaveableEditor::savedStateChanged, [=](bool tabSaved) {
+            // Project save indicator:
+            if (!tabSaved) {
+                project->setModified(true);
+            }
+            // Tab save indicator:
+            const QString indicator = QString(" %1").arg(QChar(0x2022));
+            const int tabIndex = indexOf(saveableTab);
+            QString tabTitle = tabText(tabIndex);
+            const bool titleModified = tabTitle.endsWith(indicator);
+            if (!tabSaved && !titleModified) {
+                tabTitle.append(indicator);
+                setTabText(tabIndex, tabTitle);
+            } else if (tabSaved && titleModified) {
+                tabTitle.chop(indicator.length());
+                setTabText(tabIndex, tabTitle);
+            }
+        });
+    }
     connect(tab, &BaseEditor::titleChanged, [=](const QString &title) {
         setTabText(indexOf(tab), title);
     });
@@ -202,18 +205,19 @@ int ProjectTabsWidget::addTab(BaseEditor *tab)
 
 bool ProjectTabsWidget::closeTab(BaseEditor *editor)
 {
-    if (editor && editor->commit()) {
-        delete editor;
-        return true;
+    auto saveableTab = qobject_cast<SaveableEditor *>(editor);
+    if (saveableTab && !saveableTab->commit()) {
+        return false;
     }
-    return false;
+    delete editor;
+    return true;
 }
 
 bool ProjectTabsWidget::hasUnsavedTabs() const
 {
     for (int i = 0; i < count(); ++i) {
-        BaseEditor *tab = static_cast<BaseEditor *>(widget(i));
-        if (tab->isModified()) {
+        auto saveableTab = qobject_cast<SaveableEditor *>(widget(i));
+        if (saveableTab && saveableTab->isModified()) {
             return true;
         }
     }

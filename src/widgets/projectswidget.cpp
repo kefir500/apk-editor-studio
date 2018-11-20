@@ -1,4 +1,6 @@
 #include "widgets/projectswidget.h"
+#include "editors/fileeditor.h"
+#include "base/application.h"
 #include <QModelIndex>
 
 ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
@@ -6,9 +8,32 @@ ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
     welcome = new WelcomeTab(this);
     stack = new QStackedWidget(this);
     stack->addWidget(welcome);
+
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
     layout->addWidget(stack);
+
+    actionSave = new QAction(app->loadIcon("save.png"), QString(), this);
+    actionSaveAs = new QAction(app->loadIcon("save-as.png"), QString(), this);
+    actionSave->setEnabled(false);
+    actionSaveAs->setEnabled(false);
+    actionNone = new QAction(QString(), this);
+    actionNone->setEnabled(false);
+    addAction(actionSave);
+    addAction(actionSaveAs);
+    Toolbar::addToPool("save", actionSave);
+    Toolbar::addToPool("save-as", actionSaveAs);
+
+    connect(this, &ProjectsWidget::tabChanged, [=](BaseEditor *tab) {
+        const bool isEditor = qobject_cast<SaveableEditor *>(tab);
+        const bool isFileEditor = qobject_cast<FileEditor *>(tab);
+        actionSave->setEnabled(isEditor);
+        actionSaveAs->setEnabled(isFileEditor);
+    });
+    connect(actionSave, &QAction::triggered, this, &ProjectsWidget::saveCurrentTab);
+    connect(actionSaveAs, &QAction::triggered, this, &ProjectsWidget::saveCurrentTabAs);
+
+    retranslate();
 }
 
 void ProjectsWidget::addProject(Project *project)
@@ -48,37 +73,55 @@ void ProjectsWidget::removeProject(Project *project)
 
 bool ProjectsWidget::saveCurrentProject()
 {
-    return getCurrentTabs()->saveProject();
+    return getCurrentProjectTabs()->saveProject();
 }
 
 bool ProjectsWidget::installCurrentProject()
 {
-    return getCurrentTabs()->installProject();
+    return getCurrentProjectTabs()->installProject();
 }
 
 bool ProjectsWidget::exploreCurrentProject()
 {
-    return getCurrentTabs()->exploreProject();
+    return getCurrentProjectTabs()->exploreProject();
 }
 
 bool ProjectsWidget::closeCurrentProject()
 {
-    return getCurrentTabs()->closeProject();
+    return getCurrentProjectTabs()->closeProject();
+}
+
+bool ProjectsWidget::saveCurrentTab()
+{
+    auto saveableEditor = qobject_cast<SaveableEditor *>(getCurrentTab());
+    if (saveableEditor) {
+        return saveableEditor->save();
+    }
+    return false;
+}
+
+bool ProjectsWidget::saveCurrentTabAs()
+{
+    auto fileEditor = qobject_cast<FileEditor *>(getCurrentTab());
+    if (fileEditor) {
+        return fileEditor->saveAs();
+    }
+    return false;
 }
 
 ProjectManager *ProjectsWidget::openProjectTab()
 {
-    return getCurrentTabs()->openProjectTab();
+    return getCurrentProjectTabs()->openProjectTab();
 }
 
 TitleEditor *ProjectsWidget::openTitlesTab()
 {
-    return getCurrentTabs()->openTitlesTab();
+    return getCurrentProjectTabs()->openTitlesTab();
 }
 
 BaseEditor *ProjectsWidget::openResourceTab(const QModelIndex &index)
 {
-    return getCurrentTabs()->openResourceTab(index);
+    return getCurrentProjectTabs()->openResourceTab(index);
 }
 
 Project *ProjectsWidget::hasUnsavedProjects() const
@@ -97,10 +140,38 @@ Project *ProjectsWidget::hasUnsavedProjects() const
 
 Project *ProjectsWidget::getCurrentProject() const
 {
-    return map.key(getCurrentTabs(), nullptr);
+    return map.key(getCurrentProjectTabs(), nullptr);
 }
 
-ProjectTabsWidget *ProjectsWidget::getCurrentTabs() const
+ProjectTabsWidget *ProjectsWidget::getCurrentProjectTabs() const
 {
     return qobject_cast<ProjectTabsWidget *>(stack->currentWidget());
+}
+
+QList<QAction *> ProjectsWidget::getCurrentTabActions() const
+{
+    auto tab = getCurrentTab();
+    return tab ? tab->actions() : QList<QAction *>({actionNone});
+}
+
+void ProjectsWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        retranslate();
+    } else {
+        QWidget::changeEvent(event);
+    }
+}
+
+BaseEditor *ProjectsWidget::getCurrentTab() const
+{
+    auto tabs = getCurrentProjectTabs();
+    return tabs ? qobject_cast<BaseEditor *>(tabs->currentWidget()) : welcome;
+}
+
+void ProjectsWidget::retranslate()
+{
+    actionSave->setText(tr("&Save"));
+    actionSaveAs->setText(tr("Save &As"));
+    actionNone->setText(tr("No actions"));
 }

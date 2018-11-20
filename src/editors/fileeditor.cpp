@@ -3,9 +3,8 @@
 #include "base/application.h"
 #include "base/utils.h"
 
-FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : BaseEditor(parent), index(index)
+FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : SaveableEditor(parent), index(index)
 {
-    setModified(false);
     icon = index.icon();
 
     // Initialize file watcher:
@@ -21,7 +20,7 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : BaseE
 
     // Initialize menu actions:
 
-    actions().clear();
+    qDeleteAll(actions());
 
     auto separator = [this]() -> QAction * {
         QAction *separator = new QAction(this);

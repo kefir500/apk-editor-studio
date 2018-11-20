@@ -31,12 +31,6 @@ void QuickTab::setTitle(const QString &title)
     label->setText(title);
 }
 
-bool QuickTab::save(const QString &as)
-{
-    Q_UNUSED(as)
-    return true;
-}
-
 QPushButton *QuickTab::addButton(const QString &title)
 {
     const QString btnStyle(
