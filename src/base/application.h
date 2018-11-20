@@ -86,7 +86,6 @@ public:
     ProjectsModel projects;
     Settings *settings; // TODO Check on macOS: See https://github.com/kefir500/apk-icon-editor/commit/6ac051d
     Recent *recent;
-    QMap<QString, QAction *> toolbar;
     QTranslator translator;
     QTranslator translatorQt;
 

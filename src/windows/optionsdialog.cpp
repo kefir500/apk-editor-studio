@@ -97,16 +97,16 @@ void OptionsDialog::load()
     // Toolbar
 
     listToolbarUsed->clear();
-    QMap<QString, QAction *> unusedToolbarActions = app->toolbar;
+    QMap<QString, QAction *> unusedToolbarActions = Toolbar::all();
     QStringList usedToolbarActions = app->settings->getToolbar();
     for (const QString &identifier : usedToolbarActions) {
-        unusedToolbarActions.remove(identifier);
         if (identifier == "separator") {
             listToolbarUsed->addItem(createToolbarSeparatorItem());
         } else if (identifier == "spacer") {
             listToolbarUsed->addItem(createToolbarSpacerItem());
         } else {
-            const QAction *action = app->toolbar.value(identifier);
+            const QAction *action = unusedToolbarActions.value(identifier);
+            unusedToolbarActions.remove(identifier);
             if (action) {
                 QListWidgetItem *item = new QListWidgetItem(action->icon(), action->text().remove('&'));
                 item->setData(PoolListWidget::IdentifierRole, identifier);

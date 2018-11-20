@@ -3,6 +3,8 @@
 #include "base/application.h"
 #include "base/utils.h"
 
+QMap<QString, QAction *> Toolbar::pool;
+
 Toolbar::Toolbar(QWidget *parent) : QToolBar(parent)
 {
     setMovable(false);
@@ -10,6 +12,16 @@ Toolbar::Toolbar(QWidget *parent) : QToolBar(parent)
     const QList<int> availableSizes = {16, 30, 40}; // Hardcoded icon sizes
     const int closestSize = Utils::roundToNearest(app->scale(30, 30).width(), availableSizes);
     setIconSize(QSize(closestSize, closestSize));
+}
+
+QMap<QString, QAction *> Toolbar::all()
+{
+    return pool;
+}
+
+void Toolbar::addToPool(const QString &identifier, QAction *action)
+{
+    pool.insert(identifier, action);
 }
 
 void Toolbar::reinitialize()
@@ -22,7 +34,7 @@ void Toolbar::reinitialize()
         } else if (entry == "spacer") {
             addWidget(new Spacer(this));
         } else {
-            addAction(app->toolbar.value(entry));
+            addAction(pool.value(entry, nullptr));
         }
     }
 }

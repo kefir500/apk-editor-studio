@@ -240,19 +240,17 @@ void MainWindow::initMenus()
 
     toolbar = new Toolbar(this);
     toolbar->setObjectName("Toolbar");
-    app->toolbar.insert("open-project", actionApkOpen);
-    app->toolbar.insert("save-project", actionApkSave);
-    app->toolbar.insert("close-project", actionApkClose);
-//    app->toolbar.insert("save-resource", actionEditorSave);
-//    app->toolbar.insert("save-resource-as", actionEditorSaveAs);
-    app->toolbar.insert("install-project", actionApkInstall);
-    app->toolbar.insert("open-contents", actionApkExplore);
-    app->toolbar.insert("project-manager", actionProjectManager);
-    app->toolbar.insert("title-editor", actionTitleEditor);
-    app->toolbar.insert("device-manager", actionDeviceManager);
-    app->toolbar.insert("key-manager", actionKeyManager);
-    app->toolbar.insert("settings", actionOptions);
-    app->toolbar.insert("donate", actionDonate);
+    Toolbar::addToPool("open-project", actionApkOpen);
+    Toolbar::addToPool("save-project", actionApkSave);
+    Toolbar::addToPool("close-project", actionApkClose);
+    Toolbar::addToPool("install-project", actionApkInstall);
+    Toolbar::addToPool("open-contents", actionApkExplore);
+    Toolbar::addToPool("project-manager", actionProjectManager);
+    Toolbar::addToPool("title-editor", actionTitleEditor);
+    Toolbar::addToPool("device-manager", actionDeviceManager);
+    Toolbar::addToPool("key-manager", actionKeyManager);
+    Toolbar::addToPool("settings", actionOptions);
+    Toolbar::addToPool("donate", actionDonate);
     addToolBar(toolbar);
 
     setActionsEnabled(nullptr);
