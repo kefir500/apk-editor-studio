@@ -396,9 +396,9 @@ void MainWindow::resetSettings()
 {
     if (app->settings->reset(this)) {
         restoreGeometry(QByteArray());
-        restoreState(defaultState);
-        toolbar->reinitialize();
         setInitialSize();
+        toolbar->reinitialize();
+        restoreState(defaultState);
     }
 }
 
