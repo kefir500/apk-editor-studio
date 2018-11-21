@@ -20,10 +20,18 @@ public:
     static QStringList supportedFormats();
 
 protected:
+    void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
+
     ResourceModelIndex index;
 
 private:
+    void retranslate();
+
     QFileSystemWatcher watcher;
+
+    QAction *actionReplace;
+    QAction *actionSaveAs;
+    QAction *actionExplore;
 };
 
 #endif // FILEEDITOR_H

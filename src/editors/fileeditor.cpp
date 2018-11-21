@@ -20,21 +20,17 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Savea
 
     // Initialize menu actions:
 
-    qDeleteAll(actions());
-
     auto separator = [this]() -> QAction * {
         QAction *separator = new QAction(this);
         separator->setSeparator(true);
         return separator;
     };
 
-    QAction *actionReplace = new QAction(app->loadIcon("replace.png"), tr("&Replace Resource..."), this);
-    QAction *actionSave = new QAction(app->loadIcon("save.png"), tr("&Save Resource"), this);
-    QAction *actionSaveAs = new QAction(app->loadIcon("save-as.png"), tr("Save Resource &As..."), this);
-    QAction *actionExplore = new QAction(app->loadIcon("explore.png"), tr("&Open Resource Directory"), this);
+    actionReplace = new QAction(app->loadIcon("replace.png"), QString(), this);
+    actionSaveAs = new QAction(app->loadIcon("save-as.png"), QString(), this);
+    actionExplore = new QAction(app->loadIcon("explore.png"), QString(), this);
 
     actionReplace->setShortcut(QKeySequence("Ctrl+R"));
-    actionSave->setShortcut(QKeySequence::Save);
     actionSaveAs->setShortcut(QKeySequence("Ctrl+Shift+S"));
 
     connect(actionReplace, &QAction::triggered, this, &FileEditor::replace);
@@ -47,6 +43,8 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Savea
     addAction(actionSaveAs);
     addAction(separator());
     addAction(actionExplore);
+
+    retranslate();
 }
 
 bool FileEditor::saveAs()
@@ -74,4 +72,21 @@ void FileEditor::explore() const
 QStringList FileEditor::supportedFormats()
 {
     return QStringList();
+}
+
+void FileEditor::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        retranslate();
+    } else {
+        QWidget::changeEvent(event);
+    }
+}
+
+void FileEditor::retranslate()
+{
+    actionReplace->setText(tr("&Replace Resource..."));
+    actionSave->setText(tr("&Save Resource"));
+    actionSaveAs->setText(tr("Save Resource &As..."));
+    actionExplore->setText(tr("&Open Resource Directory"));
 }
