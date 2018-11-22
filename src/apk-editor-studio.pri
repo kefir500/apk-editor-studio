@@ -136,7 +136,6 @@ HEADERS += \
     $$PWD/widgets/projecttabswidget.h \
     $$PWD/widgets/projectlist.h \
     $$PWD/widgets/projectswidget.h \
-    $$PWD/widgets/editors.h \
     $$PWD/widgets/iconlist.h \
     $$PWD/widgets/filesystemtree.h \
     $$PWD/widgets/resourcestree.h \
