@@ -9,7 +9,7 @@ class IconList : public QListView
 public:
     explicit IconList(QWidget *parent = nullptr);
 
-    IconsProxy *model();
+    IconsProxy *model() const;
     void setModel(IconsProxy *model);
 
 protected:

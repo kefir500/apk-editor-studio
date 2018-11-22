@@ -9,7 +9,7 @@ class ResourcesTree : public QTreeView
 public:
     explicit ResourcesTree(QWidget *parent = nullptr);
 
-    ResourcesModel *model();
+    ResourcesModel *model() const;
     void setModel(ResourcesModel *model);
 };
 

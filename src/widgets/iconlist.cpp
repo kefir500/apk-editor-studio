@@ -14,7 +14,7 @@ IconList::IconList(QWidget *parent) : QListView(parent)
     setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
-IconsProxy *IconList::model()
+IconsProxy *IconList::model() const
 {
     return static_cast<IconsProxy *>(QListView::model());
 }

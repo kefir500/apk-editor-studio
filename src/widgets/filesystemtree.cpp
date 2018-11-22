@@ -6,7 +6,7 @@ FilesystemTree::FilesystemTree(QWidget *parent) : QTreeView(parent)
     setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
-QFileSystemModel *FilesystemTree::model()
+QFileSystemModel *FilesystemTree::model() const
 {
     return static_cast<QFileSystemModel *>(QTreeView::model());
 }

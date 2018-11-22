@@ -9,7 +9,7 @@ ResourcesTree::ResourcesTree(QWidget *parent) : QTreeView(parent)
     setItemDelegate(new DecorationDelegate(QSize(16, 16), this));
 }
 
-ResourcesModel *ResourcesTree::model()
+ResourcesModel *ResourcesTree::model() const
 {
     return static_cast<ResourcesModel *>(QTreeView::model());
 }
