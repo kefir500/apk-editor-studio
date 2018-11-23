@@ -2,6 +2,7 @@
 #define PROJECTSWIDGET_H
 
 #include "widgets/projecttabswidget.h"
+#include "apk/projectsmodel.h"
 #include "editors/welcometab.h"
 #include <QStackedWidget>
 
@@ -11,6 +12,8 @@ class ProjectsWidget : public QWidget
 
 public:
     ProjectsWidget(QWidget *parent = nullptr);
+
+    void setModel(ProjectsModel *model);
 
     void addProject(Project *project);
     bool setCurrentProject(Project *project);
@@ -50,6 +53,8 @@ private:
     QAction *actionSave;
     QAction *actionSaveAs;
     QAction *actionNone;
+
+    ProjectsModel *model;
 };
 
 #endif // PROJECTSWIDGET_H

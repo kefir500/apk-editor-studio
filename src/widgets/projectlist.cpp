@@ -40,5 +40,10 @@ ProjectsModel *ProjectList::model() const
 
 void ProjectList::setModel(ProjectsModel *model)
 {
+    auto previousModel = this->model();
+    if (previousModel) {
+        disconnect(previousModel, &ProjectsModel::added, this, &ProjectList::setCurrentProject);
+    }
     QComboBox::setModel(model);
+    connect(model, &ProjectsModel::added, this, &ProjectList::setCurrentProject);
 }

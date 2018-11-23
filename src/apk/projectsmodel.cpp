@@ -18,9 +18,10 @@ Project *ProjectsModel::open(const QString &filename, bool unpack)
         emit added(project);
     endInsertRows();
 
-    connect(project, &Project::dataChanged, [=]() {
+    connect(project, &Project::changed, [=]() {
         const int row = indexOf(project);
         emit dataChanged(index(row, 0), index(row, ColumnCount - 1));
+        emit changed(project);
     });
 
     return project;

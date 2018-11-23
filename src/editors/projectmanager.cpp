@@ -44,7 +44,7 @@ ProjectManager::ProjectManager(Project *project, QWidget *parent) : QuickTab(par
 
     setEnabled(project->getState() != Project::ProjectEmpty);
     connect(project, &Project::unpacked, this, &ProjectManager::setEnabled, Qt::QueuedConnection);
-    connect(project, &Project::dataChanged, this, [=]() {
+    connect(project, &Project::changed, this, [=]() {
         setTitle(project->getTitle());
     }, Qt::QueuedConnection);
 

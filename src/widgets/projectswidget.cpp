@@ -5,6 +5,8 @@
 
 ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
 {
+    model = nullptr;
+
     welcome = new WelcomeTab(this);
     stack = new QStackedWidget(this);
     stack->addWidget(welcome);
@@ -34,6 +36,17 @@ ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
     connect(actionSaveAs, &QAction::triggered, this, &ProjectsWidget::saveCurrentTabAs);
 
     retranslate();
+}
+
+void ProjectsWidget::setModel(ProjectsModel *model)
+{
+    if (model) {
+        disconnect(model, &ProjectsModel::added, this, &ProjectsWidget::addProject);
+        disconnect(model, &ProjectsModel::removed, this, &ProjectsWidget::removeProject);
+    }
+    this->model = model;
+    connect(model, &ProjectsModel::added, this, &ProjectsWidget::addProject);
+    connect(model, &ProjectsModel::removed, this, &ProjectsWidget::removeProject);
 }
 
 void ProjectsWidget::addProject(Project *project)

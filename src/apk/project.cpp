@@ -269,7 +269,7 @@ bool Project::getModifiedState() const
 void Project::setModified(bool modified)
 {
     isModified = modified;
-    emit dataChanged();
+    emit changed();
 }
 
 void Project::journal(const QString &brief, LogEntry::Type type)
@@ -312,7 +312,7 @@ Tasks::Task *Project::createUnpackTask(const QString &source)
         // Read manifest:
         journal(tr("Reading Android manifest..."));
         initialize();
-        emit dataChanged();
+        emit changed();
         // Done:
         isUnpacked = true;
         emit unpacked(true);
@@ -506,11 +506,11 @@ void Project::setState(State state)
         break;
     }
 
-    emit dataChanged();
+    emit changed();
 }
 
 void Project::setErrored(bool errored)
 {
     isErrored = errored;
-    emit dataChanged();
+    emit changed();
 }

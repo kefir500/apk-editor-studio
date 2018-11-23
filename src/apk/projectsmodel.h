@@ -34,6 +34,7 @@ public:
 
 signals:
     void added(Project *project) const;
+    void changed(Project *project) const;
     void removed(Project *project) const;
 
 private:

@@ -24,6 +24,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     loadSettings();
     initLanguages();
 
+    connect(&app->projects, &ProjectsModel::changed, [=](Project *project) {
+        if (project == projectsWidget->getCurrentProject()) {
+            updateWindowForProject(project);
+        }
+    });
+
     connect(app->recent, &Recent::changed, this, &MainWindow::updateRecentMenu);
     updateRecentMenu();
 
@@ -49,12 +55,19 @@ void MainWindow::initWidgets()
     setInitialSize();
 
     projectsWidget = new ProjectsWidget(this);
+    projectsWidget->setModel(&app->projects);
     setCentralWidget(projectsWidget);
+    connect(projectsWidget, &ProjectsWidget::tabChanged, [=]() {
+        menuEditor->clear();
+        menuEditor->addActions(projectsWidget->getCurrentTabActions());
+    });
 
     QWidget *dockProjectsWidget = new QWidget(this);
     QVBoxLayout *projectsLayout = new QVBoxLayout(dockProjectsWidget);
     projectsList = new ProjectList(this);
     projectsList->setModel(&app->projects);
+    connect(projectsList, &ProjectList::currentProjectChanged, this, &MainWindow::setCurrentProject);
+
     logView = new LogView(this);
     projectsLayout->addWidget(projectsList);
     projectsLayout->addWidget(logView);
@@ -113,26 +126,6 @@ void MainWindow::initWidgets()
     dockResources->raise();
 
     defaultState = saveState();
-
-    connect(&app->projects, &ProjectsModel::added, [=](Project *project) {
-        projectsWidget->addProject(project);
-        projectsList->setCurrentProject(project);
-    });
-    connect(&app->projects, &ProjectsModel::removed, projectsWidget, &ProjectsWidget::removeProject);
-    connect(projectsList, &ProjectList::currentProjectChanged, [=](Project *project) {
-        setCurrentProject(project);
-    });
-    connect(projectsWidget, &ProjectsWidget::tabChanged, [=]() {
-        menuEditor->clear();
-        menuEditor->addActions(projectsWidget->getCurrentTabActions());
-    });
-    connect(&app->projects, &ProjectsModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight) {
-        Q_UNUSED(bottomRight)
-        if (topLeft.row() == projectsList->currentIndex()) {
-            Project *project = static_cast<Project *>(topLeft.internalPointer());
-            updateWindowForProject(project);
-        }
-    });
 }
 
 void MainWindow::initMenus()

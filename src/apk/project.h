@@ -58,7 +58,7 @@ signals:
     void unpacked(bool success) const;
     void packed(bool success) const;
     void installed(bool success) const;
-    void dataChanged() const;
+    void changed() const;
 
 private:
     Tasks::Task *createUnpackTask(const QString &source);
