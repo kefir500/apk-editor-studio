@@ -1,11 +1,11 @@
 #ifndef FILEEDITOR_H
 #define FILEEDITOR_H
 
-#include "editors/saveableeditor.h"
+#include "editors/editor.h"
 #include "apk/resourcemodelindex.h"
 #include <QFileSystemWatcher>
 
-class FileEditor : public SaveableEditor
+class FileEditor : public Editor
 {
     Q_OBJECT
 

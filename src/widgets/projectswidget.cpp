@@ -7,7 +7,7 @@ ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
 {
     model = nullptr;
 
-    welcome = new WelcomeTab(this);
+    welcome = new WelcomeViewer(this);
     stack = new QStackedWidget(this);
     stack->addWidget(welcome);
 
@@ -26,8 +26,8 @@ ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
     Toolbar::addToPool("save", actionSave);
     Toolbar::addToPool("save-as", actionSaveAs);
 
-    connect(this, &ProjectsWidget::tabChanged, [=](BaseEditor *tab) {
-        const bool isEditor = qobject_cast<SaveableEditor *>(tab);
+    connect(this, &ProjectsWidget::tabChanged, [=](Viewer *tab) {
+        const bool isEditor = qobject_cast<Editor *>(tab);
         const bool isFileEditor = qobject_cast<FileEditor *>(tab);
         actionSave->setEnabled(isEditor);
         actionSaveAs->setEnabled(isFileEditor);
@@ -57,7 +57,7 @@ void ProjectsWidget::addProject(Project *project)
         stack->addWidget(tabs);
         connect(tabs, &ProjectTabsWidget::currentChanged, [=](int index) {
             Q_UNUSED(index)
-            auto tab = qobject_cast<BaseEditor *>(tabs->currentWidget());
+            auto tab = qobject_cast<Viewer *>(tabs->currentWidget());
             emit tabChanged(tab);
         });
     }
@@ -68,7 +68,7 @@ bool ProjectsWidget::setCurrentProject(Project *project)
     ProjectTabsWidget *tabs = map.value(project, nullptr);
     if (tabs) {
         stack->setCurrentWidget(tabs);
-        auto tab = qobject_cast<BaseEditor *>(tabs->currentWidget());
+        auto tab = qobject_cast<Viewer *>(tabs->currentWidget());
         emit tabChanged(tab);
         return true;
     } else {
@@ -106,9 +106,9 @@ bool ProjectsWidget::closeCurrentProject()
 
 bool ProjectsWidget::saveCurrentTab()
 {
-    auto saveableEditor = qobject_cast<SaveableEditor *>(getCurrentTab());
-    if (saveableEditor) {
-        return saveableEditor->save();
+    auto editor = qobject_cast<Editor *>(getCurrentTab());
+    if (editor) {
+        return editor->save();
     }
     return false;
 }
@@ -122,7 +122,7 @@ bool ProjectsWidget::saveCurrentTabAs()
     return false;
 }
 
-ProjectManager *ProjectsWidget::openProjectTab()
+ProjectViewer *ProjectsWidget::openProjectTab()
 {
     return getCurrentProjectTabs()->openProjectTab();
 }
@@ -132,7 +132,7 @@ TitleEditor *ProjectsWidget::openTitlesTab()
     return getCurrentProjectTabs()->openTitlesTab();
 }
 
-BaseEditor *ProjectsWidget::openResourceTab(const QModelIndex &index)
+Viewer *ProjectsWidget::openResourceTab(const QModelIndex &index)
 {
     return getCurrentProjectTabs()->openResourceTab(index);
 }
@@ -176,10 +176,10 @@ void ProjectsWidget::changeEvent(QEvent *event)
     }
 }
 
-BaseEditor *ProjectsWidget::getCurrentTab() const
+Viewer *ProjectsWidget::getCurrentTab() const
 {
     auto tabs = getCurrentProjectTabs();
-    return tabs ? qobject_cast<BaseEditor *>(tabs->currentWidget()) : welcome;
+    return tabs ? qobject_cast<Viewer *>(tabs->currentWidget()) : welcome;
 }
 
 void ProjectsWidget::retranslate()

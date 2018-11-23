@@ -20,8 +20,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
-    BaseEditor *openResource(const QModelIndex &index);
-    BaseEditor *openManifestEditor(ManifestModel::ManifestRow manifestField);
+    Viewer *openResource(const QModelIndex &index);
+    Viewer *openManifestEditor(ManifestModel::ManifestRow manifestField);
     void openLogEntry(const QModelIndex &index);
 
     bool setCurrentProject(Project *project);

@@ -4,7 +4,7 @@
 #include <QBoxLayout>
 #include <QHeaderView>
 
-TitleEditor::TitleEditor(const Project *project, QWidget *parent) : SaveableEditor(parent)
+TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(parent)
 {
     title = tr("Application Title");
     icon = app->loadIcon("title.png");

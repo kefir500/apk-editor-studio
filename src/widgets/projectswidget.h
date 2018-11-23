@@ -3,7 +3,7 @@
 
 #include "widgets/projecttabswidget.h"
 #include "apk/projectsmodel.h"
-#include "editors/welcometab.h"
+#include "editors/welcomeviewer.h"
 #include <QStackedWidget>
 
 class ProjectsWidget : public QWidget
@@ -27,9 +27,9 @@ public:
     bool saveCurrentTab();
     bool saveCurrentTabAs();
 
-    ProjectManager *openProjectTab();
+    ProjectViewer *openProjectTab();
     TitleEditor *openTitlesTab();
-    BaseEditor *openResourceTab(const QModelIndex &index);
+    Viewer *openResourceTab(const QModelIndex &index);
 
     Project *hasUnsavedProjects() const;
     Project *getCurrentProject() const;
@@ -37,18 +37,17 @@ public:
     QList<QAction *> getCurrentTabActions() const;
 
 signals:
-    void tabChanged(BaseEditor *tab) const;
+    void tabChanged(Viewer *tab) const;
 
 protected:
     void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    BaseEditor *getCurrentTab() const;
+    Viewer *getCurrentTab() const;
     void retranslate();
 
     QStackedWidget *stack;
-    QMap<Project *, ProjectTabsWidget *> map;
-    WelcomeTab *welcome;
+    WelcomeViewer *welcome;
 
     QAction *actionSave;
     QAction *actionSaveAs;

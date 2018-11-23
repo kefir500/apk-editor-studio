@@ -1,18 +1,18 @@
-#ifndef QUICKTAB_H
-#define QUICKTAB_H
+#ifndef ACTIONVIEWER_H
+#define ACTIONVIEWER_H
 
-#include "editors/baseeditor.h"
+#include "editors/viewer.h"
 #include <QBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <functional>
 
-class QuickTab : public BaseEditor
+class ActionViewer : public Viewer
 {
     Q_OBJECT
 
 public:
-    explicit QuickTab(QWidget *parent = nullptr);
+    explicit ActionViewer(QWidget *parent = nullptr);
     void setTitle(const QString &title);
 
 protected:
@@ -24,4 +24,4 @@ private:
     QLabel *label;
 };
 
-#endif // QUICKTAB_H
+#endif // ACTIONVIEWER_H

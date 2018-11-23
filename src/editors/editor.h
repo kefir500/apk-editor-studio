@@ -1,18 +1,18 @@
-#ifndef SAVEABLEEDITOR_H
-#define SAVEABLEEDITOR_H
+#ifndef EDITOR_H
+#define EDITOR_H
 
-#include "editors/baseeditor.h"
+#include "editors/viewer.h"
 #include <QAction>
 
-class SaveableEditor : public BaseEditor
+class Editor : public Viewer
 {
     Q_OBJECT
 
 public:
-    SaveableEditor(QWidget *parent = nullptr);
+    Editor(QWidget *parent = nullptr);
     virtual bool save(const QString &as = QString()) = 0;
 
-    bool commit();
+    bool finalize();
     bool isModified() const;
 
 signals:
@@ -31,4 +31,4 @@ private:
 
 };
 
-#endif // SAVEABLEEDITOR_H
+#endif // EDITOR_H

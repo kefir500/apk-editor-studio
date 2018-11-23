@@ -1,15 +1,15 @@
-#ifndef PROJECTMANAGER_H
-#define PROJECTMANAGER_H
+#ifndef PROJECTVIEWER_H
+#define PROJECTVIEWER_H
 
-#include "editors/quicktab.h"
+#include "editors/actionviewer.h"
 #include "apk/project.h"
 
-class ProjectManager : public QuickTab
+class ProjectViewer : public ActionViewer
 {
     Q_OBJECT
 
 public:
-    explicit ProjectManager(Project *project, QWidget *parent = nullptr);
+    explicit ProjectViewer(Project *project, QWidget *parent = nullptr);
 
 signals:
     void apkSaveRequested() const;
@@ -31,4 +31,4 @@ private:
     QPushButton *btnInstall;
 };
 
-#endif // PROJECTMANAGER_H
+#endif // PROJECTVIEWER_H

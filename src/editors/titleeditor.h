@@ -1,11 +1,11 @@
 #ifndef TITLEEDITOR_H
 #define TITLEEDITOR_H
 
-#include "editors/saveableeditor.h"
+#include "editors/editor.h"
 #include "apk/titlesmodel.h"
 #include <QTableView>
 
-class TitleEditor : public SaveableEditor
+class TitleEditor : public Editor
 {
     Q_OBJECT
 

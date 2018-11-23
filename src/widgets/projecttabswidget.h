@@ -2,7 +2,7 @@
 #define PROJECTTABSWIDGET_H
 
 #include "apk/resourcemodelindex.h"
-#include "editors/projectmanager.h"
+#include "editors/projectviewer.h"
 #include "editors/titleeditor.h"
 #include <QTabWidget>
 
@@ -13,9 +13,9 @@ class ProjectTabsWidget : public QTabWidget
 public:
     explicit ProjectTabsWidget(Project *project, QWidget *parent = nullptr);
 
-    ProjectManager *openProjectTab();
+    ProjectViewer *openProjectTab();
     TitleEditor *openTitlesTab();
-    BaseEditor *openResourceTab(const ResourceModelIndex &index);
+    Viewer *openResourceTab(const ResourceModelIndex &index);
 
     bool saveTabs();
     bool isUnsaved() const;
@@ -26,10 +26,10 @@ public:
     bool closeProject();
 
 private:
-    int addTab(BaseEditor *tab);    
-    bool closeTab(BaseEditor *editor);
+    int addTab(Viewer *tab);
+    bool closeTab(Viewer *editor);
     bool hasUnsavedTabs() const;
-    BaseEditor *getTabByIdentifier(const QString &identifier) const;
+    Viewer *getTabByIdentifier(const QString &identifier) const;
 
     Project *project;
 };

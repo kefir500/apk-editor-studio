@@ -1,8 +1,8 @@
-#include "editors/saveableeditor.h"
+#include "editors/editor.h"
 #include "base/application.h"
 #include <QMessageBox>
 
-SaveableEditor::SaveableEditor(QWidget *parent) : BaseEditor(parent)
+Editor::Editor(QWidget *parent) : Viewer(parent)
 {
     setModified(false);
 
@@ -15,7 +15,7 @@ SaveableEditor::SaveableEditor(QWidget *parent) : BaseEditor(parent)
     retranslate();
 }
 
-bool SaveableEditor::commit()
+bool Editor::finalize()
 {
     if (isModified()) {
         const int answer = QMessageBox::question(this, QString(), tr("Save the changes?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
@@ -32,18 +32,18 @@ bool SaveableEditor::commit()
     return true;
 }
 
-bool SaveableEditor::isModified() const
+bool Editor::isModified() const
 {
     return modified;
 }
 
-void SaveableEditor::setModified(bool value)
+void Editor::setModified(bool value)
 {
     modified = value;
     emit savedStateChanged(!value);
 }
 
-void SaveableEditor::changeEvent(QEvent *event)
+void Editor::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
@@ -52,7 +52,7 @@ void SaveableEditor::changeEvent(QEvent *event)
     }
 }
 
-void SaveableEditor::retranslate()
+void Editor::retranslate()
 {
     actionSave->setText(tr("&Save"));
 }

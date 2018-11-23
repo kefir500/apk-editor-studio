@@ -1,10 +1,10 @@
-#include "editors/projectmanager.h"
+#include "editors/projectviewer.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include <QEvent>
 
-ProjectManager::ProjectManager(Project *project, QWidget *parent) : QuickTab(parent)
+ProjectViewer::ProjectViewer(Project *project, QWidget *parent) : ActionViewer(parent)
 {
     //: "Project" is a singular noun in this context.
     this->title = tr("Project Manager");
@@ -43,7 +43,7 @@ ProjectManager::ProjectManager(Project *project, QWidget *parent) : QuickTab(par
     });
 
     setEnabled(project->getState() != Project::ProjectEmpty);
-    connect(project, &Project::unpacked, this, &ProjectManager::setEnabled, Qt::QueuedConnection);
+    connect(project, &Project::unpacked, this, &ProjectViewer::setEnabled, Qt::QueuedConnection);
     connect(project, &Project::changed, this, [=]() {
         setTitle(project->getTitle());
     }, Qt::QueuedConnection);
@@ -51,7 +51,7 @@ ProjectManager::ProjectManager(Project *project, QWidget *parent) : QuickTab(par
     retranslate();
 }
 
-void ProjectManager::changeEvent(QEvent *event)
+void ProjectViewer::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
@@ -60,7 +60,7 @@ void ProjectManager::changeEvent(QEvent *event)
     }
 }
 
-void ProjectManager::retranslate()
+void ProjectViewer::retranslate()
 {
     setTitle(project->getTitle());
     tr("Edit APK"); // TODO For future use

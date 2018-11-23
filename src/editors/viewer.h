@@ -1,18 +1,20 @@
-#ifndef BASEEDITOR_H
-#define BASEEDITOR_H
+#ifndef VIEWER_H
+#define VIEWER_H
 
 #include <QWidget>
 #include <QIcon>
 
-class BaseEditor : public QWidget
+class Viewer : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit BaseEditor(QWidget *parent = nullptr) : QWidget(parent) {}
+    explicit Viewer(QWidget *parent = nullptr) : QWidget(parent) {}
 
     const QString &getTitle() const;
     const QIcon &getIcon() const;
+
+    virtual bool finalize();
 
 signals:
     void titleChanged(const QString &title) const;
@@ -23,4 +25,4 @@ protected:
     QIcon icon;
 };
 
-#endif // BASEEDITOR_H
+#endif // VIEWER_H

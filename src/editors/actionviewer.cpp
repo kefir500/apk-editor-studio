@@ -1,10 +1,10 @@
-#include "editors/quicktab.h"
+#include "editors/actionviewer.h"
 #include "base/application.h"
 #include <QPainter>
 #include <QPaintEvent>
 #include <QFontDatabase>
 
-QuickTab::QuickTab(QWidget *parent) : BaseEditor(parent)
+ActionViewer::ActionViewer(QWidget *parent) : Viewer(parent)
 {
     label = new QLabel(this);
 #if defined(Q_OS_WIN)
@@ -26,12 +26,12 @@ QuickTab::QuickTab(QWidget *parent) : BaseEditor(parent)
     layout->addStretch();
 }
 
-void QuickTab::setTitle(const QString &title)
+void ActionViewer::setTitle(const QString &title)
 {
     label->setText(title);
 }
 
-QPushButton *QuickTab::addButton(const QString &title)
+QPushButton *ActionViewer::addButton(const QString &title)
 {
     const QString btnStyle(
         "QPushButton { background: rgb(225, 240, 190); border: none; } "
@@ -48,7 +48,7 @@ QPushButton *QuickTab::addButton(const QString &title)
     return button;
 }
 
-void QuickTab::paintEvent(QPaintEvent *event)
+void ActionViewer::paintEvent(QPaintEvent *event)
 {
     const int w = width();
     const int h = height();

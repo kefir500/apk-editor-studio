@@ -29,15 +29,15 @@ SOURCES += \
     $$PWD/base/password.cpp \
     $$PWD/base/device.cpp \
     $$PWD/base/devicesmodel.cpp \
-    $$PWD/editors/baseeditor.cpp \
-    $$PWD/editors/saveableeditor.cpp \
+    $$PWD/editors/viewer.cpp \
+    $$PWD/editors/actionviewer.cpp \
+    $$PWD/editors/welcomeviewer.cpp \
+    $$PWD/editors/projectviewer.cpp \
+    $$PWD/editors/editor.cpp \
     $$PWD/editors/fileeditor.cpp \
     $$PWD/editors/codeeditor.cpp \
     $$PWD/editors/imageeditor.cpp \
-    $$PWD/editors/projectmanager.cpp \
     $$PWD/editors/titleeditor.cpp \
-    $$PWD/editors/quicktab.cpp \
-    $$PWD/editors/welcometab.cpp \
     $$PWD/tools/executable.cpp \
     $$PWD/tools/java.cpp \
     $$PWD/tools/jar.cpp \
@@ -106,15 +106,15 @@ HEADERS += \
     $$PWD/base/result.h \
     $$PWD/base/device.h \
     $$PWD/base/devicesmodel.h \
-    $$PWD/editors/baseeditor.h \
-    $$PWD/editors/saveableeditor.h \
+    $$PWD/editors/viewer.h \
+    $$PWD/editors/actionviewer.h \
+    $$PWD/editors/welcomeviewer.h \
+    $$PWD/editors/projectviewer.h \
+    $$PWD/editors/editor.h \
     $$PWD/editors/fileeditor.h \
     $$PWD/editors/codeeditor.h \
     $$PWD/editors/imageeditor.h \
-    $$PWD/editors/projectmanager.h \
-    $$PWD/editors/quicktab.h \
     $$PWD/editors/titleeditor.h \
-    $$PWD/editors/welcometab.h \
     $$PWD/tools/executable.h \
     $$PWD/tools/java.h \
     $$PWD/tools/jar.h \

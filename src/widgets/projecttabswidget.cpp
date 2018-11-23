@@ -12,27 +12,27 @@ ProjectTabsWidget::ProjectTabsWidget(Project *project, QWidget *parent) : QTabWi
     setTabsClosable(true);
 
     connect(this, &ProjectTabsWidget::tabCloseRequested, [=](int index) {
-        BaseEditor *tab = static_cast<BaseEditor *>(widget(index));
+        Viewer *tab = static_cast<Viewer *>(widget(index));
         closeTab(tab);
     });
 
     openProjectTab();
 }
 
-ProjectManager *ProjectTabsWidget::openProjectTab()
+ProjectViewer *ProjectTabsWidget::openProjectTab()
 {
     const QString identifier = "project";
-    BaseEditor *existing = getTabByIdentifier(identifier);
+    Viewer *existing = getTabByIdentifier(identifier);
     if (existing) {
         setCurrentIndex(indexOf(existing));
-        return static_cast<ProjectManager *>(existing);
+        return static_cast<ProjectViewer *>(existing);
     }
 
-    ProjectManager *tab = new ProjectManager(project, this);
+    ProjectViewer *tab = new ProjectViewer(project, this);
     tab->setProperty("identifier", identifier);
-    connect(tab, &ProjectManager::titleEditorRequested, this, &ProjectTabsWidget::openTitlesTab);
-    connect(tab, &ProjectManager::apkSaveRequested, this, &ProjectTabsWidget::saveProject);
-    connect(tab, &ProjectManager::apkInstallRequested, this, &ProjectTabsWidget::installProject);
+    connect(tab, &ProjectViewer::titleEditorRequested, this, &ProjectTabsWidget::openTitlesTab);
+    connect(tab, &ProjectViewer::apkSaveRequested, this, &ProjectTabsWidget::saveProject);
+    connect(tab, &ProjectViewer::apkInstallRequested, this, &ProjectTabsWidget::installProject);
     addTab(tab);
     return tab;
 }
@@ -40,7 +40,7 @@ ProjectManager *ProjectTabsWidget::openProjectTab()
 TitleEditor *ProjectTabsWidget::openTitlesTab()
 {
     const QString identifier = "titles";
-    BaseEditor *existing = getTabByIdentifier(identifier);
+    Viewer *existing = getTabByIdentifier(identifier);
     if (existing) {
         setCurrentIndex(indexOf(existing));
         return static_cast<TitleEditor *>(existing);
@@ -52,17 +52,17 @@ TitleEditor *ProjectTabsWidget::openTitlesTab()
     return editor;
 }
 
-BaseEditor *ProjectTabsWidget::openResourceTab(const ResourceModelIndex &index)
+Viewer *ProjectTabsWidget::openResourceTab(const ResourceModelIndex &index)
 {
     const QString path = index.path();
     const QString identifier = path;
-    BaseEditor *existing = getTabByIdentifier(identifier);
+    Viewer *existing = getTabByIdentifier(identifier);
     if (existing) {
         setCurrentIndex(indexOf(existing));
         return existing;
     }
 
-    BaseEditor *editor = nullptr;
+    Editor *editor = nullptr;
     const QString extension = QFileInfo(path).suffix();
     if (CodeEditor::supportedFormats().contains(extension)) {
         editor = new CodeEditor(index, this);
@@ -81,7 +81,7 @@ bool ProjectTabsWidget::saveTabs()
 {
     bool result = true;
     for (int index = 0; index < count(); ++index) {
-        SaveableEditor *tab = static_cast<SaveableEditor *>(widget(index));
+        Editor *tab = static_cast<Editor *>(widget(index));
         if (!tab->save()) {
             result = false;
         }
@@ -169,20 +169,20 @@ bool ProjectTabsWidget::closeProject()
     return app->projects.close(project);
 }
 
-int ProjectTabsWidget::addTab(BaseEditor *tab)
+int ProjectTabsWidget::addTab(Viewer *tab)
 {
     const int tabIndex = QTabWidget::addTab(tab, tab->getIcon(), tab->getTitle());
     setCurrentIndex(tabIndex);
-    auto saveableTab = qobject_cast<SaveableEditor *>(tab);
-    if (saveableTab) {
-        connect(saveableTab, &SaveableEditor::savedStateChanged, [=](bool tabSaved) {
+    auto editor = qobject_cast<Editor *>(tab);
+    if (editor) {
+        connect(editor, &Editor::savedStateChanged, [=](bool tabSaved) {
             // Project save indicator:
             if (!tabSaved) {
                 project->setModified(true);
             }
             // Tab save indicator:
             const QString indicator = QString(" %1").arg(QChar(0x2022));
-            const int tabIndex = indexOf(saveableTab);
+            const int tabIndex = indexOf(editor);
             QString tabTitle = tabText(tabIndex);
             const bool titleModified = tabTitle.endsWith(indicator);
             if (!tabSaved && !titleModified) {
@@ -194,19 +194,18 @@ int ProjectTabsWidget::addTab(BaseEditor *tab)
             }
         });
     }
-    connect(tab, &BaseEditor::titleChanged, [=](const QString &title) {
+    connect(tab, &Viewer::titleChanged, [=](const QString &title) {
         setTabText(indexOf(tab), title);
     });
-    connect(tab, &BaseEditor::iconChanged, [=](const QIcon &icon) {
+    connect(tab, &Viewer::iconChanged, [=](const QIcon &icon) {
         setTabIcon(indexOf(tab), icon);
     });
     return tabIndex;
 }
 
-bool ProjectTabsWidget::closeTab(BaseEditor *editor)
+bool ProjectTabsWidget::closeTab(Viewer *editor)
 {
-    auto saveableTab = qobject_cast<SaveableEditor *>(editor);
-    if (saveableTab && !saveableTab->commit()) {
+    if (!editor->finalize()) {
         return false;
     }
     delete editor;
@@ -216,18 +215,18 @@ bool ProjectTabsWidget::closeTab(BaseEditor *editor)
 bool ProjectTabsWidget::hasUnsavedTabs() const
 {
     for (int i = 0; i < count(); ++i) {
-        auto saveableTab = qobject_cast<SaveableEditor *>(widget(i));
-        if (saveableTab && saveableTab->isModified()) {
+        auto editor = qobject_cast<Editor *>(widget(i));
+        if (editor && editor->isModified()) {
             return true;
         }
     }
     return false;
 }
 
-BaseEditor *ProjectTabsWidget::getTabByIdentifier(const QString &identifier) const
+Viewer *ProjectTabsWidget::getTabByIdentifier(const QString &identifier) const
 {
     for (int index = 0; index < count(); ++index) {
-        BaseEditor *tab = static_cast<BaseEditor *>(widget(index));
+        Viewer *tab = static_cast<Viewer *>(widget(index));
         if (tab->property("identifier") == identifier) {
             return tab;
         }

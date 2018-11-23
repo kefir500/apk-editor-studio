@@ -397,7 +397,7 @@ void MainWindow::saveSettings()
     app->settings->setMainWindowState(saveState());
 }
 
-BaseEditor *MainWindow::openResource(const QModelIndex &index)
+Viewer *MainWindow::openResource(const QModelIndex &index)
 {
     if (!index.model()->hasChildren(index)) {
         return projectsWidget->openResourceTab(index);
@@ -405,7 +405,7 @@ BaseEditor *MainWindow::openResource(const QModelIndex &index)
     return nullptr;
 }
 
-BaseEditor *MainWindow::openManifestEditor(ManifestModel::ManifestRow manifestField)
+Viewer *MainWindow::openManifestEditor(ManifestModel::ManifestRow manifestField)
 {
     if (manifestField == ManifestModel::ApplicationLabel) {
         return projectsWidget->openTitlesTab();

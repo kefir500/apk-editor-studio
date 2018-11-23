@@ -3,7 +3,7 @@
 #include "base/application.h"
 #include "base/utils.h"
 
-FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : SaveableEditor(parent), index(index)
+FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Editor(parent), index(index)
 {
     icon = index.icon();
 
