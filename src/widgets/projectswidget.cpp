@@ -156,15 +156,16 @@ Project *ProjectsWidget::getCurrentProject() const
     return map.key(getCurrentProjectTabs(), nullptr);
 }
 
-ProjectTabsWidget *ProjectsWidget::getCurrentProjectTabs() const
-{
-    return qobject_cast<ProjectTabsWidget *>(stack->currentWidget());
-}
-
 QList<QAction *> ProjectsWidget::getCurrentTabActions() const
 {
     auto tab = getCurrentTab();
-    return tab ? tab->actions() : QList<QAction *>({actionNone});
+    if (tab) {
+        auto actions = tab->actions();
+        if (!actions.isEmpty()) {
+            return actions;
+        }
+    }
+    return {actionNone};
 }
 
 void ProjectsWidget::changeEvent(QEvent *event)
@@ -174,6 +175,11 @@ void ProjectsWidget::changeEvent(QEvent *event)
     } else {
         QWidget::changeEvent(event);
     }
+}
+
+ProjectTabsWidget *ProjectsWidget::getCurrentProjectTabs() const
+{
+    return qobject_cast<ProjectTabsWidget *>(stack->currentWidget());
 }
 
 Viewer *ProjectsWidget::getCurrentTab() const

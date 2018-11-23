@@ -33,7 +33,6 @@ public:
 
     Project *hasUnsavedProjects() const;
     Project *getCurrentProject() const;
-    ProjectTabsWidget *getCurrentProjectTabs() const;
     QList<QAction *> getCurrentTabActions() const;
 
 signals:
@@ -43,8 +42,13 @@ protected:
     void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    ProjectTabsWidget *getCurrentProjectTabs() const;
     Viewer *getCurrentTab() const;
+
     void retranslate();
+
+    ProjectsModel *model;
+    QMap<Project *, ProjectTabsWidget *> map;
 
     QStackedWidget *stack;
     WelcomeViewer *welcome;
@@ -52,8 +56,6 @@ private:
     QAction *actionSave;
     QAction *actionSaveAs;
     QAction *actionNone;
-
-    ProjectsModel *model;
 };
 
 #endif // PROJECTSWIDGET_H
