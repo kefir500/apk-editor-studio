@@ -1,9 +1,12 @@
 #include "widgets/logview.h"
+#include "widgets/logdelegate.h"
 #include "base/application.h"
 #include <QPainter>
 
 LogView::LogView(QWidget *parent) : QListView(parent)
 {
+    setItemDelegate(new LogDelegate(this));
+
     loading = new QVariantAnimation(this);
     loading->setDuration(1000);
     loading->setLoopCount(-1);
@@ -11,6 +14,8 @@ LogView::LogView(QWidget *parent) : QListView(parent)
     loading->setKeyValueAt(0.5, app->getColor(Application::ColorLogoPrimary));
     loading->setKeyValueAt(1, QPalette().color(QPalette::Base));
     loading->start();
+
+    connect(this, &LogView::clicked, this, &LogView::clearSelection);
 }
 
 void LogView::setModel(QAbstractItemModel *model)

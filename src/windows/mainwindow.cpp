@@ -8,8 +8,6 @@
 #include "widgets/resourcestree.h"
 #include "widgets/filesystemtree.h"
 #include "widgets/iconlist.h"
-#include "widgets/logdelegate.h"
-#include "widgets/projectlistitemdelegate.h"
 #include "base/application.h"
 #include <QMenuBar>
 #include <QDockWidget>
@@ -58,10 +56,10 @@ void MainWindow::initWidgets()
     projectsList = new ProjectList(this);
     projectsList->setModel(&app->projects);
     logView = new LogView(this);
-    logView->setItemDelegate(new LogDelegate(this));
     projectsLayout->addWidget(projectsList);
     projectsLayout->addWidget(logView);
     projectsLayout->setMargin(0);
+    connect(logView, &LogView::clicked, this, &MainWindow::openLogEntry);
 
     QWidget *dockResourceWidget = new QWidget(this);
     QVBoxLayout *resourceLayout = new QVBoxLayout(dockResourceWidget);
@@ -135,8 +133,6 @@ void MainWindow::initWidgets()
             updateWindowForProject(project);
         }
     });
-    connect(logView, &QListView::clicked, this, &MainWindow::openLogEntry);
-    connect(logView, &QListView::clicked, logView, &QListView::clearSelection);
 }
 
 void MainWindow::initMenus()
