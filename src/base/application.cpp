@@ -84,6 +84,9 @@ int Application::exec()
 
     connect(this, &Application::messageReceived, [this](const QString &message) {
         if (!message.isEmpty()) {
+            window->setWindowState((window->windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+            window->activateWindow();
+            window->raise();
             const QStringList paths = message.split('\n');
             for (const QString &path : paths) {
                 openApk(path);
