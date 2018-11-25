@@ -28,15 +28,15 @@ public:
     ~Project() Q_DECL_OVERRIDE;
 
     void unpack();
-    void pack(const QString &path);
+    void pack(QString path);
     void install(const QString &serial);
     void saveAndInstall(const QString &path, const QString &serial);
 
     Manifest *initialize();
 
     const QString &getTitle() const;
-    const QString &getOriginalPath() const;
-    const QString &getContentsPath() const;
+    QString getOriginalPath() const;
+    QString getContentsPath() const;
     const Manifest *getManifest() const;
     QIcon getThumbnail() const;
 

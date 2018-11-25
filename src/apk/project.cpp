@@ -15,7 +15,7 @@ Project::Project(const QString &path)
 {
     QFileInfo fileInfo(path);
     title = fileInfo.fileName();
-    originalPath = QDir::toNativeSeparators(fileInfo.canonicalFilePath());
+    originalPath = fileInfo.canonicalFilePath();
     manifest = nullptr;
     isUnpacked = false;
     setState(ProjectEmpty);
@@ -41,7 +41,7 @@ void Project::unpack()
 {
     logModel.clear();
 
-    auto taskOpen = createUnpackTask(originalPath);
+    auto taskOpen = createUnpackTask(getOriginalPath());
 
     connect(taskOpen, &Tasks::Task::started, this, [=]() {
         setErrored(false);
@@ -60,10 +60,11 @@ void Project::unpack()
     taskOpen->run();
 }
 
-void Project::pack(const QString &path)
+void Project::pack(QString path)
 {
     logModel.clear();
 
+    path = QDir::toNativeSeparators(path);
     QFileInfo fileInfo(path);
     const QString directory = fileInfo.absolutePath();
     app->settings->setLastDirectory(directory);
@@ -143,7 +144,7 @@ void Project::install(const QString &serial)
 
 Manifest *Project::initialize()
 {
-    qDebug() << qPrintable(QString("Initializing \"%1\"...").arg(originalPath));
+    qDebug() << qPrintable(QString("Initializing \"%1\"...").arg(getOriginalPath()));
 
     filesystemModel.setRootPath(contentsPath);
 
@@ -201,7 +202,7 @@ Manifest *Project::initialize()
 
             const QStringList allowedIconFiles = {(iconFilename + ".png"), (iconFilename + ".jpg"), (iconFilename + ".gif"), (iconFilename + ".xml")}; // Read more: https://developer.android.com/guide/topics/resources/drawable-resource.html
             if (categoryTitle == iconCategory && allowedIconFiles.contains(resourceFile)) {
-                qDebug() << "Parsed application icon:" << fileNode->getFile()->getFilePath();
+                qDebug() << "Parsed application icon:" << QDir::toNativeSeparators(fileNode->getFile()->getFilePath());
                 iconsProxy.addIcon(fileIndex);
             }
         }
@@ -231,14 +232,14 @@ const QString &Project::getTitle() const
     return title;
 }
 
-const QString &Project::getOriginalPath() const
+QString Project::getOriginalPath() const
 {
-    return originalPath;
+    return QDir::toNativeSeparators(originalPath);
 }
 
-const QString &Project::getContentsPath() const
+QString Project::getContentsPath() const
 {
-    return contentsPath;
+    return QDir::toNativeSeparators(contentsPath);
 }
 
 const Manifest *Project::getManifest() const
@@ -371,7 +372,7 @@ Tasks::Task *Project::createSaveTask(const QString &target) // Combines Pack, Zi
 
 Tasks::Task *Project::createPackTask(const QString &target)
 {
-    const QString source = QDir::toNativeSeparators(getContentsPath());
+    const QString source = getContentsPath();
     const QString frameworks = app->settings->getFrameworksDirectory();
     const bool resources = true;
     const bool sources = !app->settings->getDecompileSources();
