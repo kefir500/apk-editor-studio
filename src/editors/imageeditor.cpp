@@ -36,6 +36,7 @@ ImageEditor::ImageEditor(const ResourceModelIndex &index, QWidget *parent) : Fil
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(view);
     layout->addWidget(controls);
+    layout->setMargin(0);
 
     connect(zoomGroup, &ZoomGroup::zoomIn, view, &GraphicsView::zoomIn);
     connect(zoomGroup, &ZoomGroup::zoomOut, view, &GraphicsView::zoomOut);

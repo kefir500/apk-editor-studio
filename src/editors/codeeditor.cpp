@@ -33,6 +33,7 @@ CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileE
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(editor);
+    layout->setMargin(0);
 
     file = new QFile(filename, this);
     load();
