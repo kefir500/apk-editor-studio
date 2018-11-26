@@ -31,19 +31,20 @@ public:
     TitleEditor *openTitlesTab();
     Viewer *openResourceTab(const QModelIndex &index);
 
-    Project *hasUnsavedProjects() const;
+    bool hasUnsavedProjects();
     Project *getCurrentProject() const;
     QList<QAction *> getCurrentTabActions() const;
 
 signals:
-    void tabChanged(Viewer *tab) const;
+    void currentProjectChanged(Project *project) const;
+    void currentTabChanged(Viewer *tab) const;
 
 protected:
     void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
     ProjectTabsWidget *getCurrentProjectTabs() const;
-    Viewer *getCurrentTab() const;
+    Viewer *getCurrentProjectTab() const;
 
     void retranslate();
 

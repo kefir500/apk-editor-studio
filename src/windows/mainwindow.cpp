@@ -57,7 +57,13 @@ void MainWindow::initWidgets()
     projectsWidget = new ProjectsWidget(this);
     projectsWidget->setModel(&app->projects);
     setCentralWidget(projectsWidget);
-    connect(projectsWidget, &ProjectsWidget::tabChanged, [=]() {
+    connect(projectsWidget, &ProjectsWidget::currentProjectChanged, [=](Project *project) {
+        setCurrentProject(project);
+        projectsList->blockSignals(true);
+        projectsList->setCurrentProject(project);
+        projectsList->blockSignals(false);
+    });
+    connect(projectsWidget, &ProjectsWidget::currentTabChanged, [=]() {
         menuEditor->clear();
         menuEditor->addActions(projectsWidget->getCurrentTabActions());
     });
@@ -66,7 +72,12 @@ void MainWindow::initWidgets()
     QVBoxLayout *projectsLayout = new QVBoxLayout(dockProjectsWidget);
     projectsList = new ProjectList(this);
     projectsList->setModel(&app->projects);
-    connect(projectsList, &ProjectList::currentProjectChanged, this, &MainWindow::setCurrentProject);
+    connect(projectsList, &ProjectList::currentProjectChanged, [=](Project *project) {
+        setCurrentProject(project);
+        projectsWidget->blockSignals(true);
+        projectsWidget->setCurrentProject(project);
+        projectsWidget->blockSignals(false);
+    });
 
     logView = new LogView(this);
     projectsLayout->addWidget(projectsList);
@@ -424,7 +435,6 @@ void MainWindow::openLogEntry(const QModelIndex &index)
 bool MainWindow::setCurrentProject(Project *project)
 {
     updateWindowForProject(project);
-    projectsWidget->setCurrentProject(project);
     if (!project) {
         return false;
     }
@@ -548,9 +558,8 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    Project *unsaved = projectsWidget->hasUnsavedProjects();
+    const bool unsaved = projectsWidget->hasUnsavedProjects();
     if (unsaved) {
-        projectsList->setCurrentProject(unsaved);
         const QString question = tr("You have unsaved changes.\nDo you want to discard them and exit?");
         const int answer = QMessageBox::question(this, QString(), question, QMessageBox::Discard, QMessageBox::Cancel);
         if (answer != QMessageBox::Discard) {

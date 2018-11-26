@@ -45,5 +45,6 @@ void ProjectList::setModel(ProjectsModel *model)
         disconnect(previousModel, &ProjectsModel::added, this, &ProjectList::setCurrentProject);
     }
     QComboBox::setModel(model);
+    disconnect(model, &ProjectsModel::rowsInserted, this, nullptr); // Prevent QComboBox from setting default index
     connect(model, &ProjectsModel::added, this, &ProjectList::setCurrentProject);
 }

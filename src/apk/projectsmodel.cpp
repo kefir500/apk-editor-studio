@@ -15,8 +15,8 @@ Project *ProjectsModel::open(const QString &filename, bool unpack)
 
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
         projects.append(project);
-        emit added(project);
     endInsertRows();
+    emit added(project);
 
     connect(project, &Project::changed, [=]() {
         const int row = indexOf(project);
