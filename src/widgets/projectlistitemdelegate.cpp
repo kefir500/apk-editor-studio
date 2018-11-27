@@ -7,7 +7,7 @@
 
 ProjectListItemDelegate::ProjectListItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
-    iconReady = app->loadPixmap("state-ready.png");
+    iconIdle = app->loadPixmap("state-idle.png");
     iconUnpacking = app->loadPixmap("state-open.png");
     iconPacking = app->loadPixmap("state-save.png");
     iconInstalling = app->loadPixmap("state-install.png");
@@ -29,25 +29,25 @@ void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 
     // Prepare state icon:
 
-    const int projectState = index.data(ProjectsModel::ProjectStateRole).toInt();
-    const bool projectError = index.data(ProjectsModel::ProjectErrorRole).toBool();
+    const int currentProjectAction = index.data(ProjectsModel::ProjectActionRole).toInt();
+    const bool lastActionFailed = index.data(ProjectsModel::ProjectFailedRole).toBool();
     QIcon stateIcon;
-    if (projectError) {
+    if (lastActionFailed) {
         stateIcon = iconError;
     } else {
-        switch (projectState) {
-        case Project::ProjectReady:
-            stateIcon = iconReady;
+        switch (currentProjectAction) {
+        case ProjectState::ProjectIdle:
+            stateIcon = iconIdle;
             break;
-        case Project::ProjectUnpacking:
+        case ProjectState::ProjectUnpacking:
             stateIcon = iconUnpacking;
             break;
-        case Project::ProjectPacking:
-        case Project::ProjectSigning:
-        case Project::ProjectOptimizing:
+        case ProjectState::ProjectPacking:
+        case ProjectState::ProjectSigning:
+        case ProjectState::ProjectOptimizing:
             stateIcon = iconPacking;
             break;
-        case Project::ProjectInstalling:
+        case ProjectState::ProjectInstalling:
             stateIcon = iconInstalling;
             break;
         }

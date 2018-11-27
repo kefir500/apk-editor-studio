@@ -77,10 +77,13 @@ QVariant ProjectsModel::data(const QModelIndex &index, int role) const
                     QIcon thumbnail = project->getThumbnail();
                     return !thumbnail.isNull() ? thumbnail : app->loadPixmap("loading.png");
             }
-        } else if (role == ProjectStateRole) {
-            return project->getState();
-        } else if (role == ProjectErrorRole) {
-            return project->getErroredState();
+        } else {
+            switch (role) {
+                case ProjectActionRole:   return project->getState().getCurrentAction();
+                case ProjectUnpackedRole: return project->getState().isUnpacked();
+                case ProjectModifiedRole: return project->getState().isModified();
+                case ProjectFailedRole:   return project->getState().isLastActionFailed();
+            }
         }
     }
     return QVariant();

@@ -16,8 +16,10 @@ public:
     };
 
     enum ProjectRole {
-        ProjectStateRole = Qt::UserRole + 1,
-        ProjectErrorRole
+        ProjectActionRole = Qt::UserRole + 1,
+        ProjectUnpackedRole,
+        ProjectModifiedRole,
+        ProjectFailedRole
     };
 
     ~ProjectsModel() Q_DECL_OVERRIDE;

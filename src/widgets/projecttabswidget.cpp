@@ -91,7 +91,7 @@ bool ProjectTabsWidget::saveTabs()
 
 bool ProjectTabsWidget::isUnsaved() const
 {
-    return project->getModifiedState() || hasUnsavedTabs();
+    return project->getState().isModified() || hasUnsavedTabs();
 }
 
 bool ProjectTabsWidget::saveProject()
@@ -160,7 +160,7 @@ bool ProjectTabsWidget::exploreProject()
 
 bool ProjectTabsWidget::closeProject()
 {
-    if (project->getModifiedState()) {
+    if (project->getState().isModified()) {
         const int answer = QMessageBox::question(this, QString(), tr("Are you sure you want to close this APK?\nAny unsaved changes will be lost."));
         if (answer != QMessageBox::Yes) {
             return false;

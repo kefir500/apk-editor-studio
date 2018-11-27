@@ -1,7 +1,8 @@
 SOURCES += \
     $$PWD/apk/project.cpp \
-    $$PWD/apk/manifest.cpp \
+    $$PWD/apk/projectstate.cpp \
     $$PWD/apk/projectsmodel.cpp \
+    $$PWD/apk/manifest.cpp \
     $$PWD/apk/xmlnode.cpp \
     $$PWD/apk/xmlmodel.cpp \
     $$PWD/apk/resourcesmodel.cpp \
@@ -77,8 +78,9 @@ SOURCES += \
 
 HEADERS += \
     $$PWD/apk/project.h \
-    $$PWD/apk/manifest.h \
+    $$PWD/apk/projectstate.h \
     $$PWD/apk/projectsmodel.h \
+    $$PWD/apk/manifest.h \
     $$PWD/apk/xmlnode.h \
     $$PWD/apk/xmlmodel.h \
     $$PWD/apk/resourcesmodel.h \

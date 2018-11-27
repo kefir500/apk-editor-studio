@@ -451,33 +451,17 @@ void MainWindow::setActionsEnabled(const Project *project)
 {
     actionApkSave->setEnabled(false);
     actionApkClose->setEnabled(false);
-    actionApkInstall->setEnabled(false);
+    actionApkInstall->setEnabled(true); // For ability to install external APK
     actionApkExplore->setEnabled(false);
     actionProjectManager->setEnabled(false);
     actionTitleEditor->setEnabled(false);
-
-    if (!project) {
-        actionApkInstall->setEnabled(true);
-        return;
-    }
-
-    switch (project->getState()) {
-    case Project::ProjectReady:
-        actionApkClose->setEnabled(true);
-    case Project::ProjectInstalling:
-        actionApkSave->setEnabled(true);
-        actionApkInstall->setEnabled(true);
-        actionTitleEditor->setEnabled(true);
-    case Project::ProjectPacking:
-    case Project::ProjectSigning:
-    case Project::ProjectOptimizing:
-    case Project::ProjectUnpacking:
-        actionApkExplore->setEnabled(true);
-    case Project::ProjectEmpty:
+    if (project) {
+        actionApkSave->setEnabled(project->getState().canSave());
+        actionApkClose->setEnabled(project->getState().canClose());
+        actionApkInstall->setEnabled(project->getState().canInstall());
+        actionApkExplore->setEnabled(project->getState().canExplore());
+        actionTitleEditor->setEnabled(project->getState().canEdit());
         actionProjectManager->setEnabled(true);
-        if (project->getErroredState()) {
-            actionApkClose->setEnabled(true);
-        }
     }
 }
 
@@ -485,7 +469,7 @@ void MainWindow::updateWindowForProject(const Project *project)
 {
     if (project) {
         setWindowTitle(QString("%1 [*]").arg(project->getOriginalPath()));
-        setWindowModified(project->getModifiedState());
+        setWindowModified(project->getState().isModified());
         setActionsEnabled(project);
     } else {
         setWindowTitle(QString());

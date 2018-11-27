@@ -42,12 +42,9 @@ ProjectViewer::ProjectViewer(Project *project, QWidget *parent) : ActionViewer(p
         emit apkInstallRequested();
     });
 
-    setEnabled(project->getState() != Project::ProjectEmpty);
-    connect(project, &Project::unpacked, this, &ProjectViewer::setEnabled, Qt::QueuedConnection);
-    connect(project, &Project::changed, this, [=]() {
-        setTitle(project->getTitle());
-    }, Qt::QueuedConnection);
+    connect(project, &Project::changed, this, &ProjectViewer::onProjectUpdated, Qt::QueuedConnection);
 
+    onProjectUpdated();
     retranslate();
 }
 
@@ -58,6 +55,16 @@ void ProjectViewer::changeEvent(QEvent *event)
     } else {
         QWidget::changeEvent(event);
     }
+}
+
+void ProjectViewer::onProjectUpdated()
+{
+    setTitle(project->getTitle());
+    btnEditTitle->setEnabled(project->getState().canEdit());
+    btnEditIcon->setEnabled(project->getState().canEdit());
+    btnExplore->setEnabled(project->getState().canExplore());
+    btnSave->setEnabled(project->getState().canSave());
+    btnInstall->setEnabled(project->getState().canInstall());
 }
 
 void ProjectViewer::retranslate()

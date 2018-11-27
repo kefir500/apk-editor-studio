@@ -20,6 +20,7 @@ protected:
     void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    void onProjectUpdated();
     void retranslate();
 
     Project *project;

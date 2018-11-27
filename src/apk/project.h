@@ -5,6 +5,7 @@
 #include "apk/manifestmodel.h"
 #include "apk/iconsproxy.h"
 #include "apk/logmodel.h"
+#include "apk/projectstate.h"
 #include "base/tasks.h"
 #include <QIcon>
 #include <QFileSystemModel>
@@ -14,16 +15,6 @@ class Project : public QObject
     Q_OBJECT
 
 public:
-    enum State {
-        ProjectEmpty,
-        ProjectReady,
-        ProjectUnpacking,
-        ProjectPacking,
-        ProjectSigning,
-        ProjectOptimizing,
-        ProjectInstalling
-    };
-
     Project(const QString &path);
     ~Project() Q_DECL_OVERRIDE;
 
@@ -39,11 +30,7 @@ public:
     QString getContentsPath() const;
     const Manifest *getManifest() const;
     QIcon getThumbnail() const;
-
-    State getState() const;
-    bool getErroredState() const;
-    bool getModifiedState() const;
-    void setModified(bool modified);
+    const ProjectState &getState() const;
 
     void journal(const QString &brief, LogEntry::Type type = LogEntry::Information);
     void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
@@ -70,13 +57,7 @@ private:
 
     const Keystore *getKeystore() const;
 
-    void setState(State state);
-    void setErrored(bool isErrored);
-
-    State state;
-    bool isErrored;
-    bool isUnpacked;
-    bool isModified;
+    ProjectState state;
 
     QString title;
     QString originalPath;

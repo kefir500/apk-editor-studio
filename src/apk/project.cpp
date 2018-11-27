@@ -17,11 +17,11 @@ Project::Project(const QString &path)
     title = fileInfo.fileName();
     originalPath = fileInfo.canonicalFilePath();
     manifest = nullptr;
-    isUnpacked = false;
-    setState(ProjectEmpty);
-    setErrored(false);
-    setModified(false);
     iconsProxy.setSourceModel(&resourcesModel);
+    connect(&state, &ProjectState::changed, [this]() {
+        logModel.setLoadingState(state.getCurrentAction() != ProjectState::ProjectIdle);
+        emit changed();
+    });
 }
 
 Project::~Project()
@@ -44,17 +44,17 @@ void Project::unpack()
     auto taskOpen = createUnpackTask(getOriginalPath());
 
     connect(taskOpen, &Tasks::Task::started, this, [=]() {
-        setErrored(false);
+        state.setLastActionFailed(false);
     }, Qt::QueuedConnection);
 
     connect(taskOpen, &Tasks::Task::success, this, [=]() {
-        setState(ProjectReady);
+        state.setCurrentAction(ProjectState::ProjectIdle);
         journal(tr("Done."), LogEntry::Success);
     }, Qt::QueuedConnection);
 
     connect(taskOpen, &Tasks::Task::error, this, [=]() {
-        setState(ProjectEmpty);
-        setErrored(true);
+        state.setCurrentAction(ProjectState::ProjectIdle);
+        state.setLastActionFailed(true);
     }, Qt::QueuedConnection);
 
     taskOpen->run();
@@ -72,18 +72,18 @@ void Project::pack(QString path)
     auto taskSave = createSaveTask(path);
 
     connect(taskSave, &Tasks::Batch::started, this, [=]() {
-        setErrored(false);
+        state.setLastActionFailed(false);
     }, Qt::QueuedConnection);
 
     connect(taskSave, &Tasks::Batch::success, this, [=]() {
-        setState(ProjectReady);
-        setModified(false);
+        state.setCurrentAction(ProjectState::ProjectIdle);
+        state.setModified(false);
         journal(tr("Done."), LogEntry::Success);
     }, Qt::QueuedConnection);
 
     connect(taskSave, &Tasks::Batch::error, this, [=]() {
-        setState(ProjectReady);
-        setErrored(true);
+        state.setCurrentAction(ProjectState::ProjectIdle);
+        state.setLastActionFailed(true);
     }, Qt::QueuedConnection);
 
     taskSave->run();
@@ -103,17 +103,17 @@ void Project::saveAndInstall(const QString &path, const QString &serial)
     tasks->add(createInstallTask(serial), true);
 
     connect(tasks, &Tasks::Batch::started, this, [=]() {
-        setErrored(false);
+        state.setLastActionFailed(false);
     }, Qt::QueuedConnection);
 
     connect(tasks, &Tasks::Batch::success, this, [=]() {
-        setState(ProjectReady);
+        state.setCurrentAction(ProjectState::ProjectIdle);
         journal(tr("Done."), LogEntry::Success);
     }, Qt::QueuedConnection);
 
     connect(tasks, &Tasks::Batch::error, this, [=]() {
-        setState(ProjectReady);
-        setErrored(true);
+        state.setCurrentAction(ProjectState::ProjectIdle);
+        state.setLastActionFailed(true);
     }, Qt::QueuedConnection);
 
     tasks->run();
@@ -126,17 +126,17 @@ void Project::install(const QString &serial)
     auto taskInstall = createInstallTask(serial);
 
     connect(taskInstall, &Tasks::Install::started, this, [=]() {
-        setErrored(false);
+        state.setLastActionFailed(false);
     }, Qt::QueuedConnection);
 
     connect(taskInstall, &Tasks::Install::success, this, [=]() {
-        setState(ProjectReady);
+        state.setCurrentAction(ProjectState::ProjectIdle);
         journal(tr("Done."), LogEntry::Success);
     }, Qt::QueuedConnection);
 
     connect(taskInstall, &Tasks::Install::error, this, [=]() {
-        setState(isUnpacked ? ProjectReady : ProjectEmpty);
-        setErrored(true);
+        state.setCurrentAction(ProjectState::ProjectIdle);
+        state.setLastActionFailed(true);
     }, Qt::QueuedConnection);
 
     taskInstall->run();
@@ -209,17 +209,17 @@ Manifest *Project::initialize()
     }
 
     connect(&resourcesModel, &ResourcesModel::dataChanged, [=] () {
-        setModified(true);
+        state.setModified(true);
     });
     connect(&filesystemModel, &QFileSystemModel::dataChanged, [=] () {
-        setModified(true);
+        state.setModified(true);
     });
     connect(&iconsProxy, &IconsProxy::dataChanged, [=] () {
-        setModified(true);
+        state.setModified(true);
     });
     connect(&manifestModel, &ManifestModel::dataChanged, [=] (const QModelIndex &, const QModelIndex &, const QVector<int> &roles) {
         if (roles.contains(Qt::DisplayRole) || roles.contains(Qt::EditRole)) {
-            setModified(true);
+            state.setModified(true);
         }
     });
 
@@ -252,25 +252,9 @@ QIcon Project::getThumbnail() const
     return iconsProxy.getIcon();
 }
 
-Project::State Project::getState() const
+const ProjectState &Project::getState() const
 {
     return state;
-}
-
-bool Project::getErroredState() const
-{
-    return isErrored;
-}
-
-bool Project::getModifiedState() const
-{
-    return isModified;
-}
-
-void Project::setModified(bool modified)
-{
-    isModified = modified;
-    emit changed();
 }
 
 void Project::journal(const QString &brief, LogEntry::Type type)
@@ -305,17 +289,14 @@ Tasks::Task *Project::createUnpackTask(const QString &source)
     connect(taskUnpack, &Tasks::Pack::started, this, [=]() {
         journal(tr("Unpacking APK..."));
         qDebug() << qPrintable(QString("Unpacking\n  from: %1\n  to:   %2\n").arg(source, target));
-        setState(ProjectUnpacking);
-        setErrored(false);
+        state.setCurrentAction(ProjectState::ProjectUnpacking);
+        state.setLastActionFailed(false);
     }, Qt::QueuedConnection);
 
     connect(taskUnpack, &Tasks::Unpack::success, this, [=]() {
-        // Read manifest:
         journal(tr("Reading Android manifest..."));
         initialize();
-        emit changed();
-        // Done:
-        isUnpacked = true;
+        state.setUnpacked(true);
         emit unpacked(true);
     }, Qt::QueuedConnection);
 
@@ -363,7 +344,7 @@ Tasks::Task *Project::createSaveTask(const QString &target) // Combines Pack, Zi
     }, Qt::QueuedConnection);
 
     connect(taskSave, &Tasks::Batch::error, this, [=]() {
-        setModified(false);
+        state.setModified(false);
         emit packed(false);
     }, Qt::QueuedConnection);
 
@@ -382,7 +363,7 @@ Tasks::Task *Project::createPackTask(const QString &target)
     connect(taskPack, &Tasks::Pack::started, this, [=]() {
         journal(tr("Packing APK..."));
         qDebug() << qPrintable(QString("Packing\n  from: %1\n  to:   %2\n").arg(source, target));
-        setState(ProjectPacking);
+        state.setCurrentAction(ProjectState::ProjectPacking);
     }, Qt::QueuedConnection);
 
     connect(taskPack, &Tasks::Pack::error, this, [=](const QString &message) {
@@ -397,7 +378,7 @@ Tasks::Task *Project::createZipalignTask(const QString &target)
     auto taskZipalign = new Tasks::Align(target);
 
     connect(taskZipalign, &Tasks::Align::started, this, [=]() {
-        setState(ProjectOptimizing);
+        state.setCurrentAction(ProjectState::ProjectOptimizing);
         journal(tr("Optimizing APK..."));
     }, Qt::QueuedConnection);
 
@@ -417,7 +398,7 @@ Tasks::Task *Project::createSignTask(const QString &target, const Keystore *keys
     });
 
     connect(taskSign, &Tasks::Sign::started, this, [=]() {
-        setState(ProjectSigning);
+        state.setCurrentAction(ProjectState::ProjectSigning);
         journal(tr("Signing APK..."));
     }, Qt::QueuedConnection);
 
@@ -434,7 +415,7 @@ Tasks::Task *Project::createInstallTask(const QString &serial)
 
     connect(taskInstall, &Tasks::Install::started, this, [=]() {
         journal(tr("Installing APK..."));
-        setState(ProjectInstalling);
+        state.setCurrentAction(ProjectState::ProjectInstalling);
     }, Qt::QueuedConnection);
 
     connect(taskInstall, &Tasks::Install::success, this, [=]() {
@@ -491,27 +472,4 @@ const Keystore *Project::getKeystore() const
        keystore->keyPassword = "123456";
     }
     return keystore;
-}
-
-void Project::setState(State state)
-{
-    this->state = state;
-
-    switch (state) {
-    case ProjectEmpty:
-    case ProjectReady:
-        logModel.setLoadingState(false);
-        break;
-    default:
-        logModel.setLoadingState(true);
-        break;
-    }
-
-    emit changed();
-}
-
-void Project::setErrored(bool errored)
-{
-    isErrored = errored;
-    emit changed();
 }
