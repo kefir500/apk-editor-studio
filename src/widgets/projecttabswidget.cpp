@@ -175,11 +175,11 @@ int ProjectTabsWidget::addTab(Viewer *tab)
     setCurrentIndex(tabIndex);
     auto editor = qobject_cast<Editor *>(tab);
     if (editor) {
-        connect(editor, &Editor::savedStateChanged, [=](bool tabSaved) {
+        connect(editor, &Editor::saved, [=]() {
             // Project save indicator:
-            if (!tabSaved) {
-                project->setModified(true);
-            }
+            const_cast<ProjectState &>(project->getState()).setModified(true);
+        });
+        connect(editor, &Editor::savedStateChanged, [=](bool tabSaved) {
             // Tab save indicator:
             const QString indicator = QString(" %1").arg(QChar(0x2022));
             const int tabIndex = indexOf(editor);

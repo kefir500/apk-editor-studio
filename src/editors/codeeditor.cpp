@@ -74,6 +74,7 @@ bool CodeEditor::save(const QString &as)
         stream << editor->toPlainText();
         if (as.isEmpty()) {
             setModified(false);
+            emit saved();
         }
         result = true;
     } else {

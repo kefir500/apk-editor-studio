@@ -79,12 +79,14 @@ void ImageEditor::setImage(const QPixmap &image)
 bool ImageEditor::save(const QString &as)
 {
     if (as.isEmpty()) {
-        const bool success = pixmapItem->pixmap().save(index.path());
-        setModified(!success);
-        return success;
+        if (!pixmapItem->pixmap().save(index.path())) {
+            return false;
+        }
+        setModified(false);
+        emit saved();
+        return true;
     } else {
-        const bool success = pixmapItem->pixmap().save(as);
-        return success;
+        return pixmapItem->pixmap().save(as);
     }
 }
 

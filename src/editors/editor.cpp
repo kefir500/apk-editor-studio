@@ -9,7 +9,9 @@ Editor::Editor(QWidget *parent) : Viewer(parent)
     qDeleteAll(actions());
     actionSave = new QAction(app->loadIcon("save.png"), QString(), this);
     actionSave->setShortcut(QKeySequence::Save);
-    connect(actionSave, &QAction::triggered, [=]() { save(); });
+    connect(actionSave, &QAction::triggered, [this]() {
+        save();
+    });
     addAction(actionSave);
 
     retranslate();

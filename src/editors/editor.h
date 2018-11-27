@@ -12,10 +12,11 @@ public:
     Editor(QWidget *parent = nullptr);
     virtual bool save(const QString &as = QString()) = 0;
 
-    bool finalize();
+    bool finalize() Q_DECL_OVERRIDE;
     bool isModified() const;
 
 signals:
+    void saved() const;
     void savedStateChanged(bool saved) const;
 
 protected:
