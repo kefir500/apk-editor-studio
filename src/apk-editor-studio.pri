@@ -67,7 +67,6 @@ SOURCES += \
     $$PWD/widgets/projectlistitemdelegate.cpp \
     $$PWD/widgets/poollistwidget.cpp \
     $$PWD/widgets/resourcesview.cpp \
-    $$PWD/widgets/resourcemenu.cpp \
     $$PWD/windows/mainwindow.cpp \
     $$PWD/windows/dialogs.cpp \
     $$PWD/windows/optionsdialog.cpp \
@@ -147,7 +146,6 @@ HEADERS += \
     $$PWD/widgets/projectlistitemdelegate.h \
     $$PWD/widgets/poollistwidget.h \
     $$PWD/widgets/resourcesview.h \
-    $$PWD/widgets/resourcemenu.h \
     $$PWD/windows/mainwindow.h \
     $$PWD/windows/dialogs.h \
     $$PWD/windows/optionsdialog.h \

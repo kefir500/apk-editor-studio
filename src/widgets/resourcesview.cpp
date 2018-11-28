@@ -1,6 +1,7 @@
 #include "widgets/resourcesview.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
+#include <QMenu>
 
 ResourcesView::ResourcesView(QAbstractItemView *view, QWidget *parent) : QWidget(parent), view(view)
 {
@@ -16,7 +17,7 @@ ResourcesView::ResourcesView(QAbstractItemView *view, QWidget *parent) : QWidget
     connect(view, &QAbstractItemView::customContextMenuRequested, [=](const QPoint &point) {
         const QModelIndex index = view->indexAt(point);
         if (index.isValid() && !view->model()->hasChildren(index)) {
-            auto menu = generateContextMenu(index, view);
+            auto menu = generateContextMenu(index);
             if (menu) {
                 menu->exec(view->viewport()->mapToGlobal(point));
             }
@@ -29,34 +30,38 @@ void ResourcesView::setModel(QAbstractItemModel *model)
     view->setModel(model);
 }
 
-QSharedPointer<ResourceMenu> ResourcesView::generateContextMenu(const ResourceModelIndex &resourceIndex, QWidget *parent)
+QSharedPointer<QMenu> ResourcesView::generateContextMenu(const ResourceModelIndex &resourceIndex)
 {
     const QString resourcePath = resourceIndex.path();
     if (resourcePath.isEmpty()) {
-        return QSharedPointer<ResourceMenu>(nullptr);
+        return QSharedPointer<QMenu>(nullptr);
     }
 
-    auto menu = new ResourceMenu(parent);
-    menu->getSaveAction()->setVisible(false);
+    auto menu = new QMenu(this);
 
-    menu->connect(menu, &ResourceMenu::editClicked, [=]() {
+    menu->addAction(app->loadIcon("edit.png"), tr("&Edit Resource"),  [=]() {
         emit editRequested(resourceIndex);
     });
 
-    menu->connect(menu, &ResourceMenu::replaceClicked, [=]() {
-        if (Dialogs::replaceFile(resourcePath, parent)) {
+    menu->addSeparator();
+
+    menu->addAction(app->loadIcon("replace.png"), tr("&Replace Resource..."), [=]() {
+        if (Dialogs::replaceFile(resourcePath, this)) {
             auto model = const_cast<QAbstractItemModel *>(resourceIndex.model());
             emit model->dataChanged(resourceIndex, resourceIndex);
         }
     });
 
-    menu->connect(menu, &ResourceMenu::saveAsClicked, [=]() {
-        Dialogs::copyFile(resourcePath, parent);
+    menu->addAction(app->loadIcon("save-as.png"), tr("Save Resource &As..."), [=]() {
+        Dialogs::copyFile(resourcePath, this);
     });
 
-    menu->connect(menu, &ResourceMenu::exploreClicked, [=]() {
+    menu->addSeparator();
+
+    //: "Resource" is a singular noun in this context.
+    menu->addAction(app->loadIcon("explore.png"), tr("&Open Resource Directory"), [=]() {
         app->explore(resourcePath);
     });
 
-    return QSharedPointer<ResourceMenu>(menu);
+    return QSharedPointer<QMenu>(menu);
 }

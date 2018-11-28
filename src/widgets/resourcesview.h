@@ -1,7 +1,6 @@
 #ifndef RESOURCESVIEW_H
 #define RESOURCESVIEW_H
 
-#include "widgets/resourcemenu.h"
 #include "apk/resourcemodelindex.h"
 #include <QAbstractItemView>
 
@@ -23,7 +22,7 @@ signals:
     void editRequested(const QModelIndex &index) const;
 
 private:
-    QSharedPointer<ResourceMenu> generateContextMenu(const ResourceModelIndex &resourceIndex, QWidget *parent = nullptr);
+    QSharedPointer<QMenu> generateContextMenu(const ResourceModelIndex &resourceIndex);
 
     QAbstractItemView *view;
 };
