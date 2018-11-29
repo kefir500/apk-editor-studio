@@ -73,8 +73,9 @@ private:
     QMenu *menuLanguage;
     QAction *actionApkOpen;
     QAction *actionApkSave;
-    QAction *actionApkExplore;
     QAction *actionApkInstall;
+    QAction *actionApkInstallExternal;
+    QAction *actionApkExplore;
     QAction *actionApkClose;
     QAction *actionExit;
     QAction *actionRecentClear;

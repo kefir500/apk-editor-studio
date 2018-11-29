@@ -147,12 +147,14 @@ void MainWindow::initMenus()
 
     actionApkOpen = new QAction(app->loadIcon("open.png"), QString(), this);
     actionApkOpen->setShortcut(QKeySequence::Open);
-    actionApkExplore = new QAction(app->loadIcon("explore.png"), QString(), this);
-    actionApkExplore->setShortcut(QKeySequence("Ctrl+E"));
     actionApkSave = new QAction(app->loadIcon("pack.png"), QString(), this);
     actionApkSave->setShortcut(QKeySequence("Ctrl+Alt+S"));
-    actionApkInstall = new QAction(app->loadIcon("device.png"), QString(), this);
+    actionApkInstall = new QAction(app->loadIcon("install.png"), QString(), this);
     actionApkInstall->setShortcut(QKeySequence("Ctrl+I"));
+    actionApkInstallExternal = new QAction(app->loadIcon("install.png"), QString(), this);
+    actionApkInstallExternal->setShortcut(QKeySequence("Ctrl+Shift+I"));
+    actionApkExplore = new QAction(app->loadIcon("explore.png"), QString(), this);
+    actionApkExplore->setShortcut(QKeySequence("Ctrl+E"));
     actionApkClose = new QAction(app->loadIcon("close-project.png"), QString(), this);
     actionApkClose->setShortcut(QKeySequence("Ctrl+W"));
     actionExit = new QAction(QIcon(app->loadIcon("close.png")), QString(), this);
@@ -172,7 +174,7 @@ void MainWindow::initMenus()
     actionKeyManager->setIcon(app->loadIcon("key.png"));
     actionKeyManager->setShortcut(QKeySequence("Ctrl+K"));
     actionDeviceManager = new QAction(this);
-    actionDeviceManager->setIcon(app->loadIcon("device.png"));
+    actionDeviceManager->setIcon(app->loadIcon("devices.png"));
     actionDeviceManager->setShortcut(QKeySequence("Ctrl+D"));
     actionProjectManager = new QAction(this);
     actionProjectManager->setIcon(app->loadIcon("project.png"));
@@ -204,10 +206,12 @@ void MainWindow::initMenus()
     menuFile->addAction(actionApkOpen);
     menuFile->addMenu(menuRecent);
     menuFile->addSeparator();
-    menuFile->addAction(actionApkExplore);
-    menuFile->addSeparator();
     menuFile->addAction(actionApkSave);
+    menuFile->addSeparator();
     menuFile->addAction(actionApkInstall);
+    menuFile->addAction(actionApkInstallExternal);
+    menuFile->addSeparator();
+    menuFile->addAction(actionApkExplore);
     menuFile->addSeparator();
     menuFile->addAction(actionApkClose);
     menuFile->addSeparator();
@@ -241,9 +245,9 @@ void MainWindow::initMenus()
     toolbar->setObjectName("Toolbar");
     Toolbar::addToPool("open-project", actionApkOpen);
     Toolbar::addToPool("save-project", actionApkSave);
-    Toolbar::addToPool("close-project", actionApkClose);
     Toolbar::addToPool("install-project", actionApkInstall);
     Toolbar::addToPool("open-contents", actionApkExplore);
+    Toolbar::addToPool("close-project", actionApkClose);
     Toolbar::addToPool("project-manager", actionProjectManager);
     Toolbar::addToPool("title-editor", actionTitleEditor);
     Toolbar::addToPool("device-manager", actionDeviceManager);
@@ -258,12 +262,10 @@ void MainWindow::initMenus()
 
     connect(actionApkOpen, &QAction::triggered, [=]() { Dialogs::openApk(this); });
     connect(actionApkSave, &QAction::triggered, projectsWidget, &ProjectsWidget::saveCurrentProject);
-    connect(actionApkInstall, &QAction::triggered, [=]() {
-        const bool isProjectOpen = projectsWidget->getCurrentProject();
-        isProjectOpen ? projectsWidget->installCurrentProject() : app->installExternalApk();
-    });
-    connect(actionApkClose, &QAction::triggered, projectsWidget, &ProjectsWidget::closeCurrentProject);
+    connect(actionApkInstall, &QAction::triggered, projectsWidget, &ProjectsWidget::installCurrentProject);
+    connect(actionApkInstallExternal, &QAction::triggered, app, &Application::installExternalApk);
     connect(actionApkExplore, &QAction::triggered, projectsWidget, &ProjectsWidget::exploreCurrentProject);
+    connect(actionApkClose, &QAction::triggered, projectsWidget, &ProjectsWidget::closeCurrentProject);
     connect(actionRecentClear, &QAction::triggered, app->recent, &Recent::clear);
     connect(actionTitleEditor, &QAction::triggered, projectsWidget, &ProjectsWidget::openTitlesTab);
     connect(actionProjectManager, &QAction::triggered, projectsWidget, &ProjectsWidget::openProjectTab);
@@ -342,10 +344,11 @@ void MainWindow::retranslate()
     // File Menu:
 
     actionApkOpen->setText(tr("&Open APK..."));
-    actionApkExplore->setText(tr("Open Con&tents"));
     actionApkSave->setText(tr("Save A&PK..."));
-    actionApkClose->setText(tr("&Close APK"));
     actionApkInstall->setText(tr("&Install APK..."));
+    actionApkInstallExternal->setText(tr("&Install External APK..."));
+    actionApkExplore->setText(tr("Open Con&tents"));
+    actionApkClose->setText(tr("&Close APK"));
     actionExit->setText(tr("E&xit"));
 
     // Recent Menu:
@@ -449,20 +452,12 @@ bool MainWindow::setCurrentProject(Project *project)
 
 void MainWindow::setActionsEnabled(const Project *project)
 {
-    actionApkSave->setEnabled(false);
-    actionApkClose->setEnabled(false);
-    actionApkInstall->setEnabled(true); // For ability to install external APK
-    actionApkExplore->setEnabled(false);
-    actionProjectManager->setEnabled(false);
-    actionTitleEditor->setEnabled(false);
-    if (project) {
-        actionApkSave->setEnabled(project->getState().canSave());
-        actionApkClose->setEnabled(project->getState().canClose());
-        actionApkInstall->setEnabled(project->getState().canInstall());
-        actionApkExplore->setEnabled(project->getState().canExplore());
-        actionTitleEditor->setEnabled(project->getState().canEdit());
-        actionProjectManager->setEnabled(true);
-    }
+    actionApkSave->setEnabled(project ? project->getState().canSave() : false);
+    actionApkInstall->setEnabled(project ? project->getState().canInstall() : false);
+    actionApkExplore->setEnabled(project ? project->getState().canExplore() : false);
+    actionApkClose->setEnabled(project ? project->getState().canClose() : false);
+    actionTitleEditor->setEnabled(project ? project->getState().canEdit() : false);
+    actionProjectManager->setEnabled(true);
 }
 
 void MainWindow::updateWindowForProject(const Project *project)

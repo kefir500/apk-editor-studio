@@ -281,7 +281,7 @@ void OptionsDialog::initialize()
     fileboxAdb = new FileBox(QString(), QString(), false, this);
     //: "Device" is a plural noun in this context.
     QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
-    btnDeviceManager->setIcon(app->loadIcon("device.png"));
+    btnDeviceManager->setIcon(app->loadIcon("devices.png"));
     btnDeviceManager->setMinimumHeight(app->scale(30));
     connect(btnDeviceManager, &QPushButton::clicked, [=]() {
         DeviceManager deviceManager(this);

@@ -11,6 +11,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
 {
     //: "Device" is a plural noun in this context.
     setWindowTitle(tr("Device Manager"));
+    setWindowIcon(app->loadIcon("devices.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     resize(app->scale(560, 300));
 
@@ -70,7 +71,6 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     connect(this, &DeviceManager::accepted, &deviceModel, &DevicesModel::save);
 
     setCurrentDevice(nullptr);
-    show();
     refreshDevices();
 }
 
@@ -83,10 +83,11 @@ void DeviceManager::refreshDevices()
 const Device *DeviceManager::getDevice()
 {
     setWindowTitle(tr("Install APK"));
+    setWindowIcon(app->loadIcon("install.png"));
 
     QPushButton *btnInstall = dialogButtons->button(QDialogButtonBox::Ok);
     btnInstall->setText(tr("Install"));
-    btnInstall->setIcon(app->loadIcon("device.png"));
+    btnInstall->setIcon(app->loadIcon("install.png"));
     btnInstall->setEnabled(false);
 
     connect(deviceList->selectionModel(), &QItemSelectionModel::currentChanged, [=](const QModelIndex &index) {
