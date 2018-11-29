@@ -28,8 +28,8 @@ public:
     const QString &getTitle() const;
     QString getOriginalPath() const;
     QString getContentsPath() const;
-    const Manifest *getManifest() const;
     QIcon getThumbnail() const;
+    const Manifest *getManifest() const;
     const ProjectState &getState() const;
 
     void journal(const QString &brief, LogEntry::Type type = LogEntry::Information);

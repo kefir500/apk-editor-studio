@@ -15,7 +15,7 @@ Project::Project(const QString &path)
 {
     QFileInfo fileInfo(path);
     title = fileInfo.fileName();
-    originalPath = fileInfo.canonicalFilePath();
+    originalPath = fileInfo.absoluteFilePath();
     manifest = nullptr;
     iconsProxy.setSourceModel(&resourcesModel);
     connect(&state, &ProjectState::changed, [this]() {
@@ -242,14 +242,14 @@ QString Project::getContentsPath() const
     return QDir::toNativeSeparators(contentsPath);
 }
 
-const Manifest *Project::getManifest() const
-{
-    return manifest;
-}
-
 QIcon Project::getThumbnail() const
 {
     return iconsProxy.getIcon();
+}
+
+const Manifest *Project::getManifest() const
+{
+    return manifest;
 }
 
 const ProjectState &Project::getState() const
