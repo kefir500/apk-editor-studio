@@ -30,7 +30,8 @@ QString Dialogs::getSaveFilename(QWidget *parent, const QString &defaultPath, co
 {
     const QString path = makePath(defaultPath);
     const QString filter = makeFilter(defaultPath, formats);
-    return QFileDialog::getSaveFileName(parent, QString(), path, filter);
+    QString defaultFilter = FileFormat::fromFilename(path).getFilterString();
+    return QFileDialog::getSaveFileName(parent, QString(), path, filter, &defaultFilter);
 }
 
 QStringList Dialogs::getOpenFilenames(QWidget *parent, const QString &defaultPath, const FileFormatList &formats)
