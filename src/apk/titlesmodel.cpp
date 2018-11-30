@@ -83,9 +83,11 @@ bool TitlesModel::setData(const QModelIndex &index, const QVariant &value, int r
     if (index.isValid() && role == Qt::EditRole) {
         const int row = index.row();
         TitleNode *title = nodes.at(row);
-        title->node->setValue(value.toString());
-        emit dataChanged(index, index);
-        return true;
+        if (title->node->getValue() != value) {
+            title->node->setValue(value.toString());
+            emit dataChanged(index, index);
+            return true;
+        }
     }
     return false;
 }

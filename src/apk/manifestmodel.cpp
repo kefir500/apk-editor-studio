@@ -18,11 +18,36 @@ bool ManifestModel::setData(const QModelIndex &index, const QVariant &value, int
         if (role == Qt::EditRole) {
             const int row = index.row();
             switch (row) {
-                case ApplicationLabel: manifest->setApplicationLabel(value.toString()); break;
-                case VersionCode:      manifest->setVersionCode(value.toInt()); break;
-                case VersionName:      manifest->setVersionName(value.toString()); break;
-                case MinimumSdk:       manifest->setMinSdk(value.toInt()); break;
-                case TargetSdk:        manifest->setTargetSdk(value.toInt()); break;
+            case ApplicationLabel:
+                if (manifest->getApplicationLabel() == value) {
+                    return false;
+                }
+                manifest->setApplicationLabel(value.toString());
+                break;
+            case VersionCode:
+                if (manifest->getVersionCode() == value) {
+                    return false;
+                }
+                manifest->setVersionCode(value.toInt());
+                break;
+            case VersionName:
+                if (manifest->getVersionName() == value) {
+                    return false;
+                }
+                manifest->setVersionName(value.toString());
+                break;
+            case MinimumSdk:
+                if (manifest->getMinSdk() == value) {
+                    return false;
+                }
+                manifest->setMinSdk(value.toInt());
+                break;
+            case TargetSdk:
+                if (manifest->getTargetSdk() == value) {
+                    return false;
+                }
+                manifest->setTargetSdk(value.toInt());
+                break;
             }
         } else if (role >= Qt::UserRole) {
             userdata[index.row()][role] = value;
