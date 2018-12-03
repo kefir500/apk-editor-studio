@@ -266,6 +266,7 @@ void MainWindow::initMenus()
     connect(actionApkInstallExternal, &QAction::triggered, app, &Application::installExternalApk);
     connect(actionApkExplore, &QAction::triggered, projectsWidget, &ProjectsWidget::exploreCurrentProject);
     connect(actionApkClose, &QAction::triggered, projectsWidget, &ProjectsWidget::closeCurrentProject);
+    connect(actionExit, &QAction::triggered, this, &MainWindow::close);
     connect(actionRecentClear, &QAction::triggered, app->recent, &Recent::clear);
     connect(actionTitleEditor, &QAction::triggered, projectsWidget, &ProjectsWidget::openTitlesTab);
     connect(actionProjectManager, &QAction::triggered, projectsWidget, &ProjectsWidget::openProjectTab);
