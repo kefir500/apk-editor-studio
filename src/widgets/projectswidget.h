@@ -4,7 +4,7 @@
 #include "widgets/projecttabswidget.h"
 #include "apk/projectsmodel.h"
 #include "editors/welcomeviewer.h"
-#include <QStackedWidget>
+#include <QStackedLayout>
 
 class ProjectsWidget : public QWidget
 {
@@ -51,7 +51,7 @@ private:
     ProjectsModel *model;
     QMap<Project *, ProjectTabsWidget *> map;
 
-    QStackedWidget *stack;
+    QStackedLayout *stack;
     WelcomeViewer *welcome;
 
     QAction *actionSave;

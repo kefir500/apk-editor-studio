@@ -1,19 +1,16 @@
 #include "widgets/projectswidget.h"
 #include "editors/fileeditor.h"
 #include "base/application.h"
-#include <QModelIndex>
 
 ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
 {
     model = nullptr;
 
     welcome = new WelcomeViewer(this);
-    stack = new QStackedWidget(this);
-    stack->addWidget(welcome);
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(0);
-    layout->addWidget(stack);
+    stack = new QStackedLayout(this);
+    stack->setMargin(0);
+    stack->addWidget(welcome);
 
     actionSave = new QAction(app->loadIcon("save.png"), QString(), this);
     actionSaveAs = new QAction(app->loadIcon("save-as.png"), QString(), this);
@@ -25,6 +22,8 @@ ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
     addAction(actionSaveAs);
     Toolbar::addToPool("save", actionSave);
     Toolbar::addToPool("save-as", actionSaveAs);
+    connect(actionSave, &QAction::triggered, this, &ProjectsWidget::saveCurrentTab);
+    connect(actionSaveAs, &QAction::triggered, this, &ProjectsWidget::saveCurrentTabAs);
 
     connect(this, &ProjectsWidget::currentTabChanged, [=](Viewer *tab) {
         const bool isEditor = qobject_cast<Editor *>(tab);
@@ -32,8 +31,6 @@ ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
         actionSave->setEnabled(isEditor);
         actionSaveAs->setEnabled(isFileEditor);
     });
-    connect(actionSave, &QAction::triggered, this, &ProjectsWidget::saveCurrentTab);
-    connect(actionSaveAs, &QAction::triggered, this, &ProjectsWidget::saveCurrentTabAs);
 
     retranslate();
 }
