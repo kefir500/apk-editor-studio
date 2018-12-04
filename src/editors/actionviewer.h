@@ -2,10 +2,9 @@
 #define ACTIONVIEWER_H
 
 #include "editors/viewer.h"
+#include "widgets/elidedlabel.h"
 #include <QBoxLayout>
-#include <QLabel>
 #include <QPushButton>
-#include <functional>
 
 class ActionViewer : public Viewer
 {
@@ -21,7 +20,7 @@ protected:
 
 private:
     QVBoxLayout *layout;
-    QLabel *label;
+    ElidedLabel *label;
 };
 
 #endif // ACTIONVIEWER_H

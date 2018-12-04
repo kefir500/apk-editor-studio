@@ -6,7 +6,7 @@
 
 ActionViewer::ActionViewer(QWidget *parent) : Viewer(parent)
 {
-    label = new QLabel(this);
+    label = new ElidedLabel(this);
 #if defined(Q_OS_WIN)
     label->setFont(QFont("Segoe UI", 14));
 #elif defined(Q_OS_OSX)
@@ -21,6 +21,7 @@ ActionViewer::ActionViewer(QWidget *parent) : Viewer(parent)
 
     layout = new QVBoxLayout(this);
     layout->setMargin(64);
+    layout->setSpacing(6);
     layout->addStretch();
     layout->addWidget(label);
     layout->addStretch();
@@ -34,7 +35,7 @@ void ActionViewer::setTitle(const QString &title)
 QPushButton *ActionViewer::addButton(const QString &title)
 {
     const QString btnStyle(
-        "QPushButton { background: rgb(225, 240, 190); border: none; } "
+        "QPushButton { background: rgb(225, 240, 190); border: none; padding: 0 20px } "
         "QPushButton:hover { background: rgb(215, 230, 180); }"
         "QPushButton:pressed { background: rgb(205, 220, 170); }"
     );
@@ -42,9 +43,7 @@ QPushButton *ActionViewer::addButton(const QString &title)
     button->setText(title);
     button->setMinimumHeight(app->scale(34));
     button->setStyleSheet(btnStyle);
-    layout->removeItem(layout->itemAt(layout->count() - 1));
-    layout->addWidget(button);
-    layout->addStretch();
+    layout->insertWidget(layout->count() - 1, button);
     return button;
 }
 

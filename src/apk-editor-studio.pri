@@ -55,6 +55,7 @@ SOURCES += \
     $$PWD/widgets/spacer.cpp \
     $$PWD/widgets/decorationdelegate.cpp \
     $$PWD/widgets/gradientwidget.cpp \
+    $$PWD/widgets/elidedlabel.cpp \
     $$PWD/widgets/projecttabswidget.cpp \
     $$PWD/widgets/projectlist.cpp \
     $$PWD/widgets/projectswidget.cpp \
@@ -134,6 +135,7 @@ HEADERS += \
     $$PWD/widgets/spacer.h \
     $$PWD/widgets/decorationdelegate.h \
     $$PWD/widgets/gradientwidget.h \
+    $$PWD/widgets/elidedlabel.h \
     $$PWD/widgets/projecttabswidget.h \
     $$PWD/widgets/projectlist.h \
     $$PWD/widgets/projectswidget.h \
