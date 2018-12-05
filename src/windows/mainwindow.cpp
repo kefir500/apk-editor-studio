@@ -59,9 +59,7 @@ void MainWindow::initWidgets()
     setCentralWidget(projectsWidget);
     connect(projectsWidget, &ProjectsWidget::currentProjectChanged, [=](Project *project) {
         setCurrentProject(project);
-        projectsList->blockSignals(true);
         projectsList->setCurrentProject(project);
-        projectsList->blockSignals(false);
     });
     connect(projectsWidget, &ProjectsWidget::currentTabChanged, [=]() {
         menuEditor->clear();
@@ -74,9 +72,7 @@ void MainWindow::initWidgets()
     projectsList->setModel(&app->projects);
     connect(projectsList, &ProjectList::currentProjectChanged, [=](Project *project) {
         setCurrentProject(project);
-        projectsWidget->blockSignals(true);
         projectsWidget->setCurrentProject(project);
-        projectsWidget->blockSignals(false);
     });
 
     logView = new LogView(this);
