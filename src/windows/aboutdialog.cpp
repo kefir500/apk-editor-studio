@@ -68,7 +68,7 @@ GradientWidget *AboutDialog::createAboutTab()
     text->setText(
         QString("<h4>%1</h4>").arg(app->getTitleAndVersion()) +
         QString("<p>%1 %2</p>").arg(tr("Author:"), "Alexander Gorishnyak") +
-        QString("<p><table>") +
+        QString("<p><table style=\"margin-left: -2px;\">") +
         QString(tableRow).arg(tr("Website:"), app->getWebPage()) +
         QString(tableRow).arg(tr("Bug Tracker:"), app->getIssuesPage()) +
         QString(tableRow).arg(tr("Translation:"), app->getTranslatePage()) +
