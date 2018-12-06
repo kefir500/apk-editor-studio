@@ -155,6 +155,7 @@ void MainWindow::initMenus()
     actionApkClose->setShortcut(QKeySequence("Ctrl+W"));
     actionExit = new QAction(QIcon(app->loadIcon("close.png")), QString(), this);
     actionExit->setShortcut(QKeySequence::Quit);
+    actionExit->setMenuRole(QAction::QuitRole);
 
     // Recent Menu:
 
@@ -184,6 +185,7 @@ void MainWindow::initMenus()
     actionOptions = new QAction(this);
     actionOptions->setIcon(app->loadIcon("settings.png"));
     actionOptions->setShortcut(QKeySequence("Ctrl+P"));
+    actionOptions->setMenuRole(QAction::PreferencesRole);
     menuLanguage = new QMenu(this);
     actionSettingsReset = new QAction(this);
     actionSettingsReset->setIcon(app->loadIcon("close.png"));
@@ -194,7 +196,9 @@ void MainWindow::initMenus()
     actionUpdate = new QAction(app->loadIcon("update.png"), QString(), this);
     actionDonate = new QAction(app->loadIcon("donate.png"), QString(), this);
     actionAbout = new QAction(app->loadIcon("application.png"), QString(), this);
+    actionAbout->setMenuRole(QAction::AboutRole);
     actionAboutQt = new QAction(app->loadIcon("qt.png"), QString(), this);
+    actionAboutQt->setMenuRole(QAction::AboutQtRole);
 
     // Menu Bar:
 
