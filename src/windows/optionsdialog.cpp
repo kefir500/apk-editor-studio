@@ -179,7 +179,9 @@ void OptionsDialog::changeEvent(QEvent *event)
 #ifdef QT_DEBUG
         qDebug() << "TODO Unwanted behavior: this event is fired twice";
 #endif
+        const int currentPage = pageList->currentRow();
         initialize();
+        pageList->setCurrentRow(currentPage);
     } else {
         QWidget::changeEvent(event);
     }
