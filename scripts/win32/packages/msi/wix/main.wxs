@@ -84,10 +84,11 @@
                   <File Name="application.png" Id="IconApplication16" />
                   <File Name="close.png" Id="IconClose16" />
                   <File Name="close-project.png" Id="IconCloseProject16" />
-                  <File Name="device.png" Id="IconDevice16" />
+                  <File Name="devices.png" Id="IconDevices16" />
                   <File Name="donate.png" Id="IconDonate16" />
                   <File Name="edit.png" Id="IconEdit16" />
                   <File Name="explore.png" Id="IconExplore16" />
+                  <File Name="install.png" Id="IconInstall16" />
                   <File Name="key.png" Id="IconKey16" />
                   <File Name="more.png" Id="IconMore16" />
                   <File Name="open.png" Id="IconOpen16" />
@@ -119,10 +120,11 @@
                 <Component Id="Icons30Component" Guid="E001659C-3A29-424B-8037-8228AEEB219B">
                   <File Name="close.png" Id="IconClose30" />
                   <File Name="close-project.png" Id="IconCloseProject30" />
-                  <File Name="device.png" Id="IconDevice30" />
+                  <File Name="devices.png" Id="IconDevices30" />
                   <File Name="donate.png" Id="IconDonate30" />
                   <File Name="edit.png" Id="IconEdit30" />
                   <File Name="explore.png" Id="IconExplore30" />
+                  <File Name="install.png" Id="IconInstall30" />
                   <File Name="key.png" Id="IconKey30" />
                   <File Name="open.png" Id="IconOpen30" />
                   <File Name="pack.png" Id="IconPack30" />
@@ -154,10 +156,11 @@
                 <Component Id="Icons40Component" Guid="415AF5F6-5D55-4D64-B357-FCD7ADBB92A6">
                   <File Name="close.png" Id="IconClose40" />
                   <File Name="close-project.png" Id="IconCloseProject40" />
-                  <File Name="device.png" Id="IconDevice40" />
+                  <File Name="devices.png" Id="IconDevices40" />
                   <File Name="donate.png" Id="IconDonate40" />
                   <File Name="edit.png" Id="IconEdit40" />
                   <File Name="explore.png" Id="IconExplore40" />
+                  <File Name="install.png" Id="IconInstall40" />
                   <File Name="key.png" Id="IconKey40" />
                   <File Name="open.png" Id="IconOpen40" />
                   <File Name="pack.png" Id="IconPack40" />
@@ -192,9 +195,9 @@
                 <Component Id="IconsStaticComponent" Guid="5DE3B836-2439-46FB-A0F9-A4B96E8B412A">
                   <File Name="loading.png" />
                   <File Name="state-error.png" />
+                  <File Name="state-idle.png" />
                   <File Name="state-install.png" />
                   <File Name="state-open.png" />
-                  <File Name="state-ready.png" />
                   <File Name="state-save.png" />
                   <File Name="wait.png" />
                 </Component>
