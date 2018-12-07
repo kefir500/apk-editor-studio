@@ -2,8 +2,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 
   <?define ProductName="APK Editor Studio" ?>
-  <?define ProductVersion="1.0.0" ?>
-  <?define Root="..\..\..\..\..\bin\win32" ?>
+  <?define ProductVersion="1.0.0" ?> <!-- TODO Environment variable -->
+  <?define Root="..\build" ?>
 
   <Product Id="*" Name="$(var.ProductName)" Version="$(var.ProductVersion)" UpgradeCode="B889316C-C1B5-4615-8443-F1ADB1B3584D" Manufacturer="Alexander Gorishnyak" Language="1033">
 

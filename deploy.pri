@@ -13,7 +13,7 @@ defineReplace(copy) {
 }
 
 win32 {
-    DESTDIR  = $$PWD/bin/win32
+    isEmpty(DESTDIR): DESTDIR = $$PWD/bin/win32
     RC_ICONS = $$PWD/res/logo/application.ico
     QMAKE_POST_LINK += $$copy(all, .)
     QMAKE_POST_LINK += $$copy(win32, .)
