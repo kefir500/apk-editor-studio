@@ -1,30 +1,25 @@
 install:
-  - set PATH=C:\Qt\5.11\msvc2015\bin;%PATH%
-  - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
-
-build_script:
-  - qmake
-  - nmake
-
-artifacts:
-  - path: scripts\win32\packages\apk-editor-studio_win32_dev.msi
-    name: APK Editor Studio - Windows Installer (MSI)
-  - path: scripts\win32\packages\apk-editor-studio_win32_dev.zip
-    name: APK Editor Studio - Windows Portable (ZIP)
-
-after_build:
-  - cd scripts\win32
   - set QTDIR=C:\Qt\5.11\msvc2015
   - set OPENSSL=C:\OpenSSL-Win32\bin
-  - set VCREDIST=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT
+  - set VCDIR=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC
+  - set VCREDIST=%VCDIR%\redist\x86\Microsoft.VC140.CRT
   - set WIXDIR=C:\Program Files (x86)\WiX Toolset v3.11\bin
   - set SEVENZIP=7z
   - set VERSION=dev
-  - call deploy.bat
-  - cd packages
-  - call build.msi.bat
-  - call build.zip.bat
-  - cd ..
+
+before_build:
+  - cd scripts\win32\packages
+
+build_script:
+  # TODO Matrix
+  - call msi/build.msi.bat
+  - call zip/build.zip.bat
+
+artifacts:
+  - path: scripts\win32\packages\msi\wix\bin\apk-editor-studio_win32_dev.msi
+    name: APK Editor Studio - Windows Installer (MSI)
+  - path: scripts\win32\packages\zip\apk-editor-studio_win32_dev.zip
+    name: APK Editor Studio - Windows Portable (ZIP)
 
 deploy:
   - provider: GitHub
