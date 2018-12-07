@@ -20,7 +20,8 @@ win32 {
 }
 
 unix:!macx {
-    DESTDIR = $$PWD/bin/linux/bin
+    isEmpty(DESTDIR): DESTDIR = $$PWD/bin/linux
+    DESTDIR = $$DESTDIR/bin
     QMAKE_POST_LINK += $$mkdir($$DESTDIR/../share/$$TARGET)
     QMAKE_POST_LINK += $$copy(all/., ../share/$$TARGET)
     QMAKE_POST_LINK += $$copy(linux/share, ..)
@@ -41,7 +42,7 @@ unix:!macx {
 }
 
 macx {
-    DESTDIR = $$PWD/bin/macos
+    isEmpty(DESTDIR): DESTDIR = $$PWD/bin/macos
     QMAKE_MAC_SDK = macosx10.7
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
     QMAKE_POST_LINK += $$copy(all/., $${TARGET}.app/Contents/MacOS)

@@ -4,7 +4,8 @@ cd "$(dirname "$0")"
 
 export DEBEMAIL="kefir500@gmail.com"
 export DEBFULLNAME="Alexander Gorishnyak"
-VERSION=$(cat ../../../../VERSION)
+unset VERSION
+source ../../environment.sh
 
 clean() {
     rm -rf apk-editor-studio-$VERSION 2> /dev/null
