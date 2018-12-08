@@ -127,7 +127,7 @@ QString Application::getTemporaryPath() const
 #ifndef PORTABLE
     const QString path = QString("%1/%2").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getTitleNoSpaces());
 #else
-    const QString path = QString("%1/data/temp").arg(app->getDirectory(), subdirectory);
+    const QString path = QString("%1/data/temp").arg(getDirectory());
 #endif
     return QDir::cleanPath(path);
 }
@@ -142,7 +142,7 @@ QString Application::getLocalConfigPath(QString subdirectory) const
 #ifndef PORTABLE
     const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getTitleNoSpaces(), subdirectory);
 #else
-    const QString path = QString("%1/data/%2").arg(app->getDirectory(), subdirectory);
+    const QString path = QString("%1/data/%2").arg(getDirectory(), subdirectory);
 #endif
     return QDir::cleanPath(path);
 }
