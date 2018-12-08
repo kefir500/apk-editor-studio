@@ -1,0 +1,10 @@
+{
+  "title": "APK Editor Studio",
+  "icon": "../../../../../res/deploy/macos/bundle/Contents/Resources/apk-editor-studio.icns",
+  "background": "background.png",
+  "icon-size": 128,
+  "contents": [
+    { "x": 160, "y": 200, "type": "file", "path": "../../app/APK Editor Studio.app" },
+    { "x": 430, "y": 200, "type": "link", "path": "/Applications" }
+  ]
+}
