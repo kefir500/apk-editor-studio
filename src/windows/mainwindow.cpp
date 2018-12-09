@@ -354,7 +354,7 @@ void MainWindow::retranslate()
 
     // Recent Menu:
 
-    menuRecent->setTitle(tr("&Recent Files"));
+    menuRecent->setTitle(tr("Open &Recent"));
     actionRecentClear->setText(tr("&Clear List"));
     actionRecentNone->setText(tr("No Recent Files"));
 
