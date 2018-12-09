@@ -458,7 +458,7 @@ void MainWindow::setActionsEnabled(const Project *project)
     actionApkExplore->setEnabled(project ? project->getState().canExplore() : false);
     actionApkClose->setEnabled(project ? project->getState().canClose() : false);
     actionTitleEditor->setEnabled(project ? project->getState().canEdit() : false);
-    actionProjectManager->setEnabled(true);
+    actionProjectManager->setEnabled(project);
 }
 
 void MainWindow::updateWindowForProject(const Project *project)

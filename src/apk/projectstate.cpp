@@ -74,5 +74,5 @@ bool ProjectState::canExplore() const
 
 bool ProjectState::canClose() const
 {
-    return isUnpacked() && (currentAction == ProjectIdle);
+    return currentAction == ProjectIdle;
 }
