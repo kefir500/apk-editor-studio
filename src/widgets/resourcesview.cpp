@@ -61,7 +61,7 @@ QSharedPointer<QMenu> ResourcesView::generateContextMenu(const ResourceModelInde
 
     menu->addSeparator();
 
-    //: "Resource" is a singular noun in this context.
+    //: This string refers to a single resource.
     QAction *actionExplore = menu->addAction(app->loadIcon("explore.png"), tr("&Open Resource Directory"));
     connect(actionExplore, &QAction::triggered, [=]() {
         app->explore(resourcePath);

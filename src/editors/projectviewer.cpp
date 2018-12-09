@@ -6,7 +6,7 @@
 
 ProjectViewer::ProjectViewer(Project *project, QWidget *parent) : ActionViewer(parent)
 {
-    //: "Project" is a singular noun in this context.
+    //: This string refers to a single project (as in "Manager of a project").
     this->title = tr("Project Manager");
     this->icon = app->loadIcon("project.png");
     this->project = project;

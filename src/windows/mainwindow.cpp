@@ -360,11 +360,11 @@ void MainWindow::retranslate()
 
     // Tools Menu:
 
-    //: "Key" is a plural noun in this context.
+    //: This string refers to multiple keys (as in "Manager of keys").
     actionKeyManager->setText(tr("&Key Manager..."));
-    //: "Device" is a plural noun in this context.
+    //: This string refers to multiple devices (as in "Manager of devices").
     actionDeviceManager->setText(tr("&Device Manager..."));
-    //: "Project" is a singular noun in this context.
+    //: This string refers to a single project (as in "Manager of a project").
     actionProjectManager->setText(tr("&Project Manager"));
     actionTitleEditor->setText(tr("Edit Application &Title"));
 

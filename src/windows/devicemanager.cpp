@@ -9,7 +9,7 @@
 
 DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
 {
-    //: "Device" is a plural noun in this context.
+    //: This string refers to multiple devices (as in "Manager of devices").
     setWindowTitle(tr("Device Manager"));
     setWindowIcon(app->loadIcon("devices.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
