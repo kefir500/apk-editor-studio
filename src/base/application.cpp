@@ -117,32 +117,27 @@ QString Application::getTitleAndVersion() const
     return QString("%1 v%2").arg(getTitle(), getVersion());
 }
 
-QString Application::getDirectory() const
+QString Application::getExecutableDirectory() const
 {
     return QApplication::applicationDirPath() + '/';
 }
 
-QString Application::getTemporaryPath() const
+QString Application::getTemporaryPath(const QString &subdirectory) const
 {
 #ifndef PORTABLE
-    const QString path = QString("%1/%2").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getTitleNoSpaces());
+    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getTitleNoSpaces(), subdirectory);
 #else
-    const QString path = QString("%1/data/temp").arg(getDirectory());
+    const QString path = QString("%1/data/temp/%2").arg(getExecutableDirectory(), subdirectory);
 #endif
     return QDir::cleanPath(path);
 }
 
-QString Application::getOutputPath() const
-{
-    return QString("%1/apk").arg(getTemporaryPath());
-}
-
-QString Application::getLocalConfigPath(QString subdirectory) const
+QString Application::getLocalConfigPath(const QString &subdirectory) const
 {
 #ifndef PORTABLE
     const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getTitleNoSpaces(), subdirectory);
 #else
-    const QString path = QString("%1/data/%2").arg(getDirectory(), subdirectory);
+    const QString path = QString("%1/data/%2").arg(getExecutableDirectory(), subdirectory);
 #endif
     return QDir::cleanPath(path);
 }
@@ -150,9 +145,9 @@ QString Application::getLocalConfigPath(QString subdirectory) const
 QString Application::getSharedPath(const QString &resource) const
 {
 #ifndef Q_OS_LINUX
-    const QString path = getDirectory() + resource;
+    const QString path = getExecutableDirectory() + resource;
 #else
-    const QString path = QString("%1/../share/%2/%3").arg(getDirectory(), getTitleNoSpaces(), resource);
+    const QString path = QString("%1/../share/%2/%3").arg(getExecutableDirectory(), getTitleNoSpaces(), resource);
 #endif
     return QDir::cleanPath(path);
 }
@@ -162,7 +157,7 @@ QString Application::getBinaryPath(const QString &executable) const
 #ifdef Q_OS_WIN
     QString path = getSharedPath("tools/" + executable);
 #else
-    const QString path = getDirectory() + executable;
+    const QString path = getExecutableDirectory() + executable;
 #endif
 
     QFileInfo fileInfo(path);

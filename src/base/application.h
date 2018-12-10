@@ -38,10 +38,9 @@ public:
     QString getTitleNoSpaces() const;
     QString getTitleAndVersion() const;
 
-    QString getDirectory() const;
-    QString getTemporaryPath() const;
-    QString getOutputPath() const;
-    QString getLocalConfigPath(QString subdirectory = QString()) const;
+    QString getExecutableDirectory() const;
+    QString getTemporaryPath(const QString &subdirectory = QString()) const;
+    QString getLocalConfigPath(const QString &subdirectory = QString()) const;
     QString getSharedPath(const QString &resource = QString()) const;
     QString getBinaryPath(const QString &executable) const;
     QPixmap getLocaleFlag(const QLocale &locale) const;

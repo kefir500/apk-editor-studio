@@ -48,7 +48,12 @@ QString Settings::getApktoolPath()
 QString Settings::getOutputDirectory()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("Apktool/Output", app->getOutputPath()).toString();
+    return settings->value("Apktool/Output", getDefaultOutputDirectory()).toString();
+}
+
+QString Settings::getDefaultOutputDirectory()
+{
+    return app->getTemporaryPath("apk");
 }
 
 QString Settings::getFrameworksDirectory()

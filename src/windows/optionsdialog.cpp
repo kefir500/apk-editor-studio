@@ -72,7 +72,7 @@ void OptionsDialog::load()
     fileboxApktool->setCurrentPath(app->settings->getApktoolPath());
     fileboxApktool->setDefaultPath(app->getSharedPath("tools/apktool.jar"));
     fileboxOutput->setCurrentPath(app->settings->getOutputDirectory());
-    fileboxOutput->setDefaultPath(app->getOutputPath());
+    fileboxOutput->setDefaultPath(app->settings->getDefaultOutputDirectory());
     fileboxFrameworks->setCurrentPath(app->settings->getFrameworksDirectory());
     fileboxFrameworks->setDefaultPath(app->getLocalConfigPath("frameworks"));
     checkboxSources->setChecked(app->settings->getDecompileSources());

@@ -15,6 +15,7 @@ public:
 
     QString getApktoolPath();
     QString getOutputDirectory();
+    QString getDefaultOutputDirectory();
     QString getFrameworksDirectory();
     bool getSignApk();
     bool getOptimizeApk();
