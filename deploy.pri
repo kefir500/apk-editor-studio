@@ -1,5 +1,3 @@
-# Deploy:
-
 defineReplace(path) {
     return($$shell_quote($$shell_path($$1)))
 }
@@ -10,6 +8,10 @@ defineReplace(mkdir) {
 
 defineReplace(copy) {
     return($$QMAKE_COPY_DIR $$path($$PWD/res/deploy/$$1) $$path($$DESTDIR/$$2) $$escape_expand(\\n\\t))
+}
+
+defineReplace(executable) {
+    return(chmod +x $$path($$1) $$escape_expand(\\n\\t))
 }
 
 win32 {
@@ -25,7 +27,11 @@ unix:!macx {
     QMAKE_POST_LINK += $$mkdir($$DESTDIR/../share/$$TARGET)
     QMAKE_POST_LINK += $$copy(all/., ../share/$$TARGET)
     QMAKE_POST_LINK += $$copy(linux/share, ..)
-    isEmpty(PACKAGE): QMAKE_POST_LINK += $$copy(linux/bin, ..)
+    isEmpty(PACKAGE) {
+        QMAKE_POST_LINK += $$copy(linux/bin, ..)
+        QMAKE_POST_LINK += $$executable($$DESTDIR/adb)
+        QMAKE_POST_LINK += $$executable($$DESTDIR/zipalign)
+    }
     # Install:
     isEmpty(PREFIX): PREFIX = /usr
     target.path   = $$PREFIX/bin
@@ -47,5 +53,7 @@ macx {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
     QMAKE_POST_LINK += $$copy(all/., $${TARGET}.app/Contents/MacOS)
     QMAKE_POST_LINK += $$copy(macos/bundle/., $${TARGET}.app)
+    QMAKE_POST_LINK += $$executable($$DESTDIR/$${TARGET}.app/Contents/MacOS/adb)
+    QMAKE_POST_LINK += $$executable($$DESTDIR/$${TARGET}.app/Contents/MacOS/zipalign)
     QMAKE_INFO_PLIST = $$PWD/res/deploy/macos/Info.plist
 }
