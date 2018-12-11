@@ -27,7 +27,7 @@ public:
     Project *open(const QString &filename, bool unpack = true);
     bool close(Project *project);
 
-    Project *get(const QString &filename) const;
+    Project *existing(const QString &filename) const;
     int indexOf(Project *project) const;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;

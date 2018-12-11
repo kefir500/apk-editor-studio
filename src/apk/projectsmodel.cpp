@@ -43,7 +43,7 @@ bool ProjectsModel::close(Project *project)
     return true;
 }
 
-Project *ProjectsModel::get(const QString &filename) const
+Project *ProjectsModel::existing(const QString &filename) const
 {
     QListIterator<Project *> it(projects);
     while (it.hasNext()) {
