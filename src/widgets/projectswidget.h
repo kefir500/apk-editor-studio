@@ -27,7 +27,7 @@ public:
     bool saveCurrentTab();
     bool saveCurrentTabAs();
 
-    ProjectViewer *openProjectTab();
+    ProjectActionViewer *openProjectTab();
     TitleEditor *openTitlesTab();
     Viewer *openResourceTab(const QModelIndex &index);
 

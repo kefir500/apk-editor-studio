@@ -1,12 +1,12 @@
 #include "widgets/resourcestree.h"
-#include "widgets/decorationdelegate.h"
+#include "widgets/decorationsizedelegate.h"
 #include "apk/resourcemodelindex.h"
 
 ResourcesTree::ResourcesTree(QWidget *parent) : QTreeView(parent)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     setSelectionBehavior(QAbstractItemView::SelectRows);
-    setItemDelegate(new DecorationDelegate(QSize(16, 16), this));
+    setItemDelegate(new DecorationSizeDelegate(QSize(16, 16), this));
 }
 
 ResourcesModel *ResourcesTree::model() const

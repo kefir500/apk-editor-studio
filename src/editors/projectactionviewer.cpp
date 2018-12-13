@@ -1,10 +1,10 @@
-#include "editors/projectviewer.h"
+#include "editors/projectactionviewer.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include <QEvent>
 
-ProjectViewer::ProjectViewer(Project *project, QWidget *parent) : ActionViewer(parent)
+ProjectActionViewer::ProjectActionViewer(Project *project, QWidget *parent) : ActionViewer(parent)
 {
     //: This string refers to a single project (as in "Manager of a project").
     this->title = tr("Project Manager");
@@ -42,13 +42,13 @@ ProjectViewer::ProjectViewer(Project *project, QWidget *parent) : ActionViewer(p
         emit apkInstallRequested();
     });
 
-    connect(project, &Project::changed, this, &ProjectViewer::onProjectUpdated, Qt::QueuedConnection);
+    connect(project, &Project::changed, this, &ProjectActionViewer::onProjectUpdated, Qt::QueuedConnection);
 
     onProjectUpdated();
     retranslate();
 }
 
-void ProjectViewer::changeEvent(QEvent *event)
+void ProjectActionViewer::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
@@ -57,7 +57,7 @@ void ProjectViewer::changeEvent(QEvent *event)
     }
 }
 
-void ProjectViewer::onProjectUpdated()
+void ProjectActionViewer::onProjectUpdated()
 {
     setTitle(project->getTitle());
     btnEditTitle->setEnabled(project->getState().canEdit());
@@ -67,7 +67,7 @@ void ProjectViewer::onProjectUpdated()
     btnInstall->setEnabled(project->getState().canInstall());
 }
 
-void ProjectViewer::retranslate()
+void ProjectActionViewer::retranslate()
 {
     setTitle(project->getTitle());
     tr("Edit APK"); // TODO For future use

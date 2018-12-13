@@ -2,7 +2,7 @@
 #define PROJECTTABSWIDGET_H
 
 #include "apk/resourcemodelindex.h"
-#include "editors/projectviewer.h"
+#include "editors/projectactionviewer.h"
 #include "editors/titleeditor.h"
 #include <QTabWidget>
 
@@ -13,7 +13,7 @@ class ProjectTabsWidget : public QTabWidget
 public:
     explicit ProjectTabsWidget(Project *project, QWidget *parent = nullptr);
 
-    ProjectViewer *openProjectTab();
+    ProjectActionViewer *openProjectTab();
     TitleEditor *openTitlesTab();
     Viewer *openResourceTab(const ResourceModelIndex &index);
 

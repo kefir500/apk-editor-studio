@@ -1,13 +1,13 @@
-#include "widgets/buttondelegate.h"
+#include "widgets/itembuttondelegate.h"
 #include "base/application.h"
 #include <QPainter>
 
-ButtonDelegate::ButtonDelegate(QObject *parent) : QStyledItemDelegate(parent)
+ItemButtonDelegate::ItemButtonDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
     lastHoverRow = -1;
 }
 
-bool ButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+bool ItemButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
     const bool editable = index.data(ManifestModel::ReferenceRole).toBool();
     if (editable) {
@@ -57,7 +57,7 @@ bool ButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const
     return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
 
-void ButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void ItemButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     const bool editable = index.data(ManifestModel::ReferenceRole).toBool();
     if (editable) {
@@ -93,7 +93,7 @@ void ButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     }
 }
 
-QRect ButtonDelegate::buttonRect(const QRect &rect)
+QRect ItemButtonDelegate::buttonRect(const QRect &rect)
 {
     const int w = rect.height();
     const int h = rect.height();

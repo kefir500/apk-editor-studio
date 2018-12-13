@@ -122,7 +122,7 @@ bool ProjectsWidget::saveCurrentTabAs()
     return false;
 }
 
-ProjectViewer *ProjectsWidget::openProjectTab()
+ProjectActionViewer *ProjectsWidget::openProjectTab()
 {
     return getCurrentProjectTabs()->openProjectTab();
 }

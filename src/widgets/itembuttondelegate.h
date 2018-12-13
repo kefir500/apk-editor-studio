@@ -1,14 +1,14 @@
-#ifndef BUTTONDELEGATE_H
-#define BUTTONDELEGATE_H
+#ifndef ITEMBUTTONDELEGATE_H
+#define ITEMBUTTONDELEGATE_H
 
 #include <QStyledItemDelegate>
 
-class ButtonDelegate : public QStyledItemDelegate
+class ItemButtonDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 
 public:
-    explicit ButtonDelegate(QObject *parent = nullptr);
+    explicit ItemButtonDelegate(QObject *parent = nullptr);
 
     static QRect buttonRect(const QRect &rect);
 
@@ -26,8 +26,7 @@ private:
         ButtonStatePressed
     };
 
-//    QMap<int, ButtonState> buttons;
     int lastHoverRow;
 };
 
-#endif // BUTTONDELEGATE_H
+#endif // ITEMBUTTONDELEGATE_H

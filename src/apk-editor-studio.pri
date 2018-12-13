@@ -35,7 +35,7 @@ SOURCES += \
     $$PWD/editors/editor.cpp \
     $$PWD/editors/fileeditor.cpp \
     $$PWD/editors/imageeditor.cpp \
-    $$PWD/editors/projectviewer.cpp \
+    $$PWD/editors/projectactionviewer.cpp \
     $$PWD/editors/titleeditor.cpp \
     $$PWD/editors/viewer.cpp \
     $$PWD/editors/welcomeviewer.cpp \
@@ -49,13 +49,13 @@ SOURCES += \
     $$PWD/tools/keytool.cpp \
     $$PWD/tools/which.cpp \
     $$PWD/tools/zipalign.cpp \
-    $$PWD/widgets/buttondelegate.cpp \
-    $$PWD/widgets/decorationdelegate.cpp \
+    $$PWD/widgets/decorationsizedelegate.cpp \
     $$PWD/widgets/elidedlabel.cpp \
     $$PWD/widgets/filebox.cpp \
     $$PWD/widgets/filesystemtree.cpp \
     $$PWD/widgets/gradientwidget.cpp \
     $$PWD/widgets/iconlist.cpp \
+    $$PWD/widgets/itembuttondelegate.h \
     $$PWD/widgets/logdelegate.cpp \
     $$PWD/widgets/logview.cpp \
     $$PWD/widgets/manifestview.cpp \
@@ -113,7 +113,7 @@ HEADERS += \
     $$PWD/editors/editor.h \
     $$PWD/editors/fileeditor.h \
     $$PWD/editors/imageeditor.h \
-    $$PWD/editors/projectviewer.h \
+    $$PWD/editors/projectactionviewer.h \
     $$PWD/editors/titleeditor.h \
     $$PWD/editors/viewer.h \
     $$PWD/editors/welcomeviewer.h \
@@ -129,13 +129,13 @@ HEADERS += \
     $$PWD/tools/tools.h \
     $$PWD/tools/which.h \
     $$PWD/tools/zipalign.h \
-    $$PWD/widgets/buttondelegate.h \
-    $$PWD/widgets/decorationdelegate.h \
+    $$PWD/widgets/decorationsizedelegate.h \
     $$PWD/widgets/elidedlabel.h \
     $$PWD/widgets/filebox.h \
     $$PWD/widgets/filesystemtree.h \
     $$PWD/widgets/gradientwidget.h \
     $$PWD/widgets/iconlist.h \
+    $$PWD/widgets/itembuttondelegate.h \
     $$PWD/widgets/logdelegate.h \
     $$PWD/widgets/logview.h \
     $$PWD/widgets/manifestview.h \

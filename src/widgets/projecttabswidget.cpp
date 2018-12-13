@@ -19,20 +19,20 @@ ProjectTabsWidget::ProjectTabsWidget(Project *project, QWidget *parent) : QTabWi
     openProjectTab();
 }
 
-ProjectViewer *ProjectTabsWidget::openProjectTab()
+ProjectActionViewer *ProjectTabsWidget::openProjectTab()
 {
     const QString identifier = "project";
     Viewer *existing = getTabByIdentifier(identifier);
     if (existing) {
         setCurrentIndex(indexOf(existing));
-        return static_cast<ProjectViewer *>(existing);
+        return static_cast<ProjectActionViewer *>(existing);
     }
 
-    ProjectViewer *tab = new ProjectViewer(project, this);
+    ProjectActionViewer *tab = new ProjectActionViewer(project, this);
     tab->setProperty("identifier", identifier);
-    connect(tab, &ProjectViewer::titleEditorRequested, this, &ProjectTabsWidget::openTitlesTab);
-    connect(tab, &ProjectViewer::apkSaveRequested, this, &ProjectTabsWidget::saveProject);
-    connect(tab, &ProjectViewer::apkInstallRequested, this, &ProjectTabsWidget::installProject);
+    connect(tab, &ProjectActionViewer::titleEditorRequested, this, &ProjectTabsWidget::openTitlesTab);
+    connect(tab, &ProjectActionViewer::apkSaveRequested, this, &ProjectTabsWidget::saveProject);
+    connect(tab, &ProjectActionViewer::apkInstallRequested, this, &ProjectTabsWidget::installProject);
     addTab(tab);
     return tab;
 }

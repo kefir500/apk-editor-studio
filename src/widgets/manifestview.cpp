@@ -1,5 +1,5 @@
 #include "widgets/manifestview.h"
-#include "widgets/buttondelegate.h"
+#include "widgets/itembuttondelegate.h"
 #include "base/application.h"
 #include <QEvent>
 #include <QHeaderView>
@@ -15,9 +15,9 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
     setEditTriggers(QAbstractItemView::AllEditTriggers);
     setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    ButtonDelegate *buttonDelegate = new ButtonDelegate(this);
+    ItemButtonDelegate *buttonDelegate = new ItemButtonDelegate(this);
     setItemDelegate(buttonDelegate);
-    connect(buttonDelegate, &ButtonDelegate::clicked, [=](int row) {
+    connect(buttonDelegate, &ItemButtonDelegate::clicked, [=](int row) {
         emit editorRequested(static_cast<ManifestModel::ManifestRow>(row));
     });
 }
