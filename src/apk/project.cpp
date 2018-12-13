@@ -155,20 +155,22 @@ Manifest *Project::initialize()
 
     // Parse application icon attribute (android:icon):
 
-    QString iconAttribute = manifest->getApplicationIcon();
-    QString iconCategory = iconAttribute.split('/').value(0).mid(1);
-    QString iconFilename = iconAttribute.split('/').value(1);
+    const QString appIconAttribute = manifest->getApplicationIcon();
+    const QString appIconCategory = appIconAttribute.split('/').value(0).mid(1);
+    const QString appIconFilename = appIconAttribute.split('/').value(1);
 
     // Parse resource directories:
 
     QMap<QString, QModelIndex> mapCategories;
     QMap<QString, QModelIndex> mapFilegroups;
 
+    const QStringList drawableFormats = {"png", "jpg", "jpeg", "gif", "xml"}; // Read more: https://developer.android.com/guide/topics/resources/drawable-resource.html
+
     QDirIterator resourceDirectories(contentsPath + "/res/", QDir::Dirs | QDir::NoDotAndDotDot);
     while (resourceDirectories.hasNext()) {
 
-        const QString resourceDirectory = QFileInfo(resourceDirectories.next()).fileName();
-        const QString categoryTitle = resourceDirectory.split('-').first(); // E.g., "drawable", "values"...
+        const QFileInfo resourceDirectory = QFileInfo(resourceDirectories.next());
+        const QString categoryTitle = resourceDirectory.fileName().split('-').first(); // E.g., "drawable", "values"...
         QModelIndex categoryIndex = mapCategories.value(categoryTitle, QModelIndex());
         ResourceNode *categoryNode = nullptr;
         if (categoryIndex.isValid()) {
@@ -181,27 +183,28 @@ Manifest *Project::initialize()
 
         // Parse resource files:
 
-        QDirIterator resourceFiles(contentsPath + "/res/" + resourceDirectory, QDir::Files);
+        QDirIterator resourceFiles(resourceDirectory.filePath(), QDir::Files);
         while (resourceFiles.hasNext()) {
 
-            const QString resourceFile = QFileInfo(resourceFiles.next()).fileName();
-            QModelIndex filegroupIndex = mapFilegroups.value(resourceFile, QModelIndex());
+            const QFileInfo resourceFile(resourceFiles.next());
+            const QString resourceFilename = resourceFile.fileName();
+
+            QModelIndex filegroupIndex = mapFilegroups.value(resourceFilename, QModelIndex());
             ResourceNode *filegroupNode = nullptr;
             if (filegroupIndex.isValid()) {
                 filegroupNode = static_cast<ResourceNode *>(filegroupIndex.internalPointer());
             } else {
-                filegroupNode = new ResourceNode(resourceFile, nullptr);
+                filegroupNode = new ResourceNode(resourceFilename, nullptr);
                 filegroupIndex = resourcesModel.addNode(filegroupNode, categoryIndex);
-                mapFilegroups[resourceFile] = filegroupIndex;
+                mapFilegroups[resourceFilename] = filegroupIndex;
             }
 
-            ResourceNode *fileNode = new ResourceNode(resourceFile, new ResourceFile(QString("%1/res/%2/%3").arg(contentsPath, resourceDirectory, resourceFile)));
+            ResourceNode *fileNode = new ResourceNode(resourceFilename, new ResourceFile(resourceFile.filePath()));
             QModelIndex fileIndex = resourcesModel.addNode(fileNode, filegroupIndex);
 
             // Parse application icons:
 
-            const QStringList allowedIconFiles = {(iconFilename + ".png"), (iconFilename + ".jpg"), (iconFilename + ".gif"), (iconFilename + ".xml")}; // Read more: https://developer.android.com/guide/topics/resources/drawable-resource.html
-            if (categoryTitle == iconCategory && allowedIconFiles.contains(resourceFile)) {
+            if (categoryTitle == appIconCategory && resourceFile.baseName() == appIconFilename && drawableFormats.contains(resourceFile.suffix())) {
                 qDebug() << "Parsed application icon:" << QDir::toNativeSeparators(fileNode->getFile()->getFilePath());
                 iconsProxy.addIcon(fileIndex);
             }
