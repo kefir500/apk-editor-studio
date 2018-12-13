@@ -55,7 +55,7 @@ SOURCES += \
     $$PWD/widgets/filesystemtree.cpp \
     $$PWD/widgets/gradientwidget.cpp \
     $$PWD/widgets/iconlist.cpp \
-    $$PWD/widgets/itembuttondelegate.h \
+    $$PWD/widgets/itembuttondelegate.cpp \
     $$PWD/widgets/logdelegate.cpp \
     $$PWD/widgets/logview.cpp \
     $$PWD/widgets/manifestview.cpp \
