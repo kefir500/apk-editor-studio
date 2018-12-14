@@ -398,8 +398,9 @@ bool Application::explore(const QString &path)
     return QProcess::startDetached(QString("explorer.exe %1").arg(argument));
 #elif defined(Q_OS_OSX)
     QStringList arguments;
+    const QString action = fileInfo.isDir() ? "open" : "reveal";
     arguments << "-e"
-              << QString("tell application \"Finder\" to reveal POSIX file \"%1\"").arg(fileInfo.canonicalFilePath());
+              << QString("tell application \"Finder\" to %1 POSIX file \"%2\"").arg(action, fileInfo.canonicalFilePath());
     QProcess::execute(QLatin1String("/usr/bin/osascript"), arguments);
     arguments.clear();
     arguments << "-e"
@@ -407,7 +408,8 @@ bool Application::explore(const QString &path)
     QProcess::execute(QLatin1String("/usr/bin/osascript"), arguments);
     return true;
 #else
-    return QDesktopServices::openUrl(QUrl::fromLocalFile(fileInfo.absolutePath()));
+    const QString directory = fileInfo.isDir() ? fileInfo.canonicalFilePath() : fileInfo.canonicalPath();
+    return QDesktopServices::openUrl(QUrl::fromLocalFile(directory));
 #endif
 }
 
