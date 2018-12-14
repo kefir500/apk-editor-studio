@@ -193,7 +193,6 @@
               </Directory>
               <Directory Id="IconsStaticFolder" Name="static">
                 <Component Id="IconsStaticComponent" Guid="5DE3B836-2439-46FB-A0F9-A4B96E8B412A">
-                  <File Name="loading.png" />
                   <File Name="state-error.png" />
                   <File Name="state-idle.png" />
                   <File Name="state-install.png" />
