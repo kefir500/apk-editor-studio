@@ -1,8 +1,11 @@
 #include "base/utils.h"
+#include <QDir>
+#include <QProcess>
 #include <QFileInfo>
 #include <QImageReader>
 #include <QImageWriter>
 #include <QDebug>
+#include <QtConcurrent/QtConcurrent>
 
 QString Utils::capitalize(QString string)
 {
