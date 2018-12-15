@@ -1,6 +1,7 @@
 #include "widgets/resourceabstractview.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QMenu>
 
 ResourceAbstractView::ResourceAbstractView(QAbstractItemView *view, QWidget *parent) : QWidget(parent), view(view)
@@ -64,7 +65,7 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(const ResourceMo
     //: This string refers to a single resource.
     QAction *actionExplore = menu->addAction(app->loadIcon("explore.png"), tr("&Open Resource Directory"));
     connect(actionExplore, &QAction::triggered, [=]() {
-        app->explore(resourcePath);
+        Utils::explore(resourcePath);
     });
 
     return QSharedPointer<QMenu>(menu);

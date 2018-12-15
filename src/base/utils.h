@@ -13,8 +13,10 @@ namespace Utils
 
     int roundToNearest(int number, QList<int> numbers);
 
-    // File utils:
+    // File / Directory utils:
 
+    bool explore(const QString &path);
+    void rmdir(const QString &path, bool recursive = false);
     bool copyFile(const QString &src, const QString &dst);
     bool copyImage(const QString &src, const QString &dst);
 

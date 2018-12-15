@@ -66,7 +66,7 @@ bool FileEditor::replace()
 
 void FileEditor::explore() const
 {
-    app->explore(index.path());
+    Utils::explore(index.path());
 }
 
 QStringList FileEditor::supportedFormats()

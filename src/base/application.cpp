@@ -1,14 +1,14 @@
 #include "base/application.h"
-#undef app
 #include "tools/apktool.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
 #include <QDesktopServices>
+#include <QDateTime>
 #include <QFileOpenEvent>
 #include <QPixmapCache>
 #include <QPainter>
 #include <QScreen>
-#include <QtConcurrent/QtConcurrent>
+#include <QDebug>
 
 Application::Application(int &argc, char **argv) : QtSingleApplication(argc, argv)
 {
@@ -384,44 +384,6 @@ bool Application::associate() const
 #else
     return false;
 #endif
-}
-
-bool Application::explore(const QString &path)
-{
-    if (path.isEmpty()) {
-        return false;
-    }
-    const QFileInfo fileInfo(path);
-#if defined(Q_OS_WIN)
-    const QString nativePath = QDir::toNativeSeparators(fileInfo.canonicalFilePath());
-    const QString argument = fileInfo.isDir() ? nativePath : QString("/select,%1").arg(nativePath);
-    return QProcess::startDetached(QString("explorer.exe %1").arg(argument));
-#elif defined(Q_OS_OSX)
-    QStringList arguments;
-    const QString action = fileInfo.isDir() ? "open" : "reveal";
-    arguments << "-e"
-              << QString("tell application \"Finder\" to %1 POSIX file \"%2\"").arg(action, fileInfo.canonicalFilePath());
-    QProcess::execute(QLatin1String("/usr/bin/osascript"), arguments);
-    arguments.clear();
-    arguments << "-e"
-              << QString("tell application \"Finder\" to activate");
-    QProcess::execute(QLatin1String("/usr/bin/osascript"), arguments);
-    return true;
-#else
-    const QString directory = fileInfo.isDir() ? fileInfo.canonicalFilePath() : fileInfo.canonicalPath();
-    return QDesktopServices::openUrl(QUrl::fromLocalFile(directory));
-#endif
-}
-
-void Application::rmdir(const QString &path, bool recursive)
-{
-    if (!recursive) {
-        QDir().rmdir(path);
-    } else if (!path.isEmpty()) {
-        QtConcurrent::run([=]() {
-            QDir(path).removeRecursively();
-        });
-    }
 }
 
 void Application::visitWebPage() const

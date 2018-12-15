@@ -4,6 +4,7 @@
 #include "editors/codeeditor.h"
 #include "editors/imageeditor.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QDebug>
 
 ProjectTabsWidget::ProjectTabsWidget(Project *project, QWidget *parent) : QTabWidget(parent), project(project)
@@ -154,7 +155,7 @@ bool ProjectTabsWidget::installProject()
 
 bool ProjectTabsWidget::exploreProject()
 {
-    app->explore(project->getContentsPath());
+    Utils::explore(project->getContentsPath());
     return true;
 }
 

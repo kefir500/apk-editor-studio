@@ -1,5 +1,6 @@
 #include "apk/project.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include "tools/apktool.h"
 #include "tools/apksigner.h"
 #include "tools/zipalign.h"
@@ -33,7 +34,7 @@ Project::~Project()
         qDebug() << qPrintable(QString("Removing \"%1\"...\n").arg(contentsPath));
         // Additional check to prevent accidental recursive deletion of the wrong directory:
         const bool recursive = QFile::exists(QString("%1/%2").arg(contentsPath, "AndroidManifest.xml"));
-        app->rmdir(contentsPath, recursive);
+        Utils::rmdir(contentsPath, recursive);
     }
 }
 

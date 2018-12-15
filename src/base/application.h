@@ -72,8 +72,6 @@ public:
     bool addToRecent(const Project *project);
 
     bool associate() const;
-    bool explore(const QString &path);
-    void rmdir(const QString &path, bool recursive = false);
     void visitWebPage() const;
     void visitContactPage() const;
     void visitTranslatePage() const;

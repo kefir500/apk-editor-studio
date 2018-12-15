@@ -29,7 +29,7 @@ ProjectActionViewer::ProjectActionViewer(Project *project, QWidget *parent) : Ac
 
     btnExplore = addButton();
     connect(btnExplore, &QPushButton::clicked, [=]() {
-        app->explore(project->getContentsPath());
+        Utils::explore(project->getContentsPath());
     });
 
     btnSave = addButton();

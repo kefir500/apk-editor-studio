@@ -43,6 +43,44 @@ int Utils::roundToNearest(int number, QList<int> numbers)
     return number;
 }
 
+bool Utils::explore(const QString &path)
+{
+    if (path.isEmpty()) {
+        return false;
+    }
+    const QFileInfo fileInfo(path);
+#if defined(Q_OS_WIN)
+    const QString nativePath = QDir::toNativeSeparators(fileInfo.canonicalFilePath());
+    const QString argument = fileInfo.isDir() ? nativePath : QString("/select,%1").arg(nativePath);
+    return QProcess::startDetached(QString("explorer.exe %1").arg(argument));
+#elif defined(Q_OS_OSX)
+    QStringList arguments;
+    const QString action = fileInfo.isDir() ? "open" : "reveal";
+    arguments << "-e"
+              << QString("tell application \"Finder\" to %1 POSIX file \"%2\"").arg(action, fileInfo.canonicalFilePath());
+    QProcess::execute(QLatin1String("/usr/bin/osascript"), arguments);
+    arguments.clear();
+    arguments << "-e"
+              << QString("tell application \"Finder\" to activate");
+    QProcess::execute(QLatin1String("/usr/bin/osascript"), arguments);
+    return true;
+#else
+    const QString directory = fileInfo.isDir() ? fileInfo.canonicalFilePath() : fileInfo.canonicalPath();
+    return QDesktopServices::openUrl(QUrl::fromLocalFile(directory));
+#endif
+}
+
+void Utils::rmdir(const QString &path, bool recursive)
+{
+    if (!recursive) {
+        QDir().rmdir(path);
+    } else if (!path.isEmpty()) {
+        QtConcurrent::run([=]() {
+            QDir(path).removeRecursively();
+        });
+    }
+}
+
 bool Utils::copyFile(const QString &src, const QString &dst)
 {
     if (src.isEmpty() || dst.isEmpty() || !QFile::exists(src)) {
