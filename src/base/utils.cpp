@@ -4,8 +4,9 @@
 #include <QFileInfo>
 #include <QImageReader>
 #include <QImageWriter>
-#include <QDebug>
+#include <QDesktopServices>
 #include <QtConcurrent/QtConcurrent>
+#include <QDebug>
 
 QString Utils::capitalize(QString string)
 {
