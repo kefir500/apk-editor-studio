@@ -1,15 +1,15 @@
-#ifndef RESOURCESVIEW_H
-#define RESOURCESVIEW_H
+#ifndef RESOURCEABSTRACTVIEW_H
+#define RESOURCEABSTRACTVIEW_H
 
 #include "apk/resourcemodelindex.h"
 #include <QAbstractItemView>
 
-class ResourcesView : public QWidget
+class ResourceAbstractView : public QWidget
 {
     Q_OBJECT
 
 public:
-    ResourcesView(QAbstractItemView *view, QWidget *parent = nullptr);
+    ResourceAbstractView(QAbstractItemView *view, QWidget *parent = nullptr);
 
     void setModel(QAbstractItemModel *model);
 
@@ -27,4 +27,4 @@ private:
     QAbstractItemView *view;
 };
 
-#endif // RESOURCESVIEW_H
+#endif // RESOURCEABSTRACTVIEW_H

@@ -1,18 +1,18 @@
-#include "apk/resourcesmodel.h"
+#include "apk/resourceitemsmodel.h"
 #include "base/utils.h"
 #include <QFileIconProvider>
 
-ResourcesModel::ResourcesModel(QObject *parent) : QAbstractItemModel(parent)
+ResourceItemsModel::ResourceItemsModel(QObject *parent) : QAbstractItemModel(parent)
 {
     root = new ResourceNode();
 }
 
-ResourcesModel::~ResourcesModel()
+ResourceItemsModel::~ResourceItemsModel()
 {
     delete root;
 }
 
-QModelIndex ResourcesModel::addNode(ResourceNode *node, const QModelIndex &parent)
+QModelIndex ResourceItemsModel::addNode(ResourceNode *node, const QModelIndex &parent)
 {
     ResourceNode *parentNode = parent.isValid() ? static_cast<ResourceNode *>(parent.internalPointer()) : root;
     beginInsertRows(parent, rowCount(parent), rowCount(parent));
@@ -21,7 +21,7 @@ QModelIndex ResourcesModel::addNode(ResourceNode *node, const QModelIndex &paren
     return createIndex(rowCount(parent) - 1, 0, node);
 }
 
-QVariant ResourcesModel::data(const QModelIndex &index, int role) const
+QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
         const ResourceNode *node = static_cast<ResourceNode *>(index.internalPointer());
@@ -60,7 +60,7 @@ QVariant ResourcesModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant ResourcesModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant ResourceItemsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
@@ -76,7 +76,7 @@ QVariant ResourcesModel::headerData(int section, Qt::Orientation orientation, in
     return QVariant();
 }
 
-QModelIndex ResourcesModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex ResourceItemsModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (hasIndex(row, column, parent)) {
         ResourceNode *parentItem = parent.isValid() ? static_cast<ResourceNode *>(parent.internalPointer()) : root;
@@ -88,7 +88,7 @@ QModelIndex ResourcesModel::index(int row, int column, const QModelIndex &parent
     return QModelIndex();
 }
 
-QModelIndex ResourcesModel::parent(const QModelIndex &index) const
+QModelIndex ResourceItemsModel::parent(const QModelIndex &index) const
 {
     if (index.isValid()) {
         ResourceNode *childItem = static_cast<ResourceNode *>(index.internalPointer());
@@ -100,30 +100,30 @@ QModelIndex ResourcesModel::parent(const QModelIndex &index) const
     return QModelIndex();
 }
 
-int ResourcesModel::rowCount(const QModelIndex &parent) const
+int ResourceItemsModel::rowCount(const QModelIndex &parent) const
 {
     ResourceNode *parentItem = parent.isValid() ? static_cast<ResourceNode *>(parent.internalPointer()) : root;
     return parentItem->childCount();
 }
 
-int ResourcesModel::columnCount(const QModelIndex &parent) const
+int ResourceItemsModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return ColumnCount;
 }
 
-QString ResourcesModel::getResourcePath(const QModelIndex &index) const
+QString ResourceItemsModel::getResourcePath(const QModelIndex &index) const
 {
     if (!index.isValid()) {
         return QString();
     }
-    return index.sibling(index.row(), ResourcesModel::ResourcePath).data().toString();
+    return index.sibling(index.row(), ResourceItemsModel::ResourcePath).data().toString();
 }
 
-QPixmap ResourcesModel::getResourceFlag(const QModelIndex &index) const
+QPixmap ResourceItemsModel::getResourceFlag(const QModelIndex &index) const
 {
     if (!index.isValid()) {
         return QString();
     }
-    return index.sibling(index.row(), ResourcesModel::ResourceLanguage).data(Qt::DecorationRole).value<QPixmap>();
+    return index.sibling(index.row(), ResourceItemsModel::ResourceLanguage).data(Qt::DecorationRole).value<QPixmap>();
 }

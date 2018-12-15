@@ -1,10 +1,10 @@
-#include "apk/titlesmodel.h"
+#include "apk/titleitemsmodel.h"
 #include <QFile>
 #include <QDirIterator>
 #include <QTextStream>
 #include <QDebug>
 
-TitlesModel::TitlesModel(const Project *apk, QObject *parent) : QAbstractTableModel(parent)
+TitleItemsModel::TitleItemsModel(const Project *apk, QObject *parent) : QAbstractTableModel(parent)
 {
     // Parse application label attribute (android:label):
 
@@ -35,12 +35,12 @@ TitlesModel::TitlesModel(const Project *apk, QObject *parent) : QAbstractTableMo
     }
 }
 
-TitlesModel::~TitlesModel()
+TitleItemsModel::~TitleItemsModel()
 {
     qDeleteAll(nodes);
 }
 
-void TitlesModel::add(const QString &filepath, const QString &key)
+void TitleItemsModel::add(const QString &filepath, const QString &key)
 {
     QFile xml(filepath);
     if (xml.open(QFile::ReadOnly | QFile::Text)) {
@@ -70,7 +70,7 @@ void TitlesModel::add(const QString &filepath, const QString &key)
     }
 }
 
-bool TitlesModel::save() const
+bool TitleItemsModel::save() const
 {
     for (const TitleNode *title : nodes) {
         title->save();
@@ -78,7 +78,7 @@ bool TitlesModel::save() const
     return true;
 }
 
-bool TitlesModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool TitleItemsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (index.isValid() && role == Qt::EditRole) {
         const int row = index.row();
@@ -92,7 +92,7 @@ bool TitlesModel::setData(const QModelIndex &index, const QVariant &value, int r
     return false;
 }
 
-QVariant TitlesModel::data(const QModelIndex &index, int role) const
+QVariant TitleItemsModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
         TitleNode *title = nodes.at(index.row());
@@ -112,7 +112,7 @@ QVariant TitlesModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant TitlesModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant TitleItemsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
@@ -126,28 +126,28 @@ QVariant TitlesModel::headerData(int section, Qt::Orientation orientation, int r
     return QVariant();
 }
 
-QModelIndex TitlesModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex TitleItemsModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (Q_UNLIKELY(parent.isValid())) {
-        qWarning() << "CRITICAL: Unwanted parent passed to titles proxy";
+        qWarning() << "CRITICAL: Unwanted parent passed to titles model";
         return QModelIndex();
     }
     return createIndex(row, column);
 }
 
-int TitlesModel::rowCount(const QModelIndex &parent) const
+int TitleItemsModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return nodes.count();
 }
 
-int TitlesModel::columnCount(const QModelIndex &parent) const
+int TitleItemsModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return ColumnCount;
 }
 
-Qt::ItemFlags TitlesModel::flags(const QModelIndex &index) const
+Qt::ItemFlags TitleItemsModel::flags(const QModelIndex &index) const
 {
     if (index.column() == 0) {
         return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;

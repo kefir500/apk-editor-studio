@@ -1,7 +1,7 @@
 #ifndef PROJECTLIST_H
 #define PROJECTLIST_H
 
-#include "apk/projectsmodel.h"
+#include "apk/projectitemsmodel.h"
 #include <QComboBox>
 
 class ProjectList : public QComboBox
@@ -13,8 +13,8 @@ public:
 
     bool setCurrentProject(Project *project);
 
-    ProjectsModel *model() const;
-    void setModel(ProjectsModel *model);
+    ProjectItemsModel *model() const;
+    void setModel(ProjectItemsModel *model);
 
 signals:
     void currentProjectChanged(Project *project) const;

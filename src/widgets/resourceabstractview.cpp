@@ -1,9 +1,9 @@
-#include "widgets/resourcesview.h"
+#include "widgets/resourceabstractview.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
 #include <QMenu>
 
-ResourcesView::ResourcesView(QAbstractItemView *view, QWidget *parent) : QWidget(parent), view(view)
+ResourceAbstractView::ResourceAbstractView(QAbstractItemView *view, QWidget *parent) : QWidget(parent), view(view)
 {
     view->setParent(this);
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -25,12 +25,12 @@ ResourcesView::ResourcesView(QAbstractItemView *view, QWidget *parent) : QWidget
     });
 }
 
-void ResourcesView::setModel(QAbstractItemModel *model)
+void ResourceAbstractView::setModel(QAbstractItemModel *model)
 {
     view->setModel(model);
 }
 
-QSharedPointer<QMenu> ResourcesView::generateContextMenu(const ResourceModelIndex &resourceIndex)
+QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(const ResourceModelIndex &resourceIndex)
 {
     const QString resourcePath = resourceIndex.path();
     if (resourcePath.isEmpty()) {

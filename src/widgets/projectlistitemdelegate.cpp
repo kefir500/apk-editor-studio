@@ -1,5 +1,5 @@
 #include "widgets/projectlistitemdelegate.h"
-#include "apk/projectsmodel.h"
+#include "apk/projectitemsmodel.h"
 #include "base/application.h"
 #include <QPainter>
 
@@ -29,8 +29,8 @@ void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 
     // Prepare state icon:
 
-    const int currentProjectAction = index.data(ProjectsModel::ProjectActionRole).toInt();
-    const bool lastActionFailed = index.data(ProjectsModel::ProjectFailedRole).toBool();
+    const int currentProjectAction = index.data(ProjectItemsModel::ProjectActionRole).toInt();
+    const bool lastActionFailed = index.data(ProjectItemsModel::ProjectFailedRole).toBool();
     QIcon stateIcon;
     if (lastActionFailed) {
         stateIcon = iconError;

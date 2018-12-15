@@ -1,8 +1,8 @@
-#include "editors/welcomeviewer.h"
+#include "editors/welcomeactionviewer.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
 
-WelcomeViewer::WelcomeViewer(QWidget *parent) : ActionViewer(parent)
+WelcomeActionViewer::WelcomeActionViewer(QWidget *parent) : ActionViewer(parent)
 {
     btnOpen = addButton();
     btnInstall = addButton();
@@ -10,7 +10,7 @@ WelcomeViewer::WelcomeViewer(QWidget *parent) : ActionViewer(parent)
     connect(btnInstall, &QPushButton::clicked, app, &Application::installExternalApk);
 }
 
-void WelcomeViewer::changeEvent(QEvent *event)
+void WelcomeActionViewer::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         //: Don't translate the "APK Editor Studio" part.

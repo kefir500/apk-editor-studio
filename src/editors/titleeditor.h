@@ -2,7 +2,7 @@
 #define TITLEEDITOR_H
 
 #include "editors/editor.h"
-#include "apk/titlesmodel.h"
+#include "apk/titleitemsmodel.h"
 #include <QTableView>
 
 class TitleEditor : public Editor
@@ -15,7 +15,7 @@ public:
 
 private:
     QTableView *table;
-    TitlesModel *model;
+    TitleItemsModel *model;
 };
 
 #endif // TITLEEDITOR_H

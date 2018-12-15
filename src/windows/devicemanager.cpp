@@ -39,11 +39,11 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     QGroupBox *groupInfo = new QGroupBox(tr("Device Information"), this);
 
     QFormLayout *infoLayout = new QFormLayout(groupInfo);
-    infoLayout->addRow(deviceModel.headerData(DevicesModel::DeviceAlias, Qt::Horizontal).toString(), fieldAlias);
-    infoLayout->addRow(deviceModel.headerData(DevicesModel::DeviceSerial, Qt::Horizontal).toString(), labelSerial);
-    infoLayout->addRow(deviceModel.headerData(DevicesModel::DeviceProduct, Qt::Horizontal).toString(), labelProduct);
-    infoLayout->addRow(deviceModel.headerData(DevicesModel::DeviceModel, Qt::Horizontal).toString(), labelModel);
-    infoLayout->addRow(deviceModel.headerData(DevicesModel::DeviceDevice, Qt::Horizontal).toString(),labelDevice);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceAlias, Qt::Horizontal).toString(), fieldAlias);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceSerial, Qt::Horizontal).toString(), labelSerial);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceProduct, Qt::Horizontal).toString(), labelProduct);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceModel, Qt::Horizontal).toString(), labelModel);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceDevice, Qt::Horizontal).toString(),labelDevice);
 
     QHBoxLayout *devicesLayout = new QHBoxLayout;
     devicesLayout->addLayout(listLayout, 2);
@@ -61,14 +61,14 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
         setCurrentDevice(device);
     });
     connect(fieldAlias, &QLineEdit::textChanged, [=](const QString &alias) {
-        QModelIndex index = deviceModel.index(deviceList->currentIndex().row(), DevicesModel::DeviceAlias);
+        QModelIndex index = deviceModel.index(deviceList->currentIndex().row(), DeviceItemsModel::DeviceAlias);
         deviceModel.setData(index, alias);
     });
     connect(btnRefresh, &QPushButton::clicked, this, &DeviceManager::refreshDevices);
-    connect(btnApply, &QPushButton::clicked, &deviceModel, &DevicesModel::save);
+    connect(btnApply, &QPushButton::clicked, &deviceModel, &DeviceItemsModel::save);
     connect(dialogButtons, &QDialogButtonBox::accepted, this, &DeviceManager::accept);
     connect(dialogButtons, &QDialogButtonBox::rejected, this, &DeviceManager::reject);
-    connect(this, &DeviceManager::accepted, &deviceModel, &DevicesModel::save);
+    connect(this, &DeviceManager::accepted, &deviceModel, &DeviceItemsModel::save);
 
     setCurrentDevice(nullptr);
     refreshDevices();

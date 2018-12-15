@@ -1,11 +1,11 @@
-#ifndef TITLESMODEL_H
-#define TITLESMODEL_H
+#ifndef TITLEITEMSMODEL_H
+#define TITLEITEMSMODEL_H
 
 #include "apk/project.h"
 #include "apk/titlenode.h"
 #include <QAbstractTableModel>
 
-class TitlesModel : public QAbstractTableModel
+class TitleItemsModel : public QAbstractTableModel
 {
     Q_OBJECT
 
@@ -18,8 +18,8 @@ public:
         ColumnCount
     };
 
-    explicit TitlesModel(const Project *apk, QObject *parent = nullptr);
-    ~TitlesModel() Q_DECL_OVERRIDE;
+    explicit TitleItemsModel(const Project *apk, QObject *parent = nullptr);
+    ~TitleItemsModel() Q_DECL_OVERRIDE;
 
     bool save() const;
 
@@ -37,4 +37,4 @@ private:
     QList<TitleNode *> nodes;
 };
 
-#endif // TITLESMODEL_H
+#endif // TITLEITEMSMODEL_H

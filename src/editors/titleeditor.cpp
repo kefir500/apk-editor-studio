@@ -10,7 +10,7 @@ TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(paren
     icon = app->loadIcon("title.png");
 
     WAIT
-    model = new TitlesModel(project, this);
+    model = new TitleItemsModel(project, this);
 
     table = new QTableView(this);
     table->setAlternatingRowColors(true);
@@ -22,7 +22,7 @@ TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(paren
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(table);
 
-    connect(model, &TitlesModel::dataChanged, [=]() {
+    connect(model, &TitleItemsModel::dataChanged, [=]() {
         setModified(true);
     });
 }

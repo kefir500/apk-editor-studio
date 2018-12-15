@@ -33,18 +33,18 @@ bool ProjectList::setCurrentProject(Project *project)
     return false;
 }
 
-ProjectsModel *ProjectList::model() const
+ProjectItemsModel *ProjectList::model() const
 {
-    return static_cast<ProjectsModel *>(QComboBox::model());
+    return static_cast<ProjectItemsModel *>(QComboBox::model());
 }
 
-void ProjectList::setModel(ProjectsModel *model)
+void ProjectList::setModel(ProjectItemsModel *model)
 {
     auto previousModel = this->model();
     if (previousModel) {
-        disconnect(previousModel, &ProjectsModel::added, this, &ProjectList::setCurrentProject);
+        disconnect(previousModel, &ProjectItemsModel::added, this, &ProjectList::setCurrentProject);
     }
     QComboBox::setModel(model);
-    disconnect(model, &ProjectsModel::rowsInserted, this, nullptr); // Prevent QComboBox from setting default index
-    connect(model, &ProjectsModel::added, this, &ProjectList::setCurrentProject);
+    disconnect(model, &ProjectItemsModel::rowsInserted, this, nullptr); // Prevent QComboBox from setting default index
+    connect(model, &ProjectItemsModel::added, this, &ProjectList::setCurrentProject);
 }

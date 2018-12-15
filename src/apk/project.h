@@ -1,9 +1,9 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
-#include "apk/resourcesmodel.h"
+#include "apk/resourceitemsmodel.h"
 #include "apk/manifestmodel.h"
-#include "apk/iconsproxy.h"
+#include "apk/iconitemsmodel.h"
 #include "apk/logmodel.h"
 #include "apk/projectstate.h"
 #include "base/tasks.h"
@@ -35,9 +35,9 @@ public:
     void journal(const QString &brief, LogEntry::Type type = LogEntry::Information);
     void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
 
-    ResourcesModel resourcesModel;
+    ResourceItemsModel resourcesModel;
     QFileSystemModel filesystemModel;
-    IconsProxy iconsProxy;
+    IconItemsModel iconsProxy;
     ManifestModel manifestModel;
     LogModel logModel;
 

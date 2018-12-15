@@ -5,7 +5,7 @@
 #include "windows/keymanager.h"
 #include "windows/optionsdialog.h"
 #include "windows/waitdialog.h"
-#include "widgets/resourcestree.h"
+#include "widgets/resourcetree.h"
 #include "widgets/filesystemtree.h"
 #include "widgets/iconlist.h"
 #include "base/application.h"
@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     loadSettings();
     initLanguages();
 
-    connect(&app->projects, &ProjectsModel::changed, [=](Project *project) {
+    connect(&app->projects, &ProjectItemsModel::changed, [=](Project *project) {
         if (project == projectsWidget->getCurrentProject()) {
             updateWindowForProject(project);
         }
@@ -83,24 +83,24 @@ void MainWindow::initWidgets()
 
     QWidget *dockResourceWidget = new QWidget(this);
     QVBoxLayout *resourceLayout = new QVBoxLayout(dockResourceWidget);
-    resourcesTree = new ResourcesView(new ResourcesTree, this);
+    resourcesTree = new ResourceAbstractView(new ResourceTree, this);
     resourceLayout->addWidget(resourcesTree);
     resourceLayout->setMargin(0);
-    connect(resourcesTree, &ResourcesView::editRequested, this, &MainWindow::openResource);
+    connect(resourcesTree, &ResourceAbstractView::editRequested, this, &MainWindow::openResource);
 
     QWidget *dockFilesystemWidget = new QWidget(this);
     QVBoxLayout *filesystemLayout = new QVBoxLayout(dockFilesystemWidget);
-    filesystemTree = new ResourcesView(new FilesystemTree, this);
+    filesystemTree = new ResourceAbstractView(new FilesystemTree, this);
     filesystemLayout->addWidget(filesystemTree);
     filesystemLayout->setMargin(0);
-    connect(filesystemTree, &ResourcesView::editRequested, this, &MainWindow::openResource);
+    connect(filesystemTree, &ResourceAbstractView::editRequested, this, &MainWindow::openResource);
 
     QWidget *dockIconsWidget = new QWidget(this);
     QVBoxLayout *iconsLayout = new QVBoxLayout(dockIconsWidget);
-    iconsList = new ResourcesView(new IconList, this);
+    iconsList = new ResourceAbstractView(new IconList, this);
     iconsLayout->addWidget(iconsList);
     iconsLayout->setMargin(0);
-    connect(iconsList, &ResourcesView::editRequested, this, &MainWindow::openResource);
+    connect(iconsList, &ResourceAbstractView::editRequested, this, &MainWindow::openResource);
 
     QWidget *dockManifestWidget = new QWidget(this);
     QVBoxLayout *manifestLayout = new QVBoxLayout(dockManifestWidget);

@@ -1,23 +1,23 @@
 SOURCES += \
-    $$PWD/apk/iconsproxy.cpp \
+    $$PWD/apk/iconitemsmodel.cpp \
     $$PWD/apk/logentry.cpp \
     $$PWD/apk/logmodel.cpp \
     $$PWD/apk/manifest.cpp \
     $$PWD/apk/manifestmodel.cpp \
     $$PWD/apk/project.cpp \
-    $$PWD/apk/projectsmodel.cpp \
+    $$PWD/apk/projectitemsmodel.cpp \
     $$PWD/apk/projectstate.cpp \
     $$PWD/apk/resourcefile.cpp \
+    $$PWD/apk/resourceitemsmodel.cpp \
     $$PWD/apk/resourcemodelindex.cpp \
     $$PWD/apk/resourcenode.cpp \
-    $$PWD/apk/resourcesmodel.cpp \
+    $$PWD/apk/titleitemsmodel.cpp \
     $$PWD/apk/titlenode.cpp \
-    $$PWD/apk/titlesmodel.cpp \
     $$PWD/apk/xmlmodel.cpp \
     $$PWD/apk/xmlnode.cpp \
     $$PWD/base/application.cpp \
     $$PWD/base/device.cpp \
-    $$PWD/base/devicesmodel.cpp \
+    $$PWD/base/deviceitemsmodel.cpp \
     $$PWD/base/fileformat.cpp \
     $$PWD/base/fileformatlist.cpp \
     $$PWD/base/language.cpp \
@@ -38,7 +38,7 @@ SOURCES += \
     $$PWD/editors/projectactionviewer.cpp \
     $$PWD/editors/titleeditor.cpp \
     $$PWD/editors/viewer.cpp \
-    $$PWD/editors/welcomeviewer.cpp \
+    $$PWD/editors/welcomeactionviewer.cpp \
     $$PWD/tools/adb.cpp \
     $$PWD/tools/apksigner.cpp \
     $$PWD/tools/apktool.cpp \
@@ -64,8 +64,8 @@ SOURCES += \
     $$PWD/widgets/projectlistitemdelegate.cpp \
     $$PWD/widgets/projectswidget.cpp \
     $$PWD/widgets/projecttabswidget.cpp \
-    $$PWD/widgets/resourcestree.cpp \
-    $$PWD/widgets/resourcesview.cpp \
+    $$PWD/widgets/resourceabstractview.cpp \
+    $$PWD/widgets/resourcetree.cpp \
     $$PWD/widgets/spacer.cpp \
     $$PWD/widgets/toolbar.cpp \
     $$PWD/windows/aboutdialog.cpp \
@@ -77,25 +77,25 @@ SOURCES += \
     $$PWD/windows/waitdialog.cpp
 
 HEADERS += \
-    $$PWD/apk/iconsproxy.h \
+    $$PWD/apk/iconitemsmodel.h \
     $$PWD/apk/logentry.h \
     $$PWD/apk/logmodel.h \
     $$PWD/apk/manifest.h \
     $$PWD/apk/manifestmodel.h \
     $$PWD/apk/project.h \
-    $$PWD/apk/projectsmodel.h \
+    $$PWD/apk/projectitemsmodel.h \
     $$PWD/apk/projectstate.h \
     $$PWD/apk/resourcefile.h \
+    $$PWD/apk/resourceitemsmodel.h \
     $$PWD/apk/resourcemodelindex.h \
     $$PWD/apk/resourcenode.h \
-    $$PWD/apk/resourcesmodel.h \
+    $$PWD/apk/titleitemsmodel.h \
     $$PWD/apk/titlenode.h \
-    $$PWD/apk/titlesmodel.h \
     $$PWD/apk/xmlmodel.h \
     $$PWD/apk/xmlnode.h \
     $$PWD/base/application.h \
     $$PWD/base/device.h \
-    $$PWD/base/devicesmodel.h \
+    $$PWD/base/deviceitemsmodel.h \
     $$PWD/base/fileformat.h \
     $$PWD/base/fileformatlist.h \
     $$PWD/base/language.h \
@@ -116,7 +116,7 @@ HEADERS += \
     $$PWD/editors/projectactionviewer.h \
     $$PWD/editors/titleeditor.h \
     $$PWD/editors/viewer.h \
-    $$PWD/editors/welcomeviewer.h \
+    $$PWD/editors/welcomeactionviewer.h \
     $$PWD/tools/adb.h \
     $$PWD/tools/apksigner.h \
     $$PWD/tools/apktool.h \
@@ -144,8 +144,8 @@ HEADERS += \
     $$PWD/widgets/projectlistitemdelegate.h \
     $$PWD/widgets/projectswidget.h \
     $$PWD/widgets/projecttabswidget.h \
-    $$PWD/widgets/resourcestree.h \
-    $$PWD/widgets/resourcesview.h \
+    $$PWD/widgets/resourceabstractview.h \
+    $$PWD/widgets/resourcetree.h \
     $$PWD/widgets/spacer.h \
     $$PWD/widgets/toolbar.h \
     $$PWD/windows/aboutdialog.h \

@@ -5,7 +5,7 @@
 #include "widgets/logview.h"
 #include "widgets/manifestview.h"
 #include "widgets/projectswidget.h"
-#include "widgets/resourcesview.h"
+#include "widgets/resourceabstractview.h"
 #include "widgets/projectlist.h"
 #include "widgets/toolbar.h"
 #include <QMainWindow>
@@ -52,9 +52,9 @@ private:
     ProjectList *projectsList;
     LogView *logView;
     ManifestView *manifestTable;
-    ResourcesView *resourcesTree;
-    ResourcesView *filesystemTree;
-    ResourcesView *iconsList;
+    ResourceAbstractView *resourcesTree;
+    ResourceAbstractView *filesystemTree;
+    ResourceAbstractView *iconsList;
 
     Toolbar *toolbar;
     QDockWidget *dockProjects;

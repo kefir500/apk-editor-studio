@@ -21,7 +21,7 @@ ProjectActionViewer::ProjectActionViewer(Project *project, QWidget *parent) : Ac
         const QString iconSource(Dialogs::getOpenImageFilename(this));
         if (!iconSource.isEmpty()) {
             for (int row = 0; row < project->iconsProxy.rowCount(); ++row) {
-                const QString iconTarget = project->iconsProxy.index(row, IconsProxy::IconPath).data().toString();
+                const QString iconTarget = project->iconsProxy.index(row, IconItemsModel::IconPath).data().toString();
                 Utils::copyImage(iconSource, iconTarget);
             }
         }

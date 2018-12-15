@@ -6,7 +6,7 @@ ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
 {
     model = nullptr;
 
-    welcome = new WelcomeViewer(this);
+    welcome = new WelcomeActionViewer(this);
 
     stack = new QStackedLayout(this);
     stack->setMargin(0);
@@ -35,15 +35,15 @@ ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
     retranslate();
 }
 
-void ProjectsWidget::setModel(ProjectsModel *model)
+void ProjectsWidget::setModel(ProjectItemsModel *model)
 {
     if (model) {
-        disconnect(model, &ProjectsModel::added, this, &ProjectsWidget::addProject);
-        disconnect(model, &ProjectsModel::removed, this, &ProjectsWidget::removeProject);
+        disconnect(model, &ProjectItemsModel::added, this, &ProjectsWidget::addProject);
+        disconnect(model, &ProjectItemsModel::removed, this, &ProjectsWidget::removeProject);
     }
     this->model = model;
-    connect(model, &ProjectsModel::added, this, &ProjectsWidget::addProject);
-    connect(model, &ProjectsModel::removed, this, &ProjectsWidget::removeProject);
+    connect(model, &ProjectItemsModel::added, this, &ProjectsWidget::addProject);
+    connect(model, &ProjectItemsModel::removed, this, &ProjectsWidget::removeProject);
 }
 
 void ProjectsWidget::addProject(Project *project)

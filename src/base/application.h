@@ -1,7 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "apk/projectsmodel.h"
+#include "apk/projectitemsmodel.h"
 #include "base/language.h"
 #include "base/recent.h"
 #include "base/settings.h"
@@ -82,8 +82,8 @@ public:
     void visitJdkPage() const;
 
     MainWindow *window;
-    ProjectsModel projects;
-    Settings *settings; // TODO Check on macOS: See https://github.com/kefir500/apk-icon-editor/commit/6ac051d
+    ProjectItemsModel projects;
+    Settings *settings;
     Recent *recent;
     QTranslator translator;
     QTranslator translatorQt;

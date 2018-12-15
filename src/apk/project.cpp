@@ -211,13 +211,13 @@ Manifest *Project::initialize()
         }
     }
 
-    connect(&resourcesModel, &ResourcesModel::dataChanged, [=] () {
+    connect(&resourcesModel, &ResourceItemsModel::dataChanged, [=] () {
         state.setModified(true);
     });
     connect(&filesystemModel, &QFileSystemModel::dataChanged, [=] () {
         state.setModified(true);
     });
-    connect(&iconsProxy, &IconsProxy::dataChanged, [=] () {
+    connect(&iconsProxy, &IconItemsModel::dataChanged, [=] () {
         state.setModified(true);
     });
     connect(&manifestModel, &ManifestModel::dataChanged, [=] (const QModelIndex &, const QModelIndex &, const QVector<int> &roles) {

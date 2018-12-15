@@ -1,10 +1,10 @@
-#ifndef ICONSPROXY_H
-#define ICONSPROXY_H
+#ifndef ICONITEMSMODEL_H
+#define ICONITEMSMODEL_H
 
 #include <QAbstractProxyModel>
-#include "apk/resourcesmodel.h"
+#include "apk/resourceitemsmodel.h"
 
-class IconsProxy : public QAbstractProxyModel
+class IconItemsModel : public QAbstractProxyModel
 {
     Q_OBJECT
 
@@ -15,14 +15,14 @@ public:
         ColumnCount
     };
 
-    explicit IconsProxy(QObject *parent = nullptr);
+    explicit IconItemsModel(QObject *parent = nullptr);
 
     bool addIcon(const QPersistentModelIndex &index);
     QIcon getIcon() const;
     QString getIconPath(const QModelIndex &index) const;
 
-    ResourcesModel *sourceModel() const;
-    void setSourceModel(ResourcesModel *sourceModel);
+    ResourceItemsModel *sourceModel() const;
+    void setSourceModel(ResourceItemsModel *sourceModel);
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     QModelIndex parent(const QModelIndex &child) const Q_DECL_OVERRIDE;
@@ -38,4 +38,4 @@ private:
     QMap<int, QPersistentModelIndex> proxyToSourceMap;
 };
 
-#endif // ICONSPROXY_H
+#endif // ICONITEMSMODEL_H

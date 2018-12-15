@@ -1,10 +1,10 @@
-#ifndef RESOURCESMODEL_H
-#define RESOURCESMODEL_H
+#ifndef RESOURCEITEMSMODEL_H
+#define RESOURCEITEMSMODEL_H
 
 #include "apk/resourcenode.h"
 #include <QAbstractItemModel>
 
-class ResourcesModel : public QAbstractItemModel
+class ResourceItemsModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -19,8 +19,8 @@ public:
         ColumnCount
     };
 
-    ResourcesModel(QObject *parent = nullptr);
-    ~ResourcesModel() Q_DECL_OVERRIDE;
+    ResourceItemsModel(QObject *parent = nullptr);
+    ~ResourceItemsModel() Q_DECL_OVERRIDE;
 
     QModelIndex addNode(ResourceNode *node, const QModelIndex &parent = QModelIndex());
 
@@ -38,4 +38,4 @@ private:
     ResourceNode *root;
 };
 
-#endif // RESOURCESMODEL_H
+#endif // RESOURCEITEMSMODEL_H

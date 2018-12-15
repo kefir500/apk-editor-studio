@@ -1,8 +1,8 @@
-#include "apk/iconsproxy.h"
+#include "apk/iconitemsmodel.h"
 #include "base/application.h"
 #include <QDebug>
 
-IconsProxy::IconsProxy(QObject *parent) : QAbstractProxyModel(parent)
+IconItemsModel::IconItemsModel(QObject *parent) : QAbstractProxyModel(parent)
 {
     connect(this, &QAbstractItemModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight) {
         auto sourceModel = this->sourceModel();
@@ -14,16 +14,16 @@ IconsProxy::IconsProxy(QObject *parent) : QAbstractProxyModel(parent)
     });
 }
 
-void IconsProxy::setSourceModel(ResourcesModel *sourceModel)
+void IconItemsModel::setSourceModel(ResourceItemsModel *sourceModel)
 {
     if (this->sourceModel()) {
-        disconnect(this->sourceModel(), &ResourcesModel::dataChanged, this, &IconsProxy::sourceDataChanged);
+        disconnect(this->sourceModel(), &ResourceItemsModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
     }
     QAbstractProxyModel::setSourceModel(sourceModel);
-    connect(sourceModel, &ResourcesModel::dataChanged, this, &IconsProxy::sourceDataChanged);
+    connect(sourceModel, &ResourceItemsModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
 }
 
-bool IconsProxy::addIcon(const QPersistentModelIndex &index)
+bool IconItemsModel::addIcon(const QPersistentModelIndex &index)
 {
     if (!sourceToProxyMap.contains(index)) {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
@@ -36,53 +36,53 @@ bool IconsProxy::addIcon(const QPersistentModelIndex &index)
     return false;
 }
 
-QIcon IconsProxy::getIcon() const
+QIcon IconItemsModel::getIcon() const
 {
     QIcon icon;
     const int rows = rowCount();
     for (int i = 0; i < rows; ++i) {
-        const QModelIndex sourceIndex = mapToSource(index(i, ResourcesModel::NodeCaption));
+        const QModelIndex sourceIndex = mapToSource(index(i, ResourceItemsModel::NodeCaption));
         const QPixmap pixmap = sourceIndex.data(Qt::DecorationRole).value<QPixmap>();
         icon.addPixmap(pixmap);
     }
     return icon;
 }
 
-QString IconsProxy::getIconPath(const QModelIndex &index) const
+QString IconItemsModel::getIconPath(const QModelIndex &index) const
 {
     if (!index.isValid()) {
         return QString();
     }
-    return this->index(index.row(), IconsProxy::IconPath).data().toString();
+    return this->index(index.row(), IconItemsModel::IconPath).data().toString();
 }
 
-ResourcesModel *IconsProxy::sourceModel() const
+ResourceItemsModel *IconItemsModel::sourceModel() const
 {
-    return static_cast<ResourcesModel *>(QAbstractProxyModel::sourceModel());
+    return static_cast<ResourceItemsModel *>(QAbstractProxyModel::sourceModel());
 }
 
-QVariant IconsProxy::data(const QModelIndex &index, int role) const
+QVariant IconItemsModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
         const QModelIndex sourceIndex = mapToSource(index);
         if (role == Qt::DisplayRole) {
             switch (index.column()) {
             case IconCaption:
-                return sourceIndex.sibling(sourceIndex.row(), ResourcesModel::ResourceQualifiers).data().toString().toUpper();
+                return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourceQualifiers).data().toString().toUpper();
             case IconPath:
-                return sourceIndex.sibling(sourceIndex.row(), ResourcesModel::ResourcePath).data().toString();
+                return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourcePath).data().toString();
             }
         } else if (role == Qt::ToolTipRole) {
-            return sourceIndex.sibling(sourceIndex.row(), ResourcesModel::ResourcePath).data().toString();
+            return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourcePath).data().toString();
         } else if (role == Qt::DecorationRole) {
-            const QPixmap pixmap = sourceIndex.sibling(sourceIndex.row(), ResourcesModel::NodeCaption).data(Qt::DecorationRole).value<QPixmap>();
+            const QPixmap pixmap = sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::NodeCaption).data(Qt::DecorationRole).value<QPixmap>();
             return !pixmap.isNull() ? pixmap.scaled(app->scale(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation) : QPixmap();
         }
     }
     return QVariant();
 }
 
-QModelIndex IconsProxy::index(int row, int column, const QModelIndex &parent) const
+QModelIndex IconItemsModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (Q_UNLIKELY(parent.isValid())) {
         qWarning() << "CRITICAL: Unwanted parent passed to icons proxy";
@@ -91,13 +91,13 @@ QModelIndex IconsProxy::index(int row, int column, const QModelIndex &parent) co
     return createIndex(row, column);
 }
 
-QModelIndex IconsProxy::parent(const QModelIndex &child) const
+QModelIndex IconItemsModel::parent(const QModelIndex &child) const
 {
     Q_UNUSED(child)
     return QModelIndex();
 }
 
-QModelIndex IconsProxy::mapFromSource(const QModelIndex &sourceIndex) const
+QModelIndex IconItemsModel::mapFromSource(const QModelIndex &sourceIndex) const
 {
     if (sourceIndex.isValid() && sourceToProxyMap.contains(sourceIndex)) {
         return createIndex(sourceToProxyMap[sourceIndex], sourceIndex.column(), sourceIndex.internalPointer());
@@ -105,7 +105,7 @@ QModelIndex IconsProxy::mapFromSource(const QModelIndex &sourceIndex) const
     return QModelIndex();
 }
 
-QModelIndex IconsProxy::mapToSource(const QModelIndex &proxyIndex) const
+QModelIndex IconItemsModel::mapToSource(const QModelIndex &proxyIndex) const
 {
     if (proxyIndex.isValid() && proxyToSourceMap.contains(proxyIndex.row())) {
         QModelIndex sourceIndex = proxyToSourceMap.value(proxyIndex.row());
@@ -114,19 +114,19 @@ QModelIndex IconsProxy::mapToSource(const QModelIndex &proxyIndex) const
     return QModelIndex();
 }
 
-int IconsProxy::rowCount(const QModelIndex &parent) const
+int IconItemsModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return proxyToSourceMap.count();
 }
 
-int IconsProxy::columnCount(const QModelIndex &parent) const
+int IconItemsModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return 1;
 }
 
-void IconsProxy::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+void IconItemsModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
     emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight));
 }

@@ -2,8 +2,8 @@
 #define PROJECTSWIDGET_H
 
 #include "widgets/projecttabswidget.h"
-#include "apk/projectsmodel.h"
-#include "editors/welcomeviewer.h"
+#include "apk/projectitemsmodel.h"
+#include "editors/welcomeactionviewer.h"
 #include <QStackedLayout>
 
 class ProjectsWidget : public QWidget
@@ -13,7 +13,7 @@ class ProjectsWidget : public QWidget
 public:
     ProjectsWidget(QWidget *parent = nullptr);
 
-    void setModel(ProjectsModel *model);
+    void setModel(ProjectItemsModel *model);
 
     void addProject(Project *project);
     bool setCurrentProject(Project *project);
@@ -48,11 +48,11 @@ private:
 
     void retranslate();
 
-    ProjectsModel *model;
+    ProjectItemsModel *model;
     QMap<Project *, ProjectTabsWidget *> map;
 
     QStackedLayout *stack;
-    WelcomeViewer *welcome;
+    WelcomeActionViewer *welcome;
 
     QAction *actionSave;
     QAction *actionSaveAs;

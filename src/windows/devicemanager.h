@@ -1,7 +1,7 @@
 #ifndef DEVICEMANAGER_H
 #define DEVICEMANAGER_H
 
-#include "base/devicesmodel.h"
+#include "base/deviceitemsmodel.h"
 #include <QDialog>
 #include <QLabel>
 #include <QListView>
@@ -21,7 +21,7 @@ private:
     bool setCurrentDevice(const Device *device);
 
     QListView *deviceList;
-    DevicesModel deviceModel;
+    DeviceItemsModel deviceModel;
 
     QLineEdit *fieldAlias;
     QLabel *labelSerial;

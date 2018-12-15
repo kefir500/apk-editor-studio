@@ -1,9 +1,9 @@
-#ifndef PROJECTSMODEL_H
-#define PROJECTSMODEL_H
+#ifndef PROJECTITEMSMODEL_H
+#define PROJECTITEMSMODEL_H
 
 #include "apk/project.h"
 
-class ProjectsModel : public QAbstractListModel
+class ProjectItemsModel : public QAbstractListModel
 {
     Q_OBJECT
 
@@ -22,7 +22,7 @@ public:
         ProjectFailedRole
     };
 
-    ~ProjectsModel() Q_DECL_OVERRIDE;
+    ~ProjectItemsModel() Q_DECL_OVERRIDE;
 
     Project *open(const QString &filename, bool unpack = true);
     bool close(Project *project);
@@ -43,4 +43,4 @@ private:
     QList<Project *> projects;
 };
 
-#endif // PROJECTSMODEL_H
+#endif // PROJECTITEMSMODEL_H

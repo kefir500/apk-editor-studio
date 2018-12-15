@@ -1,11 +1,11 @@
-#ifndef DEVICESMODEL_H
-#define DEVICESMODEL_H
+#ifndef DEVICEITEMSMODEL_H
+#define DEVICEITEMSMODEL_H
 
 #include "base/device.h"
 #include <QAbstractTableModel>
 #include <QSharedPointer>
 
-class DevicesModel : public QAbstractTableModel
+class DeviceItemsModel : public QAbstractTableModel
 {
     Q_OBJECT
 
@@ -34,4 +34,4 @@ private:
     QList<QSharedPointer<Device> > devices;
 };
 
-#endif // DEVICESMODEL_H
+#endif // DEVICEITEMSMODEL_H

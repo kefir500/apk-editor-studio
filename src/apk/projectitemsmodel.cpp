@@ -1,12 +1,12 @@
-#include "apk/projectsmodel.h"
+#include "apk/projectitemsmodel.h"
 #include "base/application.h"
 
-ProjectsModel::~ProjectsModel()
+ProjectItemsModel::~ProjectItemsModel()
 {
     qDeleteAll(projects);
 }
 
-Project *ProjectsModel::open(const QString &filename, bool unpack)
+Project *ProjectItemsModel::open(const QString &filename, bool unpack)
 {
     Project *project = new Project(filename);
     if (unpack) {
@@ -27,7 +27,7 @@ Project *ProjectsModel::open(const QString &filename, bool unpack)
     return project;
 }
 
-bool ProjectsModel::close(Project *project)
+bool ProjectItemsModel::close(Project *project)
 {
     const int row = indexOf(project);
     if (row == -1) {
@@ -43,7 +43,7 @@ bool ProjectsModel::close(Project *project)
     return true;
 }
 
-Project *ProjectsModel::existing(const QString &filename) const
+Project *ProjectItemsModel::existing(const QString &filename) const
 {
     QListIterator<Project *> it(projects);
     while (it.hasNext()) {
@@ -55,12 +55,12 @@ Project *ProjectsModel::existing(const QString &filename) const
     return nullptr;
 }
 
-int ProjectsModel::indexOf(Project *project) const
+int ProjectItemsModel::indexOf(Project *project) const
 {
     return projects.indexOf(project);
 }
 
-QVariant ProjectsModel::data(const QModelIndex &index, int role) const
+QVariant ProjectItemsModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
         const int column = index.column();
@@ -88,7 +88,7 @@ QVariant ProjectsModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QModelIndex ProjectsModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex ProjectItemsModel::index(int row, int column, const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     if (row >= 0 && row < projects.count()) {
@@ -97,7 +97,7 @@ QModelIndex ProjectsModel::index(int row, int column, const QModelIndex &parent)
     return QModelIndex();
 }
 
-int ProjectsModel::rowCount(const QModelIndex &parent) const
+int ProjectItemsModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return projects.count();

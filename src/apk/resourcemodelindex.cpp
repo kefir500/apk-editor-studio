@@ -1,17 +1,17 @@
 #include "apk/resourcemodelindex.h"
-#include "apk/resourcesmodel.h"
-#include "apk/iconsproxy.h"
+#include "apk/resourceitemsmodel.h"
+#include "apk/iconitemsmodel.h"
 #include <QFileSystemModel>
 #include <QFileIconProvider>
 
 QString ResourceModelIndex::path() const
 {
     if (isValid()) {
-        auto resourcesModel = qobject_cast<const ResourcesModel *>(model());
+        auto resourcesModel = qobject_cast<const ResourceItemsModel *>(model());
         if (resourcesModel) {
             return resourcesModel->getResourcePath(*this);
         }
-        auto iconsModel = qobject_cast<const IconsProxy *>(model());
+        auto iconsModel = qobject_cast<const IconItemsModel *>(model());
         if (iconsModel) {
             return iconsModel->getIconPath(*this);
         }
@@ -26,11 +26,11 @@ QString ResourceModelIndex::path() const
 QIcon ResourceModelIndex::icon() const
 {
     auto fetch = [this]() -> QIcon {
-        auto resourcesModel = qobject_cast<const ResourcesModel *>(model());
+        auto resourcesModel = qobject_cast<const ResourceItemsModel *>(model());
         if (resourcesModel) {
             return resourcesModel->getResourceFlag(*this);
         }
-        auto iconsModel = qobject_cast<const IconsProxy *>(model());
+        auto iconsModel = qobject_cast<const IconItemsModel *>(model());
         if (iconsModel) {
             auto resourcesModel = iconsModel->sourceModel();
             return resourcesModel->getResourceFlag(iconsModel->mapToSource(*this));

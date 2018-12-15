@@ -1,8 +1,8 @@
-#include "base/devicesmodel.h"
+#include "base/deviceitemsmodel.h"
 #include "base/application.h"
 #include "tools/adb.h"
 
-const Device *DevicesModel::get(const QModelIndex &index) const
+const Device *DeviceItemsModel::get(const QModelIndex &index) const
 {
     if (index.isValid()) {
         return devices.at(index.row()).data();
@@ -10,7 +10,7 @@ const Device *DevicesModel::get(const QModelIndex &index) const
     return nullptr;
 }
 
-void DevicesModel::refresh()
+void DeviceItemsModel::refresh()
 {
     Adb adb(app->settings->getAdbPath());
     if (!devices.isEmpty()) {
@@ -33,7 +33,7 @@ void DevicesModel::refresh()
     }
 }
 
-void DevicesModel::save() const
+void DeviceItemsModel::save() const
 {
     for (const QSharedPointer<Device> &device : devices) {
         const QString alias = device->getAlias();
@@ -43,7 +43,7 @@ void DevicesModel::save() const
     }
 }
 
-bool DevicesModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool DeviceItemsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (index.isValid() && role == Qt::EditRole && index.column() == DeviceAlias) {
         devices[index.row()]->setAlias(value.toString());
@@ -53,7 +53,7 @@ bool DevicesModel::setData(const QModelIndex &index, const QVariant &value, int 
     return false;
 }
 
-QVariant DevicesModel::data(const QModelIndex &index, int role) const
+QVariant DeviceItemsModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid() && role == Qt::DisplayRole) {
         auto device = devices.at(index.row());
@@ -75,7 +75,7 @@ QVariant DevicesModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant DevicesModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant DeviceItemsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (orientation == Qt::Horizontal) {
         if (role == Qt::DisplayRole) {
@@ -91,7 +91,7 @@ QVariant DevicesModel::headerData(int section, Qt::Orientation orientation, int 
     return QVariant();
 }
 
-QModelIndex DevicesModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex DeviceItemsModel::index(int row, int column, const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     if (row >= 0 && row < devices.count()) {
@@ -100,13 +100,13 @@ QModelIndex DevicesModel::index(int row, int column, const QModelIndex &parent) 
     return QModelIndex();
 }
 
-int DevicesModel::rowCount(const QModelIndex &parent) const
+int DeviceItemsModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return devices.count();
 }
 
-int DevicesModel::columnCount(const QModelIndex &parent) const
+int DeviceItemsModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return ColumnCount;
