@@ -17,7 +17,7 @@ signals:
     void titleEditorRequested() const;
 
 protected:
-    void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void changeEvent(QEvent *event) override;
 
 private:
     void onProjectUpdated();

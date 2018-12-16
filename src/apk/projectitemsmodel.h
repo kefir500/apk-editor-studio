@@ -22,7 +22,7 @@ public:
         ProjectFailedRole
     };
 
-    ~ProjectItemsModel() Q_DECL_OVERRIDE;
+    ~ProjectItemsModel() override;
 
     Project *open(const QString &filename, bool unpack = true);
     bool close(Project *project);
@@ -30,9 +30,9 @@ public:
     Project *existing(const QString &filename) const;
     int indexOf(Project *project) const;
 
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-    QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
 signals:
     void added(Project *project) const;

@@ -20,7 +20,7 @@ public:
     static QStringList supportedFormats();
 
 protected:
-    void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void changeEvent(QEvent *event) override;
 
     ResourceModelIndex index;
 

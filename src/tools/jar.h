@@ -8,8 +8,8 @@ class Jar : public Java
 public:
     explicit Jar(const QString &jar, QObject *parent = nullptr);
 
-    void startAsync(const QStringList &options) Q_DECL_OVERRIDE;
-    Result<QString> startSync(const QStringList &options) const Q_DECL_OVERRIDE;
+    void startAsync(const QStringList &options) override;
+    Result<QString> startSync(const QStringList &options) const override;
 
 private:
     QString jar;

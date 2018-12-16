@@ -22,8 +22,8 @@ signals:
     void zoomed(qreal factor);
 
 protected:
-    void wheelEvent(QWheelEvent *event) Q_DECL_OVERRIDE;
-    void drawBackground(QPainter *painter, const QRectF &rect) Q_DECL_OVERRIDE;
+    void wheelEvent(QWheelEvent *event) override;
+    void drawBackground(QPainter *painter, const QRectF &rect) override;
 
 private:
     qreal zoomFactor;
@@ -58,17 +58,17 @@ class ImageEditor : public FileEditor
 public:
     ImageEditor(const ResourceModelIndex &index, QWidget *parent = nullptr);
 
-    bool load() Q_DECL_OVERRIDE;
-    bool save(const QString &as = QString()) Q_DECL_OVERRIDE;
+    bool load() override;
+    bool save(const QString &as = QString()) override;
 
     void setHighlight(bool value);
 
     static QStringList supportedFormats();
 
 protected:
-    void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
-    void dragLeaveEvent(QDragLeaveEvent *event) Q_DECL_OVERRIDE;
-    void dropEvent(QDropEvent *event) Q_DECL_OVERRIDE;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dragLeaveEvent(QDragLeaveEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
 
 private:
     void setImage(const QPixmap &image);

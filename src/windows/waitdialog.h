@@ -9,7 +9,7 @@ class WaitDialog : public QMessageBox
 
 public:
     explicit WaitDialog(QWidget *parent = nullptr);
-    ~WaitDialog() Q_DECL_OVERRIDE;
+    ~WaitDialog() override;
 };
 
 #define WAIT WaitDialog waitDialog(this); Q_UNUSED(waitDialog)

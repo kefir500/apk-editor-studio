@@ -29,7 +29,7 @@ public:
     };
 
     Application(int &argc, char **argv);
-    ~Application() Q_DECL_OVERRIDE;
+    ~Application() override;
 
     int exec();
 
@@ -87,7 +87,7 @@ public:
     QTranslator translatorQt;
 
 protected:
-    bool event(QEvent *event) Q_DECL_OVERRIDE;
+    bool event(QEvent *event) override;
 
 private:
     qreal scaleFactor;

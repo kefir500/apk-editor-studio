@@ -15,8 +15,8 @@ public:
 
     PoolListWidget(QWidget *parent = nullptr);
     void addItem(QListWidgetItem *item, bool reusable);
-    void startDrag(Qt::DropActions supportedActions) Q_DECL_OVERRIDE;
-    void dropEvent(QDropEvent *event) Q_DECL_OVERRIDE;
+    void startDrag(Qt::DropActions supportedActions) override;
+    void dropEvent(QDropEvent *event) override;
 };
 
 #endif // POOLLISTWIDGET_H

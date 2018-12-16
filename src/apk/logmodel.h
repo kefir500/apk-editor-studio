@@ -16,7 +16,7 @@ public:
     };
 
     LogModel();
-    ~LogModel() Q_DECL_OVERRIDE;
+    ~LogModel() override;
 
     bool add(LogEntry *entry);
     bool add(const QString &brief, const QString &descriptive, LogEntry::Type type);
@@ -26,9 +26,9 @@ public:
     void setLoadingState(bool state);
     bool getLoadingState() const;
 
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-    QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
     QList<LogEntry *> entries;

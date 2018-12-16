@@ -10,7 +10,7 @@ class ManifestView : public QTableView
 
 public:
     explicit ManifestView(QWidget *parent = nullptr);
-    QSize sizeHint() const Q_DECL_OVERRIDE;
+    QSize sizeHint() const override;
 
 signals:
     void editorRequested(ManifestModel::ManifestRow manifestField);

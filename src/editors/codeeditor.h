@@ -10,8 +10,8 @@ class CodeEditor : public FileEditor
 public:
     CodeEditor(const ResourceModelIndex &index, QWidget *parent = nullptr);
 
-    bool load() Q_DECL_OVERRIDE;
-    bool save(const QString &as = QString()) Q_DECL_OVERRIDE;
+    bool load() override;
+    bool save(const QString &as = QString()) override;
 
     static QStringList supportedFormats();
 

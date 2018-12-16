@@ -11,11 +11,11 @@ class LogView : public QListView
 
 public:
     explicit LogView(QWidget *parent = nullptr);
-    void setModel(QAbstractItemModel *model) Q_DECL_OVERRIDE;
-    QSize sizeHint() const Q_DECL_OVERRIDE;
+    void setModel(QAbstractItemModel *model) override;
+    QSize sizeHint() const override;
 
 protected:
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     QVariantAnimation *loading;

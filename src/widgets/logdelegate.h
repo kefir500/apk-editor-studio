@@ -11,7 +11,7 @@ public:
     explicit LogDelegate(QObject *parent = nullptr);
 
 protected:
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 private:
     QIcon iconExpand;

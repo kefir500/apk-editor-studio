@@ -12,7 +12,7 @@ public:
     Editor(QWidget *parent = nullptr);
     virtual bool save(const QString &as = QString()) = 0;
 
-    bool finalize() Q_DECL_OVERRIDE;
+    bool finalize() override;
     bool isModified() const;
 
 signals:
@@ -21,7 +21,7 @@ signals:
 
 protected:
     void setModified(bool value);
-    void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void changeEvent(QEvent *event) override;
 
     QAction *actionSave;
 

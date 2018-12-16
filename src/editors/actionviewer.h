@@ -16,7 +16,7 @@ public:
 
 protected:
     QPushButton *addButton(const QString &title = QString());
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     QVBoxLayout *layout;

@@ -11,7 +11,7 @@ public:
     explicit WelcomeActionViewer(QWidget *parent = nullptr);
 
 protected:
-    void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void changeEvent(QEvent *event) override;
 
 private:
     QPushButton *btnOpen;

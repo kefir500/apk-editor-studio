@@ -11,7 +11,7 @@ public:
     explicit GradientWidget(QWidget *parent = nullptr) : QWidget(parent) {}
 
 protected:
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *event) override;
 
 };
 

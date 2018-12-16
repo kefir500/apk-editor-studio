@@ -31,7 +31,7 @@ namespace Tasks
     {
     public:
         Unpack(const QString &source, const QString &target, const QString &frameworks, bool resources, bool sources);
-        void run() Q_DECL_OVERRIDE;
+        void run() override;
     private:
         QString source;
         QString target;
@@ -46,7 +46,7 @@ namespace Tasks
     {
     public:
         Pack(const QString &source, const QString &target, const QString &frameworks, bool resources, bool sources);
-        void run() Q_DECL_OVERRIDE;
+        void run() override;
     private:
         QString source;
         QString target;
@@ -61,7 +61,7 @@ namespace Tasks
     {
     public:
         Align(const QString &target);
-        void run() Q_DECL_OVERRIDE;
+        void run() override;
     private:
         QString target;
     };
@@ -72,7 +72,7 @@ namespace Tasks
     {
     public:
         Sign(const QString &target, const Keystore *keystore);
-        void run() Q_DECL_OVERRIDE;
+        void run() override;
     private:
         QString target;
         const Keystore *keystore;
@@ -84,7 +84,7 @@ namespace Tasks
     {
     public:
         Install(const QString &apk, const QString &serial);
-        void run() Q_DECL_OVERRIDE;
+        void run() override;
     private:
         QString apk;
         QString serial;
@@ -97,9 +97,9 @@ namespace Tasks
         Q_OBJECT
     public:
         void add(Task *task, bool critical = false);
-        void run() Q_DECL_OVERRIDE;
+        void run() override;
     private:
-        ~Batch() Q_DECL_OVERRIDE;
+        ~Batch() override;
         QQueue<Task *> tasks;
     };
 }

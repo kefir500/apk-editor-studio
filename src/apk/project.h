@@ -16,7 +16,7 @@ class Project : public QObject
 
 public:
     Project(const QString &path);
-    ~Project() Q_DECL_OVERRIDE;
+    ~Project() override;
 
     void unpack();
     void pack(QString path);
