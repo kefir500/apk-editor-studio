@@ -61,7 +61,7 @@ void Project::unpack()
     taskOpen->run();
 }
 
-void Project::pack(QString path)
+void Project::save(QString path)
 {
     logModel.clear();
 

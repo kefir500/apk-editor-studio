@@ -327,7 +327,7 @@ bool Application::installExternalApk()
         return false;
     }
     DeviceManager devices(window);
-    const Device *device = devices.getDevice();
+    const Device *device = devices.getTargetDevice();
     if (!device) {
         return false;
     }

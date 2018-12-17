@@ -19,7 +19,7 @@ public:
     ~Project() override;
 
     void unpack();
-    void pack(QString path);
+    void save(QString path);
     void install(const QString &serial);
     void saveAndInstall(const QString &path, const QString &serial);
 

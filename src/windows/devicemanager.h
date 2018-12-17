@@ -15,7 +15,7 @@ public:
     explicit DeviceManager(QWidget *parent = nullptr);
 
     void refreshDevices();
-    const Device *getDevice();
+    const Device *getTargetDevice();
 
 private:
     bool setCurrentDevice(const Device *device);

@@ -80,7 +80,7 @@ void DeviceManager::refreshDevices()
     deviceModel.refresh();
 }
 
-const Device *DeviceManager::getDevice()
+const Device *DeviceManager::getTargetDevice()
 {
     setWindowTitle(tr("Install APK"));
     setWindowIcon(app->loadIcon("install.png"));

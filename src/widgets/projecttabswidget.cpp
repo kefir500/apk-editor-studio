@@ -115,14 +115,14 @@ bool ProjectTabsWidget::saveProject()
     if (target.isEmpty()) {
         return false;
     }
-    project->pack(target);
+    project->save(target);
     return true;
 }
 
 bool ProjectTabsWidget::installProject()
 {
     DeviceManager devices(this);
-    const Device *device = devices.getDevice();
+    const Device *device = devices.getTargetDevice();
     if (!device) {
         return false;
     }
