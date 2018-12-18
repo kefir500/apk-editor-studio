@@ -13,6 +13,7 @@
 #include <QDockWidget>
 #include <QMimeData>
 #include <QMimeDatabase>
+#include <QTimer>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -37,8 +38,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     app->sendEvent(this, &languageChangeEvent);
 
     if (app->settings->getAutoUpdates()) {
-        Updater *updater = new Updater(false, this);
-        updater->checkAndDelete();
+        // Delay to prevent uninitialized window render
+        auto timer = new QTimer(this);
+        connect (timer, &QTimer::timeout, [=]() {
+            Updater::check(false, this);
+            timer->deleteLater();
+        });
+        timer->setSingleShot(true);
+        timer->start(1000);
     }
 
     qDebug();
@@ -288,8 +295,7 @@ void MainWindow::initMenus()
     connect(actionSettingsReset, &QAction::triggered, this, &MainWindow::resetSettings);
     connect(actionWebsite, &QAction::triggered, app, &Application::visitWebPage);
     connect(actionUpdate, &QAction::triggered, [=]() {
-        Updater *updater = new Updater(true, this);
-        updater->checkAndDelete();
+        Updater::check(true, this);
     });
     connect(actionDonate, &QAction::triggered, app, &Application::visitDonatePage);
     connect(actionAboutQt, &QAction::triggered, app, &Application::aboutQt);

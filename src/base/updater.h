@@ -1,24 +1,22 @@
 #ifndef UPDATER_H
 #define UPDATER_H
 
-#include <QtNetwork/QNetworkAccessManager>
+#include <QCoreApplication>
 
-class Updater : public QObject
+class Updater final
 {
-    Q_OBJECT
+    Q_DECLARE_TR_FUNCTIONS(Updater)
 
 public:
-    explicit Updater(bool verbose = false, QWidget *parent = nullptr);
-    void checkAndDelete();
-    void download() const;
+    Updater() = delete;
+
+    static void check(bool verbose = false, QWidget *parent = nullptr);
+    static void download();
 
 private:
-    QString parse(const QByteArray &json) const;
-    bool compare(const QString &currentVersion, const QString &latestVersion) const;
-    void notify(const QString &version) const;
-
-    QNetworkAccessManager *http;
-    bool verbose;
+    static QString parse(const QByteArray &json);
+    static bool compare(const QString &currentVersion, const QString &latestVersion);
+    static void notify(const QString &version, QWidget *parent = nullptr);
 };
 
 #endif // UPDATER_H

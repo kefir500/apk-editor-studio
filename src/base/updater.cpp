@@ -4,23 +4,23 @@
 #include <QtNetwork/QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QThread>
 #include <QMessageBox>
 #include <QDebug>
 
-Updater::Updater(bool verbose, QWidget *parent) : QObject(parent)
+void Updater::check(bool verbose, QWidget *parent)
 {
-    http = new QNetworkAccessManager(this);
+    auto http = new QNetworkAccessManager;
 
-    tr("What's new:"); // TODO For future use
-    connect(http, &QNetworkAccessManager::finished, [=](QNetworkReply *reply) {
+    QObject::connect(http, &QNetworkAccessManager::finished, parent, [=](QNetworkReply *reply) {
         QNetworkReply::NetworkError error = reply->error();
         if (error == QNetworkReply::NoError) {
             const QString currentVersion = VERSION;
             const QString latestVersion = parse(reply->readAll());
             if (!latestVersion.isEmpty()) {
                 if (compare(currentVersion, latestVersion)) {
-                    qDebug() << qPrintable(QString("Updater: New version avaiable (%1).\n").arg(latestVersion));
-                    notify(latestVersion);
+                    qDebug() << qPrintable(QString("Updater: New version available (%1).\n").arg(latestVersion));
+                    notify(latestVersion, parent);
                 } else {
                     if (verbose) {
                         //: Don't translate the "APK Editor Studio" part.
@@ -28,7 +28,7 @@ Updater::Updater(bool verbose, QWidget *parent) : QObject(parent)
                     }
                 }
             } else {
-                qDebug() << "Updater: Could not parse JSON.\n";
+                qWarning() << "Updater: Could not parse JSON.\n";
                 if (verbose) {
                     QMessageBox::warning(parent, QString(), tr("Could not check for updates: invalid format."));
                 }
@@ -41,21 +41,25 @@ Updater::Updater(bool verbose, QWidget *parent) : QObject(parent)
             }
         }
         reply->deleteLater();
-        deleteLater();
+        http->deleteLater();
+    }, Qt::QueuedConnection);
+
+    auto thread = new QThread();
+    http->moveToThread(thread);
+    QObject::connect(http, &QObject::destroyed, thread, &QThread::quit);
+    QObject::connect(thread, &QThread::finished, thread, &QThread::deleteLater);
+    QObject::connect(thread, &QThread::started, [=]() {
+        http->get(QNetworkRequest(app->getUpdateUrl()));
     });
+    thread->start();
 }
 
-void Updater::checkAndDelete()
-{
-    http->get(QNetworkRequest(app->getUpdateUrl()));
-}
-
-void Updater::download() const
+void Updater::download()
 {
     app->visitWebPage();
 }
 
-QString Updater::parse(const QByteArray &json) const
+QString Updater::parse(const QByteArray &json)
 {
 #if defined(Q_OS_WIN)
     const QString os = "windows";
@@ -67,12 +71,12 @@ QString Updater::parse(const QByteArray &json) const
     const QString os = "windows";
 #endif
     return QJsonDocument::fromJson(json)
-                          .object()["1"]
+                          .object()["os"]
                           .toObject()[os]
                           .toObject()["version"].toString();
 }
 
-bool Updater::compare(const QString &currentVersion, const QString &latestVersion) const
+bool Updater::compare(const QString &currentVersion, const QString &latestVersion)
 {
     QStringList currentVersionSegments = currentVersion.split('.');
     QStringList latestVersionSegments = latestVersion.split('.');
@@ -82,7 +86,7 @@ bool Updater::compare(const QString &currentVersion, const QString &latestVersio
     // Normalize segments count:
     const int minSegments = qMin(currentVersionSegmentCount, latestVersionSegmentCount);
     const int maxSegments = qMax(currentVersionSegmentCount, latestVersionSegmentCount);
-    for (short i = minSegments; i < maxSegments; ++i) {
+    for (int i = minSegments; i < maxSegments; ++i) {
         if (currentVersionSegments.size() <= i) {
             currentVersionSegments.append("0");
         } else if (latestVersionSegments.size() <= i) {
@@ -103,14 +107,13 @@ bool Updater::compare(const QString &currentVersion, const QString &latestVersio
     return false;
 }
 
-void Updater::notify(const QString &version) const
+void Updater::notify(const QString &version, QWidget *parent)
 {
-    QWidget *parentWidget = static_cast<QWidget *>(parent());
     //: This is a noun.
     const QString title = tr("Update");
     //: "v%1" will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the "APK Editor Studio" part.
-    const QString question = tr("APK Editor Studio v%1 is avaiable.\nDownload?").arg(version);
-    const int answer = QMessageBox::question(parentWidget, title, question);
+    const QString question = tr("APK Editor Studio v%1 is available.\nDownload?").arg(version);
+    const int answer = QMessageBox::question(parent, title, question);
     if (answer == QMessageBox::Yes) {
         download();
     }
