@@ -82,8 +82,8 @@ bool ProjectTabsWidget::saveTabs()
 {
     bool result = true;
     for (int index = 0; index < count(); ++index) {
-        Editor *tab = static_cast<Editor *>(widget(index));
-        if (!tab->save()) {
+        Editor *tab = qobject_cast<Editor *>(widget(index));
+        if (tab && !tab->save()) {
             result = false;
         }
     }
