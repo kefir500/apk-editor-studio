@@ -78,7 +78,6 @@ void Project::save(QString path)
 
     connect(taskSave, &Tasks::Batch::success, this, [=]() {
         state.setCurrentAction(ProjectState::ProjectIdle);
-        state.setModified(false);
         journal(tr("Done."), LogEntry::Success);
     }, Qt::QueuedConnection);
 
@@ -345,11 +344,11 @@ Tasks::Task *Project::createSaveTask(const QString &target) // Combines Pack, Zi
     });
 
     connect(taskSave, &Tasks::Batch::success, this, [=]() {
+        state.setModified(false);
         emit packed(true);
     }, Qt::QueuedConnection);
 
     connect(taskSave, &Tasks::Batch::error, this, [=]() {
-        state.setModified(false);
         emit packed(false);
     }, Qt::QueuedConnection);
 
