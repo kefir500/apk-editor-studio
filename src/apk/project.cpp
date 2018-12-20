@@ -89,10 +89,11 @@ void Project::save(QString path)
     taskSave->run();
 }
 
-void Project::saveAndInstall(const QString &path, const QString &serial)
+void Project::saveAndInstall(QString path, const QString &serial)
 {
     logModel.clear();
 
+    path = QDir::toNativeSeparators(path);
     QFileInfo fileInfo(path);
     const QString directory = fileInfo.absolutePath();
     app->settings->setLastDirectory(directory);

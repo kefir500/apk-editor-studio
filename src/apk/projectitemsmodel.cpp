@@ -48,7 +48,7 @@ Project *ProjectItemsModel::existing(const QString &filename) const
     QListIterator<Project *> it(projects);
     while (it.hasNext()) {
         Project *iteration = it.next();
-        if (iteration->getOriginalPath() == filename) {
+        if (iteration->getOriginalPath() == QDir::toNativeSeparators(filename)) {
             return iteration;
         }
     }
