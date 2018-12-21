@@ -293,7 +293,7 @@ Tasks::Task *Project::createUnpackTask(const QString &source)
 
     connect(taskUnpack, &Tasks::Pack::started, this, [=]() {
         journal(tr("Unpacking APK..."));
-        qDebug() << qPrintable(QString("Unpacking\n  from: %1\n  to:   %2\n").arg(source, target));
+        qDebug() << qPrintable(QString("Unpacking\n  from: %1\n    to: %2\n").arg(source, target));
         state.setCurrentAction(ProjectState::ProjectUnpacking);
         state.setLastActionFailed(false);
     }, Qt::QueuedConnection);
@@ -367,7 +367,7 @@ Tasks::Task *Project::createPackTask(const QString &target)
 
     connect(taskPack, &Tasks::Pack::started, this, [=]() {
         journal(tr("Packing APK..."));
-        qDebug() << qPrintable(QString("Packing\n  from: %1\n  to:   %2\n").arg(source, target));
+        qDebug() << qPrintable(QString("Packing\n  from: %1\n    to: %2\n").arg(source, target));
         state.setCurrentAction(ProjectState::ProjectPacking);
     }, Qt::QueuedConnection);
 
