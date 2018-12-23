@@ -157,3 +157,5 @@ HEADERS += \
     $$PWD/windows/waitdialog.h
 
 INCLUDEPATH += $$PWD
+
+TRANSLATIONS = $$PWD/../res/translations/apk-editor-studio.en.ts

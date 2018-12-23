@@ -351,10 +351,10 @@ void MainWindow::retranslate()
     // File Menu:
 
     actionApkOpen->setText(tr("&Open APK..."));
-    actionApkSave->setText(tr("Save A&PK..."));
+    actionApkSave->setText(tr("&Save APK..."));
     actionApkInstall->setText(tr("&Install APK..."));
-    actionApkInstallExternal->setText(tr("&Install External APK..."));
-    actionApkExplore->setText(tr("Open Con&tents"));
+    actionApkInstallExternal->setText(tr("Install &External APK..."));
+    actionApkExplore->setText(tr("O&pen Contents"));
     actionApkClose->setText(tr("&Close APK"));
     actionExit->setText(tr("E&xit"));
 

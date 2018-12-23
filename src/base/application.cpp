@@ -299,7 +299,7 @@ Project *Application::openApk(const QString &filename, bool unpack)
 {
     Project *existing = projects.existing(filename);
     if (existing) {
-        //: "v%1" will be replaced with a path to an APK.
+        //: "%1" will be replaced with a path to an APK.
         const QString question = tr("This APK is already open:\n%1\nDo you want to reopen it and lose any unsaved changes?").arg(existing->getOriginalPath());
         const int answer = QMessageBox::question(window, QString(), question);
         if (answer != QMessageBox::Yes) {

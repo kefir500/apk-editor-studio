@@ -191,6 +191,6 @@ Viewer *ProjectsWidget::getCurrentProjectTab() const
 void ProjectsWidget::retranslate()
 {
     actionSave->setText(tr("&Save"));
-    actionSaveAs->setText(tr("Save &As"));
+    actionSaveAs->setText(tr("Save &As..."));
     actionNone->setText(tr("No actions"));
 }
