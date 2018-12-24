@@ -29,7 +29,7 @@ void IconList::dragEnterEvent(QDragEnterEvent *event)
     const QMimeData *mimeData = event->mimeData();
     const bool isImage = (mimeData->hasUrls() && Utils::isImageReadable(mimeData->urls().at(0).path())) || mimeData->hasImage();
     event->setAccepted(isImage);
-    setHighlight(true, indexAt(event->pos()));
+    setHighlight(isImage, indexAt(event->pos()));
 }
 
 void IconList::dragLeaveEvent(QDragLeaveEvent *event)
@@ -84,10 +84,10 @@ void IconList::dropEvent(QDropEvent *event)
 
 void IconList::setHighlight(bool highlight, const QModelIndex &index)
 {
-    if (!index.isValid()) {
-        highlightRect = highlight ? rect() : QRect();
+    if (!highlight) {
+        highlightRect = QRect();
     } else {
-        highlightRect = visualRect(index);
+        highlightRect = index.isValid() ? visualRect(index) : rect();
     }
     viewport()->update();
 }
