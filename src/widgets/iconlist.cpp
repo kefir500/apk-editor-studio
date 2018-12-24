@@ -1,6 +1,7 @@
 #include "widgets/iconlist.h"
 #include "base/application.h"
 #include "base/utils.h"
+#include <QPainter>
 #include <QDragEnterEvent>
 #include <QMimeData>
 
@@ -25,12 +26,10 @@ void IconList::setModel(IconItemsModel *model)
 
 void IconList::dragEnterEvent(QDragEnterEvent *event)
 {
-    // TODO Highlight separate items
     const QMimeData *mimeData = event->mimeData();
-    if (mimeData->hasUrls() || mimeData->hasImage()) {
-        event->acceptProposedAction();
-        setHighlight(true);
-    }
+    const bool isImage = (mimeData->hasUrls() && Utils::isImageReadable(mimeData->urls().at(0).path())) || mimeData->hasImage();
+    event->setAccepted(isImage);
+    setHighlight(true, indexAt(event->pos()));
 }
 
 void IconList::dragLeaveEvent(QDragLeaveEvent *event)
@@ -41,7 +40,14 @@ void IconList::dragLeaveEvent(QDragLeaveEvent *event)
 
 void IconList::dragMoveEvent(QDragMoveEvent *event)
 {
-    event->acceptProposedAction(); // Otherwise QListView drag and drop won't work
+    setHighlight(true, indexAt(event->pos()));
+}
+
+void IconList::paintEvent(QPaintEvent *event)
+{
+    QListView::paintEvent(event);
+    QPainter painter(viewport());
+    painter.fillRect(highlightRect, app->getColor(app->ColorHighlight));
 }
 
 void IconList::dropEvent(QDropEvent *event)
@@ -76,8 +82,12 @@ void IconList::dropEvent(QDropEvent *event)
     setHighlight(false);
 }
 
-void IconList::setHighlight(bool value)
+void IconList::setHighlight(bool highlight, const QModelIndex &index)
 {
-    QColor background = app->getColor(app->ColorHighlight);
-    setStyleSheet(value ? QString("IconList {background: %1}").arg(background.name(QColor::HexArgb)) : QString());
+    if (!index.isValid()) {
+        highlightRect = highlight ? rect() : QRect();
+    } else {
+        highlightRect = visualRect(index);
+    }
+    viewport()->update();
 }
