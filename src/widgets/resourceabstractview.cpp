@@ -7,6 +7,7 @@
 ResourceAbstractView::ResourceAbstractView(QAbstractItemView *view, QWidget *parent) : QWidget(parent), view(view)
 {
     view->setParent(this);
+    view->setContextMenuPolicy(Qt::CustomContextMenu);
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(view);
     layout->setMargin(0);

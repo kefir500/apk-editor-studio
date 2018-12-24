@@ -7,7 +7,7 @@
 class FilesystemTree : public QTreeView
 {
 public:
-    explicit FilesystemTree(QWidget *parent = nullptr);
+    explicit FilesystemTree(QWidget *parent = nullptr) : QTreeView(parent) {}
 
     QFileSystemModel *model() const;
     void setModel(QFileSystemModel *model);

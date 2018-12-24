@@ -4,7 +4,6 @@
 
 ResourceTree::ResourceTree(QWidget *parent) : QTreeView(parent)
 {
-    setContextMenuPolicy(Qt::CustomContextMenu);
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setItemDelegate(new DecorationSizeDelegate(QSize(16, 16), this));
 }

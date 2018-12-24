@@ -11,7 +11,6 @@
 IconList::IconList(QWidget *parent) : QListView(parent)
 {
     setAcceptDrops(true);
-    setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 IconItemsModel *IconList::model() const
