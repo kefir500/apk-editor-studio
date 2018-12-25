@@ -213,10 +213,15 @@ void GraphicsView::zoomReset()
     emit zoomed(1);
 }
 
-void GraphicsView::setHighlight(bool value)
+void GraphicsView::setHighlight(bool highlight)
 {
-    QColor background = app->getColor(app->ColorHighlight);
-    setStyleSheet(value ? QString("GraphicsView {background: %1}").arg(background.name(QColor::HexArgb)) : QString());
+    if (highlight) {
+        auto highlightPalette = palette();
+        highlightPalette.setColor(QPalette::Base, app->getColor(app->ColorHighlight));
+        setPalette(highlightPalette);
+    } else {
+        setPalette(QPalette());
+    }
 }
 
 void GraphicsView::wheelEvent(QWheelEvent *event)

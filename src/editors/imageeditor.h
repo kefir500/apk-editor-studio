@@ -16,7 +16,7 @@ public:
     void zoomIn();
     void zoomOut();
     void zoomReset();
-    void setHighlight(bool value);
+    void setHighlight(bool highlight);
 
 signals:
     void zoomed(qreal factor);
