@@ -1,6 +1,7 @@
 #include "editors/imageeditor.h"
 #include "base/application.h"
 #include "base/fileformatlist.h"
+#include "base/utils.h"
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsColorizeEffect>
@@ -113,10 +114,9 @@ void ImageEditor::setSizeInfo(const QSize &size)
 void ImageEditor::dragEnterEvent(QDragEnterEvent *event)
 {
     const QMimeData *mimeData = event->mimeData();
-    if (mimeData->hasUrls() || mimeData->hasImage()) {
-        setHighlight(true);
-        event->acceptProposedAction();
-    }
+    const bool isImage = (mimeData->hasUrls() && Utils::isImageReadable(mimeData->urls().at(0).path())) || mimeData->hasImage();
+    event->setAccepted(isImage);
+    setHighlight(isImage);
 }
 
 void ImageEditor::dragLeaveEvent(QDragLeaveEvent *event)
