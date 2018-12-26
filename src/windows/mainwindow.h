@@ -20,15 +20,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
-    Viewer *openResource(const QModelIndex &index);
-    Viewer *openManifestEditor(ManifestModel::ManifestRow manifestField);
-    void openLogEntry(const QModelIndex &index);
-
-    bool setCurrentProject(Project *project);
-    void setActionsEnabled(const Project *project);
-    void updateWindowForProject(const Project *project);
-    void updateRecentMenu();
-
 protected:
     void changeEvent(QEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -46,6 +37,15 @@ private:
     void loadSettings();
     void resetSettings();
     void saveSettings();
+
+    Viewer *openResource(const QModelIndex &index);
+    Viewer *openManifestEditor(ManifestModel::ManifestRow manifestField);
+    void openLogEntry(const QModelIndex &index);
+
+    bool setCurrentProject(Project *project);
+    void setActionsEnabled(const Project *project);
+    void updateWindowForProject(const Project *project);
+    void updateRecentMenu();
 
     ProjectsWidget *projectsWidget;
 
