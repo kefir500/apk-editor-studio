@@ -182,15 +182,15 @@ int ProjectTabsWidget::addTab(Viewer *tab)
         });
         connect(editor, &Editor::savedStateChanged, [=](bool tabSaved) {
             // Tab save indicator:
-            const QString indicator = QString(" %1").arg(QChar(0x2022));
+            const QString indicator = QString("%1 ").arg(QChar(0x2022));
             const int tabIndex = indexOf(editor);
             QString tabTitle = tabText(tabIndex);
-            const bool titleModified = tabTitle.endsWith(indicator);
+            const bool titleModified = tabTitle.startsWith(indicator);
             if (!tabSaved && !titleModified) {
-                tabTitle.append(indicator);
+                tabTitle.prepend(indicator);
                 setTabText(tabIndex, tabTitle);
             } else if (tabSaved && titleModified) {
-                tabTitle.chop(indicator.length());
+                tabTitle.remove(0, indicator.length());
                 setTabText(tabIndex, tabTitle);
             }
         });
