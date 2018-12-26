@@ -50,8 +50,7 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
 bool FileEditor::saveAs()
 {
     const QString filename = index.path();
-    const bool isImage = Utils::isImageReadable(filename);
-    const QString destination = isImage ? Dialogs::getSaveImageFilename(this, filename) : Dialogs::getSaveFilename(this, filename); // TODO lol wtf why not encpsulate in ImageEditor
+    const QString destination = Dialogs::getSaveFilename(this, filename);
     if (destination.isEmpty()) {
         return false;
     }

@@ -13,7 +13,7 @@ public:
     FileEditor(const ResourceModelIndex &index, QWidget *parent = nullptr);
 
     virtual bool load() = 0;
-    bool saveAs();
+    virtual bool saveAs();
     bool replace();
     void explore() const;
 

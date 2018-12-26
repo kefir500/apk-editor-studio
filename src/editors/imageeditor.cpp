@@ -2,6 +2,7 @@
 #include "base/application.h"
 #include "base/fileformatlist.h"
 #include "base/utils.h"
+#include "windows/dialogs.h"
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsColorizeEffect>
@@ -89,6 +90,16 @@ bool ImageEditor::save(const QString &as)
     } else {
         return pixmapItem->pixmap().save(as);
     }
+}
+
+bool ImageEditor::saveAs()
+{
+    const QString filename = index.path();
+    const QString destination = Dialogs::getSaveImageFilename(this, filename);
+    if (destination.isEmpty()) {
+        return false;
+    }
+    return save(destination);
 }
 
 void ImageEditor::setHighlight(bool value)

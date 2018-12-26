@@ -60,6 +60,7 @@ public:
 
     bool load() override;
     bool save(const QString &as = QString()) override;
+    bool saveAs() override;
 
     void setHighlight(bool value);
 
