@@ -3,11 +3,23 @@
 
 #include <QPixmap>
 
-struct RecentFile
+class RecentFile
 {
-    RecentFile(const QString &filename, const QPixmap &thumbnail) : filename(filename), thumbnail(thumbnail) {}
-    const QString filename;
-    const QPixmap thumbnail;
+public:
+    RecentFile(const QString &filename, const QPixmap &thumbnail);
+    const QString &filename() const;
+    const QPixmap &thumbnail() const;
+
+private:
+    class RecentFilePrivate : public QSharedData
+    {
+    public:
+        RecentFilePrivate(const QString &filename, const QPixmap &thumbnail) : filename(filename), thumbnail(thumbnail) {}
+        const QString filename;
+        const QPixmap thumbnail;
+    };
+
+    QSharedDataPointer<RecentFilePrivate> d;
 };
 
 class Recent : public QObject
@@ -23,7 +35,7 @@ public:
 
     void setLimit(int limit);
 
-    const QList<QSharedPointer<RecentFile> > &all() const;
+    const QList<RecentFile> &all() const;
     QStringList filenames() const;
     QList<QPixmap> thumbnails() const;
 
@@ -35,7 +47,7 @@ private:
     QString thumbnailPath(const QString &filename) const;
     QString hash(const QString &string) const;
 
-    QList<QSharedPointer<RecentFile> > recent;
+    QList<RecentFile> recent;
     QString identifier;
     QString thumbsPath;
     int limit;

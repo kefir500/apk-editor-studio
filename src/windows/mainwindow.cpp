@@ -484,11 +484,11 @@ void MainWindow::updateRecentMenu()
 {
     menuRecent->clear();
     auto recentList = app->recent->all();
-    for (const QSharedPointer<RecentFile> &recentEntry : recentList) {
-        QAction *action = new QAction(recentEntry->thumbnail, recentEntry->filename, this);
+    for (const RecentFile &recentEntry : recentList) {
+        QAction *action = new QAction(recentEntry.thumbnail(), recentEntry.filename(), this);
         menuRecent->addAction(action);
         connect(action, &QAction::triggered, [=]() {
-            app->openApk(recentEntry->filename);
+            app->openApk(recentEntry.filename());
         });
     }
     menuRecent->addSeparator();

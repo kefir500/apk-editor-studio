@@ -4,6 +4,21 @@
 #include <QSettings>
 #include <QDir>
 
+RecentFile::RecentFile(const QString &filename, const QPixmap &thumbnail)
+{
+    d = new RecentFilePrivate(filename, thumbnail);
+}
+
+const QString &RecentFile::filename() const
+{
+    return d->filename;
+}
+
+const QPixmap &RecentFile::thumbnail() const
+{
+    return d->thumbnail;
+}
+
 Recent::Recent(const QString &identifier, QObject *parent) : QObject(parent)
 {
     this->identifier = identifier;
@@ -16,7 +31,7 @@ Recent::Recent(const QString &identifier, QObject *parent) : QObject(parent)
     ini.endGroup();
 
     for (const QString &file : files) {
-        recent.append(QSharedPointer<RecentFile>(new RecentFile(file, thumbnailPath(file))));
+        recent.append(RecentFile(file, thumbnailPath(file)));
     }
     emit changed();
 }
@@ -35,14 +50,14 @@ bool Recent::add(const QString &filename, const QPixmap &thumbnail)
     // Remove duplicates:
 
     for (int i = 0; i < recent.size(); ++i) {
-        if (recent[i]->filename == filename) {
+        if (recent[i].filename() == filename) {
             recent.removeAt(i);
         }
     }
 
     // Create recent entry:
 
-    recent.prepend(QSharedPointer<RecentFile>(new RecentFile(filename, thumbnail)));
+    recent.prepend(RecentFile(filename, thumbnail));
     while (recent.size() > limit) {
         remove(recent.size() - 1);
     }
@@ -57,7 +72,7 @@ bool Recent::remove(int index)
     if (index >= recent.size()) {
         return false;
     }
-    const QString filename = recent[index]->filename;
+    const QString filename = recent[index].filename();
     QFile::remove(thumbnailPath(filename));
     recent.removeAt(index);
     saveToFile();
@@ -81,7 +96,7 @@ void Recent::setLimit(int limit)
     app->settings->setRecentLimit(limit);
 }
 
-const QList<QSharedPointer<RecentFile> > &Recent::all() const
+const QList<RecentFile> &Recent::all() const
 {
     return recent;
 }
@@ -89,8 +104,8 @@ const QList<QSharedPointer<RecentFile> > &Recent::all() const
 QStringList Recent::filenames() const
 {
     QStringList result;
-    for (const QSharedPointer<RecentFile> &entry : recent) {
-        result << entry->filename;
+    for (const RecentFile &entry : recent) {
+        result << entry.filename();
     }
     return result;
 }
@@ -98,8 +113,8 @@ QStringList Recent::filenames() const
 QList<QPixmap> Recent::thumbnails() const
 {
     QList<QPixmap> result;
-    for (const QSharedPointer<RecentFile> &entry : recent) {
-        result << entry->thumbnail;
+    for (const RecentFile &entry : recent) {
+        result << entry.thumbnail();
     }
     return result;
 }
