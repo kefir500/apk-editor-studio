@@ -19,14 +19,24 @@ namespace
     }
 }
 
-QString Dialogs::getOpenFilename(QWidget *parent, const QString &defaultPath, const FileFormatList &formats)
+QString Dialogs::getOpenFilename(const QString &defaultPath, QWidget *parent)
+{
+    return getOpenFilename(defaultPath, FileFormatList(), parent);
+}
+
+QString Dialogs::getOpenFilename(const QString &defaultPath, const FileFormatList &formats, QWidget *parent)
 {
     const QString path = makePath(defaultPath);
     const QString filter = makeFilter(defaultPath, formats);
     return QFileDialog::getOpenFileName(parent, QString(), path, filter);
 }
 
-QString Dialogs::getSaveFilename(QWidget *parent, const QString &defaultPath, const FileFormatList &formats)
+QString Dialogs::getSaveFilename(const QString &defaultPath, QWidget *parent)
+{
+    return getSaveFilename(defaultPath, FileFormatList(), parent);
+}
+
+QString Dialogs::getSaveFilename(const QString &defaultPath, const FileFormatList &formats, QWidget *parent)
 {
     const QString path = makePath(defaultPath);
     const QString filter = makeFilter(defaultPath, formats);
@@ -34,54 +44,74 @@ QString Dialogs::getSaveFilename(QWidget *parent, const QString &defaultPath, co
     return QFileDialog::getSaveFileName(parent, QString(), path, filter, &defaultFilter);
 }
 
-QStringList Dialogs::getOpenFilenames(QWidget *parent, const QString &defaultPath, const FileFormatList &formats)
+QStringList Dialogs::getOpenFilenames(const QString &defaultPath, const FileFormatList &formats, QWidget *parent)
 {
     const QString path = makePath(defaultPath);
     const QString filter = makeFilter(defaultPath, formats);
     return QFileDialog::getOpenFileNames(parent, QString(), path, filter);
 }
 
-QString Dialogs::getOpenImageFilename(QWidget *parent, const QString &defaultPath)
+QString Dialogs::getOpenImageFilename(QWidget *parent)
 {
-    return Dialogs::getOpenFilename(parent, defaultPath, FileFormatList::forReadableImages());
+    return Dialogs::getOpenImageFilename(QString(), parent);
 }
 
-QString Dialogs::getSaveImageFilename(QWidget *parent, const QString &defaultPath)
+QString Dialogs::getOpenImageFilename(const QString &defaultPath, QWidget *parent)
 {
-    return Dialogs::getSaveFilename(parent, defaultPath, FileFormatList::forWritableImages());
+    return Dialogs::getOpenFilename(defaultPath, FileFormatList::forReadableImages(), parent);
 }
 
-QStringList Dialogs::getOpenImageFilenames(QWidget *parent, const QString &defaultPath)
+QString Dialogs::getSaveImageFilename(const QString &defaultPath, QWidget *parent)
 {
-    return Dialogs::getOpenFilenames(parent, defaultPath, FileFormatList::forReadableImages());
+    return Dialogs::getSaveFilename(defaultPath, FileFormatList::forWritableImages(), parent);
 }
 
-QStringList Dialogs::getOpenApkFilenames(QWidget *parent, const QString &defaultPath)
+QStringList Dialogs::getOpenImageFilenames(const QString &defaultPath, QWidget *parent)
 {
-    return Dialogs::getOpenFilenames(parent, defaultPath, FileFormatList::forApk());
+    return Dialogs::getOpenFilenames(defaultPath, FileFormatList::forReadableImages(), parent);
 }
 
-QString Dialogs::getSaveApkFilename(const Project *project, QWidget *parent, const QString &defaultPath)
+QStringList Dialogs::getOpenApkFilenames(QWidget *parent)
+{
+    return Dialogs::getOpenApkFilenames(QString(), parent);
+}
+
+QStringList Dialogs::getOpenApkFilenames(const QString &defaultPath, QWidget *parent)
+{
+    return Dialogs::getOpenFilenames(defaultPath, FileFormatList::forApk(), parent);
+}
+
+QString Dialogs::getSaveApkFilename(const Project *project, QWidget *parent)
+{
+    return Dialogs::getSaveApkFilename(project, QString(), parent);
+}
+
+QString Dialogs::getSaveApkFilename(const Project *project, const QString &defaultPath, QWidget *parent)
 {
     const QString directory = makePath(defaultPath);
     const QString filename = QFileInfo(project->getOriginalPath()).fileName();
     const QString path = QString("%1/%2").arg(directory, filename);
-    return Dialogs::getSaveFilename(parent, path, FileFormatList::forApk());
+    return Dialogs::getSaveFilename(path, FileFormatList::forApk(), parent);
 }
 
-QString Dialogs::getOpenKeystoreFilename(QWidget *parent, const QString &defaultPath)
+QString Dialogs::getOpenKeystoreFilename(const QString &defaultPath, QWidget *parent)
 {
-    return Dialogs::getOpenFilename(parent, defaultPath, FileFormatList::forKeystore());
+    return Dialogs::getOpenFilename(defaultPath, FileFormatList::forKeystore(), parent);
 }
 
-QString Dialogs::getSaveKeystoreFilename(QWidget *parent, const QString &defaultPath)
+QString Dialogs::getSaveKeystoreFilename(const QString &defaultPath, QWidget *parent)
 {
-    return Dialogs::getSaveFilename(parent, defaultPath, FileFormatList::forKeystore());
+    return Dialogs::getSaveFilename(defaultPath, FileFormatList::forKeystore(), parent);
 }
 
-bool Dialogs::openApk(QWidget *parent, const QString &defaultPath)
+bool Dialogs::openApk(QWidget *parent)
 {
-    const QStringList paths = getOpenApkFilenames(parent, defaultPath);
+    return Dialogs::openApk(QString(), parent);
+}
+
+bool Dialogs::openApk(const QString &defaultPath, QWidget *parent)
+{
+    const QStringList paths = getOpenApkFilenames(defaultPath, parent);
     if (paths.isEmpty()) {
         return false;
     }
@@ -91,7 +121,7 @@ bool Dialogs::openApk(QWidget *parent, const QString &defaultPath)
     return true;
 }
 
-QString Dialogs::getOpenDirectory(QWidget *parent, const QString &defaultPath)
+QString Dialogs::getOpenDirectory(const QString &defaultPath, QWidget *parent)
 {
     const QString path = makePath(defaultPath);
     return QFileDialog::getExistingDirectory(parent, QString(), path);
@@ -131,7 +161,7 @@ QString Dialogs::combo(const QStringList &options, const QString &current, const
 bool Dialogs::copyFile(const QString &src, QWidget *parent)
 {
     const bool isReadableImage = Utils::isImageReadable(src);
-    const QString dst = isReadableImage ? Dialogs::getSaveImageFilename(parent, src) : Dialogs::getSaveFilename(parent, src);
+    const QString dst = isReadableImage ? Dialogs::getSaveImageFilename(src, parent) : Dialogs::getSaveFilename(src, parent);
     if (dst.isEmpty()) {
         return false;
     }
@@ -148,7 +178,7 @@ bool Dialogs::copyFile(const QString &src, QWidget *parent)
 bool Dialogs::replaceFile(const QString &what, QWidget *parent)
 {
     const bool isWritableImage = Utils::isImageWritable(what);
-    const QString with = isWritableImage ? Dialogs::getOpenImageFilename(parent, what) : Dialogs::getOpenFilename(parent, what);
+    const QString with = isWritableImage ? Dialogs::getOpenImageFilename(what, parent) : Dialogs::getOpenFilename(what, parent);
     if (with.isEmpty() || !QFile::exists(with)) {
         return false;
     }

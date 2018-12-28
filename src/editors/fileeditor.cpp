@@ -50,7 +50,7 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
 bool FileEditor::saveAs()
 {
     const QString filename = index.path();
-    const QString destination = Dialogs::getSaveFilename(this, filename);
+    const QString destination = Dialogs::getSaveFilename(filename, this);
     if (destination.isEmpty()) {
         return false;
     }

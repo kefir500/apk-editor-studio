@@ -53,7 +53,7 @@ void FileBox::setDefaultPath(const QString &path)
 void FileBox::openPath()
 {
     const QString oldPath = input->text();
-    const QString newPath = isDirectory ? Dialogs::getOpenDirectory(this, oldPath) : Dialogs::getOpenFilename(this, oldPath);
+    const QString newPath = isDirectory ? Dialogs::getOpenDirectory(oldPath, this) : Dialogs::getOpenFilename(oldPath, this);
     if (!newPath.isEmpty()) {
         setCurrentPath(newPath);
     }

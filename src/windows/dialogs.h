@@ -7,23 +7,35 @@
 
 namespace Dialogs
 {
-    QString getOpenFilename(QWidget *parent = nullptr, const QString &defaultPath = QString(), const FileFormatList &formats = FileFormatList());
-    QString getSaveFilename(QWidget *parent = nullptr, const QString &defaultPath = QString(), const FileFormatList &formats = FileFormatList());
-    QStringList getOpenFilenames(QWidget *parent = nullptr, const QString &defaultPath = QString(), const FileFormatList &formats = FileFormatList());
+    QString getOpenFilename(const QString &defaultPath, QWidget *parent = nullptr);
+    QString getOpenFilename(const QString &defaultPath, const FileFormatList &formats, QWidget *parent = nullptr);
 
-    QString getOpenImageFilename(QWidget *parent = nullptr, const QString &defaultPath = QString());
-    QString getSaveImageFilename(QWidget *parent = nullptr, const QString &defaultPath = QString());
-    QStringList getOpenImageFilenames(QWidget *parent = nullptr, const QString &defaultPath = QString());
+    QString getSaveFilename(const QString &defaultPath, QWidget *parent = nullptr);
+    QString getSaveFilename(const QString &defaultPath, const FileFormatList &formats, QWidget *parent = nullptr);
 
-    QStringList getOpenApkFilenames(QWidget *parent = nullptr, const QString &defaultPath = QString());
-    QString getSaveApkFilename(const Project *project, QWidget *parent = nullptr, const QString &defaultPath = QString());
+    QStringList getOpenFilenames(const QString &defaultPath, const FileFormatList &formats, QWidget *parent = nullptr);
 
-    QString getOpenKeystoreFilename(QWidget *parent = nullptr, const QString &defaultPath = QString());
-    QString getSaveKeystoreFilename(QWidget *parent = nullptr, const QString &defaultPath = QString());
+    QString getOpenImageFilename(QWidget *parent = nullptr);
+    QString getOpenImageFilename(const QString &defaultPath, QWidget *parent = nullptr);
 
-    bool openApk(QWidget *parent = nullptr, const QString &defaultPath = QString());
+    QString getSaveImageFilename(const QString &defaultPath, QWidget *parent = nullptr);
 
-    QString getOpenDirectory(QWidget *parent = nullptr, const QString &defaultPath = QString());
+    QStringList getOpenImageFilenames(const QString &defaultPath, QWidget *parent = nullptr);
+
+    QStringList getOpenApkFilenames(QWidget *parent = nullptr);
+    QStringList getOpenApkFilenames(const QString &defaultPath, QWidget *parent = nullptr);
+
+    QString getSaveApkFilename(const Project *project, QWidget *parent = nullptr);
+    QString getSaveApkFilename(const Project *project, const QString &defaultPath, QWidget *parent = nullptr);
+
+    QString getOpenKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);
+
+    QString getSaveKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);
+
+    bool openApk(QWidget *parent = nullptr);
+    bool openApk(const QString &defaultPath, QWidget *parent = nullptr);
+
+    QString getOpenDirectory(const QString &defaultPath, QWidget *parent = nullptr);
 
     QString combo(const QStringList &options, QWidget *parent = nullptr);
     QString combo(const QStringList &options, const QString &current, QWidget *parent = nullptr);

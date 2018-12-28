@@ -95,7 +95,7 @@ bool ImageEditor::save(const QString &as)
 bool ImageEditor::saveAs()
 {
     const QString filename = index.path();
-    const QString destination = Dialogs::getSaveImageFilename(this, filename);
+    const QString destination = Dialogs::getSaveImageFilename(filename, this);
     if (destination.isEmpty()) {
         return false;
     }
