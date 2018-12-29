@@ -62,7 +62,6 @@ GradientWidget *AboutDialog::createAboutTab()
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     QLabel *text = new QLabel(this);
-    text->setWordWrap(true);
     text->setOpenExternalLinks(true);
     const QString tableRow("<tr><td>%1</td><td><a href=\"%2\">%2</a></td></tr>");
     text->setText(
