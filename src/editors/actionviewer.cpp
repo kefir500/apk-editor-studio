@@ -32,6 +32,11 @@ void ActionViewer::setTitle(const QString &title)
     label->setText(title);
 }
 
+void ActionViewer::addWidget(QWidget *widget)
+{
+    layout->insertWidget(layout->count() - 1, widget);
+}
+
 QPushButton *ActionViewer::addButton(const QString &title)
 {
     const QString btnStyle(
@@ -43,7 +48,7 @@ QPushButton *ActionViewer::addButton(const QString &title)
     button->setText(title);
     button->setMinimumHeight(app->scale(34));
     button->setStyleSheet(btnStyle);
-    layout->insertWidget(layout->count() - 1, button);
+    addWidget(button);
     return button;
 }
 

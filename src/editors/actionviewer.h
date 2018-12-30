@@ -15,6 +15,7 @@ public:
     void setTitle(const QString &title);
 
 protected:
+    void addWidget(QWidget *widget);
     QPushButton *addButton(const QString &title = QString());
     void paintEvent(QPaintEvent *event) override;
 
