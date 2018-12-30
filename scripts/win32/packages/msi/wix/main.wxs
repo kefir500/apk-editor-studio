@@ -469,9 +469,9 @@
             <File Source="$(env.QTDIR)\bin\Qt5Core.dll" />
             <File Source="$(env.QTDIR)\bin\Qt5Gui.dll" />
             <File Source="$(env.QTDIR)\bin\Qt5Network.dll" />
+            <File Source="$(env.QTDIR)\bin\Qt5Svg.dll" />
             <File Source="$(env.QTDIR)\bin\Qt5Widgets.dll" />
             <File Source="$(env.QTDIR)\bin\Qt5Xml.dll" />
-            <File Source="$(env.QTDIR)\bin\Qt5Bluetooth.dll" />
           </Component>
           <Component Id="SslComponent" Guid="F309A6A0-AD5B-44A4-97E7-BFF5D5FCAA45">
             <File Source="$(env.OPENSSL)\libeay32.dll" />
@@ -480,8 +480,10 @@
           <Directory Id="ImageFormatsFolder" Name="imageformats">
             <Component Id="ImageFormatsComponent" Guid="CC89BD49-ED15-4E80-9CA6-4EC52B81E53C">
               <File Source="$(env.QTDIR)\plugins\imageformats\qgif.dll" />
+              <File Source="$(env.QTDIR)\plugins\imageformats\qicns.dll" />
               <File Source="$(env.QTDIR)\plugins\imageformats\qico.dll" />
               <File Source="$(env.QTDIR)\plugins\imageformats\qjpeg.dll" />
+              <File Source="$(env.QTDIR)\plugins\imageformats\qsvg.dll" />
             </Component>
           </Directory>
           <Directory Id="PlatformsFolder" Name="platforms">
