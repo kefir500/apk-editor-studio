@@ -1,7 +1,10 @@
 bin/
 obj/
+.qmake.cache
+.qmake.stash
 .vagrant/
 .vs/
+.vscode/
 *.ai
 *.autosave
 *.o
@@ -19,6 +22,4 @@ obj/
 Makefile*
 moc_*.cpp
 qrc_*.cpp
-/.qmake.cache
-/.qmake.stash
 !res/deploy/linux/bin/
