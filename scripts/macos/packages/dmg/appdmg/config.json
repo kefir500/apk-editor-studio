@@ -4,7 +4,7 @@
   "background": "background.png",
   "icon-size": 128,
   "contents": [
-    { "x": 160, "y": 200, "type": "file", "path": "../../app/APK Editor Studio.app" },
-    { "x": 430, "y": 200, "type": "link", "path": "/Applications" }
+    { "x": 245, "y": 250, "type": "file", "path": "../../app/APK Editor Studio.app" },
+    { "x": 550, "y": 250, "type": "link", "path": "/Applications" }
   ]
 }
