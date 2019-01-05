@@ -4,7 +4,7 @@ Upstream-Contact: Alexander Gorishnyak <kefir500@gmail.com>
 Source: https://github.com/kefir500/apk-editor-studio
 
 Files: *
-Copyright: 2018 Alexander Gorishnyak <kefir500@gmail.com>
+Copyright: 2018-2019 Alexander Gorishnyak <kefir500@gmail.com>
 License: GPL-3.0+
 
 Files: res/deploy/all/tools/apktool.jar
