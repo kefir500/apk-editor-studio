@@ -97,32 +97,32 @@ int Application::exec()
     return QApplication::exec();
 }
 
-QString Application::getTitle() const
+QString Application::getTitle()
 {
     return APPLICATION;
 }
 
-QString Application::getVersion() const
+QString Application::getVersion()
 {
     return VERSION;
 }
 
-QString Application::getTitleNoSpaces() const
+QString Application::getTitleNoSpaces()
 {
     return getTitle().toLower().replace(' ', '-');
 }
 
-QString Application::getTitleAndVersion() const
+QString Application::getTitleAndVersion()
 {
     return QString("%1 v%2").arg(getTitle(), getVersion());
 }
 
-QString Application::getExecutableDirectory() const
+QString Application::getExecutableDirectory()
 {
-    return QApplication::applicationDirPath() + '/';
+    return applicationDirPath() + '/';
 }
 
-QString Application::getTemporaryPath(const QString &subdirectory) const
+QString Application::getTemporaryPath(const QString &subdirectory)
 {
 #ifndef PORTABLE
     const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getTitleNoSpaces(), subdirectory);
@@ -132,7 +132,7 @@ QString Application::getTemporaryPath(const QString &subdirectory) const
     return QDir::cleanPath(path);
 }
 
-QString Application::getLocalConfigPath(const QString &subdirectory) const
+QString Application::getLocalConfigPath(const QString &subdirectory)
 {
 #ifndef PORTABLE
     const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getTitleNoSpaces(), subdirectory);
@@ -142,7 +142,7 @@ QString Application::getLocalConfigPath(const QString &subdirectory) const
     return QDir::cleanPath(path);
 }
 
-QString Application::getSharedPath(const QString &resource) const
+QString Application::getSharedPath(const QString &resource)
 {
 #ifndef Q_OS_LINUX
     const QString path = getExecutableDirectory() + resource;
@@ -152,7 +152,7 @@ QString Application::getSharedPath(const QString &resource) const
     return QDir::cleanPath(path);
 }
 
-QString Application::getBinaryPath(const QString &executable) const
+QString Application::getBinaryPath(const QString &executable)
 {
 #ifdef Q_OS_WIN
     QString path = getSharedPath("tools/" + executable);
@@ -170,7 +170,7 @@ QString Application::getBinaryPath(const QString &executable) const
     return fileInfo.exists() ? path : fileInfo.fileName();
 }
 
-QPixmap Application::getLocaleFlag(const QLocale &locale) const
+QPixmap Application::getLocaleFlag(const QLocale &locale)
 {
     const QLocale::Language localeLanguage = locale.language();
     const QLocale::Country localeCountry = locale.country();
@@ -191,7 +191,7 @@ QPixmap Application::getLocaleFlag(const QLocale &locale) const
     }
 }
 
-QList<Language> Application::getLanguages() const
+QList<Language> Application::getLanguages()
 {
     QList<Language> languages;
     languages.append(QString("%1.en.qm").arg(getTitleNoSpaces()));
@@ -205,7 +205,7 @@ QList<Language> Application::getLanguages() const
     return languages;
 }
 
-QColor Application::getColor(Color color) const
+QColor Application::getColor(Color color)
 {
     switch (color) {
         case ColorLogoPrimary:   return QColor(150, 200, 75);  // #96C84B
@@ -235,52 +235,52 @@ QSize Application::scale(int width, int height) const
     return QSize(width, height) * scaleFactor;
 }
 
-QPixmap Application::loadPixmap(const QString &filename) const
+QPixmap Application::loadPixmap(const QString &filename)
 {
     return QPixmap(getSharedPath(QString("resources/icons/static/%1").arg(filename)));
 }
 
-QString Application::getWebPage() const
+QString Application::getWebPage()
 {
     return QString("https://kefir500.github.io/%1/").arg(getTitleNoSpaces());
 }
 
-QString Application::getSourcePage() const
+QString Application::getSourcePage()
 {
     return QString("https://github.com/kefir500/%1/").arg(getTitleNoSpaces());
 }
 
-QString Application::getIssuesPage() const
+QString Application::getIssuesPage()
 {
     return getSourcePage() + "issues";
 }
 
-QString Application::getContactPage() const
+QString Application::getContactPage()
 {
     return getWebPage();
 }
 
-QString Application::getTranslatePage() const
+QString Application::getTranslatePage()
 {
     return "https://www.transifex.com/qminds/" + getTitleNoSpaces();
 }
 
-QString Application::getDonatePage() const
+QString Application::getDonatePage()
 {
     return "https://www.paypal.me/kefir500";
 }
 
-QString Application::getJrePage() const
+QString Application::getJrePage()
 {
     return "https://www.java.com/en/download/manual.jsp";
 }
 
-QString Application::getJdkPage() const
+QString Application::getJdkPage()
 {
     return "http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html";
 }
 
-QString Application::getUpdateUrl() const
+QString Application::getUpdateUrl()
 {
     return getWebPage() + "/VERSION";
 }
@@ -357,7 +357,7 @@ bool Application::addToRecent(const Project *project)
     return recent->add(project->getOriginalPath(), project->getThumbnail().pixmap(scale(32, 32)));
 }
 
-bool Application::associate() const
+bool Application::associate()
 {
 #ifdef Q_OS_WIN
     QSettings registry("HKEY_CURRENT_USER\\Software\\Classes", QSettings::NativeFormat);
@@ -378,32 +378,32 @@ bool Application::associate() const
 #endif
 }
 
-void Application::visitWebPage() const
+void Application::visitWebPage()
 {
     QDesktopServices::openUrl(getWebPage());
 }
 
-void Application::visitContactPage() const
+void Application::visitContactPage()
 {
     QDesktopServices::openUrl(getContactPage());
 }
 
-void Application::visitTranslatePage() const
+void Application::visitTranslatePage()
 {
     QDesktopServices::openUrl(getTranslatePage());
 }
 
-void Application::visitDonatePage() const
+void Application::visitDonatePage()
 {
     QDesktopServices::openUrl(getDonatePage());
 }
 
-void Application::visitJrePage() const
+void Application::visitJrePage()
 {
     QDesktopServices::openUrl(getJrePage());
 }
 
-void Application::visitJdkPage() const
+void Application::visitJdkPage()
 {
     QDesktopServices::openUrl(getJdkPage());
 }

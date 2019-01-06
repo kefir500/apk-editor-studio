@@ -34,35 +34,35 @@ public:
 
     int exec();
 
-    QString getTitle() const;
-    QString getVersion() const;
-    QString getTitleNoSpaces() const;
-    QString getTitleAndVersion() const;
+    static QString getTitle();
+    static QString getVersion();
+    static QString getTitleNoSpaces();
+    static QString getTitleAndVersion();
 
-    QString getExecutableDirectory() const;
-    QString getTemporaryPath(const QString &subdirectory = QString()) const;
-    QString getLocalConfigPath(const QString &subdirectory = QString()) const;
-    QString getSharedPath(const QString &resource = QString()) const;
-    QString getBinaryPath(const QString &executable) const;
-    QPixmap getLocaleFlag(const QLocale &locale) const;
+    static QString getExecutableDirectory();
+    static QString getTemporaryPath(const QString &subdirectory = QString());
+    static QString getLocalConfigPath(const QString &subdirectory = QString());
+    static QString getSharedPath(const QString &resource = QString());
+    static QString getBinaryPath(const QString &executable);
+    static QPixmap getLocaleFlag(const QLocale &locale);
 
-    QList<Language> getLanguages() const;
-    QColor getColor(Color color) const;
+    static QList<Language> getLanguages();
+    static QColor getColor(Color color);
 
     int scale(int value) const;
     QSize scale(int width, int height) const;
 
-    QPixmap loadPixmap(const QString &filename) const;
+    static QPixmap loadPixmap(const QString &filename);
 
-    QString getWebPage() const;
-    QString getSourcePage() const;
-    QString getIssuesPage() const;
-    QString getContactPage() const;
-    QString getTranslatePage() const;
-    QString getDonatePage() const;
-    QString getJrePage() const;
-    QString getJdkPage() const;
-    QString getUpdateUrl() const;
+    static QString getWebPage();
+    static QString getSourcePage();
+    static QString getIssuesPage();
+    static QString getContactPage();
+    static QString getTranslatePage();
+    static QString getDonatePage();
+    static QString getJrePage();
+    static QString getJdkPage();
+    static QString getUpdateUrl();
 
     Project *openApk(const QString &filename, bool unpack = true);
     bool closeApk(Project *project);
@@ -71,13 +71,13 @@ public:
     void setLanguage(const QString &locale);
     bool addToRecent(const Project *project);
 
-    bool associate() const;
-    void visitWebPage() const;
-    void visitContactPage() const;
-    void visitTranslatePage() const;
-    void visitDonatePage() const;
-    void visitJrePage() const;
-    void visitJdkPage() const;
+    static bool associate();
+    static void visitWebPage();
+    static void visitContactPage();
+    static void visitTranslatePage();
+    static void visitDonatePage();
+    static void visitJrePage();
+    static void visitJdkPage();
 
     MainWindow *window;
     ProjectItemsModel projects;
