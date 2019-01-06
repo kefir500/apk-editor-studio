@@ -16,7 +16,7 @@ KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
     resize(app->scale(500, 0));
     //: This string refers to multiple keys (as in "Manager of keys").
     setWindowTitle(tr("Key Manager"));
-    setWindowIcon(app->loadIcon("key.png"));
+    setWindowIcon(app->icons.get("key.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     groupKeystore = new QGroupBox(tr("Custom Keystore"), this);

@@ -162,9 +162,9 @@ ZoomGroup::ZoomGroup(QWidget *parent) : QWidget(parent)
     QToolButton *btnZoomIn = new QToolButton(this);
     QToolButton *btnZoomOut = new QToolButton(this);
     QToolButton *btnZoomNormal = new QToolButton(this);
-    btnZoomIn->setIcon(app->loadIcon("zoom-in.png"));
-    btnZoomOut->setIcon(app->loadIcon("zoom-out.png"));
-    btnZoomNormal->setIcon(app->loadIcon("zoom.png"));
+    btnZoomIn->setIcon(app->icons.get("zoom-in.png"));
+    btnZoomOut->setIcon(app->icons.get("zoom-out.png"));
+    btnZoomNormal->setIcon(app->icons.get("zoom.png"));
 
     labelZoom = new QLabel(this);
 

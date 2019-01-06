@@ -7,7 +7,7 @@
 TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(parent)
 {
     title = tr("Application Title");
-    icon = app->loadIcon("title.png");
+    icon = app->icons.get("title.png");
 
     WAIT
     model = new TitleItemsModel(project, this);

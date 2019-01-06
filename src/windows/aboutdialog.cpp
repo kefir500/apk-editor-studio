@@ -26,7 +26,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 
     QLabel *icon = new QLabel(this);
     icon->setContentsMargins(0, 0, 10, 4);
-    icon->setPixmap(app->loadIcon("application.png").pixmap(app->scale(48, 48)));
+    icon->setPixmap(app->icons.get("application.png").pixmap(app->scale(48, 48)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QLabel *title = new QLabel(app->getTitleAndVersion(), this);
     QFont titleFont = title->font();
@@ -58,7 +58,7 @@ GradientWidget *AboutDialog::createAboutTab()
 
     QLabel *icon = new QLabel(this);
     icon->setMargin(16);
-    icon->setPixmap(app->loadIcon("about.png").pixmap(app->scale(128, 128)));
+    icon->setPixmap(app->icons.get("about.png").pixmap(app->scale(128, 128)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     QLabel *text = new QLabel(this);

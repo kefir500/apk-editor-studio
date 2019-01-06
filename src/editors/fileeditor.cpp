@@ -26,9 +26,9 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
         return separator;
     };
 
-    actionReplace = new QAction(app->loadIcon("replace.png"), QString(), this);
-    actionSaveAs = new QAction(app->loadIcon("save-as.png"), QString(), this);
-    actionExplore = new QAction(app->loadIcon("explore.png"), QString(), this);
+    actionReplace = new QAction(app->icons.get("replace.png"), QString(), this);
+    actionSaveAs = new QAction(app->icons.get("save-as.png"), QString(), this);
+    actionExplore = new QAction(app->icons.get("explore.png"), QString(), this);
 
     actionReplace->setShortcut(QKeySequence("Ctrl+R"));
     actionSaveAs->setShortcut(QKeySequence("Ctrl+Shift+S"));

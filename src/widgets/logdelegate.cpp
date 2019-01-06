@@ -4,7 +4,7 @@
 
 LogDelegate::LogDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
-    iconExpand = app->loadIcon("more.png");
+    iconExpand = app->icons.get("more.png");
 }
 
 void LogDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const

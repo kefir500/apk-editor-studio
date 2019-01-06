@@ -235,16 +235,6 @@ QSize Application::scale(int width, int height) const
     return QSize(width, height) * scaleFactor;
 }
 
-QIcon Application::loadIcon(const QString &filename) const
-{
-    QIcon icon;
-    QDirIterator it(getSharedPath("resources/icons"), {filename}, QDir::Files, QDirIterator::Subdirectories);
-    while (it.hasNext()) {
-        icon.addFile(it.next());
-    }
-    return icon;
-}
-
 QPixmap Application::loadPixmap(const QString &filename) const
 {
     return QPixmap(getSharedPath(QString("resources/icons/static/%1").arg(filename)));

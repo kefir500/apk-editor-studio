@@ -12,8 +12,8 @@ ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
     stack->setMargin(0);
     stack->addWidget(welcome);
 
-    actionSave = new QAction(app->loadIcon("save.png"), QString(), this);
-    actionSaveAs = new QAction(app->loadIcon("save-as.png"), QString(), this);
+    actionSave = new QAction(app->icons.get("save.png"), QString(), this);
+    actionSaveAs = new QAction(app->icons.get("save-as.png"), QString(), this);
     actionSave->setEnabled(false);
     actionSaveAs->setEnabled(false);
     actionNone = new QAction(QString(), this);

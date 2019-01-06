@@ -41,14 +41,14 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(const ResourceMo
 
     auto menu = new QMenu(this);
 
-    QAction *actionEdit = menu->addAction(app->loadIcon("edit.png"), tr("&Edit Resource"));
+    QAction *actionEdit = menu->addAction(app->icons.get("edit.png"), tr("&Edit Resource"));
     connect(actionEdit, &QAction::triggered, [=]() {
         emit editRequested(resourceIndex);
     });
 
     menu->addSeparator();
 
-    QAction *actionReplace = menu->addAction(app->loadIcon("replace.png"), tr("&Replace Resource..."));
+    QAction *actionReplace = menu->addAction(app->icons.get("replace.png"), tr("&Replace Resource..."));
     connect(actionReplace, &QAction::triggered, [=]() {
         if (Dialogs::replaceFile(resourcePath, this)) {
             auto model = const_cast<QAbstractItemModel *>(resourceIndex.model());
@@ -56,7 +56,7 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(const ResourceMo
         }
     });
 
-    QAction *actionSaveAs = menu->addAction(app->loadIcon("save-as.png"), tr("Save Resource &As..."));
+    QAction *actionSaveAs = menu->addAction(app->icons.get("save-as.png"), tr("Save Resource &As..."));
     connect(actionSaveAs, &QAction::triggered, [=]() {
         Dialogs::copyFile(resourcePath, this);
     });
@@ -64,7 +64,7 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(const ResourceMo
     menu->addSeparator();
 
     //: This string refers to a single resource.
-    QAction *actionExplore = menu->addAction(app->loadIcon("explore.png"), tr("&Open Resource Directory"));
+    QAction *actionExplore = menu->addAction(app->icons.get("explore.png"), tr("&Open Resource Directory"));
     connect(actionExplore, &QAction::triggered, [=]() {
         Utils::explore(resourcePath);
     });

@@ -148,63 +148,63 @@ void MainWindow::initMenus()
 
     // File Menu:
 
-    actionApkOpen = new QAction(app->loadIcon("open.png"), QString(), this);
+    actionApkOpen = new QAction(app->icons.get("open.png"), QString(), this);
     actionApkOpen->setShortcut(QKeySequence::Open);
-    actionApkSave = new QAction(app->loadIcon("pack.png"), QString(), this);
+    actionApkSave = new QAction(app->icons.get("pack.png"), QString(), this);
     actionApkSave->setShortcut(QKeySequence("Ctrl+Alt+S"));
-    actionApkInstall = new QAction(app->loadIcon("install.png"), QString(), this);
+    actionApkInstall = new QAction(app->icons.get("install.png"), QString(), this);
     actionApkInstall->setShortcut(QKeySequence("Ctrl+I"));
-    actionApkInstallExternal = new QAction(app->loadIcon("install.png"), QString(), this);
+    actionApkInstallExternal = new QAction(app->icons.get("install.png"), QString(), this);
     actionApkInstallExternal->setShortcut(QKeySequence("Ctrl+Shift+I"));
-    actionApkExplore = new QAction(app->loadIcon("explore.png"), QString(), this);
+    actionApkExplore = new QAction(app->icons.get("explore.png"), QString(), this);
     actionApkExplore->setShortcut(QKeySequence("Ctrl+E"));
-    actionApkClose = new QAction(app->loadIcon("close-project.png"), QString(), this);
+    actionApkClose = new QAction(app->icons.get("close-project.png"), QString(), this);
     actionApkClose->setShortcut(QKeySequence("Ctrl+W"));
-    actionExit = new QAction(QIcon(app->loadIcon("close.png")), QString(), this);
+    actionExit = new QAction(QIcon(app->icons.get("close.png")), QString(), this);
     actionExit->setShortcut(QKeySequence::Quit);
     actionExit->setMenuRole(QAction::QuitRole);
 
     // Recent Menu:
 
     menuRecent = new QMenu(this);
-    menuRecent->setIcon(app->loadIcon("recent.png"));
-    actionRecentClear = new QAction(app->loadIcon("close.png"), QString(), this);
+    menuRecent->setIcon(app->icons.get("recent.png"));
+    actionRecentClear = new QAction(app->icons.get("close.png"), QString(), this);
     actionRecentNone = new QAction(this);
     actionRecentNone->setEnabled(false);
 
     // Tools Menu:
 
     actionKeyManager = new QAction(this);
-    actionKeyManager->setIcon(app->loadIcon("key.png"));
+    actionKeyManager->setIcon(app->icons.get("key.png"));
     actionKeyManager->setShortcut(QKeySequence("Ctrl+K"));
     actionDeviceManager = new QAction(this);
-    actionDeviceManager->setIcon(app->loadIcon("devices.png"));
+    actionDeviceManager->setIcon(app->icons.get("devices.png"));
     actionDeviceManager->setShortcut(QKeySequence("Ctrl+D"));
     actionProjectManager = new QAction(this);
-    actionProjectManager->setIcon(app->loadIcon("project.png"));
+    actionProjectManager->setIcon(app->icons.get("project.png"));
     actionProjectManager->setShortcut(QKeySequence("Ctrl+M"));
     actionTitleEditor = new QAction(this);
-    actionTitleEditor->setIcon(app->loadIcon("title.png"));
+    actionTitleEditor->setIcon(app->icons.get("title.png"));
     actionTitleEditor->setShortcut(QKeySequence("Ctrl+T"));
 
     // Settings Menu:
 
     actionOptions = new QAction(this);
-    actionOptions->setIcon(app->loadIcon("settings.png"));
+    actionOptions->setIcon(app->icons.get("settings.png"));
     actionOptions->setShortcut(QKeySequence("Ctrl+P"));
     actionOptions->setMenuRole(QAction::PreferencesRole);
     menuLanguage = new QMenu(this);
     actionSettingsReset = new QAction(this);
-    actionSettingsReset->setIcon(app->loadIcon("close.png"));
+    actionSettingsReset->setIcon(app->icons.get("close.png"));
 
     // Help Menu:
 
-    actionWebsite = new QAction(app->loadIcon("website.png"), QString(), this);
-    actionUpdate = new QAction(app->loadIcon("update.png"), QString(), this);
-    actionDonate = new QAction(app->loadIcon("donate.png"), QString(), this);
-    actionAbout = new QAction(app->loadIcon("application.png"), QString(), this);
+    actionWebsite = new QAction(app->icons.get("website.png"), QString(), this);
+    actionUpdate = new QAction(app->icons.get("update.png"), QString(), this);
+    actionDonate = new QAction(app->icons.get("donate.png"), QString(), this);
+    actionAbout = new QAction(app->icons.get("application.png"), QString(), this);
     actionAbout->setMenuRole(QAction::AboutRole);
-    actionAboutQt = new QAction(app->loadIcon("qt.png"), QString(), this);
+    actionAboutQt = new QAction(app->icons.get("qt.png"), QString(), this);
     actionAboutQt->setMenuRole(QAction::AboutQtRole);
 
     // Menu Bar:

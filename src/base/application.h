@@ -2,6 +2,7 @@
 #define APPLICATION_H
 
 #include "apk/projectitemsmodel.h"
+#include "base/iconprovider.h"
 #include "base/language.h"
 #include "base/recent.h"
 #include "base/settings.h"
@@ -51,7 +52,6 @@ public:
     int scale(int value) const;
     QSize scale(int width, int height) const;
 
-    QIcon loadIcon(const QString &filename) const;
     QPixmap loadPixmap(const QString &filename) const;
 
     QString getWebPage() const;
@@ -83,6 +83,7 @@ public:
     ProjectItemsModel projects;
     Settings *settings;
     Recent *recent;
+    IconProvider icons;
     QTranslator translator;
     QTranslator translatorQt;
 

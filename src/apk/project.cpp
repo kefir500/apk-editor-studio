@@ -249,7 +249,7 @@ QString Project::getContentsPath() const
 QIcon Project::getThumbnail() const
 {
     QIcon thumbnail = iconsProxy.getIcon();
-    return !thumbnail.isNull() ? thumbnail : app->loadIcon("application.png");
+    return !thumbnail.isNull() ? thumbnail : app->icons.get("application.png");
 }
 
 const Manifest *Project::getManifest() const

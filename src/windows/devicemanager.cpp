@@ -11,7 +11,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
 {
     //: This string refers to multiple devices (as in "Manager of devices").
     setWindowTitle(tr("Device Manager"));
-    setWindowIcon(app->loadIcon("devices.png"));
+    setWindowIcon(app->icons.get("devices.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     resize(app->scale(560, 300));
 
@@ -22,7 +22,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     deviceList->setCurrentIndex(QModelIndex());
 
     QPushButton *btnRefresh = new QPushButton(tr("Refresh"), this);
-    btnRefresh->setIcon(app->loadIcon("refresh.png"));
+    btnRefresh->setIcon(app->icons.get("refresh.png"));
 
     QVBoxLayout *listLayout = new QVBoxLayout;
     listLayout->addWidget(caption);
@@ -83,11 +83,11 @@ void DeviceManager::refreshDevices()
 const Device *DeviceManager::getTargetDevice()
 {
     setWindowTitle(tr("Install APK"));
-    setWindowIcon(app->loadIcon("install.png"));
+    setWindowIcon(app->icons.get("install.png"));
 
     QPushButton *btnInstall = dialogButtons->button(QDialogButtonBox::Ok);
     btnInstall->setText(tr("Install"));
-    btnInstall->setIcon(app->loadIcon("install.png"));
+    btnInstall->setIcon(app->icons.get("install.png"));
     btnInstall->setEnabled(false);
 
     connect(deviceList->selectionModel(), &QItemSelectionModel::currentChanged, [=](const QModelIndex &index) {

@@ -199,7 +199,7 @@ void OptionsDialog::initialize()
     layout->addWidget(widget);
 
     setWindowTitle(tr("Options"));
-    setWindowIcon(app->loadIcon("settings.png"));
+    setWindowIcon(app->icons.get("settings.png"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     resize(app->scale(800, 400));
 
@@ -208,7 +208,7 @@ void OptionsDialog::initialize()
     QFormLayout *pageGeneral = new QFormLayout;
     checkboxUpdates = new QCheckBox(tr("Check for updates automatically"), this);
     btnAssociate = new QPushButton(tr("Set as default program for APK files"), this);
-    btnAssociate->setIcon(app->loadIcon("application.png"));
+    btnAssociate->setIcon(app->icons.get("application.png"));
     btnAssociate->setMinimumHeight(app->scale(30));
     connect(btnAssociate, &QPushButton::clicked, [this]() {
         if (app->associate()) {
@@ -253,7 +253,7 @@ void OptionsDialog::initialize()
     QFormLayout *layoutSign = new QFormLayout(groupSign);
     //: This string refers to multiple keys (as in "Manager of keys").
     QPushButton *btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
-    btnKeyManager->setIcon(app->loadIcon("key.png"));
+    btnKeyManager->setIcon(app->icons.get("key.png"));
     btnKeyManager->setMinimumHeight(app->scale(30));
     connect(btnKeyManager, &QPushButton::clicked, [=]() {
         KeyManager keyManager(this);
@@ -283,7 +283,7 @@ void OptionsDialog::initialize()
     fileboxAdb = new FileBox(QString(), QString(), false, this);
     //: This string refers to multiple devices (as in "Manager of devices").
     QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
-    btnDeviceManager->setIcon(app->loadIcon("devices.png"));
+    btnDeviceManager->setIcon(app->icons.get("devices.png"));
     btnDeviceManager->setMinimumHeight(app->scale(30));
     connect(btnDeviceManager, &QPushButton::clicked, [=]() {
         DeviceManager deviceManager(this);
@@ -355,7 +355,7 @@ void OptionsDialog::initialize()
 
 QListWidgetItem *OptionsDialog::createToolbarSeparatorItem() const
 {
-    QIcon icon = app->loadIcon("separator.png");
+    QIcon icon = app->icons.get("separator.png");
     //: Separator is a toolbar element which divides buttons with a vertical line.
     QListWidgetItem *separator = new QListWidgetItem(icon, tr("Separator"));
     separator->setData(PoolListWidget::IdentifierRole, "separator");
@@ -365,7 +365,7 @@ QListWidgetItem *OptionsDialog::createToolbarSeparatorItem() const
 
 QListWidgetItem *OptionsDialog::createToolbarSpacerItem() const
 {
-    QIcon icon = app->loadIcon("spacer.png");
+    QIcon icon = app->icons.get("spacer.png");
     //: Spacer is a toolbar element which divides buttons with an empty space.
     QListWidgetItem *spacer = new QListWidgetItem(icon, tr("Spacer"));
     spacer->setData(PoolListWidget::IdentifierRole, "spacer");

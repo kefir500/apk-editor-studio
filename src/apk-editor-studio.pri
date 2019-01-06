@@ -20,6 +20,7 @@ SOURCES += \
     $$PWD/base/deviceitemsmodel.cpp \
     $$PWD/base/fileformat.cpp \
     $$PWD/base/fileformatlist.cpp \
+    $$PWD/base/iconprovider.cpp \
     $$PWD/base/language.cpp \
     $$PWD/base/main.cpp \
     $$PWD/base/password.cpp \
@@ -98,6 +99,7 @@ HEADERS += \
     $$PWD/base/deviceitemsmodel.h \
     $$PWD/base/fileformat.h \
     $$PWD/base/fileformatlist.h \
+    $$PWD/base/iconprovider.h \
     $$PWD/base/language.h \
     $$PWD/base/password.h \
     $$PWD/base/recent.h \
