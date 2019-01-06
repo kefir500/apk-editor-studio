@@ -37,7 +37,7 @@ Application::Application(int &argc, char **argv) : QtSingleApplication(argc, arg
     qDebug();
 
 #ifdef Q_OS_LINUX
-    setWindowIcon(loadIcon("application.png"));
+    setWindowIcon(icons.get("application.png"));
 #endif
 }
 
