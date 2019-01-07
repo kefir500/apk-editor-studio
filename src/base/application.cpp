@@ -242,7 +242,7 @@ QPixmap Application::loadPixmap(const QString &filename)
 
 QString Application::getWebPage()
 {
-    return QString("https://kefir500.github.io/%1/").arg(getTitleNoSpaces());
+    return QString("https://qwertycube.com/%1").arg(getTitleNoSpaces());
 }
 
 QString Application::getSourcePage()
@@ -262,7 +262,7 @@ QString Application::getContactPage()
 
 QString Application::getTranslatePage()
 {
-    return "https://www.transifex.com/qminds/" + getTitleNoSpaces();
+    return "https://www.transifex.com/qwertycube/" + getTitleNoSpaces();
 }
 
 QString Application::getDonatePage()
@@ -282,7 +282,7 @@ QString Application::getJdkPage()
 
 QString Application::getUpdateUrl()
 {
-    return getWebPage() + "/VERSION";
+    return getWebPage() + "/versions.json";
 }
 
 Project *Application::openApk(const QString &filename, bool unpack)

@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Alexander Gorishnyak <kefir500@gmail.com>
 Build-Depends: debhelper (>=9)
 Standards-Version: 3.9.7
-Homepage: https://kefir500.github.io/apk-editor-studio
+Homepage: https://qwertycube.com/apk-editor-studio
 Vcs-Git: git://github.com/kefir500/apk-editor-studio.git
 Vcs-Browser: https://github.com/kefir500/apk-editor-studio
 
