@@ -197,6 +197,11 @@
                   <File Name="application.png" Id="IconApplication256" />
                 </Component>
               </Directory>
+              <Directory Id="IconsOtherFolder" Name="other">
+                <Component Id="IconsOtherComponent" Guid="674E999F-47EA-4586-91C8-69732B81C8EE">
+                  <File Name="about.png" />
+                </Component>
+              </Directory>
             </Directory>
             <Directory Id="FlagsFolder" Name="flags">
               <Component Id="FlagsComponent" Guid="A6DFCCDD-FCEF-453D-8E0E-C0A816199BFB">
@@ -517,6 +522,7 @@
       <ComponentRef Id="Icons40Component" />
       <ComponentRef Id="Icons48Component" />
       <ComponentRef Id="Icons256Component" />
+      <ComponentRef Id="IconsOtherComponent" />
     </ComponentGroup>
     <ComponentGroup Id="ToolsComponents">
       <ComponentRef Id="ApktoolComponent" />
