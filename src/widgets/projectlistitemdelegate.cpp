@@ -7,11 +7,11 @@
 
 ProjectListItemDelegate::ProjectListItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
-    iconIdle = app->loadPixmap("state-idle.png");
-    iconUnpacking = app->loadPixmap("state-open.png");
-    iconPacking = app->loadPixmap("state-save.png");
-    iconInstalling = app->loadPixmap("state-install.png");
-    iconError = app->loadPixmap("state-error.png");
+    iconIdle = app->icons.get("state-idle.png");
+    iconUnpacking = app->icons.get("state-open.png");
+    iconPacking = app->icons.get("state-save.png");
+    iconInstalling = app->icons.get("state-install.png");
+    iconError = app->icons.get("state-error.png");
 }
 
 void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const

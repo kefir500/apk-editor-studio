@@ -20,8 +20,11 @@ namespace Utils
     bool copyFile(const QString &src, const QString &dst);
     bool copyImage(const QString &src, const QString &dst);
 
+    // Image utils:
+
     bool isImageReadable(const QString &path);
     bool isImageWritable(const QString &path);
+    QPixmap iconToPixmap(const QIcon &icon);
 }
 
 #endif // UTILS_H

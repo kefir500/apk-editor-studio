@@ -1,5 +1,6 @@
 #include "windows/waitdialog.h"
 #include "base/application.h"
+#include "base/utils.h"
 
 WaitDialog::WaitDialog(QWidget *parent) : QMessageBox(parent)
 {
@@ -7,7 +8,7 @@ WaitDialog::WaitDialog(QWidget *parent) : QMessageBox(parent)
     //: This is an imperative mood verb (as in "please wait").
     setWindowTitle(tr("Wait"));
     setText(tr("Please wait..."));
-    setIconPixmap(app->loadPixmap("wait.png"));
+    setIconPixmap(Utils::iconToPixmap(app->icons.get("wait.png")));
     setStandardButtons(QMessageBox::NoButton);
     setWindowModality(Qt::ApplicationModal);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

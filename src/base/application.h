@@ -52,8 +52,6 @@ public:
     int scale(int value) const;
     QSize scale(int width, int height) const;
 
-    static QPixmap loadPixmap(const QString &filename);
-
     static QString getWebPage();
     static QString getSourcePage();
     static QString getIssuesPage();

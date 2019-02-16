@@ -113,7 +113,12 @@
               </Directory>
               <Directory Id="Icons20Folder" Name="20x20">
                 <Component Id="Icons20Component" Guid="0201824A-8197-476D-AEEA-362133CD6D8E">
-                  <File Name="application.png" />
+                  <File Name="application.png" Id="IconApplication20" />
+                  <File Name="state-error.png" Id="IconStateError20" />
+                  <File Name="state-idle.png" Id="IconStateIdle20" />
+                  <File Name="state-install.png" Id="IconStateInstall20" />
+                  <File Name="state-open.png" Id="IconStateOpen20" />
+                  <File Name="state-save.png" Id="IconStateSave20" />
                 </Component>
               </Directory>
               <Directory Id="Icons30Folder" Name="30x30">
@@ -139,6 +144,7 @@
                   <File Name="spacer.png" Id="IconSpacer30" />
                   <File Name="title.png" Id="IconTitle30" />
                   <File Name="update.png" Id="IconUpdate30" />
+                  <File Name="wait.png" Id="IconWait30" />
                   <File Name="website.png" Id="IconWebsite30" />
                   <File Name="zoom.png" Id="IconZoom30" />
                   <File Name="zoom-in.png" Id="IconZoomIn30" />
@@ -189,16 +195,6 @@
               <Directory Id="Icons256Folder" Name="256x256">
                 <Component Id="Icons256Component" Guid="1F57E49F-DC86-478C-A851-930C5C3209B9">
                   <File Name="application.png" Id="IconApplication256" />
-                </Component>
-              </Directory>
-              <Directory Id="IconsStaticFolder" Name="static">
-                <Component Id="IconsStaticComponent" Guid="5DE3B836-2439-46FB-A0F9-A4B96E8B412A">
-                  <File Name="state-error.png" />
-                  <File Name="state-idle.png" />
-                  <File Name="state-install.png" />
-                  <File Name="state-open.png" />
-                  <File Name="state-save.png" />
-                  <File Name="wait.png" />
                 </Component>
               </Directory>
             </Directory>
@@ -521,7 +517,6 @@
       <ComponentRef Id="Icons40Component" />
       <ComponentRef Id="Icons48Component" />
       <ComponentRef Id="Icons256Component" />
-      <ComponentRef Id="IconsStaticComponent" />
     </ComponentGroup>
     <ComponentGroup Id="ToolsComponents">
       <ComponentRef Id="ApktoolComponent" />

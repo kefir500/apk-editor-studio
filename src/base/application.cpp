@@ -235,11 +235,6 @@ QSize Application::scale(int width, int height) const
     return QSize(width, height) * scaleFactor;
 }
 
-QPixmap Application::loadPixmap(const QString &filename)
-{
-    return QPixmap(getSharedPath(QString("resources/icons/static/%1").arg(filename)));
-}
-
 QString Application::getWebPage()
 {
     return QString("https://qwertycube.com/%1").arg(getTitleNoSpaces());

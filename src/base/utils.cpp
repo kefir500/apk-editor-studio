@@ -1,5 +1,6 @@
 #include "base/utils.h"
 #include <QDir>
+#include <QIcon>
 #include <QProcess>
 #include <QFileInfo>
 #include <QImageReader>
@@ -126,4 +127,11 @@ bool Utils::isImageWritable(const QString &path)
 {
     const QString extension = QFileInfo(path).suffix();
     return QImageWriter::supportedImageFormats().contains(extension.toLocal8Bit());
+}
+
+QPixmap Utils::iconToPixmap(const QIcon &icon)
+{
+    const auto sizes = icon.availableSizes();
+    const QSize size = !sizes.isEmpty() ? sizes.first() : QSize();
+    return icon.pixmap(size);
 }
