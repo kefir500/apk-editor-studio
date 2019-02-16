@@ -2,6 +2,7 @@
 #define UTILS_H
 
 #include <QList>
+#include <QPixmap>
 
 namespace Utils
 {
