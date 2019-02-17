@@ -135,3 +135,63 @@ QPixmap Utils::iconToPixmap(const QIcon &icon)
     const QSize size = !sizes.isEmpty() ? sizes.first() : QSize();
     return icon.pixmap(size);
 }
+
+QString Utils::getAndroidCodename(int api)
+{
+    // Read more: https://source.android.com/setup/start/build-numbers
+    switch (api) {
+    case 3:
+        return "1.5 - Cupcake";
+    case 4:
+        return "1.6 - Donut";
+    case 5:
+        return "2.0 - Eclair";
+    case 6:
+        return "2.0.1 - Eclair";
+    case 7:
+        return "2.1 - Eclair";
+    case 8:
+        return "2.2.x - Froyo";
+    case 9:
+        return "2.3 - 2.3.2 - Gingerbread";
+    case 10:
+        return "2.3.3 - 2.3.7 - Gingerbread";
+    case 11:
+        return "3.0 - Honeycomb";
+    case 12:
+        return "3.1 - Honeycomb";
+    case 13:
+        return "3.2.x - Honeycomb";
+    case 14:
+        return "4.0.1 - 4.0.2 - Ice Cream Sandwich";
+    case 15:
+        return "4.0.3 - 4.0.4 - Ice Cream Sandwich";
+    case 16:
+        return "4.1.x - Jelly Bean";
+    case 17:
+        return "4.2.x - Jelly Bean";
+    case 18:
+        return "4.3.x - Jelly Bean";
+    case 19:
+        return "4.4 - 4.4.4 - KitKat";
+    case 20:
+        return "4.4 - 4.4.4 - KitKat Wear";
+    case 21:
+        return "5.0 - Lollipop";
+    case 22:
+        return "5.1 - Lollipop";
+    case 23:
+        return "6.0 - Marshmallow";
+    case 24:
+        return "7.0 - Nougat";
+    case 25:
+        return "7.1 - Nougat";
+    case 26:
+        return "8.0 - Oreo";
+    case 27:
+        return "8.1 - Oreo";
+    case 28:
+        return "9.0 - Pie";
+    }
+    return QString();
+}

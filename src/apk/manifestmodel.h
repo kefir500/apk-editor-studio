@@ -26,6 +26,10 @@ public:
     explicit ManifestModel(QObject *parent = nullptr);
 
     void initialize(Manifest *manifest);
+    int getMinimumSdk() const;
+    int getTargetSdk() const;
+    void setMinimumSdk(int sdk);
+    void setTargetSdk(int sdk);
 
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

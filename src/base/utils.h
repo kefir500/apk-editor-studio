@@ -26,6 +26,10 @@ namespace Utils
     bool isImageReadable(const QString &path);
     bool isImageWritable(const QString &path);
     QPixmap iconToPixmap(const QIcon &icon);
+
+    // Android utils:
+
+    QString getAndroidCodename(int api);
 }
 
 #endif // UTILS_H

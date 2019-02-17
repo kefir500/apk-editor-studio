@@ -1,4 +1,5 @@
 #include "apk/manifestmodel.h"
+#include "base/utils.h"
 
 ManifestModel::ManifestModel(QObject *parent) : QAbstractListModel(parent)
 {
@@ -10,6 +11,28 @@ void ManifestModel::initialize(Manifest *manifest)
 {
     this->manifest = manifest;
     emit dataChanged(index(0, 0), index(RowCount - 1, 0));
+}
+
+int ManifestModel::getMinimumSdk() const
+{
+    return manifest->getMinSdk();
+}
+
+int ManifestModel::getTargetSdk() const
+{
+    return manifest->getTargetSdk();
+}
+
+void ManifestModel::setMinimumSdk(int sdk)
+{
+    manifest->setMinSdk(sdk);
+    emit dataChanged(index(MinimumSdk, 0), index(MinimumSdk, 0));
+}
+
+void ManifestModel::setTargetSdk(int sdk)
+{
+    manifest->setTargetSdk(sdk);
+    emit dataChanged(index(TargetSdk, 0), index(TargetSdk, 0));
 }
 
 bool ManifestModel::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -62,15 +85,36 @@ bool ManifestModel::setData(const QModelIndex &index, const QVariant &value, int
 
 QVariant ManifestModel::data(const QModelIndex &index, int role) const
 {
+    auto getSdkTitle = [](int api) -> QString {
+        const QString codename = Utils::getAndroidCodename(api);
+        return !codename.isEmpty() ? QString("%1 (%2)").arg(api).arg(codename) : QString::number(api);
+    };
+
     if (manifest && index.isValid()) {
         const int row = index.row();
         if (role == Qt::DisplayRole || role == Qt::EditRole) {
             switch (row) {
-                case ApplicationLabel: return manifest->getApplicationLabel();
-                case VersionCode:      return manifest->getVersionCode();
-                case VersionName:      return manifest->getVersionName();
-                case MinimumSdk:       return manifest->getMinSdk();
-                case TargetSdk:        return manifest->getTargetSdk();
+            case ApplicationLabel:
+                return manifest->getApplicationLabel();
+            case VersionCode:
+                return manifest->getVersionCode();
+            case VersionName:
+                return manifest->getVersionName();
+            case MinimumSdk: {
+                const int sdk = manifest->getMinSdk();
+                if (role == Qt::DisplayRole) {
+                    return getSdkTitle(sdk);
+                } else {
+                    return sdk;
+                }
+            }
+            case TargetSdk:
+                const int sdk = manifest->getTargetSdk();
+                if (role == Qt::DisplayRole) {
+                    return getSdkTitle(sdk);
+                } else {
+                    return sdk;
+                }
             }
         } else if (role == ReferenceRole && row == ApplicationLabel) {
             return manifest->getApplicationLabel().startsWith("@string/");
