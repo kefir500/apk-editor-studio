@@ -16,10 +16,13 @@ public:
     };
 
     explicit IconItemsModel(QObject *parent = nullptr);
+    ~IconItemsModel() override;
 
-    bool addIcon(const QPersistentModelIndex &index);
+    bool addIcon(const QPersistentModelIndex &index, bool round = false);
     QIcon getIcon() const;
+    QPixmap getPixmap(const QModelIndex &index) const;
     QString getIconPath(const QModelIndex &index) const;
+    QString getIconCaption(const QModelIndex &index) const;
 
     ResourceItemsModel *sourceModel() const;
     void setSourceModel(ResourceItemsModel *sourceModel);
@@ -32,10 +35,28 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
+    class IconItem;
+
     void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
 
-    QMap<QPersistentModelIndex, int> sourceToProxyMap;
-    QMap<int, QPersistentModelIndex> proxyToSourceMap;
+    QList<IconItem *> icons;
+    QMap<QPersistentModelIndex, IconItem *> sourceToProxyMap;
+};
+
+class IconItemsModel::IconItem
+{
+public:
+    IconItem(const QPersistentModelIndex &index) : index(index) {}
+
+    const QPersistentModelIndex &getIndex() const;
+
+    bool isRound() const;
+    void setRound(bool round);
+
+private:
+    QPersistentModelIndex index;
+
+    bool round;
 };
 
 #endif // ICONITEMSMODEL_H

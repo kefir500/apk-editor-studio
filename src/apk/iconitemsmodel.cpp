@@ -2,6 +2,8 @@
 #include "base/application.h"
 #include <QDebug>
 
+// IconItemsModel:
+
 IconItemsModel::IconItemsModel(QObject *parent) : QAbstractProxyModel(parent)
 {
     connect(this, &QAbstractItemModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight) {
@@ -14,6 +16,11 @@ IconItemsModel::IconItemsModel(QObject *parent) : QAbstractProxyModel(parent)
     });
 }
 
+IconItemsModel::~IconItemsModel()
+{
+    qDeleteAll(icons);
+}
+
 void IconItemsModel::setSourceModel(ResourceItemsModel *sourceModel)
 {
     if (this->sourceModel()) {
@@ -23,13 +30,17 @@ void IconItemsModel::setSourceModel(ResourceItemsModel *sourceModel)
     connect(sourceModel, &ResourceItemsModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
 }
 
-bool IconItemsModel::addIcon(const QPersistentModelIndex &index)
+bool IconItemsModel::addIcon(const QPersistentModelIndex &index, bool round)
 {
     if (!sourceToProxyMap.contains(index)) {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-            const int row = proxyToSourceMap.size();
-            sourceToProxyMap[index] = row;
-            proxyToSourceMap[row] = index;
+            IconItem *icon = new IconItem(index);
+            icon->setRound(round);
+            icons.append(icon);
+            std::sort(icons.begin(), icons.end(), [](const IconItem *a, const IconItem *b) {
+                return a->isRound() < b->isRound();
+            });
+            sourceToProxyMap.insert(index, icon);
         endInsertRows();
         return true;
     }
@@ -42,18 +53,46 @@ QIcon IconItemsModel::getIcon() const
     const int rows = rowCount();
     for (int i = 0; i < rows; ++i) {
         const QModelIndex sourceIndex = mapToSource(index(i, ResourceItemsModel::NodeCaption));
-        const QPixmap pixmap = sourceIndex.data(Qt::DecorationRole).value<QPixmap>();
-        icon.addPixmap(pixmap);
+        if (Q_LIKELY(sourceIndex.isValid())) {
+            const QPixmap pixmap = sourceIndex.data(Qt::DecorationRole).value<QPixmap>();
+            icon.addPixmap(pixmap);
+        }
     }
     return icon;
 }
 
+QPixmap IconItemsModel::getPixmap(const QModelIndex &index) const
+{
+    const QModelIndex sourceIndex = mapToSource(index);
+    if (Q_LIKELY(sourceIndex.isValid())) {
+        // TODO Cut to square
+        const QPixmap pixmap = sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::NodeCaption).data(Qt::DecorationRole).value<QPixmap>();
+        return !pixmap.isNull() ? pixmap.scaled(app->scale(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation) : QPixmap();
+    }
+    return QPixmap();
+}
+
 QString IconItemsModel::getIconPath(const QModelIndex &index) const
+{
+    const QModelIndex sourceIndex = mapToSource(index);
+    if (Q_LIKELY(sourceIndex.isValid())) {
+        return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourcePath).data().toString();
+    }
+    return QString();
+}
+
+QString IconItemsModel::getIconCaption(const QModelIndex &index) const
 {
     if (!index.isValid()) {
         return QString();
     }
-    return this->index(index.row(), IconItemsModel::IconPath).data().toString();
+    const IconItem *iconItem = icons.at(index.row());
+    const QModelIndex sourceIndex = iconItem->getIndex();
+    QString caption = sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourceQualifiers).data().toString().toUpper();
+    if (iconItem->isRound()) {
+        caption.append(QString(" (%1)").arg(tr("Round icon")));
+    }
+    return caption;
 }
 
 ResourceItemsModel *IconItemsModel::sourceModel() const
@@ -64,19 +103,15 @@ ResourceItemsModel *IconItemsModel::sourceModel() const
 QVariant IconItemsModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
-        const QModelIndex sourceIndex = mapToSource(index);
         if (role == Qt::DisplayRole) {
             switch (index.column()) {
-            case IconCaption:
-                return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourceQualifiers).data().toString().toUpper();
-            case IconPath:
-                return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourcePath).data().toString();
+                case IconCaption: return getIconCaption(index);
+                case IconPath: return getIconPath(index);
             }
         } else if (role == Qt::ToolTipRole) {
-            return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourcePath).data().toString();
+            return getIconPath(index);
         } else if (role == Qt::DecorationRole) {
-            const QPixmap pixmap = sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::NodeCaption).data(Qt::DecorationRole).value<QPixmap>();
-            return !pixmap.isNull() ? pixmap.scaled(app->scale(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation) : QPixmap();
+            return getPixmap(index);
         }
     }
     return QVariant();
@@ -99,17 +134,26 @@ QModelIndex IconItemsModel::parent(const QModelIndex &child) const
 
 QModelIndex IconItemsModel::mapFromSource(const QModelIndex &sourceIndex) const
 {
-    if (sourceIndex.isValid() && sourceToProxyMap.contains(sourceIndex)) {
-        return createIndex(sourceToProxyMap[sourceIndex], sourceIndex.column(), sourceIndex.internalPointer());
+    if (sourceIndex.isValid()) {
+        IconItem *iconItem = sourceToProxyMap.value(sourceIndex);
+        if (iconItem) {
+            const int row = icons.indexOf(iconItem);
+            if (Q_LIKELY(row != -1)) {
+                return createIndex(row, sourceIndex.column(), sourceIndex.internalPointer());
+            }
+        }
     }
     return QModelIndex();
 }
 
 QModelIndex IconItemsModel::mapToSource(const QModelIndex &proxyIndex) const
 {
-    if (proxyIndex.isValid() && proxyToSourceMap.contains(proxyIndex.row())) {
-        QModelIndex sourceIndex = proxyToSourceMap.value(proxyIndex.row());
-        return sourceIndex;
+    if (proxyIndex.isValid()) {
+        const int row = proxyIndex.row();
+        if (Q_LIKELY(row >= 0 && row < icons.count())) {
+            QModelIndex sourceIndex = icons.at(row)->getIndex();
+            return sourceIndex;
+        }
     }
     return QModelIndex();
 }
@@ -117,7 +161,7 @@ QModelIndex IconItemsModel::mapToSource(const QModelIndex &proxyIndex) const
 int IconItemsModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return proxyToSourceMap.count();
+    return icons.count();
 }
 
 int IconItemsModel::columnCount(const QModelIndex &parent) const
@@ -129,4 +173,21 @@ int IconItemsModel::columnCount(const QModelIndex &parent) const
 void IconItemsModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
     emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight));
+}
+
+// IconItem:
+
+const QPersistentModelIndex &IconItemsModel::IconItem::getIndex() const
+{
+    return index;
+}
+
+bool IconItemsModel::IconItem::isRound() const
+{
+    return round;
+}
+
+void IconItemsModel::IconItem::setRound(bool round)
+{
+    this->round = round;
 }

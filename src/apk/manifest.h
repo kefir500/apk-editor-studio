@@ -15,13 +15,13 @@ public:
 
     QString getApplicationLabel() const;
     QString getApplicationIcon() const;
+    QString getApplicationRoundIcon() const;
     int getMinSdk() const;
     int getTargetSdk() const;
     int getVersionCode() const;
     QString getVersionName() const;
 
     void setApplicationLabel(const QString &value);
-    void setApplicationIcon(const QString &value);
     void setMinSdk(int value);
     void setTargetSdk(int value);
     void setVersionCode(int value);
@@ -39,6 +39,7 @@ private:
 
     QDomAttr applicationLabel;
     QDomAttr applicationIcon;
+    QDomAttr applicationRoundIcon;
 
     int minSdk;
     int targetSdk;

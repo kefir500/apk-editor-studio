@@ -154,13 +154,23 @@ Manifest *Project::initialize()
     manifest = new Manifest(contentsPath + "/AndroidManifest.xml", contentsPath + "/apktool.yml");
     manifestModel.initialize(manifest);
 
-    // Parse application icon attribute (android:icon):
+    // Parse application icon attributes:
 
+    // android:icon
     const QString appIconAttribute = manifest->getApplicationIcon();
     const QString appIconCategory = appIconAttribute.split('/').value(0).mid(1);
     const QString appIconFilename = appIconAttribute.split('/').value(1);
+    // android:roundIcon
+    const QString appRoundIconAttribute = manifest->getApplicationRoundIcon();
+    const QString appRoundIconCategory = appRoundIconAttribute.split('/').value(0).mid(1);
+    const QString appRoundIconFilename = appRoundIconAttribute.split('/').value(1);
 
     // Parse resource directories:
+
+    auto doesResourceMatchAttribute = [](const QFileInfo &resourceFile, const QString &resourceCategory, const QString &resourceFilename) -> bool {
+        auto category = resourceFile.path().split('/').last().split('-').first(); // E.g., "drawable", "values"...
+        return (category == resourceCategory && resourceFile.baseName() == resourceFilename);
+    };
 
     QMap<QString, QModelIndex> mapCategories;
     QMap<QString, QModelIndex> mapFilegroups;
@@ -203,11 +213,17 @@ Manifest *Project::initialize()
             ResourceNode *fileNode = new ResourceNode(resourceFilename, new ResourceFile(resourceFile.filePath()));
             QModelIndex fileIndex = resourcesModel.addNode(fileNode, filegroupIndex);
 
-            // Parse application icons:
+            // Assign resource to a proxy:
 
-            if (categoryTitle == appIconCategory && resourceFile.baseName() == appIconFilename && drawableFormats.contains(resourceFile.suffix())) {
+            // If "android:icon":
+            if (doesResourceMatchAttribute(resourceFile, appIconCategory, appIconFilename) && drawableFormats.contains(resourceFile.suffix())) {
                 qDebug() << "Parsed application icon:" << QDir::toNativeSeparators(fileNode->getFile()->getFilePath());
                 iconsProxy.addIcon(fileIndex);
+            }
+            // If "android:roundIcon":
+            else if (doesResourceMatchAttribute(resourceFile, appRoundIconCategory, appRoundIconFilename) && drawableFormats.contains(resourceFile.suffix())) {
+                qDebug() << "Parsed application icon:" << QDir::toNativeSeparators(fileNode->getFile()->getFilePath());
+                iconsProxy.addIcon(fileIndex, true);
             }
         }
     }
