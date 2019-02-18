@@ -237,7 +237,7 @@ QSize Application::scale(int width, int height) const
 
 QString Application::getWebPage()
 {
-    return QString("https://qwertycube.com/%1").arg(getTitleNoSpaces());
+    return QString("https://qwertycube.com/%1/").arg(getTitleNoSpaces());
 }
 
 QString Application::getSourcePage()
@@ -257,7 +257,7 @@ QString Application::getContactPage()
 
 QString Application::getTranslatePage()
 {
-    return "https://www.transifex.com/qwertycube/" + getTitleNoSpaces();
+    return QString("https://www.transifex.com/qwertycube/%1/").arg(getTitleNoSpaces());
 }
 
 QString Application::getDonatePage()
