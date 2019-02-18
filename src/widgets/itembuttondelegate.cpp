@@ -79,7 +79,7 @@ void ItemButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             buttonState = QStyle::State_None;
         }
         QStyleOptionButton button;
-        button.text = "@";
+        button.text = QChar(0x2192);
         button.rect = buttonRect(option.rect);
         button.state = QStyle::State_Enabled | QStyle::State_Raised | buttonState;
         // Paint base:

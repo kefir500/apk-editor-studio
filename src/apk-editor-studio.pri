@@ -75,6 +75,7 @@ SOURCES += \
     $$PWD/windows/keymanager.cpp \
     $$PWD/windows/mainwindow.cpp \
     $$PWD/windows/optionsdialog.cpp \
+    $$PWD/windows/selectdialog.cpp \
     $$PWD/windows/waitdialog.cpp
 
 HEADERS += \
@@ -156,6 +157,7 @@ HEADERS += \
     $$PWD/windows/keymanager.h \
     $$PWD/windows/mainwindow.h \
     $$PWD/windows/optionsdialog.h \
+    $$PWD/windows/selectdialog.h \
     $$PWD/windows/waitdialog.h
 
 INCLUDEPATH += $$PWD

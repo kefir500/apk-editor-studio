@@ -26,10 +26,18 @@ public:
     explicit ManifestModel(QObject *parent = nullptr);
 
     void initialize(Manifest *manifest);
+
+    QString getApplicationLabel() const;
+    int getVersionCode() const;
+    QString getVersionName() const;
     int getMinimumSdk() const;
     int getTargetSdk() const;
-    void setMinimumSdk(int sdk);
-    void setTargetSdk(int sdk);
+
+    bool setApplicationLabel(const QString &label);
+    bool setVersionCode(int version);
+    bool setVersionName(const QString &version);
+    bool setMinimumSdk(int sdk);
+    bool setTargetSdk(int sdk);
 
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

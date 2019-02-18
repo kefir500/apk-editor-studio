@@ -1,6 +1,8 @@
 #include "widgets/manifestview.h"
 #include "widgets/itembuttondelegate.h"
+#include "windows/selectdialog.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QEvent>
 #include <QHeaderView>
 
@@ -18,11 +20,58 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
     ItemButtonDelegate *buttonDelegate = new ItemButtonDelegate(this);
     setItemDelegate(buttonDelegate);
     connect(buttonDelegate, &ItemButtonDelegate::clicked, [=](int row) {
-        emit editorRequested(static_cast<ManifestModel::ManifestRow>(row));
+        switch (row) {
+        case ManifestModel::MinimumSdk: {
+            const QString dialogTitle = model()->headerData(ManifestModel::MinimumSdk, Qt::Vertical).toString();
+            const int currentApi = model()->getMinimumSdk();
+            const int api = selectAndroidApi(dialogTitle, currentApi);
+            if (api) {
+                model()->setMinimumSdk(api);
+            }
+            break;
+        }
+        case ManifestModel::TargetSdk: {
+            const QString dialogTitle = model()->headerData(ManifestModel::MinimumSdk, Qt::Vertical).toString();
+            const int currentApi = model()->getTargetSdk();
+            const int api = selectAndroidApi(dialogTitle, currentApi);
+            if (api) {
+                model()->setTargetSdk(api);
+            }
+            break;
+        }
+        default:
+            emit titleEditorRequested(static_cast<ManifestModel::ManifestRow>(row));
+        }
     });
+}
+
+ManifestModel *ManifestView::model() const
+{
+    return static_cast<ManifestModel *>(QTableView::model());
+}
+
+void ManifestView::setModel(ManifestModel *model)
+{
+    QTableView::setModel(model);
 }
 
 QSize ManifestView::sizeHint() const
 {
     return QSize(app->scale(240), 117);
+}
+
+int ManifestView::selectAndroidApi(const QString &dialogTitle, int defaultApi)
+{
+    QList<int> apiLevels;
+    QStringList apiCodenames;
+    int selection = 0;
+    for (int api = 3; api <= 28; ++api) {
+        apiLevels.append(api);
+        apiCodenames.append(QString("%1 (%2)").arg(api).arg(Utils::getAndroidCodename(api)));
+        if (api == defaultApi) {
+            selection = apiLevels.count() - 1;
+        }
+    }
+    selection = SelectDialog::select(dialogTitle, apiCodenames, selection, this);
+    return (selection != -1) ? apiLevels.at(selection) : 0;
 }

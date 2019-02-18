@@ -114,7 +114,7 @@ void MainWindow::initWidgets()
     manifestTable = new ManifestView(this);
     manifestLayout->addWidget(manifestTable);
     manifestLayout->setMargin(0);
-    connect(manifestTable, &ManifestView::editorRequested, this, &MainWindow::openManifestEditor);
+    connect(manifestTable, &ManifestView::titleEditorRequested, projectsWidget, &ProjectsWidget::openTitlesTab);
 
     dockProjects = new QDockWidget(this);
     dockResources = new QDockWidget(this);
@@ -422,14 +422,6 @@ Viewer *MainWindow::openResource(const QModelIndex &index)
 {
     if (!index.model()->hasChildren(index)) {
         return projectsWidget->openResourceTab(index);
-    }
-    return nullptr;
-}
-
-Viewer *MainWindow::openManifestEditor(ManifestModel::ManifestRow manifestField)
-{
-    if (manifestField == ManifestModel::ApplicationLabel) {
-        return projectsWidget->openTitlesTab();
     }
     return nullptr;
 }
