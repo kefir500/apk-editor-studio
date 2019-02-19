@@ -26,7 +26,7 @@ public:
 
     bool addIcon(const QPersistentModelIndex &index, IconType type = Icon);
     QIcon getIcon() const;
-    QPixmap getPixmap(const QModelIndex &index) const;
+    QIcon getIcon(const QModelIndex &index) const;
     QString getIconPath(const QModelIndex &index) const;
     QString getIconCaption(const QModelIndex &index) const;
 

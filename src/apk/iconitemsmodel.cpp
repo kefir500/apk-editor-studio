@@ -1,5 +1,6 @@
 #include "apk/iconitemsmodel.h"
 #include "base/application.h"
+#include <QFileIconProvider>
 #include <QDebug>
 
 // IconItemsModel:
@@ -61,15 +62,14 @@ QIcon IconItemsModel::getIcon() const
     return icon;
 }
 
-QPixmap IconItemsModel::getPixmap(const QModelIndex &index) const
+QIcon IconItemsModel::getIcon(const QModelIndex &index) const
 {
     const QModelIndex sourceIndex = mapToSource(index);
     if (Q_LIKELY(sourceIndex.isValid())) {
-        // TODO Cut to square
-        const QPixmap pixmap = sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::NodeCaption).data(Qt::DecorationRole).value<QPixmap>();
-        return !pixmap.isNull() ? pixmap.scaled(app->scale(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation) : QPixmap();
+        QIcon icon = sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::NodeCaption).data(Qt::DecorationRole).value<QPixmap>();
+        return !icon.isNull() ? icon : QFileIconProvider().icon(getIconPath(index));
     }
-    return QPixmap();
+    return QIcon();
 }
 
 QString IconItemsModel::getIconPath(const QModelIndex &index) const
@@ -116,7 +116,7 @@ QVariant IconItemsModel::data(const QModelIndex &index, int role) const
         } else if (role == Qt::ToolTipRole) {
             return getIconPath(index);
         } else if (role == Qt::DecorationRole) {
-            return getPixmap(index);
+            return getIcon(index);
         }
     }
     return QVariant();
