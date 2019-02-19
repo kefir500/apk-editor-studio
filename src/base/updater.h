@@ -12,6 +12,7 @@ public:
 
     static void check(bool verbose = false, QWidget *parent = nullptr);
     static void download();
+    static void whatsnew(const QString &version);
 
 private:
     static QString parse(const QByteArray &json);

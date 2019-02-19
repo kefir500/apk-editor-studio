@@ -71,6 +71,7 @@ public:
 
     static bool associate();
     static void visitWebPage();
+    static void visitBlogPage(const QString &post);
     static void visitContactPage();
     static void visitTranslatePage();
     static void visitDonatePage();

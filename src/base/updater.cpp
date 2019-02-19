@@ -59,6 +59,11 @@ void Updater::download()
     app->visitWebPage();
 }
 
+void Updater::whatsnew(const QString &version)
+{
+    app->visitBlogPage(QString("apk-editor-studio-v%1-released").arg(version));
+}
+
 QString Updater::parse(const QByteArray &json)
 {
 #if defined(Q_OS_WIN)
@@ -109,12 +114,18 @@ bool Updater::compare(const QString &currentVersion, const QString &latestVersio
 
 void Updater::notify(const QString &version, QWidget *parent)
 {
+    QMessageBox question(parent);
     //: This is a noun.
-    const QString title = tr("Update");
+    question.setWindowTitle(tr("Update"));
     //: "v%1" will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the "APK Editor Studio" part.
-    const QString question = tr("APK Editor Studio v%1 is available.\nDownload?").arg(version);
-    const int answer = QMessageBox::question(parent, title, question);
-    if (answer == QMessageBox::Yes) {
+    question.setText(tr("APK Editor Studio v%1 is available. Download?").arg(version));
+    question.setIcon(QMessageBox::Question);
+    question.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    auto btnWhatsNew = question.addButton(tr("What's New"), QMessageBox::ActionRole);
+    QObject::connect(btnWhatsNew, &QPushButton::clicked, [=]() {
+        whatsnew(version);
+    });
+    if (question.exec() == QMessageBox::Yes) {
         download();
     }
 }
