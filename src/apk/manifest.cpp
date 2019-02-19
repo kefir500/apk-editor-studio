@@ -14,6 +14,7 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
         applicationLabel = getXmlAttribute({"application", "android:label"});
         applicationIcon = getXmlAttribute({"application", "android:icon"});
         applicationRoundIcon = getXmlAttribute({"application", "android:roundIcon"});
+        applicationBanner = getXmlAttribute({"application", "android:banner"});
     }
 
     // YAML:
@@ -76,6 +77,11 @@ QString Manifest::getApplicationIcon() const
 QString Manifest::getApplicationRoundIcon() const
 {
     return applicationRoundIcon.value();
+}
+
+QString Manifest::getApplicationBanner() const
+{
+    return applicationBanner.value();
 }
 
 int Manifest::getMinSdk() const

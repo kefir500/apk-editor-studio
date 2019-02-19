@@ -15,10 +15,16 @@ public:
         ColumnCount
     };
 
+    enum IconType {
+        Icon,
+        RoundIcon,
+        Banner
+    };
+
     explicit IconItemsModel(QObject *parent = nullptr);
     ~IconItemsModel() override;
 
-    bool addIcon(const QPersistentModelIndex &index, bool round = false);
+    bool addIcon(const QPersistentModelIndex &index, IconType type = Icon);
     QIcon getIcon() const;
     QPixmap getPixmap(const QModelIndex &index) const;
     QString getIconPath(const QModelIndex &index) const;
@@ -50,13 +56,13 @@ public:
 
     const QPersistentModelIndex &getIndex() const;
 
-    bool isRound() const;
-    void setRound(bool round);
+    IconType getType() const;
+    void setType(IconType type);
 
 private:
     QPersistentModelIndex index;
 
-    bool round;
+    IconType type;
 };
 
 #endif // ICONITEMSMODEL_H

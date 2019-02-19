@@ -164,6 +164,10 @@ Manifest *Project::initialize()
     const QString appRoundIconAttribute = manifest->getApplicationRoundIcon();
     const QString appRoundIconCategory = appRoundIconAttribute.split('/').value(0).mid(1);
     const QString appRoundIconFilename = appRoundIconAttribute.split('/').value(1);
+    // android:banner
+    const QString appBannerAttribute = manifest->getApplicationBanner();
+    const QString appBannerCategory = appBannerAttribute.split('/').value(0).mid(1);
+    const QString appBannerFilename = appBannerAttribute.split('/').value(1);
 
     // Parse resource directories:
 
@@ -222,8 +226,13 @@ Manifest *Project::initialize()
             }
             // If "android:roundIcon":
             else if (doesResourceMatchAttribute(resourceFile, appRoundIconCategory, appRoundIconFilename) && drawableFormats.contains(resourceFile.suffix())) {
-                qDebug() << "Parsed application icon:" << QDir::toNativeSeparators(fileNode->getFile()->getFilePath());
-                iconsProxy.addIcon(fileIndex, true);
+                qDebug() << "Parsed application round icon:" << QDir::toNativeSeparators(fileNode->getFile()->getFilePath());
+                iconsProxy.addIcon(fileIndex, IconItemsModel::RoundIcon);
+            }
+            // If "android:banner":
+            else if (doesResourceMatchAttribute(resourceFile, appBannerCategory, appBannerFilename) && drawableFormats.contains(resourceFile.suffix())) {
+                qDebug() << "Parsed application banner:" << QDir::toNativeSeparators(fileNode->getFile()->getFilePath());
+                iconsProxy.addIcon(fileIndex, IconItemsModel::Banner);
             }
         }
     }

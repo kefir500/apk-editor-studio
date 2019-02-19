@@ -30,15 +30,15 @@ void IconItemsModel::setSourceModel(ResourceItemsModel *sourceModel)
     connect(sourceModel, &ResourceItemsModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
 }
 
-bool IconItemsModel::addIcon(const QPersistentModelIndex &index, bool round)
+bool IconItemsModel::addIcon(const QPersistentModelIndex &index, IconType type)
 {
     if (!sourceToProxyMap.contains(index)) {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
             IconItem *icon = new IconItem(index);
-            icon->setRound(round);
+            icon->setType(type);
             icons.append(icon);
             std::sort(icons.begin(), icons.end(), [](const IconItem *a, const IconItem *b) {
-                return a->isRound() < b->isRound();
+                return a->getType() < b->getType();
             });
             sourceToProxyMap.insert(index, icon);
         endInsertRows();
@@ -89,8 +89,13 @@ QString IconItemsModel::getIconCaption(const QModelIndex &index) const
     const IconItem *iconItem = icons.at(index.row());
     const QModelIndex sourceIndex = iconItem->getIndex();
     QString caption = sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourceQualifiers).data().toString().toUpper();
-    if (iconItem->isRound()) {
+    switch (iconItem->getType()) {
+    case RoundIcon:
         caption.append(QString(" (%1)").arg(tr("Round icon")));
+        break;
+    case Banner:
+        caption.append(QString(" (%1)").arg(tr("TV Banner")));
+        break;
     }
     return caption;
 }
@@ -182,12 +187,12 @@ const QPersistentModelIndex &IconItemsModel::IconItem::getIndex() const
     return index;
 }
 
-bool IconItemsModel::IconItem::isRound() const
+IconItemsModel::IconType IconItemsModel::IconItem::getType() const
 {
-    return round;
+    return type;
 }
 
-void IconItemsModel::IconItem::setRound(bool round)
+void IconItemsModel::IconItem::setType(IconType type)
 {
-    this->round = round;
+    this->type = type;
 }
