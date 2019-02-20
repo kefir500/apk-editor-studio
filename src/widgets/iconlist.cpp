@@ -1,4 +1,5 @@
 #include "widgets/iconlist.h"
+#include "widgets/decorationsizedelegate.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include <QPainter>
@@ -12,6 +13,7 @@
 IconList::IconList(QWidget *parent) : QListView(parent)
 {
     setAcceptDrops(true);
+    setItemDelegate(new DecorationSizeDelegate(QSize(36, 36), this));
 }
 
 IconItemsModel *IconList::model() const
