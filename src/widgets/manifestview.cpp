@@ -31,7 +31,7 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
             break;
         }
         case ManifestModel::TargetSdk: {
-            const QString dialogTitle = model()->headerData(ManifestModel::MinimumSdk, Qt::Vertical).toString();
+            const QString dialogTitle = model()->headerData(ManifestModel::TargetSdk, Qt::Vertical).toString();
             const int currentApi = model()->getTargetSdk();
             const int api = selectAndroidApi(dialogTitle, currentApi);
             if (api) {
