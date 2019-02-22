@@ -1,8 +1,10 @@
+image: Visual Studio 2017
+
 install:
   - set QTDIR=C:\Qt\5.12.1\msvc2017
   - set OPENSSL=C:\OpenSSL-Win32\bin
-  - set VCDIR=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC
-  - set VCREDIST=%VCDIR%\redist\x86\Microsoft.VC140.CRT
+  - set VCREDIST_DLL=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT
+  - set VCREDIST_MSM=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules\Microsoft_VC141_CRT_x86.msm
   - set WIXDIR=C:\Program Files (x86)\WiX Toolset v3.11\bin
   - set SEVENZIP=7z
   - set VERSION=dev
