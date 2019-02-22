@@ -1,5 +1,5 @@
 install:
-  - set QTDIR=C:\Qt\5.11\msvc2015
+  - set QTDIR=C:\Qt\5.12.1\msvc2017
   - set OPENSSL=C:\OpenSSL-Win32\bin
   - set VCDIR=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC
   - set VCREDIST=%VCDIR%\redist\x86\Microsoft.VC140.CRT

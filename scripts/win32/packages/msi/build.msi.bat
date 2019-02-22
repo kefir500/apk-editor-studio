@@ -2,7 +2,7 @@ call "%~dp0\..\..\environment.bat"
 
 rem Build
 
-call "%VCDIR%\vcvarsall.bat" x86
+call "%VCVARS%" x86
 call "%QTDIR%\bin\qmake" "%~dp0\..\..\..\.." "DESTDIR=\"%~dp0\build""
 if %errorlevel% neq 0 exit /b 1
 nmake

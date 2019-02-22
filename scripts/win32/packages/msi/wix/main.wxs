@@ -26,7 +26,7 @@
     <WixVariable Id="WixUIBannerBmp" Value="res\header.bmp" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Merge Id="VCRedist" SourceFile="C:\Program Files (x86)\Common Files\Merge Modules\Microsoft_VC140_CRT_x86.msm" DiskId="1" Language="0"/> <!-- TODO Environment variable -->
+      <Merge Id="VCRedist" SourceFile="$(env.VCREDIST_MSM)" DiskId="1" Language="0"/>
       <Component Id="AssociationComponent" Guid="C6176BE3-E235-46DF-9BC6-5CA8358B0254">
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\apk-editor-studio.apk" Name="FriendlyTypeName" Value="Android Application Package" Type="string" />
         <ProgId Id="apk-editor-studio.apk" Description="Android Application Package">

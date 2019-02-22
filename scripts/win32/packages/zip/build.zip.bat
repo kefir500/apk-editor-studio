@@ -14,7 +14,7 @@ if exist "%FOLDER%" rmdir /s /q "%FOLDER%"
 
 rem Build
 
-call "%VCDIR%\vcvarsall.bat" x86
+call "%VCVARS%" x86
 call "%QTDIR%\bin\qmake" "%~dp0\..\..\..\.." "DESTDIR=\"%FOLDER%\"" DEFINES+=PORTABLE
 if %errorlevel% neq 0 exit /b 1
 nmake

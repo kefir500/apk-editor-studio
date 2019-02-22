@@ -18,10 +18,9 @@ xcopy /y "%QTDIR%\plugins\styles\qwindowsvistastyle.dll" styles\
 
 rem Deploy Visual C++ Redistributable
 
-xcopy /y "%VCREDIST%\msvcp*.dll" .
-xcopy /y "%VCREDIST%\msvcr*.dll" .
-xcopy /y "%VCREDIST%\vccorlib*.dll" .
-xcopy /y "%VCREDIST%\vcruntime*dll" .
+xcopy /y "%VCREDIST_DLL%\msvcp*.dll" .
+xcopy /y "%VCREDIST_DLL%\msvcr*.dll" .
+xcopy /y "%VCREDIST_DLL%\vcruntime*dll" .
 
 rem Deploy OpenSSL
 
