@@ -51,11 +51,9 @@ bool IconItemsModel::addIcon(const QPersistentModelIndex &index, IconType type)
 QIcon IconItemsModel::getIcon() const
 {
     QIcon icon;
-    const int rows = rowCount();
-    for (int i = 0; i < rows; ++i) {
-        const QModelIndex sourceIndex = mapToSource(index(i, ResourceItemsModel::NodeCaption));
-        if (Q_LIKELY(sourceIndex.isValid())) {
-            const QPixmap pixmap = sourceIndex.data(Qt::DecorationRole).value<QPixmap>();
+    for (const IconItem *iconItem : icons) {
+        if (iconItem->getType() == Icon) {
+            const QPixmap pixmap = iconItem->getIndex().data(Qt::DecorationRole).value<QPixmap>();
             icon.addPixmap(pixmap);
         }
     }
