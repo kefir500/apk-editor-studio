@@ -86,6 +86,7 @@ void MainWindow::initWidgets()
     projectsLayout->addWidget(projectsList);
     projectsLayout->addWidget(logView);
     projectsLayout->setMargin(0);
+    projectsLayout->setSpacing(1);
     connect(logView, &LogView::clicked, this, &MainWindow::openLogEntry);
 
     QWidget *dockResourceWidget = new QWidget(this);
