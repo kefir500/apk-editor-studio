@@ -5,7 +5,10 @@
 #include "base/xmlhighlighter.h"
 #include <QBoxLayout>
 #include <QTextStream>
+#include <QPainter>
 #include <QDebug>
+
+// CodeEditor:
 
 CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileEditor(index, parent)
 {
@@ -13,16 +16,8 @@ CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileE
     title = filename.section('/', -2);
     icon = index.icon();
 
-    editor = new QPlainTextEdit(this);
-    editor->setLineWrapMode(QPlainTextEdit::NoWrap);
-    QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
-#ifndef Q_OS_OSX
-    font.setPointSize(10);
-#else
-    font.setPointSize(12);
-#endif
-    editor->setFont(font);
-    editor->setTabStopWidth(4 * QFontMetrics(font).width(' '));
+    editor = new CodeTextEdit(this);
+    new CodeContainer(editor);
 
     const QString suffix = QFileInfo(filename).suffix().toLower();
     if (FileFormat::fromExtension("xml").hasExtension(suffix) || FileFormat::fromExtension("html").hasExtension(suffix)) {
@@ -95,4 +90,95 @@ QStringList CodeEditor::supportedFormats()
     filter.add(FileFormat::fromExtension("html"));
     filter.add(FileFormat::fromExtension("yml"));
     return filter.getExtensions();
+}
+
+// CodeTextEdit:
+
+CodeTextEdit::CodeTextEdit(QWidget *parent) : QPlainTextEdit(parent)
+{
+    setLineWrapMode(CodeTextEdit::NoWrap);
+
+    QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+#ifndef Q_OS_OSX
+    font.setPointSize(10);
+#else
+    font.setPointSize(12);
+#endif
+    setFont(font);
+    setTabStopWidth(4 * QFontMetrics(font).width(' '));
+}
+
+void CodeTextEdit::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+    emit resized();
+}
+
+// CodeContainer:
+
+CodeContainer::CodeContainer(CodeTextEdit *editor) : QWidget(editor)
+{
+    m_width = 0;
+    m_padding = 20;
+    connect(editor, &CodeTextEdit::blockCountChanged, [=](int blocks) {
+        m_width = editor->fontMetrics().boundingRect(QString::number(blocks)).width() + m_padding;
+        editor->setViewportMargins(m_width, 0, 0, 0);
+    });
+    connect(editor, &CodeTextEdit::resized, [=]() {
+        const QRect contents = editor->contentsRect();
+        setGeometry(QRect(contents.left(), contents.top(), m_width, contents.height()));
+    });
+    connect(editor, &CodeTextEdit::cursorPositionChanged, [=]() {
+        QTextEdit::ExtraSelection selection;
+        QColor highlight = app->getColor(Application::ColorHighlight).lighter(170);
+        selection.format.setBackground(highlight);
+        selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+        selection.cursor = editor->textCursor();
+        selection.cursor.clearSelection();
+        editor->setExtraSelections({selection});
+        m_currentLine = editor->textCursor().block().blockNumber() + 1;
+    });
+    connect(editor, &CodeTextEdit::updateRequest, [=](const QRect &rect, int dy) {
+        dy ? scroll(0, dy) : update(0, rect.y(), width(), rect.height());
+    });
+}
+
+CodeTextEdit *CodeContainer::parent() const
+{
+    return qobject_cast<CodeTextEdit *>(QWidget::parent());
+}
+
+QSize CodeContainer::sizeHint() const
+{
+    return QSize(m_width, parent()->viewport()->height());
+}
+
+void CodeContainer::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    painter.fillRect(0, 0, m_width, height(), QColor::fromRgb(245, 245, 245));
+    painter.setPen(QColor::fromRgb(140, 140, 140));
+    const int lineNumberHeight = parent()->fontMetrics().height();
+    QTextBlock block = parent()->firstVisibleBlock();
+    int top = static_cast<int>(parent()->blockBoundingGeometry(block).translated(parent()->contentOffset()).top());
+    int bottom = top + static_cast<int>(parent()->blockBoundingRect(block).height());
+    while (block.isValid() && top <= event->rect().bottom()) {
+        if (block.isVisible() && bottom >= event->rect().top()) {
+            const int blockNumber = block.blockNumber() + 1;
+            if (blockNumber != m_currentLine) {
+                painter.drawText(0, top, m_width - m_padding / 2, lineNumberHeight, Qt::AlignRight, QString::number(blockNumber));
+            } else {
+                painter.save();
+                QFont font = painter.font();
+                font.setBold(true);
+                painter.setPen(QColor::fromRgb(100, 100, 100));
+                painter.setFont(font);
+                painter.drawText(0, top, m_width - m_padding / 2, lineNumberHeight, Qt::AlignRight, QString::number(blockNumber));
+                painter.restore();
+            }
+        }
+        block = block.next();
+        top = bottom;
+        bottom = top + static_cast<int>(parent()->blockBoundingRect(block).height());
+    }
 }

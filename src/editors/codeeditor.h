@@ -5,6 +5,40 @@
 #include <QPlainTextEdit>
 #include <QSyntaxHighlighter>
 
+class CodeTextEdit;
+
+class CodeContainer : public QWidget
+{
+public:
+    CodeContainer(CodeTextEdit *editor);
+
+    CodeTextEdit *parent() const;
+    QSize sizeHint() const override;
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
+private:
+    int m_width;
+    int m_padding;
+    int m_currentLine;
+};
+
+class CodeTextEdit : public QPlainTextEdit
+{
+    Q_OBJECT
+    friend CodeContainer;
+
+public:
+    CodeTextEdit(QWidget *parent = nullptr);
+
+signals:
+    void resized();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+};
+
 class CodeEditor : public FileEditor
 {
 public:
@@ -17,7 +51,7 @@ public:
 
 private:
     QFile *file;
-    QPlainTextEdit *editor;
+    CodeTextEdit *editor;
     QSyntaxHighlighter *syntax;
 };
 
