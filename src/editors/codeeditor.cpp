@@ -33,8 +33,8 @@ CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileE
     file = new QFile(filename, this);
     load();
 
-    connect(editor, &QPlainTextEdit::textChanged, [=]() {
-        setModified(true);
+    connect(editor, &QPlainTextEdit::modificationChanged, [=](bool changed) {
+        setModified(changed);
     });
 }
 
