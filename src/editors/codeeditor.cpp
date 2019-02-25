@@ -14,6 +14,10 @@ CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileE
 {
     const QString filename = index.path();
     title = filename.section('/', -2);
+    QRegularExpression guid("^{\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}}");
+    if (guid.match(title).hasMatch()) {
+        title = title.split('/').last();
+    }
     icon = index.icon();
 
     editor = new CodeTextEdit(this);
