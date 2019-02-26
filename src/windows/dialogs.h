@@ -45,7 +45,8 @@ namespace Dialogs
     bool replaceFile(const QString &path, QWidget *parent = nullptr);
 
     int detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon = QMessageBox::Warning, QWidget *parent = nullptr);
-    int log(const QString &log, QWidget *parent = nullptr);
+    int log(const QString &title, const QString &text, QWidget *parent = nullptr);
+    int log(const QString &text, QWidget *parent = nullptr);
 }
 
 #endif // DIALOGS_H

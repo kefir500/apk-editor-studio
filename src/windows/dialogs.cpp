@@ -203,9 +203,10 @@ int Dialogs::detailed(const QString &text, const QString &detailed, QMessageBox:
     return dialog.exec();
 }
 
-int Dialogs::log(const QString &text, QWidget *parent)
+int Dialogs::log(const QString &title, const QString &text, QWidget *parent)
 {
     QDialog dialog(parent);
+    dialog.setWindowTitle(title);
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
     dialog.resize(app->scale(600, 360));
 
@@ -225,4 +226,9 @@ int Dialogs::log(const QString &text, QWidget *parent)
     layout->addWidget(buttons);
 
     return dialog.exec();
+}
+
+int Dialogs::log(const QString &text, QWidget *parent)
+{
+    return log(QString(), text, parent);
 }
