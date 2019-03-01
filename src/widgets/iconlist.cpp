@@ -14,6 +14,7 @@ IconList::IconList(QWidget *parent) : QListView(parent)
 {
     setAcceptDrops(true);
     setItemDelegate(new DecorationSizeDelegate(QSize(36, 36), this));
+    rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
 }
 
 IconItemsModel *IconList::model() const
@@ -31,25 +32,19 @@ void IconList::dragEnterEvent(QDragEnterEvent *event)
     const QMimeData *mimeData = event->mimeData();
     const bool isImage = (mimeData->hasUrls() && Utils::isImageReadable(mimeData->urls().at(0).path())) || mimeData->hasImage();
     event->setAccepted(isImage);
-    setHighlight(isImage, indexAt(event->pos()));
+    rubberBand->setVisible(isImage);
 }
 
 void IconList::dragLeaveEvent(QDragLeaveEvent *event)
 {
-    Q_UNUSED(event);
-    setHighlight(false);
+    Q_UNUSED(event)
+    rubberBand->hide();
 }
 
 void IconList::dragMoveEvent(QDragMoveEvent *event)
 {
-    setHighlight(true, indexAt(event->pos()));
-}
-
-void IconList::paintEvent(QPaintEvent *event)
-{
-    QListView::paintEvent(event);
-    QPainter painter(viewport());
-    painter.fillRect(highlightRect, app->getColor(app->ColorHighlight));
+    const QRect dropRect = rect().contains(event->pos()) ? visualRect(indexAt(event->pos())) : QRect();
+    rubberBand->setGeometry(dropRect.isValid() ? dropRect : rect());
 }
 
 void IconList::dropEvent(QDropEvent *event)
@@ -81,15 +76,5 @@ void IconList::dropEvent(QDropEvent *event)
         qDebug() << "TODO: Image dropped";
 #endif
     }
-    setHighlight(false);
-}
-
-void IconList::setHighlight(bool highlight, const QModelIndex &index)
-{
-    if (!highlight) {
-        highlightRect = QRect();
-    } else {
-        highlightRect = index.isValid() ? visualRect(index) : rect();
-    }
-    viewport()->update();
+    rubberBand->hide();
 }

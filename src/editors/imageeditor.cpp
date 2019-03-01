@@ -26,6 +26,7 @@ ImageEditor::ImageEditor(const ResourceModelIndex &index, QWidget *parent) : Fil
     scene = new QGraphicsScene(this);
     view = new GraphicsView(this);
     view->setScene(scene);
+    rubberBand = new QRubberBand(QRubberBand::Rectangle, view);
 
     zoomGroup = new ZoomGroup(this);
     labelSize = new QLabel(this);
@@ -102,11 +103,6 @@ bool ImageEditor::saveAs()
     return save(destination);
 }
 
-void ImageEditor::setHighlight(bool value)
-{
-    view->setHighlight(value);
-}
-
 QStringList ImageEditor::supportedFormats()
 {
     return FileFormatList::forReadableImages().getExtensions();
@@ -127,13 +123,13 @@ void ImageEditor::dragEnterEvent(QDragEnterEvent *event)
     const QMimeData *mimeData = event->mimeData();
     const bool isImage = (mimeData->hasUrls() && Utils::isImageReadable(mimeData->urls().at(0).path())) || mimeData->hasImage();
     event->setAccepted(isImage);
-    setHighlight(isImage);
+    rubberBand->setVisible(isImage);
 }
 
 void ImageEditor::dragLeaveEvent(QDragLeaveEvent *event)
 {
-    Q_UNUSED(event);
-    setHighlight(false);
+    Q_UNUSED(event)
+    rubberBand->hide();
 }
 
 void ImageEditor::dropEvent(QDropEvent *event)
@@ -152,7 +148,13 @@ void ImageEditor::dropEvent(QDropEvent *event)
         qDebug() << "TODO: Image dropped";
 #endif
     }
-    setHighlight(false);
+    rubberBand->hide();
+}
+
+void ImageEditor::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+    rubberBand->setGeometry(geometry());
 }
 
 // ZoomGroup
@@ -195,7 +197,6 @@ GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent), zoomDelta(1
     setDragMode(QGraphicsView::ScrollHandDrag);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-    setHighlight(false);
     zoomReset();
 }
 
@@ -222,17 +223,6 @@ void GraphicsView::zoomReset()
     zoomFactor = 1.0;
     resetTransform();
     emit zoomed(1);
-}
-
-void GraphicsView::setHighlight(bool highlight)
-{
-    if (highlight) {
-        auto highlightPalette = palette();
-        highlightPalette.setColor(QPalette::Base, app->getColor(app->ColorHighlight));
-        setPalette(highlightPalette);
-    } else {
-        setPalette(QPalette());
-    }
 }
 
 void GraphicsView::wheelEvent(QWheelEvent *event)

@@ -211,11 +211,6 @@ QColor Application::getColor(Color color)
         case ColorLogoPrimary:   return QColor(150, 200, 75);  // #96C84B
         case ColorLogoSecondary: return QColor(195, 218, 108); // #C3DA6C
         case ColorAndroid:       return QColor(164, 198, 57);  // #A4C639
-        case ColorHighlight: {
-            QColor color = QPalette().color(QPalette::Highlight);
-            color.setAlpha(30);
-            return color;
-        }
         case ColorBackgroundStart: return QColor(250, 255, 230);
         case ColorBackgroundEnd:   return QColor(240, 245, 220);
         case ColorSuccess: return QColor(235, 250, 200);

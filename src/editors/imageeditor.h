@@ -4,6 +4,7 @@
 #include "editors/fileeditor.h"
 #include <QGraphicsView>
 #include <QLabel>
+#include <QRubberBand>
 
 // GraphicsView
 
@@ -16,7 +17,6 @@ public:
     void zoomIn();
     void zoomOut();
     void zoomReset();
-    void setHighlight(bool highlight);
 
 signals:
     void zoomed(qreal factor);
@@ -62,14 +62,13 @@ public:
     bool save(const QString &as = QString()) override;
     bool saveAs() override;
 
-    void setHighlight(bool value);
-
     static QStringList supportedFormats();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragLeaveEvent(QDragLeaveEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     void setImage(const QPixmap &image);
@@ -81,6 +80,7 @@ private:
     QGraphicsPixmapItem *pixmapItem;
     QLabel *labelSize;
     ZoomGroup *zoomGroup;
+    QRubberBand *rubberBand;
 };
 
 #endif // IMAGEEDITOR_H

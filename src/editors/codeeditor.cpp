@@ -134,7 +134,8 @@ CodeContainer::CodeContainer(CodeTextEdit *editor) : QWidget(editor)
     });
     connect(editor, &CodeTextEdit::cursorPositionChanged, [=]() {
         QTextEdit::ExtraSelection selection;
-        QColor highlight = app->getColor(Application::ColorHighlight).lighter(170);
+        QColor highlight = QPalette().color(QPalette::Highlight);
+        highlight.setAlpha(16);
         selection.format.setBackground(highlight);
         selection.format.setProperty(QTextFormat::FullWidthSelection, true);
         selection.cursor = editor->textCursor();
