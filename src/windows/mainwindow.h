@@ -92,6 +92,8 @@ private:
     QAction *actionAbout;
     QActionGroup *actionsLanguage;
 
+    QRubberBand *rubberBand;
+
     QByteArray defaultState;
 };
 

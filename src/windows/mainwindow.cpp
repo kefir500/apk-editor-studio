@@ -140,6 +140,8 @@ void MainWindow::initWidgets()
     tabifyDockWidget(dockResources, dockFilesystem);
     dockResources->raise();
 
+    rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+
     defaultState = saveState();
 }
 
@@ -513,12 +515,16 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
     const QMimeData *mimeData = event->mimeData();
     if (mimeData->hasUrls()) {
         event->acceptProposedAction();
+        const bool showRubberBand = mimeData->urls().first().toString().toLower().endsWith(".apk");
+        rubberBand->setGeometry(rect());
+        rubberBand->setVisible(showRubberBand);
     }
 }
 
 void MainWindow::dragLeaveEvent(QDragLeaveEvent *event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
+    rubberBand->hide();
 }
 
 void MainWindow::dropEvent(QDropEvent *event)
@@ -535,6 +541,7 @@ void MainWindow::dropEvent(QDropEvent *event)
             }
         }
     }
+    rubberBand->hide();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

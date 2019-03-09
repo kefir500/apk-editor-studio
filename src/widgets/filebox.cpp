@@ -8,11 +8,11 @@
 FileBox::FileBox(const QString &currentPath, const QString &defaultPath, bool isDirectory, QWidget *parent) : QWidget(parent)
 {
     setAcceptDrops(true);
-    setAutoFillBackground(true);
 
-    input = new QLineEdit(this);
+    input = new LineEditWithoutDrops(this);
     btnReset = new QToolButton(this);
     btnOpen = new QToolButton(this);
+    rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
 
     this->isDirectory = isDirectory;
     setCurrentPath(currentPath);
@@ -94,26 +94,38 @@ void FileBox::changeEvent(QEvent *event)
 
 void FileBox::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasText()) {
-        event->acceptProposedAction();
-        setBackgroundRole(QPalette::Light);
-    }
+    const bool hasText = event->mimeData()->hasText();
+    event->setAccepted(hasText);
+    rubberBand->setVisible(hasText);
+}
+
+void FileBox::dragMoveEvent(QDragMoveEvent *event)
+{
+    event->acceptProposedAction();
 }
 
 void FileBox::dragLeaveEvent(QDragLeaveEvent *event)
 {
-    Q_UNUSED(event);
-    setBackgroundRole(QPalette::Window);
+    Q_UNUSED(event)
+    rubberBand->hide();
 }
 
 void FileBox::dropEvent(QDropEvent *event)
 {
     const QMimeData *mimeData = event->mimeData();
-    if (mimeData->hasText()) {
+    if (mimeData->hasUrls()) {
+        event->acceptProposedAction();
         const QUrl url = mimeData->text();
         const QString path = url.toLocalFile();
         setCurrentPath(path);
-        event->acceptProposedAction();
+    } else if (mimeData->hasText()) {
+        setCurrentPath(mimeData->text());
     }
-    setBackgroundRole(QPalette::Window);
+    rubberBand->hide();
+}
+
+void FileBox::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+    rubberBand->setGeometry(input->geometry());
 }
