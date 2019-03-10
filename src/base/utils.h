@@ -3,6 +3,7 @@
 
 #include <QList>
 #include <QPixmap>
+#include <QFileInfo>
 
 namespace Utils
 {
@@ -29,6 +30,7 @@ namespace Utils
 
     // Android utils:
 
+    bool isDrawableResource(const QFileInfo &file);
     QString getAndroidCodename(int api);
 }
 

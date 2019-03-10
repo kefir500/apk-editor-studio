@@ -2,7 +2,6 @@
 #include <QDir>
 #include <QIcon>
 #include <QProcess>
-#include <QFileInfo>
 #include <QImageReader>
 #include <QImageWriter>
 #include <QDesktopServices>
@@ -194,4 +193,11 @@ QString Utils::getAndroidCodename(int api)
         return "9.0 - Pie";
     }
     return QString();
+}
+
+bool Utils::isDrawableResource(const QFileInfo &file)
+{
+    // Read more: https://developer.android.com/guide/topics/resources/drawable-resource.html
+    const QStringList drawableFormats = {"png", "jpg", "jpeg", "gif", "xml"};
+    return drawableFormats.contains(file.suffix());
 }
