@@ -3,6 +3,7 @@ SOURCES += \
     $$PWD/apk/logentry.cpp \
     $$PWD/apk/logmodel.cpp \
     $$PWD/apk/manifest.cpp \
+    $$PWD/apk/manifestattribute.cpp \
     $$PWD/apk/manifestmodel.cpp \
     $$PWD/apk/project.cpp \
     $$PWD/apk/projectitemsmodel.cpp \
@@ -83,6 +84,7 @@ HEADERS += \
     $$PWD/apk/logentry.h \
     $$PWD/apk/logmodel.h \
     $$PWD/apk/manifest.h \
+    $$PWD/apk/manifestattribute.h \
     $$PWD/apk/manifestmodel.h \
     $$PWD/apk/project.h \
     $$PWD/apk/projectitemsmodel.h \
