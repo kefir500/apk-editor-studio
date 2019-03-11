@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QRegularExpression>
+#include "apk/manifestattribute.h"
 
 class Manifest
 {
