@@ -15,7 +15,7 @@ void ManifestModel::initialize(Manifest *manifest)
 
 QString ManifestModel::getApplicationLabel() const
 {
-    return manifest->getApplicationLabel();
+    return manifest->getApplicationLabel().getValue();
 }
 
 int ManifestModel::getVersionCode() const
@@ -40,7 +40,7 @@ int ManifestModel::getTargetSdk() const
 
 bool ManifestModel::setApplicationLabel(const QString &label)
 {
-    if (manifest->getApplicationLabel() == label) {
+    if (manifest->getApplicationLabel().getValue() == label) {
         return false;
     }
     manifest->setApplicationLabel(label);
@@ -125,13 +125,13 @@ QVariant ManifestModel::data(const QModelIndex &index, int role) const
         if (role == Qt::DisplayRole || role == Qt::EditRole) {
             switch (row) {
             case ApplicationLabel:
-                return manifest->getApplicationLabel();
+                return getApplicationLabel();
             case VersionCode:
-                return manifest->getVersionCode();
+                return getVersionCode();
             case VersionName:
-                return manifest->getVersionName();
+                return getVersionName();
             case MinimumSdk: {
-                const int sdk = manifest->getMinSdk();
+                const int sdk = getMinimumSdk();
                 if (role == Qt::DisplayRole) {
                     return getSdkTitle(sdk);
                 } else {
@@ -139,7 +139,7 @@ QVariant ManifestModel::data(const QModelIndex &index, int role) const
                 }
             }
             case TargetSdk:
-                const int sdk = manifest->getTargetSdk();
+                const int sdk = getTargetSdk();
                 if (role == Qt::DisplayRole) {
                     return getSdkTitle(sdk);
                 } else {
@@ -149,7 +149,7 @@ QVariant ManifestModel::data(const QModelIndex &index, int role) const
         } else if (role == ReferenceRole) {
             switch (row) {
             case ApplicationLabel:
-                return manifest->getApplicationLabel().startsWith("@string/");
+                return getApplicationLabel().startsWith("@string/");
             case MinimumSdk:
             case TargetSdk:
                 return true;

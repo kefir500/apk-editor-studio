@@ -13,10 +13,10 @@ public:
 
     QDomAttr getXmlAttribute(QStringList tree) const;
 
-    QString getApplicationLabel() const;
-    QString getApplicationIcon() const;
-    QString getApplicationRoundIcon() const;
-    QString getApplicationBanner() const;
+    const ManifestAttribute &getApplicationLabel() const;
+    const ManifestAttribute &getApplicationIcon() const;
+    const ManifestAttribute &getApplicationRoundIcon() const;
+    const ManifestAttribute &getApplicationBanner() const;
     int getMinSdk() const;
     int getTargetSdk() const;
     int getVersionCode() const;
@@ -38,10 +38,10 @@ private:
     QDomDocument xml;
     QString yml;
 
-    QDomAttr applicationLabel;
-    QDomAttr applicationIcon;
-    QDomAttr applicationRoundIcon;
-    QDomAttr applicationBanner;
+    ManifestAttribute applicationLabel;
+    ManifestAttribute applicationIcon;
+    ManifestAttribute applicationRoundIcon;
+    ManifestAttribute applicationBanner;
 
     int minSdk;
     int targetSdk;

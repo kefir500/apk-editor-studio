@@ -11,10 +11,10 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
         QTextStream stream(xmlFile);
         stream.setCodec("UTF-8");
         xml.setContent(stream.readAll());
-        applicationLabel = getXmlAttribute({"application", "android:label"});
-        applicationIcon = getXmlAttribute({"application", "android:icon"});
-        applicationRoundIcon = getXmlAttribute({"application", "android:roundIcon"});
-        applicationBanner = getXmlAttribute({"application", "android:banner"});
+        applicationLabel = ManifestAttribute(getXmlAttribute({"application", "android:label"}));
+        applicationIcon = ManifestAttribute(getXmlAttribute({"application", "android:icon"}));
+        applicationRoundIcon = ManifestAttribute(getXmlAttribute({"application", "android:roundIcon"}));
+        applicationBanner = ManifestAttribute(getXmlAttribute({"application", "android:banner"}));
     }
 
     // YAML:
@@ -59,9 +59,9 @@ QDomAttr Manifest::getXmlAttribute(QStringList tree) const
     return QDomAttr();
 }
 
-QString Manifest::getApplicationLabel() const
+const ManifestAttribute &Manifest::getApplicationLabel() const
 {
-    return applicationLabel.value();
+    return applicationLabel;
 //    QDomDocument dom;
 //    dom.setContent(manifest);
 //    return dom.firstChildElement("manifest")
@@ -69,19 +69,19 @@ QString Manifest::getApplicationLabel() const
 //              .attribute("android:label");
 }
 
-QString Manifest::getApplicationIcon() const
+const ManifestAttribute &Manifest::getApplicationIcon() const
 {
-    return applicationIcon.value();
+    return applicationIcon;
 }
 
-QString Manifest::getApplicationRoundIcon() const
+const ManifestAttribute &Manifest::getApplicationRoundIcon() const
 {
-    return applicationRoundIcon.value();
+    return applicationRoundIcon;
 }
 
-QString Manifest::getApplicationBanner() const
+const ManifestAttribute &Manifest::getApplicationBanner() const
 {
-    return applicationBanner.value();
+    return applicationBanner;
 }
 
 int Manifest::getMinSdk() const
