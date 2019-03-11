@@ -4,6 +4,8 @@
 #include "apk/resourcenode.h"
 #include <QAbstractItemModel>
 
+class Project;
+
 class ResourceItemsModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -15,11 +17,13 @@ public:
         ResourceLocale,
         ResourceApi,
         ResourceQualifiers,
+        ResourceName,
+        ResourceType,
         ResourcePath,
         ColumnCount
     };
 
-    ResourceItemsModel(QObject *parent = nullptr);
+    ResourceItemsModel(const Project *apk, QObject *parent = nullptr);
     ~ResourceItemsModel() override;
 
     QModelIndex addNode(ResourceNode *node, const QModelIndex &parent = QModelIndex());
@@ -33,8 +37,16 @@ public:
 
     QString getResourcePath(const QModelIndex &index) const;
     QPixmap getResourceFlag(const QModelIndex &index) const;
+    QString getResourceName(const QModelIndex &index) const;
+    QString getResourceType(const QModelIndex &index) const;
+    const Project *getApk() const;
+
+signals:
+    void added(const QModelIndex &index);
+    void removed(const QModelIndex &index);
 
 private:
+    const Project *apk;
     ResourceNode *root;
 };
 

@@ -21,17 +21,17 @@ public:
         Banner
     };
 
-    explicit IconItemsModel(QObject *parent = nullptr);
+    explicit IconItemsModel(QObject *parent = nullptr) : QAbstractProxyModel(parent) {}
     ~IconItemsModel() override;
 
-    bool addIcon(const QPersistentModelIndex &index, IconType type = Icon);
+    void setSourceModel(ResourceItemsModel *sourceModel);
+
     QIcon getIcon() const;
     QIcon getIcon(const QModelIndex &index) const;
     QString getIconPath(const QModelIndex &index) const;
     QString getIconCaption(const QModelIndex &index) const;
 
     ResourceItemsModel *sourceModel() const;
-    void setSourceModel(ResourceItemsModel *sourceModel);
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex &child) const override;
@@ -43,7 +43,12 @@ public:
 private:
     class IconItem;
 
-    void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
+    bool addIcon(const QPersistentModelIndex &index, IconType type = Icon);
+    void onResourceAdded(const QModelIndex &index);
+    void onResourceRemoved(const QModelIndex &index);
+    void onResourceChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
+
+    const Project *apk();
 
     QList<IconItem *> icons;
     QMap<QPersistentModelIndex, IconItem *> sourceToProxyMap;

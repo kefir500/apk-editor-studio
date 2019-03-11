@@ -2,8 +2,9 @@
 #include "base/utils.h"
 #include <QFileIconProvider>
 
-ResourceItemsModel::ResourceItemsModel(QObject *parent) : QAbstractItemModel(parent)
+ResourceItemsModel::ResourceItemsModel(const Project *apk, QObject *parent) : QAbstractItemModel(parent)
 {
+    this->apk = apk;
     root = new ResourceNode();
 }
 
@@ -18,7 +19,9 @@ QModelIndex ResourceItemsModel::addNode(ResourceNode *node, const QModelIndex &p
     beginInsertRows(parent, rowCount(parent), rowCount(parent));
         parentNode->addChild(node);
     endInsertRows();
-    return createIndex(rowCount(parent) - 1, 0, node);
+    auto index = createIndex(rowCount(parent) - 1, 0, node);
+    emit added(index);
+    return index;
 }
 
 QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
@@ -37,6 +40,8 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                     case ResourceLocale:     return file->getLocaleCode();
                     case ResourceApi:        return file->getApiVersion();
                     case ResourceQualifiers: return file->getReadableQualifiers();
+                    case ResourceName:       return file->getName();
+                    case ResourceType:       return file->getType();
                     case ResourcePath:       return file->getFilePath();
                 }
             } else if (role == Qt::DecorationRole) {
@@ -126,4 +131,25 @@ QPixmap ResourceItemsModel::getResourceFlag(const QModelIndex &index) const
         return QString();
     }
     return index.sibling(index.row(), ResourceItemsModel::ResourceLanguage).data(Qt::DecorationRole).value<QPixmap>();
+}
+
+QString ResourceItemsModel::getResourceName(const QModelIndex &index) const
+{
+    if (!index.isValid()) {
+        return QString();
+    }
+    return index.sibling(index.row(), ResourceItemsModel::ResourceName).data().toString();
+}
+
+QString ResourceItemsModel::getResourceType(const QModelIndex &index) const
+{
+    if (!index.isValid()) {
+        return QString();
+    }
+    return index.sibling(index.row(), ResourceItemsModel::ResourceType).data().toString();
+}
+
+const Project *ResourceItemsModel::getApk() const
+{
+    return apk;
 }

@@ -67,7 +67,8 @@ void IconList::dropEvent(QDropEvent *event)
                     }
                 }
                 if (success) {
-                    emit model()->dataChanged(index, index);
+                    auto sourceIndex = model()->mapToSource(index);
+                    emit model()->sourceModel()->dataChanged(sourceIndex, sourceIndex);
                 }
             }
         }

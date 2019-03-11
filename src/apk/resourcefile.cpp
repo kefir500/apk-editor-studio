@@ -38,7 +38,7 @@ ResourceFile::ResourceFile(const QString &path)
     }
     qualifiers = directoryParts.at(directoryParts.size() - 2);
     QStringList qualifiersParts = qualifiers.split('-');
-    this->category = qualifiersParts.takeFirst();
+    this->type = qualifiersParts.takeFirst();
     // Replace "-r" region code prefix with "_":
     qualifiersParts = qualifiersParts.join('-').replace(QRegularExpression("(-r)(?=[A-Za-z]{2}(?=\\z|-))"), "_").split('-');
     this->readableQualifiers = qualifiersParts.join(" - ");
@@ -108,9 +108,14 @@ QString ResourceFile::getReadableQualifiers() const
     return readableQualifiers;
 }
 
-QString ResourceFile::getCategory() const
+QString ResourceFile::getName() const
 {
-    return category;
+    return QFileInfo(path).baseName();
+}
+
+QString ResourceFile::getType() const
+{
+    return type;
 }
 
 QString ResourceFile::getDpi() const

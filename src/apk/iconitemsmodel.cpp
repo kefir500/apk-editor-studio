@@ -1,51 +1,31 @@
 #include "apk/iconitemsmodel.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QFileIconProvider>
 #include <QDebug>
 
 // IconItemsModel:
-
-IconItemsModel::IconItemsModel(QObject *parent) : QAbstractProxyModel(parent)
-{
-    connect(this, &QAbstractItemModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight) {
-        auto sourceModel = this->sourceModel();
-        if (sourceModel) {
-            blockSignals(true);
-            emit sourceModel->dataChanged(mapToSource(topLeft), mapToSource(bottomRight));
-            blockSignals(false);
-        }
-    });
-}
 
 IconItemsModel::~IconItemsModel()
 {
     qDeleteAll(icons);
 }
 
-void IconItemsModel::setSourceModel(ResourceItemsModel *sourceModel)
+void IconItemsModel::setSourceModel(ResourceItemsModel *newSourceModel)
 {
-    if (this->sourceModel()) {
-        disconnect(this->sourceModel(), &ResourceItemsModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
-    }
-    QAbstractProxyModel::setSourceModel(sourceModel);
-    connect(sourceModel, &ResourceItemsModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
-}
-
-bool IconItemsModel::addIcon(const QPersistentModelIndex &index, IconType type)
-{
-    if (!sourceToProxyMap.contains(index)) {
-        beginInsertRows(QModelIndex(), rowCount(), rowCount());
-            IconItem *icon = new IconItem(index);
-            icon->setType(type);
-            icons.append(icon);
-            std::sort(icons.begin(), icons.end(), [](const IconItem *a, const IconItem *b) {
-                return a->getType() < b->getType();
-            });
-            sourceToProxyMap.insert(index, icon);
-        endInsertRows();
-        return true;
-    }
-    return false;
+    beginResetModel();
+        if (sourceModel()) {
+            disconnect(sourceModel(), &ResourceItemsModel::added, this, &IconItemsModel::onResourceAdded);
+            disconnect(sourceModel(), &ResourceItemsModel::removed, this, &IconItemsModel::onResourceRemoved);
+            disconnect(sourceModel(), &ResourceItemsModel::dataChanged, this, &IconItemsModel::onResourceChanged);
+        }
+        QAbstractProxyModel::setSourceModel(newSourceModel);
+        if (sourceModel()) {
+            connect(sourceModel(), &ResourceItemsModel::added, this, &IconItemsModel::onResourceAdded);
+            connect(sourceModel(), &ResourceItemsModel::removed, this, &IconItemsModel::onResourceRemoved);
+            connect(sourceModel(), &ResourceItemsModel::dataChanged, this, &IconItemsModel::onResourceChanged);
+        }
+    endResetModel();
 }
 
 QIcon IconItemsModel::getIcon() const
@@ -173,9 +153,56 @@ int IconItemsModel::columnCount(const QModelIndex &parent) const
     return 1;
 }
 
-void IconItemsModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+bool IconItemsModel::addIcon(const QPersistentModelIndex &index, IconType type)
+{
+    if (!sourceToProxyMap.contains(index)) {
+        beginInsertRows(QModelIndex(), rowCount(), rowCount());
+            IconItem *icon = new IconItem(index);
+            icon->setType(type);
+            icons.append(icon);
+            std::sort(icons.begin(), icons.end(), [](const IconItem *a, const IconItem *b) {
+                return a->getType() < b->getType();
+            });
+            sourceToProxyMap.insert(index, icon);
+        endInsertRows();
+        return true;
+    }
+    return false;
+}
+
+void IconItemsModel::onResourceAdded(const QModelIndex &index)
+{
+    if (Utils::isDrawableResource(sourceModel()->getResourcePath(index))) {
+        auto resourceName = sourceModel()->getResourceName(index);
+        auto resourceType = sourceModel()->getResourceType(index);
+        if (!resourceName.isEmpty() && !resourceType.isEmpty()) {
+            auto iconResource = apk()->getManifest()->getApplicationIcon();
+            auto roundIconResource = apk()->getManifest()->getApplicationRoundIcon();
+            auto bannerResource = apk()->getManifest()->getApplicationBanner();
+            if (resourceName == iconResource.getResourceName() && resourceType == iconResource.getResourceType()) {
+                addIcon(index, Icon);
+            } else if (resourceName == roundIconResource.getResourceName() && resourceType == roundIconResource.getResourceType()) {
+                addIcon(index, RoundIcon);
+            } else if (resourceName == bannerResource.getResourceName() && resourceType == bannerResource.getResourceType()) {
+                addIcon(index, Banner);
+            }
+        }
+    }
+}
+
+void IconItemsModel::onResourceRemoved(const QModelIndex &index)
+{
+    // TODO
+}
+
+void IconItemsModel::onResourceChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
     emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight));
+}
+
+const Project *IconItemsModel::apk()
+{
+    return sourceModel()->getApk();
 }
 
 // IconItem:

@@ -12,7 +12,7 @@
 #include <QInputDialog>
 #include <QDebug>
 
-Project::Project(const QString &path)
+Project::Project(const QString &path) : resourcesModel(this)
 {
     QFileInfo fileInfo(path);
     title = fileInfo.fileName();
@@ -154,32 +154,10 @@ Manifest *Project::initialize()
     manifest = new Manifest(contentsPath + "/AndroidManifest.xml", contentsPath + "/apktool.yml");
     manifestModel.initialize(manifest);
 
-    // Parse application icon attributes:
-
-    // android:icon
-    const QString appIconAttribute = manifest->getApplicationIcon();
-    const QString appIconCategory = appIconAttribute.split('/').value(0).mid(1);
-    const QString appIconFilename = appIconAttribute.split('/').value(1);
-    // android:roundIcon
-    const QString appRoundIconAttribute = manifest->getApplicationRoundIcon();
-    const QString appRoundIconCategory = appRoundIconAttribute.split('/').value(0).mid(1);
-    const QString appRoundIconFilename = appRoundIconAttribute.split('/').value(1);
-    // android:banner
-    const QString appBannerAttribute = manifest->getApplicationBanner();
-    const QString appBannerCategory = appBannerAttribute.split('/').value(0).mid(1);
-    const QString appBannerFilename = appBannerAttribute.split('/').value(1);
-
     // Parse resource directories:
-
-    auto doesResourceMatchAttribute = [](const QFileInfo &resourceFile, const QString &resourceCategory, const QString &resourceFilename) -> bool {
-        auto category = resourceFile.path().split('/').last().split('-').first(); // E.g., "drawable", "values"...
-        return (category == resourceCategory && resourceFile.baseName() == resourceFilename);
-    };
 
     QMap<QString, QModelIndex> mapCategories;
     QMap<QString, QModelIndex> mapFilegroups;
-
-    const QStringList drawableFormats = {"png", "jpg", "jpeg", "gif", "xml"}; // Read more: https://developer.android.com/guide/topics/resources/drawable-resource.html
 
     QDirIterator resourceDirectories(contentsPath + "/res/", QDir::Dirs | QDir::NoDotAndDotDot);
     while (resourceDirectories.hasNext()) {
@@ -215,25 +193,7 @@ Manifest *Project::initialize()
             }
 
             ResourceNode *fileNode = new ResourceNode(resourceFilename, new ResourceFile(resourceFile.filePath()));
-            QModelIndex fileIndex = resourcesModel.addNode(fileNode, filegroupIndex);
-
-            // Assign resource to a proxy:
-
-            // If "android:icon":
-            if (doesResourceMatchAttribute(resourceFile, appIconCategory, appIconFilename) && drawableFormats.contains(resourceFile.suffix())) {
-                qDebug() << "Parsed application icon:" << QDir::toNativeSeparators(fileNode->getFile()->getFilePath());
-                iconsProxy.addIcon(fileIndex);
-            }
-            // If "android:roundIcon":
-            else if (doesResourceMatchAttribute(resourceFile, appRoundIconCategory, appRoundIconFilename) && drawableFormats.contains(resourceFile.suffix())) {
-                qDebug() << "Parsed application round icon:" << QDir::toNativeSeparators(fileNode->getFile()->getFilePath());
-                iconsProxy.addIcon(fileIndex, IconItemsModel::RoundIcon);
-            }
-            // If "android:banner":
-            else if (doesResourceMatchAttribute(resourceFile, appBannerCategory, appBannerFilename) && drawableFormats.contains(resourceFile.suffix())) {
-                qDebug() << "Parsed application banner:" << QDir::toNativeSeparators(fileNode->getFile()->getFilePath());
-                iconsProxy.addIcon(fileIndex, IconItemsModel::Banner);
-            }
+            resourcesModel.addNode(fileNode, filegroupIndex);
         }
     }
 

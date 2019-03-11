@@ -11,7 +11,8 @@ public:
 
     QString getQualifiers() const;
     QString getReadableQualifiers() const;
-    QString getCategory() const;
+    QString getName() const;
+    QString getType() const; // E.g., "drawable", "values", etc.
     QString getDpi() const;
     QString getLocaleCode() const;
     QString getLanguageName() const;
@@ -23,7 +24,7 @@ public:
 
 private:
     QString path;
-    QString category;
+    QString type;
     QString qualifiers;
     QString readableQualifiers;
 
