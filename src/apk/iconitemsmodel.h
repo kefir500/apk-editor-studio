@@ -41,7 +41,12 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
-    class IconItem;
+    struct IconItem
+    {
+        IconItem(const QPersistentModelIndex &index, IconType type) : index(index), type(type) {}
+        const QPersistentModelIndex index;
+        const IconType type;
+    };
 
     bool addIcon(const QPersistentModelIndex &index, IconType type = Icon);
     void onResourceAdded(const QModelIndex &index);
@@ -52,22 +57,6 @@ private:
 
     QList<IconItem *> icons;
     QMap<QPersistentModelIndex, IconItem *> sourceToProxyMap;
-};
-
-class IconItemsModel::IconItem
-{
-public:
-    IconItem(const QPersistentModelIndex &index) : index(index) {}
-
-    const QPersistentModelIndex &getIndex() const;
-
-    IconType getType() const;
-    void setType(IconType type);
-
-private:
-    QPersistentModelIndex index;
-
-    IconType type;
 };
 
 #endif // ICONITEMSMODEL_H

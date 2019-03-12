@@ -4,8 +4,6 @@
 #include <QFileIconProvider>
 #include <QDebug>
 
-// IconItemsModel:
-
 IconItemsModel::~IconItemsModel()
 {
     qDeleteAll(icons);
@@ -32,8 +30,8 @@ QIcon IconItemsModel::getIcon() const
 {
     QIcon icon;
     for (const IconItem *iconItem : icons) {
-        if (iconItem->getType() == Icon) {
-            const QPixmap pixmap = iconItem->getIndex().data(Qt::DecorationRole).value<QPixmap>();
+        if (iconItem->type == Icon) {
+            const QPixmap pixmap = iconItem->index.data(Qt::DecorationRole).value<QPixmap>();
             icon.addPixmap(pixmap);
         }
     }
@@ -65,9 +63,11 @@ QString IconItemsModel::getIconCaption(const QModelIndex &index) const
         return QString();
     }
     const IconItem *iconItem = icons.at(index.row());
-    const QModelIndex sourceIndex = iconItem->getIndex();
+    const QModelIndex sourceIndex = iconItem->index;
     QString caption = sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourceQualifiers).data().toString().toUpper();
-    switch (iconItem->getType()) {
+    switch (iconItem->type) {
+    case Icon:
+        break;
     case RoundIcon:
         caption.append(QString(" (%1)").arg(tr("Round icon")));
         break;
@@ -134,7 +134,7 @@ QModelIndex IconItemsModel::mapToSource(const QModelIndex &proxyIndex) const
     if (proxyIndex.isValid()) {
         const int row = proxyIndex.row();
         if (Q_LIKELY(row >= 0 && row < icons.count())) {
-            QModelIndex sourceIndex = icons.at(row)->getIndex();
+            QModelIndex sourceIndex = icons.at(row)->index;
             return sourceIndex;
         }
     }
@@ -157,11 +157,10 @@ bool IconItemsModel::addIcon(const QPersistentModelIndex &index, IconType type)
 {
     if (!sourceToProxyMap.contains(index)) {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-            IconItem *icon = new IconItem(index);
-            icon->setType(type);
+            IconItem *icon = new IconItem(index, type);
             icons.append(icon);
-            std::sort(icons.begin(), icons.end(), [](const IconItem *a, const IconItem *b) {
-                return a->getType() < b->getType();
+            std::sort(icons.begin(), icons.end(), [](const IconItem *icon1, const IconItem *icon2) {
+                return icon1->type < icon2->type;
             });
             sourceToProxyMap.insert(index, icon);
         endInsertRows();
@@ -203,21 +202,4 @@ void IconItemsModel::onResourceChanged(const QModelIndex &topLeft, const QModelI
 const Project *IconItemsModel::apk()
 {
     return sourceModel()->getApk();
-}
-
-// IconItem:
-
-const QPersistentModelIndex &IconItemsModel::IconItem::getIndex() const
-{
-    return index;
-}
-
-IconItemsModel::IconType IconItemsModel::IconItem::getType() const
-{
-    return type;
-}
-
-void IconItemsModel::IconItem::setType(IconType type)
-{
-    this->type = type;
 }
