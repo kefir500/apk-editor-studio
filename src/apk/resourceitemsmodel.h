@@ -15,12 +15,16 @@ public:
         NodeCaption,
         ResourceLanguage,
         ResourceLocale,
+        ResourceDpi,
         ResourceApi,
         ResourceQualifiers,
-        ResourceName,
-        ResourceType,
         ResourcePath,
         ColumnCount
+    };
+
+    enum ResourceRole {
+        ResourceNameRole = Qt::UserRole + 1,
+        ResourceTypeRole
     };
 
     ResourceItemsModel(const Project *apk, QObject *parent = nullptr);

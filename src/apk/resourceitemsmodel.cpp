@@ -38,10 +38,9 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                 switch (column) {
                     case ResourceLanguage:   return file->getLanguageName();
                     case ResourceLocale:     return file->getLocaleCode();
+                    case ResourceDpi:        return file->getDpi();
                     case ResourceApi:        return file->getApiVersion();
                     case ResourceQualifiers: return file->getReadableQualifiers();
-                    case ResourceName:       return file->getName();
-                    case ResourceType:       return file->getType();
                     case ResourcePath:       return file->getFilePath();
                 }
             } else if (role == Qt::DecorationRole) {
@@ -59,6 +58,10 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                     case ResourceLanguage:
                         return file->getLanguageIcon();
                 }
+            } else if (role == ResourceNameRole) {
+                return file->getName();
+            } else if (role == ResourceTypeRole) {
+                return file->getType();
             }
         }
     }
@@ -75,6 +78,7 @@ QVariant ResourceItemsModel::headerData(int section, Qt::Orientation orientation
             //: This string refers to the Android qualifiers (https://developer.android.com/guide/topics/resources/providing-resources).
             case ResourceQualifiers: return tr("Qualifiers");
             case ResourcePath:       return tr("Path");
+            case ResourceDpi:        return "DPI";
             case ResourceApi:        return "API";
         }
     }
