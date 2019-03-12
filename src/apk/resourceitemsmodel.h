@@ -39,10 +39,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
-    QString getResourcePath(const QModelIndex &index) const;
-    QPixmap getResourceFlag(const QModelIndex &index) const;
-    QString getResourceName(const QModelIndex &index) const;
-    QString getResourceType(const QModelIndex &index) const;
+    const ResourceFile *getResource(const QModelIndex &index) const;
     const Project *getApk() const;
 
 signals:

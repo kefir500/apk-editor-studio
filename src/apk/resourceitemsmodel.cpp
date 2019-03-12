@@ -121,36 +121,14 @@ int ResourceItemsModel::columnCount(const QModelIndex &parent) const
     return ColumnCount;
 }
 
-QString ResourceItemsModel::getResourcePath(const QModelIndex &index) const
+const ResourceFile *ResourceItemsModel::getResource(const QModelIndex &index) const
 {
     if (!index.isValid()) {
-        return QString();
+        return nullptr;
     }
-    return index.sibling(index.row(), ResourceItemsModel::ResourcePath).data().toString();
-}
-
-QPixmap ResourceItemsModel::getResourceFlag(const QModelIndex &index) const
-{
-    if (!index.isValid()) {
-        return QString();
-    }
-    return index.sibling(index.row(), ResourceItemsModel::ResourceLanguage).data(Qt::DecorationRole).value<QPixmap>();
-}
-
-QString ResourceItemsModel::getResourceName(const QModelIndex &index) const
-{
-    if (!index.isValid()) {
-        return QString();
-    }
-    return index.sibling(index.row(), ResourceItemsModel::ResourceName).data().toString();
-}
-
-QString ResourceItemsModel::getResourceType(const QModelIndex &index) const
-{
-    if (!index.isValid()) {
-        return QString();
-    }
-    return index.sibling(index.row(), ResourceItemsModel::ResourceType).data().toString();
+    const ResourceNode *node = static_cast<ResourceNode *>(index.internalPointer());
+    ResourceFile *resource = node->getFile();
+    return resource;
 }
 
 const Project *ResourceItemsModel::getApk() const

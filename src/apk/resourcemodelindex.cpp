@@ -9,7 +9,7 @@ QString ResourceModelIndex::path() const
     if (isValid()) {
         auto resourcesModel = qobject_cast<const ResourceItemsModel *>(model());
         if (resourcesModel) {
-            return resourcesModel->getResourcePath(*this);
+            return resourcesModel->getResource(*this)->getFilePath();
         }
         auto iconsModel = qobject_cast<const IconItemsModel *>(model());
         if (iconsModel) {
@@ -28,12 +28,12 @@ QIcon ResourceModelIndex::icon() const
     auto fetch = [this]() -> QIcon {
         auto resourcesModel = qobject_cast<const ResourceItemsModel *>(model());
         if (resourcesModel) {
-            return resourcesModel->getResourceFlag(*this);
+            return resourcesModel->getResource(*this)->getLanguageIcon();
         }
         auto iconsModel = qobject_cast<const IconItemsModel *>(model());
         if (iconsModel) {
             auto resourcesModel = iconsModel->sourceModel();
-            return resourcesModel->getResourceFlag(iconsModel->mapToSource(*this));
+            return resourcesModel->getResource(iconsModel->mapToSource(*this))->getLanguageIcon();
         }
         auto fileSystemModel = qobject_cast<const QFileSystemModel *>(model());
         if (fileSystemModel) {

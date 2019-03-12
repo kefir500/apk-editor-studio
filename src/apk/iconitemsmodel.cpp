@@ -171,9 +171,9 @@ bool IconItemsModel::addIcon(const QPersistentModelIndex &index, IconType type)
 
 void IconItemsModel::onResourceAdded(const QModelIndex &index)
 {
-    if (Utils::isDrawableResource(sourceModel()->getResourcePath(index))) {
-        auto resourceName = sourceModel()->getResourceName(index);
-        auto resourceType = sourceModel()->getResourceType(index);
+    if (Utils::isDrawableResource(sourceModel()->getResource(index)->getFilePath())) {
+        auto resourceName = sourceModel()->getResource(index)->getName();
+        auto resourceType = sourceModel()->getResource(index)->getType();
         if (!resourceName.isEmpty() && !resourceType.isEmpty()) {
             auto iconResource = apk()->getManifest()->getApplicationIcon();
             auto roundIconResource = apk()->getManifest()->getApplicationRoundIcon();
