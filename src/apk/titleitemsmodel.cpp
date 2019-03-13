@@ -20,9 +20,9 @@ TitleItemsModel::TitleItemsModel(const Project *apk, QObject *parent) : QAbstrac
     while (resourceDirectories.hasNext()) {
 
         const QString resourceDirectory = QFileInfo(resourceDirectories.next()).fileName();
-        const QString categoryTitle = resourceDirectory.split('-').first();
+        const QString resourceType = resourceDirectory.split('-').first();
 
-        if (categoryTitle == "values") {
+        if (resourceType == "values") {
 
             // Parse resource files:
 

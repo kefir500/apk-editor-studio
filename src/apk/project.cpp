@@ -156,22 +156,22 @@ Manifest *Project::initialize()
 
     // Parse resource directories:
 
-    QMap<QString, QModelIndex> mapCategories;
-    QMap<QString, QModelIndex> mapFilegroups;
+    QMap<QString, QModelIndex> mapResourceTypes;
+    QMap<QString, QModelIndex> mapResourceGroups;
 
     QDirIterator resourceDirectories(contentsPath + "/res/", QDir::Dirs | QDir::NoDotAndDotDot);
     while (resourceDirectories.hasNext()) {
 
         const QFileInfo resourceDirectory = QFileInfo(resourceDirectories.next());
-        const QString categoryTitle = resourceDirectory.fileName().split('-').first(); // E.g., "drawable", "values"...
-        QModelIndex categoryIndex = mapCategories.value(categoryTitle, QModelIndex());
-        ResourceNode *categoryNode = nullptr;
-        if (categoryIndex.isValid()) {
-            categoryNode = static_cast<ResourceNode *>(categoryIndex.internalPointer());
+        const QString resourceTypeTitle = resourceDirectory.fileName().split('-').first(); // E.g., "drawable", "values"...
+        QModelIndex resourceTypeIndex = mapResourceTypes.value(resourceTypeTitle, QModelIndex());
+        ResourceNode *resourceTypeNode = nullptr;
+        if (resourceTypeIndex.isValid()) {
+            resourceTypeNode = static_cast<ResourceNode *>(resourceTypeIndex.internalPointer());
         } else {
-            categoryNode = new ResourceNode(categoryTitle, nullptr);
-            categoryIndex = resourcesModel.addNode(categoryNode);
-            mapCategories[categoryTitle] = categoryIndex;
+            resourceTypeNode = new ResourceNode(resourceTypeTitle, nullptr);
+            resourceTypeIndex = resourcesModel.addNode(resourceTypeNode);
+            mapResourceTypes[resourceTypeTitle] = resourceTypeIndex;
         }
 
         // Parse resource files:
@@ -182,18 +182,18 @@ Manifest *Project::initialize()
             const QFileInfo resourceFile(resourceFiles.next());
             const QString resourceFilename = resourceFile.fileName();
 
-            QModelIndex filegroupIndex = mapFilegroups.value(resourceFilename, QModelIndex());
-            ResourceNode *filegroupNode = nullptr;
-            if (filegroupIndex.isValid()) {
-                filegroupNode = static_cast<ResourceNode *>(filegroupIndex.internalPointer());
+            QModelIndex resourceGroupIndex = mapResourceGroups.value(resourceFilename, QModelIndex());
+            ResourceNode *resourceGroupNode = nullptr;
+            if (resourceGroupIndex.isValid()) {
+                resourceGroupNode = static_cast<ResourceNode *>(resourceGroupIndex.internalPointer());
             } else {
-                filegroupNode = new ResourceNode(resourceFilename, nullptr);
-                filegroupIndex = resourcesModel.addNode(filegroupNode, categoryIndex);
-                mapFilegroups[resourceFilename] = filegroupIndex;
+                resourceGroupNode = new ResourceNode(resourceFilename, nullptr);
+                resourceGroupIndex = resourcesModel.addNode(resourceGroupNode, resourceTypeIndex);
+                mapResourceGroups[resourceFilename] = resourceGroupIndex;
             }
 
             ResourceNode *fileNode = new ResourceNode(resourceFilename, new ResourceFile(resourceFile.filePath()));
-            resourcesModel.addNode(fileNode, filegroupIndex);
+            resourcesModel.addNode(fileNode, resourceGroupIndex);
         }
     }
 
