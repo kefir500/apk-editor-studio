@@ -9,7 +9,8 @@ QString ResourceModelIndex::path() const
     if (isValid()) {
         auto resourcesModel = qobject_cast<const ResourceItemsModel *>(model());
         if (resourcesModel) {
-            return resourcesModel->getResource(*this)->getFilePath();
+            auto resource = resourcesModel->getResource(*this);
+            return resource ? resource->getFilePath() : QString();
         }
         auto iconsModel = qobject_cast<const IconItemsModel *>(model());
         if (iconsModel) {
