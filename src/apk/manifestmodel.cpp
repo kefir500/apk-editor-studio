@@ -187,7 +187,7 @@ QModelIndex ManifestModel::index(int row, int column, const QModelIndex &parent)
 
 int ManifestModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return RowCount;
 }
 

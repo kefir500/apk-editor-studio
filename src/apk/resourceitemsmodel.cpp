@@ -50,10 +50,8 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                         if (Utils::isImageReadable(filePath)) {
                             QPixmap thumbnail(filePath);
                             return thumbnail;
-                        } else {
-                            return QFileIconProvider().icon(QFileInfo(filePath));
                         }
-                        break;
+                        return QFileIconProvider().icon(QFileInfo(filePath));
                     }
                     case ResourceLanguage:
                         return file->getLanguageIcon();
@@ -117,7 +115,7 @@ int ResourceItemsModel::rowCount(const QModelIndex &parent) const
 
 int ResourceItemsModel::columnCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return ColumnCount;
 }
 

@@ -90,7 +90,7 @@ QVariant ProjectItemsModel::data(const QModelIndex &index, int role) const
 
 QModelIndex ProjectItemsModel::index(int row, int column, const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     if (row >= 0 && row < projects.count()) {
         return createIndex(row, column, projects.at(row));
     }
@@ -99,6 +99,6 @@ QModelIndex ProjectItemsModel::index(int row, int column, const QModelIndex &par
 
 int ProjectItemsModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return projects.count();
 }

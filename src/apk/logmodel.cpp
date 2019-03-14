@@ -66,7 +66,7 @@ QVariant LogModel::data(const QModelIndex &index, int role) const
 
 QModelIndex LogModel::index(int row, int column, const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     if (row >= 0 && row < entries.count()) {
         return createIndex(row, column, entries.at(row));
     }
@@ -75,6 +75,6 @@ QModelIndex LogModel::index(int row, int column, const QModelIndex &parent) cons
 
 int LogModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return entries.count();
 }

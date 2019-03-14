@@ -29,7 +29,7 @@ TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(paren
 
 bool TitleEditor::save(const QString &as)
 {
-    Q_UNUSED(as);
+    Q_UNUSED(as)
     if (!model->save()) {
         return false;
     }

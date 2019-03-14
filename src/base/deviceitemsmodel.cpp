@@ -93,7 +93,7 @@ QVariant DeviceItemsModel::headerData(int section, Qt::Orientation orientation, 
 
 QModelIndex DeviceItemsModel::index(int row, int column, const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     if (row >= 0 && row < devices.count()) {
         return createIndex(row, column, devices.at(row).data());
     }
@@ -102,12 +102,12 @@ QModelIndex DeviceItemsModel::index(int row, int column, const QModelIndex &pare
 
 int DeviceItemsModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return devices.count();
 }
 
 int DeviceItemsModel::columnCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return ColumnCount;
 }

@@ -137,13 +137,13 @@ QModelIndex TitleItemsModel::index(int row, int column, const QModelIndex &paren
 
 int TitleItemsModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return nodes.count();
 }
 
 int TitleItemsModel::columnCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return ColumnCount;
 }
 
