@@ -433,7 +433,6 @@ void MainWindow::openLogEntry(const QModelIndex &index)
 {
     const QString message = index.sibling(index.row(), LogModel::LogDescriptive).data().toString();
     if (!message.isEmpty()) {
-        Dialogs::log(message, this);
         //: "Log" as in event log, message log, etc.
         Dialogs::log(tr("Log"), message, this);
     }
