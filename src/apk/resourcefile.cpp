@@ -31,7 +31,7 @@ ResourceFile::ResourceFile(const QString &path)
         qFatal("CRITICAL: Empty path passed to resource file constructor");
     }
 
-    this->path = path;
+    this->path = QDir::fromNativeSeparators(path);
     const QStringList directoryParts = path.split('/');
     if (Q_UNLIKELY(directoryParts.size() < 2)) {
         qFatal("CRITICAL: Invalid path passed to resource file constructor");
