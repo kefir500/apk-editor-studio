@@ -284,7 +284,7 @@ Tasks::Task *Project::createUnpackTask(const QString &source)
     }, Qt::QueuedConnection);
 
     connect(taskUnpack, &Tasks::Unpack::success, this, [=]() {
-        journal(tr("Reading Android manifest..."));
+        journal(tr("Reading APK contents..."));
         initialize();
         state.setUnpacked(true);
         emit unpacked(true);
