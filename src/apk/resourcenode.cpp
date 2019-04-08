@@ -43,7 +43,7 @@ void ResourceNode::addChild(ResourceNode *child)
     child->parent = this;
 }
 
-ResourceNode *ResourceNode::getChild(int row)
+ResourceNode *ResourceNode::getChild(int row) const
 {
     return children.at(row);
 }

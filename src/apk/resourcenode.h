@@ -17,7 +17,7 @@ public:
 
     void addChild(ResourceNode *child);
     int childCount() const;
-    ResourceNode *getChild(int row);
+    ResourceNode *getChild(int row) const;
     ResourceNode *getParent() const;
     int row() const;
 
