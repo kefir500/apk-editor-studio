@@ -3,7 +3,7 @@
 [![Build Status (Travis CI)](https://travis-ci.org/kefir500/apk-editor-studio.svg?branch=master)](https://travis-ci.org/kefir500/apk-editor-studio/builds)
 [![Build Status (AppVeyor)](https://ci.appveyor.com/api/projects/status/github/kefir500/apk-editor-studio?svg=true)](https://ci.appveyor.com/project/kefir500/apk-editor-studio)
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg?maxAge=2592000)](https://raw.githubusercontent.com/kefir500/apk-editor-studio/master/LICENSE)
-[![PayPal Donate](https://img.shields.io/badge/donate-PayPal-orange.svg?logo=paypal)](https://www.paypal.me/kefir500)
+[![PayPal Donate](https://img.shields.io/badge/donate-PayPal-orange.svg?logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=kefir500@gmail.com&item_name=APK%20Editor%20Studio%20-%20Donation&quantity=1)
 
 **APK Editor Studio** is a powerful yet easy to use APK reverse-engineering tool written in C++/Qt.
 

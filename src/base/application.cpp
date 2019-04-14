@@ -257,7 +257,7 @@ QString Application::getTranslatePage()
 
 QString Application::getDonatePage()
 {
-    return "https://www.paypal.me/kefir500";
+    return "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=kefir500@gmail.com&item_name=APK%20Editor%20Studio%20-%20Donation&quantity=1";
 }
 
 QString Application::getJrePage()
