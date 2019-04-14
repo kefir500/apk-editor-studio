@@ -1,5 +1,15 @@
+apk-editor-studio (1.1.0-1) unstable; urgency=low
+
+  * Added round icons support.
+  * Added TV banners support.
+  * Added API selection dialog.
+  * Added line numbers in code editor.
+  * Updated Apktool to 2.4.0.
+
+ -- Alexander Gorishnyak <kefir500@gmail.com>  Sun, 14 Apr 2019 14:07:38 +0600
+
 apk-editor-studio (1.0.0-1) unstable; urgency=low
 
   * First release.
 
- -- Alexander Gorishnyak <kefir500@gmail.com>  Sat, 15 Sep 2018 17:30:26 +0600
+ -- Alexander Gorishnyak <kefir500@gmail.com>  Sat, 08 Jan 2019 11:08:50 +0600

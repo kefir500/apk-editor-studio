@@ -1,4 +1,11 @@
 # Version History
 
+## 1.1.0
+- Added round icons support.
+- Added TV banners support.
+- Added API selection dialog.
+- Added line numbers in code editor.
+- Updated Apktool to 2.4.0.
+
 ## 1.0.0
 - First release.
