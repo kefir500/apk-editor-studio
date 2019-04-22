@@ -34,7 +34,26 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
         }
         ResourceFile *file = node->getFile();
         if (file) {
-            if (role == Qt::DisplayRole) {
+            switch (role) {
+            case SortRole:
+                switch (column) {
+                case ResourceDpi: {
+                    auto dpi = file->getDpi().toLower();
+                    if (dpi == "ldpi") { return 0; }
+                    if (dpi == "mdpi") { return 1; }
+                    if (dpi == "hdpi") { return 2; }
+                    if (dpi == "xhdpi") { return 3; }
+                    if (dpi == "xxhdpi") { return 4; }
+                    if (dpi == "xxxhdpi") { return 5; }
+                    if (dpi == "nodpi") { return 6; }
+                    if (dpi == "tvdpi") { return 7; }
+                    if (dpi == "anydpi") { return 8; }
+                    return 9;
+                }
+                case ResourceApi:
+                    return file->getApiVersion().remove(0, 1).toInt();
+                }
+            case Qt::DisplayRole:
                 switch (column) {
                     case ResourceLanguage:   return file->getLanguageName();
                     case ResourceLocale:     return file->getLocaleCode();
@@ -43,7 +62,7 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                     case ResourceQualifiers: return file->getReadableQualifiers();
                     case ResourcePath:       return file->getFilePath();
                 }
-            } else if (role == Qt::DecorationRole) {
+            case Qt::DecorationRole:
                 switch (column) {
                     case NodeCaption: {
                         const QString filePath = file->getFilePath();
@@ -56,9 +75,9 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                     case ResourceLanguage:
                         return file->getLanguageIcon();
                 }
-            } else if (role == ResourceNameRole) {
+            case ResourceNameRole:
                 return file->getName();
-            } else if (role == ResourceTypeRole) {
+            case ResourceTypeRole:
                 return file->getType();
             }
         }

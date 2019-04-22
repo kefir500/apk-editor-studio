@@ -24,7 +24,8 @@ public:
 
     enum ResourceRole {
         ResourceNameRole = Qt::UserRole + 1,
-        ResourceTypeRole
+        ResourceTypeRole,
+        SortRole
     };
 
     ResourceItemsModel(const Project *apk, QObject *parent = nullptr);
