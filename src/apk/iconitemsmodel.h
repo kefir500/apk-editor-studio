@@ -37,6 +37,7 @@ public:
     QModelIndex parent(const QModelIndex &child) const override;
     QModelIndex mapFromSource(const QModelIndex &sourceIndex) const override;
     QModelIndex mapToSource(const QModelIndex &proxyIndex) const override;
+    void sort(int column = 0, Qt::SortOrder order = Qt::AscendingOrder) override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 

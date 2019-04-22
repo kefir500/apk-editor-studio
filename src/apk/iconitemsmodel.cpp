@@ -141,6 +141,23 @@ QModelIndex IconItemsModel::mapToSource(const QModelIndex &proxyIndex) const
     return QModelIndex();
 }
 
+void IconItemsModel::sort(int column, Qt::SortOrder order)
+{
+    Q_UNUSED(column)
+    Q_UNUSED(order)
+    std::sort(icons.begin(), icons.end(), [](const IconItem *icon1, const IconItem *icon2) {
+        auto index1 = icon1->index;
+        auto index2 = icon2->index;
+        auto dpi1 = index1.sibling(index1.row(), ResourceItemsModel::ResourceDpi).data(ResourceItemsModel::SortRole);
+        auto dpi2 = index2.sibling(index2.row(), ResourceItemsModel::ResourceDpi).data(ResourceItemsModel::SortRole);
+        if (icon1->type < icon2->type) { return true; }
+        if (icon2->type < icon1->type) { return false; }
+        if (dpi1 < dpi2) { return true; }
+        if (dpi2 < dpi1) { return false; }
+        return false;
+    });
+}
+
 int IconItemsModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
@@ -159,9 +176,6 @@ bool IconItemsModel::addIcon(const QPersistentModelIndex &index, IconType type)
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
             IconItem *icon = new IconItem(index, type);
             icons.append(icon);
-            std::sort(icons.begin(), icons.end(), [](const IconItem *icon1, const IconItem *icon2) {
-                return icon1->type < icon2->type;
-            });
             sourceToProxyMap.insert(index, icon);
         endInsertRows();
         return true;

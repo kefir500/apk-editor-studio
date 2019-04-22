@@ -197,6 +197,8 @@ Manifest *Project::initialize()
         }
     }
 
+    iconsProxy.sort();
+
     connect(&resourcesModel, &ResourceItemsModel::dataChanged, [=] () {
         state.setModified(true);
     });
