@@ -62,19 +62,21 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                     case ResourceQualifiers: return file->getReadableQualifiers();
                     case ResourcePath:       return file->getFilePath();
                 }
+                break;
             case Qt::DecorationRole:
                 switch (column) {
-                    case NodeCaption: {
-                        const QString filePath = file->getFilePath();
-                        if (Utils::isImageReadable(filePath)) {
-                            QPixmap thumbnail(filePath);
-                            return thumbnail;
-                        }
-                        return QFileIconProvider().icon(QFileInfo(filePath));
+                case NodeCaption: {
+                    const QString filePath = file->getFilePath();
+                    if (Utils::isImageReadable(filePath)) {
+                        QPixmap thumbnail(filePath);
+                        return thumbnail;
                     }
-                    case ResourceLanguage:
-                        return file->getLanguageIcon();
+                    return QFileIconProvider().icon(QFileInfo(filePath));
                 }
+                case ResourceLanguage:
+                    return file->getLanguageIcon();
+                }
+                break;
             case ResourceNameRole:
                 return file->getName();
             case ResourceTypeRole:
