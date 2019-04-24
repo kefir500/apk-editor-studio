@@ -198,6 +198,6 @@ QString Utils::getAndroidCodename(int api)
 bool Utils::isDrawableResource(const QFileInfo &file)
 {
     // Read more: https://developer.android.com/guide/topics/resources/drawable-resource.html
-    const QStringList drawableFormats = {"png", "jpg", "jpeg", "gif", "xml"};
+    const QStringList drawableFormats = {"png", "jpg", "jpeg", "gif", "xml", "webp"};
     return drawableFormats.contains(file.suffix());
 }
