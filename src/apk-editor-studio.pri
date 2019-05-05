@@ -28,6 +28,7 @@ SOURCES += \
     $$PWD/base/recent.cpp \
     $$PWD/base/settings.cpp \
     $$PWD/base/tasks.cpp \
+    $$PWD/base/treenode.cpp \
     $$PWD/base/updater.cpp \
     $$PWD/base/utils.cpp \
     $$PWD/base/xmlhighlighter.cpp \
@@ -109,6 +110,7 @@ HEADERS += \
     $$PWD/base/result.h \
     $$PWD/base/settings.h \
     $$PWD/base/tasks.h \
+    $$PWD/base/treenode.h \
     $$PWD/base/updater.h \
     $$PWD/base/utils.h \
     $$PWD/base/xmlhighlighter.h \

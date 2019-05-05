@@ -1,9 +1,10 @@
 #ifndef RESOURCENODE_H
 #define RESOURCENODE_H
 
+#include "base/treenode.h"
 #include "apk/resourcefile.h"
 
-class ResourceNode
+class ResourceNode : public TreeNode
 {
 public:
     ResourceNode(const QString &caption = QString(), ResourceFile *file = nullptr);
@@ -16,16 +17,12 @@ public:
     void setFile(ResourceFile *file);
 
     void addChild(ResourceNode *child);
-    int childCount() const;
     ResourceNode *getChild(int row) const;
     ResourceNode *getParent() const;
-    int row() const;
 
 private:
     QString caption;
     ResourceFile *file;
-    ResourceNode *parent;
-    QList<ResourceNode *> children;
 };
 
 #endif // RESOURCENODE_H

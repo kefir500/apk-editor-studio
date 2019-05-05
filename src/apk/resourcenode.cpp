@@ -11,7 +11,6 @@ ResourceNode::ResourceNode(const QString &caption, ResourceFile *file)
 ResourceNode::~ResourceNode()
 {
     delete file;
-    qDeleteAll(children);
 }
 
 QString ResourceNode::getCaption() const
@@ -39,26 +38,15 @@ void ResourceNode::setFile(ResourceFile *file)
 
 void ResourceNode::addChild(ResourceNode *child)
 {
-    children.append(child);
-    child->parent = this;
+    TreeNode::addChild(child);
 }
 
 ResourceNode *ResourceNode::getChild(int row) const
 {
-    return children.at(row);
-}
-
-int ResourceNode::childCount() const
-{
-    return children.count();
+    return static_cast<ResourceNode *>(children.at(row));
 }
 
 ResourceNode *ResourceNode::getParent() const
 {
-    return parent;
-}
-
-int ResourceNode::row() const
-{
-    return parent ? parent->children.indexOf(const_cast<ResourceNode *>(this)) : 0;
+    return static_cast<ResourceNode *>(parent);
 }
