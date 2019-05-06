@@ -2,15 +2,15 @@
 #define ICONLIST_H
 
 #include "apk/iconitemsmodel.h"
-#include <QListView>
+#include <QTreeView>
 
-class IconList : public QListView
+class IconList : public QTreeView
 {
 public:
     explicit IconList(QWidget *parent = nullptr);
 
+    void setModel(QAbstractItemModel *model) override;
     IconItemsModel *model() const;
-    void setModel(IconItemsModel *model);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -19,6 +19,8 @@ protected:
     void dropEvent(QDropEvent *event) override;
 
 private:
+    void expandApplicationIcons();
+
     QRubberBand *rubberBand;
 };
 

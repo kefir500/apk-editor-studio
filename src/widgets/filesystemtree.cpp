@@ -1,5 +1,4 @@
 #include "widgets/filesystemtree.h"
-#include "apk/resourcemodelindex.h"
 
 QFileSystemModel *FilesystemTree::model() const
 {

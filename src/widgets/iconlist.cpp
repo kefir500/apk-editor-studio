@@ -10,21 +10,36 @@
     #include <QDebug>
 #endif
 
-IconList::IconList(QWidget *parent) : QListView(parent)
+IconList::IconList(QWidget *parent) : QTreeView(parent)
 {
     setAcceptDrops(true);
     setItemDelegate(new DecorationSizeDelegate(QSize(36, 36), this));
+    setHeaderHidden(true);
     rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+}
+
+void IconList::setModel(QAbstractItemModel *model)
+{
+    if (this->model()) {
+        disconnect(this->model(), &IconItemsModel::ready, this, &IconList::expandApplicationIcons);
+    }
+
+    if (model) {
+        auto iconModel = qobject_cast<IconItemsModel *>(model);
+        Q_ASSERT(iconModel);
+
+        QTreeView::setModel(iconModel);
+
+        if (iconModel) {
+            connect(iconModel, &IconItemsModel::ready, this, &IconList::expandApplicationIcons);
+            expandApplicationIcons();
+        }
+    }
 }
 
 IconItemsModel *IconList::model() const
 {
-    return static_cast<IconItemsModel *>(QListView::model());
-}
-
-void IconList::setModel(IconItemsModel *model)
-{
-    QListView::setModel(model);
+    return static_cast<IconItemsModel *>(QTreeView::model());
 }
 
 void IconList::dragEnterEvent(QDragEnterEvent *event)
@@ -58,11 +73,11 @@ void IconList::dropEvent(QDropEvent *event)
                 bool success = false;
                 const QModelIndex index = indexAt(event->pos());
                 if (index.isValid()) {
-                    const QString iconTarget = model()->index(index.row(), IconItemsModel::IconPath).data().toString();
+                    const QString iconTarget = model()->index(index.row(), IconItemsModel::PathColumn).data().toString();
                     success = Utils::copyImage(iconSource, iconTarget);
                 } else {
                     for (int row = 0; row < model()->rowCount(); ++row) {
-                        const QString iconTarget = model()->index(row, IconItemsModel::IconPath).data().toString();
+                        const QString iconTarget = model()->index(row, IconItemsModel::PathColumn).data().toString();
                         success = Utils::copyImage(iconSource, iconTarget);
                     }
                 }
@@ -78,4 +93,9 @@ void IconList::dropEvent(QDropEvent *event)
 #endif
     }
     rubberBand->hide();
+}
+
+void IconList::expandApplicationIcons()
+{
+    expand(model()->index(IconItemsModel::ApplicationRow, 0));
 }

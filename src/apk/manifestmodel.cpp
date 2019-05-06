@@ -15,7 +15,7 @@ void ManifestModel::initialize(Manifest *manifest)
 
 QString ManifestModel::getApplicationLabel() const
 {
-    return manifest->getApplicationLabel().getValue();
+    return manifest->scopes.first()->label().getValue();
 }
 
 int ManifestModel::getVersionCode() const
@@ -40,7 +40,7 @@ int ManifestModel::getTargetSdk() const
 
 bool ManifestModel::setApplicationLabel(const QString &label)
 {
-    if (manifest->getApplicationLabel().getValue() == label) {
+    if (manifest->scopes.first()->label().getValue() == label) {
         return false;
     }
     manifest->setApplicationLabel(label);

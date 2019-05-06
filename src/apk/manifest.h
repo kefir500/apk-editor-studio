@@ -4,7 +4,7 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QRegularExpression>
-#include "apk/manifestattribute.h"
+#include "apk/manifestscope.h"
 
 class Manifest
 {
@@ -12,12 +12,6 @@ public:
     Manifest(const QString &xmlPath, const QString &ymlPath);
     ~Manifest();
 
-    QDomAttr getXmlAttribute(QStringList tree) const;
-
-    const ManifestAttribute &getApplicationLabel() const;
-    const ManifestAttribute &getApplicationIcon() const;
-    const ManifestAttribute &getApplicationRoundIcon() const;
-    const ManifestAttribute &getApplicationBanner() const;
     int getMinSdk() const;
     int getTargetSdk() const;
     int getVersionCode() const;
@@ -29,6 +23,8 @@ public:
     void setVersionCode(int value);
     void setVersionName(const QString &value);
 
+    QList<ManifestScope *> scopes;
+
 private:
     bool saveXml();
     bool saveYml();
@@ -38,11 +34,6 @@ private:
 
     QDomDocument xml;
     QString yml;
-
-    ManifestAttribute applicationLabel;
-    ManifestAttribute applicationIcon;
-    ManifestAttribute applicationRoundIcon;
-    ManifestAttribute applicationBanner;
 
     int minSdk;
     int targetSdk;

@@ -11,10 +11,19 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
         QTextStream stream(xmlFile);
         stream.setCodec("UTF-8");
         xml.setContent(stream.readAll());
-        applicationLabel = ManifestAttribute(getXmlAttribute({"application", "android:label"}));
-        applicationIcon = ManifestAttribute(getXmlAttribute({"application", "android:icon"}));
-        applicationRoundIcon = ManifestAttribute(getXmlAttribute({"application", "android:roundIcon"}));
-        applicationBanner = ManifestAttribute(getXmlAttribute({"application", "android:banner"}));
+        auto applicationNode = xml.firstChildElement("manifest").firstChildElement("application");
+        scopes.append(new ManifestScope(applicationNode));
+        auto applicationChild = applicationNode.firstChildElement();
+        while (!applicationChild.isNull()) {
+            if (QStringList({"application", "activity"}).contains(applicationChild.nodeName())) {
+                if (applicationChild.hasAttribute("android:icon") ||
+                    applicationChild.hasAttribute("android:roundIcon") ||
+                    applicationChild.hasAttribute("android:banner")) {
+                        scopes.append(new ManifestScope(applicationChild));
+                }
+            }
+            applicationChild = applicationChild.nextSiblingElement();
+        }
     }
 
     // YAML:
@@ -44,44 +53,7 @@ Manifest::~Manifest()
 {
     delete xmlFile;
     delete ymlFile;
-}
-
-QDomAttr Manifest::getXmlAttribute(QStringList tree) const
-{
-    if (!tree.isEmpty()) {
-        const QString attribute = tree.takeLast();
-        QDomElement node = xml.firstChildElement("manifest");
-        for (const QString &element : tree) {
-            node = node.firstChildElement(element);
-        }
-        return node.attributeNode(attribute);
-    }
-    return QDomAttr();
-}
-
-const ManifestAttribute &Manifest::getApplicationLabel() const
-{
-    return applicationLabel;
-//    QDomDocument dom;
-//    dom.setContent(manifest);
-//    return dom.firstChildElement("manifest")
-//              .firstChildElement("application")
-//              .attribute("android:label");
-}
-
-const ManifestAttribute &Manifest::getApplicationIcon() const
-{
-    return applicationIcon;
-}
-
-const ManifestAttribute &Manifest::getApplicationRoundIcon() const
-{
-    return applicationRoundIcon;
-}
-
-const ManifestAttribute &Manifest::getApplicationBanner() const
-{
-    return applicationBanner;
+    qDeleteAll(scopes);
 }
 
 int Manifest::getMinSdk() const
@@ -106,7 +78,7 @@ QString Manifest::getVersionName() const
 
 void Manifest::setApplicationLabel(const QString &value)
 {
-    applicationLabel.setValue(value);
+    scopes.first()->label().setValue(value);
     saveXml();
 }
 

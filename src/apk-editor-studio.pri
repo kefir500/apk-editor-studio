@@ -5,6 +5,7 @@ SOURCES += \
     $$PWD/apk/manifest.cpp \
     $$PWD/apk/manifestattribute.cpp \
     $$PWD/apk/manifestmodel.cpp \
+    $$PWD/apk/manifestscope.cpp \
     $$PWD/apk/project.cpp \
     $$PWD/apk/projectitemsmodel.cpp \
     $$PWD/apk/projectstate.cpp \
@@ -87,6 +88,7 @@ HEADERS += \
     $$PWD/apk/manifest.h \
     $$PWD/apk/manifestattribute.h \
     $$PWD/apk/manifestmodel.h \
+    $$PWD/apk/manifestscope.h \
     $$PWD/apk/project.h \
     $$PWD/apk/projectitemsmodel.h \
     $$PWD/apk/projectstate.h \
