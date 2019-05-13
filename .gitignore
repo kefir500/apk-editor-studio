@@ -18,8 +18,10 @@ obj/
 *.user
 *.wixobj
 *.wixpdb
+*.AppImage
 *.DS_Store
 Makefile*
 moc_*.cpp
+moc_*.h
 qrc_*.cpp
 !res/deploy/linux/bin/
