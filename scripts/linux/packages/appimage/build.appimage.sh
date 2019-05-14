@@ -1,9 +1,11 @@
 #!/bin/bash
 
 clean() {
-    make clean
     rm -rf appdir 2> /dev/null
-    rm .qmake.stash Makefile*
+    if [[ $CI != true ]]; then
+        make clean
+        rm .qmake.stash Makefile*
+    fi
 }
 
 # Prepare
@@ -12,14 +14,13 @@ cd "$(dirname "$0")"
 source ../../environment.sh
 source /opt/qt*/bin/qt*-env.sh
 clean
-mkdir appdir
 
 # Build
 
 if [[ $CI != true ]]; then
-    qmake ../../../.. PREFIX="$(pwd)/appdir/usr"
+    qmake ../../../..
     make
-    make install
+    make install INSTALL_ROOT=appdir
 fi
 
 # Package
