@@ -17,7 +17,7 @@ before_deploy:
   - export VERSION=dev
   - export TRAVIS_TAG=development
   - cd scripts/linux/packages
-  - make install -C ../../.. INSTALL_ROOT=scripts/linux/packages/appimage/appdir
+  - make install -C ../../.. INSTALL_ROOT=$(pwd)/appimage/appdir
   - appimage/build.appimage.sh
   - deb/build.deb.sh
   - tar.xz/build.tar.xz.sh

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 clean() {
-    rm -rf appdir 2> /dev/null
     if [[ $CI != true ]]; then
         make clean
         rm .qmake.stash Makefile*
+        rm -rf appdir 2> /dev/null
     fi
 }
 
