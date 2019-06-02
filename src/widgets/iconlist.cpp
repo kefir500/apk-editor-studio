@@ -27,13 +27,9 @@ void IconList::setModel(QAbstractItemModel *model)
     if (model) {
         auto iconModel = qobject_cast<IconItemsModel *>(model);
         Q_ASSERT(iconModel);
-
         QTreeView::setModel(iconModel);
-
-        if (iconModel) {
-            connect(iconModel, &IconItemsModel::ready, this, &IconList::expandApplicationIcons);
-            expandApplicationIcons();
-        }
+        connect(iconModel, &IconItemsModel::ready, this, &IconList::expandApplicationIcons);
+        expandApplicationIcons();
     }
 }
 

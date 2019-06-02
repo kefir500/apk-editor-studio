@@ -8,7 +8,7 @@ class ResourceNode : public TreeNode
 {
 public:
     ResourceNode(const QString &caption = QString(), ResourceFile *file = nullptr);
-    ~ResourceNode();
+    ~ResourceNode() override;
 
     QString getCaption() const;
     ResourceFile *getFile() const;

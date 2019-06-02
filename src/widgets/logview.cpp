@@ -22,8 +22,9 @@ void LogView::setModel(QAbstractItemModel *model)
 {
     disconnect(loading, &QVariantAnimation::valueChanged, nullptr, nullptr);
 
-    LogModel *logModel = qobject_cast<LogModel *>(model);
-    if (logModel) {
+    if (model) {
+        LogModel *logModel = qobject_cast<LogModel *>(model);
+        Q_ASSERT(logModel);
         connect(loading, &QVariantAnimation::valueChanged, [=]() {
             if (logModel->getLoadingState()) {
                 viewport()->update();

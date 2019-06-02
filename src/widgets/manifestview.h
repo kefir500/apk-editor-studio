@@ -12,7 +12,7 @@ public:
     explicit ManifestView(QWidget *parent = nullptr);
 
     ManifestModel *model() const;
-    void setModel(ManifestModel *model);
+    void setModel(QAbstractItemModel *model) override;
 
     QSize sizeHint() const override;
 

@@ -5,7 +5,10 @@ QFileSystemModel *FilesystemTree::model() const
     return static_cast<QFileSystemModel *>(QTreeView::model());
 }
 
-void FilesystemTree::setModel(QFileSystemModel *model)
+void FilesystemTree::setModel(QAbstractItemModel *model)
 {
-    QTreeView::setModel(model);
+    if (model) {
+        Q_ASSERT(qobject_cast<QFileSystemModel *>(model));
+        QTreeView::setModel(model);
+    }
 }
