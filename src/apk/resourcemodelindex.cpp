@@ -3,22 +3,31 @@
 #include "apk/iconitemsmodel.h"
 #include <QFileSystemModel>
 #include <QFileIconProvider>
+#include <QSortFilterProxyModel>
+
+#ifdef QT_DEBUG
+    #include <QDebug>
+#endif
 
 QString ResourceModelIndex::path() const
 {
     if (isValid()) {
-        auto resourcesModel = qobject_cast<const ResourceItemsModel *>(model());
+        auto mapping = map();
+        QAbstractItemModel *model = mapping.first;
+        QModelIndex index = mapping.second;
+
+        auto resourcesModel = qobject_cast<const ResourceItemsModel *>(model);
         if (resourcesModel) {
-            auto resource = resourcesModel->getResource(*this);
+            auto resource = resourcesModel->getResource(index);
             return resource ? resource->getFilePath() : QString();
         }
-        auto iconsModel = qobject_cast<const IconItemsModel *>(model());
+        auto iconsModel = qobject_cast<const IconItemsModel *>(model);
         if (iconsModel) {
-            return iconsModel->getIconPath(*this);
+            return iconsModel->getIconPath(index);
         }
-        auto fileSystemModel = qobject_cast<const QFileSystemModel *>(model());
+        auto fileSystemModel = qobject_cast<const QFileSystemModel *>(model);
         if (fileSystemModel) {
-            return fileSystemModel->filePath(*this);
+            return fileSystemModel->filePath(index);
         }
     }
     return QString();
@@ -27,18 +36,22 @@ QString ResourceModelIndex::path() const
 QIcon ResourceModelIndex::icon() const
 {
     auto fetch = [this]() -> QIcon {
-        auto resourcesModel = qobject_cast<const ResourceItemsModel *>(model());
+        auto mapping = map();
+        QAbstractItemModel *model = mapping.first;
+        QModelIndex index = mapping.second;
+
+        auto resourcesModel = qobject_cast<const ResourceItemsModel *>(model);
         if (resourcesModel) {
-            return resourcesModel->getResource(*this)->getLanguageIcon();
+            return resourcesModel->getResource(index)->getLanguageIcon();
         }
-        auto iconsModel = qobject_cast<const IconItemsModel *>(model());
+        auto iconsModel = qobject_cast<const IconItemsModel *>(model);
         if (iconsModel) {
             auto resourcesModel = iconsModel->sourceModel();
-            return resourcesModel->getResource(iconsModel->mapToSource(*this))->getLanguageIcon();
+            return resourcesModel->getResource(iconsModel->mapToSource(index))->getLanguageIcon();
         }
-        auto fileSystemModel = qobject_cast<const QFileSystemModel *>(model());
+        auto fileSystemModel = qobject_cast<const QFileSystemModel *>(model);
         if (fileSystemModel) {
-            return fileSystemModel->fileIcon(this->sibling(this->row(), 0));
+            return fileSystemModel->fileIcon(index.sibling(index.row(), 0));
         }
         return QIcon();
     };
@@ -53,4 +66,21 @@ QIcon ResourceModelIndex::icon() const
 void ResourceModelIndex::update()
 {
     emit const_cast<QAbstractItemModel *>(model())->dataChanged(*this, *this);
+}
+
+QPair<QAbstractItemModel *, QModelIndex> ResourceModelIndex::map() const
+{
+    QAbstractItemModel *model = nullptr;
+    QModelIndex index = {};
+
+    auto sortProxy = qobject_cast<const QSortFilterProxyModel *>(this->model());
+    if (!sortProxy) {
+        model = const_cast<QAbstractItemModel *>(this->model());
+        index = *this;
+    } else {
+        model = sortProxy->sourceModel();
+        index = sortProxy->mapToSource(*this);
+    }
+
+    return {model, index};
 }

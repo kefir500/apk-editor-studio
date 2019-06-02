@@ -10,7 +10,7 @@ public:
     explicit ResourceTree(QWidget *parent = nullptr);
 
     ResourceItemsModel *model() const;
-    void setModel(ResourceItemsModel *model);
+    void setModel(QAbstractItemModel *model) override;
 };
 
 #endif // RESOURCETREE_H

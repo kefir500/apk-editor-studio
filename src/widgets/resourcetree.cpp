@@ -1,23 +1,33 @@
 #include "widgets/resourcetree.h"
 #include "widgets/decorationsizedelegate.h"
-#include "apk/resourcemodelindex.h"
+#include <QSortFilterProxyModel>
 
 ResourceTree::ResourceTree(QWidget *parent) : QTreeView(parent)
 {
+    setSortingEnabled(true);
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setItemDelegate(new DecorationSizeDelegate(QSize(16, 16), this));
+
+    auto sortProxy = new QSortFilterProxyModel(this);
+    sortProxy->setSortRole(ResourceItemsModel::SortRole);
+    QTreeView::setModel(sortProxy);
 }
 
 ResourceItemsModel *ResourceTree::model() const
 {
-    return static_cast<ResourceItemsModel *>(QTreeView::model());
+    auto proxy = static_cast<QSortFilterProxyModel *>(QTreeView::model());
+    return static_cast<ResourceItemsModel *>(proxy->sourceModel());
 }
 
-void ResourceTree::setModel(ResourceItemsModel *model)
+void ResourceTree::setModel(QAbstractItemModel *model)
 {
-    QTreeView::setModel(model);
-    sortByColumn(0, Qt::DescendingOrder);
-    setColumnWidth(ResourceItemsModel::NodeCaption, 120);
-    setColumnWidth(ResourceItemsModel::ResourceLocale, 64);
-    setColumnWidth(ResourceItemsModel::ResourcePath, 500);
+    if (model) {
+        Q_ASSERT(qobject_cast<ResourceItemsModel *>(model));
+        auto proxy = static_cast<QSortFilterProxyModel *>(QTreeView::model());
+        proxy->setSourceModel(model);
+        sortByColumn(0, Qt::AscendingOrder);
+        setColumnWidth(ResourceItemsModel::NodeCaption, 120);
+        setColumnWidth(ResourceItemsModel::ResourceLocale, 64);
+        setColumnWidth(ResourceItemsModel::ResourcePath, 500);
+    }
 }

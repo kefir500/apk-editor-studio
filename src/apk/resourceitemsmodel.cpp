@@ -29,8 +29,12 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
     if (index.isValid()) {
         const ResourceNode *node = static_cast<ResourceNode *>(index.internalPointer());
         const int column = index.column();
-        if (role == Qt::DisplayRole && column == NodeCaption) {
-            return node->getCaption();
+        switch (role) {
+        case Qt::DisplayRole:
+        case SortRole:
+            if (column == NodeCaption) {
+                return node->getCaption();
+            }
         }
         ResourceFile *file = node->getFile();
         if (file) {
@@ -55,12 +59,18 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                 }
             case Qt::DisplayRole:
                 switch (column) {
-                    case ResourceLanguage:   return file->getLanguageName();
-                    case ResourceLocale:     return file->getLocaleCode();
-                    case ResourceDpi:        return file->getDpi();
-                    case ResourceApi:        return file->getApiVersion();
-                    case ResourceQualifiers: return file->getReadableQualifiers();
-                    case ResourcePath:       return file->getFilePath();
+                case ResourceLanguage:
+                    return file->getLanguageName();
+                case ResourceLocale:
+                    return file->getLocaleCode();
+                case ResourceDpi:
+                    return file->getDpi();
+                case ResourceApi:
+                    return file->getApiVersion();
+                case ResourceQualifiers:
+                    return file->getReadableQualifiers();
+                case ResourcePath:
+                    return file->getFilePath();
                 }
                 break;
             case Qt::DecorationRole:
