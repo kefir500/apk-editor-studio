@@ -142,6 +142,7 @@ void Batch::add(Task *task, bool critical)
 
 void Batch::run()
 {
+    emit started();
     if (!tasks.isEmpty()) {
         Task *task = tasks.dequeue();
         task->run();
