@@ -8,7 +8,7 @@ ProjectItemsModel::~ProjectItemsModel()
 
 Project *ProjectItemsModel::open(const QString &filename, bool unpack)
 {
-    Project *project = new Project(filename);
+    auto project = new Project(filename);
     if (unpack) {
         project->unpack();
     }

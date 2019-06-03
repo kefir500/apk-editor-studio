@@ -21,7 +21,7 @@ bool LogModel::add(LogEntry *entry)
 
 bool LogModel::add(const QString &brief, const QString &descriptive, LogEntry::Type type)
 {
-    LogEntry *entry = new LogEntry(brief, descriptive, type);
+    auto entry = new LogEntry(brief, descriptive, type);
     return add(entry);
 }
 

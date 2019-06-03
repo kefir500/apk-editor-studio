@@ -16,7 +16,7 @@ QString ManifestAttribute::getResourceName() const
     return node.value().split('/').value(1);
 }
 
-void ManifestAttribute::setValue(const QString value)
+void ManifestAttribute::setValue(const QString &value)
 {
     node.setValue(value);
 }

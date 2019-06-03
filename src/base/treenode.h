@@ -18,8 +18,6 @@ public:
     TreeNode *getParent() const;
     int row() const;
 
-    virtual void sort();
-
 protected:
     TreeNode *parent;
     QVector<TreeNode *> children;

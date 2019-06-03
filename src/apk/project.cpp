@@ -27,9 +27,8 @@ Project::Project(const QString &path) : resourcesModel(this)
 
 Project::~Project()
 {
-    if (manifest) {
-        delete manifest;
-    }
+    delete manifest;
+
     if (!contentsPath.isEmpty()) {
         qDebug() << qPrintable(QString("Removing \"%1\"...\n").arg(contentsPath));
         // Additional check to prevent accidental recursive deletion of the wrong directory:

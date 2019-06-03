@@ -13,7 +13,7 @@ public:
     QString getResourceType() const;
     QString getResourceName() const;
 
-    void setValue(const QString value);
+    void setValue(const QString &value);
 
 private:
     QDomAttr node;

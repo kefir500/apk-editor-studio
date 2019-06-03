@@ -57,11 +57,3 @@ int TreeNode::row() const
 {
     return parent ? parent->children.indexOf(const_cast<TreeNode *>(this)) : 0;
 }
-
-void TreeNode::sort()
-{
-    std::sort(children.begin(), children.end());
-    for (auto child : children) {
-        child->sort();
-    }
-}

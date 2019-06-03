@@ -9,27 +9,21 @@ namespace Dialogs
 {
     QString getOpenFilename(const QString &defaultPath, QWidget *parent = nullptr);
     QString getOpenFilename(const QString &defaultPath, const FileFormatList &formats, QWidget *parent = nullptr);
-
     QString getSaveFilename(const QString &defaultPath, QWidget *parent = nullptr);
     QString getSaveFilename(const QString &defaultPath, const FileFormatList &formats, QWidget *parent = nullptr);
-
     QStringList getOpenFilenames(const QString &defaultPath, const FileFormatList &formats, QWidget *parent = nullptr);
 
     QString getOpenImageFilename(QWidget *parent = nullptr);
     QString getOpenImageFilename(const QString &defaultPath, QWidget *parent = nullptr);
-
     QString getSaveImageFilename(const QString &defaultPath, QWidget *parent = nullptr);
-
     QStringList getOpenImageFilenames(const QString &defaultPath, QWidget *parent = nullptr);
 
     QStringList getOpenApkFilenames(QWidget *parent = nullptr);
     QStringList getOpenApkFilenames(const QString &defaultPath, QWidget *parent = nullptr);
-
     QString getSaveApkFilename(const Project *project, QWidget *parent = nullptr);
     QString getSaveApkFilename(const Project *project, const QString &defaultPath, QWidget *parent = nullptr);
 
     QString getOpenKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);
-
     QString getSaveKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);
 
     bool openApk(QWidget *parent = nullptr);
