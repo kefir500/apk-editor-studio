@@ -218,6 +218,12 @@ int Dialogs::log(const QString &title, const QString &text, QWidget *parent)
     textBox->setFont(font);
 
     QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok, &dialog);
+    QPushButton *btnCopy = new QPushButton(app->translate("Dialogs", "Copy to Clipboard"), buttons);
+    buttons->addButton(btnCopy, QDialogButtonBox::ActionRole);
+    app->connect(btnCopy, &QPushButton::clicked, [=]() {
+        textBox->selectAll();
+        textBox->copy();
+    });
     app->connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
     app->connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
