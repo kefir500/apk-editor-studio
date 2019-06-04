@@ -13,18 +13,18 @@ public:
         Error
     };
 
-    LogEntry(const QString &brief, const QString &descriptive, Type type);
-    LogEntry(const QString &brief, const QString &descriptive, const QColor &color)
-        : brief(brief), descriptive(descriptive), color(color) {}
+    LogEntry(const QString &brief, const QString &descriptive, Type type)
+        : brief(brief), descriptive(descriptive), type(type) {}
 
     QString getBrief() const;
     QString getDescriptive() const;
+    Type getType() const;
     QColor getColor() const;
 
 private:
     QString brief;
     QString descriptive;
-    QColor color;
+    Type type;
 };
 
 #endif // LOGENTRY_H

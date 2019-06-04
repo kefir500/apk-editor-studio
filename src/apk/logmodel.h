@@ -30,6 +30,9 @@ public:
     QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
+signals:
+    void added(LogEntry *entry);
+
 private:
     QList<LogEntry *> entries;
     bool isLoading;

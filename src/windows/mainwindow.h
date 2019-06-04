@@ -39,7 +39,6 @@ private:
     void saveSettings();
 
     Viewer *openResource(const QModelIndex &index);
-    void openLogEntry(const QModelIndex &index);
 
     bool setCurrentProject(Project *project);
     void setActionsEnabled(const Project *project);

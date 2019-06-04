@@ -16,6 +16,7 @@ bool LogModel::add(LogEntry *entry)
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
         entries.append(entry);
     endInsertRows();
+    emit added(entry);
     return true;
 }
 
