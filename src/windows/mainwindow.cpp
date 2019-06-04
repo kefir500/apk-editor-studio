@@ -428,15 +428,6 @@ Viewer *MainWindow::openResource(const QModelIndex &index)
     return nullptr;
 }
 
-void MainWindow::openLogEntry(const QModelIndex &index)
-{
-    const QString message = index.sibling(index.row(), LogModel::LogDescriptive).data().toString();
-    if (!message.isEmpty()) {
-        //: "Log" as in event log, message log, etc.
-        Dialogs::log(tr("Log"), message, this);
-    }
-}
-
 bool MainWindow::setCurrentProject(Project *project)
 {
     updateWindowForProject(project);
