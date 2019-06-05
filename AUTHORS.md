@@ -10,3 +10,8 @@
 - [Frank Osterfeld](https://github.com/frankosterfeld) — QtKeychain
 - [Icons8](https://icons8.com) — Action icons
 - [Mark James](http://www.famfamfam.com) — Flag icons
+
+### Donors:
+
+- Luis Corominas
+- Jason Leon Castillo
