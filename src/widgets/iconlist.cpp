@@ -27,6 +27,9 @@ void IconList::setModel(QAbstractItemModel *model)
     if (model) {
         auto iconModel = qobject_cast<IconItemsModel *>(model);
         Q_ASSERT(iconModel);
+        for (int column = 1; column < model->columnCount(); ++column) {
+            hideColumn(column);
+        }
         QTreeView::setModel(iconModel);
         connect(iconModel, &IconItemsModel::ready, this, &IconList::expandApplicationIcons);
         expandApplicationIcons();

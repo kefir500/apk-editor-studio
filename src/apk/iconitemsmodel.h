@@ -20,6 +20,7 @@ public:
     enum IconColumn {
         CaptionColumn,
         PathColumn,
+        TypeColumn,
         ColumnCount
     };
 
@@ -39,6 +40,7 @@ public:
     QIcon getIcon(const QModelIndex &index) const;
     QString getIconPath(const QModelIndex &index) const;
     QString getIconCaption(const QModelIndex &index) const;
+    IconType getIconType(const QModelIndex &index) const;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;

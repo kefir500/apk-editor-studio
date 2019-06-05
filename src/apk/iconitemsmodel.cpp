@@ -93,25 +93,44 @@ QString IconItemsModel::getIconCaption(const QModelIndex &index) const
     return caption;
 }
 
+IconItemsModel::IconType IconItemsModel::getIconType(const QModelIndex &index) const
+{
+    if (!index.isValid()) {
+        return Icon;
+    }
+    auto node = static_cast<IconNode *>(index.internalPointer());
+    return node->type;
+}
+
 QVariant IconItemsModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
         if (role == Qt::DisplayRole) {
-            auto node = static_cast<TreeNode *>(index.internalPointer());
-            if (node == applicationNode) {
-                return tr("Application");
-            } else if (node == activitiesNode) {
-                //: This string refers to the Android activities (https://developer.android.com/guide/components/activities).
-                return tr("Activities");
-            } else if (activitiesNode->hasChild(node)) {
-                return static_cast<ActivityNode *>(node)->scope->name();
-            } else {
-                return getIconCaption(index);
+            switch (index.column()) {
+            case CaptionColumn: {
+                auto node = static_cast<TreeNode *>(index.internalPointer());
+                if (node == applicationNode) {
+                    return tr("Application");
+                } else if (node == activitiesNode) {
+                    //: This string refers to the Android activities (https://developer.android.com/guide/components/activities).
+                    return tr("Activities");
+                } else if (activitiesNode->hasChild(node)) {
+                    return static_cast<ActivityNode *>(node)->scope->name();
+                } else {
+                    return getIconCaption(index);
+                }
+            }
+            case PathColumn:
+                return getIconPath(index);
+            case TypeColumn:
+                return getIconType(index);
             }
         } else if (role == Qt::ToolTipRole) {
             return getIconPath(index);
         } else if (role == Qt::DecorationRole) {
-            return getIcon(index);
+            if (index.column() == 0) {
+                return getIcon(index);
+            }
         }
     }
     return QVariant();
@@ -219,7 +238,7 @@ int IconItemsModel::rowCount(const QModelIndex &parent) const
 int IconItemsModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return 1;
+    return ColumnCount;
 }
 
 bool IconItemsModel::appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type)
