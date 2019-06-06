@@ -87,7 +87,7 @@ QString IconItemsModel::getIconCaption(const QModelIndex &index) const
         caption.append(QString(" (%1)").arg(tr("Round icon")));
         break;
     case Banner:
-        caption.append(QString(" (%1)").arg(tr("TV Banner")));
+        caption.append(QString(" (%1)").arg(tr("TV banner")));
         break;
     }
     return caption;

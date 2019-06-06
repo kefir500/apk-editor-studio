@@ -84,7 +84,7 @@ void FileEditor::changeEvent(QEvent *event)
 
 void FileEditor::retranslate()
 {
-    actionReplace->setText(tr("&Replace Resource..."));
+    actionReplace->setText(tr("Re&place Resource..."));
     actionSave->setText(tr("&Save Resource"));
     actionSaveAs->setText(tr("Save Resource &As..."));
     actionExplore->setText(tr("&Open Resource Directory"));

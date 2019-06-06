@@ -46,7 +46,7 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(const ResourceMo
 
     menu->addSeparator();
 
-    QAction *actionReplace = menu->addAction(app->icons.get("replace.png"), tr("&Replace Resource..."));
+    QAction *actionReplace = menu->addAction(app->icons.get("replace.png"), tr("Re&place Resource..."));
     connect(actionReplace, &QAction::triggered, [=]() {
         if (Dialogs::replaceFile(resourcePath, this)) {
             auto model = const_cast<QAbstractItemModel *>(resourceIndex.model());
