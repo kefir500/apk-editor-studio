@@ -150,6 +150,24 @@ int ResourceItemsModel::columnCount(const QModelIndex &parent) const
     return ColumnCount;
 }
 
+bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString &sourcePath)
+{
+    if (sourcePath.isEmpty()) {
+        return false;
+    }
+    const QString targetPath = index.sibling(index.row(), ResourcePath).data().toString();
+    const bool isReadableImage = Utils::isImageReadable(sourcePath);
+    const bool isWritableImage = Utils::isImageWritable(targetPath);
+    const bool isImage = isReadableImage && isWritableImage;
+    const bool success = isImage ? Utils::copyImage(sourcePath, targetPath)
+                                 : Utils::copyFile(sourcePath, targetPath);
+    if (success) {
+        emit dataChanged(index, index);
+        return true;
+    }
+    return false;
+}
+
 const ResourceFile *ResourceItemsModel::getResource(const QModelIndex &index) const
 {
     if (!index.isValid()) {

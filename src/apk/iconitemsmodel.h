@@ -42,6 +42,9 @@ public:
     QString getIconCaption(const QModelIndex &index) const;
     IconType getIconType(const QModelIndex &index) const;
 
+    void replaceIcon(const QModelIndex &index, const QString &path);
+    void replaceApplicationIcons(const QString &path);
+
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex &child) const override;

@@ -19,12 +19,7 @@ ProjectActionViewer::ProjectActionViewer(Project *project, QWidget *parent) : Ac
     btnEditIcon = addButton();
     connect(btnEditIcon, &QPushButton::clicked, [=]() {
         const QString iconSource(Dialogs::getOpenImageFilename(this));
-        if (!iconSource.isEmpty()) {
-            for (int row = 0; row < project->iconsProxy.rowCount(); ++row) {
-                const QString iconTarget = project->iconsProxy.index(row, IconItemsModel::PathColumn).data().toString();
-                Utils::copyImage(iconSource, iconTarget);
-            }
-        }
+        project->iconsProxy.replaceApplicationIcons(iconSource);
     });
 
     btnExplore = addButton();

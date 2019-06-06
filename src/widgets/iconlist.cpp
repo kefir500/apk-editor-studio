@@ -57,33 +57,27 @@ void IconList::dragLeaveEvent(QDragLeaveEvent *event)
 
 void IconList::dragMoveEvent(QDragMoveEvent *event)
 {
-    const QRect dropRect = rect().contains(event->pos()) ? visualRect(indexAt(event->pos())) : QRect();
-    rubberBand->setGeometry(dropRect.isValid() ? dropRect : rect());
+    if (!model()->hasChildren(indexAt(event->pos()))) {
+        rubberBand->setGeometry(visualRect(indexAt(event->pos())));
+    } else {
+        rubberBand->setGeometry(QRect());
+    }
 }
 
 void IconList::dropEvent(QDropEvent *event)
 {
+    rubberBand->hide();
+    if (!model()) {
+        return;
+    }
     const QMimeData *mimeData = event->mimeData();
     if (mimeData->hasUrls()) {
         event->acceptProposedAction();
-        if (model()) {
-            QString iconSource(mimeData->urls().at(0).toLocalFile());
-            if (!iconSource.isEmpty()) {
-                bool success = false;
-                const QModelIndex index = indexAt(event->pos());
-                if (index.isValid()) {
-                    const QString iconTarget = model()->index(index.row(), IconItemsModel::PathColumn).data().toString();
-                    success = Utils::copyImage(iconSource, iconTarget);
-                } else {
-                    for (int row = 0; row < model()->rowCount(); ++row) {
-                        const QString iconTarget = model()->index(row, IconItemsModel::PathColumn).data().toString();
-                        success = Utils::copyImage(iconSource, iconTarget);
-                    }
-                }
-                if (success) {
-                    auto sourceIndex = model()->mapToSource(index);
-                    emit model()->sourceModel()->dataChanged(sourceIndex, sourceIndex);
-                }
+        QString path(mimeData->urls().at(0).toLocalFile());
+        if (!path.isEmpty()) {
+            const QModelIndex index = indexAt(event->pos());
+            if (index.isValid() && rect().contains(event->pos())) {
+                model()->replaceIcon(index, path);
             }
         }
     } else if (mimeData->hasImage()) {
@@ -91,7 +85,6 @@ void IconList::dropEvent(QDropEvent *event)
         qDebug() << "TODO: Image dropped";
 #endif
     }
-    rubberBand->hide();
 }
 
 void IconList::expandApplicationIcons()

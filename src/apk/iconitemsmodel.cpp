@@ -102,6 +102,27 @@ IconItemsModel::IconType IconItemsModel::getIconType(const QModelIndex &index) c
     return node->type;
 }
 
+void IconItemsModel::replaceIcon(const QModelIndex &index, const QString &iconSource)
+{
+    sourceModel()->replaceResource(mapToSource(index), iconSource);
+}
+
+void IconItemsModel::replaceApplicationIcons(const QString &path)
+{
+    if (path.isEmpty()) {
+        return;
+    }
+    auto applicationIndex = index(ApplicationRow, 0);
+    auto applicationIconCount = applicationNode->childCount();
+    for (int row = 0; row < applicationIconCount; ++row) {
+        auto iconIndex = index(row, PathColumn, applicationIndex);
+        auto iconType = getIconType(iconIndex);
+        if (iconType == Icon || iconType == RoundIcon) {
+            sourceModel()->replaceResource(mapToSource(iconIndex), path);
+        }
+    }
+}
+
 QVariant IconItemsModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {

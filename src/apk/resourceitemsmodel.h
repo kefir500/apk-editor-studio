@@ -40,6 +40,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
+    bool replaceResource(const QModelIndex &index, const QString &file);
     const ResourceFile *getResource(const QModelIndex &index) const;
     const Project *getApk() const;
 
