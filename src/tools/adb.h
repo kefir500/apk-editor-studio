@@ -10,7 +10,8 @@ public:
     explicit Adb(const QString &executable, QObject *parent = nullptr);
 
     void install(const QString &apk, const QString &serial = QString());
-    QList<QSharedPointer<Device> > devices() const;
+    QList<QSharedPointer<Device>> devices() const;
+
     QString version() const;
 };
 

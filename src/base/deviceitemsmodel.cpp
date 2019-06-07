@@ -18,7 +18,7 @@ void DeviceItemsModel::refresh()
             devices.clear();
         endRemoveRows();
     }
-    const QList<QSharedPointer<Device> > list = adb.devices();
+    const QList<QSharedPointer<Device>> list = adb.devices();
     if (!list.isEmpty()) {
         beginInsertRows(QModelIndex(), 0, list.size() - 1);
             for (const QSharedPointer<Device> &device : list) {

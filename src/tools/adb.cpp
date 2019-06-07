@@ -22,9 +22,9 @@ void Adb::install(const QString &apk, const QString &serial)
     Executable::startAsync(arguments);
 }
 
-QList<QSharedPointer<Device> > Adb::devices() const
+QList<QSharedPointer<Device>> Adb::devices() const
 {
-    QList<QSharedPointer<Device> > list;
+    QList<QSharedPointer<Device>> list;
     QStringList arguments;
     arguments << "devices" << "-l";
     Result<QString> result = Executable::startSync(arguments);

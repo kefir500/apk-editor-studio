@@ -31,7 +31,7 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
-    QList<QSharedPointer<Device> > devices;
+    QList<QSharedPointer<Device>> devices;
 };
 
 #endif // DEVICEITEMSMODEL_H
