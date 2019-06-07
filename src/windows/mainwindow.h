@@ -47,12 +47,12 @@ private:
 
     ProjectsWidget *projectsWidget;
 
-    ProjectList *projectsList;
+    ProjectList *projectList;
     LogView *logView;
     ManifestView *manifestTable;
-    ResourceAbstractView *resourcesTree;
+    ResourceAbstractView *resourceTree;
     ResourceAbstractView *filesystemTree;
-    ResourceAbstractView *iconsList;
+    ResourceAbstractView *iconList;
 
     Toolbar *toolbar;
     QDockWidget *dockProjects;

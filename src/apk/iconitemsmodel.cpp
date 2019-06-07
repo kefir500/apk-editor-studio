@@ -22,14 +22,14 @@ void IconItemsModel::setSourceModel(ResourceItemsModel *newSourceModel)
         if (sourceModel()) {
             disconnect(sourceModel(), &ResourceItemsModel::added, this, &IconItemsModel::onResourceAdded);
             disconnect(sourceModel(), &ResourceItemsModel::removed, this, &IconItemsModel::onResourceRemoved);
-            disconnect(sourceModel(), &ResourceItemsModel::dataChanged, this, &IconItemsModel::onResourceChanged);
+            disconnect(sourceModel(), &ResourceItemsModel::dataChanged, this, &IconItemsModel::onSourceDataChanged);
             disconnect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
         }
         QAbstractProxyModel::setSourceModel(newSourceModel);
         if (sourceModel()) {
             connect(sourceModel(), &ResourceItemsModel::added, this, &IconItemsModel::onResourceAdded);
             connect(sourceModel(), &ResourceItemsModel::removed, this, &IconItemsModel::onResourceRemoved);
-            connect(sourceModel(), &ResourceItemsModel::dataChanged, this, &IconItemsModel::onResourceChanged);
+            connect(sourceModel(), &ResourceItemsModel::dataChanged, this, &IconItemsModel::onSourceDataChanged);
             connect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
         }
     endResetModel();
@@ -333,7 +333,7 @@ void IconItemsModel::onResourceRemoved(const QModelIndex &index)
     // TODO
 }
 
-void IconItemsModel::onResourceChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+void IconItemsModel::onSourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
     emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight));
 }

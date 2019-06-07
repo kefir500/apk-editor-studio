@@ -75,7 +75,7 @@ private:
     bool appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type = Icon);
     void onResourceAdded(const QModelIndex &index);
     void onResourceRemoved(const QModelIndex &index);
-    void onResourceChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
+    void onSourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
     const Project *apk() const;
 
     QHash<QPersistentModelIndex, IconNode *> sourceToProxyMap;

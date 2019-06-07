@@ -66,7 +66,7 @@ void MainWindow::initWidgets()
     setCentralWidget(projectsWidget);
     connect(projectsWidget, &ProjectsWidget::currentProjectChanged, [=](Project *project) {
         setCurrentProject(project);
-        projectsList->setCurrentProject(project);
+        projectList->setCurrentProject(project);
     });
     connect(projectsWidget, &ProjectsWidget::currentTabChanged, [=]() {
         menuEditor->clear();
@@ -75,25 +75,25 @@ void MainWindow::initWidgets()
 
     QWidget *dockProjectsWidget = new QWidget(this);
     QVBoxLayout *projectsLayout = new QVBoxLayout(dockProjectsWidget);
-    projectsList = new ProjectList(this);
-    projectsList->setModel(&app->projects);
-    connect(projectsList, &ProjectList::currentProjectChanged, [=](Project *project) {
+    projectList = new ProjectList(this);
+    projectList->setModel(&app->projects);
+    connect(projectList, &ProjectList::currentProjectChanged, [=](Project *project) {
         setCurrentProject(project);
         projectsWidget->setCurrentProject(project);
     });
 
     logView = new LogView(this);
-    projectsLayout->addWidget(projectsList);
+    projectsLayout->addWidget(projectList);
     projectsLayout->addWidget(logView);
     projectsLayout->setMargin(0);
     projectsLayout->setSpacing(1);
 
     QWidget *dockResourceWidget = new QWidget(this);
     QVBoxLayout *resourceLayout = new QVBoxLayout(dockResourceWidget);
-    resourcesTree = new ResourceAbstractView(new ResourceTree, this);
-    resourceLayout->addWidget(resourcesTree);
+    resourceTree = new ResourceAbstractView(new ResourceTree, this);
+    resourceLayout->addWidget(resourceTree);
     resourceLayout->setMargin(0);
-    connect(resourcesTree, &ResourceAbstractView::editRequested, this, &MainWindow::openResource);
+    connect(resourceTree, &ResourceAbstractView::editRequested, this, &MainWindow::openResource);
 
     QWidget *dockFilesystemWidget = new QWidget(this);
     QVBoxLayout *filesystemLayout = new QVBoxLayout(dockFilesystemWidget);
@@ -104,10 +104,11 @@ void MainWindow::initWidgets()
 
     QWidget *dockIconsWidget = new QWidget(this);
     QVBoxLayout *iconsLayout = new QVBoxLayout(dockIconsWidget);
-    iconsList = new ResourceAbstractView(new IconList, this);
-    iconsLayout->addWidget(iconsList);
+    iconList = new ResourceAbstractView(new IconList, this);
+    iconsLayout->addWidget(iconList);
     iconsLayout->setMargin(0);
-    connect(iconsList, &ResourceAbstractView::editRequested, this, &MainWindow::openResource);
+    iconsLayout->setSpacing(1);
+    connect(iconList, &ResourceAbstractView::editRequested, this, &MainWindow::openResource);
 
     QWidget *dockManifestWidget = new QWidget(this);
     QVBoxLayout *manifestLayout = new QVBoxLayout(dockManifestWidget);
@@ -431,16 +432,15 @@ Viewer *MainWindow::openResource(const QModelIndex &index)
 bool MainWindow::setCurrentProject(Project *project)
 {
     updateWindowForProject(project);
-    if (!project) {
-        return false;
-    }
-    resourcesTree->setModel(&project->resourcesModel);
-    filesystemTree->setModel(&project->filesystemModel);
-    filesystemTree->getView<FilesystemTree *>()->setRootIndex(project->filesystemModel.index(project->getContentsPath()));
-    iconsList->setModel(&project->iconsProxy);
-    logView->setModel(&project->logModel);
-    manifestTable->setModel(&project->manifestModel);
-    return true;
+    resourceTree->setModel(project ? &project->resourcesModel : nullptr);
+    filesystemTree->setModel(project ? &project->filesystemModel : nullptr);
+    iconList->setModel(project ? &project->iconsProxy : nullptr);
+    logView->setModel(project ? &project->logModel : nullptr);
+    manifestTable->setModel(project ? &project->manifestModel : nullptr);
+    filesystemTree->getView<FilesystemTree *>()->setRootIndex(project
+        ? project->filesystemModel.index(project->getContentsPath())
+        : QModelIndex());
+    return project;
 }
 
 void MainWindow::setActionsEnabled(const Project *project)
