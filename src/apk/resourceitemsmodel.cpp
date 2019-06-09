@@ -182,6 +182,11 @@ bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString
     return false;
 }
 
+bool ResourceItemsModel::removeResource(const QModelIndex &index)
+{
+    return removeRow(index.row(), index.parent());
+}
+
 bool ResourceItemsModel::removeResource(const QString &path)
 {
     auto index = findIndex(path, QModelIndex());

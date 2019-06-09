@@ -42,6 +42,7 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
     bool replaceResource(const QModelIndex &index, const QString &file);
+    bool removeResource(const QModelIndex &index);
     bool removeResource(const QString &path);
     QModelIndex findIndex(const QString &path, const QModelIndex &parent) const;
     const ResourceFile *getResource(const QModelIndex &index) const;

@@ -66,6 +66,11 @@ bool FileEditor::replace()
     return Dialogs::replaceFile(path, this);
 }
 
+void FileEditor::remove() const
+{
+    // TODO
+}
+
 void FileEditor::explore() const
 {
     Utils::explore(index.path());
