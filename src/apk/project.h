@@ -3,12 +3,12 @@
 
 #include "apk/resourceitemsmodel.h"
 #include "apk/manifestmodel.h"
+#include "apk/filesystemmodel.h"
 #include "apk/iconitemsmodel.h"
 #include "apk/logmodel.h"
 #include "apk/projectstate.h"
 #include "base/tasks.h"
 #include <QIcon>
-#include <QFileSystemModel>
 
 class Project : public QObject
 {
@@ -36,7 +36,7 @@ public:
     void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
 
     ResourceItemsModel resourcesModel;
-    QFileSystemModel filesystemModel;
+    FileSystemModel filesystemModel{&resourcesModel};
     IconItemsModel iconsProxy;
     ManifestModel manifestModel;
     LogModel logModel;

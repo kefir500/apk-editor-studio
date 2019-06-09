@@ -101,6 +101,7 @@
                   <File Name="qt.png" Id="IconQt16" />
                   <File Name="recent.png" Id="IconRecent16" />
                   <File Name="refresh.png" Id="IconRefresh16" />
+                  <File Name="remove.png" Id="IconRemove16" />
                   <File Name="replace.png" Id="IconReplace16" />
                   <File Name="save.png" Id="IconSave16" />
                   <File Name="save-as.png" Id="IconSaveAs16" />
@@ -140,6 +141,7 @@
                   <File Name="project.png" Id="IconProject30" />
                   <File Name="recent.png" Id="IconRecent30" />
                   <File Name="refresh.png" Id="IconRefresh30" />
+                  <File Name="remove.png" Id="IconRemove30" />
                   <File Name="replace.png" Id="IconReplace30" />
                   <File Name="save.png" Id="IconSave30" />
                   <File Name="save-as.png" Id="IconSaveAs30" />
@@ -177,6 +179,7 @@
                   <File Name="project.png" Id="IconProject40" />
                   <File Name="recent.png" Id="IconRecent40" />
                   <File Name="refresh.png" Id="IconRefresh40" />
+                  <File Name="remove.png" Id="IconRemove40" />
                   <File Name="replace.png" Id="IconReplace40" />
                   <File Name="save.png" Id="IconSave40" />
                   <File Name="save-as.png" Id="IconSaveAs40" />

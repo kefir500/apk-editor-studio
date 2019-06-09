@@ -1,14 +1,14 @@
 #ifndef FILESYSTEMTREE_H
 #define FILESYSTEMTREE_H
 
-#include <QFileSystemModel>
+#include "apk/filesystemmodel.h"
 #include <QTreeView>
 
 class FilesystemTree : public QTreeView
 {
 public:
     explicit FilesystemTree(QWidget *parent = nullptr) : QTreeView(parent) {}
-    QFileSystemModel *model() const;
+    FileSystemModel *model() const;
     void setModel(QAbstractItemModel *model) override;
 };
 

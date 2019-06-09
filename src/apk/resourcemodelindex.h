@@ -7,8 +7,10 @@ class ResourceModelIndex : public QPersistentModelIndex
 {
 public:
     ResourceModelIndex(const QModelIndex &index) : QPersistentModelIndex(index) {}
+
     QString path() const;
     QIcon icon() const;
+
     void update();
 
 private:

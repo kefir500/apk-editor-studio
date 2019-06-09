@@ -21,15 +21,15 @@ void IconItemsModel::setSourceModel(ResourceItemsModel *newSourceModel)
     beginResetModel();
         if (sourceModel()) {
             disconnect(sourceModel(), &ResourceItemsModel::added, this, &IconItemsModel::onResourceAdded);
-            disconnect(sourceModel(), &ResourceItemsModel::removed, this, &IconItemsModel::onResourceRemoved);
-            disconnect(sourceModel(), &ResourceItemsModel::dataChanged, this, &IconItemsModel::onSourceDataChanged);
+            disconnect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &IconItemsModel::sourceRowsAboutToBeRemoved);
+            disconnect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
             disconnect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
         }
         QAbstractProxyModel::setSourceModel(newSourceModel);
         if (sourceModel()) {
             connect(sourceModel(), &ResourceItemsModel::added, this, &IconItemsModel::onResourceAdded);
-            connect(sourceModel(), &ResourceItemsModel::removed, this, &IconItemsModel::onResourceRemoved);
-            connect(sourceModel(), &ResourceItemsModel::dataChanged, this, &IconItemsModel::onSourceDataChanged);
+            connect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &IconItemsModel::sourceRowsAboutToBeRemoved);
+            connect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
             connect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
         }
     endResetModel();
@@ -262,6 +262,15 @@ int IconItemsModel::columnCount(const QModelIndex &parent) const
     return ColumnCount;
 }
 
+bool IconItemsModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    auto index = mapToSource(this->index(row, 0, parent));
+    if (!index.isValid()) {
+        return false;
+    }
+    return sourceModel()->removeRows(index.row(), count, index.parent());
+}
+
 bool IconItemsModel::appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type)
 {
     if (!sourceToProxyMap.contains(index)) {
@@ -328,12 +337,24 @@ void IconItemsModel::onResourceAdded(const QModelIndex &index)
     }
 }
 
-void IconItemsModel::onResourceRemoved(const QModelIndex &index)
+void IconItemsModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
 {
-    // TODO
+    for (int row = first; row <= last; ++row) {
+        auto sourceIndex = parent.child(row, 0);
+        auto proxyIndex = mapFromSource(sourceIndex);
+        if (proxyIndex.isValid()) {
+            auto proxyRow = proxyIndex.row();
+            beginRemoveRows(proxyIndex.parent(), proxyRow, proxyRow);
+                auto proxyNode = sourceToProxyMap.value(sourceIndex);
+                proxyNode->removeSelf();
+                proxyToSourceMap.remove(proxyNode);
+                sourceToProxyMap.remove(sourceIndex);
+            endRemoveRows();
+        }
+    }
 }
 
-void IconItemsModel::onSourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+void IconItemsModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
     emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight));
 }

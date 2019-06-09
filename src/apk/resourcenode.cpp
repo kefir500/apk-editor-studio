@@ -1,4 +1,5 @@
 #include "apk/resourcenode.h"
+#include <QFile>
 
 ResourceNode::ResourceNode(const QString &caption, ResourceFile *file)
 {
@@ -39,6 +40,15 @@ void ResourceNode::setFile(ResourceFile *file)
 void ResourceNode::addChild(ResourceNode *child)
 {
     TreeNode::addChild(child);
+}
+
+bool ResourceNode::removeChild(int row)
+{
+    auto child = getChild(row);
+    if (!QFile::remove(child->file->getFilePath())) {
+        return false;
+    }
+    return TreeNode::removeChild(row);
 }
 
 ResourceNode *ResourceNode::getChild(int row) const

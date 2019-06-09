@@ -1,14 +1,14 @@
 #include "widgets/filesystemtree.h"
 
-QFileSystemModel *FilesystemTree::model() const
+FileSystemModel *FilesystemTree::model() const
 {
-    return static_cast<QFileSystemModel *>(QTreeView::model());
+    return static_cast<FileSystemModel *>(QTreeView::model());
 }
 
 void FilesystemTree::setModel(QAbstractItemModel *model)
 {
     if (model) {
-        Q_ASSERT(qobject_cast<QFileSystemModel *>(model));
+        Q_ASSERT(qobject_cast<FileSystemModel *>(model));
         QTreeView::setModel(model);
     }
 }

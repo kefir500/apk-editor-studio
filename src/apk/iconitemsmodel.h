@@ -53,6 +53,7 @@ public:
     void sort(int column = 0, Qt::SortOrder order = Qt::AscendingOrder) override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    bool removeRows(int row, int count, const QModelIndex &parent) override;
 
 signals:
     void ready() const;
@@ -74,8 +75,8 @@ private:
 
     bool appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type = Icon);
     void onResourceAdded(const QModelIndex &index);
-    void onResourceRemoved(const QModelIndex &index);
-    void onSourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
+    void sourceRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
+    void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
     const Project *apk() const;
 
     QHash<QPersistentModelIndex, IconNode *> sourceToProxyMap;

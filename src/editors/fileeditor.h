@@ -15,6 +15,7 @@ public:
     virtual bool load() = 0;
     virtual bool saveAs();
     bool replace();
+    void remove() const;
     void explore() const;
 
     static QStringList supportedFormats();
@@ -30,6 +31,7 @@ private:
     QFileSystemWatcher watcher;
 
     QAction *actionReplace;
+    QAction *actionRemove;
     QAction *actionSaveAs;
     QAction *actionExplore;
 };

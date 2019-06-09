@@ -1,4 +1,5 @@
 SOURCES += \
+    $$PWD/apk/filesystemmodel.cpp \
     $$PWD/apk/iconitemsmodel.cpp \
     $$PWD/apk/logentry.cpp \
     $$PWD/apk/logmodel.cpp \
@@ -82,6 +83,7 @@ SOURCES += \
     $$PWD/windows/waitdialog.cpp
 
 HEADERS += \
+    $$PWD/apk/filesystemmodel.h \
     $$PWD/apk/iconitemsmodel.h \
     $$PWD/apk/logentry.h \
     $$PWD/apk/logmodel.h \

@@ -39,14 +39,16 @@ public:
     QModelIndex parent(const QModelIndex &index) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
     bool replaceResource(const QModelIndex &index, const QString &file);
+    bool removeResource(const QString &path);
+    QModelIndex findIndex(const QString &path, const QModelIndex &parent) const;
     const ResourceFile *getResource(const QModelIndex &index) const;
     const Project *getApk() const;
 
 signals:
     void added(const QModelIndex &index);
-    void removed(const QModelIndex &index);
 
 private:
     const Project *apk;

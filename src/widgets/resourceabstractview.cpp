@@ -59,6 +59,11 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(const ResourceMo
         Dialogs::copyFile(resourcePath, this);
     });
 
+    QAction *actionRemove = menu->addAction(app->icons.get("remove.png"), tr("&Remove Resource"));
+    connect(actionRemove, &QAction::triggered, [=]() {
+        view->model()->removeRow(resourceIndex.row(), resourceIndex.parent());
+    });
+
     menu->addSeparator();
 
     //: This string refers to a single resource.

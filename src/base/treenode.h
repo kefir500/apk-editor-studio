@@ -11,6 +11,8 @@ public:
 
     void addChild(TreeNode *node);
     bool hasChild(TreeNode *node) const;
+    virtual bool removeChild(int row);
+    bool removeSelf();
     int childCount() const;
     QVector<TreeNode *> &getChildren();
     TreeNode *getChild(int row) const;

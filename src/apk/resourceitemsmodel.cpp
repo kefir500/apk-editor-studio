@@ -150,6 +150,20 @@ int ResourceItemsModel::columnCount(const QModelIndex &parent) const
     return ColumnCount;
 }
 
+bool ResourceItemsModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    bool success = true;
+    auto node = static_cast<ResourceNode *>(parent.internalPointer());
+    beginRemoveRows(parent, row, row + count - 1);
+    for (int i = row; i < row + count; ++i) {
+        if (!node->removeChild(row)) {
+            success = false;
+        }
+    }
+    endRemoveRows();
+    return success;
+}
+
 bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString &sourcePath)
 {
     if (sourcePath.isEmpty()) {
@@ -166,6 +180,27 @@ bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString
         return true;
     }
     return false;
+}
+
+bool ResourceItemsModel::removeResource(const QString &path)
+{
+    auto index = findIndex(path, QModelIndex());
+    return index.isValid() ? removeRow(index.row(), index.parent()) : false;
+}
+
+QModelIndex ResourceItemsModel::findIndex(const QString &path, const QModelIndex &parent) const
+{
+    for (int row = 0; row < rowCount(parent); ++row) {
+        auto resource = index(row, ResourcePath, parent);
+        if (resource.data().toString() == path) {
+            return resource;
+        }
+        resource = findIndex(path, resource);
+        if (resource.isValid()) {
+            return resource;
+        }
+    }
+    return {};
 }
 
 const ResourceFile *ResourceItemsModel::getResource(const QModelIndex &index) const

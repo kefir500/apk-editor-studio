@@ -16,6 +16,18 @@ bool TreeNode::hasChild(TreeNode *node) const
     return children.contains(node);
 }
 
+bool TreeNode::removeChild(int row)
+{
+    delete children[row];
+    children.remove(row);
+    return true;
+}
+
+bool TreeNode::removeSelf()
+{
+    return parent->removeChild(row());
+}
+
 int TreeNode::childCount() const
 {
     return children.count();
