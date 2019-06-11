@@ -151,7 +151,7 @@ int ResourceItemsModel::columnCount(const QModelIndex &parent) const
 bool ResourceItemsModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     bool success = true;
-    auto node = static_cast<ResourceNode *>(parent.internalPointer());
+    auto node = parent.isValid() ? static_cast<ResourceNode *>(parent.internalPointer()) : root;
     beginRemoveRows(parent, row, row + count - 1);
     for (int i = row; i < row + count; ++i) {
         if (!node->removeChild(row)) {
