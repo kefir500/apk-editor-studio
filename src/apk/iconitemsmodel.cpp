@@ -1,7 +1,6 @@
 #include "apk/iconitemsmodel.h"
 #include "base/application.h"
 #include "base/utils.h"
-#include <QFileIconProvider>
 #include <QDebug>
 
 IconItemsModel::IconItemsModel(QObject *parent) : QAbstractProxyModel(parent)
@@ -46,8 +45,8 @@ QIcon IconItemsModel::getIcon() const
     for (auto node : applicationNode->getChildren()) {
         auto iconNode = static_cast<IconNode *>(node);
         if (iconNode->type == Icon) {
-            const QPixmap pixmap = proxyToSourceMap.value(iconNode).data(Qt::DecorationRole).value<QPixmap>();
-            icon.addPixmap(pixmap);
+            const QIcon image = proxyToSourceMap.value(iconNode).data(Qt::DecorationRole).value<QIcon>();
+            icon.addPixmap(image.pixmap(image.availableSizes().first()));
         }
     }
     return icon;
@@ -57,8 +56,7 @@ QIcon IconItemsModel::getIcon(const QModelIndex &index) const
 {
     const QModelIndex sourceIndex = mapToSource(index);
     if (Q_LIKELY(sourceIndex.isValid())) {
-        QIcon icon = sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::NodeCaption).data(Qt::DecorationRole).value<QPixmap>();
-        return !icon.isNull() ? icon : QFileIconProvider().icon(getIconPath(index));
+        return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::NodeCaption).data(Qt::DecorationRole).value<QIcon>();
     }
     return QIcon();
 }

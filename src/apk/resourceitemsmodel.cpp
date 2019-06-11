@@ -1,6 +1,10 @@
 #include "apk/resourceitemsmodel.h"
 #include "base/utils.h"
-#include <QFileIconProvider>
+#include <QIcon>
+
+#ifdef QT_DEBUG
+    #include <QDebug>
+#endif
 
 ResourceItemsModel::ResourceItemsModel(const Project *apk, QObject *parent) : QAbstractItemModel(parent)
 {
@@ -75,14 +79,8 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                 break;
             case Qt::DecorationRole:
                 switch (column) {
-                case NodeCaption: {
-                    const QString filePath = file->getFilePath();
-                    if (Utils::isImageReadable(filePath)) {
-                        QPixmap thumbnail(filePath);
-                        return thumbnail;
-                    }
-                    return QFileIconProvider().icon(QFileInfo(filePath));
-                }
+                case NodeCaption:
+                    return file->getFileIcon();
                 case ResourceLanguage:
                     return file->getLanguageIcon();
                 }

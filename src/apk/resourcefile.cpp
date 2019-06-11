@@ -4,6 +4,7 @@
 #include <QFileInfo>
 #include <QLocale>
 #include <QRegularExpression>
+#include <QFileIconProvider>
 
 namespace Qualifiers
 {
@@ -157,4 +158,14 @@ QString ResourceFile::getFilePath() const
 QString ResourceFile::getDirectory() const
 {
     return QFileInfo(path).path();
+}
+
+QIcon ResourceFile::getFileIcon() const
+{
+    const QString filePath = getFilePath();
+    if (Utils::isImageReadable(filePath)) {
+        QPixmap thumbnail(filePath);
+        return thumbnail;
+    }
+    return QFileIconProvider().icon(QFileInfo(filePath));
 }

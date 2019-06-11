@@ -21,6 +21,7 @@ public:
     QString getFileName() const;
     QString getFilePath() const;
     QString getDirectory() const;
+    QIcon getFileIcon() const;
 
 private:
     QString path;
