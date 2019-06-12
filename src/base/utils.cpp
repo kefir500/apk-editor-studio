@@ -1,4 +1,5 @@
 #include "base/utils.h"
+#include "windows/dialogs.h"
 #include <QDir>
 #include <QIcon>
 #include <QProcess>
@@ -6,7 +7,7 @@
 #include <QImageWriter>
 #include <QDesktopServices>
 #include <QtConcurrent/QtConcurrent>
-#include <QDebug>
+#include "base/application.h"
 
 QString Utils::capitalize(QString string)
 {
@@ -85,35 +86,69 @@ void Utils::rmdir(const QString &path, bool recursive)
     }
 }
 
-bool Utils::copyFile(const QString &src, const QString &dst)
-{
-    if (src.isEmpty() || dst.isEmpty() || !QFile::exists(src)) {
-        qWarning() << "Could not copy file: invalid path to file(s).";
-        return false;
+namespace  {
+    bool copy(const QString &src, const QString &dst)
+    {
+        if (src.isEmpty() || dst.isEmpty() || !QFile::exists(src)) {
+            qWarning() << "Could not copy file: invalid path to file(s).";
+            return false;
+        }
+        const QString srcSuffix = QFileInfo(src).suffix();
+        const QString dstSuffix = QFileInfo(dst).suffix();
+        const bool sameFormats = !QString::compare(srcSuffix, dstSuffix, Qt::CaseInsensitive);
+        const bool isSrcReadableImage = Utils::isImageReadable(src);
+        const bool isDstWritableImage = Utils::isImageWritable(dst);
+        if (!(isSrcReadableImage && isDstWritableImage && !sameFormats)) {
+            QFile::remove(dst);
+            return QFile::copy(src, dst);
+        } else {
+            return QImage(src).save(dst);
+        }
     }
-    QFile::remove(dst);
-    return QFile::copy(src, dst);
 }
 
-bool Utils::copyImage(const QString &src, const QString &dst)
+bool Utils::copyFile(const QString &src)
 {
-    if (src.isEmpty() || dst.isEmpty() || !QFile::exists(src)) {
-        qWarning() << "Could not copy image: invalid path to file(s).";
+    return copyFile(src, QString());
+}
+
+bool Utils::copyFile(const QString &src, QString dst)
+{
+    if (dst.isNull()) {
+        dst = isImageReadable(src)
+            ? Dialogs::getSaveImageFilename(src, app->window)
+            : Dialogs::getSaveFilename(src, app->window);
+    }
+    if (dst.isEmpty()) {
         return false;
     }
-    const QString srcSuffix = QFileInfo(src).suffix();
-    const QString dstSuffix = QFileInfo(dst).suffix();
-    const bool sameFormats = !QString::compare(srcSuffix, dstSuffix, Qt::CaseInsensitive);
-    if (sameFormats) {
-        return copyFile(src, dst);
+    if (!copy(src, dst)) {
+        QMessageBox::warning(app->window, QString(), app->translate("Utils", "Could not save the file."));
+        return false;
     }
-    const bool isSrcReadableImage = isImageReadable(src);
-    const bool isDstWritableImage = isImageWritable(dst);
-    if (isSrcReadableImage && isDstWritableImage) {
-        return QImage(src).save(dst);
+    return true;
+}
+
+bool Utils::replaceFile(const QString &what)
+{
+    return replaceFile(what, QString());
+}
+
+bool Utils::replaceFile(const QString &what, QString with)
+{
+    if (with.isNull()) {
+        with = isImageWritable(what)
+            ? Dialogs::getOpenImageFilename(what, app->window)
+            : Dialogs::getOpenFilename(what, app->window);
     }
-    qWarning() << "Could not replace image: format not supported.";
-    return false;
+    if (with.isEmpty()) {
+        return false;
+    }
+    if (!copy(with, what)) {
+        QMessageBox::warning(app->window, QString(), app->translate("Utils", "Could not replace the file."));
+        return false;
+    }
+    return true;
 }
 
 bool Utils::isImageReadable(const QString &path)

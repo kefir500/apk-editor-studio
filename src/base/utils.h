@@ -19,8 +19,10 @@ namespace Utils
 
     bool explore(const QString &path);
     void rmdir(const QString &path, bool recursive = false);
-    bool copyFile(const QString &src, const QString &dst);
-    bool copyImage(const QString &src, const QString &dst);
+    bool copyFile(const QString &src);
+    bool copyFile(const QString &src, QString dst);
+    bool replaceFile(const QString &what);
+    bool replaceFile(const QString &what, QString with);
 
     // Image utils:
 

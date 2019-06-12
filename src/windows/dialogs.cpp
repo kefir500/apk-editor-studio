@@ -158,40 +158,6 @@ QString Dialogs::combo(const QStringList &options, const QString &current, const
     return dialog.exec() == QDialog::Accepted ? combo->currentText() : QString();
 }
 
-bool Dialogs::copyFile(const QString &src, QWidget *parent)
-{
-    const bool isReadableImage = Utils::isImageReadable(src);
-    const QString dst = isReadableImage ? Dialogs::getSaveImageFilename(src, parent) : Dialogs::getSaveFilename(src, parent);
-    if (dst.isEmpty()) {
-        return false;
-    }
-    const bool isWritableImage = Utils::isImageWritable(dst);
-    const bool isImage = (isReadableImage && isWritableImage);
-    const bool success = isImage ? Utils::copyImage(src, dst) : Utils::copyFile(src, dst);
-    if (!success) {
-        QMessageBox::warning(parent, QString(), app->translate("Dialogs", "Could not save the file."));
-        return false;
-    }
-    return true;
-}
-
-bool Dialogs::replaceFile(const QString &what, QWidget *parent)
-{
-    const bool isWritableImage = Utils::isImageWritable(what);
-    const QString with = isWritableImage ? Dialogs::getOpenImageFilename(what, parent) : Dialogs::getOpenFilename(what, parent);
-    if (with.isEmpty() || !QFile::exists(with)) {
-        return false;
-    }
-    const bool isReadableImage = Utils::isImageReadable(with);
-    const bool isImage = (isReadableImage && isWritableImage);
-    const bool success = isImage ? Utils::copyImage(with, what) : Utils::copyFile(with, what);
-    if (!success) {
-        QMessageBox::warning(parent, QString(), app->translate("Dialogs", "Could not replace the file."));
-        return false;
-    }
-    return true;
-}
-
 int Dialogs::detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon, QWidget *parent)
 {
     QMessageBox dialog(parent);
