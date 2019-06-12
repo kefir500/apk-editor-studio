@@ -15,8 +15,8 @@ public:
     virtual bool load() = 0;
     virtual bool saveAs();
     bool replace();
-    void remove() const;
-    void explore() const;
+    bool remove();
+    bool explore() const;
 
     static QStringList supportedFormats();
 

@@ -155,8 +155,7 @@ bool ProjectTabsWidget::installProject()
 
 bool ProjectTabsWidget::exploreProject()
 {
-    Utils::explore(project->getContentsPath());
-    return true;
+    return Utils::explore(project->getContentsPath());
 }
 
 bool ProjectTabsWidget::closeProject()

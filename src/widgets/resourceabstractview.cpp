@@ -1,7 +1,6 @@
 #include "widgets/resourceabstractview.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
-#include "base/utils.h"
 #include <QMenu>
 
 ResourceAbstractView::ResourceAbstractView(QAbstractItemView *view, QWidget *parent) : QWidget(parent), view(view)
@@ -15,7 +14,7 @@ ResourceAbstractView::ResourceAbstractView(QAbstractItemView *view, QWidget *par
     connect(view, &QAbstractItemView::activated, this, &ResourceAbstractView::editRequested);
 
     connect(view, &QAbstractItemView::customContextMenuRequested, [=](const QPoint &point) {
-        const QModelIndex index = view->indexAt(point);
+        ResourceModelIndex index = view->indexAt(point);
         if (index.isValid() && !view->model()->hasChildren(index)) {
             auto menu = generateContextMenu(index);
             if (menu) {
@@ -30,7 +29,7 @@ void ResourceAbstractView::setModel(QAbstractItemModel *model)
     view->setModel(model);
 }
 
-QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(const ResourceModelIndex &resourceIndex)
+QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(ResourceModelIndex &resourceIndex)
 {
     const QString resourcePath = resourceIndex.path();
     if (resourcePath.isEmpty()) {
@@ -47,21 +46,18 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(const ResourceMo
     menu->addSeparator();
 
     QAction *actionReplace = menu->addAction(app->icons.get("replace.png"), tr("Re&place Resource..."));
-    connect(actionReplace, &QAction::triggered, [=]() {
-        if (Dialogs::replaceFile(resourcePath, this)) {
-            auto model = const_cast<QAbstractItemModel *>(resourceIndex.model());
-            emit model->dataChanged(resourceIndex, resourceIndex);
-        }
+    connect(actionReplace, &QAction::triggered, [&]() {
+        resourceIndex.replace();
     });
 
     QAction *actionSaveAs = menu->addAction(app->icons.get("save-as.png"), tr("Save Resource &As..."));
     connect(actionSaveAs, &QAction::triggered, [=]() {
-        Dialogs::copyFile(resourcePath, this);
+        resourceIndex.save();
     });
 
     QAction *actionRemove = menu->addAction(app->icons.get("remove.png"), tr("&Remove Resource"));
-    connect(actionRemove, &QAction::triggered, [=]() {
-        view->model()->removeRow(resourceIndex.row(), resourceIndex.parent());
+    connect(actionRemove, &QAction::triggered, [&]() {
+        resourceIndex.remove();
     });
 
     menu->addSeparator();
@@ -69,7 +65,7 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(const ResourceMo
     //: This string refers to a single resource.
     QAction *actionExplore = menu->addAction(app->icons.get("explore.png"), tr("&Open Resource Directory"));
     connect(actionExplore, &QAction::triggered, [=]() {
-        Utils::explore(resourcePath);
+        resourceIndex.explore();
     });
 
     return QSharedPointer<QMenu>(menu);

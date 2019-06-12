@@ -28,6 +28,24 @@ QModelIndex ResourceItemsModel::addNode(ResourceNode *node, const QModelIndex &p
     return index;
 }
 
+bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString &with)
+{
+    const QString what = index.data(PathRole).toString();
+    if (Utils::replaceFile(what, with)) {
+        emit dataChanged(index, index);
+        return true;
+    }
+    return false;
+}
+
+bool ResourceItemsModel::removeResource(const QModelIndex &index)
+{
+    if (!index.isValid()) {
+        return false;
+    }
+    return removeRow(index.row(), index.parent());
+}
+
 QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
@@ -77,6 +95,10 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                     return file->getFilePath();
                 }
                 break;
+            case PathRole:
+                return file->getFilePath();
+            case IconRole:
+                return file->getFileIcon();
             case Qt::DecorationRole:
                 switch (column) {
                 case NodeCaption:
@@ -162,33 +184,9 @@ bool ResourceItemsModel::removeRows(int row, int count, const QModelIndex &paren
     return success;
 }
 
-bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString &sourcePath)
+QModelIndex ResourceItemsModel::findIndex(const QString &path) const
 {
-    if (sourcePath.isEmpty()) {
-        return false;
-    }
-    const QString targetPath = index.sibling(index.row(), ResourcePath).data().toString();
-    const bool isReadableImage = Utils::isImageReadable(sourcePath);
-    const bool isWritableImage = Utils::isImageWritable(targetPath);
-    const bool isImage = isReadableImage && isWritableImage;
-    const bool success = isImage ? Utils::copyImage(sourcePath, targetPath)
-                                 : Utils::copyFile(sourcePath, targetPath);
-    if (success) {
-        emit dataChanged(index, index);
-        return true;
-    }
-    return false;
-}
-
-bool ResourceItemsModel::removeResource(const QModelIndex &index)
-{
-    return removeRow(index.row(), index.parent());
-}
-
-bool ResourceItemsModel::removeResource(const QString &path)
-{
-    auto index = findIndex(path, QModelIndex());
-    return index.isValid() ? removeRow(index.row(), index.parent()) : false;
+    return findIndex(path, {});
 }
 
 QModelIndex ResourceItemsModel::findIndex(const QString &path, const QModelIndex &parent) const

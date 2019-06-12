@@ -22,7 +22,7 @@ signals:
     void editRequested(const QModelIndex &index) const;
 
 private:
-    QSharedPointer<QMenu> generateContextMenu(const ResourceModelIndex &resourceIndex);
+    QSharedPointer<QMenu> generateContextMenu(ResourceModelIndex &resourceIndex);
 
     QAbstractItemView *view;
 };

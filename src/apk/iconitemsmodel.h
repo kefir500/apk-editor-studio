@@ -6,9 +6,10 @@
 #include "apk/manifestscope.h"
 #include "base/treenode.h"
 
-class IconItemsModel : public QAbstractProxyModel
+class IconItemsModel : public QAbstractProxyModel, public IResourceItemsModel
 {
     Q_OBJECT
+    Q_INTERFACES(IResourceItemsModel)
 
 public:
     enum IconRow {
@@ -42,8 +43,10 @@ public:
     QString getIconCaption(const QModelIndex &index) const;
     IconType getIconType(const QModelIndex &index) const;
 
-    void replaceIcon(const QModelIndex &index, const QString &path);
-    void replaceApplicationIcons(const QString &path);
+    void createIcon(const QString &qualifiers);
+    bool replaceApplicationIcons(const QString &path);
+    bool replaceResource(const QModelIndex &index, const QString &path = QString()) override;
+    bool removeResource(const QModelIndex &index) override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;

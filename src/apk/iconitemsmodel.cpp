@@ -45,8 +45,8 @@ QIcon IconItemsModel::getIcon() const
     for (auto node : applicationNode->getChildren()) {
         auto iconNode = static_cast<IconNode *>(node);
         if (iconNode->type == Icon) {
-            const QIcon image = proxyToSourceMap.value(iconNode).data(Qt::DecorationRole).value<QIcon>();
-            icon.addPixmap(image.pixmap(image.availableSizes().first()));
+            const QPixmap pixmap = Utils::iconToPixmap(proxyToSourceMap.value(iconNode).data(Qt::DecorationRole).value<QIcon>());
+            icon.addPixmap(pixmap);
         }
     }
     return icon;
@@ -100,25 +100,34 @@ IconItemsModel::IconType IconItemsModel::getIconType(const QModelIndex &index) c
     return node->type;
 }
 
-void IconItemsModel::replaceIcon(const QModelIndex &index, const QString &iconSource)
-{
-    sourceModel()->replaceResource(mapToSource(index), iconSource);
-}
-
-void IconItemsModel::replaceApplicationIcons(const QString &path)
+bool IconItemsModel::replaceApplicationIcons(const QString &path)
 {
     if (path.isEmpty()) {
-        return;
+        return false;
     }
+    bool success = false;
     auto applicationIndex = index(ApplicationRow, 0);
     auto applicationIconCount = applicationNode->childCount();
     for (int row = 0; row < applicationIconCount; ++row) {
         auto iconIndex = index(row, PathColumn, applicationIndex);
         auto iconType = getIconType(iconIndex);
         if (iconType == Icon || iconType == RoundIcon) {
-            sourceModel()->replaceResource(mapToSource(iconIndex), path);
+            if (!sourceModel()->replaceResource(mapToSource(iconIndex), path)) {
+                success = false;
+            }
         }
     }
+    return success;
+}
+
+bool IconItemsModel::replaceResource(const QModelIndex &index, const QString &path)
+{
+    return sourceModel()->replaceResource(mapToSource(index), path);
+}
+
+bool IconItemsModel::removeResource(const QModelIndex &index)
+{
+    return removeRow(index.row(), index.parent());
 }
 
 QVariant IconItemsModel::data(const QModelIndex &index, int role) const
@@ -144,6 +153,10 @@ QVariant IconItemsModel::data(const QModelIndex &index, int role) const
             case TypeColumn:
                 return getIconType(index);
             }
+        } else if (role == PathRole) {
+            return getIconPath(index);
+        } else if (role == IconRole) {
+            return getIcon(index);
         } else if (role == Qt::ToolTipRole) {
             return getIconPath(index);
         } else if (role == Qt::DecorationRole) {

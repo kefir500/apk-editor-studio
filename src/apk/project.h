@@ -36,7 +36,7 @@ public:
     void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
 
     ResourceItemsModel resourcesModel;
-    FileSystemModel filesystemModel{&resourcesModel};
+    FileSystemModel filesystemModel;
     IconItemsModel iconsProxy;
     ManifestModel manifestModel;
     LogModel logModel;

@@ -1,7 +1,6 @@
 #include "editors/fileeditor.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
-#include "base/utils.h"
 
 FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Editor(parent), index(index)
 {
@@ -62,18 +61,17 @@ bool FileEditor::saveAs()
 
 bool FileEditor::replace()
 {
-    const QString path = index.path();
-    return Dialogs::replaceFile(path, this);
+    return index.replace();
 }
 
-void FileEditor::remove() const
+bool FileEditor::remove()
 {
-    // TODO
+    return index.remove();
 }
 
-void FileEditor::explore() const
+bool FileEditor::explore() const
 {
-    Utils::explore(index.path());
+    return index.explore();
 }
 
 QStringList FileEditor::supportedFormats()
@@ -86,7 +84,7 @@ void FileEditor::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
     } else {
-        QWidget::changeEvent(event);
+        Editor::changeEvent(event);
     }
 }
 

@@ -18,6 +18,7 @@ Project::Project(const QString &path) : resourcesModel(this)
     title = fileInfo.fileName();
     originalPath = fileInfo.absoluteFilePath();
     manifest = nullptr;
+    filesystemModel.setSourceModel(&resourcesModel);
     iconsProxy.setSourceModel(&resourcesModel);
     connect(&state, &ProjectState::changed, [this]() {
         logModel.setLoadingState(state.getCurrentAction() != ProjectState::ProjectIdle);

@@ -14,6 +14,7 @@ SOURCES += \
     $$PWD/apk/resourceitemsmodel.cpp \
     $$PWD/apk/resourcemodelindex.cpp \
     $$PWD/apk/resourcenode.cpp \
+    $$PWD/apk/sortfilterproxymodel.cpp \
     $$PWD/apk/titleitemsmodel.cpp \
     $$PWD/apk/titlenode.cpp \
     $$PWD/apk/xmlmodel.cpp \
@@ -85,6 +86,7 @@ SOURCES += \
 HEADERS += \
     $$PWD/apk/filesystemmodel.h \
     $$PWD/apk/iconitemsmodel.h \
+    $$PWD/apk/iresourceitemsmodel.h \
     $$PWD/apk/logentry.h \
     $$PWD/apk/logmodel.h \
     $$PWD/apk/manifest.h \
@@ -98,6 +100,7 @@ HEADERS += \
     $$PWD/apk/resourceitemsmodel.h \
     $$PWD/apk/resourcemodelindex.h \
     $$PWD/apk/resourcenode.h \
+    $$PWD/apk/sortfilterproxymodel.h \
     $$PWD/apk/titleitemsmodel.h \
     $$PWD/apk/titlenode.h \
     $$PWD/apk/xmlmodel.h \

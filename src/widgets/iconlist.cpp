@@ -77,7 +77,7 @@ void IconList::dropEvent(QDropEvent *event)
         if (!path.isEmpty()) {
             const QModelIndex index = indexAt(event->pos());
             if (index.isValid() && rect().contains(event->pos())) {
-                model()->replaceIcon(index, path);
+                model()->replaceResource(index, path);
             }
         }
     } else if (mimeData->hasImage()) {

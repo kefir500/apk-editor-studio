@@ -11,10 +11,11 @@ public:
     QString path() const;
     QIcon icon() const;
 
-    void update();
-
-private:
-    QPair<QAbstractItemModel *, QModelIndex> map() const;
+    bool save() const;
+    bool replace();
+    bool remove();
+    bool explore() const;
+    void update() const;
 };
 
 #endif // RESOURCEMODELINDEX_H
