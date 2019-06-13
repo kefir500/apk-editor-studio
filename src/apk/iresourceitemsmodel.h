@@ -18,6 +18,6 @@ public:
     virtual bool removeResource(const QModelIndex &index) = 0;
 };
 
-Q_DECLARE_INTERFACE(IResourceItemsModel, "org.qwertycube.IResourceModel")
+Q_DECLARE_INTERFACE(IResourceItemsModel, "org.qwertycube.IResourceItemsModel")
 
 #endif // IRESOURCEITEMSMODEL_H
