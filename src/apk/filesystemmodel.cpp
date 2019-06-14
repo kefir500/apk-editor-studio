@@ -16,7 +16,11 @@ bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &f
     }
     const auto path = filePath(index);
     const auto resourceIndex = sourceModel->findIndex(path);
-    return sourceModel->replaceResource(resourceIndex, file);
+    if (resourceIndex.isValid()) {
+        return sourceModel->replaceResource(resourceIndex, file);
+    } else {
+        return Utils::replaceFile(path);
+    }
 }
 
 bool FileSystemModel::removeResource(const QModelIndex &index)
@@ -45,8 +49,14 @@ bool FileSystemModel::removeRows(int row, int count, const QModelIndex &parent)
     for (int i = row; i < row + count; ++i) {
         const auto path = filePath(index(row, 0, parent));
         const auto resourceIndex = sourceModel->findIndex(path);
-        if (!sourceModel->removeResource(resourceIndex)) {
-            success = false;
+        if (resourceIndex.isValid()) {
+            if (!sourceModel->removeResource(resourceIndex)) {
+                success = false;
+            }
+        } else {
+            if (!QFile::remove(path)) {
+                success = false;
+            }
         }
     }
     endRemoveRows();
