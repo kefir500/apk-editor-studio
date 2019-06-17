@@ -49,11 +49,13 @@ unix:!macx {
 
 macx {
     isEmpty(DESTDIR): DESTDIR = $$PWD/bin/macos
-    QMAKE_MAC_SDK = macosx10.7
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
     QMAKE_POST_LINK += $$copy(all/., $${TARGET}.app/Contents/MacOS)
     QMAKE_POST_LINK += $$copy(macos/bundle/., $${TARGET}.app)
     QMAKE_POST_LINK += $$executable($$DESTDIR/$${TARGET}.app/Contents/MacOS/adb)
     QMAKE_POST_LINK += $$executable($$DESTDIR/$${TARGET}.app/Contents/MacOS/zipalign)
     QMAKE_INFO_PLIST = $$PWD/res/deploy/macos/Info.plist
+    !equals(CI, true) {
+        QMAKE_MAC_SDK = macosx10.7
+        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
+    }
 }
