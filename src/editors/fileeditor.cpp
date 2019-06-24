@@ -90,9 +90,10 @@ void FileEditor::changeEvent(QEvent *event)
 
 void FileEditor::retranslate()
 {
-    actionReplace->setText(tr("Re&place Resource..."));
+    actionReplace->setText(tr("&Replace Resource..."));
     actionSave->setText(tr("&Save Resource"));
     actionSaveAs->setText(tr("Save Resource &As..."));
-    actionRemove->setText(tr("&Remove Resource"));
+    actionRemove->setText(tr("&Delete Resource"));
+    //: This string refers to a single resource.
     actionExplore->setText(tr("&Open Resource Directory"));
 }

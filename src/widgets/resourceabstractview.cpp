@@ -38,24 +38,24 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(ResourceModelInd
 
     auto menu = new QMenu(this);
 
-    QAction *actionEdit = menu->addAction(app->icons.get("edit.png"), tr("&Edit Resource"));
+    QAction *actionEdit = menu->addAction(app->icons.get("edit.png"), tr("Edit Resource"));
     connect(actionEdit, &QAction::triggered, [=]() {
         emit editRequested(resourceIndex);
     });
 
     menu->addSeparator();
 
-    QAction *actionReplace = menu->addAction(app->icons.get("replace.png"), tr("Re&place Resource..."));
+    QAction *actionReplace = menu->addAction(app->icons.get("replace.png"), tr("Replace Resource..."));
     connect(actionReplace, &QAction::triggered, [&]() {
         resourceIndex.replace();
     });
 
-    QAction *actionSaveAs = menu->addAction(app->icons.get("save-as.png"), tr("Save Resource &As..."));
+    QAction *actionSaveAs = menu->addAction(app->icons.get("save-as.png"), tr("Save Resource As..."));
     connect(actionSaveAs, &QAction::triggered, [=]() {
         resourceIndex.save();
     });
 
-    QAction *actionRemove = menu->addAction(app->icons.get("remove.png"), tr("&Remove Resource"));
+    QAction *actionRemove = menu->addAction(app->icons.get("remove.png"), tr("Delete Resource"));
     connect(actionRemove, &QAction::triggered, [&]() {
         if (!resourceIndex.remove()) {
             QMessageBox::warning(this, QString(), tr("Could not remove the resource."));
@@ -65,7 +65,7 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(ResourceModelInd
     menu->addSeparator();
 
     //: This string refers to a single resource.
-    QAction *actionExplore = menu->addAction(app->icons.get("explore.png"), tr("&Open Resource Directory"));
+    QAction *actionExplore = menu->addAction(app->icons.get("explore.png"), tr("Open Resource Directory"));
     connect(actionExplore, &QAction::triggered, [=]() {
         resourceIndex.explore();
     });
