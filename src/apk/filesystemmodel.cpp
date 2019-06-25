@@ -9,7 +9,7 @@
 void FileSystemModel::setSourceModel(ResourceItemsModel *model)
 {
     sourceModel = model;
-    connect(sourceModel, &ResourceItemsModel::dataChanged, [=](auto &topLeft, auto &bottomRight, auto &roles) {
+    connect(sourceModel, &ResourceItemsModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles) {
         const auto fromIndex = index(ResourceModelIndex(topLeft).path());
         const auto toIndex = index(ResourceModelIndex(bottomRight).path());
         QTimer::singleShot(10, [=]() {
