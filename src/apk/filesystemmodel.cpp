@@ -1,4 +1,6 @@
 #include "apk/filesystemmodel.h"
+#include "apk/resourcemodelindex.h"
+#include <QTimer>
 
 #ifdef QT_DEBUG
     #include <QDebug>
@@ -7,6 +9,14 @@
 void FileSystemModel::setSourceModel(ResourceItemsModel *model)
 {
     sourceModel = model;
+    connect(sourceModel, &ResourceItemsModel::dataChanged, [=](auto &topLeft, auto &bottomRight, auto &roles) {
+        const auto fromIndex = index(ResourceModelIndex(topLeft).path());
+        const auto toIndex = index(ResourceModelIndex(bottomRight).path());
+        QTimer::singleShot(10, [=]() {
+            emit dataChanged(fromIndex.sibling(fromIndex.row(), 0),
+                             toIndex.sibling(toIndex.row(), columnCount() - 1), roles);
+        });
+    });
 }
 
 bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &file)
@@ -19,7 +29,14 @@ bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &f
     if (resourceIndex.isValid()) {
         return sourceModel->replaceResource(resourceIndex, file);
     } else {
-        return Utils::replaceFile(path);
+        if (Utils::replaceFile(path)) {
+            QTimer::singleShot(10, [=]() {
+                emit dataChanged(index.sibling(index.row(), 0),
+                                 index.sibling(index.row(), columnCount() - 1));
+            });
+            return true;
+        }
+        return false;
     }
 }
 
