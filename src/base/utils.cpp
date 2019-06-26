@@ -93,6 +93,10 @@ namespace  {
             qWarning() << "Could not copy file: invalid path to file(s).";
             return false;
         }
+        if (QFileInfo(src) == QFileInfo(dst)) {
+            qWarning() << "Could not copy file: source and destination paths are identical.";
+            return false;
+        }
         const QString srcSuffix = QFileInfo(src).suffix();
         const QString dstSuffix = QFileInfo(dst).suffix();
         const bool sameFormats = !QString::compare(srcSuffix, dstSuffix, Qt::CaseInsensitive);
@@ -141,7 +145,7 @@ bool Utils::replaceFile(const QString &what, QString with)
             ? Dialogs::getOpenImageFilename(what, app->window)
             : Dialogs::getOpenFilename(what, app->window);
     }
-    if (with.isEmpty()) {
+    if (with.isEmpty() || QFileInfo(with) == QFileInfo(what)) {
         return false;
     }
     if (!copy(with, what)) {
