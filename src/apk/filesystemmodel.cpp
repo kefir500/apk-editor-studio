@@ -8,15 +8,20 @@
 
 void FileSystemModel::setSourceModel(ResourceItemsModel *model)
 {
+    if (sourceModel) {
+        disconnect(sourceModel, &ResourceItemsModel::dataChanged, this, nullptr);
+    }
     sourceModel = model;
-    connect(sourceModel, &ResourceItemsModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles) {
-        const auto fromIndex = index(ResourceModelIndex(topLeft).path());
-        const auto toIndex = index(ResourceModelIndex(bottomRight).path());
-        QTimer::singleShot(10, [=]() {
-            emit dataChanged(fromIndex.sibling(fromIndex.row(), 0),
-                             toIndex.sibling(toIndex.row(), columnCount() - 1), roles);
+    if (model) {
+        connect(model, &ResourceItemsModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles) {
+            const auto fromIndex = index(ResourceModelIndex(topLeft).path());
+            const auto toIndex = index(ResourceModelIndex(bottomRight).path());
+            QTimer::singleShot(10, [=]() {
+                emit dataChanged(fromIndex.sibling(fromIndex.row(), 0),
+                                 toIndex.sibling(toIndex.row(), columnCount() - 1), roles);
+            });
         });
-    });
+    }
 }
 
 bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &file)

@@ -37,9 +37,9 @@ ProjectsWidget::ProjectsWidget(QWidget *parent) : QWidget(parent)
 
 void ProjectsWidget::setModel(ProjectItemsModel *model)
 {
-    if (model) {
-        disconnect(model, &ProjectItemsModel::added, this, &ProjectsWidget::addProject);
-        disconnect(model, &ProjectItemsModel::removed, this, &ProjectsWidget::removeProject);
+    if (this->model) {
+        disconnect(this->model, &ProjectItemsModel::added, this, &ProjectsWidget::addProject);
+        disconnect(this->model, &ProjectItemsModel::removed, this, &ProjectsWidget::removeProject);
     }
     this->model = model;
     connect(model, &ProjectItemsModel::added, this, &ProjectsWidget::addProject);
