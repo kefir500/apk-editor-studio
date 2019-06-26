@@ -34,7 +34,7 @@ public:
     explicit IconItemsModel(QObject *parent = nullptr);
     ~IconItemsModel() override;
 
-    void setSourceModel(ResourceItemsModel *sourceModel);
+    void setSourceModel(QAbstractItemModel *sourceModel) override;
     ResourceItemsModel *sourceModel() const;
 
     QIcon getIcon() const;

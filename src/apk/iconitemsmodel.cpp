@@ -15,7 +15,7 @@ IconItemsModel::~IconItemsModel()
     delete activitiesNode;
 }
 
-void IconItemsModel::setSourceModel(ResourceItemsModel *newSourceModel)
+void IconItemsModel::setSourceModel(QAbstractItemModel *newSourceModel)
 {
     beginResetModel();
         if (sourceModel()) {
@@ -24,6 +24,7 @@ void IconItemsModel::setSourceModel(ResourceItemsModel *newSourceModel)
             disconnect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
             disconnect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
         }
+        Q_ASSERT(qobject_cast<ResourceItemsModel *>(newSourceModel));
         QAbstractProxyModel::setSourceModel(newSourceModel);
         if (sourceModel()) {
             connect(sourceModel(), &ResourceItemsModel::added, this, &IconItemsModel::onResourceAdded);
