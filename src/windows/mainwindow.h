@@ -85,8 +85,9 @@ private:
     QAction *actionOptions;
     QAction *actionSettingsReset;
     QAction *actionWebsite;
-    QAction *actionUpdate;
+    QAction *actionGithub;
     QAction *actionDonate;
+    QAction *actionUpdate;
     QAction *actionAboutQt;
     QAction *actionAbout;
     QActionGroup *actionsLanguage;

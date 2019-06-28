@@ -203,8 +203,9 @@ void MainWindow::initMenus()
     // Help Menu:
 
     actionWebsite = new QAction(app->icons.get("website.png"), QString(), this);
-    actionUpdate = new QAction(app->icons.get("update.png"), QString(), this);
+    actionGithub = new QAction(app->icons.get("github.png"), QString(), this);
     actionDonate = new QAction(app->icons.get("donate.png"), QString(), this);
+    actionUpdate = new QAction(app->icons.get("update.png"), QString(), this);
     actionAbout = new QAction(app->icons.get("application.png"), QString(), this);
     actionAbout->setMenuRole(QAction::AboutRole);
     actionAboutQt = new QAction(app->icons.get("qt.png"), QString(), this);
@@ -243,8 +244,10 @@ void MainWindow::initMenus()
     menuWindow = menuBar()->addMenu(QString());
     menuHelp = menuBar()->addMenu(QString());
     menuHelp->addAction(actionWebsite);
-    menuHelp->addAction(actionUpdate);
+    menuHelp->addAction(actionGithub);
     menuHelp->addAction(actionDonate);
+    menuHelp->addSeparator();
+    menuHelp->addAction(actionUpdate);
     menuHelp->addSeparator();
     menuHelp->addAction(actionAboutQt);
     menuHelp->addAction(actionAbout);
@@ -297,10 +300,11 @@ void MainWindow::initMenus()
     });
     connect(actionSettingsReset, &QAction::triggered, this, &MainWindow::resetSettings);
     connect(actionWebsite, &QAction::triggered, app, &Application::visitWebPage);
+    connect(actionGithub, &QAction::triggered, app, &Application::visitSourcePage);
+    connect(actionDonate, &QAction::triggered, app, &Application::visitDonatePage);
     connect(actionUpdate, &QAction::triggered, [=]() {
         Updater::check(true, this);
     });
-    connect(actionDonate, &QAction::triggered, app, &Application::visitDonatePage);
     connect(actionAboutQt, &QAction::triggered, app, &Application::aboutQt);
     connect(actionAbout, &QAction::triggered, [=]() {
         AboutDialog about(this);
@@ -391,8 +395,9 @@ void MainWindow::retranslate()
     // Help Menu:
 
     actionWebsite->setText(tr("Visit &Website"));
-    actionUpdate->setText(tr("Check for &Updates"));
+    actionGithub->setText(tr("&Source Code"));
     actionDonate->setText(tr("Make a &Donation"));
+    actionUpdate->setText(tr("Check for &Updates"));
     actionAbout->setText(tr("&About APK Editor Studio..."));
     actionAboutQt->setText(tr("About &Qt..."));
 }

@@ -379,6 +379,11 @@ void Application::visitBlogPage(const QString &post)
     QDesktopServices::openUrl(url);
 }
 
+void Application::visitSourcePage()
+{
+    QDesktopServices::openUrl(getSourcePage());
+}
+
 void Application::visitContactPage()
 {
     QDesktopServices::openUrl(getContactPage());
