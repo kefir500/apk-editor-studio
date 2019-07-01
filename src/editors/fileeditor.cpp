@@ -10,10 +10,12 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
 
     watcher.addPath(index.path());
     connect(&watcher, &QFileSystemWatcher::fileChanged, [this]() {
-        this->index.update();
-        watcher.addPath(this->index.path());
-        if (!isModified()) {
-            load();
+        if (this->index.isValid()) {
+            this->index.update();
+            watcher.addPath(this->index.path());
+            if (!isModified()) {
+                load();
+            }
         }
     });
 
