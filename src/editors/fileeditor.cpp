@@ -27,7 +27,6 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
 
     actionReplace = new QAction(app->icons.get("replace.png"), QString(), this);
     actionSaveAs = new QAction(app->icons.get("save-as.png"), QString(), this);
-    actionRemove = new QAction(app->icons.get("remove.png"), QString(), this);
     actionExplore = new QAction(app->icons.get("explore.png"), QString(), this);
 
     actionReplace->setShortcut(QKeySequence("Ctrl+R"));
@@ -35,14 +34,12 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
 
     connect(actionReplace, &QAction::triggered, this, &FileEditor::replace);
     connect(actionSaveAs, &QAction::triggered, this, &FileEditor::saveAs);
-    connect(actionRemove, &QAction::triggered, this, &FileEditor::remove);
     connect(actionExplore, &QAction::triggered, this, &FileEditor::explore);
 
     addAction(actionReplace);
     addAction(separator());
     addAction(actionSave);
     addAction(actionSaveAs);
-    addAction(actionRemove);
     addAction(separator());
     addAction(actionExplore);
 
@@ -62,11 +59,6 @@ bool FileEditor::saveAs()
 bool FileEditor::replace()
 {
     return index.replace();
-}
-
-bool FileEditor::remove()
-{
-    return index.remove();
 }
 
 bool FileEditor::explore() const
@@ -93,7 +85,6 @@ void FileEditor::retranslate()
     actionReplace->setText(tr("&Replace Resource..."));
     actionSave->setText(tr("&Save Resource"));
     actionSaveAs->setText(tr("Save Resource &As..."));
-    actionRemove->setText(tr("&Delete Resource"));
     //: This string refers to a single resource.
     actionExplore->setText(tr("&Open Resource Directory"));
 }
