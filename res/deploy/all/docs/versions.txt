@@ -1,5 +1,12 @@
 # Version History
 
+## 1.2.0
+- Added support for WebP image format.
+- Added support for activity icons.
+- Added ability to remove resources.
+- Improved resource sorting.
+- Bug fixes and GUI improvements.
+
 ## 1.1.0
 - Added round icons support.
 - Added TV banners support.

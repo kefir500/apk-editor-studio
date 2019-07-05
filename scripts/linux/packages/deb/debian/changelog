@@ -1,3 +1,13 @@
+apk-editor-studio (1.2.0-1) unstable; urgency=low
+
+  * Added support for WebP image format.
+  * Added support for activity icons.
+  * Added ability to remove resources.
+  * Improved resource sorting.
+  * Bug fixes and GUI improvements.
+
+ -- Alexander Gorishnyak <kefir500@gmail.com>  Fri, 05 Jul 2019 12:44:08 +0600
+
 apk-editor-studio (1.1.0-1) unstable; urgency=low
 
   * Added round icons support.
