@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     if (app->settings->getAutoUpdates()) {
         // Delay to prevent uninitialized window render
         auto timer = new QTimer(this);
-        connect (timer, &QTimer::timeout, [=]() {
+        connect(timer, &QTimer::timeout, [=]() {
             Updater::check(false, this);
             timer->deleteLater();
         });

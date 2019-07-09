@@ -22,6 +22,8 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent) override;
 
 private:
+    void updated(const QModelIndex &from, const QModelIndex &to, const QVector<int> &roles = {});
+
     ResourceItemsModel *sourceModel;
 };
 

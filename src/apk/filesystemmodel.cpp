@@ -16,10 +16,8 @@ void FileSystemModel::setSourceModel(ResourceItemsModel *model)
         connect(model, &ResourceItemsModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles) {
             const auto fromIndex = index(ResourceModelIndex(topLeft).path());
             const auto toIndex = index(ResourceModelIndex(bottomRight).path());
-            QTimer::singleShot(10, [=]() {
-                emit dataChanged(fromIndex.sibling(fromIndex.row(), 0),
-                                 toIndex.sibling(toIndex.row(), columnCount() - 1), roles);
-            });
+            updated(fromIndex.sibling(fromIndex.row(), 0),
+                      toIndex.sibling(toIndex.row(), columnCount() - 1), roles);
         });
     }
 }
@@ -35,10 +33,8 @@ bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &f
         return sourceModel->replaceResource(resourceIndex, file);
     } else {
         if (Utils::replaceFile(path)) {
-            QTimer::singleShot(10, [=]() {
-                emit dataChanged(index.sibling(index.row(), 0),
-                                 index.sibling(index.row(), columnCount() - 1));
-            });
+            updated(index.sibling(index.row(), 0),
+                                  index.sibling(index.row(), columnCount() - 1));
             return true;
         }
         return false;
@@ -83,4 +79,15 @@ bool FileSystemModel::removeRows(int row, int count, const QModelIndex &parent)
     }
     endRemoveRows();
     return success;
+}
+
+void FileSystemModel::updated(const QModelIndex &from, const QModelIndex &to, const QVector<int> &roles)
+{
+    auto timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, [=]() {
+        emit dataChanged(from, to, roles);
+        timer->deleteLater();
+    });
+    timer->setSingleShot(true);
+    timer->start(10);
 }
