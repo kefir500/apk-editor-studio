@@ -1,26 +1,38 @@
 language: cpp
 
+before_script:
+  - export VERSION=dev
+
 matrix:
   include:
-  - compiler: gcc
-  - compiler: clang
-    env: QMAKE_FLAGS="QMAKE_CXXFLAGS+=-Wno-inconsistent-missing-override"
-
-install:
-  - sudo apt-get install qt5-default libsecret-1-dev dh-make devscripts fakeroot
-
-script:
-  - qmake "QMAKE_CXX=$CXX" "QMAKE_CC=$CC" $QMAKE_FLAGS
-  - make
+  - os: linux
+    compiler: gcc
+    install:
+      - sudo apt-get install qt5-default libsecret-1-dev dh-make devscripts fakeroot
+    script:
+      - cd scripts/linux/packages
+      - tar.xz/build.tar.xz.sh
+      - deb/build.deb.sh
+      - mv deb/apk-editor-studio_*.deb deb/apk-editor-studio_linux_dev.deb
+      - cd -
+  - os: osx
+    osx_image: xcode9.2
+    install:
+      - brew update
+      - brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/5eb54ced793999e3dd3bce7c64c34e7ffe65ddfd/Formula/qt.rb
+      - brew link qt --force
+      - nvm install node
+      - npm i appdmg
+    script:
+      - cd scripts/macos/packages
+      - chmod +x app/build.app.command
+      - chmod +x dmg/build.dmg.command
+      - app/build.app.command
+      - dmg/build.dmg.command
+      - cd -
 
 before_deploy:
-  - export VERSION=dev
   - export TRAVIS_TAG=development
-  - cd scripts/linux/packages
-  - tar.xz/build.tar.xz.sh
-  - deb/build.deb.sh
-  - mv deb/apk-editor-studio_*.deb deb/apk-editor-studio_linux_dev.deb
-  - cd -
 
 deploy:
   provider: releases
@@ -29,11 +41,12 @@ deploy:
   file:
     - "scripts/linux/packages/tar.xz/apk-editor-studio_linux_dev.tar.xz"
     - "scripts/linux/packages/deb/apk-editor-studio_linux_dev.deb"
+    - "scripts/macos/packages/app/apk-editor-studio_macos_dev.app.zip"
+    - "scripts/macos/packages/dmg/apk-editor-studio_macos_dev.dmg"
   name: Developer Build
   draft: false
   prerelease: true
   overwrite: true
   skip_cleanup: true
   on:
-    condition: $CXX = g++
     tags: false
