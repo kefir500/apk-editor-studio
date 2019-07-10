@@ -7,7 +7,7 @@ matrix:
     env: QMAKE_FLAGS="QMAKE_CXXFLAGS+=-Wno-inconsistent-missing-override"
 
 install:
-  - sudo apt-get install qt5-default libsecret-1-dev dh-make devscripts
+  - sudo apt-get install qt5-default libsecret-1-dev dh-make devscripts fakeroot
 
 script:
   - qmake "QMAKE_CXX=$CXX" "QMAKE_CC=$CC" $QMAKE_FLAGS
