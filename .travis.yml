@@ -2,6 +2,7 @@ language: cpp
 
 before_script:
   - export VERSION=dev
+  - python3 scripts/download.py
 
 matrix:
   include:
@@ -21,6 +22,7 @@ matrix:
       - brew update
       - brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/5eb54ced793999e3dd3bce7c64c34e7ffe65ddfd/Formula/qt.rb
       - brew link qt --force
+      - brew upgrade python
       - nvm install node
       - npm i appdmg
     script:
