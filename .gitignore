@@ -7,6 +7,9 @@ obj/
 .vscode/
 *.ai
 *.autosave
+*.dll
+*.exe
+*.jar
 *.o
 *.obj
 *.pdb
