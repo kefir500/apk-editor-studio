@@ -15,3 +15,6 @@
 
 - Luis Corominas
 - Jason Leon Castillo
+- Wisata Gili Permai
+- Samuel Radoc
+- Juris Baranovskis
