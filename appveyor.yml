@@ -1,7 +1,7 @@
 image: Visual Studio 2017
 
 install:
-  - set QTDIR=C:\Qt\5.12.2\msvc2017
+  - set QTDIR=C:\Qt\5.13.0\msvc2017
   - set OPENSSL=C:\OpenSSL-Win32\bin
   - set VCREDIST_DLL=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT
   - set VCREDIST_MSM=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules\Microsoft_VC141_CRT_x86.msm
