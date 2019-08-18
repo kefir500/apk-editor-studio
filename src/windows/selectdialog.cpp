@@ -15,7 +15,7 @@ SelectDialog::SelectDialog(const QString &title, const QString &text, QWidget *p
     combo = new QComboBox(this);
     layout->addWidget(combo);
 
-    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     connect(buttons, &QDialogButtonBox::accepted, this, &SelectDialog::accept);
     connect(buttons, &QDialogButtonBox::rejected, this, &SelectDialog::reject);
     layout->addWidget(buttons);

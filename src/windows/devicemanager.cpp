@@ -49,7 +49,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     devicesLayout->addLayout(listLayout, 2);
     devicesLayout->addWidget(groupInfo, 3);
 
-    dialogButtons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply);
+    dialogButtons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply, this);
     QPushButton *btnApply = dialogButtons->button(QDialogButtonBox::Apply);
 
     QVBoxLayout *layout = new QVBoxLayout(this);

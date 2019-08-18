@@ -336,7 +336,7 @@ void OptionsDialog::initialize()
     pageList->setCurrentRow(0);
     pageList->setMaximumWidth(pageList->sizeHintForColumn(0) + 60);
 
-    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply);
+    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply, this);
     QPushButton *btnApply = buttons->button(QDialogButtonBox::Apply);
 
     QGridLayout *layoutPages = new QGridLayout(widget);

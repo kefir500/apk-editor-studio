@@ -39,7 +39,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
     title->setFont(titleFont);
     title->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
-    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok);
+    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok, this);
 
     QHBoxLayout *layoutTitle = new QHBoxLayout;
     QVBoxLayout *layoutMain = new QVBoxLayout(this);
