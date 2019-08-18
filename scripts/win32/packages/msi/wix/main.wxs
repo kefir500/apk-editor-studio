@@ -92,6 +92,7 @@
                   <File Name="donate.png" Id="IconDonate16" />
                   <File Name="edit.png" Id="IconEdit16" />
                   <File Name="explore.png" Id="IconExplore16" />
+                  <File Name="github.png" Id="IconGithub16" />
                   <File Name="install.png" Id="IconInstall16" />
                   <File Name="key.png" Id="IconKey16" />
                   <File Name="more.png" Id="IconMore16" />
@@ -160,6 +161,7 @@
               <Directory Id="Icons32Folder" Name="32x32">
                 <Component Id="Icons32Component" Guid="9D01502D-121D-43AB-AC49-DDDD830B86FC">
                   <File Name="application.png" Id="IconApplication32" />
+                  <File Name="github.png" Id="IconGithub32" />
                   <File Name="more.png" Id="IconMore32" />
                   <File Name="qt.png" Id="IconQt32" />
                 </Component>
