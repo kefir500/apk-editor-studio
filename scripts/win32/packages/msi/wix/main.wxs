@@ -88,6 +88,7 @@
                   <File Name="application.png" Id="IconApplication16" />
                   <File Name="close.png" Id="IconClose16" />
                   <File Name="close-project.png" Id="IconCloseProject16" />
+                  <File Name="delete.png" Id="IconDelete16" />
                   <File Name="devices.png" Id="IconDevices16" />
                   <File Name="donate.png" Id="IconDonate16" />
                   <File Name="edit.png" Id="IconEdit16" />
@@ -131,6 +132,7 @@
                 <Component Id="Icons30Component" Guid="E001659C-3A29-424B-8037-8228AEEB219B">
                   <File Name="close.png" Id="IconClose30" />
                   <File Name="close-project.png" Id="IconCloseProject30" />
+                  <File Name="delete.png" Id="IconDelete30" />
                   <File Name="devices.png" Id="IconDevices30" />
                   <File Name="donate.png" Id="IconDonate30" />
                   <File Name="edit.png" Id="IconEdit30" />
@@ -170,6 +172,7 @@
                 <Component Id="Icons40Component" Guid="415AF5F6-5D55-4D64-B357-FCD7ADBB92A6">
                   <File Name="close.png" Id="IconClose40" />
                   <File Name="close-project.png" Id="IconCloseProject40" />
+                  <File Name="delete.png" Id="IconDelete40" />
                   <File Name="devices.png" Id="IconDevices40" />
                   <File Name="donate.png" Id="IconDonate40" />
                   <File Name="edit.png" Id="IconEdit40" />
