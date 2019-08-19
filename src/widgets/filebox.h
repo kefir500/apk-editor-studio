@@ -10,7 +10,8 @@ class FileBox : public QWidget
     Q_OBJECT
 
 public:
-    FileBox(const QString &currentPath = QString(), const QString &defaultPath = QString(), bool isDirectory = false, QWidget *parent = nullptr);
+    FileBox(const QString &currentPath, const QString &defaultPath, bool isDirectory, QWidget *parent = nullptr);
+    FileBox(bool isDirectory, QWidget *parent = nullptr) : FileBox(QString(), QString(), isDirectory, parent) {}
 
     QString getCurrentPath() const;
 

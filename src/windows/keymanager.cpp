@@ -20,7 +20,7 @@ KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     groupKeystore = new QGroupBox(tr("Custom Keystore"), this);
-    editKeystore = new FileBox(QString(), QString(), false, this);
+    editKeystore = new FileBox(false, this);
     editKeystorePassword = new QLineEdit(this);
     editKeyAlias = new QLineEdit(this);
     editKeyPassword = new QLineEdit(this);
