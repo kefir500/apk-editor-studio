@@ -82,6 +82,7 @@ private:
     QAction *actionDeviceManager;
     QAction *actionProjectManager;
     QAction *actionTitleEditor;
+    QAction *actionPermissionEditor;
     QAction *actionOptions;
     QAction *actionSettingsReset;
     QAction *actionWebsite;

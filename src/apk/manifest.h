@@ -5,6 +5,7 @@
 #include <QDomDocument>
 #include <QRegularExpression>
 #include "apk/manifestscope.h"
+#include "apk/permission.h"
 
 class Manifest
 {
@@ -23,6 +24,9 @@ public:
     void setVersionCode(int value);
     void setVersionName(const QString &value);
 
+    QList<Permission *> getPermissionList() const;
+    void removePermission(Permission *permission);
+
     QList<ManifestScope *> scopes;
 
 private:
@@ -30,10 +34,11 @@ private:
     bool saveYml();
 
     QFile *xmlFile;
-    QFile *ymlFile;
-
     QDomDocument xml;
+    QDomElement manifestNode;
+
     QString yml;
+    QFile *ymlFile;
 
     int minSdk;
     int targetSdk;

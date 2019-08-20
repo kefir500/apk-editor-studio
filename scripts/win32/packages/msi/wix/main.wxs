@@ -99,6 +99,7 @@
                   <File Name="more.png" Id="IconMore16" />
                   <File Name="open.png" Id="IconOpen16" />
                   <File Name="pack.png" Id="IconPack16" />
+                  <File Name="permissions.png" Id="IconPermissions16" />
                   <File Name="project.png" Id="IconProject16" />
                   <File Name="qt.png" Id="IconQt16" />
                   <File Name="recent.png" Id="IconRecent16" />
@@ -141,6 +142,7 @@
                   <File Name="key.png" Id="IconKey30" />
                   <File Name="open.png" Id="IconOpen30" />
                   <File Name="pack.png" Id="IconPack30" />
+                  <File Name="permissions.png" Id="IconPermissions30" />
                   <File Name="project.png" Id="IconProject30" />
                   <File Name="recent.png" Id="IconRecent30" />
                   <File Name="refresh.png" Id="IconRefresh30" />
@@ -181,6 +183,7 @@
                   <File Name="key.png" Id="IconKey40" />
                   <File Name="open.png" Id="IconOpen40" />
                   <File Name="pack.png" Id="IconPack40" />
+                  <File Name="permissions.png" Id="IconPermissions40" />
                   <File Name="project.png" Id="IconProject40" />
                   <File Name="recent.png" Id="IconRecent40" />
                   <File Name="refresh.png" Id="IconRefresh40" />

@@ -11,7 +11,8 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
         QTextStream stream(xmlFile);
         stream.setCodec("UTF-8");
         xml.setContent(stream.readAll());
-        auto applicationNode = xml.firstChildElement("manifest").firstChildElement("application");
+        manifestNode = xml.firstChildElement("manifest");
+        auto applicationNode = manifestNode.firstChildElement("application");
         scopes.append(new ManifestScope(applicationNode));
         auto applicationChild = applicationNode.firstChildElement();
         while (!applicationChild.isNull()) {
@@ -111,6 +112,25 @@ void Manifest::setVersionName(const QString &value)
     versionName = value;
     yml.replace(regexVersionName, value);
     saveYml();
+}
+
+QList<Permission *> Manifest::getPermissionList() const
+{
+    QList<Permission *> permissions;
+    const auto manifestChildNodes = manifestNode.childNodes();
+    for (int i = 0; i < manifestChildNodes.count(); ++i) {
+        const auto element = manifestChildNodes.at(i).toElement();
+        if (element.tagName() == "uses-permission") {
+            permissions.append(new Permission(element));
+        }
+    }
+    return permissions;
+}
+
+void Manifest::removePermission(Permission *permission)
+{
+    manifestNode.removeChild(permission->getNode());
+    saveXml();
 }
 
 bool Manifest::saveXml()

@@ -7,6 +7,7 @@ SOURCES += \
     $$PWD/apk/manifestattribute.cpp \
     $$PWD/apk/manifestmodel.cpp \
     $$PWD/apk/manifestscope.cpp \
+    $$PWD/apk/permission.cpp \
     $$PWD/apk/project.cpp \
     $$PWD/apk/projectitemsmodel.cpp \
     $$PWD/apk/projectstate.cpp \
@@ -80,6 +81,7 @@ SOURCES += \
     $$PWD/windows/keymanager.cpp \
     $$PWD/windows/mainwindow.cpp \
     $$PWD/windows/optionsdialog.cpp \
+    $$PWD/windows/permissioneditor.cpp \
     $$PWD/windows/selectdialog.cpp \
     $$PWD/windows/waitdialog.cpp
 
@@ -93,6 +95,7 @@ HEADERS += \
     $$PWD/apk/manifestattribute.h \
     $$PWD/apk/manifestmodel.h \
     $$PWD/apk/manifestscope.h \
+    $$PWD/apk/permission.h \
     $$PWD/apk/project.h \
     $$PWD/apk/projectitemsmodel.h \
     $$PWD/apk/projectstate.h \
@@ -168,6 +171,7 @@ HEADERS += \
     $$PWD/windows/keymanager.h \
     $$PWD/windows/mainwindow.h \
     $$PWD/windows/optionsdialog.h \
+    $$PWD/windows/permissioneditor.h \
     $$PWD/windows/selectdialog.h \
     $$PWD/windows/waitdialog.h
 

@@ -15,6 +15,7 @@
 #include <QMimeDatabase>
 #include <QTimer>
 #include <QDebug>
+#include "windows/permissioneditor.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -189,6 +190,8 @@ void MainWindow::initMenus()
     actionTitleEditor = new QAction(this);
     actionTitleEditor->setIcon(app->icons.get("title.png"));
     actionTitleEditor->setShortcut(QKeySequence("Ctrl+T"));
+    actionPermissionEditor = new QAction(this);
+    actionPermissionEditor->setIcon(app->icons.get("permissions.png"));
 
     // Settings Menu:
 
@@ -231,10 +234,12 @@ void MainWindow::initMenus()
     menuEditor->addActions(projectsWidget->getCurrentTabActions());
     menuTools = menuBar()->addMenu(QString());
     menuTools->addAction(actionKeyManager);
+    menuTools->addSeparator();
     menuTools->addAction(actionDeviceManager);
     menuTools->addSeparator();
     menuTools->addAction(actionProjectManager);
     menuTools->addAction(actionTitleEditor);
+    menuTools->addAction(actionPermissionEditor);
     menuSettings = menuBar()->addMenu(QString());
     menuSettings->addAction(actionOptions);
     menuSettings->addSeparator();
@@ -263,6 +268,7 @@ void MainWindow::initMenus()
     Toolbar::addToPool("close-project", actionApkClose);
     Toolbar::addToPool("project-manager", actionProjectManager);
     Toolbar::addToPool("title-editor", actionTitleEditor);
+    Toolbar::addToPool("permission-editor", actionPermissionEditor);
     Toolbar::addToPool("device-manager", actionDeviceManager);
     Toolbar::addToPool("key-manager", actionKeyManager);
     Toolbar::addToPool("settings", actionOptions);
@@ -283,6 +289,11 @@ void MainWindow::initMenus()
     connect(actionRecentClear, &QAction::triggered, app->recent, &Recent::clear);
     connect(actionTitleEditor, &QAction::triggered, projectsWidget, &ProjectsWidget::openTitlesTab);
     connect(actionProjectManager, &QAction::triggered, projectsWidget, &ProjectsWidget::openProjectTab);
+    connect(actionPermissionEditor, &QAction::triggered, [=]() {
+        const auto project = projectsWidget->getCurrentProject();
+        PermissionEditor permissionEditor(project->manifest, this);
+        permissionEditor.exec();
+    });
     connect(actionKeyManager, &QAction::triggered, [=]() {
         KeyManager keyManager(this);
         keyManager.exec();
@@ -380,6 +391,7 @@ void MainWindow::retranslate()
     //: This string refers to a single project (as in "Manager of a project").
     actionProjectManager->setText(tr("&Project Manager"));
     actionTitleEditor->setText(tr("Edit Application &Title"));
+    actionPermissionEditor->setText(tr("Edit Application Permi&ssions"));
 
     // Settings Menu:
 
@@ -455,6 +467,7 @@ void MainWindow::setActionsEnabled(const Project *project)
     actionApkExplore->setEnabled(project ? project->getState().canExplore() : false);
     actionApkClose->setEnabled(project ? project->getState().canClose() : false);
     actionTitleEditor->setEnabled(project ? project->getState().canEdit() : false);
+    actionPermissionEditor->setEnabled(project ? project->getState().canEdit() : false);
     actionProjectManager->setEnabled(project);
 }
 
