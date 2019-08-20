@@ -239,11 +239,6 @@ QIcon Project::getThumbnail() const
     return !thumbnail.isNull() ? thumbnail : app->icons.get("application.png");
 }
 
-const Manifest *Project::getManifest() const
-{
-    return manifest;
-}
-
 const ProjectState &Project::getState() const
 {
     return state;

@@ -8,7 +8,7 @@ TitleItemsModel::TitleItemsModel(const Project *apk, QObject *parent) : QAbstrac
 {
     // Parse application label attribute (android:label):
 
-    QString labelAttribute = apk->getManifest()->scopes.first()->label().getValue();
+    QString labelAttribute = apk->manifest->scopes.first()->label().getValue();
     if (!labelAttribute.startsWith("@string/")) {
         return;
     }

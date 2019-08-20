@@ -29,11 +29,12 @@ public:
     QString getOriginalPath() const;
     QString getContentsPath() const;
     QIcon getThumbnail() const;
-    const Manifest *getManifest() const;
     const ProjectState &getState() const;
 
     void journal(const QString &brief, LogEntry::Type type = LogEntry::Information);
     void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
+
+    Manifest *manifest;
 
     ResourceItemsModel resourcesModel;
     FileSystemModel filesystemModel;
@@ -63,7 +64,6 @@ private:
     QString originalPath;
     QString contentsPath;
     QIcon thumbnail;
-    Manifest *manifest;
 };
 
 #endif // PROJECT_H

@@ -336,7 +336,7 @@ void IconItemsModel::onResourceAdded(const QModelIndex &index)
         auto resourceName = resource->getName();
         auto resourceType = resource->getType();
         if (!resourceName.isEmpty() && !resourceType.isEmpty()) {
-            for (ManifestScope *scope : apk()->getManifest()->scopes) {
+            for (ManifestScope *scope : apk()->manifest->scopes) {
                 if (resourceName == scope->icon().getResourceName() && resourceType == scope->icon().getResourceType()) {
                     appendIcon(index, scope, Icon);
                 } else if (resourceName == scope->roundIcon().getResourceName() && resourceType == scope->roundIcon().getResourceType()) {
