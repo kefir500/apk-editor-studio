@@ -39,6 +39,7 @@ void LogModel::clear()
 void LogModel::setLoadingState(bool state)
 {
     isLoading = state;
+    emit loadingStateChanged(state);
 }
 
 bool LogModel::getLoadingState() const
