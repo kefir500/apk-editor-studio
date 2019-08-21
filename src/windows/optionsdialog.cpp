@@ -69,6 +69,8 @@ void OptionsDialog::load()
 
     // Repacking
 
+    fileboxJava->setCurrentPath(app->settings->getJavaPath());
+    fileboxJava->setDefaultPath("java");
     fileboxApktool->setCurrentPath(app->settings->getApktoolPath());
     fileboxApktool->setDefaultPath(app->getSharedPath("tools/apktool.jar"));
     fileboxOutput->setCurrentPath(app->settings->getOutputDirectory());
@@ -142,6 +144,7 @@ void OptionsDialog::save()
 
     // Repacking
 
+    app->settings->setJavaPath(fileboxJava->getCurrentPath());
     app->settings->setApktoolPath(fileboxApktool->getCurrentPath());
     app->settings->setOutputDirectory(fileboxOutput->getCurrentPath());
     app->settings->setFrameworksDirectory(fileboxFrameworks->getCurrentPath());
@@ -232,17 +235,19 @@ void OptionsDialog::initialize()
     // Repacking
 
     QFormLayout *pageRepack = new QFormLayout;
+    fileboxJava = new FileBox(false, this);
+    fileboxJava->setPathCheckEnabled(false);
     fileboxApktool = new FileBox(false, this);
     fileboxOutput = new FileBox(true, this);
     fileboxFrameworks = new FileBox(true, this);
     checkboxSources = new QCheckBox(tr("Decompile source code (smali)"), this);
     //: "Apktool" is the name of the tool, don't translate it.
+    pageRepack->addRow(tr("Java command:"), fileboxJava);
     pageRepack->addRow(tr("Apktool path:"), fileboxApktool);
     pageRepack->addRow(tr("Extraction path:"), fileboxOutput);
     pageRepack->addRow(tr("Frameworks path:"), fileboxFrameworks);
     pageRepack->addRow(checkboxSources);
     pageRepack->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
-    tr("Java path:"); // TODO For future usage
 
     // Signing
 

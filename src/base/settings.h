@@ -13,6 +13,7 @@ public:
 
     bool reset(QWidget *parent = nullptr);
 
+    QString getJavaPath();
     QString getApktoolPath();
     QString getOutputDirectory();
     QString getDefaultOutputDirectory();
@@ -38,6 +39,7 @@ public:
     QByteArray getMainWindowGeometry();
     QByteArray getMainWindowState();
 
+    void setJavaPath(const QString &path);
     void setApktoolPath(const QString &path);
     void setOutputDirectory(const QString &directory);
     void setFrameworksDirectory(const QString &directory);

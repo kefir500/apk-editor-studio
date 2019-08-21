@@ -45,6 +45,7 @@ private:
     QSpinBox *spinboxRecent;
     QComboBox *comboLanguages;
 
+    FileBox *fileboxJava;
     FileBox *fileboxApktool;
     FileBox *fileboxOutput;
     FileBox *fileboxFrameworks;

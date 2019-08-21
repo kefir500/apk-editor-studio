@@ -17,6 +17,7 @@ public:
 
     void setCurrentPath(const QString &path);
     void setDefaultPath(const QString &path);
+    void setPathCheckEnabled(bool enabled);
 
     void retranslate();
 
@@ -47,6 +48,7 @@ private:
     void resetPath();
 
     bool isDirectory;
+    bool isPathChecked;
     QString defaultPath;
 
     LineEditWithoutDrops *input;

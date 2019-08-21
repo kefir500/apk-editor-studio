@@ -1,5 +1,11 @@
 #include "tools/java.h"
+#include "base/application.h"
 #include <QRegularExpression>
+
+Java::Java(QObject *parent) : Executable(parent)
+{
+    executable = app->settings->getJavaPath();
+}
 
 QString Java::version()
 {

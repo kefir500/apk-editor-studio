@@ -6,8 +6,8 @@
 class Java : public Executable
 {
 public:
-    explicit Java(QObject *parent = nullptr) : Executable("java", parent) {}
-    explicit Java(const QString &path, QObject *parent) : Executable(path, parent = nullptr) {}
+    explicit Java(QObject *parent = nullptr);
+    explicit Java(const QString &path, QObject *parent = nullptr) : Executable(path, parent) {}
 
     QString version();
 };

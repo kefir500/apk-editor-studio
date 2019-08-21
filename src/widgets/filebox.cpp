@@ -50,6 +50,11 @@ void FileBox::setDefaultPath(const QString &path)
     btnReset->setToolTip(path);
 }
 
+void FileBox::setPathCheckEnabled(bool enabled)
+{
+    isPathChecked = enabled;
+}
+
 void FileBox::openPath()
 {
     const QString oldPath = input->text();
@@ -61,6 +66,9 @@ void FileBox::openPath()
 
 void FileBox::checkPath()
 {
+    if (!isPathChecked) {
+        return;
+    }
     const QString path = input->text();
     const bool exists = isDirectory ? QDir(path).exists() : QFile::exists(path);
     if (exists) {

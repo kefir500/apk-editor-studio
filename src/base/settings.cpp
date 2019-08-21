@@ -39,6 +39,12 @@ bool Settings::reset(QWidget *parent)
 
 // Getters:
 
+QString Settings::getJavaPath()
+{
+    QMutexLocker locker(&mutex);
+    return settings->value("Preferences/Java", "java").toString();
+}
+
 QString Settings::getApktoolPath()
 {
     QMutexLocker locker(&mutex);
@@ -189,6 +195,12 @@ QByteArray Settings::getMainWindowState()
 }
 
 // Setters:
+
+void Settings::setJavaPath(const QString &path)
+{
+    QMutexLocker locker(&mutex);
+    settings->setValue("Preferences/Java", path);
+}
 
 void Settings::setApktoolPath(const QString &path)
 {
