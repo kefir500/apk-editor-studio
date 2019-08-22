@@ -8,9 +8,9 @@ class Which : public Executable
 public:
     Which(QObject *parent)
 #ifndef Q_OS_WIN
-        : Executable("which", parent = nullptr) {}
+        : Executable("which", parent) {}
 #else
-        : Executable("where", parent = nullptr) {}
+        : Executable("where", parent) {}
 #endif
     Result<QString> find(const QString &application) const;
 };
