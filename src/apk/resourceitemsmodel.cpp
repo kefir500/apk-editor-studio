@@ -137,10 +137,10 @@ QVariant ResourceItemsModel::headerData(int section, Qt::Orientation orientation
 QModelIndex ResourceItemsModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (hasIndex(row, column, parent)) {
-        ResourceNode *parentItem = parent.isValid() ? static_cast<ResourceNode *>(parent.internalPointer()) : root;
-        ResourceNode *childItem = parentItem->getChild(row);
-        if (childItem) {
-            return createIndex(row, column, childItem);
+        ResourceNode *parentNode = parent.isValid() ? static_cast<ResourceNode *>(parent.internalPointer()) : root;
+        ResourceNode *childNode = parentNode->getChild(row);
+        if (childNode) {
+            return createIndex(row, column, childNode);
         }
     }
     return QModelIndex();
@@ -149,10 +149,10 @@ QModelIndex ResourceItemsModel::index(int row, int column, const QModelIndex &pa
 QModelIndex ResourceItemsModel::parent(const QModelIndex &index) const
 {
     if (index.isValid()) {
-        ResourceNode *childItem = static_cast<ResourceNode *>(index.internalPointer());
-        ResourceNode *parentItem = childItem->getParent();
-        if (parentItem != root) {
-            return createIndex(parentItem->row(), 0, parentItem);
+        ResourceNode *childNode = static_cast<ResourceNode *>(index.internalPointer());
+        ResourceNode *parentNode = childNode->getParent();
+        if (parentNode != root) {
+            return createIndex(parentNode->row(), 0, parentNode);
         }
     }
     return QModelIndex();

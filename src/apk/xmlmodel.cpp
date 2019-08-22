@@ -111,10 +111,10 @@ QVariant XmlResourceModel::headerData(int section, Qt::Orientation orientation, 
 QModelIndex XmlResourceModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (hasIndex(row, column, parent)) {
-        XmlNode *parentItem = parent.isValid() ?  static_cast<XmlNode *>(parent.internalPointer()): root;
-        XmlNode *childItem = parentItem->getChild(row);
-        if (childItem) {
-            return createIndex(row, column, childItem);
+        XmlNode *parentNode = parent.isValid() ?  static_cast<XmlNode *>(parent.internalPointer()): root;
+        XmlNode *childNode = parentNode->getChild(row);
+        if (childNode) {
+            return createIndex(row, column, childNode);
         }
     }
     return QModelIndex();
@@ -123,10 +123,10 @@ QModelIndex XmlResourceModel::index(int row, int column, const QModelIndex &pare
 QModelIndex XmlResourceModel::parent(const QModelIndex &index) const
 {
     if (index.isValid()) {
-        XmlNode *childItem = static_cast<XmlNode *>(index.internalPointer());
-        XmlNode *parentItem = childItem->getParent();
-        if (parentItem != root) {
-            return createIndex(parentItem->row(), 0, parentItem);
+        XmlNode *childNode = static_cast<XmlNode *>(index.internalPointer());
+        XmlNode *parentNode = childNode->getParent();
+        if (parentNode != root) {
+            return createIndex(parentNode->row(), 0, parentNode);
         }
     }
     return QModelIndex();
