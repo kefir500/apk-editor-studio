@@ -3,6 +3,7 @@
 #include "base/application.h"
 #include <QBoxLayout>
 #include <QHeaderView>
+#include <QSortFilterProxyModel>
 
 TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(parent)
 {
@@ -15,7 +16,9 @@ TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(paren
     table = new QTableView(this);
     table->setAlternatingRowColors(true);
     table->setHorizontalScrollMode(QTableView::ScrollPerPixel);
-    table->setModel(model);
+    auto sortProxy = new QSortFilterProxyModel(this);
+    sortProxy->setSourceModel(model);
+    table->setModel(sortProxy);
     table->setSortingEnabled(true);
     table->resizeColumnsToContents();
 
