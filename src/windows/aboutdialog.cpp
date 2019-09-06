@@ -1,6 +1,7 @@
 #include "windows/aboutdialog.h"
 #include "tools/adb.h"
 #include "tools/apktool.h"
+#include "tools/apksigner.h"
 #include "tools/java.h"
 #include <QFormLayout>
 #include <QTabWidget>
@@ -178,6 +179,7 @@ QWidget *AboutDialog::createLibrariesTab()
     QLabel *labelQt = new QLabel(ellipsis, this);
     QLabel *labelJava = new QLabel(ellipsis, this);
     QLabel *labelApktool = new QLabel(ellipsis, this);
+    QLabel *labelApksigner = new QLabel(ellipsis, this);
     QLabel *labelAdb = new QLabel(ellipsis, this);
 
     QFormLayout *layout = new QFormLayout(tab);
@@ -188,6 +190,7 @@ QWidget *AboutDialog::createLibrariesTab()
     layout->addRow(new QLabel("Qt", this), labelQt);
     layout->addRow(new QLabel("Java", this), labelJava);
     layout->addRow(new QLabel("Apktool", this), labelApktool);
+    layout->addRow(new QLabel("Apksigner", this), labelApksigner);
     layout->addRow(new QLabel("ADB", this), labelAdb);
 
     // Set versions:
@@ -202,6 +205,10 @@ QWidget *AboutDialog::createLibrariesTab()
         Apktool apktool(app->settings->getApktoolPath());
         const QString versionApktool = apktool.version();
         labelApktool->setText(!versionApktool.isEmpty() ? versionApktool : mdash);
+
+        Apksigner apksigner(app->settings->getApksignerPath());
+        const QString versionApksigner = apksigner.version();
+        labelApksigner->setText(!versionApksigner.isEmpty() ? versionApksigner : mdash);
 
         Adb adb(app->settings->getAdbPath());
         const QString versionAdb = adb.version();
