@@ -19,7 +19,7 @@ struct Keystore
     QString keystorePassword;
     QString keyAlias;
     QString keyPassword;
-    QString validity;
+    int validity;
     Dname dname;
 };
 

@@ -237,7 +237,7 @@ bool KeyCreator::create()
     keystore.keystorePassword = keystorePassword.isEmpty() ? editKeystorePassword->text() : keystorePassword;
     keystore.keyAlias = editAlias->text();
     keystore.keyPassword = editKeyPassword->text();
-    keystore.validity = editYears->text();
+    keystore.validity = editYears->text().toInt() * 365;
     keystore.dname.name = editName->text();
     keystore.dname.org = editOrganization->text();
     keystore.dname.orgUnit = editUnit->text();
