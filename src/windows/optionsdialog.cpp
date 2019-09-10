@@ -236,7 +236,6 @@ void OptionsDialog::initialize()
 
     QFormLayout *pageRepack = new QFormLayout;
     fileboxJava = new FileBox(false, this);
-    fileboxJava->setPathCheckEnabled(false);
     fileboxApktool = new FileBox(false, this);
     fileboxOutput = new FileBox(true, this);
     fileboxFrameworks = new FileBox(true, this);
