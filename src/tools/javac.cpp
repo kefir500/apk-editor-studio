@@ -9,7 +9,7 @@ QString Javac::version() const
     if (!result.success) {
         return QString();
     }
-    QRegularExpression regex("javac \"(.+)\"");
+    QRegularExpression regex("javac (.+)");
     const QString version = regex.match(result.value).captured(1);
     return version;
 }
