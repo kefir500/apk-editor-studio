@@ -50,6 +50,8 @@ void OptionsDialog::load()
 
     checkboxUpdates->setChecked(app->settings->getAutoUpdates());
     spinboxRecent->setValue(app->settings->getRecentLimit());
+    fileboxJava->setCurrentPath(app->settings->getJavaPath());
+    fileboxJdk->setCurrentPath(app->settings->getJdkPath());
 
     // Languages
 
@@ -69,8 +71,6 @@ void OptionsDialog::load()
 
     // Repacking
 
-    fileboxJava->setCurrentPath(app->settings->getJavaPath());
-    fileboxJava->setDefaultPath("java");
     fileboxApktool->setCurrentPath(app->settings->getApktoolPath());
     fileboxApktool->setDefaultPath(app->getSharedPath("tools/apktool.jar"));
     fileboxOutput->setCurrentPath(app->settings->getOutputDirectory());
@@ -141,10 +141,11 @@ void OptionsDialog::save()
     app->settings->setAutoUpdates(checkboxUpdates->isChecked());
     app->setLanguage(comboLanguages->currentData().toString());
     app->recent->setLimit(spinboxRecent->value());
+    app->settings->setJavaPath(fileboxJava->getCurrentPath());
+    app->settings->setJdkPath(fileboxJdk->getCurrentPath());
 
     // Repacking
 
-    app->settings->setJavaPath(fileboxJava->getCurrentPath());
     app->settings->setApktoolPath(fileboxApktool->getCurrentPath());
     app->settings->setOutputDirectory(fileboxOutput->getCurrentPath());
     app->settings->setFrameworksDirectory(fileboxFrameworks->getCurrentPath());
@@ -227,21 +228,24 @@ void OptionsDialog::initialize()
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
     spinboxRecent->setMaximum(50);
+    fileboxJava = new FileBox(false, this);
+    fileboxJava->setExistenceCheckEnabled(false);
+    fileboxJdk = new FileBox(true, this);
     pageGeneral->addRow(checkboxUpdates);
     pageGeneral->addRow(tr("Language:"), comboLanguages);
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
     pageGeneral->addRow(btnAssociate);
+    pageGeneral->addRow(tr("Custom Java command:"), fileboxJava);
+    pageGeneral->addRow(tr("Custom JDK path:"), fileboxJdk);
 
     // Repacking
 
     QFormLayout *pageRepack = new QFormLayout;
-    fileboxJava = new FileBox(false, this);
     fileboxApktool = new FileBox(false, this);
     fileboxOutput = new FileBox(true, this);
     fileboxFrameworks = new FileBox(true, this);
     checkboxSources = new QCheckBox(tr("Decompile source code (smali)"), this);
     //: "Apktool" is the name of the tool, don't translate it.
-    pageRepack->addRow(tr("Java command:"), fileboxJava);
     pageRepack->addRow(tr("Apktool path:"), fileboxApktool);
     pageRepack->addRow(tr("Extraction path:"), fileboxOutput);
     pageRepack->addRow(tr("Frameworks path:"), fileboxFrameworks);

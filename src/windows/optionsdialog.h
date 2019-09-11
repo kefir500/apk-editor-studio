@@ -46,6 +46,7 @@ private:
     QComboBox *comboLanguages;
 
     FileBox *fileboxJava;
+    FileBox *fileboxJdk;
     FileBox *fileboxApktool;
     FileBox *fileboxOutput;
     FileBox *fileboxFrameworks;

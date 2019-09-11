@@ -14,6 +14,7 @@ public:
     bool reset(QWidget *parent = nullptr);
 
     QString getJavaPath();
+    QString getJdkPath();
     QString getApktoolPath();
     QString getOutputDirectory();
     QString getDefaultOutputDirectory();
@@ -40,6 +41,7 @@ public:
     QByteArray getMainWindowState();
 
     void setJavaPath(const QString &path);
+    void setJdkPath(const QString &path);
     void setApktoolPath(const QString &path);
     void setOutputDirectory(const QString &directory);
     void setFrameworksDirectory(const QString &directory);
