@@ -10,6 +10,9 @@ public:
     explicit Java(const QString &path, QObject *parent = nullptr) : Executable(path, parent) {}
 
     QString version();
+
+private:
+    static QString findJavaCommand();
 };
 
 #endif // JAVA_H
