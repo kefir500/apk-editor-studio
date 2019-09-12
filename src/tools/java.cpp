@@ -26,7 +26,7 @@ QString Java::findJavaCommand()
     if (!userPath.isEmpty()) {
         return userPath;
     }
-    const QString envPath = qEnvironmentVariable("JAVA_HOME");
+    const QString envPath = qgetenv("JAVA_HOME");
     if (!envPath.isEmpty()) {
         return QDir(envPath).filePath("bin/java");
     }

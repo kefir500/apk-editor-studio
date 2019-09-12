@@ -24,7 +24,7 @@ QString Javac::findJdkBinPath()
 {
     QString path = app->settings->getJdkPath();
     if (path.isEmpty()) {
-        path = qEnvironmentVariable("JAVA_HOME");
+        path = qgetenv("JAVA_HOME");
     }
     if (path.isEmpty()) {
         return QString();
