@@ -4,7 +4,7 @@
 
 Javac::Javac(QObject *parent) : Executable(parent)
 {
-    executable = Utils::findJdkBinPath() + "javac";
+    executable = findJdkBinPath() + "javac";
 }
 
 QString Javac::version() const
