@@ -7,6 +7,7 @@ Result<QString> Keytool::create(const Keystore &keystore) const
     arguments << "-genkey";
     arguments << "-keystore" << keystore.keystorePath;
     arguments << "-storepass" << keystore.keystorePassword;
+    arguments << "-storetype" << "jks";
     arguments << "-keyalg" << "RSA";
     arguments << "-keysize" << "2048";
     arguments << "-validity" << QString::number(keystore.validity);
