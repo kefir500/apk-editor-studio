@@ -3,6 +3,7 @@
 #include "tools/apktool.h"
 #include "tools/apksigner.h"
 #include "tools/java.h"
+#include "tools/javac.h"
 #include <QFormLayout>
 #include <QTabWidget>
 #include <QLabel>
@@ -177,7 +178,8 @@ QWidget *AboutDialog::createLibrariesTab()
     const QChar ellipsis(0x2026);
 
     QLabel *labelQt = new QLabel(ellipsis, this);
-    QLabel *labelJava = new QLabel(ellipsis, this);
+    QLabel *labelJre = new QLabel(ellipsis, this);
+    QLabel *labelJdk = new QLabel(ellipsis, this);
     QLabel *labelApktool = new QLabel(ellipsis, this);
     QLabel *labelApksigner = new QLabel(ellipsis, this);
     QLabel *labelAdb = new QLabel(ellipsis, this);
@@ -188,7 +190,8 @@ QWidget *AboutDialog::createLibrariesTab()
     layout->setFormAlignment(Qt::AlignCenter);
     layout->setLabelAlignment(Qt::AlignRight);
     layout->addRow(new QLabel("Qt", this), labelQt);
-    layout->addRow(new QLabel("Java", this), labelJava);
+    layout->addRow(new QLabel("JRE", this), labelJre);
+    layout->addRow(new QLabel("JDK", this), labelJdk);
     layout->addRow(new QLabel("Apktool", this), labelApktool);
     layout->addRow(new QLabel("Apksigner", this), labelApksigner);
     layout->addRow(new QLabel("ADB", this), labelAdb);
@@ -198,9 +201,13 @@ QWidget *AboutDialog::createLibrariesTab()
     labelQt->setText(QT_VERSION_STR);
 
     QtConcurrent::run([=] {
-        Java java;
-        const QString versionJava = java.version();
-        labelJava->setText(!versionJava.isEmpty() ? versionJava : mdash);
+        Java jre;
+        const QString versionJre = jre.version();
+        labelJre->setText(!versionJre.isEmpty() ? versionJre : mdash);
+
+        Javac jdk;
+        const QString versionJdk = jdk.version();
+        labelJdk->setText(!versionJdk.isEmpty() ? versionJdk : mdash);
 
         Apktool apktool(app->settings->getApktoolPath());
         const QString versionApktool = apktool.version();
