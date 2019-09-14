@@ -114,22 +114,22 @@ void Manifest::setVersionName(const QString &value)
     saveYml();
 }
 
-QList<Permission *> Manifest::getPermissionList() const
+QList<Permission> Manifest::getPermissionList() const
 {
-    QList<Permission *> permissions;
+    QList<Permission> permissions;
     const auto manifestChildNodes = manifestNode.childNodes();
     for (int i = 0; i < manifestChildNodes.count(); ++i) {
         const auto element = manifestChildNodes.at(i).toElement();
         if (element.tagName() == "uses-permission") {
-            permissions.append(new Permission(element));
+            permissions.append(Permission(element));
         }
     }
     return permissions;
 }
 
-void Manifest::removePermission(Permission *permission)
+void Manifest::removePermission(const Permission &permission)
 {
-    manifestNode.removeChild(permission->getNode());
+    manifestNode.removeChild(permission.getNode());
     saveXml();
 }
 

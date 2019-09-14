@@ -1,12 +1,15 @@
 #include "windows/permissioneditor.h"
 #include "base/application.h"
 #include <QScrollArea>
-#include <QGridLayout>
 #include <QToolButton>
 #include <QDialogButtonBox>
 #include <QDesktopServices>
 
-PermissionEditor::PermissionEditor(Manifest *manifest, QWidget *parent) : QDialog(parent)
+#ifdef QT_DEBUG
+    #include <QDebug>
+#endif
+
+PermissionEditor::PermissionEditor(Manifest *manifest, QWidget *parent) : QDialog(parent), manifest(manifest)
 {
     //: This string refers to multiple permissions (as in "Editor of permissions").
     setWindowTitle(tr("Permission Editor"));
@@ -22,46 +25,46 @@ PermissionEditor::PermissionEditor(Manifest *manifest, QWidget *parent) : QDialo
     auto layout = new QVBoxLayout(this);
     layout->addWidget(scroll);
 
-    auto grid = new QGridLayout(viewport);
+    grid = new QGridLayout(viewport);
     auto permissions = manifest->getPermissionList();
-    for (int i = 0; i < permissions.count(); ++i) {
-        auto permission = permissions.at(i);
-        auto permissionName = permission->getName();
-        auto labelTitle = new QLabel(permissionName, this);
-        grid->addWidget(labelTitle, i, 0);
-
-        auto btnHelp = new QToolButton(this);
-        btnHelp->setToolTip(tr("Documentation"));
-        btnHelp->setIcon(app->icons.get("help.png"));
-        connect(btnHelp, &QToolButton::clicked, [=]() {
-            const QString url("https://developer.android.com/reference/android/Manifest.permission.html#%1");
-            QDesktopServices::openUrl(url.arg(permissionName.mid(QString("android.permission.").length())));
-        });
-        grid->addWidget(btnHelp, i, 1);
-
-        auto btnRemove = new QToolButton(this);
-        btnRemove->setToolTip(tr("Remove"));
-        btnRemove->setIcon(app->icons.get("remove.png"));
-        connect(btnRemove, &QToolButton::clicked, [=]() {
-            delete labelTitle;
-            delete btnHelp;
-            delete btnRemove;
-            forRemoval.append(permission);
-        });
-        grid->addWidget(btnRemove, i, 2);
-
-        if (!permissionName.startsWith("android.permission.")) {
-            btnHelp->hide();
-        }
+    for (const auto &permission : permissions) {
+        addPermissionLine(permission);
     }
 
-    auto buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto buttons = new QDialogButtonBox(QDialogButtonBox::Close, this);
     connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    connect(this, &QDialog::accepted, [=]() {
-        for (auto *permission : forRemoval) {
-            manifest->removePermission(permission);
-        }
-    });
     layout->addWidget(buttons);
+}
+
+void PermissionEditor::addPermissionLine(const Permission &permission)
+{
+    const int row = grid->rowCount();
+
+    auto permissionName = permission.getName();
+    auto labelTitle = new QLabel(permissionName, this);
+    grid->addWidget(labelTitle, row, 0);
+
+    auto btnHelp = new QToolButton(this);
+    btnHelp->setToolTip(tr("Documentation"));
+    btnHelp->setIcon(app->icons.get("help.png"));
+    connect(btnHelp, &QToolButton::clicked, [=]() {
+        const QString url("https://developer.android.com/reference/android/Manifest.permission.html#%1");
+        QDesktopServices::openUrl(url.arg(permissionName.mid(QString("android.permission.").length())));
+    });
+    grid->addWidget(btnHelp, row, 1);
+    if (!permissionName.startsWith("android.permission.")) {
+        btnHelp->setEnabled(false);
+    }
+
+    auto btnRemove = new QToolButton(this);
+    btnRemove->setToolTip(tr("Remove"));
+    btnRemove->setIcon(app->icons.get("remove.png"));
+    connect(btnRemove, &QToolButton::clicked, [=]() {
+        delete labelTitle;
+        delete btnHelp;
+        delete btnRemove;
+        manifest->removePermission(permission);
+    });
+    grid->addWidget(btnRemove, row, 2);
 }
