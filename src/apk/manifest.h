@@ -25,6 +25,7 @@ public:
     void setVersionName(const QString &value);
 
     QList<Permission> getPermissionList() const;
+    Permission addPermission(const QString &permission);
     void removePermission(const Permission &permission);
 
     QList<ManifestScope *> scopes;

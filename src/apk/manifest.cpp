@@ -127,6 +127,15 @@ QList<Permission> Manifest::getPermissionList() const
     return permissions;
 }
 
+Permission Manifest::addPermission(const QString &permission)
+{
+    auto element = xml.createElement("uses-permission");
+    element.setAttribute("android:name", permission);
+    manifestNode.appendChild(element);
+    saveXml();
+    return Permission(element);
+}
+
 void Manifest::removePermission(const Permission &permission)
 {
     manifestNode.removeChild(permission.getNode());

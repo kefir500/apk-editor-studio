@@ -3,6 +3,8 @@
 
 #include "apk/manifest.h"
 #include <QGridLayout>
+#include <QComboBox>
+#include <QDialogButtonBox>
 #include <QDialog>
 
 class PermissionEditor : public QDialog
@@ -15,6 +17,9 @@ private:
 
     Manifest *manifest;
     QGridLayout *grid;
+    QComboBox *comboAdd;
+    QPushButton *btnAdd;
+    QDialogButtonBox *buttons;
 };
 
 #endif // PERMISSIONEDITOR_H
