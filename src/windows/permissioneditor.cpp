@@ -1,4 +1,5 @@
 #include "windows/permissioneditor.h"
+#include "windows/yesalwaysdialog.h"
 #include "base/application.h"
 #include <QScrollArea>
 #include <QToolButton>
@@ -237,10 +238,13 @@ void PermissionEditor::addPermissionLine(const Permission &permission)
     btnRemove->setToolTip(tr("Remove"));
     btnRemove->setIcon(app->icons.get("remove.png"));
     connect(btnRemove, &QToolButton::clicked, [=]() {
-        delete labelTitle;
-        delete btnHelp;
-        delete btnRemove;
-        manifest->removePermission(permission);
+        //: %1 will be replaced with a programmatic Android permission name (e.g., "android.permission.SEND_SMS", "android.permission.CAMERA", etc.).
+        if (YesAlwaysDialog::ask("RemovePermission", tr("Are you sure you want to remove the %1 permission?").arg(permissionName), this)) {
+            delete labelTitle;
+            delete btnHelp;
+            delete btnRemove;
+            manifest->removePermission(permission);
+        }
     });
     grid->addWidget(btnRemove, row, 2);
 }
