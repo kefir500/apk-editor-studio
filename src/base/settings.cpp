@@ -200,6 +200,18 @@ QByteArray Settings::getMainWindowState()
     return settings->value("MainWindow/State").toByteArray();
 }
 
+bool Settings::hasRememberState(const QString &identifier)
+{
+    QMutexLocker locker(&mutex);
+    return settings->contains(QString("Remember/%1").arg(identifier));
+}
+
+bool Settings::getRememberState(const QString &identifier)
+{
+    QMutexLocker locker(&mutex);
+    return settings->value(QString("Remember/%1").arg(identifier)).toBool();
+}
+
 // Setters:
 
 void Settings::setJavaPath(const QString &path)
@@ -350,4 +362,16 @@ void Settings::setMainWindowState(const QByteArray &state)
 {
     QMutexLocker locker(&mutex);
     settings->setValue("MainWindow/State", state);
+}
+
+void Settings::setRememberState(const QString &identifier, bool state)
+{
+    QMutexLocker locker(&mutex);
+    settings->setValue(QString("Remember/%1").arg(identifier), state);
+}
+
+void Settings::resetRememberState(const QString &identifier)
+{
+    QMutexLocker locker(&mutex);
+    settings->remove(QString("Remember/%1").arg(identifier));
 }

@@ -39,6 +39,8 @@ public:
     QStringList getToolbar();
     QByteArray getMainWindowGeometry();
     QByteArray getMainWindowState();
+    bool hasRememberState(const QString &identifier);
+    bool getRememberState(const QString &identifier);
 
     void setJavaPath(const QString &path);
     void setJdkPath(const QString &path);
@@ -65,6 +67,8 @@ public:
     void setToolbar(const QStringList &actions);
     void setMainWindowGeometry(const QByteArray &geometry);
     void setMainWindowState(const QByteArray &state);
+    void setRememberState(const QString &identifier, bool state);
+    void resetRememberState(const QString &identifier);
 
 private:
     QSettings *settings;
