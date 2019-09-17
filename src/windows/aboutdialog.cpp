@@ -209,15 +209,15 @@ QWidget *AboutDialog::createLibrariesTab()
         const QString versionJdk = jdk.version();
         labelJdk->setText(!versionJdk.isEmpty() ? versionJdk : mdash);
 
-        Apktool apktool(app->settings->getApktoolPath());
+        Apktool apktool;
         const QString versionApktool = apktool.version();
         labelApktool->setText(!versionApktool.isEmpty() ? versionApktool : mdash);
 
-        Apksigner apksigner(app->settings->getApksignerPath());
+        Apksigner apksigner;
         const QString versionApksigner = apksigner.version();
         labelApksigner->setText(!versionApksigner.isEmpty() ? versionApksigner : mdash);
 
-        Adb adb(app->settings->getAdbPath());
+        Adb adb;
         const QString versionAdb = adb.version();
         labelAdb->setText(!versionAdb.isEmpty() ? versionAdb : mdash);
     });

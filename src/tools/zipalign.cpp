@@ -1,4 +1,5 @@
 #include "tools/zipalign.h"
+#include "base/application.h"
 #include <QFile>
 #include <QStringList>
 
@@ -19,4 +20,15 @@ void Zipalign::align(const QString &apk)
     });
 
     Executable::startAsync(arguments);
+}
+
+QString Zipalign::getPath()
+{
+    const QString path = app->settings->getZipalignPath();
+    return !path.isEmpty() ? path : getDefaultPath();
+}
+
+QString Zipalign::getDefaultPath()
+{
+    return app->getBinaryPath("zipalign");
 }

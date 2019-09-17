@@ -12,7 +12,7 @@ const Device *DeviceItemsModel::get(const QModelIndex &index) const
 
 void DeviceItemsModel::refresh()
 {
-    Adb adb(app->settings->getAdbPath());
+    Adb adb;
     if (!devices.isEmpty()) {
         beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
             devices.clear();

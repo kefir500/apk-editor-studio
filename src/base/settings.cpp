@@ -26,8 +26,8 @@ bool Settings::reset(QWidget *parent)
         apktool.reset();
         settings->clear();
         app->recent->clear();
-        QDir().mkpath(getOutputDirectory());
-        QDir().mkpath(getFrameworksDirectory());
+        QDir().mkpath(Apktool::getOutputPath());
+        QDir().mkpath(Apktool::getFrameworksPath());
         Password passwordKeystore("keystore");
         Password passwordKey("key");
         passwordKeystore.remove();
@@ -54,24 +54,19 @@ QString Settings::getJdkPath()
 QString Settings::getApktoolPath()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("Apktool/Path", app->getSharedPath("tools/apktool.jar")).toString();
+    return settings->value("Apktool/Path").toString();
 }
 
 QString Settings::getOutputDirectory()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("Apktool/Output", getDefaultOutputDirectory()).toString();
-}
-
-QString Settings::getDefaultOutputDirectory()
-{
-    return app->getTemporaryPath("apk");
+    return settings->value("Apktool/Output").toString();
 }
 
 QString Settings::getFrameworksDirectory()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("Apktool/Frameworks", app->getLocalConfigPath("frameworks")).toString();
+    return settings->value("Apktool/Frameworks").toString();
 }
 
 bool Settings::getSignApk()
@@ -89,19 +84,19 @@ bool Settings::getOptimizeApk()
 QString Settings::getApksignerPath()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("Signer/Path", app->getSharedPath("tools/apksigner.jar")).toString();
+    return settings->value("Signer/Path").toString();
 }
 
 QString Settings::getZipalignPath()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("Zipalign/Path", app->getBinaryPath("zipalign")).toString();
+    return settings->value("Zipalign/Path").toString();
 }
 
 QString Settings::getAdbPath()
 {
     QMutexLocker locker(&mutex);
-    return settings->value("ADB/Path", app->getBinaryPath("adb")).toString();
+    return settings->value("ADB/Path").toString();
 }
 
 bool Settings::getCustomKeystore()

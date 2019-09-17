@@ -1,4 +1,5 @@
 #include "tools/adb.h"
+#include "base/application.h"
 #include <QSharedPointer>
 #include <QRegularExpression>
 
@@ -59,4 +60,15 @@ QString Adb::version() const
     QRegularExpression regex("Android Debug Bridge version (.+)");
     const QString version = regex.match(result.value).captured(1).trimmed();
     return version;
+}
+
+QString Adb::getPath()
+{
+    const QString path = app->settings->getAdbPath();
+    return !path.isEmpty() ? path : getDefaultPath();
+}
+
+QString Adb::getDefaultPath()
+{
+    return app->getBinaryPath("adb");
 }

@@ -3,11 +3,12 @@
 
 #include "tools/executable.h"
 #include "tools/keystore.h"
+#include "base/application.h"
 
 class Keytool : public Executable
 {
 public:
-    explicit Keytool(QObject *parent = nullptr) : Executable("keytool", parent) {}
+    explicit Keytool(QObject *parent = nullptr) : Keytool(app->getJavaBinaryPath("keytool"), parent) {}
     explicit Keytool(const QString &executable, QObject *parent = nullptr) : Executable(executable, parent) {}
 
     Result<QString> create(const Keystore &keystore) const;

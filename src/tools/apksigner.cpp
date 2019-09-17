@@ -1,4 +1,5 @@
 #include "tools/apksigner.h"
+#include "base/application.h"
 #include <QStringList>
 
 void Apksigner::sign(const QString &target, const Keystore *keystore)
@@ -30,4 +31,15 @@ QString Apksigner::version() const
     arguments << "--version";
     auto result = startSync(arguments);
     return result.success ? result.value : QString();
+}
+
+QString Apksigner::getPath()
+{
+    const QString path = app->settings->getApksignerPath();
+    return !path.isEmpty() ? path : getDefaultPath();
+}
+
+QString Apksigner::getDefaultPath()
+{
+    return app->getSharedPath("tools/apksigner.jar");
 }

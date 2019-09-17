@@ -2,6 +2,10 @@
 #include "windows/devicemanager.h"
 #include "windows/keymanager.h"
 #include "widgets/toolbar.h"
+#include "tools/adb.h"
+#include "tools/apksigner.h"
+#include "tools/apktool.h"
+#include "tools/zipalign.h"
 #include "base/application.h"
 #include <QLabel>
 #include <QPushButton>
@@ -72,29 +76,23 @@ void OptionsDialog::load()
     // Repacking
 
     fileboxApktool->setCurrentPath(app->settings->getApktoolPath());
-    fileboxApktool->setDefaultPath(app->getSharedPath("tools/apktool.jar"));
     fileboxOutput->setCurrentPath(app->settings->getOutputDirectory());
-    fileboxOutput->setDefaultPath(app->settings->getDefaultOutputDirectory());
     fileboxFrameworks->setCurrentPath(app->settings->getFrameworksDirectory());
-    fileboxFrameworks->setDefaultPath(app->getLocalConfigPath("frameworks"));
     checkboxSources->setChecked(app->settings->getDecompileSources());
 
     // Signing
 
     groupSign->setChecked(app->settings->getSignApk());
     fileboxApksigner->setCurrentPath(app->settings->getApksignerPath());
-    fileboxApksigner->setDefaultPath(app->getSharedPath("tools/apksigner.jar"));
 
     // Optimizing
 
     groupZipalign->setChecked(app->settings->getOptimizeApk());
     fileboxZipalign->setCurrentPath(app->settings->getZipalignPath());
-    fileboxZipalign->setDefaultPath(app->getBinaryPath("zipalign"));
 
     // Installing
 
     fileboxAdb->setCurrentPath(app->settings->getAdbPath());
-    fileboxAdb->setDefaultPath(app->getBinaryPath("adb"));
 
     // Toolbar
 

@@ -1,10 +1,10 @@
 #include "apk/project.h"
 #include "base/application.h"
 #include "base/utils.h"
+#include "tools/adb.h"
 #include "tools/apktool.h"
 #include "tools/apksigner.h"
 #include "tools/zipalign.h"
-#include "tools/adb.h"
 #include "windows/dialogs.h"
 #include "windows/keymanager.h"
 #include <QUuid>
@@ -259,9 +259,9 @@ Tasks::Task *Project::createUnpackTask(const QString &source)
     QString target;
     do {
         const QString uuid = QUuid::createUuid().toString();
-        target = QDir::toNativeSeparators(QString("%1/%2").arg(app->settings->getOutputDirectory(), uuid));
+        target = QDir::toNativeSeparators(QString("%1/%2").arg(Apktool::getOutputPath(), uuid));
     } while (target.isEmpty() || QDir(target).exists());
-    const QString frameworks = app->settings->getFrameworksDirectory();
+    const QString frameworks = Apktool::getFrameworksPath();
     const bool resources = true;
     const bool sources = app->settings->getDecompileSources();
 
@@ -341,7 +341,7 @@ Tasks::Task *Project::createSaveTask(const QString &target) // Combines Pack, Zi
 Tasks::Task *Project::createPackTask(const QString &target)
 {
     const QString source = getContentsPath();
-    const QString frameworks = app->settings->getFrameworksDirectory();
+    const QString frameworks = Apktool::getFrameworksPath();
     const bool resources = true;
     const bool sources = !app->settings->getDecompileSources();
 

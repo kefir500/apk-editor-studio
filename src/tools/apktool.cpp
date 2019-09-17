@@ -49,8 +49,41 @@ void Apktool::reset() const
         const QString currentVersion = version();
         const QString previousVersion = app->settings->getApktoolVersion();
         if (currentVersion.isNull() || currentVersion != previousVersion) {
-            QFile::remove(app->settings->getFrameworksDirectory() + "/1.apk");
+            QFile::remove(getFrameworksPath() + "/1.apk");
             app->settings->setApktoolVersion(currentVersion);
         }
     });
+}
+
+QString Apktool::getPath()
+{
+    const QString path = app->settings->getApktoolPath();
+    return !path.isEmpty() ? path : getDefaultPath();
+}
+
+QString Apktool::getDefaultPath()
+{
+    return app->getSharedPath("tools/apktool.jar");
+}
+
+QString Apktool::getOutputPath()
+{
+    const QString path = app->settings->getOutputDirectory();
+    return !path.isEmpty() ? path : getDefaultOutputPath();
+}
+
+QString Apktool::getDefaultOutputPath()
+{
+    return app->getTemporaryPath("apk");
+}
+
+QString Apktool::getFrameworksPath()
+{
+    const QString path = app->settings->getFrameworksDirectory();
+    return !path.isEmpty() ? path : getDefaultFrameworksPath();
+}
+
+QString Apktool::getDefaultFrameworksPath()
+{
+    return app->getLocalConfigPath("frameworks");
 }

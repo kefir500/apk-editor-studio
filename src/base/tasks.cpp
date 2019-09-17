@@ -1,5 +1,4 @@
 #include "base/tasks.h"
-#include "base/application.h"
 #include "tools/apktool.h"
 #include "tools/apksigner.h"
 #include "tools/zipalign.h"
@@ -29,7 +28,7 @@ Unpack::Unpack(const QString &source, const QString &target, const QString &fram
 void Unpack::run()
 {
     emit started();
-    Apktool *apktool = new Apktool(app->settings->getApktoolPath(), this);
+    Apktool *apktool = new Apktool(this);
     connect(apktool, &Executable::success, this, &Task::success);
     connect(apktool, &Executable::error, this, &Task::error);
     connect(apktool, &Executable::finished, this, &Task::finished);
@@ -51,7 +50,7 @@ Pack::Pack(const QString &source, const QString &target, const QString &framewor
 void Pack::run()
 {
     emit started();
-    Apktool *apktool = new Apktool(app->settings->getApktoolPath(), this);
+    Apktool *apktool = new Apktool(this);
     connect(apktool, &Executable::success, this, &Task::success);
     connect(apktool, &Executable::error, this, &Task::error);
     connect(apktool, &Executable::finished, this, &Task::finished);
@@ -69,7 +68,7 @@ Align::Align(const QString &target)
 void Align::run()
 {
     emit started();
-    Zipalign *zipalign = new Zipalign(app->settings->getZipalignPath(), this);
+    Zipalign *zipalign = new Zipalign(this);
     connect(zipalign, &Executable::success, this, &Task::success);
     connect(zipalign, &Executable::error, this, &Task::error);
     connect(zipalign, &Executable::finished, this, &Task::finished);
@@ -88,7 +87,7 @@ Sign::Sign(const QString &target, const Keystore *keystore)
 void Sign::run()
 {
     emit started();
-    Apksigner *apksigner = new Apksigner(app->settings->getApksignerPath(), this);
+    Apksigner *apksigner = new Apksigner(this);
     connect(apksigner, &Executable::success, this, &Task::success);
     connect(apksigner, &Executable::error, this, &Task::error);
     connect(apksigner, &Executable::finished, this, &Task::finished);
@@ -107,7 +106,7 @@ Install::Install(const QString &apk, const QString &serial)
 void Install::run()
 {
     emit started();
-    Adb *adb = new Adb(app->settings->getAdbPath(), this);
+    Adb *adb = new Adb(this);
     connect(adb, &Executable::success, this, &Task::success);
     connect(adb, &Executable::error, this, &Task::error);
     connect(adb, &Executable::finished, this, &Task::finished);

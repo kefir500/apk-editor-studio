@@ -64,8 +64,8 @@ int Application::exec()
     Apktool apktool(getSharedPath("tools/apktool.jar"));
     apktool.reset();
 
-    QDir().mkpath(settings->getOutputDirectory());
-    QDir().mkpath(settings->getFrameworksDirectory());
+    QDir().mkpath(Apktool::getOutputPath());
+    QDir().mkpath(Apktool::getFrameworksPath());
 
     setLanguage(settings->getLanguage());
 
