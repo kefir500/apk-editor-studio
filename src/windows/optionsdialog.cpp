@@ -55,7 +55,6 @@ void OptionsDialog::load()
     checkboxUpdates->setChecked(app->settings->getAutoUpdates());
     spinboxRecent->setValue(app->settings->getRecentLimit());
     fileboxJava->setCurrentPath(app->settings->getJavaPath());
-    fileboxJdk->setCurrentPath(app->settings->getJdkPath());
 
     // Languages
 
@@ -140,7 +139,6 @@ void OptionsDialog::save()
     app->setLanguage(comboLanguages->currentData().toString());
     app->recent->setLimit(spinboxRecent->value());
     app->settings->setJavaPath(fileboxJava->getCurrentPath());
-    app->settings->setJdkPath(fileboxJdk->getCurrentPath());
 
     // Repacking
 
@@ -226,15 +224,15 @@ void OptionsDialog::initialize()
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
     spinboxRecent->setMaximum(50);
-    fileboxJava = new FileBox(false, this);
-    fileboxJava->setExistenceCheckEnabled(false);
-    fileboxJdk = new FileBox(true, this);
+    fileboxJava = new FileBox(true, this);
+    const QString javaPath = app->getJavaPath();
+    //: "PATH" is the name of an environment variable, don't translate it.
+    fileboxJava->setPlaceholderText(!javaPath.isEmpty() ? javaPath : tr("Retrieved from the PATH environment variable by default"));
     pageGeneral->addRow(checkboxUpdates);
     pageGeneral->addRow(tr("Language:"), comboLanguages);
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
+    pageGeneral->addRow(tr("Java path:"), fileboxJava);
     pageGeneral->addRow(btnAssociate);
-    pageGeneral->addRow(tr("Custom Java command:"), fileboxJava);
-    pageGeneral->addRow(tr("Custom JDK path:"), fileboxJdk);
 
     // Repacking
 

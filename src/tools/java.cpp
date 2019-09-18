@@ -2,10 +2,7 @@
 #include "base/application.h"
 #include <QRegularExpression>
 
-Java::Java(QObject *parent) : Executable(parent)
-{
-    executable = findJavaCommand();
-}
+Java::Java(QObject *parent) : Java(app->getJavaBinaryPath("java"), parent) {}
 
 QString Java::version()
 {
@@ -18,17 +15,4 @@ QString Java::version()
     QRegularExpression regex("version \"(.+)\"");
     const QString version = regex.match(result.value).captured(1);
     return version;
-}
-
-QString Java::findJavaCommand()
-{
-    const QString userPath = app->settings->getJavaPath();
-    if (!userPath.isEmpty()) {
-        return userPath;
-    }
-    const QString envPath = qgetenv("JAVA_HOME");
-    if (!envPath.isEmpty()) {
-        return QDir(envPath).filePath("bin/java");
-    }
-    return "java";
 }

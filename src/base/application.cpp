@@ -170,6 +170,28 @@ QString Application::getBinaryPath(const QString &executable)
     return fileInfo.exists() ? path : fileInfo.fileName();
 }
 
+QString Application::getJavaPath()
+{
+    const QString userPath = app->settings->getJavaPath();
+    if (!userPath.isEmpty()) {
+        return userPath;
+    }
+    const QString envPath = qgetenv("JAVA_HOME");
+    if (!envPath.isEmpty()) {
+        return envPath;
+    }
+    return QString();
+}
+
+QString Application::getJavaBinaryPath(const QString &executable)
+{
+    const QString javaPath = getJavaPath();
+    if (!javaPath.isEmpty()) {
+        return QDir(javaPath).filePath(QString("bin/%1").arg(executable));
+    }
+    return executable;
+}
+
 QPixmap Application::getLocaleFlag(const QLocale &locale)
 {
     const QLocale::Language localeLanguage = locale.language();

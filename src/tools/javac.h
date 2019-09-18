@@ -10,9 +10,6 @@ public:
     explicit Javac(const QString &path, QObject *parent = nullptr) : Executable(path, parent) {}
 
     QString version() const;
-
-private:
-    static QString findJdkBinPath();
 };
 
 #endif // JAVAC_H

@@ -43,6 +43,8 @@ public:
     static QString getLocalConfigPath(const QString &subdirectory = QString());
     static QString getSharedPath(const QString &resource = QString());
     static QString getBinaryPath(const QString &executable);
+    static QString getJavaPath();
+    static QString getJavaBinaryPath(const QString &executable);
     static QPixmap getLocaleFlag(const QLocale &locale);
 
     static QList<Language> getLanguages();

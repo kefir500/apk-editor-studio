@@ -2,10 +2,7 @@
 #include "base/application.h"
 #include <QRegularExpression>
 
-Javac::Javac(QObject *parent) : Executable(parent)
-{
-    executable = findJdkBinPath() + "javac";
-}
+Javac::Javac(QObject *parent) : Javac(app->getJavaBinaryPath("javac"), parent) {}
 
 QString Javac::version() const
 {
@@ -18,16 +15,4 @@ QString Javac::version() const
     QRegularExpression regex("javac (.+)");
     const QString version = regex.match(result.value).captured(1);
     return version;
-}
-
-QString Javac::findJdkBinPath()
-{
-    QString path = app->settings->getJdkPath();
-    if (path.isEmpty()) {
-        path = qgetenv("JAVA_HOME");
-    }
-    if (path.isEmpty()) {
-        return QString();
-    }
-    return QDir(path).filePath("bin/");
 }
