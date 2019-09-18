@@ -240,8 +240,11 @@ void OptionsDialog::initialize()
 
     QFormLayout *pageRepack = new QFormLayout;
     fileboxApktool = new FileBox(false, this);
+    fileboxApktool->setPlaceholderText(Apktool::getDefaultPath());
     fileboxOutput = new FileBox(true, this);
+    fileboxOutput->setPlaceholderText(Apktool::getDefaultOutputPath());
     fileboxFrameworks = new FileBox(true, this);
+    fileboxFrameworks->setPlaceholderText(Apktool::getDefaultFrameworksPath());
     checkboxSources = new QCheckBox(tr("Decompile source code (smali)"), this);
     //: "Apktool" is the name of the tool, don't translate it.
     pageRepack->addRow(tr("Apktool path:"), fileboxApktool);
@@ -256,6 +259,7 @@ void OptionsDialog::initialize()
     groupSign = new QGroupBox(tr("Enable"), this);
     groupSign->setCheckable(true);
     fileboxApksigner = new FileBox(false, this);
+    fileboxApksigner->setPlaceholderText(Apksigner::getDefaultPath());
     QFormLayout *layoutSign = new QFormLayout(groupSign);
     //: This string refers to multiple keys (as in "Manager of keys").
     QPushButton *btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
@@ -277,6 +281,7 @@ void OptionsDialog::initialize()
     groupZipalign = new QGroupBox(tr("Enable"), this);
     groupZipalign->setCheckable(true);
     fileboxZipalign = new FileBox(false, this);
+    fileboxZipalign->setPlaceholderText(Zipalign::getDefaultPath());
     QFormLayout *layoutZipalign = new QFormLayout(groupZipalign);
     //: "Zipalign" is the name of the tool, don't translate it.
     layoutZipalign->addRow(tr("Zipalign path:"), fileboxZipalign);
@@ -287,6 +292,7 @@ void OptionsDialog::initialize()
 
     QFormLayout *pageInstall = new QFormLayout;
     fileboxAdb = new FileBox(false, this);
+    fileboxAdb->setPlaceholderText(Adb::getDefaultPath());
     //: This string refers to multiple devices (as in "Manager of devices").
     QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
     btnDeviceManager->setIcon(app->icons.get("devices.png"));

@@ -55,6 +55,11 @@ void FileBox::setExistenceCheckEnabled(bool enabled)
     isPathExistenceChecked = enabled;
 }
 
+void FileBox::setPlaceholderText(const QString &text)
+{
+    input->setPlaceholderText(text);
+}
+
 void FileBox::openPath()
 {
     const QString oldPath = input->text();
@@ -71,7 +76,7 @@ void FileBox::checkPath()
     }
     const QString path = input->text();
     const bool exists = isDirectory ? QDir(path).exists() : QFile::exists(path);
-    if (exists) {
+    if (exists || path.isEmpty()) {
         input->setPalette(QPalette());
     } else {
         QPalette palette = input->palette();
