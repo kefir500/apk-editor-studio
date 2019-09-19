@@ -8,12 +8,12 @@ matrix:
     env: QMAKE_FLAGS="QMAKE_CXXFLAGS+=-Wno-inconsistent-missing-override"
 
 before_install:
-  - sudo add-apt-repository ppa:beineri/opt-qt597-xenial -y
+  - sudo add-apt-repository ppa:beineri/opt-qt5.10.1-xenial -y
   - sudo apt-get update -qq
 
 install:
   - sudo apt-get install qt5-default libsecret-1-dev dh-make devscripts fakeroot
-  - sudo apt-get install qt59base qt59imageformats qt59svg libgl1-mesa-dev
+  - sudo apt-get install qt510base qt510imageformats qt510svg libgl1-mesa-dev
   - source /opt/qt*/bin/qt*-env.sh
 
 script:
