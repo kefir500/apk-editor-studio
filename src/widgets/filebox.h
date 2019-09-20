@@ -17,7 +17,6 @@ public:
 
     void setCurrentPath(const QString &path);
     void setDefaultPath(const QString &path);
-    void setExistenceCheckEnabled(bool enabled);
     void setPlaceholderText(const QString &text);
 
     void retranslate();

@@ -50,11 +50,6 @@ void FileBox::setDefaultPath(const QString &path)
     btnReset->setToolTip(path);
 }
 
-void FileBox::setExistenceCheckEnabled(bool enabled)
-{
-    isPathExistenceChecked = enabled;
-}
-
 void FileBox::setPlaceholderText(const QString &text)
 {
     input->setPlaceholderText(text);
@@ -71,9 +66,6 @@ void FileBox::openPath()
 
 void FileBox::checkPath()
 {
-    if (!isPathExistenceChecked) {
-        return;
-    }
     const QString path = input->text();
     const bool exists = isDirectory ? QDir(path).exists() : QFile::exists(path);
     if (exists || path.isEmpty()) {
