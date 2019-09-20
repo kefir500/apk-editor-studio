@@ -6,13 +6,15 @@
 class Which : public Executable
 {
 public:
-    Which(QObject *parent)
+    static Result<QString> find(const QString &application);
+
+private:
+    Which(QObject *parent = nullptr)
 #ifndef Q_OS_WIN
         : Executable("which", parent) {}
 #else
         : Executable("where", parent) {}
 #endif
-    Result<QString> find(const QString &application) const;
 };
 
 #endif // WHICH_H

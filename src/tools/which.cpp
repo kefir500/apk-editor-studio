@@ -1,7 +1,8 @@
 #include "tools/which.h"
 #include <QStringList>
 
-Result<QString> Which::find(const QString &application) const
+Result<QString> Which::find(const QString &application)
 {
-    return startSync({application});
+    Which which;
+    return which.startSync({application});
 }
