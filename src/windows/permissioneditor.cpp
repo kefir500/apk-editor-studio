@@ -247,4 +247,8 @@ void PermissionEditor::addPermissionLine(const Permission &permission)
         }
     });
     grid->addWidget(btnRemove, row, 2);
+
+    setTabOrder(btnRemove, comboAdd);
+    setTabOrder(comboAdd, btnAdd);
+    setTabOrder(btnAdd, buttons);
 }
