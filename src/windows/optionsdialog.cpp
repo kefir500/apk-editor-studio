@@ -225,6 +225,7 @@ void OptionsDialog::initialize()
     spinboxRecent->setMinimum(0);
     spinboxRecent->setMaximum(50);
     fileboxJava = new FileBox(true, this);
+    fileboxJava->setDefaultPath("");
     const QString javaPath = app->getJavaPath();
     //: "PATH" is the name of an environment variable, don't translate it.
     fileboxJava->setPlaceholderText(!javaPath.isEmpty() ? javaPath : tr("Retrieved from the PATH environment variable by default"));
@@ -238,10 +239,13 @@ void OptionsDialog::initialize()
 
     QFormLayout *pageRepack = new QFormLayout;
     fileboxApktool = new FileBox(false, this);
+    fileboxApktool->setDefaultPath("");
     fileboxApktool->setPlaceholderText(Apktool::getDefaultPath());
     fileboxOutput = new FileBox(true, this);
+    fileboxOutput->setDefaultPath("");
     fileboxOutput->setPlaceholderText(Apktool::getDefaultOutputPath());
     fileboxFrameworks = new FileBox(true, this);
+    fileboxFrameworks->setDefaultPath("");
     fileboxFrameworks->setPlaceholderText(Apktool::getDefaultFrameworksPath());
     checkboxSources = new QCheckBox(tr("Decompile source code (smali)"), this);
     //: "Apktool" is the name of the tool, don't translate it.
@@ -257,6 +261,7 @@ void OptionsDialog::initialize()
     groupSign = new QGroupBox(tr("Enable"), this);
     groupSign->setCheckable(true);
     fileboxApksigner = new FileBox(false, this);
+    fileboxApksigner->setDefaultPath("");
     fileboxApksigner->setPlaceholderText(Apksigner::getDefaultPath());
     QFormLayout *layoutSign = new QFormLayout(groupSign);
     //: This string refers to multiple keys (as in "Manager of keys").
@@ -279,6 +284,7 @@ void OptionsDialog::initialize()
     groupZipalign = new QGroupBox(tr("Enable"), this);
     groupZipalign->setCheckable(true);
     fileboxZipalign = new FileBox(false, this);
+    fileboxZipalign->setDefaultPath("");
     fileboxZipalign->setPlaceholderText(Zipalign::getDefaultPath());
     QFormLayout *layoutZipalign = new QFormLayout(groupZipalign);
     //: "Zipalign" is the name of the tool, don't translate it.
@@ -290,6 +296,7 @@ void OptionsDialog::initialize()
 
     QFormLayout *pageInstall = new QFormLayout;
     fileboxAdb = new FileBox(false, this);
+    fileboxAdb->setDefaultPath("");
     fileboxAdb->setPlaceholderText(Adb::getDefaultPath());
     //: This string refers to multiple devices (as in "Manager of devices").
     QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);

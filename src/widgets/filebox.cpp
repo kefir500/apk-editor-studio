@@ -46,7 +46,7 @@ void FileBox::setCurrentPath(const QString &path)
 void FileBox::setDefaultPath(const QString &path)
 {
     defaultPath = path;
-    btnReset->setVisible(!path.isEmpty());
+    btnReset->setVisible(!path.isNull());
     btnReset->setToolTip(path);
 }
 
