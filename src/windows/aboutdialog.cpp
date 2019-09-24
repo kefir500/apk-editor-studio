@@ -201,6 +201,8 @@ QWidget *AboutDialog::createLibrariesTab()
     labelQt->setText(QT_VERSION_STR);
 
     QtConcurrent::run([=] {
+        // TODO Program crashes if the dialog is closed before this lambda is finished
+
         Java jre;
         const QString versionJre = jre.version();
         labelJre->setText(!versionJre.isEmpty() ? versionJre : mdash);

@@ -6,7 +6,7 @@ Executable::Executable(QObject *parent) : QObject(parent)
 #ifndef Q_OS_OSX
     const int processKillCode = 0xF291; // Windows kill code (Qt magic number)
 #else
-    const int processKillCode = 9;      // SIGKILL code // TODO Check on Linux
+    const int processKillCode = 9;      // SIGKILL code
 #endif
 
     connect(&process, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error), [=](QProcess::ProcessError processError) {
