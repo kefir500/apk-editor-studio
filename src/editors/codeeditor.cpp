@@ -5,6 +5,7 @@
 #include "base/xmlhighlighter.h"
 #include <QBoxLayout>
 #include <QTextStream>
+#include <QScrollBar>
 #include <QPainter>
 #include <QDebug>
 
@@ -48,7 +49,15 @@ bool CodeEditor::load()
     if (file->open(QFile::ReadWrite)) {
         QTextStream stream(file);
         stream.setCodec("UTF-8");
+        auto cursor = editor->textCursor();
+        const int selectionStart = cursor.selectionStart();
+        const int selectionEnd = cursor.selectionEnd();
+        const int scrollPosition = editor->verticalScrollBar()->value();
         editor->setPlainText(stream.readAll());
+        cursor.setPosition(selectionStart);
+        cursor.setPosition(selectionEnd, QTextCursor::KeepAnchor);
+        editor->setTextCursor(cursor);
+        editor->verticalScrollBar()->setValue(scrollPosition);
         setModified(false);
         return true;
     } else {
