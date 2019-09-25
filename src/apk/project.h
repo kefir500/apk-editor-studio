@@ -31,6 +31,8 @@ public:
     QIcon getThumbnail() const;
     const ProjectState &getState() const;
 
+    void setApplicationIcon(const QString &path);
+
     void journal(const QString &brief, LogEntry::Type type = LogEntry::Information);
     void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
 

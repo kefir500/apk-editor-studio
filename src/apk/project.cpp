@@ -244,6 +244,11 @@ const ProjectState &Project::getState() const
     return state;
 }
 
+void Project::setApplicationIcon(const QString &path)
+{
+    iconsProxy.replaceApplicationIcons(path);
+}
+
 void Project::journal(const QString &brief, LogEntry::Type type)
 {
     logModel.add(brief, QString(), type);
