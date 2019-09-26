@@ -244,6 +244,11 @@ QColor Application::getColor(Color color)
 
 int Application::scale(int value) const
 {
+    return static_cast<int>(value * scaleFactor);
+}
+
+qreal Application::scale(qreal value) const
+{
     return value * scaleFactor;
 }
 

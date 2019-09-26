@@ -51,6 +51,7 @@ public:
     static QColor getColor(Color color);
 
     int scale(int value) const;
+    qreal scale(qreal value) const;
     QSize scale(int width, int height) const;
 
     static QString getWebPage();
