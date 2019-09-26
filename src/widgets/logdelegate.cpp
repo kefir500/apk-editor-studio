@@ -23,7 +23,7 @@ void LogDelegate::setLoading(bool loading)
 void LogDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QStyledItemDelegate::paint(painter, option, index);
-    painter->setPen(QPen(QPalette().windowText(), 1.5));
+    painter->setPen(QPen(QPalette().windowText(), app->scale(1.5)));
     painter->setRenderHint(QPainter::Antialiasing);
 
     const int h = option.rect.height() - 8;
