@@ -245,6 +245,7 @@ bool KeyCreator::create()
     keystore.dname.state = editState->text();
     keystore.dname.countryCode = editCountry->text();
 
+    WAIT
     Keytool keytool;
     Result<QString> result = keytool.create(keystore);
     if (!result.success) {
