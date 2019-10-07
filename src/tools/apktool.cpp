@@ -3,7 +3,7 @@
 #include <QtConcurrent/QtConcurrent>
 #include "base/application.h"
 
-void Apktool::decode(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources)
+void Apktool::decode(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources, bool keepBroken)
 {
     if (source.isEmpty()) {
         emit error("Apktool: Source APK not specified.");
@@ -26,6 +26,9 @@ void Apktool::decode(const QString &source, const QString &destination, const QS
     }
     if (!sources) {
         arguments << "--no-src";
+    }
+    if (keepBroken) {
+        arguments << "--keep-broken-res";
     }
     Jar::startAsync(arguments);
 }

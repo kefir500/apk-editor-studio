@@ -16,13 +16,14 @@ Task::Task()
 
 // Unpack
 
-Unpack::Unpack(const QString &source, const QString &target, const QString &frameworks, bool resources, bool sources)
+Unpack::Unpack(const QString &source, const QString &target, const QString &frameworks, bool resources, bool sources, bool keepBroken)
 {
     this->source = source;
     this->target = target;
     this->frameworks = frameworks;
     this->resources = resources;
     this->sources = sources;
+    this->keepBroken = keepBroken;
 }
 
 void Unpack::run()
@@ -33,7 +34,7 @@ void Unpack::run()
     connect(apktool, &Executable::error, this, &Task::error);
     connect(apktool, &Executable::finished, this, &Task::finished);
     connect(apktool, &Executable::finished, apktool, &QObject::deleteLater);
-    apktool->decode(source, target, frameworks, resources, sources);
+    apktool->decode(source, target, frameworks, resources, sources, keepBroken);
 }
 
 // Pack

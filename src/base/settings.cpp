@@ -135,6 +135,12 @@ bool Settings::getDecompileSources()
     return settings->value("Apktool/Sources", false).toBool();
 }
 
+bool Settings::getKeepBrokenResources()
+{
+    QMutexLocker locker(&mutex);
+    return settings->value("Apktool/KeepBroken", false).toBool();
+}
+
 QString Settings::getDeviceAlias(const QString &serial)
 {
     QMutexLocker locker(&mutex);
@@ -297,6 +303,12 @@ void Settings::setDecompileSources(bool smali)
 {
     QMutexLocker locker(&mutex);
     settings->setValue("Apktool/Sources", smali);
+}
+
+void Settings::setKeepBrokenResources(bool keepBroken)
+{
+    QMutexLocker locker(&mutex);
+    settings->setValue("Apktool/KeepBroken", keepBroken);
 }
 
 void Settings::setDeviceAlias(const QString &serial, const QString &alias)

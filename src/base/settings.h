@@ -29,6 +29,7 @@ public:
     QString getKeyPassword();
     QString getApktoolVersion();
     bool getDecompileSources();
+    bool getKeepBrokenResources();
     QString getDeviceAlias(const QString &serial);
     QString getLastDirectory();
     bool getAutoUpdates();
@@ -56,6 +57,7 @@ public:
     void setKeyPassword(const QString &password);
     void setApktoolVersion(const QString &version);
     void setDecompileSources(bool smali);
+    void setKeepBrokenResources(bool keepBroken);
     void setDeviceAlias(const QString &serial, const QString &alias);
     void setLastDirectory(const QString &directory);
     void setAutoUpdates(bool value);

@@ -269,6 +269,7 @@ Tasks::Task *Project::createUnpackTask(const QString &source)
     const QString frameworks = Apktool::getFrameworksPath();
     const bool resources = true;
     const bool sources = app->settings->getDecompileSources();
+    const bool keepBroken = app->settings->getKeepBrokenResources();
 
     QDir().mkpath(target);
     QDir().mkpath(frameworks);
@@ -276,7 +277,7 @@ Tasks::Task *Project::createUnpackTask(const QString &source)
     // Be careful with the "contentsPath" variable: this directory is recursively removed in the destructor.
     this->contentsPath = target;
 
-    auto taskUnpack = new Tasks::Unpack(source, target, frameworks, resources, sources);
+    auto taskUnpack = new Tasks::Unpack(source, target, frameworks, resources, sources, keepBroken);
 
     connect(taskUnpack, &Tasks::Pack::started, this, [=]() {
         journal(tr("Unpacking APK..."));

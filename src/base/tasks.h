@@ -30,7 +30,7 @@ namespace Tasks
     class Unpack : public Task
     {
     public:
-        Unpack(const QString &source, const QString &target, const QString &frameworks, bool resources, bool sources);
+        Unpack(const QString &source, const QString &target, const QString &frameworks, bool resources, bool sources, bool keepBroken);
         void run() override;
     private:
         QString source;
@@ -38,6 +38,7 @@ namespace Tasks
         QString frameworks;
         bool resources;
         bool sources;
+        bool keepBroken;
     };
 
     // Pack

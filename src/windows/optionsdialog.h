@@ -50,6 +50,7 @@ private:
     FileBox *fileboxOutput;
     FileBox *fileboxFrameworks;
     QCheckBox *checkboxSources;
+    QCheckBox *checkboxBrokenResources;
 
     QGroupBox *groupSign;
     QGroupBox *groupZipalign;

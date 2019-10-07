@@ -9,7 +9,7 @@ public:
     explicit Apktool(QObject *parent = nullptr) : Apktool(getPath(), parent) {}
     explicit Apktool(const QString &jar, QObject *parent = nullptr) : Jar(jar, parent) {}
 
-    void decode(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources);
+    void decode(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources, bool keepBroken);
     void build(const QString &source, const QString &destination, const QString &frameworks);
     QString version() const;
     void reset() const;
