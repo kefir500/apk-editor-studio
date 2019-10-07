@@ -38,13 +38,11 @@ void Unpack::run()
 
 // Pack
 
-Pack::Pack(const QString &source, const QString &target, const QString &frameworks, bool resources, bool sources)
+Pack::Pack(const QString &source, const QString &target, const QString &frameworks)
 {
     this->source = source;
     this->target = target;
     this->frameworks = frameworks;
-    this->resources = resources;
-    this->sources = sources;
 }
 
 void Pack::run()
@@ -55,7 +53,7 @@ void Pack::run()
     connect(apktool, &Executable::error, this, &Task::error);
     connect(apktool, &Executable::finished, this, &Task::finished);
     connect(apktool, &Executable::finished, apktool, &QObject::deleteLater);
-    apktool->build(source, target, frameworks, resources, sources);
+    apktool->build(source, target, frameworks);
 }
 
 // Zipalign

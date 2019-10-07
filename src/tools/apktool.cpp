@@ -3,28 +3,10 @@
 #include <QtConcurrent/QtConcurrent>
 #include "base/application.h"
 
-void Apktool::build(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources)
-{
-    run("build", source, destination, frameworks, resources, sources);
-}
-
 void Apktool::decode(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources)
 {
-    run("decode", source, destination, frameworks, resources, sources);
-}
-
-QString Apktool::version() const
-{
-    QStringList arguments;
-    arguments << "-version";
-    auto result = startSync(arguments);
-    return result.success ? result.value : QString();
-}
-
-void Apktool::run(const QString &action, const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources)
-{
     if (source.isEmpty()) {
-        emit error("Apktool: Source path not specified.");
+        emit error("Apktool: Source APK not specified.");
         return;
     }
     if (destination.isEmpty()) {
@@ -33,14 +15,48 @@ void Apktool::run(const QString &action, const QString &source, const QString &d
     }
 
     QStringList arguments;
-    arguments << action << source;
+    arguments << "decode" << source;
     arguments << "--output" << destination;
     arguments << "--force";
-    if (!frameworks.isEmpty()) { arguments << "--frame-path" << frameworks; }
-    if (!resources) { arguments << "--no-res"; }
-    if (!sources) { arguments << "--no-src"; }
-
+    if (!frameworks.isEmpty()) {
+        arguments << "--frame-path" << frameworks;
+    }
+    if (!resources) {
+        arguments << "--no-res";
+    }
+    if (!sources) {
+        arguments << "--no-src";
+    }
     Jar::startAsync(arguments);
+}
+
+void Apktool::build(const QString &source, const QString &destination, const QString &frameworks)
+{
+    if (source.isEmpty()) {
+        emit error("Apktool: Source path not specified.");
+        return;
+    }
+    if (destination.isEmpty()) {
+        emit error("Apktool: Destination APK not specified.");
+        return;
+    }
+
+    QStringList arguments;
+    arguments << "build" << source;
+    arguments << "--output" << destination;
+    arguments << "--force";
+    if (!frameworks.isEmpty()) {
+        arguments << "--frame-path" << frameworks;
+    }
+    Jar::startAsync(arguments);
+}
+
+QString Apktool::version() const
+{
+    QStringList arguments;
+    arguments << "-version";
+    auto result = startSync(arguments);
+    return result.success ? result.value : QString();
 }
 
 void Apktool::reset() const

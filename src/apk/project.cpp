@@ -347,10 +347,8 @@ Tasks::Task *Project::createPackTask(const QString &target)
 {
     const QString source = getContentsPath();
     const QString frameworks = Apktool::getFrameworksPath();
-    const bool resources = true;
-    const bool sources = !app->settings->getDecompileSources();
 
-    auto taskPack = new Tasks::Pack(source, target, frameworks, resources, sources);
+    auto taskPack = new Tasks::Pack(source, target, frameworks);
 
     connect(taskPack, &Tasks::Pack::started, this, [=]() {
         journal(tr("Packing APK..."));

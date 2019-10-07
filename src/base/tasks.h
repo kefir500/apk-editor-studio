@@ -45,14 +45,12 @@ namespace Tasks
     class Pack : public Task
     {
     public:
-        Pack(const QString &source, const QString &target, const QString &frameworks, bool resources, bool sources);
+        Pack(const QString &source, const QString &target, const QString &frameworks);
         void run() override;
     private:
         QString source;
         QString target;
         QString frameworks;
-        bool resources;
-        bool sources;
     };
 
     // Zipalign
