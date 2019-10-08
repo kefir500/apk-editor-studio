@@ -27,9 +27,6 @@ public:
     static Result<QStringList> getCertificates(const QString &keystore, const QString &password, QWidget *parent = nullptr);
 
 private:
-//    QStringList fetchCertificates();
-    QStringList parseCertificates(const QString &output);
-
     QGroupBox *groupKeystore;
     FileBox *editKeystore;
     QLineEdit *editKeystorePassword;
