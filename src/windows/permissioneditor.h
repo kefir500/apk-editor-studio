@@ -9,6 +9,8 @@
 
 class PermissionEditor : public QDialog
 {
+    Q_OBJECT
+
 public:
     PermissionEditor(Manifest *manifest, QWidget *parent = nullptr);
 
