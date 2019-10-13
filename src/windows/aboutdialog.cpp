@@ -101,6 +101,11 @@ QWidget *AboutDialog::createAuthorsTab()
                 if (content.endsWith(br)) {
                     content.chop(br.length());
                 }
+            } else if (line.startsWith("## ")) {
+                line = QString("<h4>%1</h4>").arg(line.mid(3));
+                if (content.endsWith(br)) {
+                    content.chop(br.length());
+                }
             } else if (line.startsWith("- ")) {
                 line = line.mid(2) + br;
             }
@@ -142,10 +147,10 @@ QWidget *AboutDialog::createVersionsTab()
             QString line = stream.readLine();
 
             // Parse Markdown headers and lists:
-            if (line.startsWith("## ")) {
-                line = QString("<h3>%1<br></h3>").arg(line.mid(3));
-            } else if (line.startsWith("# ")) {
+            if (line.startsWith("# ")) {
                 line = QString("<h3>%1</h3>").arg(line.mid(2));
+            } else if (line.startsWith("## ")) {
+                line = QString("<h3>%1<br></h3>").arg(line.mid(3));
             } else if (line.startsWith("- ")) {
                 line = line.mid(2);
             }
