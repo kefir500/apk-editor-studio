@@ -390,8 +390,10 @@ void MainWindow::retranslate()
     actionDeviceManager->setText(tr("&Device Manager..."));
     //: This string refers to a single project (as in "Manager of a project").
     actionProjectManager->setText(tr("&Project Manager"));
+    //: The "&" is a shortcut key, *not* a conjuction "and". Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionTitleEditor->setText(tr("Edit Application &Title"));
-    actionPermissionEditor->setText(tr("Edit Application Permi&ssions"));
+    //: The "&" is a shortcut key, *not* a conjuction "and". Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    actionPermissionEditor->setText(tr("Edit Application &Permissions"));
 
     // Settings Menu:
 

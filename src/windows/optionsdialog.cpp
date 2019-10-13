@@ -229,7 +229,7 @@ void OptionsDialog::initialize()
     fileboxJava = new FileBox(true, this);
     fileboxJava->setDefaultPath("");
     const QString javaPath = app->getJavaPath();
-    fileboxJava->setPlaceholderText(!javaPath.isEmpty() ? javaPath : tr("Retrieved from environment variables by default"));
+    fileboxJava->setPlaceholderText(!javaPath.isEmpty() ? javaPath : tr("Extracted from environment variables by default"));
     pageGeneral->addRow(checkboxUpdates);
     pageGeneral->addRow(tr("Language:"), comboLanguages);
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
