@@ -9,6 +9,14 @@
 - [Icons8](https://icons8.com) — Action icons
 - [Mark James](http://www.famfamfam.com) — Flag icons
 
+# Translators:
+
+## Japanese
+- [Sakai Hiroki](https://www.transifex.com/user/profile/m07jp/)
+
+## Russian
+- [Alexander Gorishnyak](https://www.transifex.com/user/profile/kefir500/)
+
 # Donors:
 
 - Luis Corominas
