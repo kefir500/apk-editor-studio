@@ -13,6 +13,9 @@
 
 ### Translators:
 
+#### German
+- [Till Tektronix](https://www.transifex.com/user/profile/Tektronix/)
+
 #### Japanese
 - [Sakai Hiroki](https://www.transifex.com/user/profile/m07jp/)
 

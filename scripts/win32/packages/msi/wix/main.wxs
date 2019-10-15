@@ -464,6 +464,10 @@
               </Component>
             </Directory>
             <Directory Id="LanguagesFolder" Name="translations">
+              <Component Id="GermanComponent" Guid="F4214D4B-533E-413A-9FB6-42BBFB09A333">
+                <File Name="apk-editor-studio.de.qm" />
+                <File Name="qt.de.qm" />
+              </Component>
               <Component Id="JapaneseComponent" Guid="61C2541A-4370-4E10-8D53-FB9492E80A80">
                 <File Name="apk-editor-studio.ja.qm" />
                 <File Name="qt.ja.qm" />
@@ -550,6 +554,7 @@
       <ComponentRef Id="AdbComponent" />
     </ComponentGroup>
     <ComponentGroup Id="TranslationsComponents">
+      <ComponentRef Id="GermanComponent" />
       <ComponentRef Id="JapaneseComponent" />
       <ComponentRef Id="RussianComponent" />
     </ComponentGroup>
@@ -571,6 +576,9 @@
       <ComponentRef Id="AssociationComponent" />
     </Feature>
     <Feature Id="TranslationsFeature" Title="Translations" Description="Install additional translations. English is included by default.">
+      <Feature Id="GermanFeature" Title="German" Description="German translation.">
+        <ComponentRef Id="GermanComponent" />
+      </Feature>
       <Feature Id="JapaneseFeature" Title="Japanese" Description="Japanese translation.">
         <ComponentRef Id="JapaneseComponent" />
       </Feature>
