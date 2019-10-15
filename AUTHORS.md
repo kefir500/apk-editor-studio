@@ -19,6 +19,9 @@
 #### Japanese
 - [Sakai Hiroki](https://www.transifex.com/user/profile/m07jp/)
 
+#### Portuguese
+- [Giancarlo Molinari](https://www.transifex.com/user/profile/pombimsjb/)
+
 #### Russian
 - [Alexander Gorishnyak](https://www.transifex.com/user/profile/kefir500/)
 

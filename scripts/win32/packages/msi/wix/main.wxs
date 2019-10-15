@@ -472,6 +472,10 @@
                 <File Name="apk-editor-studio.ja.qm" />
                 <File Name="qt.ja.qm" />
               </Component>
+              <Component Id="PortugueseComponent" Guid="6234A343-B835-4775-BEE0-1937F8C11F70">
+                <File Name="apk-editor-studio.pt.qm" />
+                <File Name="qt.pt.qm" />
+              </Component>
               <Component Id="RussianComponent" Guid="FAF0AB93-09ED-4B7E-BF1E-80E0B2CAABD3">
                 <File Name="apk-editor-studio.ru.qm" />
                 <File Name="qt.ru.qm" />
@@ -556,6 +560,7 @@
     <ComponentGroup Id="TranslationsComponents">
       <ComponentRef Id="GermanComponent" />
       <ComponentRef Id="JapaneseComponent" />
+      <ComponentRef Id="PortugueseComponent" />
       <ComponentRef Id="RussianComponent" />
     </ComponentGroup>
     <ComponentGroup Id="DllComponents">
@@ -581,6 +586,9 @@
       </Feature>
       <Feature Id="JapaneseFeature" Title="Japanese" Description="Japanese translation.">
         <ComponentRef Id="JapaneseComponent" />
+      </Feature>
+      <Feature Id="PortugueseFeature" Title="Portuguese" Description="Portuguese translation.">
+        <ComponentRef Id="PortugueseComponent" />
       </Feature>
       <Feature Id="RussianFeature" Title="Russian" Description="Russian translation.">
         <ComponentRef Id="RussianComponent" />
