@@ -68,7 +68,7 @@ int ManifestView::selectAndroidApi(const QString &dialogTitle, int defaultApi)
     QList<int> apiLevels;
     QStringList apiCodenames;
     int selection = 0;
-    for (int api = 3; api <= 28; ++api) {
+    for (int api = 3; api <= 29; ++api) {
         apiLevels.append(api);
         apiCodenames.append(QString("%1 (%2)").arg(api).arg(Utils::getAndroidCodename(api)));
         if (api == defaultApi) {

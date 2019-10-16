@@ -230,6 +230,8 @@ QString Utils::getAndroidCodename(int api)
         return "8.1 - Oreo";
     case 28:
         return "9.0 - Pie";
+    case 29:
+        return "Android 10";
     }
     return QString();
 }
