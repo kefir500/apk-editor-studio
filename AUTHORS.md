@@ -25,6 +25,9 @@
 #### Russian
 - [Alexander Gorishnyak](https://www.transifex.com/user/profile/kefir500/)
 
+#### Spanish
+- [Francisco Zamorano](https://www.transifex.com/user/profile/Paco_Zamo/)
+
 ### Donors:
 
 - Luis Corominas

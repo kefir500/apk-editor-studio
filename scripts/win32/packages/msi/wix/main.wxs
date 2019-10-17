@@ -480,6 +480,10 @@
                 <File Name="apk-editor-studio.ru.qm" />
                 <File Name="qt.ru.qm" />
               </Component>
+              <Component Id="SpanishComponent" Guid="D2BCF8B9-5DDA-4975-A96E-9B3A19A25C70">
+                <File Name="apk-editor-studio.es.qm" />
+                <File Name="qt.es.qm" />
+              </Component>
             </Directory>
           </Directory>
           <Directory Id="DocsFolder" Name="docs">
@@ -562,6 +566,7 @@
       <ComponentRef Id="JapaneseComponent" />
       <ComponentRef Id="PortugueseComponent" />
       <ComponentRef Id="RussianComponent" />
+      <ComponentRef Id="SpanishComponent" />
     </ComponentGroup>
     <ComponentGroup Id="DllComponents">
       <ComponentRef Id="QtComponent" />
@@ -583,6 +588,9 @@
     <Feature Id="TranslationsFeature" Title="Translations" Description="Install additional translations. English is included by default.">
       <Feature Id="GermanFeature" Title="German" Description="German translation.">
         <ComponentRef Id="GermanComponent" />
+      </Feature>
+      <Feature Id="SpanishFeature" Title="Spanish" Description="Spanish translation.">
+        <ComponentRef Id="SpanishComponent" />
       </Feature>
       <Feature Id="JapaneseFeature" Title="Japanese" Description="Japanese translation.">
         <ComponentRef Id="JapaneseComponent" />
