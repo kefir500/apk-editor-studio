@@ -1,5 +1,6 @@
 bin/
 obj/
+apk-editor-studio.*.qm
 .qmake.cache
 .qmake.stash
 .vagrant/

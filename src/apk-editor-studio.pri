@@ -167,16 +167,17 @@ HEADERS += \
     $$PWD/widgets/spacer.h \
     $$PWD/widgets/toolbar.h \
     $$PWD/windows/aboutdialog.h \
+    $$PWD/windows/addresourcedialog.h \
+    $$PWD/windows/androidexplorer.h \
     $$PWD/windows/devicemanager.h \
     $$PWD/windows/dialogs.h \
     $$PWD/windows/keymanager.h \
     $$PWD/windows/mainwindow.h \
     $$PWD/windows/optionsdialog.h \
     $$PWD/windows/permissioneditor.h \
+    $$PWD/windows/rememberdialog.h \
     $$PWD/windows/selectdialog.h \
     $$PWD/windows/waitdialog.h \
     $$PWD/windows/yesalwaysdialog.h
 
 INCLUDEPATH += $$PWD
-
-TRANSLATIONS = $$PWD/../res/translations/apk-editor-studio.en.ts
