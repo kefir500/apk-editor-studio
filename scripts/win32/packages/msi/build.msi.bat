@@ -1,13 +1,15 @@
 call "%~dp0\..\..\environment.bat"
 
+set ROOT=%~dp0\..\..\..\..
+
 rem Build
 
 call "%VCVARS%" x86
-call "%QTDIR%\bin\qmake" "%~dp0\..\..\..\.." "DESTDIR=\"%~dp0\build""
+call "%QTDIR%\bin\qmake" "%ROOT%" "DESTDIR=\"%~dp0\build""
 if %errorlevel% neq 0 exit /b 1
-nmake
+"%MAKE%"
 if %errorlevel% neq 0 exit /b 2
-nmake clean
+"%MAKE%" clean
 
 rem Deploy
 

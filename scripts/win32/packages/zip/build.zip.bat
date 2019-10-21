@@ -2,6 +2,8 @@ call "%~dp0\..\..\environment.bat"
 
 rem Prepare
 
+set ROOT=%~dp0\..\..\..\..
+
 if /i not "%VERSION%"=="dev" (
     set FOLDER=APK Editor Studio v%VERSION%
 ) else (
@@ -15,11 +17,11 @@ if exist "%FOLDER%" rmdir /s /q "%FOLDER%"
 rem Build
 
 call "%VCVARS%" x86
-call "%QTDIR%\bin\qmake" "%~dp0\..\..\..\.." "DESTDIR=\"%FOLDER%\"" DEFINES+=PORTABLE
+"%QTDIR%\bin\qmake" "%ROOT%" "DESTDIR=\"%FOLDER%\"" DEFINES+=PORTABLE
 if %errorlevel% neq 0 exit /b 1
-nmake
+"%MAKE%"
 if %errorlevel% neq 0 exit /b 2
-nmake clean
+"%MAKE%" clean
 
 rem Deploy
 
