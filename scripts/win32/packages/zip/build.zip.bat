@@ -2,8 +2,6 @@ if /i not "%CI%"=="True" call "%~dp0\..\..\environment.bat"
 
 rem Prepare
 
-set ROOT=%~dp0\..\..\..\..
-
 if /i not "%CI%"=="True" (
     set FOLDER=APK Editor Studio v%VERSION%
     set ARCHIVE=%~dp0\apk-editor-studio_win32_%VERSION%.zip
@@ -18,7 +16,7 @@ if exist "%FOLDER%" rmdir /s /q "%FOLDER%"
 rem Build
 
 call "%VCVARS%" x86
-"%QTDIR%\bin\qmake" "%ROOT%" "DESTDIR=\"%FOLDER%\"" DEFINES+=PORTABLE
+"%QTDIR%\bin\qmake" "%~dp0\..\..\..\.." "DESTDIR=\"%FOLDER%\"" DEFINES+=PORTABLE
 if %errorlevel% neq 0 exit /b 1
 "%MAKE%"
 if %errorlevel% neq 0 exit /b 2
