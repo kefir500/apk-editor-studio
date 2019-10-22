@@ -9,6 +9,6 @@ Vagrant.configure("2") do |config|
   end
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
-    apt-get install -y qt5-default libsecret-1-dev dh-make devscripts
+    apt-get install -y qt5-default qttools5-dev-tools libsecret-1-dev dh-make devscripts
   SHELL
 end
