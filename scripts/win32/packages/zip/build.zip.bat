@@ -1,16 +1,17 @@
-call "%~dp0\..\..\environment.bat"
+if /i not "%CI%"=="True" call "%~dp0\..\..\environment.bat"
 
 rem Prepare
 
 set ROOT=%~dp0\..\..\..\..
 
-if /i not "%VERSION%"=="dev" (
+if /i not "%CI%"=="True" (
     set FOLDER=APK Editor Studio v%VERSION%
+    set ARCHIVE=%~dp0\apk-editor-studio_win32_%VERSION%.zip
 ) else (
     set FOLDER=APK Editor Studio - Developer Build
+    set ARCHIVE=%~dp0\apk-editor-studio_win32_dev.zip
 )
 
-set ARCHIVE=%~dp0\apk-editor-studio_win32_%VERSION%.zip
 if exist "%ARCHIVE%" del "%ARCHIVE%"
 if exist "%FOLDER%" rmdir /s /q "%FOLDER%"
 

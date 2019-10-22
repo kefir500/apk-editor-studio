@@ -1,4 +1,4 @@
-call "%~dp0\environment.bat"
+if /i not "%CI%"=="True" call "%~dp0\environment.bat"
 
 rem Deploy Qt Libraries
 

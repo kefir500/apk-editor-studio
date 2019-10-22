@@ -1,4 +1,4 @@
-call "%~dp0\..\..\environment.bat"
+if /i not "%CI%"=="True" call "%~dp0\..\..\environment.bat"
 
 set ROOT=%~dp0\..\..\..\..
 
@@ -19,9 +19,14 @@ cd ..\wix
 
 rem Package
 
+if /i not "%CI%"=="True" (
+    set OUTPUT=bin\apk-editor-studio_win32_%VERSION%.msi
+) else (
+    set OUTPUT=bin\apk-editor-studio_win32_dev.msi
+)
 "%WIXDIR%\candle.exe" -out obj\ -arch x86 -ext WixUIExtension main.wxs ui.wxs
 if %errorlevel% neq 0 exit /b 3
-"%WIXDIR%\light.exe" -out bin\apk-editor-studio_win32_%VERSION%.msi -pdbout bin\apk-editor-studio.wixpdb -ext WixUIExtension obj\main.wixobj obj\ui.wixobj
+"%WIXDIR%\light.exe" -out %OUTPUT% -pdbout bin\apk-editor-studio.wixpdb -ext WixUIExtension obj\main.wixobj obj\ui.wixobj
 if %errorlevel% neq 0 exit /b 4
 popd
 
