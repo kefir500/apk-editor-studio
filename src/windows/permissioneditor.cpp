@@ -193,9 +193,15 @@ PermissionEditor::PermissionEditor(Manifest *manifest, QWidget *parent) : QDialo
     btnAdd = new QPushButton(app->icons.get("add.png"), tr("Add"), this);
     btnAdd->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     connect(btnAdd, &QPushButton::clicked, [=]() {
-        const QString permission = QString("android.permission.%1").arg(comboAdd->currentText());
-        if (!permission.isEmpty()) {
-            addPermissionLine(manifest->addPermission(permission));
+        const QString newPermission = QString("android.permission.%1").arg(comboAdd->currentText());
+        if (!newPermission.isEmpty()) {
+            const auto permissions = manifest->getPermissionList();
+            for (const Permission &permission : permissions) {
+                if (permission.getName() == newPermission) {
+                    return;
+                }
+            }
+            addPermissionLine(manifest->addPermission(newPermission));
         }
     });
     layoutAdd->addWidget(comboAdd);
@@ -208,7 +214,7 @@ PermissionEditor::PermissionEditor(Manifest *manifest, QWidget *parent) : QDialo
     layout->addWidget(buttons);
 
     grid = new QGridLayout(viewport);
-    auto permissions = manifest->getPermissionList();
+    const auto permissions = manifest->getPermissionList();
     for (const auto &permission : permissions) {
         addPermissionLine(permission);
     }
