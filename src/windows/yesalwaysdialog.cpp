@@ -14,7 +14,6 @@ bool YesAlwaysDialog::ask(const QString &identifier, const QString &question, QW
 YesAlwaysDialog::YesAlwaysDialog(const QString &identifier, const QString &question, QWidget *parent) : QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(400, 0));
 
     auto vLayout = new QVBoxLayout(this);
     auto hLayout = new QHBoxLayout;
@@ -44,4 +43,7 @@ YesAlwaysDialog::YesAlwaysDialog(const QString &identifier, const QString &quest
     hLayout->addWidget(label);
     vLayout->addLayout(hLayout);
     vLayout->addWidget(buttons);
+
+    adjustSize();
+    resize(app->scale(400, 0));
 }
