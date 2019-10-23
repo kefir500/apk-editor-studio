@@ -4,7 +4,6 @@ cd "$(dirname "$0")"
 
 export DEBEMAIL="kefir500@gmail.com"
 export DEBFULLNAME="Alexander Gorishnyak"
-unset VERSION
 source ../../environment.sh
 
 clean() {

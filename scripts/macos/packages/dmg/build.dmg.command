@@ -3,7 +3,7 @@
 # Prepare
 
 cd "$(dirname "$0")"
-source ../../environment.sh
+if [ "$CI" != true ]; then source ../../environment.sh; fi
 
 # Package
 
