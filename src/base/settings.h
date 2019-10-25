@@ -2,8 +2,6 @@
 #define SETTINGS_H
 
 #include <QSettings>
-#include <QMutex>
-#include <QAction>
 
 class Settings
 {
@@ -71,7 +69,6 @@ public:
 
 private:
     QSettings *settings;
-    QMutex mutex;
 };
 
 #endif // SETTINGS_H

@@ -41,67 +41,56 @@ bool Settings::reset(QWidget *parent)
 
 QString Settings::getJavaPath()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Preferences/Java").toString();
 }
 
 QString Settings::getApktoolPath()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Apktool/Path").toString();
 }
 
 QString Settings::getOutputDirectory()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Apktool/Output").toString();
 }
 
 QString Settings::getFrameworksDirectory()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Apktool/Frameworks").toString();
 }
 
 bool Settings::getSignApk()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Signer/Enabled", true).toBool();
 }
 
 bool Settings::getOptimizeApk()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Zipalign/Enabled", true).toBool();
 }
 
 QString Settings::getApksignerPath()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Signer/Path").toString();
 }
 
 QString Settings::getZipalignPath()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Zipalign/Path").toString();
 }
 
 QString Settings::getAdbPath()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("ADB/Path").toString();
 }
 
 bool Settings::getCustomKeystore()
 {
-    QMutexLocker locker(&mutex);
     return !settings->value("Signer/DemoKey", true).toBool();
 }
 
 QString Settings::getKeystorePath()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Signer/Keystore").toString();
 }
 
@@ -113,7 +102,6 @@ QString Settings::getKeystorePassword()
 
 QString Settings::getKeyAlias()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Signer/Alias").toString();
 }
 
@@ -125,55 +113,46 @@ QString Settings::getKeyPassword()
 
 QString Settings::getApktoolVersion()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Apktool/Version").toString();
 }
 
 bool Settings::getDecompileSources()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Apktool/Sources", false).toBool();
 }
 
 bool Settings::getKeepBrokenResources()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Apktool/KeepBroken", false).toBool();
 }
 
 QString Settings::getDeviceAlias(const QString &serial)
 {
-    QMutexLocker locker(&mutex);
     return settings->value(QString("Devices/%1").arg(serial)).toString();
 }
 
 QString Settings::getLastDirectory()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Preferences/LastDirectory").toString();
 }
 
 bool Settings::getAutoUpdates()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Preferences/AutoUpdates", true).toBool();
 }
 
 int Settings::getRecentLimit()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Preferences/MaxRecent", 10).toInt();
 }
 
 QString Settings::getLanguage()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("Preferences/Language", "en").toString();
 }
 
 QStringList Settings::getToolbar()
 {
-    QMutexLocker locker(&mutex);
     QStringList defaults;
     defaults << "open-project" << "save-project" << "install-project" << "separator"
              << "save" << "save-as" << "separator"
@@ -185,25 +164,21 @@ QStringList Settings::getToolbar()
 
 QByteArray Settings::getMainWindowGeometry()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("MainWindow/Geometry").toByteArray();
 }
 
 QByteArray Settings::getMainWindowState()
 {
-    QMutexLocker locker(&mutex);
     return settings->value("MainWindow/State").toByteArray();
 }
 
 bool Settings::hasRememberState(const QString &identifier)
 {
-    QMutexLocker locker(&mutex);
     return settings->contains(QString("Remember/%1").arg(identifier));
 }
 
 bool Settings::getRememberState(const QString &identifier)
 {
-    QMutexLocker locker(&mutex);
     return settings->value(QString("Remember/%1").arg(identifier)).toBool();
 }
 
@@ -211,67 +186,56 @@ bool Settings::getRememberState(const QString &identifier)
 
 void Settings::setJavaPath(const QString &path)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Preferences/Java", path);
 }
 
 void Settings::setApktoolPath(const QString &path)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Apktool/Path", path);
 }
 
 void Settings::setOutputDirectory(const QString &directory)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Apktool/Output", directory);
 }
 
 void Settings::setFrameworksDirectory(const QString &directory)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Apktool/Frameworks", directory);
 }
 
 void Settings::setSignApk(bool sign)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Signer/Enabled", sign);
 }
 
 void Settings::setOptimizeApk(bool sign)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Zipalign/Enabled", sign);
 }
 
 void Settings::setApksignerPath(const QString &path)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Signer/Path", path);
 }
 
 void Settings::setZipalignPath(const QString &path)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Zipalign/Path", path);
 }
 
 void Settings::setAdbPath(const QString &path)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("ADB/Path", path);
 }
 
 void Settings::setCustomKeystore(bool custom)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Signer/DemoKey", !custom);
 }
 
 void Settings::setKeystorePath(const QString &path)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Signer/Keystore", path);
 }
 
@@ -283,7 +247,6 @@ void Settings::setKeystorePassword(const QString &value)
 
 void Settings::setKeyAlias(const QString &alias)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Signer/Alias", alias);
 }
 
@@ -295,78 +258,65 @@ void Settings::setKeyPassword(const QString &value)
 
 void Settings::setApktoolVersion(const QString &version)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Apktool/Version", version);
 }
 
 void Settings::setDecompileSources(bool smali)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Apktool/Sources", smali);
 }
 
 void Settings::setKeepBrokenResources(bool keepBroken)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Apktool/KeepBroken", keepBroken);
 }
 
 void Settings::setDeviceAlias(const QString &serial, const QString &alias)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue(QString("Devices/%1").arg(serial), alias);
 }
 
 void Settings::setLastDirectory(const QString &directory)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Preferences/LastDirectory", directory);
 }
 
 void Settings::setAutoUpdates(bool value)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Preferences/AutoUpdates", value);
 }
 
 void Settings::setRecentLimit(int limit)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Preferences/MaxRecent", limit);
 }
 
 void Settings::setLanguage(const QString &locale)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("Preferences/Language", locale);
 }
 
 void Settings::setToolbar(const QStringList &actions)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("MainWindow/Toolbar", actions);
 }
 
 void Settings::setMainWindowGeometry(const QByteArray &geometry)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("MainWindow/Geometry", geometry);
 }
 
 void Settings::setMainWindowState(const QByteArray &state)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue("MainWindow/State", state);
 }
 
 void Settings::setRememberState(const QString &identifier, bool state)
 {
-    QMutexLocker locker(&mutex);
     settings->setValue(QString("Remember/%1").arg(identifier), state);
 }
 
 void Settings::resetRememberState(const QString &identifier)
 {
-    QMutexLocker locker(&mutex);
     settings->remove(QString("Remember/%1").arg(identifier));
 }
