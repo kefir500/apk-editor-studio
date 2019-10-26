@@ -26,7 +26,7 @@ void LogDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     painter->setPen(QPen(QPalette().windowText(), app->scale(1.5)));
     painter->setRenderHint(QPainter::Antialiasing);
 
-    const int h = option.rect.height() - 8;
+    const int h = option.rect.height() - app->scale(8);
     const int w = h;
     const int x = option.rect.right() - w - 2;
     const int y = option.rect.center().y() - h / 2;
