@@ -113,8 +113,10 @@ bool IconItemsModel::replaceApplicationIcons(const QString &path)
         auto iconIndex = index(row, PathColumn, applicationIndex);
         auto iconType = getIconType(iconIndex);
         if (iconType == Icon || iconType == RoundIcon) {
-            if (!sourceModel()->replaceResource(mapToSource(iconIndex), path)) {
-                success = false;
+            if (Utils::isImageWritable(getIconPath(iconIndex))) {
+                if (!sourceModel()->replaceResource(mapToSource(iconIndex), path)) {
+                    success = false;
+                }
             }
         }
     }
