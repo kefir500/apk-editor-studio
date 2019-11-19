@@ -31,7 +31,10 @@
 ### Donors:
 
 - Luis Corominas
+- Fu Panwei
 - Jason Leon Castillo
 - Wisata Gili Permai
 - Samuel Radoc
 - Juris Baranovskis
+- Edmundo Paz
+- Heru Yudiono
