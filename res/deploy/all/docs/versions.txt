@@ -11,10 +11,11 @@
 - Added sorting to title editor.
 - Improved code editor layout.
 - Improved handling of tool paths.
+- Fixed adaptive icon bug on bulk replacement.
 - Fixed Validity field on key store creation.
 - Made JKS a default key store type.
 - Changed loading animation to spinner.
-- Updated Android SDK Build Tools to 29.0.2.
+- Updated Android SDK Tools to 29.0.2.
 - Windows: Updated Qt to 5.13.2.
 
 ## 1.2.0
