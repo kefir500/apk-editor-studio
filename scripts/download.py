@@ -46,7 +46,7 @@ urlretrieve('https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.4.0.j
 # Download and unpack Android Build Tools
 
 print('(2/3) Downloading Android Build Tools...')
-buildToolsUrl = 'https://dl.google.com/android/repository/build-tools_r28-{}.zip'
+buildToolsUrl = 'https://dl.google.com/android/repository/build-tools_r29.0.2-{}.zip'
 if sys.platform == 'win32':
     buildToolsUrl = buildToolsUrl.format('windows')
 elif sys.platform == 'linux':
