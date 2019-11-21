@@ -1,18 +1,51 @@
 # Version History
 
+## 1.3.0
+- Added permission manager.
+- Added ability to keep broken resources.
+- Added ability to specify path to Java.
+- Added German translation.
+- Added Japanese translation.
+- Added Portuguese translation.
+- Added Spanish translation.
+- Added sorting to title editor.
+- Improved code editor layout.
+- Improved handling of tool paths.
+- Fixed Validity field on key store creation.
+- Made JKS a default key store type.
+- Changed loading animation to spinner.
+- Updated Android SDK Build Tools to 29.0.2.
+- Windows: Updated Qt to 5.13.2.
+
 ## 1.2.0
 - Added support for WebP image format.
 - Added support for activity icons.
 - Added ability to remove resources.
-- Improved resource sorting.
-- Bug fixes and GUI improvements.
+- Added ability to sort resource tree.
+- Added taskbar blinking / dock bouncing.
+- Added button to instantly copy log text.
+- Improved sorting by DPI.
+- Fixed project status badge bug.
+- Fixed resource replacement bug.
+- Windows: Updated Qt to 5.12.3.
 
 ## 1.1.0
 - Added round icons support.
 - Added TV banners support.
 - Added API selection dialog.
 - Added line numbers in code editor.
+- Added "What's New" in the update dialog.
+- Added "DPI" column to the resource inspector.
+- Added current line highlighting in the code editor.
 - Updated Apktool to 2.4.0.
+- Display uniform-sized thumbnails in the icon list.
+- Display system file icons for non-graphical thumbnails.
+- Display tab titles without a bulky GUID prefix.
+- Improved drag and drop from external sources.
+- Improved code editor "Unsaved" state after undo.
+- Improved minor GUI details.
+- Windows: Updated Qt to 5.12.2.
+- Windows: Compiled OpenSSL to match VC versions.
 
 ## 1.0.0
 - First release.
