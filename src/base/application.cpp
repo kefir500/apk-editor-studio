@@ -284,7 +284,7 @@ QString Application::getTranslatePage()
 
 QString Application::getDonatePage()
 {
-    return "https://qwertycube.com/apk-editor-studio/donate/";
+    return "https://qwertycube.com/donate/";
 }
 
 QString Application::getJrePage()
