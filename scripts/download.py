@@ -46,7 +46,7 @@ urlretrieve('https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.4.0.j
 # Download and unpack Android Build Tools
 
 print('(2/3) Downloading Android Build Tools...')
-buildToolsUrl = 'https://dl.google.com/android/repository/build-tools_r29.0.2-{}.zip'
+buildToolsUrl = 'https://dl.google.com/android/repository/build-tools_r28-{}.zip'
 if sys.platform == 'win32':
     buildToolsUrl = buildToolsUrl.format('windows')
 elif sys.platform == 'linux':
@@ -56,8 +56,8 @@ elif sys.platform == 'darwin':
 urlretrieve(buildToolsUrl, 'build-tools.zip', progress)
 
 with ZipFile('build-tools.zip') as z:
-    unzip(z, 'android-10/lib/apksigner.jar', pathTo('../res/deploy/all/tools/'))
-    unzip(z, binFile('android-10/zipalign'), binDir())
+    unzip(z, 'android-9/lib/apksigner.jar', pathTo('../res/deploy/all/tools/'))
+    unzip(z, binFile('android-9/zipalign'), binDir())
 os.remove('build-tools.zip')
 
 # Download and unpack Android SDK Platform Tools
