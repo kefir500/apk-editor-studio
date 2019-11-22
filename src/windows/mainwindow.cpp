@@ -192,6 +192,7 @@ void MainWindow::initMenus()
     actionTitleEditor->setShortcut(QKeySequence("Ctrl+T"));
     actionPermissionEditor = new QAction(this);
     actionPermissionEditor->setIcon(app->icons.get("permissions.png"));
+    actionPermissionEditor->setShortcut(QKeySequence("Ctrl+Shift+P"));
 
     // Settings Menu:
 
