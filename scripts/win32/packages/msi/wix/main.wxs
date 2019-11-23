@@ -2,11 +2,10 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 
   <?define ProductName="APK Editor Studio" ?>
-  <?define ProductVersion="$(env.VERSION)" ?>
-  <?ifdef $(env.CI) ?>
-    <?if $(env.CI) != True ?>
-      <?define ProductVersion="0.0.0" ?>
-    <?endif ?>
+  <?ifndef $(env.CI) ?>
+    <?define ProductVersion="$(env.VERSION)" ?>
+  <?else ?>
+    <?define ProductVersion="0.0.0" ?>
   <?endif ?>
   <?define Root="..\build" ?>
 
