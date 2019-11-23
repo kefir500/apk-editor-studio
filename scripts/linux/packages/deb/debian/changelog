@@ -1,6 +1,6 @@
 apk-editor-studio (1.3.0-1) unstable; urgency=low
 
-  * Added permission editor.
+  * Added Permission Editor.
   * Added ability to keep broken resources.
   * Added ability to specify path to Java.
   * Added German translation.
