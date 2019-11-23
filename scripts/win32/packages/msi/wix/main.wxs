@@ -506,8 +506,8 @@
             <File Source="$(env.QTDIR)\bin\Qt5Xml.dll" />
           </Component>
           <Component Id="SslComponent" Guid="F309A6A0-AD5B-44A4-97E7-BFF5D5FCAA45">
-            <File Source="$(env.OPENSSL)\libeay32.dll" />
-            <File Source="$(env.OPENSSL)\ssleay32.dll" />
+            <File Source="$(env.OPENSSL)\libcrypto-1_1.dll" />
+            <File Source="$(env.OPENSSL)\libssl-1_1.dll" />
           </Component>
           <Directory Id="ImageFormatsFolder" Name="imageformats">
             <Component Id="ImageFormatsComponent" Guid="CC89BD49-ED15-4E80-9CA6-4EC52B81E53C">
