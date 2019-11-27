@@ -22,11 +22,32 @@ if %errorlevel% neq 0 exit /b 1
 if %errorlevel% neq 0 exit /b 2
 "%MAKE%" clean
 
-rem Deploy
+rem Deploy Qt Libraries
 
-cd "%FOLDER%"
-call "%~dp0\..\..\deploy.bat"
-cd ..
+xcopy /y "%QTDIR%\bin\Qt5Core.dll" "%FOLDER%\"
+xcopy /y "%QTDIR%\bin\Qt5Gui.dll" "%FOLDER%\"
+xcopy /y "%QTDIR%\bin\Qt5Network.dll" "%FOLDER%\"
+xcopy /y "%QTDIR%\bin\Qt5Svg.dll" "%FOLDER%\"
+xcopy /y "%QTDIR%\bin\Qt5Widgets.dll" "%FOLDER%\"
+xcopy /y "%QTDIR%\bin\Qt5Xml.dll" "%FOLDER%\"
+xcopy /y "%QTDIR%\plugins\imageformats\qgif.dll" "%FOLDER%\imageformats\"
+xcopy /y "%QTDIR%\plugins\imageformats\qicns.dll" "%FOLDER%\imageformats\"
+xcopy /y "%QTDIR%\plugins\imageformats\qico.dll" "%FOLDER%\imageformats\"
+xcopy /y "%QTDIR%\plugins\imageformats\qjpeg.dll" "%FOLDER%\imageformats\"
+xcopy /y "%QTDIR%\plugins\imageformats\qsvg.dll" "%FOLDER%\imageformats\"
+xcopy /y "%QTDIR%\plugins\platforms\qwindows.dll" "%FOLDER%\platforms\"
+xcopy /y "%QTDIR%\plugins\styles\qwindowsvistastyle.dll" "%FOLDER%\styles\"
+
+rem Deploy Visual C++ Redistributable
+
+xcopy /y "%VCREDIST_DLL%\msvcp*.dll" "%FOLDER%\"
+xcopy /y "%VCREDIST_DLL%\msvcr*.dll" "%FOLDER%\"
+xcopy /y "%VCREDIST_DLL%\vcruntime*dll" "%FOLDER%\"
+
+rem Deploy OpenSSL
+
+xcopy /y "%OPENSSL%\libcrypto-1_1.dll" "%FOLDER%\"
+xcopy /y "%OPENSSL%\libssl-1_1.dll" "%FOLDER%\"
 
 rem Package
 

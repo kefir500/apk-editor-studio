@@ -3,20 +3,15 @@ if /i not "%CI%"=="True" call "%~dp0\..\..\environment.bat"
 rem Build
 
 call "%VCVARS%" x86
-call "%QTDIR%\bin\qmake" "%~dp0\..\..\..\.." "DESTDIR=\"%~dp0\build""
+call "%QTDIR%\bin\qmake" "%~dp0\..\..\..\.." "DESTDIR=\"%~dp0\build"
 if %errorlevel% neq 0 exit /b 1
 "%MAKE%"
 if %errorlevel% neq 0 exit /b 2
 "%MAKE%" clean
 
-rem Deploy
-
-pushd "%~dp0\build"
-call "%~dp0\..\..\deploy.bat"
-cd ..\wix
-
 rem Package
 
+pushd "%~dp0\wix"
 if /i not "%CI%"=="True" (
     set OUTPUT=bin\apk-editor-studio_win32_%VERSION%.msi
 ) else (
