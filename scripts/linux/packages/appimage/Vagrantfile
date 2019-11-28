@@ -1,0 +1,15 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-16.04"
+  config.vm.synced_folder "../../../..", "/home/vagrant/apk-editor-studio"
+  config.vm.provider "virtualbox" do |v|
+    v.name = "APK Editor Studio (Ubuntu 16.04)"
+  end
+  config.vm.provision "shell", inline: <<-SHELL
+    add-apt-repository ppa:beineri/opt-qt-5.12.3-xenial
+    apt-get update
+    apt-get install -y qt512base qt512imageformats qt512svg libsecret-1-dev libgl1-mesa-dev
+  SHELL
+end
