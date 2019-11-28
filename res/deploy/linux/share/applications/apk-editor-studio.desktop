@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Name=APK Editor Studio
-Comment=APK resource editor
+Comment=Edit APK resources
 GenericName=APK resource editor
 Exec=apk-editor-studio %F
 Icon=apk-editor-studio
