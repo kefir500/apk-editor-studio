@@ -17,11 +17,9 @@ clean
 
 # Build
 
-if [[ $CI != true ]]; then
-    qmake ../../../..
-    make
-    make install INSTALL_ROOT=appdir
-fi
+qmake ../../../..
+make
+make install INSTALL_ROOT=appdir
 
 # Package
 

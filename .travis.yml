@@ -1,4 +1,3 @@
-dist: xenial
 language: cpp
 
 before_script:

@@ -7,12 +7,12 @@ if [ "$CI" != true ]; then source ../../environment.sh; fi
 
 # Build
 
-if [[ $CI != true ]]; then
-    qmake ../../../..
-    make
-    make clean
-fi
+DESTDIR=apk-editor-studio_$VERSION
+qmake ../../../.. DESTDIR="$DESTDIR"
+make
+make clean
 
 # Package
 
-tar cfJ apk-editor-studio_linux_$VERSION.tar.xz ../../../../bin/linux --transform "s,^bin/linux,apk-editor-studio_$VERSION,"
+tar cfJ apk-editor-studio_linux_$VERSION.tar.xz $DESTDIR
+rm -rf $DESTDIR
