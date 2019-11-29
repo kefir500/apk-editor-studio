@@ -13,7 +13,7 @@ matrix:
       - sudo apt-get update -qq
     install:
       - sudo apt-get install qt5-default qttools5-dev-tools libsecret-1-dev dh-make devscripts fakeroot
-      - sudo apt-get install qt510base qt510imageformats qt510svg libgl1-mesa-dev
+      - sudo apt-get install qt510base qt510imageformats qt510svg qt510tools libgl1-mesa-dev
     script:
       - cd scripts/linux/packages
       - tar.xz/build.tar.xz.sh
