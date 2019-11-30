@@ -26,4 +26,9 @@ dh_make -y -s -c gpl3 --createorig
 debuild -uc -us
 
 cd ..
+if [[ $CI != true ]]; then	
+    mv apk-editor-studio_$VERSION*.deb apk-editor-studio_linux_$VERSION.deb	
+else	
+    mv apk-editor-studio_$VERSION*.deb apk-editor-studio_linux_dev.deb	
+fi
 clean
