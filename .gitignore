@@ -8,9 +8,12 @@ apk-editor-studio.*.qm
 .vscode/
 *.ai
 *.autosave
+*.deb
 *.dll
+*.dmg
 *.exe
 *.jar
+*.msi
 *.o
 *.obj
 *.pdb
@@ -22,6 +25,7 @@ apk-editor-studio.*.qm
 *.user
 *.wixobj
 *.wixpdb
+*.zip
 *.AppImage
 *.DS_Store
 Makefile*
