@@ -81,5 +81,4 @@ required tools. Feel free to edit these variables to correspond the paths on you
 
 ## Notice
 
-- You may not use **APK Editor Studio** for any illegal purposes.
-- The repacked APK files should not violate the original licenses.
+The repacked APK files should not violate the original licenses.
