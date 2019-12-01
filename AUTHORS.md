@@ -31,6 +31,7 @@
 ### Donors:
 
 - Luis Corominas
+- Kevin Gentry
 - Fu Panwei
 - Jason Leon Castillo
 - Wisata Gili Permai
