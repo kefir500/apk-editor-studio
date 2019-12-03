@@ -26,7 +26,7 @@ def binFile(path):
     return path if sys.platform != 'win32' else path + '.exe'
 
 def progress(blocknum, blocksize, totalsize):
-    bytesdone = blocknum * blocksize
+    bytesdone = min(blocknum * blocksize, totalsize)
     percent = bytesdone * 1e2 / totalsize
     s = '\r%5.1f%% %*d / %d KB' % (percent, len(str(totalsize)), bytesdone / 1024, totalsize / 1024)
     sys.stderr.write(s)
