@@ -94,6 +94,7 @@
                   <File Name="edit.png" Id="IconEdit16" />
                   <File Name="explore.png" Id="IconExplore16" />
                   <File Name="github.png" Id="IconGithub16" />
+                  <File Name="help.png" Id="IconHelp16" />
                   <File Name="install.png" Id="IconInstall16" />
                   <File Name="key.png" Id="IconKey16" />
                   <File Name="more.png" Id="IconMore16" />
@@ -138,6 +139,7 @@
                   <File Name="donate.png" Id="IconDonate30" />
                   <File Name="edit.png" Id="IconEdit30" />
                   <File Name="explore.png" Id="IconExplore30" />
+                  <File Name="help.png" Id="IconHelp30" />
                   <File Name="install.png" Id="IconInstall30" />
                   <File Name="key.png" Id="IconKey30" />
                   <File Name="open.png" Id="IconOpen30" />
@@ -179,6 +181,7 @@
                   <File Name="donate.png" Id="IconDonate40" />
                   <File Name="edit.png" Id="IconEdit40" />
                   <File Name="explore.png" Id="IconExplore40" />
+                  <File Name="help.png" Id="IconHelp40" />
                   <File Name="install.png" Id="IconInstall40" />
                   <File Name="key.png" Id="IconKey40" />
                   <File Name="open.png" Id="IconOpen40" />
