@@ -22,7 +22,7 @@ matrix:
       - appimage/build.appimage.sh
       - cd -
   - os: osx
-    osx_image: xcode9.2
+    osx_image: xcode9.4
     install:
       - brew update
       - brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/5eb54ced793999e3dd3bce7c64c34e7ffe65ddfd/Formula/qt.rb
