@@ -85,6 +85,7 @@
             <Directory Id="IconsFolder" Name="icons">
               <Directory Id="Icons16Folder" Name="16x16">
                 <Component Id="Icons16Component" Guid="903E4029-505F-4FEC-8638-D59C3C7AB03C">
+                  <File Name="add.png" Id="IconAdd16" />
                   <File Name="application.png" Id="IconApplication16" />
                   <File Name="close.png" Id="IconClose16" />
                   <File Name="close-project.png" Id="IconCloseProject16" />
@@ -132,6 +133,7 @@
               </Directory>
               <Directory Id="Icons30Folder" Name="30x30">
                 <Component Id="Icons30Component" Guid="E001659C-3A29-424B-8037-8228AEEB219B">
+                  <File Name="add.png" Id="IconAdd30" />
                   <File Name="close.png" Id="IconClose30" />
                   <File Name="close-project.png" Id="IconCloseProject30" />
                   <File Name="delete.png" Id="IconDelete30" />
@@ -174,6 +176,7 @@
               </Directory>
               <Directory Id="Icons40Folder" Name="40x40">
                 <Component Id="Icons40Component" Guid="415AF5F6-5D55-4D64-B357-FCD7ADBB92A6">
+                  <File Name="add.png" Id="IconAdd40" />
                   <File Name="close.png" Id="IconClose40" />
                   <File Name="close-project.png" Id="IconCloseProject40" />
                   <File Name="delete.png" Id="IconDelete40" />
