@@ -31,8 +31,6 @@ matrix:
       - npm i appdmg
     script:
       - cd scripts/macos/packages
-      - chmod +x app/build.app.command
-      - chmod +x dmg/build.dmg.command
       - app/build.app.command
       - dmg/build.dmg.command
       - cd -
@@ -58,5 +56,5 @@ deploy:
   on:
     branch:
       - master
-      - /\d+\.\d+\.\d+/
+      - /^\d+\.\d+\.\d+$/
     tags: false
