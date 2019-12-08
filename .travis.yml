@@ -58,4 +58,5 @@ deploy:
   on:
     branch:
       - master
+      - /\d+\.\d+\.\d+/
     tags: false
