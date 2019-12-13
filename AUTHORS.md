@@ -28,6 +28,9 @@
 #### Spanish
 - [Francisco Zamorano](https://www.transifex.com/user/profile/Paco_Zamo/)
 
+#### Turkish
+- [emre1393](https://www.transifex.com/user/profile/emre1393/)
+
 ### Donors:
 
 - Luis Corominas

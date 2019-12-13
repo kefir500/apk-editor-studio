@@ -490,6 +490,9 @@
                 <File Name="apk-editor-studio.es.qm" />
                 <File Name="qt.es.qm" />
               </Component>
+              <Component Id="TurkishComponent" Guid="D99AAB1D-4FB5-4BFF-BEC1-0B68887E59B2">
+                <File Name="apk-editor-studio.tr.qm" />
+              </Component>
             </Directory>
           </Directory>
           <Directory Id="DocsFolder" Name="docs">
@@ -573,6 +576,7 @@
       <ComponentRef Id="PortugueseComponent" />
       <ComponentRef Id="RussianComponent" />
       <ComponentRef Id="SpanishComponent" />
+      <ComponentRef Id="TurkishComponent" />
     </ComponentGroup>
     <ComponentGroup Id="DllComponents">
       <ComponentRef Id="QtComponent" />
@@ -595,9 +599,6 @@
       <Feature Id="GermanFeature" Title="German" Description="German translation.">
         <ComponentRef Id="GermanComponent" />
       </Feature>
-      <Feature Id="SpanishFeature" Title="Spanish" Description="Spanish translation.">
-        <ComponentRef Id="SpanishComponent" />
-      </Feature>
       <Feature Id="JapaneseFeature" Title="Japanese" Description="Japanese translation.">
         <ComponentRef Id="JapaneseComponent" />
       </Feature>
@@ -606,6 +607,12 @@
       </Feature>
       <Feature Id="RussianFeature" Title="Russian" Description="Russian translation.">
         <ComponentRef Id="RussianComponent" />
+      </Feature>
+      <Feature Id="SpanishFeature" Title="Spanish" Description="Spanish translation.">
+        <ComponentRef Id="SpanishComponent" />
+      </Feature>
+      <Feature Id="TurkishFeature" Title="Turkish" Description="Turkish translation.">
+        <ComponentRef Id="TurkishComponent" />
       </Feature>
     </Feature>
     <Feature Id="ShortcutsFeature" Title="Shortcuts" Description="Create $(var.ProductName) shortcuts.">
