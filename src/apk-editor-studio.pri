@@ -63,6 +63,7 @@ SOURCES += \
     $$PWD/widgets/gradientwidget.cpp \
     $$PWD/widgets/iconlist.cpp \
     $$PWD/widgets/itembuttondelegate.cpp \
+    $$PWD/widgets/loadingwidget.cpp \
     $$PWD/widgets/logdelegate.cpp \
     $$PWD/widgets/logview.cpp \
     $$PWD/widgets/manifestview.cpp \
@@ -154,6 +155,7 @@ HEADERS += \
     $$PWD/widgets/gradientwidget.h \
     $$PWD/widgets/iconlist.h \
     $$PWD/widgets/itembuttondelegate.h \
+    $$PWD/widgets/loadingwidget.h \
     $$PWD/widgets/logdelegate.h \
     $$PWD/widgets/logview.h \
     $$PWD/widgets/manifestview.h \
