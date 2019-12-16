@@ -1,4 +1,5 @@
 #include "editors/titleeditor.h"
+#include "widgets/loadingwidget.h"
 #include "windows/waitdialog.h"
 #include "base/application.h"
 #include <QBoxLayout>
@@ -10,21 +11,28 @@ TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(paren
     title = tr("Application Title");
     icon = app->icons.get("title.png");
 
-    WAIT
-    model = new TitleItemsModel(project, this);
-
     table = new QTableView(this);
     table->setAlternatingRowColors(true);
     table->setHorizontalScrollMode(QTableView::ScrollPerPixel);
-    auto sortProxy = new QSortFilterProxyModel(this);
-    sortProxy->setSourceModel(model);
-    table->setModel(sortProxy);
-    table->setSortingEnabled(true);
-    table->resizeColumnsToContents();
+    table->hide();
+
+    auto loading = new LoadingWidget(this);
+    loading->play();
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(table);
+    layout->addWidget(loading);
 
+    model = new TitleItemsModel(project, this);
+    connect(model, &TitleItemsModel::initialized, this, [=]() {
+        auto sortProxy = new QSortFilterProxyModel(this);
+        sortProxy->setSourceModel(model);
+        table->setModel(sortProxy);
+        table->setSortingEnabled(true);
+        table->resizeColumnsToContents();
+        table->show();
+        loading->stop();
+    });
     connect(model, &TitleItemsModel::dataChanged, [=]() {
         setModified(true);
     });
@@ -33,7 +41,7 @@ TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(paren
 bool TitleEditor::save(const QString &as)
 {
     Q_UNUSED(as)
-    if (!model->save()) {
+    if (!model || !model->save()) {
         return false;
     }
     setModified(false);

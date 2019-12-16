@@ -3,71 +3,79 @@
 #include <QDirIterator>
 #include <QTextStream>
 #include <QDebug>
+#include <QtConcurrent/QtConcurrent>
 
 TitleItemsModel::TitleItemsModel(const Project *apk, QObject *parent) : QAbstractTableModel(parent)
 {
     // Parse application label attribute (android:label):
 
-    QString labelAttribute = apk->manifest->scopes.first()->label().getValue();
-    if (!labelAttribute.startsWith("@string/")) {
-        return;
-    }
-    QString labelKey = labelAttribute.mid(QString("@string/").length());
+    auto finishedFuture = QtConcurrent::run([=]() -> QList<TitleNode *> {
+        QList<TitleNode *> result;
+        QString labelAttribute = apk->manifest->scopes.first()->label().getValue();
+        if (!labelAttribute.startsWith("@string/")) {
+            return {};
+        }
+        QString labelKey = labelAttribute.mid(QString("@string/").length());
 
-    // Parse resource directories:
+        // Parse resource directories:
 
-    QDirIterator resourceDirectories(apk->getContentsPath() + "/res/", QDir::Dirs | QDir::NoDotAndDotDot);
-    while (resourceDirectories.hasNext()) {
+        QDirIterator resourceDirectories(apk->getContentsPath() + "/res/", QDir::Dirs | QDir::NoDotAndDotDot);
+        while (resourceDirectories.hasNext()) {
 
-        const QString resourceDirectory = QFileInfo(resourceDirectories.next()).fileName();
-        const QString resourceType = resourceDirectory.split('-').first();
+            const QString resourceDirectory = QFileInfo(resourceDirectories.next()).fileName();
+            const QString resourceType = resourceDirectory.split('-').first();
 
-        if (resourceType == "values") {
+            if (resourceType == "values") {
 
-            // Parse resource files:
+                // Parse resource files:
 
-            QDirIterator resourceFiles(apk->getContentsPath() + "/res/" + resourceDirectory, QDir::Files);
-            while (resourceFiles.hasNext()) {
-                const QString resourceFile = QFileInfo(resourceFiles.next()).filePath();
-                add(resourceFile, labelKey);
+                QDirIterator resourceFiles(apk->getContentsPath() + "/res/" + resourceDirectory, QDir::Files);
+                while (resourceFiles.hasNext()) {
+                    const QString resourceFile = QFileInfo(resourceFiles.next()).filePath();
+                    QFile xml(resourceFile);
+                    if (xml.open(QFile::ReadOnly | QFile::Text)) {
+                        QTextStream stream(&xml);
+                        stream.setCodec("UTF-8");
+                        QDomDocument xmlDocument;
+                        xmlDocument.setContent(stream.readAll());
+
+                        // Iterate through XML child elements:
+
+                        QDomNodeList xmlNodes = xmlDocument.firstChildElement("resources").childNodes();
+                        for (int i = 0; i < xmlNodes.count(); ++i) {
+                            QDomElement xmlNode = xmlNodes.at(i).toElement();
+                            if (Q_LIKELY(!xmlNode.isNull())) {
+
+                                // Find application label nodes:
+
+                                if (xmlNode.nodeName() == "string" && xmlNode.attribute("name") == labelKey) {
+                                    result << new TitleNode(new XmlNode(xmlNode, true), new ResourceFile(resourceFile));
+                                }
+                            } else {
+                                qWarning() << "CRITICAL: Element \"resources\" contains non-element child nodes";
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
+        return result;
+    });
+
+    auto finishedWatcher = new QFutureWatcher<QList<TitleNode *>>(this);
+    connect(finishedWatcher, &QFutureWatcher<QList<TitleNode *>>::finished, [=]() {
+        const auto result = finishedFuture.result();
+        beginInsertRows(QModelIndex(), 0, result.count() - 1);
+            nodes = finishedFuture.result();
+        endInsertRows();
+        emit initialized();
+    });
+    finishedWatcher->setFuture(finishedFuture);
 }
 
 TitleItemsModel::~TitleItemsModel()
 {
     qDeleteAll(nodes);
-}
-
-void TitleItemsModel::add(const QString &filepath, const QString &key)
-{
-    QFile xml(filepath);
-    if (xml.open(QFile::ReadOnly | QFile::Text)) {
-        QTextStream stream(&xml);
-        stream.setCodec("UTF-8");
-        QDomDocument xmlDocument;
-        xmlDocument.setContent(stream.readAll());
-
-        // Iterate through child elements:
-
-        QDomNodeList xmlNodes = xmlDocument.firstChildElement("resources").childNodes();
-        for (int i = 0; i < xmlNodes.count(); ++i) {
-            QDomElement xmlNode = xmlNodes.at(i).toElement();
-            if (Q_LIKELY(!xmlNode.isNull())) {
-
-                // Find application label nodes:
-
-                if (xmlNode.nodeName() == "string" && xmlNode.attribute("name") == key) {
-                    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-                        nodes.append(new TitleNode(new XmlNode(xmlNode, true), new ResourceFile(filepath)));
-                    endInsertRows();
-                }
-            } else {
-                qWarning() << "CRITICAL: Element \"resources\" contains non-element child nodes";
-            }
-        }
-    }
 }
 
 bool TitleItemsModel::save() const
