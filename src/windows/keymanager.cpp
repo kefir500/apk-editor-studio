@@ -4,7 +4,6 @@
 #include "base/password.h"
 #include "tools/keytool.h"
 #include <QPushButton>
-#include <QGroupBox>
 #include <QLineEdit>
 #include <QComboBox>
 #include <QDialogButtonBox>

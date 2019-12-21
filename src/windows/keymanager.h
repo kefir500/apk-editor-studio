@@ -6,6 +6,7 @@
 #include <QDialog>
 #include <QGroupBox>
 #include <QSpinBox>
+#include <QComboBox>
 #include <QFormLayout>
 
 // KeyManager
