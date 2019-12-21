@@ -61,8 +61,9 @@ int Application::exec()
     settings = new Settings();
     recent = new Recent("apk");
 
-    Apktool apktool(getSharedPath("tools/apktool.jar"));
-    apktool.reset();
+    auto apktool = new Apktool(this);
+    connect(apktool, &Apktool::resetFinished, apktool, &QObject::deleteLater);
+    apktool->reset();
 
     QDir().mkpath(Apktool::getOutputPath());
     QDir().mkpath(Apktool::getFrameworksPath());

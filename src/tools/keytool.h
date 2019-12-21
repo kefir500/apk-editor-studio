@@ -1,21 +1,28 @@
 #ifndef KEYTOOL_H
 #define KEYTOOL_H
 
-#include "tools/executable.h"
 #include "tools/keystore.h"
-#include "base/application.h"
+#include <QObject>
 
-class Keytool : public Executable
+class Keytool : public QObject
 {
-public:
-    explicit Keytool(QObject *parent = nullptr) : Keytool(app->getJavaBinaryPath("keytool"), parent) {}
-    explicit Keytool(const QString &executable, QObject *parent = nullptr) : Executable(executable, parent) {}
+    Q_OBJECT
 
-    Result<QString> create(const Keystore &keystore) const;
-    Result<QString> aliases(const QString &keystore, const QString &password) const;
+public:
+    explicit Keytool(QObject *parent = nullptr) : QObject(parent) {}
+
+    void createKeystore(const Keystore &keystore);
+    void fetchAliases(const QString &keystore, const QString &password);
+
+signals:
+    void keystoreCreated();
+    void keystoreCreateError(const QString &brief, const QString &detailed);
+    void aliasesFetched(const QStringList &aliases) const;
+    void aliasesFetchError(const QString &brief, const QString &detailed) const;
 
 private:
     void normalizeDname(Dname &dname) const;
+    QString getPath() const;
 };
 
 #endif // KEYTOOL_H

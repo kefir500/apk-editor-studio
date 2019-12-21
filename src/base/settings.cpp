@@ -22,8 +22,9 @@ bool Settings::reset(QWidget *parent)
 {
     const int answer = QMessageBox::question(parent, QString(), app->translate("Settings", "Are you sure you want to reset settings?"));
     if (answer == QMessageBox::Yes) {
-        Apktool apktool(app->getSharedPath("tools/apktool.jar"));
-        apktool.reset();
+        auto apktool = new Apktool;
+        QObject::connect(apktool, &Apktool::resetFinished, apktool, &QObject::deleteLater);
+        apktool->reset();
         settings->clear();
         app->recent->clear();
         QDir().mkpath(Apktool::getOutputPath());

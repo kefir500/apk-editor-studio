@@ -1,21 +1,26 @@
 #ifndef ADB_H
 #define ADB_H
 
-#include "tools/executable.h"
 #include "base/device.h"
 
-class Adb : public Executable
+class Adb : public QObject
 {
+    Q_OBJECT
+
 public:
-    explicit Adb(QObject *parent = nullptr) : Adb(getPath(), parent) {}
-    explicit Adb(const QString &executable, QObject *parent = nullptr);
+    explicit Adb(QObject *parent = nullptr);
 
     void install(const QString &apk, const QString &serial = QString());
-    QList<QSharedPointer<Device>> devices() const;
-    QString version() const;
+    void devices();
+    void version();
 
     static QString getPath();
     static QString getDefaultPath();
+
+signals:
+    void installFinished(bool success, const QString &message) const;
+    void devicesFetched(bool success, const QList<QSharedPointer<Device>> &devices) const;
+    void versionFetched(const QString &version) const;
 };
 
 #endif // ADB_H

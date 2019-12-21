@@ -12,15 +12,10 @@ const Device *DeviceItemsModel::get(const QModelIndex &index) const
 
 void DeviceItemsModel::refresh()
 {
-    Adb adb;
-    if (!devices.isEmpty()) {
-        beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
-            devices.clear();
-        endRemoveRows();
-    }
-    const QList<QSharedPointer<Device>> list = adb.devices();
-    if (!list.isEmpty()) {
-        beginInsertRows(QModelIndex(), 0, list.size() - 1);
+    emit fetching();
+    auto adb = new Adb(this);
+    connect(adb, &Adb::devicesFetched, [=](bool success, const QList<QSharedPointer<Device>> &list) {
+        if (success) {
             for (const QSharedPointer<Device> &device : list) {
                 const QString serial = device->getSerial();
                 const QString alias = app->settings->getDeviceAlias(serial);
@@ -28,9 +23,13 @@ void DeviceItemsModel::refresh()
                     device->setAlias(alias);
                 }
             }
-            devices.append(list);
-        endInsertRows();
-    }
+        beginResetModel();
+        devices.clear();
+        devices.append(list);
+        endResetModel();
+        emit fetched();
+    });
+    adb->devices();
 }
 
 void DeviceItemsModel::save() const

@@ -2,7 +2,6 @@
 #define KEYMANAGER_H
 
 #include "widgets/filebox.h"
-#include "base/result.h"
 #include <QDialog>
 #include <QGroupBox>
 #include <QSpinBox>
@@ -12,19 +11,14 @@
 
 class KeyManager : public QDialog
 {
-    Q_OBJECT
-
 public:
     explicit KeyManager(QWidget *parent = nullptr);
 
     void load();
     void save();
 
-    bool createKeystore();
-    bool createKey();
-
-    static QString selectKey(const QString &keystore, const QString &password, const QString &currentAlias = QString(), QWidget *parent = nullptr);
-    static Result<QStringList> getCertificates(const QString &keystore, const QString &password, QWidget *parent = nullptr);
+    void createKeystore();
+    void createKey();
 
 private:
     QGroupBox *groupKeystore;
@@ -60,7 +54,7 @@ private:
     QFormLayout *initialize(Type type);
     QFormLayout *createKeyLayout();
     bool validateFields();
-    bool create();
+    void create();
 
     Type type;
     QString keystorePath;
@@ -79,6 +73,19 @@ private:
     QLineEdit *editCity;
     QLineEdit *editState;
     QLineEdit *editCountry;
+};
+
+class KeySelector : public QDialog
+{
+public:
+    KeySelector(QWidget *parent = nullptr);
+
+    static QString select(const QString &keystore, const QString &password, const QString &currentAlias = QString(), QWidget *parent = nullptr);
+    void refresh(const QString &keystore, const QString &password, const QString &currentAlias = QString());
+    QString getCurrentValue() const;
+
+private:
+    QComboBox *combo;
 };
 
 #endif // KEYMANAGER_H

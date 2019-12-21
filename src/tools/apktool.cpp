@@ -1,16 +1,16 @@
 #include "tools/apktool.h"
-#include <QStringList>
-#include <QtConcurrent/QtConcurrent>
+#include "base/process.h"
 #include "base/application.h"
+#include <QStringList>
 
 void Apktool::decode(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources, bool keepBroken)
 {
     if (source.isEmpty()) {
-        emit error("Apktool: Source APK not specified.");
+        emit decodeFinished(false, "Apktool: Source APK not specified.");
         return;
     }
     if (destination.isEmpty()) {
-        emit error("Apktool: Destination path not specified.");
+        emit decodeFinished(false, "Apktool: Destination path not specified.");
         return;
     }
 
@@ -30,17 +30,21 @@ void Apktool::decode(const QString &source, const QString &destination, const QS
     if (keepBroken) {
         arguments << "--keep-broken-res";
     }
-    Jar::startAsync(arguments);
+
+    auto process = new Process(this);
+    connect(process, &Process::finished, this, &Apktool::decodeFinished);
+    connect(process, &Process::finished, process, &QObject::deleteLater);
+    process->jar(getPath(), arguments);
 }
 
 void Apktool::build(const QString &source, const QString &destination, const QString &frameworks)
 {
     if (source.isEmpty()) {
-        emit error("Apktool: Source path not specified.");
+        emit buildFinished(false, "Apktool: Source path not specified.");
         return;
     }
     if (destination.isEmpty()) {
-        emit error("Apktool: Destination APK not specified.");
+        emit buildFinished(false, "Apktool: Destination APK not specified.");
         return;
     }
 
@@ -51,27 +55,36 @@ void Apktool::build(const QString &source, const QString &destination, const QSt
     if (!frameworks.isEmpty()) {
         arguments << "--frame-path" << frameworks;
     }
-    Jar::startAsync(arguments);
+
+    auto process = new Process(this);
+    connect(process, &Process::finished, this, &Apktool::buildFinished);
+    connect(process, &Process::finished, process, &QObject::deleteLater);
+    process->jar(getPath(), arguments);
 }
 
-QString Apktool::version() const
+void Apktool::version()
 {
-    QStringList arguments;
-    arguments << "-version";
-    auto result = startSync(arguments);
-    return result.success ? result.value : QString();
+    auto process = new Process(this);
+    connect(process, &Process::finished, [=](bool success, const QString &output) {
+        emit versionFetched(success ? output : QString());
+        process->deleteLater();
+    });
+    process->jar(getPath(), {"-version"});
 }
 
-void Apktool::reset() const
+void Apktool::reset()
 {
-    QtConcurrent::run([=]() {
-        const QString currentVersion = version();
+    auto context = new QObject(this);
+    connect(this, &Apktool::versionFetched, context, [=](const QString &currentVersion) {
         const QString previousVersion = app->settings->getApktoolVersion();
         if (currentVersion.isNull() || currentVersion != previousVersion) {
             QFile::remove(getFrameworksPath() + "/1.apk");
             app->settings->setApktoolVersion(currentVersion);
         }
+        emit resetFinished();
+        delete context;
     });
+    version();
 }
 
 QString Apktool::getPath()

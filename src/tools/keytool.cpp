@@ -1,18 +1,23 @@
 #include "tools/keytool.h"
+#include "base/process.h"
+#include "base/application.h"
 #include <QStringList>
 
-Result<QString> Keytool::create(const Keystore &keystore) const
+void Keytool::createKeystore(const Keystore &keystore)
 {
-    QStringList arguments;
-    arguments << "-genkey";
-    arguments << "-keystore" << keystore.keystorePath;
-    arguments << "-storepass" << keystore.keystorePassword;
-    arguments << "-storetype" << "jks";
-    arguments << "-keyalg" << "RSA";
-    arguments << "-keysize" << "2048";
-    arguments << "-validity" << QString::number(keystore.validity);
-    arguments << "-alias" << keystore.keyAlias;
-    arguments << "-keypass" << keystore.keyPassword;
+    auto process = new Process(this);
+    connect(process, &Process::finished, [=](bool success, const QString &output) {
+        if (success) {
+            emit keystoreCreated();
+        } else {
+            if (output.contains(QRegularExpression("alias <.+> already exists"))) {
+                emit keystoreCreateError(tr("Could not write to keystore: alias already exists."), output);
+            } else {
+                emit keystoreCreateError(tr("Could not write to keystore. See details for more information."), output);
+            }
+        }
+        process->deleteLater();
+    });
 
     Dname dname = keystore.dname;
     normalizeDname(dname);
@@ -24,18 +29,47 @@ Result<QString> Keytool::create(const Keystore &keystore) const
     if (!dname.countryCode.isEmpty()) { dnameArg += QString("C=%1,").arg(dname.countryCode); }
     dnameArg.chop(1);
 
+    QStringList arguments;
+    arguments << "-genkey";
+    arguments << "-keystore" << keystore.keystorePath;
+    arguments << "-storepass" << keystore.keystorePassword;
+    arguments << "-storetype" << "jks";
+    arguments << "-keyalg" << "RSA";
+    arguments << "-keysize" << "2048";
+    arguments << "-validity" << QString::number(keystore.validity);
+    arguments << "-alias" << keystore.keyAlias;
+    arguments << "-keypass" << keystore.keyPassword;
     arguments << "-dname" << dnameArg;
 
-    return startSync(arguments);
+    process->run(getPath(), arguments);
 }
 
-Result<QString> Keytool::aliases(const QString &keystore, const QString &password) const
+void Keytool::fetchAliases(const QString &keystore, const QString &password)
 {
-    QStringList arguments;
-    arguments << "-list";
-    arguments << "-keystore" << keystore;
-    arguments << "-storepass" << password;
-    return startSync(arguments);
+    QRegularExpression regex("^(.+),.+,\\s*PrivateKeyEntry,\\s*$");
+    regex.setPatternOptions(QRegularExpression::MultilineOption);
+
+    auto process = new Process(this);
+    connect(process, &Process::finished, [=](bool success, const QString &output) {
+        if (success) {
+            QStringList aliases;
+            QRegularExpressionMatchIterator it = regex.globalMatch(output);
+            while (it.hasNext()) {
+                QRegularExpressionMatch match = it.next();
+                aliases << match.captured(1);
+            }
+            emit aliasesFetched(aliases);
+        } else {
+            if (output.contains("Keystore was tampered with, or password was incorrect")) {
+                emit aliasesFetchError(tr("Could not read keystore: incorrect password."), output);
+            } else {
+                emit aliasesFetchError(tr("Could not read keystore. See details for more information."), output);
+            }
+        }
+        process->deleteLater();
+    });
+
+    process->run(getPath(), {"-list", "-keystore", keystore, "-storepass", password});
 }
 
 void Keytool::normalizeDname(Dname &dname) const
@@ -46,4 +80,9 @@ void Keytool::normalizeDname(Dname &dname) const
     dname.city.replace(',', "\\,");
     dname.state.replace(',', "\\,");
     dname.countryCode.replace(',', "\\,");
+}
+
+QString Keytool::getPath() const
+{
+    return app->getJavaBinaryPath("keytool");
 }

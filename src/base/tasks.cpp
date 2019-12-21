@@ -30,10 +30,11 @@ void Unpack::run()
 {
     emit started();
     Apktool *apktool = new Apktool(this);
-    connect(apktool, &Executable::success, this, &Task::success);
-    connect(apktool, &Executable::error, this, &Task::error);
-    connect(apktool, &Executable::finished, this, &Task::finished);
-    connect(apktool, &Executable::finished, apktool, &QObject::deleteLater);
+    connect(apktool, &Apktool::decodeFinished, [=](bool ok, const QString &message) {
+        emit ok ? success() : error(message);
+        emit finished();
+        apktool->deleteLater();
+    });
     apktool->decode(source, target, frameworks, resources, sources, keepBroken);
 }
 
@@ -50,10 +51,11 @@ void Pack::run()
 {
     emit started();
     Apktool *apktool = new Apktool(this);
-    connect(apktool, &Executable::success, this, &Task::success);
-    connect(apktool, &Executable::error, this, &Task::error);
-    connect(apktool, &Executable::finished, this, &Task::finished);
-    connect(apktool, &Executable::finished, apktool, &QObject::deleteLater);
+    connect(apktool, &Apktool::buildFinished, [=](bool ok, const QString &message) {
+        emit ok ? success() : error(message);
+        emit finished();
+        apktool->deleteLater();
+    });
     apktool->build(source, target, frameworks);
 }
 
@@ -68,10 +70,11 @@ void Align::run()
 {
     emit started();
     Zipalign *zipalign = new Zipalign(this);
-    connect(zipalign, &Executable::success, this, &Task::success);
-    connect(zipalign, &Executable::error, this, &Task::error);
-    connect(zipalign, &Executable::finished, this, &Task::finished);
-    connect(zipalign, &Executable::finished, zipalign, &QObject::deleteLater);
+    connect(zipalign, &Zipalign::alignFinished, [=](bool ok, const QString &message) {
+        emit ok ? success() : error(message);
+        emit finished();
+        zipalign->deleteLater();
+    });
     zipalign->align(target);
 }
 
@@ -87,10 +90,11 @@ void Sign::run()
 {
     emit started();
     Apksigner *apksigner = new Apksigner(this);
-    connect(apksigner, &Executable::success, this, &Task::success);
-    connect(apksigner, &Executable::error, this, &Task::error);
-    connect(apksigner, &Executable::finished, this, &Task::finished);
-    connect(apksigner, &Executable::finished, apksigner, &QObject::deleteLater);
+    connect(apksigner, &Apksigner::signFinished, [=](bool ok, const QString &message) {
+        emit ok ? success() : error(message);
+        emit finished();
+        apksigner->deleteLater();
+    });
     apksigner->sign(target, keystore);
 }
 
@@ -106,10 +110,11 @@ void Install::run()
 {
     emit started();
     Adb *adb = new Adb(this);
-    connect(adb, &Executable::success, this, &Task::success);
-    connect(adb, &Executable::error, this, &Task::error);
-    connect(adb, &Executable::finished, this, &Task::finished);
-    connect(adb, &Executable::finished, adb, &QObject::deleteLater);
+    connect(adb, &Adb::installFinished, [=](bool ok, const QString &message) {
+        emit ok ? success() : error(message);
+        emit finished();
+        adb->deleteLater();
+    });
     adb->install(apk, serial);
 }
 

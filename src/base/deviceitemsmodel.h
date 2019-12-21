@@ -30,6 +30,10 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
+signals:
+    void fetching() const;
+    void fetched() const;
+
 private:
     QList<QSharedPointer<Device>> devices;
 };

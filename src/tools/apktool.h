@@ -1,18 +1,19 @@
 #ifndef APKTOOL_H
 #define APKTOOL_H
 
-#include "tools/jar.h"
+#include <QObject>
 
-class Apktool : public Jar
+class Apktool : public QObject
 {
+    Q_OBJECT
+
 public:
-    explicit Apktool(QObject *parent = nullptr) : Apktool(getPath(), parent) {}
-    explicit Apktool(const QString &jar, QObject *parent = nullptr) : Jar(jar, parent) {}
+    explicit Apktool(QObject *parent = nullptr) : QObject(parent) {}
 
     void decode(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources, bool keepBroken);
     void build(const QString &source, const QString &destination, const QString &frameworks);
-    QString version() const;
-    void reset() const;
+    void version();
+    void reset();
 
     static QString getPath();
     static QString getDefaultPath();
@@ -20,6 +21,12 @@ public:
     static QString getDefaultOutputPath();
     static QString getFrameworksPath();
     static QString getDefaultFrameworksPath();
+
+signals:
+    void decodeFinished(bool success, const QString &message = QString()) const;
+    void buildFinished(bool success, const QString &message = QString()) const;
+    void versionFetched(const QString &version) const;
+    void resetFinished() const;
 };
 
 #endif // APKTOOL_H

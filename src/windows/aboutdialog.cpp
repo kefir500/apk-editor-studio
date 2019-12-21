@@ -4,14 +4,14 @@
 #include "tools/apksigner.h"
 #include "tools/java.h"
 #include "tools/javac.h"
+#include "base/application.h"
 #include <QFormLayout>
 #include <QTabWidget>
 #include <QLabel>
 #include <QPlainTextEdit>
 #include <QTextBrowser>
 #include <QDialogButtonBox>
-#include <QtConcurrent/QtConcurrent>
-#include "base/application.h"
+#include <QTextStream>
 
 AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 {
@@ -205,70 +205,50 @@ QWidget *AboutDialog::createLibrariesTab()
 
     labelQt->setText(QT_VERSION_STR);
 
-    // Retrieve and set JRE version:
+    // Set JRE version:
 
-    auto jreWatcher = new QFutureWatcher<QString>(this);
-    auto jreFuture = QtConcurrent::run([=]() -> QString {
-        Java jre;
-        return jre.version();
+    auto jre = new Java(this);
+    connect(jre, &Java::versionFetched, [=](const QString &version) {
+        labelJre->setText(!version.isNull() ? version : mdash);
+        jre->deleteLater();
     });
-    connect(jreWatcher, &QFutureWatcher<QString>::finished, [=]() {
-        const QString version = jreWatcher->result();
-        labelJre->setText(!version.isEmpty() ? version : mdash);
-    });
-    jreWatcher->setFuture(jreFuture);
+    jre->version();
 
-    // Retrieve and set JDK version:
+    // St JDK version:
 
-    auto jdkWatcher = new QFutureWatcher<QString>(this);
-    auto jdkFuture = QtConcurrent::run([=]() -> QString {
-        Javac jdk;
-        return jdk.version();
+    auto jdk = new Javac(this);
+    connect(jdk, &Javac::versionFetched, [=](const QString &version) {
+        labelJdk->setText(!version.isNull() ? version : mdash);
+        jdk->deleteLater();
     });
-    connect(jdkWatcher, &QFutureWatcher<QString>::finished, [=]() {
-        const QString version = jdkWatcher->result();
-        labelJdk->setText(!version.isEmpty() ? version : mdash);
-    });
-    jdkWatcher->setFuture(jdkFuture);
+    jdk->version();
 
-    // Retrieve and set Apktool version:
+    // Set Apktool version:
 
-    auto apktoolWatcher = new QFutureWatcher<QString>(this);
-    auto apktoolFuture = QtConcurrent::run([=]() -> QString {
-        Apktool apktool;
-        return apktool.version();
+    auto apktool = new Apktool(this);
+    connect(apktool, &Apktool::versionFetched, [=](const QString &version) {
+        labelApktool->setText(!version.isNull() ? version : mdash);
+        apktool->deleteLater();
     });
-    connect(apktoolWatcher, &QFutureWatcher<QString>::finished, [=]() {
-        const QString version = apktoolWatcher->result();
-        labelApktool->setText(!version.isEmpty() ? version : mdash);
-    });
-    apktoolWatcher->setFuture(apktoolFuture);
+    apktool->version();
 
-    // Retrieve and set Apksigner version:
+    // Set Apksigner version:
 
-    auto apksignerWatcher = new QFutureWatcher<QString>(this);
-    auto apksignerFuture = QtConcurrent::run([=]() -> QString {
-        Apksigner apksigner;
-        return apksigner.version();
+    auto apksigner = new Apksigner(this);
+    connect(apksigner, &Apksigner::versionFetched, [=](const QString &version) {
+        labelApksigner->setText(!version.isNull() ? version : mdash);
+        apksigner->deleteLater();
     });
-    connect(apksignerWatcher, &QFutureWatcher<QString>::finished, [=]() {
-        const QString version = apksignerWatcher->result();
-        labelApksigner->setText(!version.isEmpty() ? version : mdash);
-    });
-    apksignerWatcher->setFuture(apksignerFuture);
+    apksigner->version();
 
-    // Retrieve and set ADB version:
+    // Set ADB version:
 
-    auto adbWatcher = new QFutureWatcher<QString>(this);
-    auto adbFuture = QtConcurrent::run([=]() -> QString {
-        Adb adb;
-        return adb.version();
+    auto adb = new Adb(this);
+    connect(adb, &Adb::versionFetched, [=](const QString &version) {
+        labelAdb->setText(!version.isNull() ? version : mdash);
+        adb->deleteLater();
     });
-    connect(adbWatcher, &QFutureWatcher<QString>::finished, [=]() {
-        const QString version = adbWatcher->result();
-        labelAdb->setText(!version.isEmpty() ? version : mdash);
-    });
-    adbWatcher->setFuture(adbFuture);
+    adb->version();
 
     return tab;
 }

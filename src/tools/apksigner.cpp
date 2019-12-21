@@ -1,4 +1,5 @@
 #include "tools/apksigner.h"
+#include "base/process.h"
 #include "base/application.h"
 #include <QStringList>
 
@@ -10,7 +11,7 @@ void Apksigner::sign(const QString &target, const Keystore *keystore)
 void Apksigner::sign(const QString &target, const QString &keystorePath, const QString &keystorePassword, const QString &keyAlias, const QString &keyPassword)
 {
     if (target.isEmpty()) {
-        emit error("Apksigner: Target path not specified.");
+        emit signFinished(false, "Apksigner: Target path not specified.");
         return;
     }
 
@@ -22,15 +23,20 @@ void Apksigner::sign(const QString &target, const QString &keystorePath, const Q
     arguments << "--key-pass" << QString("pass:%1").arg(keyPassword);
     arguments << target;
 
-    Jar::startAsync(arguments);
+    auto process = new Process(this);
+    connect(process, &Process::finished, this, &Apksigner::signFinished);
+    connect(process, &Process::finished, process, &QObject::deleteLater);
+    process->jar(getPath(), arguments);
 }
 
-QString Apksigner::version() const
+void Apksigner::version()
 {
-    QStringList arguments;
-    arguments << "--version";
-    auto result = startSync(arguments);
-    return result.success ? result.value : QString();
+    auto process = new Process(this);
+    connect(process, &Process::finished, [=](bool success, const QString &output) {
+        emit versionFetched(success ? output : QString());
+        process->deleteLater();
+    });
+    process->jar(getPath(), {"--version"});
 }
 
 QString Apksigner::getPath()

@@ -4,7 +4,7 @@
 #include "windows/dialogs.h"
 #include "windows/keymanager.h"
 #include "windows/optionsdialog.h"
-#include "windows/waitdialog.h"
+#include "windows/permissioneditor.h"
 #include "widgets/resourcetree.h"
 #include "widgets/filesystemtree.h"
 #include "widgets/iconlist.h"
@@ -15,7 +15,6 @@
 #include <QMimeDatabase>
 #include <QTimer>
 #include <QDebug>
-#include "windows/permissioneditor.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {

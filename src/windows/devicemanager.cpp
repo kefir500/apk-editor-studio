@@ -64,19 +64,19 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
         QModelIndex index = deviceModel.index(deviceList->currentIndex().row(), DeviceItemsModel::DeviceAlias);
         deviceModel.setData(index, alias);
     });
-    connect(btnRefresh, &QPushButton::clicked, this, &DeviceManager::refreshDevices);
+    connect(&deviceModel, &DeviceItemsModel::fetching, this, [=]() {
+        setEnabled(false);
+    });
+    connect(&deviceModel, &DeviceItemsModel::fetched, this, [=]() {
+        setEnabled(true);
+    });
+    connect(btnRefresh, &QPushButton::clicked, &deviceModel, &DeviceItemsModel::refresh);
     connect(btnApply, &QPushButton::clicked, &deviceModel, &DeviceItemsModel::save);
     connect(dialogButtons, &QDialogButtonBox::accepted, this, &DeviceManager::accept);
     connect(dialogButtons, &QDialogButtonBox::rejected, this, &DeviceManager::reject);
     connect(this, &DeviceManager::accepted, &deviceModel, &DeviceItemsModel::save);
 
     setCurrentDevice(nullptr);
-    refreshDevices();
-}
-
-void DeviceManager::refreshDevices()
-{
-    WAIT
     deviceModel.refresh();
 }
 

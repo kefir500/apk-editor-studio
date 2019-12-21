@@ -59,7 +59,7 @@ KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
     connect(btnSelectKey, &QToolButton::clicked, [this]() {
         const QString keystore = editKeystore->getCurrentPath();
         const QString password = editKeystorePassword->text();
-        const QString alias = selectKey(keystore, password, editKeyAlias->text(), this);
+        const QString alias = KeySelector::select(keystore, password, editKeyAlias->text(), this);
         if (!alias.isEmpty()) {
             editKeyAlias->setText(alias);
         }
@@ -87,7 +87,7 @@ void KeyManager::save()
     app->settings->setKeyPassword(editKeyPassword->text());
 }
 
-bool KeyManager::createKeystore()
+void KeyManager::createKeystore()
 {
     KeyCreator dialog(this);
     connect(&dialog, &KeyCreator::createdKeystore, [&](const QString &keystore) {
@@ -100,65 +100,26 @@ bool KeyManager::createKeystore()
             editKeyAlias->setText(alias);
         }
     });
-    return dialog.exec();
+    dialog.exec();
 }
 
-bool KeyManager::createKey()
+void KeyManager::createKey()
 {
     const QString keystore = editKeystore->getCurrentPath();
     const QString password = editKeystorePassword->text();
-    const bool isKeystoreReadable = getCertificates(keystore, password, this).success;
-    if (!isKeystoreReadable) {
-        return false;
-    }
-    KeyCreator dialog(keystore, password, this);
-    connect(&dialog, &KeyCreator::createdKey, [&](const QString &alias) {
-        if (!alias.isEmpty()) {
-            editKeyAlias->setText(alias);
-        }
+
+    auto keytool = new Keytool(this);
+    connect(keytool, &Keytool::aliasesFetched, [=]() {
+        KeyCreator dialog(keystore, password, this);
+        connect(&dialog, &KeyCreator::createdKey, [&](const QString &alias) {
+            if (!alias.isEmpty()) {
+                editKeyAlias->setText(alias);
+            }
+        });
+        dialog.exec();
+        keytool->deleteLater();
     });
-    return dialog.exec();
-}
-
-QString KeyManager::selectKey(const QString &keystore, const QString &password, const QString &currentAlias, QWidget *parent)
-{
-    const QStringList certificates = getCertificates(keystore, password, parent).value;
-    if (!certificates.isEmpty()) {
-        const QString alias = Dialogs::combo(certificates, currentAlias, tr("Select Key"), parent);
-        if (!alias.isEmpty()) {
-            return alias;
-        }
-    }
-    return QString();
-}
-
-Result<QStringList> KeyManager::getCertificates(const QString &keystore, const QString &password, QWidget *parent)
-{
-    Keytool keytool;
-    WaitDialog *wait = new WaitDialog(parent);
-    Q_UNUSED(wait)
-    Result<QString> result = keytool.aliases(keystore, password);
-    delete wait;
-    if (!result.success) {
-        QString text;
-        if (result.value.contains("Keystore was tampered with, or password was incorrect")) {
-            text = tr("Could not read keystore: incorrect password.");
-        } else {
-            text = tr("Could not read keystore.\nSee details for more information.");
-        }
-        Dialogs::detailed(text, result.value, QMessageBox::Warning, parent);
-        return Result<QStringList>(false, QStringList());
-    }
-
-    QStringList certificates;
-    QRegularExpression regex("^(.+),.+,\\s*PrivateKeyEntry,\\s*$");
-    regex.setPatternOptions(QRegularExpression::MultilineOption);
-    QRegularExpressionMatchIterator it = regex.globalMatch(result.value);
-    while (it.hasNext()) {
-        QRegularExpressionMatch match = it.next();
-        certificates << match.captured(1);
-    }
-    return Result<QStringList>(true, certificates);
+    keytool->fetchAliases(keystore, password);
 }
 
 // KeyCreator
@@ -215,17 +176,17 @@ QFormLayout *KeyCreator::initialize(Type type)
     return layout;
 }
 
-bool KeyCreator::create()
+void KeyCreator::create()
 {
     if (!validateFields()) {
-        return false;
+        return;
     }
 
     QString path;
     if (type == TypeKeystore) {
         path = Dialogs::getSaveKeystoreFilename();
         if (path.isEmpty()) {
-            return false;
+            return;
         }
         QFile::remove(path);
     } else if (type == TypeKey) {
@@ -245,31 +206,26 @@ bool KeyCreator::create()
     keystore.dname.state = editState->text();
     keystore.dname.countryCode = editCountry->text();
 
-    WAIT
-    Keytool keytool;
-    Result<QString> result = keytool.create(keystore);
-    if (!result.success) {
-        QString text;
-        if (result.value.contains(QRegularExpression("alias <.+> already exists"))) {
-            editAlias->setFocus();
-            editAlias->selectAll();
-            text = tr("Could not write to keystore: alias already exists.");
-        } else {
-            text = tr("Could not write to keystore.\nSee details for more information.");
+    auto keytool = new Keytool(this);
+    connect(keytool, &Keytool::keystoreCreated, [=]() {
+        if (type == TypeKeystore) {
+            QMessageBox::information(this, QString(), tr("Keystore has been successfully created!"));
+            emit createdKeystore(keystore.keystorePath);
+            emit createdKey(keystore.keyAlias);
+        } else if (type == TypeKey) {
+            QMessageBox::information(this, QString(), tr("Key has been successfully created!"));
+            emit createdKey(keystore.keyAlias);
         }
-        Dialogs::detailed(text, result.value, QMessageBox::Warning, this);
-        return false;
-    }
-    if (type == TypeKeystore) {
-        QMessageBox::information(this, QString(), tr("Keystore has been successfully created!"));
-        emit createdKeystore(keystore.keystorePath);
-        emit createdKey(keystore.keyAlias);
-    } else if (type == TypeKey) {
-        QMessageBox::information(this, QString(), tr("Key has been successfully created!"));
-        emit createdKey(keystore.keyAlias);
-    }
-    accept();
-    return true;
+        accept();
+        keytool->deleteLater();
+    });
+    connect(keytool, &Keytool::keystoreCreateError, [=](const QString &brief, const QString &detailed) {
+        editAlias->setFocus();
+        editAlias->selectAll();
+        Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
+        keytool->deleteLater();
+    });
+    keytool->createKeystore(keystore);
 }
 
 bool KeyCreator::validateFields()
@@ -357,4 +313,50 @@ QFormLayout *KeyCreator::createKeyLayout()
     layout->addRow(editCountry->placeholderText(), editCountry);
 
     return layout;
+}
+
+// KeyCreator
+
+KeySelector::KeySelector(QWidget *parent) : QDialog(parent)
+{
+    setWindowTitle(tr("Select Key"));
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+    combo = new QComboBox(this);
+
+    auto buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->addWidget(combo);
+    layout->addWidget(buttons);
+}
+
+QString KeySelector::select(const QString &keystore, const QString &password, const QString &currentAlias, QWidget *parent)
+{
+    KeySelector dialog(parent);
+    dialog.refresh(keystore, password, currentAlias);
+    return dialog.exec() == QDialog::Accepted ? dialog.getCurrentValue() : QString();
+}
+
+void KeySelector::refresh(const QString &keystore, const QString &password, const QString &currentAlias)
+{
+    auto keytool = new Keytool(this);
+    connect(keytool, &Keytool::aliasesFetched, [=](const QStringList &aliases) {
+        combo->clear();
+        combo->addItems(aliases);
+        combo->setCurrentText(currentAlias);
+        keytool->deleteLater();
+    });
+    connect(keytool, &Keytool::aliasesFetchError, [=](const QString &brief, const QString &detailed) {
+        Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
+        keytool->deleteLater();
+    });
+    keytool->fetchAliases(keystore, password);
+}
+
+QString KeySelector::getCurrentValue() const
+{
+    return combo->currentText();
 }

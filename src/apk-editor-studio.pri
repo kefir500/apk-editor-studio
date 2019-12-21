@@ -29,6 +29,7 @@ SOURCES += \
     $$PWD/base/language.cpp \
     $$PWD/base/main.cpp \
     $$PWD/base/password.cpp \
+    $$PWD/base/process.cpp \
     $$PWD/base/recent.cpp \
     $$PWD/base/settings.cpp \
     $$PWD/base/tasks.cpp \
@@ -49,12 +50,9 @@ SOURCES += \
     $$PWD/tools/adb.cpp \
     $$PWD/tools/apksigner.cpp \
     $$PWD/tools/apktool.cpp \
-    $$PWD/tools/executable.cpp \
-    $$PWD/tools/jar.cpp \
     $$PWD/tools/java.cpp \
     $$PWD/tools/javac.cpp \
     $$PWD/tools/keytool.cpp \
-    $$PWD/tools/which.cpp \
     $$PWD/tools/zipalign.cpp \
     $$PWD/widgets/decorationsizedelegate.cpp \
     $$PWD/widgets/elidedlabel.cpp \
@@ -118,6 +116,7 @@ HEADERS += \
     $$PWD/base/iconprovider.h \
     $$PWD/base/language.h \
     $$PWD/base/password.h \
+    $$PWD/base/process.h \
     $$PWD/base/recent.h \
     $$PWD/base/result.h \
     $$PWD/base/settings.h \
@@ -139,14 +138,11 @@ HEADERS += \
     $$PWD/tools/adb.h \
     $$PWD/tools/apksigner.h \
     $$PWD/tools/apktool.h \
-    $$PWD/tools/executable.h \
-    $$PWD/tools/jar.h \
     $$PWD/tools/java.h \
     $$PWD/tools/javac.h \
     $$PWD/tools/keystore.h \
     $$PWD/tools/keytool.h \
     $$PWD/tools/tools.h \
-    $$PWD/tools/which.h \
     $$PWD/tools/zipalign.h \
     $$PWD/widgets/decorationsizedelegate.h \
     $$PWD/widgets/elidedlabel.h \

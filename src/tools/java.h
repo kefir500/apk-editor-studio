@@ -1,15 +1,18 @@
 #ifndef JAVA_H
 #define JAVA_H
 
-#include "tools/executable.h"
+#include <QObject>
 
-class Java : public Executable
+class Java : public QObject
 {
-public:
-    explicit Java(QObject *parent = nullptr);
-    explicit Java(const QString &path, QObject *parent = nullptr) : Executable(path, parent) {}
+    Q_OBJECT
 
-    QString version();
+public:
+    explicit Java(QObject *parent = nullptr) : QObject(parent) {}
+    void version();
+
+signals:
+    void versionFetched(const QString &version) const;
 };
 
 #endif // JAVA_H
