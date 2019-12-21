@@ -443,7 +443,7 @@ const Keystore *Project::getKeystore() const
             }
         }
         if (keystore->keyAlias.isEmpty()) {
-            keystore->keyAlias = KeyManager::selectKey(keystore->keystorePath, keystore->keystorePassword);
+            keystore->keyAlias = KeySelector::select(keystore->keystorePath, keystore->keystorePassword);
             if (keystore->keyAlias.isEmpty()) {
                 return nullptr;
             }

@@ -23,6 +23,7 @@ void DeviceItemsModel::refresh()
                     device->setAlias(alias);
                 }
             }
+        }
         beginResetModel();
         devices.clear();
         devices.append(list);
