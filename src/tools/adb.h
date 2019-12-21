@@ -2,6 +2,7 @@
 #define ADB_H
 
 #include "base/device.h"
+#include <QObject>
 
 class Adb : public QObject
 {
