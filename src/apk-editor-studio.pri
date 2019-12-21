@@ -82,7 +82,6 @@ SOURCES += \
     $$PWD/windows/optionsdialog.cpp \
     $$PWD/windows/permissioneditor.cpp \
     $$PWD/windows/selectdialog.cpp \
-    $$PWD/windows/waitdialog.cpp \
     $$PWD/windows/yesalwaysdialog.cpp
 
 HEADERS += \
@@ -172,7 +171,6 @@ HEADERS += \
     $$PWD/windows/optionsdialog.h \
     $$PWD/windows/permissioneditor.h \
     $$PWD/windows/selectdialog.h \
-    $$PWD/windows/waitdialog.h \
     $$PWD/windows/yesalwaysdialog.h
 
 INCLUDEPATH += $$PWD

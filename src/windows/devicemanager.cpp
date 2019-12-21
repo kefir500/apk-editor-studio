@@ -1,5 +1,5 @@
 #include "windows/devicemanager.h"
-#include "windows/waitdialog.h"
+#include "widgets/loadingwidget.h"
 #include "base/application.h"
 #include <QFormLayout>
 #include <QGroupBox>
@@ -20,6 +20,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     deviceList = new QListView(this);
     deviceList->setModel(&deviceModel);
     deviceList->setCurrentIndex(QModelIndex());
+    auto loading = new LoadingWidget(deviceList);
 
     QPushButton *btnRefresh = new QPushButton(tr("Refresh"), this);
     btnRefresh->setIcon(app->icons.get("refresh.png"));
@@ -65,9 +66,11 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
         deviceModel.setData(index, alias);
     });
     connect(&deviceModel, &DeviceItemsModel::fetching, this, [=]() {
+        loading->show();
         setEnabled(false);
     });
     connect(&deviceModel, &DeviceItemsModel::fetched, this, [=]() {
+        loading->hide();
         setEnabled(true);
     });
     connect(btnRefresh, &QPushButton::clicked, &deviceModel, &DeviceItemsModel::refresh);

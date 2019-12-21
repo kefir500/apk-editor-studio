@@ -1,6 +1,5 @@
 #include "editors/titleeditor.h"
 #include "widgets/loadingwidget.h"
-#include "windows/waitdialog.h"
 #include "base/application.h"
 #include <QBoxLayout>
 #include <QHeaderView>
@@ -14,14 +13,11 @@ TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(paren
     table = new QTableView(this);
     table->setAlternatingRowColors(true);
     table->setHorizontalScrollMode(QTableView::ScrollPerPixel);
-    table->hide();
 
     auto loading = new LoadingWidget(this);
-    loading->play();
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(table);
-    layout->addWidget(loading);
 
     model = new TitleItemsModel(project, this);
     connect(model, &TitleItemsModel::initialized, this, [=]() {
@@ -30,8 +26,7 @@ TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(paren
         table->setModel(sortProxy);
         table->setSortingEnabled(true);
         table->resizeColumnsToContents();
-        table->show();
-        loading->stop();
+        loading->hide();
     });
     connect(model, &TitleItemsModel::dataChanged, [=]() {
         setModified(true);

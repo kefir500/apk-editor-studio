@@ -1,5 +1,4 @@
 #include "windows/keymanager.h"
-#include "windows/waitdialog.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
 #include "base/password.h"
@@ -144,6 +143,8 @@ QFormLayout *KeyCreator::initialize(Type type)
 
     QFormLayout *layout = new QFormLayout(this);
     QFormLayout *keyLayout = createKeyLayout();
+    loading = new LoadingWidget(this);
+    loading->hide();
 
     if (type == TypeKeystore) {
         editKeystorePassword = new QLineEdit(this);
@@ -206,8 +207,10 @@ void KeyCreator::create()
     keystore.dname.state = editState->text();
     keystore.dname.countryCode = editCountry->text();
 
+    loading->show();
     auto keytool = new Keytool(this);
     connect(keytool, &Keytool::keystoreCreated, [=]() {
+        loading->hide();
         if (type == TypeKeystore) {
             QMessageBox::information(this, QString(), tr("Keystore has been successfully created!"));
             emit createdKeystore(keystore.keystorePath);
@@ -220,6 +223,7 @@ void KeyCreator::create()
         keytool->deleteLater();
     });
     connect(keytool, &Keytool::keystoreCreateError, [=](const QString &brief, const QString &detailed) {
+        loading->hide();
         editAlias->setFocus();
         editAlias->selectAll();
         Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
@@ -323,6 +327,8 @@ KeySelector::KeySelector(QWidget *parent) : QDialog(parent)
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     combo = new QComboBox(this);
+    loading = new LoadingWidget(this);
+    loading->hide();
 
     auto buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
@@ -342,11 +348,13 @@ QString KeySelector::select(const QString &keystore, const QString &password, co
 
 void KeySelector::refresh(const QString &keystore, const QString &password, const QString &currentAlias)
 {
+    loading->show();
     auto keytool = new Keytool(this);
     connect(keytool, &Keytool::aliasesFetched, [=](const QStringList &aliases) {
         combo->clear();
         combo->addItems(aliases);
         combo->setCurrentText(currentAlias);
+        loading->hide();
         keytool->deleteLater();
     });
     connect(keytool, &Keytool::aliasesFetchError, [=](const QString &brief, const QString &detailed) {

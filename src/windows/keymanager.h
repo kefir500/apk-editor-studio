@@ -2,6 +2,7 @@
 #define KEYMANAGER_H
 
 #include "widgets/filebox.h"
+#include "widgets/loadingwidget.h"
 #include <QDialog>
 #include <QGroupBox>
 #include <QSpinBox>
@@ -73,6 +74,7 @@ private:
     QLineEdit *editCity;
     QLineEdit *editState;
     QLineEdit *editCountry;
+    LoadingWidget *loading;
 };
 
 class KeySelector : public QDialog
@@ -86,6 +88,7 @@ public:
 
 private:
     QComboBox *combo;
+    LoadingWidget *loading;
 };
 
 #endif // KEYMANAGER_H

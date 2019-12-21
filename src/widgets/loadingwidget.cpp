@@ -4,7 +4,8 @@
 
 LoadingWidget::LoadingWidget(int size, QWidget *parent) : QWidget(parent), spinnerSize(size)
 {
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setAttribute(Qt::WA_OpaquePaintEvent);
+    parentChanged();
 
     spinnerAngle = 0;
     connect(&spinnerTimer, &QTimer::timeout, [=]() {
@@ -12,19 +13,6 @@ LoadingWidget::LoadingWidget(int size, QWidget *parent) : QWidget(parent), spinn
         update();
     });
     spinnerTimer.setInterval(15);
-    stop();
-}
-
-void LoadingWidget::play()
-{
-    show();
-    spinnerTimer.start();
-}
-
-void LoadingWidget::stop()
-{
-    hide();
-    spinnerTimer.stop();
 }
 
 void LoadingWidget::paintEvent(QPaintEvent *event)
@@ -37,7 +25,50 @@ void LoadingWidget::paintEvent(QPaintEvent *event)
     const int y = rect().center().y() - h / 2;
 
     QPainter painter(this);
-    painter.setPen(QPen(QPalette().windowText(), app->scale(2.2)));
+    painter.fillRect(rect(), palette().color(QPalette::Window));
+    painter.setPen(QPen(palette().color(QPalette::WindowText), app->scale(2.2)));
     painter.setRenderHint(QPainter::Antialiasing);
     painter.drawArc(x, y, w, h, spinnerAngle, 12 * 360);
+}
+
+void LoadingWidget::showEvent(QShowEvent *)
+{
+    spinnerTimer.start();
+}
+
+void LoadingWidget::hideEvent(QHideEvent *)
+{
+    spinnerTimer.stop();
+}
+
+bool LoadingWidget::eventFilter(QObject *object, QEvent *event)
+{
+    if (object == parent()) {
+        if (event->type() == QEvent::Resize) {
+            resize(static_cast<QResizeEvent *>(event)->size());
+        } else if (event->type() == QEvent::ChildAdded) {
+            raise();
+        }
+    }
+    return QWidget::eventFilter(object, event);
+}
+
+bool LoadingWidget::event(QEvent *event)
+{
+    if (event->type() == QEvent::ParentAboutToChange) {
+        if (parent()) {
+            parent()->removeEventFilter(this);
+        }
+    } else if (event->type() == QEvent::ParentChange) {
+        parentChanged();
+    }
+    return QWidget::event(event);
+}
+
+void LoadingWidget::parentChanged()
+{
+    if (parent()) {
+        parent()->installEventFilter(this);
+        raise();
+    }
 }
