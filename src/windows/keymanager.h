@@ -40,9 +40,9 @@ class KeyCreator : public QDialog
     Q_OBJECT
 
 public:
-    enum Type {
-        TypeKeystore,
-        TypeKey
+    enum class Type {
+        Keystore,
+        Key
     };
 
     explicit KeyCreator(QWidget *parent = nullptr);

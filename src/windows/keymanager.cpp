@@ -124,14 +124,14 @@ void KeyManager::createKey()
 
 KeyCreator::KeyCreator(QWidget *parent) : QDialog(parent)
 {
-    initialize(TypeKeystore);
+    initialize(Type::Keystore);
 }
 
 KeyCreator::KeyCreator(const QString &keystorePath, const QString &keystorePassword, QWidget *parent) : QDialog(parent)
 {
     this->keystorePath = keystorePath;
     this->keystorePassword = keystorePassword;
-    initialize(TypeKey);
+    initialize(Type::Key);
 }
 
 QFormLayout *KeyCreator::initialize(Type type)
@@ -145,7 +145,7 @@ QFormLayout *KeyCreator::initialize(Type type)
     loading = new LoadingWidget(this);
     loading->hide();
 
-    if (type == TypeKeystore) {
+    if (type == Type::Keystore) {
         editKeystorePassword = new QLineEdit(this);
         editKeystorePasswordConfirm = new QLineEdit(this);
         editKeystorePassword->setPlaceholderText(tr("Keystore Password"));
@@ -162,7 +162,7 @@ QFormLayout *KeyCreator::initialize(Type type)
         groupKey->setLayout(keyLayout);
         layout->addRow(groupKey);
 
-    } else if (type == TypeKey) {
+    } else if (type == Type::Key) {
         editKeystorePassword = nullptr;
         editKeystorePasswordConfirm = nullptr;
         layout->addRow(keyLayout);
@@ -183,13 +183,13 @@ void KeyCreator::create()
     }
 
     QString path;
-    if (type == TypeKeystore) {
+    if (type == Type::Keystore) {
         path = Dialogs::getSaveKeystoreFilename();
         if (path.isEmpty()) {
             return;
         }
         QFile::remove(path);
-    } else if (type == TypeKey) {
+    } else if (type == Type::Key) {
         path = keystorePath;
     }
 
@@ -210,11 +210,11 @@ void KeyCreator::create()
     auto keytool = new Keytool(this);
     connect(keytool, &Keytool::keystoreCreated, [=]() {
         loading->hide();
-        if (type == TypeKeystore) {
+        if (type == Type::Keystore) {
             QMessageBox::information(this, QString(), tr("Keystore has been successfully created!"));
             emit createdKeystore(keystore.keystorePath);
             emit createdKey(keystore.keyAlias);
-        } else if (type == TypeKey) {
+        } else if (type == Type::Key) {
             QMessageBox::information(this, QString(), tr("Key has been successfully created!"));
             emit createdKey(keystore.keyAlias);
         }
