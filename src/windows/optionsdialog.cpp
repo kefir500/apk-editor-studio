@@ -216,7 +216,7 @@ void OptionsDialog::initialize()
         if (app->associate()) {
             QMessageBox::information(this, QString(), tr("File association has been created."));
         } else {
-            QMessageBox::warning(this, QString(), tr("Could not register file assocation."));
+            QMessageBox::warning(this, QString(), tr("Could not register file association."));
         }
     });
 #ifndef Q_OS_WIN

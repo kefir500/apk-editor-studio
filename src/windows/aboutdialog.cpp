@@ -214,7 +214,7 @@ QWidget *AboutDialog::createLibrariesTab()
     });
     jre->version();
 
-    // St JDK version:
+    // Set JDK version:
 
     auto jdk = new Javac(this);
     connect(jdk, &Javac::versionFetched, [=](const QString &version) {
