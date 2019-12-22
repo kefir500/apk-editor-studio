@@ -117,7 +117,6 @@ HEADERS += \
     $$PWD/base/password.h \
     $$PWD/base/process.h \
     $$PWD/base/recent.h \
-    $$PWD/base/result.h \
     $$PWD/base/settings.h \
     $$PWD/base/tasks.h \
     $$PWD/base/treenode.h \

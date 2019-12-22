@@ -31,10 +31,6 @@ namespace Dialogs
 
     QString getOpenDirectory(const QString &defaultPath, QWidget *parent = nullptr);
 
-    QString combo(const QStringList &options, QWidget *parent = nullptr);
-    QString combo(const QStringList &options, const QString &current, QWidget *parent = nullptr);
-    QString combo(const QStringList &options, const QString &current, const QString &title, QWidget *parent = nullptr);
-
     int detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon = QMessageBox::Warning, QWidget *parent = nullptr);
     int log(const QString &title, const QString &text, QWidget *parent = nullptr);
     int log(const QString &text, QWidget *parent = nullptr);

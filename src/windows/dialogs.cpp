@@ -127,37 +127,6 @@ QString Dialogs::getOpenDirectory(const QString &defaultPath, QWidget *parent)
     return QFileDialog::getExistingDirectory(parent, QString(), path);
 }
 
-QString Dialogs::combo(const QStringList &options, QWidget *parent)
-{
-    return Dialogs::combo(options, QString(), QString(), parent);
-}
-
-QString Dialogs::combo(const QStringList &options, const QString &current, QWidget *parent)
-{
-    return Dialogs::combo(options, current, QString(), parent);
-}
-
-QString Dialogs::combo(const QStringList &options, const QString &current, const QString &title, QWidget *parent)
-{
-    QDialog dialog(parent);
-    dialog.setWindowTitle(title);
-    dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
-    QComboBox *combo = new QComboBox(&dialog);
-    combo->addItems(options);
-    combo->setCurrentText(current);
-
-    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
-    app->connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-    app->connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
-
-    QVBoxLayout *layout = new QVBoxLayout(&dialog);
-    layout->addWidget(combo);
-    layout->addWidget(buttons);
-
-    return dialog.exec() == QDialog::Accepted ? combo->currentText() : QString();
-}
-
 int Dialogs::detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon, QWidget *parent)
 {
     QMessageBox dialog(parent);

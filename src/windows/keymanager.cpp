@@ -5,7 +5,6 @@
 #include "tools/keytool.h"
 #include <QPushButton>
 #include <QLineEdit>
-#include <QComboBox>
 #include <QDialogButtonBox>
 
 // KeyManager
