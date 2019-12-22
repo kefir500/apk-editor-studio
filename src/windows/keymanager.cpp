@@ -136,6 +136,11 @@ KeyCreator::KeyCreator(const QString &keystorePath, const QString &keystorePassw
 
 QFormLayout *KeyCreator::initialize(Type type)
 {
+    if (type == Type::Keystore) {
+        setWindowTitle(tr("Create Keystore"));
+    } else if (type == Type::Key) {
+        setWindowTitle(tr("Create Key"));
+    }
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     this->type = type;
