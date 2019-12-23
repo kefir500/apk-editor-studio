@@ -133,6 +133,11 @@ bool IconItemsModel::removeResource(const QModelIndex &index)
     return removeRow(index.row(), index.parent());
 }
 
+QString IconItemsModel::getResourcePath(const QModelIndex &index) const
+{
+    return getIconPath(index);
+}
+
 QVariant IconItemsModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
@@ -156,10 +161,6 @@ QVariant IconItemsModel::data(const QModelIndex &index, int role) const
             case TypeColumn:
                 return getIconType(index);
             }
-        } else if (role == PathRole) {
-            return getIconPath(index);
-        } else if (role == IconRole) {
-            return getIcon(index);
         } else if (role == Qt::ToolTipRole) {
             return getIconPath(index);
         } else if (role == Qt::DecorationRole) {

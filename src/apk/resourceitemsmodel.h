@@ -25,7 +25,7 @@ public:
     };
 
     enum Role {
-        SortRole = IRoleCount + 1
+        SortRole = Qt::UserRole + 1
     };
 
     ResourceItemsModel(const Project *apk, QObject *parent = nullptr);
@@ -34,6 +34,7 @@ public:
     QModelIndex addNode(ResourceNode *node, const QModelIndex &parent = QModelIndex());
     bool replaceResource(const QModelIndex &index, const QString &file = QString()) override;
     bool removeResource(const QModelIndex &index) override;
+    QString getResourcePath(const QModelIndex &index) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;

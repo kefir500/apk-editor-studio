@@ -46,16 +46,9 @@ bool FileSystemModel::removeResource(const QModelIndex &index)
     return removeRow(index.row(), index.parent());
 }
 
-QVariant FileSystemModel::data(const QModelIndex &index, int role) const
+QString FileSystemModel::getResourcePath(const QModelIndex &index) const
 {
-    switch (role) {
-    case PathRole:
-        return filePath(index);
-    case IconRole:
-        return fileIcon(index);
-    default:
-        return QFileSystemModel::data(index, role);
-    }
+    return filePath(index);
 }
 
 bool FileSystemModel::removeRows(int row, int count, const QModelIndex &parent)

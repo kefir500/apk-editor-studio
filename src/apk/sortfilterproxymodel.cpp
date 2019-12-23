@@ -14,3 +14,8 @@ bool SortFilterProxyModel::removeResource(const QModelIndex &index)
 {
     return sourceModel()->removeResource(mapToSource(index));
 }
+
+QString SortFilterProxyModel::getResourcePath(const QModelIndex &index) const
+{
+    return sourceModel()->getResourcePath(mapToSource(index));
+}

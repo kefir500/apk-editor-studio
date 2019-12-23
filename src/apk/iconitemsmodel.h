@@ -47,6 +47,7 @@ public:
     bool replaceApplicationIcons(const QString &path);
     bool replaceResource(const QModelIndex &index, const QString &path = QString()) override;
     bool removeResource(const QModelIndex &index) override;
+    QString getResourcePath(const QModelIndex &index) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;

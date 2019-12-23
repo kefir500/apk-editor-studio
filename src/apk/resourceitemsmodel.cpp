@@ -1,4 +1,5 @@
 #include "apk/resourceitemsmodel.h"
+#include "apk/resourcemodelindex.h"
 #include "base/utils.h"
 #include <QIcon>
 
@@ -30,7 +31,7 @@ QModelIndex ResourceItemsModel::addNode(ResourceNode *node, const QModelIndex &p
 
 bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString &with)
 {
-    const QString what = index.data(PathRole).toString();
+    const QString what = ResourceModelIndex(index).path();
     if (Utils::replaceFile(what, with)) {
         emit dataChanged(index, index);
         return true;
@@ -44,6 +45,11 @@ bool ResourceItemsModel::removeResource(const QModelIndex &index)
         return false;
     }
     return removeRow(index.row(), index.parent());
+}
+
+QString ResourceItemsModel::getResourcePath(const QModelIndex &index) const
+{
+    return index.sibling(index.row(), PathColumn).data().toString();
 }
 
 QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
@@ -95,10 +101,6 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                     return file->getFilePath();
                 }
                 break;
-            case PathRole:
-                return file->getFilePath();
-            case IconRole:
-                return file->getFileIcon();
             case Qt::DecorationRole:
                 switch (column) {
                 case CaptionColumn:
