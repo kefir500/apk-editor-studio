@@ -45,7 +45,7 @@ QIcon IconItemsModel::getIcon() const
     QIcon icon;
     for (auto node : applicationNode->getChildren()) {
         auto iconNode = static_cast<IconNode *>(node);
-        if (iconNode->type == Icon) {
+        if (iconNode->type == TypeIcon) {
             const QPixmap pixmap = Utils::iconToPixmap(proxyToSourceMap.value(iconNode).data(Qt::DecorationRole).value<QIcon>());
             icon.addPixmap(pixmap);
         }
@@ -57,7 +57,7 @@ QIcon IconItemsModel::getIcon(const QModelIndex &index) const
 {
     const QModelIndex sourceIndex = mapToSource(index);
     if (Q_LIKELY(sourceIndex.isValid())) {
-        return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::NodeCaption).data(Qt::DecorationRole).value<QIcon>();
+        return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::CaptionColumn).data(Qt::DecorationRole).value<QIcon>();
     }
     return QIcon();
 }
@@ -66,7 +66,7 @@ QString IconItemsModel::getIconPath(const QModelIndex &index) const
 {
     const QModelIndex sourceIndex = mapToSource(index);
     if (Q_LIKELY(sourceIndex.isValid())) {
-        return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourcePath).data().toString();
+        return sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::PathColumn).data().toString();
     }
     return QString();
 }
@@ -78,14 +78,14 @@ QString IconItemsModel::getIconCaption(const QModelIndex &index) const
     }
     auto iconNode = static_cast<IconNode *>(index.internalPointer());
     const QModelIndex sourceIndex = proxyToSourceMap.value(iconNode);
-    QString caption = sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::ResourceQualifiers).data().toString().toUpper();
+    QString caption = sourceIndex.sibling(sourceIndex.row(), ResourceItemsModel::QualifiersColumn).data().toString().toUpper();
     switch (iconNode->type) {
-    case Icon:
+    case TypeIcon:
         break;
-    case RoundIcon:
+    case TypeRoundIcon:
         caption.append(QString(" (%1)").arg(tr("Round icon")));
         break;
-    case Banner:
+    case TypeBanner:
         caption.append(QString(" (%1)").arg(tr("TV banner")));
         break;
     }
@@ -95,7 +95,7 @@ QString IconItemsModel::getIconCaption(const QModelIndex &index) const
 IconItemsModel::IconType IconItemsModel::getIconType(const QModelIndex &index) const
 {
     if (!index.isValid()) {
-        return Icon;
+        return TypeIcon;
     }
     auto node = static_cast<IconNode *>(index.internalPointer());
     return node->type;
@@ -112,7 +112,7 @@ bool IconItemsModel::replaceApplicationIcons(const QString &path)
     for (int row = 0; row < applicationIconCount; ++row) {
         auto iconIndex = index(row, PathColumn, applicationIndex);
         auto iconType = getIconType(iconIndex);
-        if (iconType == Icon || iconType == RoundIcon) {
+        if (iconType == TypeIcon || iconType == TypeRoundIcon) {
             if (Utils::isImageWritable(getIconPath(iconIndex))) {
                 if (!sourceModel()->replaceResource(mapToSource(iconIndex), path)) {
                     success = false;
@@ -236,8 +236,8 @@ void IconItemsModel::sort(int column, Qt::SortOrder order)
         auto index2 = proxyToSourceMap.value(icon2);
         if (icon1->type < icon2->type) { return true; }
         if (icon2->type < icon1->type) { return false; }
-        auto dpi1 = index1.sibling(index1.row(), ResourceItemsModel::ResourceDpi).data(ResourceItemsModel::SortRole);
-        auto dpi2 = index2.sibling(index2.row(), ResourceItemsModel::ResourceDpi).data(ResourceItemsModel::SortRole);
+        auto dpi1 = index1.sibling(index1.row(), ResourceItemsModel::DpiColumn).data(ResourceItemsModel::SortRole);
+        auto dpi2 = index2.sibling(index2.row(), ResourceItemsModel::DpiColumn).data(ResourceItemsModel::SortRole);
         if (dpi1 < dpi2) { return true; }
         if (dpi2 < dpi1) { return false; }
         return false;
@@ -340,11 +340,11 @@ void IconItemsModel::onResourceAdded(const QModelIndex &index)
         if (!resourceName.isEmpty() && !resourceType.isEmpty()) {
             for (ManifestScope *scope : apk()->manifest->scopes) {
                 if (resourceName == scope->icon().getResourceName() && resourceType == scope->icon().getResourceType()) {
-                    appendIcon(index, scope, Icon);
+                    appendIcon(index, scope, TypeIcon);
                 } else if (resourceName == scope->roundIcon().getResourceName() && resourceType == scope->roundIcon().getResourceType()) {
-                    appendIcon(index, scope, RoundIcon);
+                    appendIcon(index, scope, TypeRoundIcon);
                 } else if (resourceName == scope->banner().getResourceName() && resourceType == scope->banner().getResourceType()) {
-                    appendIcon(index, scope, Banner);
+                    appendIcon(index, scope, TypeBanner);
                 }
             }
         }

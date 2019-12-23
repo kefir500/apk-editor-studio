@@ -13,21 +13,19 @@ class ResourceItemsModel : public QAbstractItemModel, public IResourceItemsModel
     Q_INTERFACES(IResourceItemsModel)
 
 public:
-    enum ResourceColumn {
-        NodeCaption,
-        ResourceLanguage,
-        ResourceLocale,
-        ResourceDpi,
-        ResourceApi,
-        ResourceQualifiers,
-        ResourcePath,
+    enum Column {
+        CaptionColumn,
+        LanguageColumn,
+        LocaleColumn,
+        DpiColumn,
+        ApiColumn,
+        QualifiersColumn,
+        PathColumn,
         ColumnCount
     };
 
-    enum ResourceRole {
-        ResourceNameRole = RoleCount,
-        ResourceTypeRole,
-        SortRole
+    enum Role {
+        SortRole = IRoleCount + 1
     };
 
     ResourceItemsModel(const Project *apk, QObject *parent = nullptr);

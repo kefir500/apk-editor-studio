@@ -11,7 +11,7 @@ LogView::LogView(QWidget *parent) : QListView(parent)
     });
     connect(this, &LogView::clicked, [this](const QModelIndex &index) {
         clearSelection();
-        const QString message = index.sibling(index.row(), LogModel::LogDescriptive).data().toString();
+        const QString message = index.sibling(index.row(), LogModel::DescriptiveColumn).data().toString();
         if (!message.isEmpty()) {
             //: "Log" as in event log, message log, etc.
             Dialogs::log(tr("Log"), message, this);

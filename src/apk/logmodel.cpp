@@ -54,8 +54,10 @@ QVariant LogModel::data(const QModelIndex &index, int role) const
         const LogEntry *entry = static_cast<LogEntry *>(index.internalPointer());
         if (role == Qt::DisplayRole) {
             switch (column) {
-                case LogBrief:       return entry->getBrief();
-                case LogDescriptive: return entry->getDescriptive();
+            case BriefColumn:
+                return entry->getBrief();
+            case DescriptiveColumn:
+                return entry->getDescriptive();
             }
         } else if (role == Qt::ForegroundRole) {
             return QBrush(Qt::black);

@@ -21,8 +21,8 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
     setItemDelegate(buttonDelegate);
     connect(buttonDelegate, &ItemButtonDelegate::clicked, [=](int row) {
         switch (row) {
-        case ManifestModel::MinimumSdk: {
-            const QString dialogTitle = model()->headerData(ManifestModel::MinimumSdk, Qt::Vertical).toString();
+        case ManifestModel::MinimumSdkRow: {
+            const QString dialogTitle = model()->headerData(ManifestModel::MinimumSdkRow, Qt::Vertical).toString();
             const int currentApi = model()->getMinimumSdk();
             const int api = selectAndroidApi(dialogTitle, currentApi);
             if (api) {
@@ -30,8 +30,8 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
             }
             break;
         }
-        case ManifestModel::TargetSdk: {
-            const QString dialogTitle = model()->headerData(ManifestModel::TargetSdk, Qt::Vertical).toString();
+        case ManifestModel::TargetSdkRow: {
+            const QString dialogTitle = model()->headerData(ManifestModel::TargetSdkRow, Qt::Vertical).toString();
             const int currentApi = model()->getTargetSdk();
             const int api = selectAndroidApi(dialogTitle, currentApi);
             if (api) {
@@ -40,7 +40,7 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
             break;
         }
         default:
-            emit titleEditorRequested(static_cast<ManifestModel::ManifestRow>(row));
+            emit titleEditorRequested(static_cast<ManifestModel::Row>(row));
         }
     });
 }

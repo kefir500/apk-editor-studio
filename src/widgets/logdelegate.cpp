@@ -33,7 +33,7 @@ void LogDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
 
     const auto model = static_cast<const LogModel *>(index.model());
     const bool loading = (index.row() == model->rowCount() - 1) ? model->getLoadingState() : false;
-    const QString message = index.sibling(index.row(), LogModel::LogDescriptive).data().toString();
+    const QString message = index.sibling(index.row(), LogModel::DescriptiveColumn).data().toString();
 
     if (loading) {
         painter->drawArc(x, y, w, h, spinnerAngle, 12 * 360);

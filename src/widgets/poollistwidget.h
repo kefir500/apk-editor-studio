@@ -8,8 +8,8 @@ class PoolListWidget : public QListWidget
 public:
     using QListWidget::addItem;
 
-    enum PoolItemRole {
-        IdentifierRole = Qt::UserRole,
+    enum Role {
+        IdentifierRole = Qt::UserRole + 1,
         ReusableRole
     };
 

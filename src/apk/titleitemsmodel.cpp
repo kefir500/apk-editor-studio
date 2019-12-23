@@ -106,14 +106,19 @@ QVariant TitleItemsModel::data(const QModelIndex &index, int role) const
         TitleNode *title = nodes.at(index.row());
         if (role == Qt::DisplayRole || role == Qt::EditRole) {
             switch (index.column()) {
-                case Value:              return title->node->getValue();
-                case ResourceLanguage:   return title->file->getLanguageName();
-                case ResourceQualifiers: return title->file->getReadableQualifiers();
-                case ResourcePath:       return title->file->getFilePath();
+            case ValueColumn:
+                return title->node->getValue();
+            case LanguageColumn:
+                return title->file->getLanguageName();
+            case QualifiersColumn:
+                return title->file->getReadableQualifiers();
+            case PathColumn:
+                return title->file->getFilePath();
             }
         } else if (role == Qt::DecorationRole) {
             switch (index.column()) {
-                case ResourceLanguage: return title->file->getLanguageIcon();
+            case LanguageColumn:
+                return title->file->getLanguageIcon();
             }
         }
     }
@@ -124,11 +129,15 @@ QVariant TitleItemsModel::headerData(int section, Qt::Orientation orientation, i
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
-            case Value:              return tr("Application Title");
-            case ResourceLanguage:   return tr("Language");
+        case ValueColumn:
+            return tr("Application Title");
+        case LanguageColumn:
+            return tr("Language");
+        case QualifiersColumn:
             //: This string refers to the Android qualifiers (https://developer.android.com/guide/topics/resources/providing-resources).
-            case ResourceQualifiers: return tr("Qualifiers");
-            case ResourcePath:       return tr("Path");
+            return tr("Qualifiers");
+        case PathColumn:
+            return tr("Path");
         }
     }
     return QVariant();

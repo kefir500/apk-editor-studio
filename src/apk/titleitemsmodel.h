@@ -10,11 +10,11 @@ class TitleItemsModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    enum TitleColumn {
-        Value,
-        ResourceLanguage,
-        ResourceQualifiers,
-        ResourcePath,
+    enum Column {
+        ValueColumn,
+        LanguageColumn,
+        QualifiersColumn,
+        PathColumn,
         ColumnCount
     };
 

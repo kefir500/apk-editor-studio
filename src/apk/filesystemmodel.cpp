@@ -49,8 +49,10 @@ bool FileSystemModel::removeResource(const QModelIndex &index)
 QVariant FileSystemModel::data(const QModelIndex &index, int role) const
 {
     switch (role) {
-    case PathRole: return filePath(index);
-    case IconRole: return fileIcon(index);
+    case PathRole:
+        return filePath(index);
+    case IconRole:
+        return fileIcon(index);
     default:
         return QFileSystemModel::data(index, role);
     }

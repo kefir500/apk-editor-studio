@@ -10,16 +10,16 @@ class ManifestModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    enum ManifestRow {
-        ApplicationLabel,
-        VersionCode,
-        VersionName,
-        MinimumSdk,
-        TargetSdk,
+    enum Row {
+        ApplicationLabelRow,
+        VersionCodeRow,
+        VersionNameRow,
+        MinimumSdkRow,
+        TargetSdkRow,
         RowCount
     };
 
-    enum ManifestRole {
+    enum Role {
         ReferenceRole = Qt::UserRole + 1
     };
 

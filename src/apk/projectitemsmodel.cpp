@@ -67,21 +67,25 @@ QVariant ProjectItemsModel::data(const QModelIndex &index, int role) const
         const Project *project = static_cast<Project *>(index.internalPointer());
         if (role == Qt::DisplayRole) {
             switch (column) {
-                case ProjectTitle:        return project->getTitle();
-                case ProjectOriginalPath: return project->getOriginalPath();
-                case ProjectContentsPath: return project->getContentsPath();
+            case TitleColumn:
+                return project->getTitle();
+            case OriginalPathColumn:
+                return project->getOriginalPath();
+            case ContentsPathColumn:
+                return project->getContentsPath();
+            case CurrentActionColumn:
+                return project->getState().getCurrentAction();
+            case IsUnpackedColumn:
+                return project->getState().isUnpacked();
+            case IsModifiedColumn:
+                return project->getState().isModified();
+            case IsFailedColumn:
+                return project->getState().isLastActionFailed();
             }
         } else if (role == Qt::DecorationRole) {
             switch (column) {
-                case ProjectTitle:
-                    return project->getThumbnail();
-            }
-        } else {
-            switch (role) {
-                case ProjectActionRole:   return project->getState().getCurrentAction();
-                case ProjectUnpackedRole: return project->getState().isUnpacked();
-                case ProjectModifiedRole: return project->getState().isModified();
-                case ProjectFailedRole:   return project->getState().isLastActionFailed();
+            case TitleColumn:
+                return project->getThumbnail();
             }
         }
     }

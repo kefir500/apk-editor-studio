@@ -40,11 +40,11 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     QGroupBox *groupInfo = new QGroupBox(tr("Device Information"), this);
 
     QFormLayout *infoLayout = new QFormLayout(groupInfo);
-    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceAlias, Qt::Horizontal).toString(), fieldAlias);
-    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceSerial, Qt::Horizontal).toString(), labelSerial);
-    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceProduct, Qt::Horizontal).toString(), labelProduct);
-    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceModel, Qt::Horizontal).toString(), labelModel);
-    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceDevice, Qt::Horizontal).toString(),labelDevice);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::AliasColumn, Qt::Horizontal).toString(), fieldAlias);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::SerialColumn, Qt::Horizontal).toString(), labelSerial);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::ProductColumn, Qt::Horizontal).toString(), labelProduct);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::ModelColumn, Qt::Horizontal).toString(), labelModel);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceColumn, Qt::Horizontal).toString(),labelDevice);
 
     QHBoxLayout *devicesLayout = new QHBoxLayout;
     devicesLayout->addLayout(listLayout, 2);
@@ -62,7 +62,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
         setCurrentDevice(device);
     });
     connect(fieldAlias, &QLineEdit::textChanged, [=](const QString &alias) {
-        QModelIndex index = deviceModel.index(deviceList->currentIndex().row(), DeviceItemsModel::DeviceAlias);
+        QModelIndex index = deviceModel.index(deviceList->currentIndex().row(), DeviceItemsModel::AliasColumn);
         deviceModel.setData(index, alias);
     });
     connect(&deviceModel, &DeviceItemsModel::fetching, this, [=]() {

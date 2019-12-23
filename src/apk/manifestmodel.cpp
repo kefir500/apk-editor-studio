@@ -44,7 +44,7 @@ bool ManifestModel::setApplicationLabel(const QString &label)
         return false;
     }
     manifest->setApplicationLabel(label);
-    emit dataChanged(index(ApplicationLabel, 0), index(ApplicationLabel, 0), {});
+    emit dataChanged(index(ApplicationLabelRow, 0), index(ApplicationLabelRow, 0), {});
     return true;
 }
 
@@ -54,7 +54,7 @@ bool ManifestModel::setVersionCode(int version)
         return false;
     }
     manifest->setVersionCode(version);
-    emit dataChanged(index(VersionCode, 0), index(VersionCode, 0), {});
+    emit dataChanged(index(VersionCodeRow, 0), index(VersionCodeRow, 0), {});
     return true;
 }
 
@@ -64,7 +64,7 @@ bool ManifestModel::setVersionName(const QString &version)
         return false;
     }
     manifest->setVersionName(version);
-    emit dataChanged(index(VersionName, 0), index(VersionName, 0), {});
+    emit dataChanged(index(VersionNameRow, 0), index(VersionNameRow, 0), {});
     return true;
 }
 
@@ -74,7 +74,7 @@ bool ManifestModel::setMinimumSdk(int sdk)
         return false;
     }
     manifest->setMinSdk(sdk);
-    emit dataChanged(index(MinimumSdk, 0), index(MinimumSdk, 0), {});
+    emit dataChanged(index(MinimumSdkRow, 0), index(MinimumSdkRow, 0), {});
     return true;
 }
 
@@ -84,7 +84,7 @@ bool ManifestModel::setTargetSdk(int sdk)
         return false;
     }
     manifest->setTargetSdk(sdk);
-    emit dataChanged(index(TargetSdk, 0), index(TargetSdk, 0), {});
+    emit dataChanged(index(TargetSdkRow, 0), index(TargetSdkRow, 0), {});
     return true;
 }
 
@@ -94,16 +94,16 @@ bool ManifestModel::setData(const QModelIndex &index, const QVariant &value, int
         if (role == Qt::EditRole) {
             const int row = index.row();
             switch (row) {
-                case ApplicationLabel:
-                    return setApplicationLabel(value.toString());
-                case VersionCode:
-                    return setVersionCode(value.toInt());
-                case VersionName:
-                    return setVersionName(value.toString());
-                case MinimumSdk:
-                    return setMinimumSdk(value.toInt());
-                case TargetSdk:
-                    return setTargetSdk(value.toInt());
+            case ApplicationLabelRow:
+                return setApplicationLabel(value.toString());
+            case VersionCodeRow:
+                return setVersionCode(value.toInt());
+            case VersionNameRow:
+                return setVersionName(value.toString());
+            case MinimumSdkRow:
+                return setMinimumSdk(value.toInt());
+            case TargetSdkRow:
+                return setTargetSdk(value.toInt());
             }
         } else if (role >= Qt::UserRole) {
             userdata[index.row()][role] = value;
@@ -124,13 +124,13 @@ QVariant ManifestModel::data(const QModelIndex &index, int role) const
         const int row = index.row();
         if (role == Qt::DisplayRole || role == Qt::EditRole) {
             switch (row) {
-            case ApplicationLabel:
+            case ApplicationLabelRow:
                 return getApplicationLabel();
-            case VersionCode:
+            case VersionCodeRow:
                 return getVersionCode();
-            case VersionName:
+            case VersionNameRow:
                 return getVersionName();
-            case MinimumSdk: {
+            case MinimumSdkRow: {
                 const int sdk = getMinimumSdk();
                 if (role == Qt::DisplayRole) {
                     return getSdkTitle(sdk);
@@ -138,7 +138,7 @@ QVariant ManifestModel::data(const QModelIndex &index, int role) const
                     return sdk;
                 }
             }
-            case TargetSdk:
+            case TargetSdkRow:
                 const int sdk = getTargetSdk();
                 if (role == Qt::DisplayRole) {
                     return getSdkTitle(sdk);
@@ -148,10 +148,10 @@ QVariant ManifestModel::data(const QModelIndex &index, int role) const
             }
         } else if (role == ReferenceRole) {
             switch (row) {
-            case ApplicationLabel:
+            case ApplicationLabelRow:
                 return getApplicationLabel().startsWith("@string/");
-            case MinimumSdk:
-            case TargetSdk:
+            case MinimumSdkRow:
+            case TargetSdkRow:
                 return true;
             }
         } else if (role >= Qt::UserRole) {
@@ -166,11 +166,16 @@ QVariant ManifestModel::headerData(int section, Qt::Orientation orientation, int
     if (orientation == Qt::Vertical) {
         if (role == Qt::DisplayRole) {
             switch (section) {
-                case ApplicationLabel: return tr("Application Title");
-                case VersionCode:      return tr("Version Code");
-                case VersionName:      return tr("Version Name");
-                case MinimumSdk:       return tr("Minimum SDK");
-                case TargetSdk:        return tr("Target SDK");
+            case ApplicationLabelRow:
+                return tr("Application Title");
+            case VersionCodeRow:
+                return tr("Version Code");
+            case VersionNameRow:
+                return tr("Version Name");
+            case MinimumSdkRow:
+                return tr("Minimum SDK");
+            case TargetSdkRow:
+                return tr("Target SDK");
             }
         }
     }

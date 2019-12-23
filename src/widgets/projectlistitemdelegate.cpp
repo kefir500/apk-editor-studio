@@ -29,8 +29,8 @@ void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 
     // Prepare state icon:
 
-    const int currentProjectAction = index.data(ProjectItemsModel::ProjectActionRole).toInt();
-    const bool lastActionFailed = index.data(ProjectItemsModel::ProjectFailedRole).toBool();
+    const int currentProjectAction = index.sibling(index.row(), ProjectItemsModel::CurrentActionColumn).data().toInt();
+    const bool lastActionFailed = index.sibling(index.row(), ProjectItemsModel::IsFailedColumn).data().toBool();
     QIcon stateIcon;
     if (lastActionFailed) {
         stateIcon = iconError;

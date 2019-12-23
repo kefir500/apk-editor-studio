@@ -8,18 +8,15 @@ class ProjectItemsModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    enum ProjectColumn {
-        ProjectTitle,
-        ProjectOriginalPath,
-        ProjectContentsPath,
+    enum Column {
+        TitleColumn,
+        OriginalPathColumn,
+        ContentsPathColumn,
+        CurrentActionColumn,
+        IsUnpackedColumn,
+        IsModifiedColumn,
+        IsFailedColumn,
         ColumnCount
-    };
-
-    enum ProjectRole {
-        ProjectActionRole = Qt::UserRole + 1,
-        ProjectUnpackedRole,
-        ProjectModifiedRole,
-        ProjectFailedRole
     };
 
     ~ProjectItemsModel() override;

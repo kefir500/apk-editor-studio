@@ -10,10 +10,9 @@ public:
     enum Role {
         PathRole = Qt::UserRole + 1,
         IconRole,
-        RoleCount
+        IRoleCount
     };
     virtual ~IResourceItemsModel() = default;
-    bool saveResource(const QModelIndex &index, const QString &path = QString());
     virtual bool replaceResource(const QModelIndex &index, const QString &path = QString()) = 0;
     virtual bool removeResource(const QModelIndex &index) = 0;
 };

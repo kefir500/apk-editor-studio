@@ -10,12 +10,12 @@ class DeviceItemsModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    enum DeviceColumn {
-        DeviceAlias,
-        DeviceSerial,
-        DeviceProduct,
-        DeviceModel,
-        DeviceDevice,
+    enum Column {
+        AliasColumn,
+        SerialColumn,
+        ProductColumn,
+        ModelColumn,
+        DeviceColumn,
         ColumnCount
     };
 

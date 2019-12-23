@@ -71,7 +71,7 @@ XmlNode *XmlResourceModel::addNode(const QDomElement &node)
 
 bool XmlResourceModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (index.isValid() && role == Qt::EditRole && index.column() == Value) {
+    if (index.isValid() && role == Qt::EditRole && index.column() == ValueColumn) {
         XmlNode *node = static_cast<XmlNode *>(index.internalPointer());
         node->setValue(value.toString());
         emit dataChanged(index, index);
@@ -87,8 +87,10 @@ QVariant XmlResourceModel::data(const QModelIndex &index, int role) const
         XmlNode *string = static_cast<XmlNode *>(index.internalPointer());
         if (role == Qt::DisplayRole || role == Qt::EditRole) {
             switch (column) {
-                case Key:   return string->getAttribute("name");
-                case Value: return string->getValue();
+            case KeyColumn:
+                return string->getAttribute("name");
+            case ValueColumn:
+                return string->getValue();
             }
         }
     }
@@ -100,8 +102,10 @@ QVariant XmlResourceModel::headerData(int section, Qt::Orientation orientation, 
     if (orientation == Qt::Horizontal) {
         if (role == Qt::DisplayRole) {
             switch (section) {
-                case Key:   return tr("Key");
-                case Value: return tr("Value");
+            case KeyColumn:
+                return tr("Key");
+            case ValueColumn:
+                return tr("Value");
             }
         }
     }
@@ -146,7 +150,7 @@ int XmlResourceModel::columnCount(const QModelIndex &parent) const
 
 Qt::ItemFlags XmlResourceModel::flags(const QModelIndex &index) const
 {
-    if (index.column() == Value) {
+    if (index.column() == ValueColumn) {
         return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
     } else {
         return QAbstractItemModel::flags(index);

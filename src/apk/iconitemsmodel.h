@@ -12,13 +12,13 @@ class IconItemsModel : public QAbstractProxyModel, public IResourceItemsModel
     Q_INTERFACES(IResourceItemsModel)
 
 public:
-    enum IconRow {
+    enum Row {
         ApplicationRow,
         ActivitiesRow,
         RowCount
     };
 
-    enum IconColumn {
+    enum Column {
         CaptionColumn,
         PathColumn,
         TypeColumn,
@@ -26,9 +26,9 @@ public:
     };
 
     enum IconType {
-        Icon,
-        RoundIcon,
-        Banner
+        TypeIcon,
+        TypeRoundIcon,
+        TypeBanner
     };
 
     explicit IconItemsModel(QObject *parent = nullptr);
@@ -76,7 +76,7 @@ private:
         const ManifestScope *scope;
     };
 
-    bool appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type = Icon);
+    bool appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type = TypeIcon);
     void onResourceAdded(const QModelIndex &index);
     void sourceRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
     void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);

@@ -54,7 +54,7 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
         switch (role) {
         case Qt::DisplayRole:
         case SortRole:
-            if (column == NodeCaption) {
+            if (column == CaptionColumn) {
                 return node->getCaption();
             }
         }
@@ -63,7 +63,7 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
             switch (role) {
             case SortRole:
                 switch (column) {
-                case ResourceDpi: {
+                case DpiColumn: {
                     auto dpi = file->getDpi().toLower();
                     if (dpi == "ldpi") { return 0; }
                     if (dpi == "mdpi") { return 1; }
@@ -76,22 +76,22 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                     if (dpi == "anydpi") { return 8; }
                     return 9;
                 }
-                case ResourceApi:
+                case ApiColumn:
                     return file->getApiVersion().remove(0, 1).toInt();
                 }
             case Qt::DisplayRole:
                 switch (column) {
-                case ResourceLanguage:
+                case LanguageColumn:
                     return file->getLanguageName();
-                case ResourceLocale:
+                case LocaleColumn:
                     return file->getLocaleCode();
-                case ResourceDpi:
+                case DpiColumn:
                     return file->getDpi();
-                case ResourceApi:
+                case ApiColumn:
                     return file->getApiVersion();
-                case ResourceQualifiers:
+                case QualifiersColumn:
                     return file->getReadableQualifiers();
-                case ResourcePath:
+                case PathColumn:
                     return file->getFilePath();
                 }
                 break;
@@ -101,16 +101,12 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                 return file->getFileIcon();
             case Qt::DecorationRole:
                 switch (column) {
-                case NodeCaption:
+                case CaptionColumn:
                     return file->getFileIcon();
-                case ResourceLanguage:
+                case LanguageColumn:
                     return file->getLanguageIcon();
                 }
                 break;
-            case ResourceNameRole:
-                return file->getName();
-            case ResourceTypeRole:
-                return file->getType();
             }
         }
     }
@@ -121,14 +117,21 @@ QVariant ResourceItemsModel::headerData(int section, Qt::Orientation orientation
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
-            case NodeCaption:        return tr("Resource");
-            case ResourceLanguage:   return tr("Language");
-            case ResourceLocale:     return tr("Locale");
+        case CaptionColumn:
+            return tr("Resource");
+        case LanguageColumn:
+            return tr("Language");
+        case LocaleColumn:
+            return tr("Locale");
+        case QualifiersColumn:
             //: This string refers to the Android qualifiers (https://developer.android.com/guide/topics/resources/providing-resources).
-            case ResourceQualifiers: return tr("Qualifiers");
-            case ResourcePath:       return tr("Path");
-            case ResourceDpi:        return "DPI";
-            case ResourceApi:        return "API";
+            return tr("Qualifiers");
+        case PathColumn:
+            return tr("Path");
+        case DpiColumn:
+            return "DPI";
+        case ApiColumn:
+            return "API";
         }
     }
     return QVariant();
@@ -192,7 +195,7 @@ QModelIndex ResourceItemsModel::findIndex(const QString &path) const
 QModelIndex ResourceItemsModel::findIndex(const QString &path, const QModelIndex &parent) const
 {
     for (int row = 0; row < rowCount(parent); ++row) {
-        auto resource = index(row, ResourcePath, parent);
+        auto resource = index(row, PathColumn, parent);
         if (resource.data().toString() == path) {
             return resource;
         }
