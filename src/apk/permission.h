@@ -8,6 +8,8 @@ class Permission
 public:
     explicit Permission(const QDomElement &node) : node(node) {}
 
+    bool operator==(const Permission &permission) const;
+
     QString getName() const;
     const QDomElement &getNode() const;
 
