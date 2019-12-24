@@ -189,7 +189,7 @@ Manifest *Project::initialize()
         state.setModified(true);
     });
     connect(&manifestModel, &ManifestModel::dataChanged, [=] (const QModelIndex &, const QModelIndex &, const QVector<int> &roles) {
-        if (roles.contains(Qt::DisplayRole) || roles.contains(Qt::EditRole)) {
+        if (!(roles.count() == 1 && roles.contains(Qt::UserRole))) {
             state.setModified(true);
         }
     });
