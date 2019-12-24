@@ -12,10 +12,9 @@ public:
         TitleColumn,
         OriginalPathColumn,
         ContentsPathColumn,
-        CurrentActionColumn,
+        StateColumn,
         IsUnpackedColumn,
         IsModifiedColumn,
-        IsFailedColumn,
         ColumnCount
     };
 

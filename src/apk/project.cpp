@@ -21,7 +21,7 @@ Project::Project(const QString &path) : resourcesModel(this)
     filesystemModel.setSourceModel(&resourcesModel);
     iconsProxy.setSourceModel(&resourcesModel);
     connect(&state, &ProjectState::changed, [this]() {
-        logModel.setLoadingState(state.getCurrentAction() != ProjectState::ProjectIdle);
+        logModel.setLoadingState(!state.isIdle());
         emit changed();
     });
 }
@@ -44,18 +44,13 @@ void Project::unpack()
 
     auto taskOpen = createUnpackTask(getOriginalPath());
 
-    connect(taskOpen, &Tasks::Task::started, this, [=]() {
-        state.setLastActionFailed(false);
-    }, Qt::QueuedConnection);
-
     connect(taskOpen, &Tasks::Task::success, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
         journal(tr("Done."), LogEntry::Success);
+        state.setCurrentState(ProjectState::StateNormal);
     }, Qt::QueuedConnection);
 
     connect(taskOpen, &Tasks::Task::error, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        state.setLastActionFailed(true);
+        state.setCurrentState(ProjectState::StateErrored);
     }, Qt::QueuedConnection);
 
     taskOpen->run();
@@ -72,18 +67,13 @@ void Project::save(QString path)
 
     auto taskSave = createSaveTask(path);
 
-    connect(taskSave, &Tasks::Batch::started, this, [=]() {
-        state.setLastActionFailed(false);
-    }, Qt::QueuedConnection);
-
     connect(taskSave, &Tasks::Batch::success, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
         journal(tr("Done."), LogEntry::Success);
+        state.setCurrentState(ProjectState::StateNormal);
     }, Qt::QueuedConnection);
 
     connect(taskSave, &Tasks::Batch::error, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        state.setLastActionFailed(true);
+        state.setCurrentState(ProjectState::StateErrored);
     }, Qt::QueuedConnection);
 
     taskSave->run();
@@ -103,18 +93,13 @@ void Project::saveAndInstall(QString path, const QString &serial)
     tasks->add(createSaveTask(path), true);
     tasks->add(createInstallTask(serial), true);
 
-    connect(tasks, &Tasks::Batch::started, this, [=]() {
-        state.setLastActionFailed(false);
-    }, Qt::QueuedConnection);
-
     connect(tasks, &Tasks::Batch::success, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
         journal(tr("Done."), LogEntry::Success);
+        state.setCurrentState(ProjectState::StateNormal);
     }, Qt::QueuedConnection);
 
     connect(tasks, &Tasks::Batch::error, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        state.setLastActionFailed(true);
+        state.setCurrentState(ProjectState::StateErrored);
     }, Qt::QueuedConnection);
 
     tasks->run();
@@ -126,18 +111,13 @@ void Project::install(const QString &serial)
 
     auto taskInstall = createInstallTask(serial);
 
-    connect(taskInstall, &Tasks::Install::started, this, [=]() {
-        state.setLastActionFailed(false);
-    }, Qt::QueuedConnection);
-
     connect(taskInstall, &Tasks::Install::success, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
         journal(tr("Done."), LogEntry::Success);
+        state.setCurrentState(ProjectState::StateNormal);
     }, Qt::QueuedConnection);
 
     connect(taskInstall, &Tasks::Install::error, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        state.setLastActionFailed(true);
+        state.setCurrentState(ProjectState::StateErrored);
     }, Qt::QueuedConnection);
 
     taskInstall->run();
@@ -282,8 +262,7 @@ Tasks::Task *Project::createUnpackTask(const QString &source)
     connect(taskUnpack, &Tasks::Pack::started, this, [=]() {
         journal(tr("Unpacking APK..."));
         qDebug() << qPrintable(QString("Unpacking\n  from: %1\n    to: %2\n").arg(source, target));
-        state.setCurrentAction(ProjectState::ProjectUnpacking);
-        state.setLastActionFailed(false);
+        state.setCurrentState(ProjectState::StateUnpacking);
     }, Qt::QueuedConnection);
 
     connect(taskUnpack, &Tasks::Unpack::success, this, [=]() {
@@ -332,15 +311,6 @@ Tasks::Task *Project::createSaveTask(const QString &target) // Combines Pack, Zi
         originalPath = target;
     });
 
-    connect(taskSave, &Tasks::Batch::success, this, [=]() {
-        state.setModified(false);
-        emit packed(true);
-    }, Qt::QueuedConnection);
-
-    connect(taskSave, &Tasks::Batch::error, this, [=]() {
-        emit packed(false);
-    }, Qt::QueuedConnection);
-
     return taskSave;
 }
 
@@ -354,11 +324,17 @@ Tasks::Task *Project::createPackTask(const QString &target)
     connect(taskPack, &Tasks::Pack::started, this, [=]() {
         journal(tr("Packing APK..."));
         qDebug() << qPrintable(QString("Packing\n  from: %1\n    to: %2\n").arg(source, target));
-        state.setCurrentAction(ProjectState::ProjectPacking);
+        state.setCurrentState(ProjectState::StatePacking);
     }, Qt::QueuedConnection);
+
+    connect(taskPack, &Tasks::Pack::success, this, [=]() {
+        state.setModified(false);
+        emit packed(true);
+    });
 
     connect(taskPack, &Tasks::Pack::error, this, [=](const QString &message) {
         journal(tr("Error packing APK."), message, LogEntry::Error);
+        emit packed(false);
     }, Qt::QueuedConnection);
 
     return taskPack;
@@ -369,7 +345,7 @@ Tasks::Task *Project::createZipalignTask(const QString &target)
     auto taskZipalign = new Tasks::Align(target);
 
     connect(taskZipalign, &Tasks::Align::started, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectOptimizing);
+        state.setCurrentState(ProjectState::StateOptimizing);
         journal(tr("Optimizing APK..."));
     }, Qt::QueuedConnection);
 
@@ -389,7 +365,7 @@ Tasks::Task *Project::createSignTask(const QString &target, const Keystore *keys
     });
 
     connect(taskSign, &Tasks::Sign::started, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectSigning);
+        state.setCurrentState(ProjectState::StateSigning);
         journal(tr("Signing APK..."));
     }, Qt::QueuedConnection);
 
@@ -406,7 +382,7 @@ Tasks::Task *Project::createInstallTask(const QString &serial)
 
     connect(taskInstall, &Tasks::Install::started, this, [=]() {
         journal(tr("Installing APK..."));
-        state.setCurrentAction(ProjectState::ProjectInstalling);
+        state.setCurrentState(ProjectState::StateInstalling);
     }, Qt::QueuedConnection);
 
     connect(taskInstall, &Tasks::Install::success, this, [=]() {

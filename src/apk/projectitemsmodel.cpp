@@ -73,19 +73,34 @@ QVariant ProjectItemsModel::data(const QModelIndex &index, int role) const
                 return project->getOriginalPath();
             case ContentsPathColumn:
                 return project->getContentsPath();
-            case CurrentActionColumn:
-                return project->getState().getCurrentAction();
+            case StateColumn:
+                return project->getState().getCurrentState();
             case IsUnpackedColumn:
                 return project->getState().isUnpacked();
             case IsModifiedColumn:
                 return project->getState().isModified();
-            case IsFailedColumn:
-                return project->getState().isLastActionFailed();
             }
         } else if (role == Qt::DecorationRole) {
             switch (column) {
             case TitleColumn:
                 return project->getThumbnail();
+            case StateColumn: {
+                const auto currentAction = project->getState().getCurrentState();
+                switch (currentAction) {
+                case ProjectState::StateNormal:
+                    return app->icons.get("state-idle.png");
+                case ProjectState::StateUnpacking:
+                    return app->icons.get("state-open.png");
+                case ProjectState::StatePacking:
+                case ProjectState::StateSigning:
+                case ProjectState::StateOptimizing:
+                    return app->icons.get("state-save.png");
+                case ProjectState::StateInstalling:
+                    return app->icons.get("state-install.png");
+                case ProjectState::StateErrored:
+                    return app->icons.get("state-error.png");
+                }
+            }
             }
         }
     }

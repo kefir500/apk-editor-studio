@@ -8,26 +8,26 @@ class ProjectState : public QObject
     Q_OBJECT
 
 public:
-    enum ProjectAction {
-        ProjectIdle,
-        ProjectUnpacking,
-        ProjectPacking,
-        ProjectSigning,
-        ProjectOptimizing,
-        ProjectInstalling
+    enum State {
+        StateNormal,
+        StateErrored,
+        StateUnpacking,
+        StatePacking,
+        StateSigning,
+        StateOptimizing,
+        StateInstalling
     };
 
     ProjectState();
 
-    void setCurrentAction(ProjectAction action);
+    void setCurrentState(const State &state);
     void setUnpacked(bool unpacked);
     void setModified(bool modified);
-    void setLastActionFailed(bool fail);
 
-    ProjectAction getCurrentAction() const;
+    const State &getCurrentState() const;
     bool isUnpacked() const;
     bool isModified() const;
-    bool isLastActionFailed() const;
+    bool isIdle() const;
 
     bool canEdit() const;
     bool canSave() const;
@@ -41,8 +41,7 @@ signals:
 private:
     bool unpacked;
     bool modified;
-    bool lastActionFailed;
-    ProjectAction currentAction;
+    State state;
 };
 
 #endif // PROJECTSTATE_H

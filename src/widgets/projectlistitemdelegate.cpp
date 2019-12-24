@@ -5,15 +5,6 @@
 
 // TODO Add indicator for unsaved projects
 
-ProjectListItemDelegate::ProjectListItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
-{
-    iconIdle = app->icons.get("state-idle.png");
-    iconUnpacking = app->icons.get("state-open.png");
-    iconPacking = app->icons.get("state-save.png");
-    iconInstalling = app->icons.get("state-install.png");
-    iconError = app->icons.get("state-error.png");
-}
-
 void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QStyleOptionViewItem itemOption = option;
@@ -29,29 +20,8 @@ void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 
     // Prepare state icon:
 
-    const int currentProjectAction = index.sibling(index.row(), ProjectItemsModel::CurrentActionColumn).data().toInt();
-    const bool lastActionFailed = index.sibling(index.row(), ProjectItemsModel::IsFailedColumn).data().toBool();
-    QIcon stateIcon;
-    if (lastActionFailed) {
-        stateIcon = iconError;
-    } else {
-        switch (currentProjectAction) {
-        case ProjectState::ProjectIdle:
-            stateIcon = iconIdle;
-            break;
-        case ProjectState::ProjectUnpacking:
-            stateIcon = iconUnpacking;
-            break;
-        case ProjectState::ProjectPacking:
-        case ProjectState::ProjectSigning:
-        case ProjectState::ProjectOptimizing:
-            stateIcon = iconPacking;
-            break;
-        case ProjectState::ProjectInstalling:
-            stateIcon = iconInstalling;
-            break;
-        }
-    }
+    const QModelIndex stateIndex = index.sibling(index.row(), ProjectItemsModel::StateColumn);
+    const QIcon stateIcon = stateIndex.data(Qt::DecorationRole).value<QIcon>();
     const int stateIconSideMaximum = option.rect.height() - 2;
     const QSize stateIconSize = stateIcon.actualSize(QSize(stateIconSideMaximum, stateIconSideMaximum));
 
