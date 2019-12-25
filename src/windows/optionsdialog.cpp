@@ -7,6 +7,7 @@
 #include "tools/apktool.h"
 #include "tools/zipalign.h"
 #include "base/application.h"
+#include <QFormLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QAbstractButton>
