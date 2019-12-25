@@ -6,7 +6,7 @@
 #include "tools/apksigner.h"
 #include "tools/zipalign.h"
 #include "windows/dialogs.h"
-#include "windows/keymanager.h"
+#include "windows/keyselector.h"
 #include <QUuid>
 #include <QDirIterator>
 #include <QInputDialog>
