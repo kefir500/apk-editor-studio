@@ -2,7 +2,6 @@
 #define ADB_H
 
 #include "tools/command.h"
-#include "base/androidfilesystemitem.h"
 #include "base/device.h"
 
 namespace Adb
