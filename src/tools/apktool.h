@@ -1,32 +1,81 @@
 #ifndef APKTOOL_H
 #define APKTOOL_H
 
-#include <QObject>
+#include "tools/command.h"
 
-class Apktool : public QObject
+namespace Apktool
 {
-    Q_OBJECT
+    class Decode : public Command
+    {
+        Q_OBJECT
 
-public:
-    explicit Apktool(QObject *parent = nullptr) : QObject(parent) {}
+    public:
+        Decode(const QString &source, const QString &destination, const QString &frameworks,
+               bool resources, bool sources, bool keepBroken, QObject *parent = nullptr)
+            : Command(parent)
+            , source(source)
+            , destination(destination)
+            , frameworks(frameworks)
+            , resources(resources)
+            , sources(sources)
+            , keepBroken(keepBroken) {}
 
-    void decode(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources, bool keepBroken);
-    void build(const QString &source, const QString &destination, const QString &frameworks);
-    void version();
+        void run() override;
+
+    private:
+        const QString source;
+        const QString destination;
+        const QString frameworks;
+        const bool resources;
+        const bool sources;
+        const bool keepBroken;
+
+    signals:
+        void finished(bool success, const QString &output) const;
+    };
+
+    class Build : public Command
+    {
+        Q_OBJECT
+
+    public:
+        Build(const QString &source, const QString &destination,
+              const QString &frameworks, QObject *parent = nullptr)
+            : Command(parent)
+            , source(source)
+            , destination(destination)
+            , frameworks(frameworks) {}
+
+        void run() override;
+
+    private:
+        const QString source;
+        const QString destination;
+        const QString frameworks;
+
+    signals:
+        void finished(bool success, const QString &output) const;
+    };
+
+    class Version : public Command
+    {
+        Q_OBJECT
+
+    public:
+        Version(QObject *parent = nullptr) : Command(parent) {}
+        void run() override;
+
+    signals:
+        void finished(const QString &version) const;
+    };
+
     void reset();
-
-    static QString getPath();
-    static QString getDefaultPath();
-    static QString getOutputPath();
-    static QString getDefaultOutputPath();
-    static QString getFrameworksPath();
-    static QString getDefaultFrameworksPath();
-
-signals:
-    void decodeFinished(bool success, const QString &message = QString()) const;
-    void buildFinished(bool success, const QString &message = QString()) const;
-    void versionFetched(const QString &version) const;
-    void resetFinished() const;
-};
+    QString getPath();
+    QString getDefaultPath();
+    QString getOutputPath();
+    QString getDefaultOutputPath();
+    QString getFrameworksPath();
+    QString getDefaultFrameworksPath();
+}
 
 #endif // APKTOOL_H

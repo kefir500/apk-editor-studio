@@ -1,28 +1,53 @@
 #ifndef KEYTOOL_H
 #define KEYTOOL_H
 
+#include "tools/command.h"
 #include "tools/keystore.h"
-#include <QObject>
 
-class Keytool : public QObject
+namespace Keytool
 {
-    Q_OBJECT
+    class Genkey : public Command
+    {
+        Q_OBJECT
 
-public:
-    explicit Keytool(QObject *parent = nullptr) : QObject(parent) {}
+    public:
+        Genkey(const Keystore &keystore, QObject *parent = nullptr)
+            : Command(parent)
+            , keystore(keystore) {}
 
-    void createKeystore(const Keystore &keystore);
-    void fetchAliases(const QString &keystore, const QString &password);
+        void run() override;
 
-signals:
-    void keystoreCreated();
-    void keystoreCreateError(const QString &brief, const QString &detailed);
-    void aliasesFetched(const QStringList &aliases) const;
-    void aliasesFetchError(const QString &brief, const QString &detailed) const;
+    signals:
+        void success() const;
+        void error(const QString &brief, const QString &detailed) const;
 
-private:
-    void normalizeDname(Dname &dname) const;
-    QString getPath() const;
-};
+    private:
+        const Keystore keystore;
+    };
+
+    class Aliases : public Command
+    {
+        Q_OBJECT
+
+    public:
+        Aliases(const QString &keystore, const QString &password, QObject *parent = nullptr)
+            : Command(parent)
+            , keystore(keystore)
+            , password(password) {}
+
+        void run() override;
+
+    signals:
+        void success(const QStringList &aliases) const;
+        void error(const QString &brief, const QString &detailed) const;
+
+    private:
+        const QString keystore;
+        const QString password;
+    };
+
+    void normalizeDname(Dname &dname);
+    QString getPath();
+}
 
 #endif // KEYTOOL_H

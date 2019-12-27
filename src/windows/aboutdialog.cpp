@@ -207,48 +207,48 @@ QWidget *AboutDialog::createLibrariesTab()
 
     // Set JRE version:
 
-    auto jre = new Java(this);
-    connect(jre, &Java::versionFetched, [=](const QString &version) {
+    auto jre = new Java::Version(this);
+    connect(jre, &Java::Version::finished, [=](const QString &version) {
         labelJre->setText(!version.isNull() ? version : mdash);
         jre->deleteLater();
     });
-    jre->version();
+    jre->run();
 
     // Set JDK version:
 
-    auto jdk = new Javac(this);
-    connect(jdk, &Javac::versionFetched, [=](const QString &version) {
+    auto jdk = new Javac::Version(this);
+    connect(jdk, &Javac::Version::finished, [=](const QString &version) {
         labelJdk->setText(!version.isNull() ? version : mdash);
         jdk->deleteLater();
     });
-    jdk->version();
+    jdk->run();
 
     // Set Apktool version:
 
-    auto apktool = new Apktool(this);
-    connect(apktool, &Apktool::versionFetched, [=](const QString &version) {
+    auto apktool = new Apktool::Version(this);
+    connect(apktool, &Apktool::Version::finished, [=](const QString &version) {
         labelApktool->setText(!version.isNull() ? version : mdash);
         apktool->deleteLater();
     });
-    apktool->version();
+    apktool->run();
 
     // Set Apksigner version:
 
-    auto apksigner = new Apksigner(this);
-    connect(apksigner, &Apksigner::versionFetched, [=](const QString &version) {
+    auto apksigner = new Apksigner::Version(this);
+    connect(apksigner, &Apksigner::Version::finished, [=](const QString &version) {
         labelApksigner->setText(!version.isNull() ? version : mdash);
         apksigner->deleteLater();
     });
-    apksigner->version();
+    apksigner->run();
 
     // Set ADB version:
 
-    auto adb = new Adb(this);
-    connect(adb, &Adb::versionFetched, [=](const QString &version) {
+    auto adb = new Adb::Version(this);
+    connect(adb, &Adb::Version::finished, [=](const QString &version) {
         labelAdb->setText(!version.isNull() ? version : mdash);
         adb->deleteLater();
     });
-    adb->version();
+    adb->run();
 
     return tab;
 }

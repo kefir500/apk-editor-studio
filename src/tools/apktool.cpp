@@ -3,14 +3,14 @@
 #include "base/application.h"
 #include <QStringList>
 
-void Apktool::decode(const QString &source, const QString &destination, const QString &frameworks, bool resources, bool sources, bool keepBroken)
+void Apktool::Decode::run()
 {
     if (source.isEmpty()) {
-        emit decodeFinished(false, "Apktool: Source APK not specified.");
+        emit finished(false, "Apktool: Source APK not specified.");
         return;
     }
     if (destination.isEmpty()) {
-        emit decodeFinished(false, "Apktool: Destination path not specified.");
+        emit finished(false, "Apktool: Destination path not specified.");
         return;
     }
 
@@ -32,19 +32,19 @@ void Apktool::decode(const QString &source, const QString &destination, const QS
     }
 
     auto process = new Process(this);
-    connect(process, &Process::finished, this, &Apktool::decodeFinished);
-    connect(process, &Process::finished, process, &QObject::deleteLater);
+    connect(process, &Process::finished, this, &Decode::finished);
+    connect(process, &Process::finished, process, &Process::deleteLater);
     process->jar(getPath(), arguments);
 }
 
-void Apktool::build(const QString &source, const QString &destination, const QString &frameworks)
+void Apktool::Build::run()
 {
     if (source.isEmpty()) {
-        emit buildFinished(false, "Apktool: Source path not specified.");
+        emit finished(false, "Apktool: Source path not specified.");
         return;
     }
     if (destination.isEmpty()) {
-        emit buildFinished(false, "Apktool: Destination APK not specified.");
+        emit finished(false, "Apktool: Destination APK not specified.");
         return;
     }
 
@@ -57,16 +57,16 @@ void Apktool::build(const QString &source, const QString &destination, const QSt
     }
 
     auto process = new Process(this);
-    connect(process, &Process::finished, this, &Apktool::buildFinished);
-    connect(process, &Process::finished, process, &QObject::deleteLater);
+    connect(process, &Process::finished, this, &Build::finished);
+    connect(process, &Process::finished, process, &Process::deleteLater);
     process->jar(getPath(), arguments);
 }
 
-void Apktool::version()
+void Apktool::Version::run()
 {
     auto process = new Process(this);
     connect(process, &Process::finished, [=](bool success, const QString &output) {
-        emit versionFetched(success ? output : QString());
+        emit finished(success ? output : QString());
         process->deleteLater();
     });
     process->jar(getPath(), {"-version"});
@@ -74,17 +74,16 @@ void Apktool::version()
 
 void Apktool::reset()
 {
-    auto context = new QObject(this);
-    connect(this, &Apktool::versionFetched, context, [=](const QString &currentVersion) {
+    auto versionCommand = new Version;
+    // TODO 111 Is app->connect deleted after Version destruction?
+    app->connect(versionCommand, &Version::finished, [=](const QString &currentVersion) {
         const QString previousVersion = app->settings->getApktoolVersion();
         if (currentVersion.isNull() || currentVersion != previousVersion) {
             QFile::remove(getFrameworksPath() + "/1.apk");
             app->settings->setApktoolVersion(currentVersion);
         }
-        emit resetFinished();
-        delete context;
     });
-    version();
+    versionCommand->run();
 }
 
 QString Apktool::getPath()

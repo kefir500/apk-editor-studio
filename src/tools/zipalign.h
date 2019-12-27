@@ -1,22 +1,27 @@
 #ifndef ZIPALIGN_H
 #define ZIPALIGN_H
 
-#include <QObject>
+#include "tools/command.h"
 
-class Zipalign : public QObject
+namespace Zipalign
 {
-    Q_OBJECT
+    class Align : public Command
+    {
+        Q_OBJECT
 
-public:
-    explicit Zipalign(QObject *parent = nullptr) : QObject(parent) {}
+    public:
+        Align(const QString &apk, QObject *parent = nullptr) : Command(parent), apk(apk) {}
+        void run() override;
 
-    void align(const QString &apk);
+    signals:
+        void finished(bool success, const QString &output) const;
 
-    static QString getPath();
-    static QString getDefaultPath();
+    private:
+        const QString apk;
+    };
 
-signals:
-    void alignFinished(bool success, const QString &message) const;
-};
+    QString getPath();
+    QString getDefaultPath();
+}
 
 #endif // ZIPALIGN_H

@@ -3,7 +3,7 @@
 #include "base/application.h"
 #include <QFile>
 
-void Zipalign::align(const QString &apk)
+void Zipalign::Align::run()
 {
     const QString tempApk = apk + ".aligned";
 
@@ -19,7 +19,7 @@ void Zipalign::align(const QString &apk)
             QFile::remove(apk);
             QFile::rename(tempApk, apk);
         }
-        emit alignFinished(success, output);
+        emit finished(success, output);
         process->deleteLater();
     });
     process->run(getPath(), arguments);

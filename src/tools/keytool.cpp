@@ -3,17 +3,17 @@
 #include "base/application.h"
 #include <QStringList>
 
-void Keytool::createKeystore(const Keystore &keystore)
+void Keytool::Genkey::run()
 {
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
-        if (success) {
-            emit keystoreCreated();
+    connect(process, &Process::finished, [=](bool ok, const QString &output) {
+        if (ok) {
+            emit success();
         } else {
             if (output.contains(QRegularExpression("alias <.+> already exists"))) {
-                emit keystoreCreateError(tr("Could not write to keystore: alias already exists."), output);
+                emit error(tr("Could not write to keystore: alias already exists."), output);
             } else {
-                emit keystoreCreateError(tr("Could not write to keystore. See details for more information."), output);
+                emit error(tr("Could not write to keystore. See details for more information."), output);
             }
         }
         process->deleteLater();
@@ -44,26 +44,26 @@ void Keytool::createKeystore(const Keystore &keystore)
     process->run(getPath(), arguments);
 }
 
-void Keytool::fetchAliases(const QString &keystore, const QString &password)
+void Keytool::Aliases::run()
 {
     QRegularExpression regex("^(.+),.+,\\s*PrivateKeyEntry,\\s*$");
     regex.setPatternOptions(QRegularExpression::MultilineOption);
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
-        if (success) {
+    connect(process, &Process::finished, [=](bool ok, const QString &output) {
+        if (ok) {
             QStringList aliases;
             QRegularExpressionMatchIterator it = regex.globalMatch(output);
             while (it.hasNext()) {
                 QRegularExpressionMatch match = it.next();
                 aliases << match.captured(1);
             }
-            emit aliasesFetched(aliases);
+            emit success(aliases);
         } else {
             if (output.contains("Keystore was tampered with, or password was incorrect")) {
-                emit aliasesFetchError(tr("Could not read keystore: incorrect password."), output);
+                emit error(tr("Could not read keystore: incorrect password."), output);
             } else {
-                emit aliasesFetchError(tr("Could not read keystore. See details for more information."), output);
+                emit error(tr("Could not read keystore. See details for more information."), output);
             }
         }
         process->deleteLater();
@@ -72,7 +72,7 @@ void Keytool::fetchAliases(const QString &keystore, const QString &password)
     process->run(getPath(), {"-list", "-keystore", keystore, "-storepass", password});
 }
 
-void Keytool::normalizeDname(Dname &dname) const
+void Keytool::normalizeDname(Dname &dname)
 {
     dname.name.replace(',', "\\,");
     dname.orgUnit.replace(',', "\\,");
@@ -82,7 +82,7 @@ void Keytool::normalizeDname(Dname &dname) const
     dname.countryCode.replace(',', "\\,");
 }
 
-QString Keytool::getPath() const
+QString Keytool::getPath()
 {
     return app->getJavaBinaryPath("keytool");
 }

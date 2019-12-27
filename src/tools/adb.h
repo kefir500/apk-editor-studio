@@ -1,27 +1,65 @@
 #ifndef ADB_H
 #define ADB_H
 
+#include "tools/command.h"
+#include "base/androidfilesystemitem.h"
 #include "base/device.h"
-#include <QObject>
 
-class Adb : public QObject
+namespace Adb
 {
-    Q_OBJECT
+    // Install
 
-public:
-    explicit Adb(QObject *parent = nullptr);
+    class Install : public Command
+    {
+        Q_OBJECT
 
-    void install(const QString &apk, const QString &serial = QString());
-    void devices();
-    void version();
+    public:
+        Install(const QString &apk, const QString &serial = QString(), QObject *parent = nullptr)
+            : Command(parent)
+            , apk(apk)
+            , serial(serial) {}
 
-    static QString getPath();
-    static QString getDefaultPath();
+        void run() override;
 
-signals:
-    void installFinished(bool success, const QString &message) const;
-    void devicesFetched(bool success, const QList<QSharedPointer<Device>> &devices) const;
-    void versionFetched(const QString &version) const;
-};
+    signals:
+        void finished(bool success, const QString &output) const;
+
+    private:
+        const QString apk;
+        const QString serial;
+    };
+
+    // Devices
+
+    class Devices : public Command
+    {
+        Q_OBJECT
+
+    public:
+        Devices(QObject *parent) : Command(parent) {}
+        void run() override;
+
+    signals:
+        void finished(bool success, QList<QSharedPointer<Device>> devices) const;
+    };
+
+    // Version
+
+    class Version : public Command
+    {
+        Q_OBJECT
+
+    public:
+        Version(QObject *parent) : Command(parent) {}
+        void run() override;
+
+    signals:
+        void finished(const QString &version) const;
+    };
+
+    QString getPath();
+    QString getDefaultPath();
+    QString escapePath(const QString &path);
+}
 
 #endif // ADB_H

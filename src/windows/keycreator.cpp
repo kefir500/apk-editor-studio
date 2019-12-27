@@ -94,8 +94,8 @@ void KeyCreator::create()
     keystore.dname.countryCode = editCountry->text();
 
     loading->show();
-    auto keytool = new Keytool(this);
-    connect(keytool, &Keytool::keystoreCreated, [=]() {
+    auto keytool = new Keytool::Genkey(keystore, this);
+    connect(keytool, &Keytool::Genkey::success, [=]() {
         loading->hide();
         if (type == Type::Keystore) {
             QMessageBox::information(this, QString(), tr("Keystore has been successfully created!"));
@@ -108,14 +108,14 @@ void KeyCreator::create()
         accept();
         keytool->deleteLater();
     });
-    connect(keytool, &Keytool::keystoreCreateError, [=](const QString &brief, const QString &detailed) {
+    connect(keytool, &Keytool::Genkey::error, [=](const QString &brief, const QString &detailed) {
         loading->hide();
         editAlias->setFocus();
         editAlias->selectAll();
         Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
         keytool->deleteLater();
     });
-    keytool->createKeystore(keystore);
+    keytool->run();
 }
 
 bool KeyCreator::validateFields()

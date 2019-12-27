@@ -1,18 +1,21 @@
 #ifndef JAVAC_H
 #define JAVAC_H
 
-#include <QObject>
+#include "tools/command.h"
 
-class Javac : public QObject
+namespace Javac
 {
-    Q_OBJECT
+    class Version : public Command
+    {
+        Q_OBJECT
 
-public:
-    explicit Javac(QObject *parent = nullptr) : QObject(parent) {}
-    void version();
+    public:
+        Version(QObject *parent = nullptr) : Command(parent) {}
+        void run() override;
 
-signals:
-    void versionFetched(const QString &version) const;
-};
+    signals:
+        void finished(const QString &version) const;
+    };
+}
 
 #endif // JAVAC_H

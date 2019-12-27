@@ -3,16 +3,16 @@
 #include "base/application.h"
 #include <QRegularExpression>
 
-void Javac::version()
+void Javac::Version::run()
 {
     auto process = new Process(this);
     connect(process, &Process::finished, [=](bool success, const QString &output) {
         if (success) {
             QRegularExpression regex("javac (.+)");
             const QString version = regex.match(output).captured(1);
-            emit versionFetched(version);
+            emit finished(version);
         } else {
-            emit versionFetched({});
+            emit finished({});
         }
         process->deleteLater();
     });

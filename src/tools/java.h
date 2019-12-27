@@ -1,18 +1,21 @@
 #ifndef JAVA_H
 #define JAVA_H
 
-#include <QObject>
+#include "tools/command.h"
 
-class Java : public QObject
+namespace Java
 {
-    Q_OBJECT
+    class Version : public Command
+    {
+        Q_OBJECT
 
-public:
-    explicit Java(QObject *parent = nullptr) : QObject(parent) {}
-    void version();
+    public:
+        Version(QObject *parent = nullptr) : Command(parent) {}
+        void run() override;
 
-signals:
-    void versionFetched(const QString &version) const;
-};
+    signals:
+        void finished(const QString &version) const;
+    };
+}
 
 #endif // JAVA_H

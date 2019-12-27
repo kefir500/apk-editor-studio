@@ -29,13 +29,13 @@ Unpack::Unpack(const QString &source, const QString &target, const QString &fram
 void Unpack::run()
 {
     emit started();
-    Apktool *apktool = new Apktool(this);
-    connect(apktool, &Apktool::decodeFinished, [=](bool ok, const QString &message) {
+    auto apktool = new Apktool::Decode(source, target, frameworks, resources, sources, keepBroken, this);
+    connect(apktool, &Apktool::Decode::finished, [=](bool ok, const QString &message) {
         emit ok ? success() : error(message);
         emit finished();
         apktool->deleteLater();
     });
-    apktool->decode(source, target, frameworks, resources, sources, keepBroken);
+    apktool->run();
 }
 
 // Pack
@@ -50,13 +50,13 @@ Pack::Pack(const QString &source, const QString &target, const QString &framewor
 void Pack::run()
 {
     emit started();
-    Apktool *apktool = new Apktool(this);
-    connect(apktool, &Apktool::buildFinished, [=](bool ok, const QString &message) {
+    auto apktool = new Apktool::Build(source, target, frameworks, this);
+    connect(apktool, &Apktool::Build::finished, [=](bool ok, const QString &message) {
         emit ok ? success() : error(message);
         emit finished();
         apktool->deleteLater();
     });
-    apktool->build(source, target, frameworks);
+    apktool->run();
 }
 
 // Zipalign
@@ -69,13 +69,13 @@ Align::Align(const QString &target)
 void Align::run()
 {
     emit started();
-    Zipalign *zipalign = new Zipalign(this);
-    connect(zipalign, &Zipalign::alignFinished, [=](bool ok, const QString &message) {
+    auto zipalign = new Zipalign::Align(target, this);
+    connect(zipalign, &Zipalign::Align::finished, [=](bool ok, const QString &message) {
         emit ok ? success() : error(message);
         emit finished();
         zipalign->deleteLater();
     });
-    zipalign->align(target);
+    zipalign->run();
 }
 
 // Sign
@@ -89,13 +89,13 @@ Sign::Sign(const QString &target, const Keystore *keystore)
 void Sign::run()
 {
     emit started();
-    Apksigner *apksigner = new Apksigner(this);
-    connect(apksigner, &Apksigner::signFinished, [=](bool ok, const QString &message) {
+    auto apksigner = new Apksigner::Sign(target, keystore, this);
+    connect(apksigner, &Apksigner::Sign::finished, [=](bool ok, const QString &message) {
         emit ok ? success() : error(message);
         emit finished();
         apksigner->deleteLater();
     });
-    apksigner->sign(target, keystore);
+    apksigner->run();
 }
 
 // Install
@@ -109,13 +109,13 @@ Install::Install(const QString &apk, const QString &serial)
 void Install::run()
 {
     emit started();
-    Adb *adb = new Adb(this);
-    connect(adb, &Adb::installFinished, [=](bool ok, const QString &message) {
+    auto adb = new Adb::Install(apk, serial, this);
+    connect(adb, &Adb::Install::finished, [=](bool ok, const QString &message) {
         emit ok ? success() : error(message);
         emit finished();
         adb->deleteLater();
     });
-    adb->install(apk, serial);
+    adb->run();
 }
 
 // Batch

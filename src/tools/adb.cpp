@@ -5,15 +5,7 @@
 #include <QSharedPointer>
 #include <QRegularExpression>
 
-#ifdef QT_DEBUG
-    #include <QDebug>
-#endif
-
-Adb::Adb(QObject *parent) : QObject(parent)
-{
-}
-
-void Adb::install(const QString &apk, const QString &serial)
+void Adb::Install::run()
 {
     QStringList arguments;
     if (!serial.isEmpty()) {
@@ -22,12 +14,12 @@ void Adb::install(const QString &apk, const QString &serial)
     arguments << "install" << "-r" << apk;
 
     auto process = new Process(this);
-    connect(process, &Process::finished, this, &Adb::installFinished);
+    connect(process, &Process::finished, this, &Install::finished);
     connect(process, &Process::finished, process, &QObject::deleteLater);
     process->run(getPath(), arguments);
 }
 
-void Adb::devices()
+void Adb::Devices::run()
 {
     auto process = new Process(this);
     connect(process, &Process::finished, [=](bool success, const QString &output) {
@@ -49,22 +41,22 @@ void Adb::devices()
                 }
             }
         }
-        emit devicesFetched(success, list);
+        emit finished(success, list);
         process->deleteLater();
     });
     process->run(getPath(), {"devices", "-l"});
 }
 
-void Adb::version()
+void Adb::Version::run()
 {
     auto process = new Process(this);
     connect(process, &Process::finished, [=](bool success, const QString &output) {
         if (success) {
             QRegularExpression regex("Android Debug Bridge version (.+)");
             const QString version = regex.match(output).captured(1).trimmed();
-            emit versionFetched(version);
+            emit finished(version);
         } else {
-            emit versionFetched({});
+            emit finished({});
         }
         process->deleteLater();
     });

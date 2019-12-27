@@ -13,8 +13,8 @@ const Device *DeviceItemsModel::get(const QModelIndex &index) const
 void DeviceItemsModel::refresh()
 {
     emit fetching();
-    auto adb = new Adb(this);
-    connect(adb, &Adb::devicesFetched, [=](bool success, const QList<QSharedPointer<Device>> &list) {
+    auto adb = new Adb::Devices(this);
+    connect(adb, &Adb::Devices::finished, [=](bool success, const QList<QSharedPointer<Device>> &list) {
         if (success) {
             for (const QSharedPointer<Device> &device : list) {
                 const QString serial = device->getSerial();
@@ -30,7 +30,7 @@ void DeviceItemsModel::refresh()
         endResetModel();
         emit fetched();
     });
-    adb->devices();
+    adb->run();
 }
 
 void DeviceItemsModel::save() const

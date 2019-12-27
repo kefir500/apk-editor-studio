@@ -138,11 +138,11 @@ HEADERS += \
     $$PWD/tools/adb.h \
     $$PWD/tools/apksigner.h \
     $$PWD/tools/apktool.h \
+    $$PWD/tools/command.h \
     $$PWD/tools/java.h \
     $$PWD/tools/javac.h \
     $$PWD/tools/keystore.h \
     $$PWD/tools/keytool.h \
-    $$PWD/tools/tools.h \
     $$PWD/tools/zipalign.h \
     $$PWD/widgets/decorationsizedelegate.h \
     $$PWD/widgets/elidedlabel.h \

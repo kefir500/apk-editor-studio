@@ -3,15 +3,10 @@
 #include "base/application.h"
 #include <QStringList>
 
-void Apksigner::sign(const QString &target, const Keystore *keystore)
-{
-    return sign(target, keystore->keystorePath, keystore->keystorePassword, keystore->keyAlias, keystore->keyPassword);
-}
-
-void Apksigner::sign(const QString &target, const QString &keystorePath, const QString &keystorePassword, const QString &keyAlias, const QString &keyPassword)
+void Apksigner::Sign::run()
 {
     if (target.isEmpty()) {
-        emit signFinished(false, "Apksigner: Target path not specified.");
+        emit finished(false, "Apksigner: Target path not specified.");
         return;
     }
 
@@ -24,16 +19,16 @@ void Apksigner::sign(const QString &target, const QString &keystorePath, const Q
     arguments << target;
 
     auto process = new Process(this);
-    connect(process, &Process::finished, this, &Apksigner::signFinished);
+    connect(process, &Process::finished, this, &Apksigner::Sign::finished);
     connect(process, &Process::finished, process, &QObject::deleteLater);
     process->jar(getPath(), arguments);
 }
 
-void Apksigner::version()
+void Apksigner::Version::run()
 {
     auto process = new Process(this);
     connect(process, &Process::finished, [=](bool success, const QString &output) {
-        emit versionFetched(success ? output : QString());
+        emit finished(success ? output : QString());
         process->deleteLater();
     });
     process->jar(getPath(), {"--version"});

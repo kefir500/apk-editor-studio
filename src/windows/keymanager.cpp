@@ -109,8 +109,8 @@ void KeyManager::createKey()
     const QString keystore = editKeystore->getCurrentPath();
     const QString password = editKeystorePassword->text();
 
-    auto keytool = new Keytool(this);
-    connect(keytool, &Keytool::aliasesFetched, [=]() {
+    auto keytool = new Keytool::Aliases(keystore, password, this);
+    connect(keytool, &Keytool::Aliases::success, [=]() {
         KeyCreator dialog(keystore, password, this);
         connect(&dialog, &KeyCreator::createdKey, [&](const QString &alias) {
             if (!alias.isEmpty()) {
@@ -120,5 +120,5 @@ void KeyManager::createKey()
         dialog.exec();
         keytool->deleteLater();
     });
-    keytool->fetchAliases(keystore, password);
+    keytool->run();
 }

@@ -32,19 +32,19 @@ QString KeySelector::select(const QString &keystore, const QString &password, co
 void KeySelector::refresh(const QString &keystore, const QString &password, const QString &currentAlias)
 {
     loading->show();
-    auto keytool = new Keytool(this);
-    connect(keytool, &Keytool::aliasesFetched, [=](const QStringList &aliases) {
+    auto keytool = new Keytool::Aliases(keystore, password, this);
+    connect(keytool, &Keytool::Aliases::success, [=](const QStringList &aliases) {
         combo->clear();
         combo->addItems(aliases);
         combo->setCurrentText(currentAlias);
         loading->hide();
         keytool->deleteLater();
     });
-    connect(keytool, &Keytool::aliasesFetchError, [=](const QString &brief, const QString &detailed) {
+    connect(keytool, &Keytool::Aliases::error, [=](const QString &brief, const QString &detailed) {
         Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
         keytool->deleteLater();
     });
-    keytool->fetchAliases(keystore, password);
+    keytool->run();
 }
 
 QString KeySelector::getCurrentValue() const
