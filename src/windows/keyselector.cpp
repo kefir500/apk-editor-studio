@@ -43,6 +43,7 @@ void KeySelector::refresh(const QString &keystore, const QString &password, cons
     connect(keytool, &Keytool::Aliases::error, [=](const QString &brief, const QString &detailed) {
         Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
         keytool->deleteLater();
+        close();
     });
     keytool->run();
 }
