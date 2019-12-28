@@ -34,18 +34,21 @@ KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
     editKeystorePassword->setEchoMode(QLineEdit::Password);
     editKeyPassword->setEchoMode(QLineEdit::Password);
 
+    QHBoxLayout *layoutKeystore = new QHBoxLayout;
+    layoutKeystore->addWidget(editKeystore);
+    layoutKeystore->addWidget(btnCreateKeystore);
+
     QHBoxLayout *layoutKeyAlias = new QHBoxLayout;
     layoutKeyAlias->addWidget(editKeyAlias);
     layoutKeyAlias->addWidget(btnSelectKey);
+    layoutKeyAlias->addWidget(btnCreateKey);
 
     QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 
     QFormLayout *customKeystoreLayout = new QFormLayout(groupKeystore);
-    customKeystoreLayout->addRow(tr("Keystore path:"), editKeystore);
-    customKeystoreLayout->addWidget(btnCreateKeystore);
+    customKeystoreLayout->addRow(tr("Keystore path:"), layoutKeystore);
     customKeystoreLayout->addRow(tr("Keystore password:"), editKeystorePassword);
     customKeystoreLayout->addRow(tr("Key alias:"), layoutKeyAlias);
-    customKeystoreLayout->addWidget(btnCreateKey);
     customKeystoreLayout->addRow(tr("Key password:"), editKeyPassword);
     customKeystoreLayout->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
