@@ -11,6 +11,11 @@ namespace Keytool
         Q_OBJECT
 
     public:
+        enum ErrorType {
+            AliasExistsError,
+            UnknownError
+        };
+
         Genkey(const Keystore &keystore, QObject *parent = nullptr)
             : Command(parent)
             , keystore(keystore) {}
@@ -19,7 +24,7 @@ namespace Keytool
 
     signals:
         void success() const;
-        void error(const QString &brief, const QString &detailed) const;
+        void error(ErrorType errorType, const QString &brief, const QString &detailed) const;
 
     private:
         const Keystore keystore;
@@ -30,6 +35,11 @@ namespace Keytool
         Q_OBJECT
 
     public:
+        enum ErrorType {
+            IncorrectPasswordError,
+            UnknownError
+        };
+
         Aliases(const QString &keystore, const QString &password, QObject *parent = nullptr)
             : Command(parent)
             , keystore(keystore)
@@ -39,7 +49,7 @@ namespace Keytool
 
     signals:
         void success(const QStringList &aliases) const;
-        void error(const QString &brief, const QString &detailed) const;
+        void error(ErrorType errorType, const QString &brief, const QString &detailed) const;
 
     private:
         const QString keystore;

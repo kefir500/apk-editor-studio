@@ -64,7 +64,7 @@ QFormLayout *KeyCreator::initialize()
             loading->hide();
             keytool->deleteLater();
         });
-        connect(keytool, &Keytool::Aliases::error, [=](const QString &brief, const QString &detailed) {
+        connect(keytool, &Keytool::Aliases::error, [=](Keytool::Aliases::ErrorType, const QString &brief, const QString &detailed) {
             Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
             keytool->deleteLater();
             close();
@@ -125,10 +125,12 @@ void KeyCreator::create()
         accept();
         keytool->deleteLater();
     });
-    connect(keytool, &Keytool::Genkey::error, [=](const QString &brief, const QString &detailed) {
+    connect(keytool, &Keytool::Genkey::error, [=](Keytool::Genkey::ErrorType errorType, const QString &brief, const QString &detailed) {
+        if (errorType == Keytool::Genkey::AliasExistsError) {
+            editAlias->setFocus();
+            editAlias->selectAll();
+        }
         loading->hide();
-        editAlias->setFocus();
-        editAlias->selectAll();
         Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
         keytool->deleteLater();
     });

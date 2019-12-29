@@ -11,9 +11,9 @@ void Keytool::Genkey::run()
             emit success();
         } else {
             if (output.contains(QRegularExpression("alias <.+> already exists"))) {
-                emit error(tr("Could not write to keystore: alias already exists."), output);
+                emit error(AliasExistsError, tr("Could not write to keystore: alias already exists."), output);
             } else {
-                emit error(tr("Could not write to keystore. See details for more information."), output);
+                emit error(UnknownError, tr("Could not write to keystore. See details for more information."), output);
             }
         }
         process->deleteLater();
@@ -61,9 +61,9 @@ void Keytool::Aliases::run()
             emit success(aliases);
         } else {
             if (output.contains("Keystore was tampered with, or password was incorrect")) {
-                emit error(tr("Could not read keystore: incorrect password."), output);
+                emit error(IncorrectPasswordError, tr("Could not read keystore: incorrect password."), output);
             } else {
-                emit error(tr("Could not read keystore. See details for more information."), output);
+                emit error(UnknownError, tr("Could not read keystore. See details for more information."), output);
             }
         }
         process->deleteLater();
