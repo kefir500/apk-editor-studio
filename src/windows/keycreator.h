@@ -12,10 +12,6 @@ class KeyCreator : public QDialog
     Q_OBJECT
 
 public:
-    enum class Type {
-        Keystore,
-        Key
-    };
 
     explicit KeyCreator(QWidget *parent = nullptr);
     KeyCreator(const QString &keystorePath, const QString &keystorePassword, QWidget *parent = nullptr);
@@ -25,7 +21,12 @@ signals:
     void createdKey(const QString &alias);
 
 private:
-    QFormLayout *initialize(Type type);
+    enum class Type {
+        Keystore,
+        Key
+    };
+
+    QFormLayout *initialize();
     QFormLayout *createKeyLayout();
     bool validateFields();
     void create();

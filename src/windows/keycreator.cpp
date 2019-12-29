@@ -4,19 +4,23 @@
 #include <QGroupBox>
 #include <QDialogButtonBox>
 
-KeyCreator::KeyCreator(QWidget *parent) : QDialog(parent)
+KeyCreator::KeyCreator(QWidget *parent)
+    : QDialog(parent)
+    , type(Type::Keystore)
 {
-    initialize(Type::Keystore);
+    initialize();
 }
 
-KeyCreator::KeyCreator(const QString &keystorePath, const QString &keystorePassword, QWidget *parent) : QDialog(parent)
+KeyCreator::KeyCreator(const QString &keystorePath, const QString &keystorePassword, QWidget *parent)
+    : QDialog(parent)
+    , type(Type::Key)
+    , keystorePath(keystorePath)
+    , keystorePassword(keystorePassword)
 {
-    this->keystorePath = keystorePath;
-    this->keystorePassword = keystorePassword;
-    initialize(Type::Key);
+    initialize();
 }
 
-QFormLayout *KeyCreator::initialize(Type type)
+QFormLayout *KeyCreator::initialize()
 {
     if (type == Type::Keystore) {
         setWindowTitle(tr("Create Keystore"));
@@ -25,12 +29,9 @@ QFormLayout *KeyCreator::initialize(Type type)
     }
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    this->type = type;
-
     QFormLayout *layout = new QFormLayout(this);
     QFormLayout *keyLayout = createKeyLayout();
     loading = new LoadingWidget(this);
-    loading->hide();
 
     if (type == Type::Keystore) {
         editKeystorePassword = new QLineEdit(this);
@@ -39,6 +40,8 @@ QFormLayout *KeyCreator::initialize(Type type)
         editKeystorePasswordConfirm->setPlaceholderText(tr("Confirm Password"));
         editKeystorePassword->setEchoMode(QLineEdit::Password);
         editKeystorePasswordConfirm->setEchoMode(QLineEdit::Password);
+
+        loading->hide();
 
         QHBoxLayout *layoutPassword = new QHBoxLayout;
         layoutPassword->addWidget(editKeystorePassword);
@@ -53,6 +56,20 @@ QFormLayout *KeyCreator::initialize(Type type)
         editKeystorePassword = nullptr;
         editKeystorePasswordConfirm = nullptr;
         layout->addRow(keyLayout);
+
+        // Check if the KeyStore is valid
+
+        auto keytool = new Keytool::Aliases(keystorePath, keystorePassword, this);
+        connect(keytool, &Keytool::Aliases::success, [=]() {
+            loading->hide();
+            keytool->deleteLater();
+        });
+        connect(keytool, &Keytool::Aliases::error, [=](const QString &brief, const QString &detailed) {
+            Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
+            keytool->deleteLater();
+            close();
+        });
+        keytool->run();
     }
 
     QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);

@@ -63,7 +63,9 @@ KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
     connect(btnSelectKey, &QToolButton::clicked, [this]() {
         const QString keystore = editKeystore->getCurrentPath();
         const QString password = editKeystorePassword->text();
-        const QString alias = KeySelector::select(keystore, password, editKeyAlias->text(), this);
+        const QString defaultAlias = editKeyAlias->text();
+        KeySelector keySelector(keystore, password, defaultAlias, this);
+        const QString alias = keySelector.select();
         if (!alias.isEmpty()) {
             editKeyAlias->setText(alias);
         }
@@ -112,16 +114,11 @@ void KeyManager::createKey()
     const QString keystore = editKeystore->getCurrentPath();
     const QString password = editKeystorePassword->text();
 
-    auto keytool = new Keytool::Aliases(keystore, password, this);
-    connect(keytool, &Keytool::Aliases::success, [=]() {
-        KeyCreator dialog(keystore, password, this);
-        connect(&dialog, &KeyCreator::createdKey, [&](const QString &alias) {
-            if (!alias.isEmpty()) {
-                editKeyAlias->setText(alias);
-            }
-        });
-        dialog.exec();
-        keytool->deleteLater();
+    KeyCreator dialog(keystore, password, this);
+    connect(&dialog, &KeyCreator::createdKey, [&](const QString &alias) {
+        if (!alias.isEmpty()) {
+            editKeyAlias->setText(alias);
+        }
     });
-    keytool->run();
+    dialog.exec();
 }

@@ -419,7 +419,8 @@ const Keystore *Project::getKeystore() const
             }
         }
         if (keystore->keyAlias.isEmpty()) {
-            keystore->keyAlias = KeySelector::select(keystore->keystorePath, keystore->keystorePassword);
+            KeySelector keySelector(keystore->keystorePath, keystore->keystorePassword);
+            keystore->keyAlias = keySelector.select();
             if (keystore->keyAlias.isEmpty()) {
                 return nullptr;
             }

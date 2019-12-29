@@ -4,7 +4,11 @@
 #include <QBoxLayout>
 #include <QDialogButtonBox>
 
-KeySelector::KeySelector(QWidget *parent) : QDialog(parent)
+KeySelector::KeySelector(const QString &keystore, const QString &password,
+                         const QString &defaultAlias, QWidget *parent)
+    : QDialog(parent)
+    , keystore(keystore)
+    , password(password)
 {
     setWindowTitle(tr("Select Key"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -20,23 +24,28 @@ KeySelector::KeySelector(QWidget *parent) : QDialog(parent)
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(combo);
     layout->addWidget(buttons);
+
+    refresh(defaultAlias);
 }
 
-QString KeySelector::select(const QString &keystore, const QString &password, const QString &currentAlias, QWidget *parent)
+QString KeySelector::select()
 {
-    KeySelector dialog(parent);
-    dialog.refresh(keystore, password, currentAlias);
-    return dialog.exec() == QDialog::Accepted ? dialog.getCurrentValue() : QString();
+    return exec() == QDialog::Accepted ? getCurrentValue() : QString();
 }
 
-void KeySelector::refresh(const QString &keystore, const QString &password, const QString &currentAlias)
+QString KeySelector::getCurrentValue() const
+{
+    return combo->currentText();
+}
+
+void KeySelector::refresh(const QString &defaultAlias)
 {
     loading->show();
     auto keytool = new Keytool::Aliases(keystore, password, this);
     connect(keytool, &Keytool::Aliases::success, [=](const QStringList &aliases) {
         combo->clear();
         combo->addItems(aliases);
-        combo->setCurrentText(currentAlias);
+        combo->setCurrentText(defaultAlias);
         loading->hide();
         keytool->deleteLater();
     });
@@ -46,9 +55,4 @@ void KeySelector::refresh(const QString &keystore, const QString &password, cons
         close();
     });
     keytool->run();
-}
-
-QString KeySelector::getCurrentValue() const
-{
-    return combo->currentText();
 }
