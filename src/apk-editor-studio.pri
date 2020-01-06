@@ -80,6 +80,7 @@ SOURCES += \
     $$PWD/windows/keycreator.cpp \
     $$PWD/windows/keymanager.cpp \
     $$PWD/windows/keyselector.cpp \
+    $$PWD/windows/keystorecreator.cpp \
     $$PWD/windows/mainwindow.cpp \
     $$PWD/windows/optionsdialog.cpp \
     $$PWD/windows/permissioneditor.cpp \
@@ -170,6 +171,7 @@ HEADERS += \
     $$PWD/windows/keycreator.h \
     $$PWD/windows/keymanager.h \
     $$PWD/windows/keyselector.h \
+    $$PWD/windows/keystorecreator.h \
     $$PWD/windows/mainwindow.h \
     $$PWD/windows/optionsdialog.h \
     $$PWD/windows/permissioneditor.h \

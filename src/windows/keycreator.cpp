@@ -4,182 +4,18 @@
 #include <QGroupBox>
 #include <QDialogButtonBox>
 
-KeyCreator::KeyCreator(QWidget *parent)
-    : QDialog(parent)
-    , type(Type::Keystore)
-{
-    initialize();
-}
-
 KeyCreator::KeyCreator(const QString &keystorePath, const QString &keystorePassword, QWidget *parent)
     : QDialog(parent)
-    , type(Type::Key)
     , keystorePath(keystorePath)
     , keystorePassword(keystorePassword)
 {
-    initialize();
-}
-
-QFormLayout *KeyCreator::initialize()
-{
-    if (type == Type::Keystore) {
-        setWindowTitle(tr("Create Keystore"));
-    } else if (type == Type::Key) {
-        setWindowTitle(tr("Create Key"));
-    }
+    setWindowTitle(tr("Create Key"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    QFormLayout *layout = new QFormLayout(this);
-    QFormLayout *keyLayout = createKeyLayout();
-    loading = new LoadingWidget(this);
+    mainLayout = new QFormLayout(this);
 
-    if (type == Type::Keystore) {
-        editKeystorePassword = new QLineEdit(this);
-        editKeystorePasswordConfirm = new QLineEdit(this);
-        editKeystorePassword->setPlaceholderText(tr("Keystore Password"));
-        editKeystorePasswordConfirm->setPlaceholderText(tr("Confirm Password"));
-        editKeystorePassword->setEchoMode(QLineEdit::Password);
-        editKeystorePasswordConfirm->setEchoMode(QLineEdit::Password);
-
-        loading->hide();
-
-        QHBoxLayout *layoutPassword = new QHBoxLayout;
-        layoutPassword->addWidget(editKeystorePassword);
-        layoutPassword->addWidget(editKeystorePasswordConfirm);
-        layout->addRow(tr("Password"), layoutPassword);
-
-        QGroupBox *groupKey = new QGroupBox(tr("Key"), this);
-        groupKey->setLayout(keyLayout);
-        layout->addRow(groupKey);
-
-    } else if (type == Type::Key) {
-        editKeystorePassword = nullptr;
-        editKeystorePasswordConfirm = nullptr;
-        layout->addRow(keyLayout);
-
-        // Check if the KeyStore is valid
-
-        auto keytool = new Keytool::Aliases(keystorePath, keystorePassword, this);
-        connect(keytool, &Keytool::Aliases::success, [=]() {
-            loading->hide();
-            keytool->deleteLater();
-        });
-        connect(keytool, &Keytool::Aliases::error, [=](Keytool::Aliases::ErrorType, const QString &brief, const QString &detailed) {
-            Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
-            keytool->deleteLater();
-            close();
-        });
-        keytool->run();
-    }
-
-    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-    connect(buttons, &QDialogButtonBox::accepted, this, &KeyCreator::create);
-    connect(buttons, &QDialogButtonBox::rejected, this, &KeyCreator::reject);
-    layout->addRow(buttons);
-
-    return layout;
-}
-
-void KeyCreator::create()
-{
-    if (!validateFields()) {
-        return;
-    }
-
-    QString path;
-    if (type == Type::Keystore) {
-        path = Dialogs::getSaveKeystoreFilename();
-        if (path.isEmpty()) {
-            return;
-        }
-        QFile::remove(path);
-    } else if (type == Type::Key) {
-        path = keystorePath;
-    }
-
-    Keystore keystore;
-    keystore.keystorePath = path;
-    keystore.keystorePassword = keystorePassword.isEmpty() ? editKeystorePassword->text() : keystorePassword;
-    keystore.keyAlias = editAlias->text();
-    keystore.keyPassword = editKeyPassword->text();
-    keystore.validity = editYears->text().toInt() * 365;
-    keystore.dname.name = editName->text();
-    keystore.dname.org = editOrganization->text();
-    keystore.dname.orgUnit = editUnit->text();
-    keystore.dname.city = editCity->text();
-    keystore.dname.state = editState->text();
-    keystore.dname.countryCode = editCountry->text();
-
-    loading->show();
-    auto keytool = new Keytool::Genkey(keystore, this);
-    connect(keytool, &Keytool::Genkey::success, [=]() {
-        loading->hide();
-        if (type == Type::Keystore) {
-            QMessageBox::information(this, QString(), tr("Keystore has been successfully created!"));
-            emit createdKeystore(keystore.keystorePath);
-            emit createdKey(keystore.keyAlias);
-        } else if (type == Type::Key) {
-            QMessageBox::information(this, QString(), tr("Key has been successfully created!"));
-            emit createdKey(keystore.keyAlias);
-        }
-        accept();
-        keytool->deleteLater();
-    });
-    connect(keytool, &Keytool::Genkey::error, [=](Keytool::Genkey::ErrorType errorType, const QString &brief, const QString &detailed) {
-        if (errorType == Keytool::Genkey::AliasExistsError) {
-            editAlias->setFocus();
-            editAlias->selectAll();
-        }
-        loading->hide();
-        Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
-        keytool->deleteLater();
-    });
-    keytool->run();
-}
-
-bool KeyCreator::validateFields()
-{
-    const QString strPasswordMinimum = tr("Password must be at least 6 characters.");
-    const QString strPasswordMatch = tr("Passwords do not match.");
-    const QString strFieldRequired = tr("Please fill out the required fields.");
-
-    if (editKeystorePassword && editKeystorePassword->text().length() < 6) {
-        QMessageBox::warning(this, QString(), strPasswordMinimum);
-        editKeystorePassword->setFocus();
-        return false;
-    }
-    if (editKeystorePassword && editKeystorePassword->text() != editKeystorePasswordConfirm->text()) {
-        QMessageBox::warning(this, QString(), strPasswordMatch);
-        editKeystorePasswordConfirm->setFocus();
-        return false;
-    }
-    if (editAlias && editAlias->text().isEmpty()) {
-        QMessageBox::warning(this, QString(), strFieldRequired);
-        editAlias->setFocus();
-        return false;
-    }
-    if (editKeyPassword && editKeyPassword->text().length() < 6) {
-        QMessageBox::warning(this, QString(), strPasswordMinimum);
-        editKeyPassword->setFocus();
-        return false;
-    }
-    if (editKeyPassword && editKeyPassword->text() != editKeyPasswordConfirm->text()) {
-        QMessageBox::warning(this, QString(), strPasswordMatch);
-        editKeyPasswordConfirm->setFocus();
-        return false;
-    }
-    if (editName && editName->text().isEmpty()) {
-        QMessageBox::warning(this, QString(), strFieldRequired);
-        editName->setFocus();
-        return false;
-    }
-    return true;
-}
-
-QFormLayout *KeyCreator::createKeyLayout()
-{
-    QFormLayout *layout = new QFormLayout;
-    layout->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
+    QFormLayout *keyLayout = new QFormLayout;
+    keyLayout->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
     editAlias = new QLineEdit(this);
     editKeyPassword = new QLineEdit(this);
@@ -211,15 +47,110 @@ QFormLayout *KeyCreator::createKeyLayout()
     layoutPassword->addWidget(editKeyPassword);
     layoutPassword->addWidget(editKeyPasswordConfirm);
 
-    layout->addRow(editAlias->placeholderText(), editAlias);
-    layout->addRow(tr("Password"), layoutPassword);
-    layout->addRow(tr("Validity (Years)"), editYears);
-    layout->addRow(editName->placeholderText(), editName);
-    layout->addRow(editUnit->placeholderText(), editUnit);
-    layout->addRow(editOrganization->placeholderText(), editOrganization);
-    layout->addRow(editCity->placeholderText(), editCity);
-    layout->addRow(editState->placeholderText(), editState);
-    layout->addRow(editCountry->placeholderText(), editCountry);
+    keyLayout->addRow(editAlias->placeholderText(), editAlias);
+    keyLayout->addRow(tr("Password"), layoutPassword);
+    keyLayout->addRow(tr("Validity (Years)"), editYears);
+    keyLayout->addRow(editName->placeholderText(), editName);
+    keyLayout->addRow(editUnit->placeholderText(), editUnit);
+    keyLayout->addRow(editOrganization->placeholderText(), editOrganization);
+    keyLayout->addRow(editCity->placeholderText(), editCity);
+    keyLayout->addRow(editState->placeholderText(), editState);
+    keyLayout->addRow(editCountry->placeholderText(), editCountry);
 
-    return layout;
+    auto groupKey = new QGroupBox(tr("Key"), this);
+    groupKey->setLayout(keyLayout);
+    mainLayout->addRow(groupKey);
+
+    loading = new LoadingWidget(this);
+
+    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    connect(buttons, &QDialogButtonBox::accepted, this, &KeyCreator::create);
+    connect(buttons, &QDialogButtonBox::rejected, this, &KeyCreator::reject);
+    mainLayout->addRow(buttons);
+
+    // Check if the KeyStore is valid
+
+    if (!keystorePath.isNull()) {
+        auto keytool = new Keytool::Aliases(keystorePath, keystorePassword, this);
+        connect(keytool, &Keytool::Aliases::success, [=]() {
+            loading->hide();
+            keytool->deleteLater();
+        });
+        connect(keytool, &Keytool::Aliases::error, [=](Keytool::Aliases::ErrorType, const QString &brief, const QString &detailed) {
+            Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
+            keytool->deleteLater();
+            close();
+        });
+        keytool->run();
+    }
+}
+
+void KeyCreator::create()
+{
+    if (!validate()) {
+        return;
+    }
+
+    Keystore keystore;
+    fillKeystore(keystore, keystorePath, keystorePassword);
+
+    loading->show();
+    auto keytool = new Keytool::Genkey(keystore, this);
+    connect(keytool, &Keytool::Genkey::success, [=]() {
+        loading->hide();
+        QMessageBox::information(this, QString(), tr("Key has been successfully created!"));
+        emit createdKey(keystore.keyAlias);
+        accept();
+        keytool->deleteLater();
+    });
+    connect(keytool, &Keytool::Genkey::error, [=](Keytool::Genkey::ErrorType errorType, const QString &brief, const QString &detailed) {
+        if (errorType == Keytool::Genkey::AliasExistsError) {
+            editAlias->setFocus();
+            editAlias->selectAll();
+        }
+        loading->hide();
+        Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
+        keytool->deleteLater();
+    });
+    keytool->run();
+}
+
+bool KeyCreator::validate()
+{
+    if (editAlias->text().isEmpty()) {
+        QMessageBox::warning(this, QString(), strFieldRequired);
+        editAlias->setFocus();
+        return false;
+    }
+    if (editKeyPassword->text().length() < 6) {
+        QMessageBox::warning(this, QString(), strPasswordMinimum);
+        editKeyPassword->setFocus();
+        return false;
+    }
+    if (editKeyPassword->text() != editKeyPasswordConfirm->text()) {
+        QMessageBox::warning(this, QString(), strPasswordMatch);
+        editKeyPasswordConfirm->setFocus();
+        return false;
+    }
+    if (editName->text().isEmpty()) {
+        QMessageBox::warning(this, QString(), strFieldRequired);
+        editName->setFocus();
+        return false;
+    }
+    return true;
+}
+
+void KeyCreator::fillKeystore(Keystore &keystore, const QString &keystorePath, const QString &keystorePassword) const
+{
+    keystore.keystorePath = keystorePath;
+    keystore.keystorePassword = keystorePassword;
+    keystore.keyAlias = editAlias->text();
+    keystore.keyPassword = editKeyPassword->text();
+    keystore.validity = editYears->text().toInt() * 365;
+    keystore.dname.name = editName->text();
+    keystore.dname.org = editOrganization->text();
+    keystore.dname.orgUnit = editUnit->text();
+    keystore.dname.city = editCity->text();
+    keystore.dname.state = editState->text();
+    keystore.dname.countryCode = editCountry->text();
 }

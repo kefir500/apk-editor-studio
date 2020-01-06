@@ -1,5 +1,5 @@
 #include "windows/keymanager.h"
-#include "windows/keycreator.h"
+#include "windows/keystorecreator.h"
 #include "windows/keyselector.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
@@ -95,13 +95,13 @@ void KeyManager::save()
 
 void KeyManager::createKeystore()
 {
-    KeyCreator dialog(this);
-    connect(&dialog, &KeyCreator::createdKeystore, [&](const QString &keystore) {
+    KeystoreCreator dialog(this);
+    connect(&dialog, &KeystoreCreator::createdKeystore, [&](const QString &keystore) {
         if (!keystore.isEmpty()) {
             editKeystore->setCurrentPath(keystore);
         }
     });
-    connect(&dialog, &KeyCreator::createdKey, [&](const QString &alias) {
+    connect(&dialog, &KeystoreCreator::createdKey, [&](const QString &alias) {
         if (!alias.isEmpty()) {
             editKeyAlias->setText(alias);
         }

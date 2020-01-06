@@ -2,6 +2,7 @@
 #define KEYCREATOR_H
 
 #include "widgets/loadingwidget.h"
+#include "tools/keystore.h"
 #include <QDialog>
 #include <QFormLayout>
 #include <QLineEdit>
@@ -12,31 +13,26 @@ class KeyCreator : public QDialog
     Q_OBJECT
 
 public:
-
-    explicit KeyCreator(QWidget *parent = nullptr);
     KeyCreator(const QString &keystorePath, const QString &keystorePassword, QWidget *parent = nullptr);
 
 signals:
-    void createdKeystore(const QString &path);
     void createdKey(const QString &alias);
 
+protected:
+    virtual void create();
+    virtual bool validate();
+    void fillKeystore(Keystore &keystore, const QString &keystorePath, const QString &keystorePassword) const;
+
+    const QString strPasswordMinimum{tr("Password must be at least 6 characters.")};
+    const QString strPasswordMatch{tr("Passwords do not match.")};
+    const QString strFieldRequired{tr("Please fill out the required fields.")};
+
+    QFormLayout *mainLayout;
+    LoadingWidget *loading;
+
 private:
-    enum class Type {
-        Keystore,
-        Key
-    };
-
-    QFormLayout *initialize();
-    QFormLayout *createKeyLayout();
-    bool validateFields();
-    void create();
-
-    Type type;
-    QString keystorePath;
-    QString keystorePassword;
-
-    QLineEdit *editKeystorePassword;
-    QLineEdit *editKeystorePasswordConfirm;
+    const QString keystorePath;
+    const QString keystorePassword;
 
     QLineEdit *editAlias;
     QLineEdit *editKeyPassword;
@@ -48,7 +44,6 @@ private:
     QLineEdit *editCity;
     QLineEdit *editState;
     QLineEdit *editCountry;
-    LoadingWidget *loading;
 };
 
 #endif // KEYCREATOR_H
