@@ -26,7 +26,6 @@ matrix:
       - brew update
       - brew install qt
       - brew link qt --force
-      - brew upgrade python
       - nvm install node
       - npm i appdmg
     script:
