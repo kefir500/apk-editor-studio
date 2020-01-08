@@ -4,12 +4,12 @@ Upstream-Contact: Alexander Gorishnyak <kefir500@gmail.com>
 Source: https://github.com/kefir500/apk-editor-studio
 
 Files: *
-Copyright: 2018-2019 Alexander Gorishnyak <kefir500@gmail.com>
+Copyright: 2019-2020 Alexander Gorishnyak <kefir500@gmail.com>
 License: GPL-3.0+
 
 Files: res/deploy/all/tools/apktool.jar
 Copyright: 2010-2011 Ryszard Wiśniewski
-           2012-2018 Connor Tumbleson
+           2012-2020 Connor Tumbleson
 License: Apache-2.0
 
 Files: res/deploy/all/tools/apksigner.jar
@@ -25,11 +25,11 @@ Copyright: 2008 The Android Open Source Project
 License: Apache-2.0
 
 Files: lib/qtkeychain/*
-Copyright: 2011-2018 Frank Osterfeld
+Copyright: 2011-2020 Frank Osterfeld
 License: BSD-3-clause
 
 Files: res/deploy/all/resources/icons/*
-Copyright: 2018 Icons8 LLC
+Copyright: 2020 Icons8 LLC
 License: CC-BY-ND-3.0
 
 Files: res/deploy/all/resources/flags/*
