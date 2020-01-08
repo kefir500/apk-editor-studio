@@ -38,119 +38,119 @@ bool Settings::reset(QWidget *parent)
 
 // Getters:
 
-QString Settings::getJavaPath()
+QString Settings::getJavaPath() const
 {
     return settings->value("Preferences/Java").toString();
 }
 
-QString Settings::getApktoolPath()
+QString Settings::getApktoolPath() const
 {
     return settings->value("Apktool/Path").toString();
 }
 
-QString Settings::getOutputDirectory()
+QString Settings::getOutputDirectory() const
 {
     return settings->value("Apktool/Output").toString();
 }
 
-QString Settings::getFrameworksDirectory()
+QString Settings::getFrameworksDirectory() const
 {
     return settings->value("Apktool/Frameworks").toString();
 }
 
-bool Settings::getSignApk()
+bool Settings::getSignApk() const
 {
     return settings->value("Signer/Enabled", true).toBool();
 }
 
-bool Settings::getOptimizeApk()
+bool Settings::getOptimizeApk() const
 {
     return settings->value("Zipalign/Enabled", true).toBool();
 }
 
-QString Settings::getApksignerPath()
+QString Settings::getApksignerPath() const
 {
     return settings->value("Signer/Path").toString();
 }
 
-QString Settings::getZipalignPath()
+QString Settings::getZipalignPath() const
 {
     return settings->value("Zipalign/Path").toString();
 }
 
-QString Settings::getAdbPath()
+QString Settings::getAdbPath() const
 {
     return settings->value("ADB/Path").toString();
 }
 
-bool Settings::getCustomKeystore()
+bool Settings::getCustomKeystore() const
 {
     return !settings->value("Signer/DemoKey", true).toBool();
 }
 
-QString Settings::getKeystorePath()
+QString Settings::getKeystorePath() const
 {
     return settings->value("Signer/Keystore").toString();
 }
 
-QString Settings::getKeystorePassword()
+QString Settings::getKeystorePassword() const
 {
     Password password("APK Editor Studio - Keystore");
     return password.get();
 }
 
-QString Settings::getKeyAlias()
+QString Settings::getKeyAlias() const
 {
     return settings->value("Signer/Alias").toString();
 }
 
-QString Settings::getKeyPassword()
+QString Settings::getKeyPassword() const
 {
     Password password("APK Editor Studio - Key");
     return password.get();
 }
 
-QString Settings::getApktoolVersion()
+QString Settings::getApktoolVersion() const
 {
     return settings->value("Apktool/Version").toString();
 }
 
-bool Settings::getDecompileSources()
+bool Settings::getDecompileSources() const
 {
     return settings->value("Apktool/Sources", false).toBool();
 }
 
-bool Settings::getKeepBrokenResources()
+bool Settings::getKeepBrokenResources() const
 {
     return settings->value("Apktool/KeepBroken", false).toBool();
 }
 
-QString Settings::getDeviceAlias(const QString &serial)
+QString Settings::getDeviceAlias(const QString &serial) const
 {
     return settings->value(QString("Devices/%1").arg(serial)).toString();
 }
 
-QString Settings::getLastDirectory()
+QString Settings::getLastDirectory() const
 {
     return settings->value("Preferences/LastDirectory").toString();
 }
 
-bool Settings::getAutoUpdates()
+bool Settings::getAutoUpdates() const
 {
     return settings->value("Preferences/AutoUpdates", true).toBool();
 }
 
-int Settings::getRecentLimit()
+int Settings::getRecentLimit() const
 {
     return settings->value("Preferences/MaxRecent", 10).toInt();
 }
 
-QString Settings::getLanguage()
+QString Settings::getLanguage() const
 {
     return settings->value("Preferences/Language", "en").toString();
 }
 
-QStringList Settings::getToolbar()
+QStringList Settings::getToolbar() const
 {
     QStringList defaults;
     defaults << "open-project" << "save-project" << "install-project" << "separator"
@@ -161,22 +161,22 @@ QStringList Settings::getToolbar()
     return settings->value("MainWindow/Toolbar", defaults).toStringList();
 }
 
-QByteArray Settings::getMainWindowGeometry()
+QByteArray Settings::getMainWindowGeometry() const
 {
     return settings->value("MainWindow/Geometry").toByteArray();
 }
 
-QByteArray Settings::getMainWindowState()
+QByteArray Settings::getMainWindowState() const
 {
     return settings->value("MainWindow/State").toByteArray();
 }
 
-bool Settings::hasRememberState(const QString &identifier)
+bool Settings::hasRememberState(const QString &identifier) const
 {
     return settings->contains(QString("Remember/%1").arg(identifier));
 }
 
-bool Settings::getRememberState(const QString &identifier)
+bool Settings::getRememberState(const QString &identifier) const
 {
     return settings->value(QString("Remember/%1").arg(identifier)).toBool();
 }
