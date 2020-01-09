@@ -261,6 +261,11 @@ QString Application::getWebPage()
     return QString("https://qwertycube.com/%1/").arg(getTitleNoSpaces());
 }
 
+QString Application::getUpdatePage()
+{
+    return QString("https://qwertycube.com/%1/#utm_source=apk-editor-studio&utm_medium=update").arg(getTitleNoSpaces());
+}
+
 QString Application::getSourcePage()
 {
     return QString("https://github.com/kefir500/%1/").arg(getTitleNoSpaces());
@@ -397,6 +402,11 @@ bool Application::associate()
 void Application::visitWebPage()
 {
     QDesktopServices::openUrl(getWebPage());
+}
+
+void Application::visitUpdatePage()
+{
+    QDesktopServices::openUrl(getUpdatePage());
 }
 
 void Application::visitBlogPage(const QString &post)

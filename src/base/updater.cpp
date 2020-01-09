@@ -56,7 +56,7 @@ void Updater::check(bool verbose, QWidget *parent)
 
 void Updater::download()
 {
-    app->visitWebPage();
+    app->visitUpdatePage();
 }
 
 void Updater::whatsnew(const QString &version)

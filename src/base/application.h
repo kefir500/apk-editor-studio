@@ -55,6 +55,7 @@ public:
     QSize scale(int width, int height) const;
 
     static QString getWebPage();
+    static QString getUpdatePage();
     static QString getSourcePage();
     static QString getIssuesPage();
     static QString getContactPage();
@@ -73,6 +74,7 @@ public:
 
     static bool associate();
     static void visitWebPage();
+    static void visitUpdatePage();
     static void visitBlogPage(const QString &post);
     static void visitSourcePage();
     static void visitContactPage();
