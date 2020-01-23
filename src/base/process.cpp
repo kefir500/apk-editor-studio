@@ -26,7 +26,6 @@ void Process::run(const QString &program, const QStringList &arguments)
             // Process killed
             emit finished(true, {});
         } else {
-            qWarning() << QString("%1: %2").arg(program, output);
             emit finished(false, output);
         }
         process->deleteLater();
