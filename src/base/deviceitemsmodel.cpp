@@ -2,10 +2,10 @@
 #include "base/application.h"
 #include "tools/adb.h"
 
-const Device *DeviceItemsModel::get(const QModelIndex &index) const
+QSharedPointer<Device> DeviceItemsModel::get(const QModelIndex &index) const
 {
     if (index.isValid()) {
-        return devices.at(index.row()).data();
+        return devices.at(index.row());
     }
     return nullptr;
 }

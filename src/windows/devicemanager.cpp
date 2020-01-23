@@ -58,8 +58,8 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     layout->addWidget(dialogButtons);
 
     connect(deviceList->selectionModel(), &QItemSelectionModel::currentChanged, [=](const QModelIndex &index) {
-        const Device *device = deviceModel.get(index);
-        setCurrentDevice(device);
+        const auto device = deviceModel.get(index);
+        setCurrentDevice(device.data());
     });
     connect(fieldAlias, &QLineEdit::textChanged, [=](const QString &alias) {
         QModelIndex index = deviceModel.index(deviceList->currentIndex().row(), DeviceItemsModel::AliasColumn);
@@ -83,23 +83,29 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     deviceModel.refresh();
 }
 
-const Device *DeviceManager::getTargetDevice()
+QSharedPointer<Device> DeviceManager::selectDevice(const QString &title, const QString &action, const QIcon &icon, QWidget *parent)
 {
-    setWindowTitle(tr("Install APK"));
-    setWindowIcon(app->icons.get("install.png"));
+    DeviceManager dialog(parent);
+    dialog.setWindowTitle(title.isEmpty() ? tr("Select Device") : title);
+    if (!icon.isNull()) {
+        dialog.setWindowIcon(icon);
+    }
 
-    QPushButton *btnInstall = dialogButtons->button(QDialogButtonBox::Ok);
-    btnInstall->setText(tr("Install"));
-    btnInstall->setIcon(app->icons.get("install.png"));
-    btnInstall->setEnabled(false);
+    auto btnSelect = dialog.dialogButtons->button(QDialogButtonBox::Ok);
+    btnSelect->setEnabled(false);
+    if (!action.isEmpty()) {
+        btnSelect->setText(action);
+    }
+    if (!icon.isNull()) {
+        btnSelect->setIcon(icon);
+    }
 
-    connect(deviceList->selectionModel(), &QItemSelectionModel::currentChanged, [=](const QModelIndex &index) {
-        const Device *device = deviceModel.get(index);
-        btnInstall->setEnabled(device);
+    connect(&dialog, &DeviceManager::currentChanged, [=](const Device *device) {
+        btnSelect->setEnabled(device);
     });
 
-    if (exec() == QDialog::Accepted) {
-        const Device *device = deviceModel.get(deviceList->currentIndex());
+    if (dialog.exec() == QDialog::Accepted) {
+        const auto device = dialog.deviceModel.get(dialog.deviceList->currentIndex());
         return device;
     }
 
@@ -108,6 +114,7 @@ const Device *DeviceManager::getTargetDevice()
 
 bool DeviceManager::setCurrentDevice(const Device *device)
 {
+    emit currentChanged(device);
     if (device) {
         fieldAlias->setEnabled(true);
         fieldAlias->setText(device->getAlias());

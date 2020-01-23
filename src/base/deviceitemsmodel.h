@@ -19,7 +19,7 @@ public:
         ColumnCount
     };
 
-    const Device *get(const QModelIndex &index) const;
+    QSharedPointer<Device> get(const QModelIndex &index) const;
     void refresh();
     void save() const;
 

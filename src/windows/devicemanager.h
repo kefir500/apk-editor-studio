@@ -14,7 +14,13 @@ class DeviceManager : public QDialog
 public:
     explicit DeviceManager(QWidget *parent = nullptr);
 
-    const Device *getTargetDevice();
+    static QSharedPointer<Device> selectDevice(const QString &title = QString(),
+                                               const QString &action = QString(),
+                                               const QIcon &icon = QIcon(),
+                                               QWidget *parent = nullptr);
+
+signals:
+    void currentChanged(const Device *device) const;
 
 private:
     bool setCurrentDevice(const Device *device);

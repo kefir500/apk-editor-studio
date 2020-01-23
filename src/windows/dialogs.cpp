@@ -1,4 +1,5 @@
 #include "windows/dialogs.h"
+#include "windows/devicemanager.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include <QFileDialog>
@@ -125,6 +126,14 @@ QString Dialogs::getOpenDirectory(const QString &defaultPath, QWidget *parent)
 {
     const QString path = makePath(defaultPath);
     return QFileDialog::getExistingDirectory(parent, QString(), path);
+}
+
+QSharedPointer<Device> Dialogs::getInstallTargetDevice(QWidget *parent)
+{
+    const QString title(app->translate("Dialogs", "Install APK"));
+    const QString action(app->translate("Dialogs", "Install"));
+    const QIcon icon(app->icons.get("install.png"));
+    return DeviceManager::selectDevice(title, action, icon, parent);
 }
 
 int Dialogs::detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon, QWidget *parent)

@@ -339,8 +339,7 @@ bool Application::installExternalApk()
     if (paths.isEmpty()) {
         return false;
     }
-    DeviceManager devices(window);
-    const Device *device = devices.getTargetDevice();
+    const auto device = Dialogs::getInstallTargetDevice(window);
     if (!device) {
         return false;
     }

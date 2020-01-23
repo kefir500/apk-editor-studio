@@ -3,6 +3,7 @@
 
 #include "apk/project.h"
 #include "base/fileformatlist.h"
+#include "base/device.h"
 #include <QMessageBox>
 
 namespace Dialogs
@@ -30,6 +31,10 @@ namespace Dialogs
     bool openApk(const QString &defaultPath, QWidget *parent = nullptr);
 
     QString getOpenDirectory(const QString &defaultPath, QWidget *parent = nullptr);
+
+    QSharedPointer<Device> getInstallTargetDevice(QWidget *parent = nullptr);
+    QSharedPointer<Device> getExplorerTargetDevice(QWidget *parent = nullptr);
+    QSharedPointer<Device> getScreenshotTargetDevice(QWidget *parent = nullptr);
 
     int detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon = QMessageBox::Warning, QWidget *parent = nullptr);
     int log(const QString &title, const QString &text, QWidget *parent = nullptr);
