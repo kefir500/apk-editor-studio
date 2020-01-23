@@ -1,14 +1,14 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
-#include <QObject>
+#include <QProcess>
 
 class Process : public QObject
 {
     Q_OBJECT
 
 public:
-    Process(QObject *parent = nullptr) : QObject(parent) {}
+    Process(QObject *parent = nullptr);
 
     void run(const QString &program, const QStringList &arguments = {});
     void jar(const QString &jar, const QStringList &arguments = {});
@@ -18,7 +18,7 @@ signals:
     void finished(bool success, const QString &output) const;
 
 protected:
-    QString program;
+    QProcess process;
 };
 
 #endif // PROCESS_H
