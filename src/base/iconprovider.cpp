@@ -24,7 +24,7 @@ QIcon IconProvider::get(const QString &iconName)
 
 QIcon IconProvider::get(const QFileInfo &fileInfo) const
 {
-    return fileIconProvider.icon(fileInfo);
+    return fileIconProvider.icon(fileInfo.fileName());
 }
 
 QIcon IconProvider::get(QFileIconProvider::IconType iconType) const
