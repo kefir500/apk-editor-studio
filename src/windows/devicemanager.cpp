@@ -109,7 +109,7 @@ QSharedPointer<Device> DeviceManager::selectDevice(const QString &title, const Q
         return device;
     }
 
-    return nullptr;
+    return {};
 }
 
 bool DeviceManager::setCurrentDevice(const Device *device)
