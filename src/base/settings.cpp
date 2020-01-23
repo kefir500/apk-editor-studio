@@ -40,7 +40,18 @@ bool Settings::reset(QWidget *parent)
 
 QString Settings::getJavaPath() const
 {
-    return settings->value("Preferences/Java").toString();
+    const auto defaultValue = settings->value("Preferences/Java");
+    return settings->value("Java/Path", defaultValue).toString();
+}
+
+int Settings::getJavaMinHeapSize() const
+{
+    return settings->value("Java/MinHeapSize").toInt();
+}
+
+int Settings::getJavaMaxHeapSize() const
+{
+    return settings->value("Java/MaxHeapSize").toInt();
 }
 
 QString Settings::getApktoolPath() const
@@ -185,7 +196,17 @@ bool Settings::getRememberState(const QString &identifier) const
 
 void Settings::setJavaPath(const QString &path)
 {
-    settings->setValue("Preferences/Java", path);
+    settings->setValue("Java/Path", path);
+}
+
+void Settings::setJavaMinHeapSize(int size)
+{
+    settings->setValue("Java/MinHeapSize", size);
+}
+
+void Settings::setJavaMaxHeapSize(int size)
+{
+    settings->setValue("Java/MaxHeapSize", size);
 }
 
 void Settings::setApktoolPath(const QString &path)

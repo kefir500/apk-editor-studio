@@ -46,7 +46,17 @@ void Process::run(const QString &program, const QStringList &arguments)
     process.start(program, arguments);
 }
 
-void Process::jar(const QString &jar, const QStringList &arguments)
+void Process::jar(const QString &jar, const QStringList &jarArguments)
 {
-    run(app->getJavaBinaryPath("java"), QStringList() << "-jar" << jar << arguments);
+    QStringList arguments;
+    const int minHeapSize = app->settings->getJavaMinHeapSize();
+    const int maxHeapSize = app->settings->getJavaMaxHeapSize();
+    if (app->settings->getJavaMinHeapSize()) {
+        arguments << QString("-Xms%1m").arg(minHeapSize);
+    }
+    if (app->settings->getJavaMaxHeapSize()) {
+        arguments << QString("-Xmx%1m").arg(maxHeapSize);
+    }
+    arguments << "-jar" << jar << jarArguments;
+    run(app->getJavaBinaryPath("java"), arguments);
 }

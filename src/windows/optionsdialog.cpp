@@ -55,7 +55,12 @@ void OptionsDialog::load()
 
     checkboxUpdates->setChecked(app->settings->getAutoUpdates());
     spinboxRecent->setValue(app->settings->getRecentLimit());
+
+    // Java
+
     fileboxJava->setCurrentPath(app->settings->getJavaPath());
+    spinboxMinHeapSize->setValue(app->settings->getJavaMinHeapSize());
+    spinboxMaxHeapSize->setValue(app->settings->getJavaMaxHeapSize());
 
     // Languages
 
@@ -140,7 +145,12 @@ void OptionsDialog::save()
     app->settings->setAutoUpdates(checkboxUpdates->isChecked());
     app->setLanguage(comboLanguages->currentData().toString());
     app->recent->setLimit(spinboxRecent->value());
+
+    // Java
+
     app->settings->setJavaPath(fileboxJava->getCurrentPath());
+    app->settings->setJavaMinHeapSize(spinboxMinHeapSize->value());
+    app->settings->setJavaMaxHeapSize(spinboxMaxHeapSize->value());
 
     // Repacking
 
@@ -227,15 +237,30 @@ void OptionsDialog::initialize()
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
     spinboxRecent->setMaximum(50);
+    pageGeneral->addRow(checkboxUpdates);
+    pageGeneral->addRow(tr("Language:"), comboLanguages);
+    pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
+    pageGeneral->addRow(btnAssociate);
+
+    // Java
+
+    QFormLayout *pageJava = new QFormLayout;
     fileboxJava = new FileBox(true, this);
     fileboxJava->setDefaultPath("");
     const QString javaPath = app->getJavaPath();
     fileboxJava->setPlaceholderText(!javaPath.isEmpty() ? javaPath : tr("Extracted from environment variables by default"));
-    pageGeneral->addRow(checkboxUpdates);
-    pageGeneral->addRow(tr("Language:"), comboLanguages);
-    pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
-    pageGeneral->addRow(tr("Java path:"), fileboxJava);
-    pageGeneral->addRow(btnAssociate);
+    spinboxMinHeapSize = new QSpinBox(this);
+    spinboxMaxHeapSize = new QSpinBox(this);
+    //: Megabytes
+    spinboxMinHeapSize->setSuffix(tr(" MB"));
+    spinboxMaxHeapSize->setSuffix(tr(" MB"));
+    spinboxMinHeapSize->setSpecialValueText(tr("Default"));
+    spinboxMaxHeapSize->setSpecialValueText(tr("Default"));
+    spinboxMinHeapSize->setRange(0, std::numeric_limits<int>::max());
+    spinboxMaxHeapSize->setRange(0, std::numeric_limits<int>::max());
+    pageJava->addRow(tr("Java path:"), fileboxJava);
+    pageJava->addRow(tr("Initial heap size (MB):"), spinboxMinHeapSize);
+    pageJava->addRow(tr("Maximum heap size (MB):"), spinboxMaxHeapSize);
 
     // Repacking
 
@@ -349,6 +374,7 @@ void OptionsDialog::initialize()
     pageStack->setFrameShape(QFrame::StyledPanel);
     pageList = new QListWidget(this);
     addPage(tr("General"), pageGeneral);
+    addPage("Java", pageJava);
     addPage(tr("Repacking"), pageRepack);
     addPage(tr("Signing APK"), pageSign);
     addPage(tr("Optimizing APK"), pageZipalign);

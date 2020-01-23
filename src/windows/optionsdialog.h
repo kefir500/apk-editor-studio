@@ -46,6 +46,9 @@ private:
     QComboBox *comboLanguages;
 
     FileBox *fileboxJava;
+    QSpinBox *spinboxMinHeapSize;
+    QSpinBox *spinboxMaxHeapSize;
+
     FileBox *fileboxApktool;
     FileBox *fileboxOutput;
     FileBox *fileboxFrameworks;

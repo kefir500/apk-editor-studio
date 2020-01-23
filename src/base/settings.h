@@ -12,6 +12,8 @@ public:
     bool reset(QWidget *parent = nullptr);
 
     QString getJavaPath() const;
+    int getJavaMinHeapSize() const;
+    int getJavaMaxHeapSize() const;
     QString getApktoolPath() const;
     QString getOutputDirectory() const;
     QString getFrameworksDirectory() const;
@@ -40,6 +42,8 @@ public:
     bool getRememberState(const QString &identifier) const;
 
     void setJavaPath(const QString &path);
+    void setJavaMinHeapSize(int size);
+    void setJavaMaxHeapSize(int size);
     void setApktoolPath(const QString &path);
     void setOutputDirectory(const QString &directory);
     void setFrameworksDirectory(const QString &directory);
