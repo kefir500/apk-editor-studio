@@ -27,9 +27,6 @@ namespace Dialogs
     QString getOpenKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);
     QString getSaveKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);
 
-    bool openApk(QWidget *parent = nullptr);
-    bool openApk(const QString &defaultPath, QWidget *parent = nullptr);
-
     QString getOpenDirectory(const QString &defaultPath, QWidget *parent = nullptr);
 
     QSharedPointer<Device> getInstallTargetDevice(QWidget *parent = nullptr);

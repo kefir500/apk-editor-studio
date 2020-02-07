@@ -333,28 +333,6 @@ Project *Application::openApk(const QString &filename, bool unpack)
     return project;
 }
 
-bool Application::installExternalApk()
-{
-    const QStringList paths = Dialogs::getOpenApkFilenames(window);
-    if (paths.isEmpty()) {
-        return false;
-    }
-    const auto device = Dialogs::getInstallTargetDevice(window);
-    if (!device) {
-        return false;
-    }
-    for (const QString &path : paths) {
-        Project *project = openApk(path, false);
-        project->install(device->getSerial());
-    }
-    return true;
-}
-
-bool Application::closeApk(Project *project)
-{
-    return projects.close(project);
-}
-
 void Application::setLanguage(const QString &locale)
 {
     removeTranslator(&translator);
@@ -398,59 +376,18 @@ bool Application::associate()
 #endif
 }
 
-void Application::visitWebPage()
-{
-    QDesktopServices::openUrl(getWebPage());
-}
-
-void Application::visitUpdatePage()
-{
-    QDesktopServices::openUrl(getUpdatePage());
-}
-
-void Application::visitBlogPage(const QString &post)
-{
-    const QString url = getWebPage() + "blog/" + post + "/";
-    QDesktopServices::openUrl(url);
-}
-
-void Application::visitSourcePage()
-{
-    QDesktopServices::openUrl(getSourcePage());
-}
-
-void Application::visitContactPage()
-{
-    QDesktopServices::openUrl(getContactPage());
-}
-
-void Application::visitTranslatePage()
-{
-    QDesktopServices::openUrl(getTranslatePage());
-}
-
-void Application::visitDonatePage()
-{
-    QDesktopServices::openUrl(getDonatePage());
-}
-
-void Application::visitJrePage()
-{
-    QDesktopServices::openUrl(getJrePage());
-}
-
-void Application::visitJdkPage()
-{
-    QDesktopServices::openUrl(getJdkPage());
-}
-
 bool Application::event(QEvent *event)
 {
     // File open request on macOS
-    if (event->type() == QEvent::FileOpen) {
+    switch (event->type()) {
+    case QEvent::FileOpen: {
         const QString filePath = static_cast<QFileOpenEvent *>(event)->file();
         openApk(filePath);
         return true;
     }
-    return QApplication::event(event);
+    case QEvent::LanguageChange:
+        postEvent(&actions, new QEvent(QEvent::LanguageChange));
+    default:
+        return QtSingleApplication::event(event);
+    }
 }

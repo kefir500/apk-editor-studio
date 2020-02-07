@@ -2,6 +2,7 @@
 #define APPLICATION_H
 
 #include "apk/projectitemsmodel.h"
+#include "base/actionprovider.h"
 #include "base/iconprovider.h"
 #include "base/language.h"
 #include "base/recent.h"
@@ -66,36 +67,25 @@ public:
     static QString getUpdateUrl();
 
     Project *openApk(const QString &filename, bool unpack = true);
-    bool closeApk(Project *project);
-    bool installExternalApk();
 
     void setLanguage(const QString &locale);
     bool addToRecent(const Project *project);
-
     static bool associate();
-    static void visitWebPage();
-    static void visitUpdatePage();
-    static void visitBlogPage(const QString &post);
-    static void visitSourcePage();
-    static void visitContactPage();
-    static void visitTranslatePage();
-    static void visitDonatePage();
-    static void visitJrePage();
-    static void visitJdkPage();
 
     MainWindow *window;
-    ProjectItemsModel projects;
     Settings *settings;
     Recent *recent;
     IconProvider icons;
-    QTranslator translator;
-    QTranslator translatorQt;
+    ActionProvider actions;
+    ProjectItemsModel projects;
 
 protected:
     bool event(QEvent *event) override;
 
 private:
     qreal scaleFactor;
+    QTranslator translator;
+    QTranslator translatorQt;
 };
 
 #define app (static_cast<Application *>(qApp))

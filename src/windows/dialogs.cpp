@@ -105,23 +105,6 @@ QString Dialogs::getSaveKeystoreFilename(const QString &defaultPath, QWidget *pa
     return Dialogs::getSaveFilename(defaultPath, FileFormatList::forKeystore(), parent);
 }
 
-bool Dialogs::openApk(QWidget *parent)
-{
-    return Dialogs::openApk(QString(), parent);
-}
-
-bool Dialogs::openApk(const QString &defaultPath, QWidget *parent)
-{
-    const QStringList paths = getOpenApkFilenames(defaultPath, parent);
-    if (paths.isEmpty()) {
-        return false;
-    }
-    for (const QString &path : paths) {
-        app->openApk(path);
-    }
-    return true;
-}
-
 QString Dialogs::getOpenDirectory(const QString &defaultPath, QWidget *parent)
 {
     const QString path = makePath(defaultPath);

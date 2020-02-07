@@ -31,7 +31,6 @@ private:
     void setInitialSize();
     void initWidgets();
     void initMenus();
-    void initLanguages();
     void retranslate();
 
     void loadSettings();
@@ -43,7 +42,6 @@ private:
     bool setCurrentProject(Project *project);
     void setActionsEnabled(const Project *project);
     void updateWindowForProject(const Project *project);
-    void updateRecentMenu();
 
     ProjectsWidget *projectsWidget;
 
@@ -67,28 +65,15 @@ private:
     QMenu *menuSettings;
     QMenu *menuWindow;
     QMenu *menuHelp;
-    QMenu *menuRecent;
-    QMenu *menuLanguage;
-    QAction *actionApkOpen;
     QAction *actionApkSave;
     QAction *actionApkInstall;
     QAction *actionApkInstallExternal;
     QAction *actionApkExplore;
     QAction *actionApkClose;
-    QAction *actionExit;
-    QAction *actionRecentClear;
-    QAction *actionRecentNone;
-    QAction *actionKeyManager;
-    QAction *actionDeviceManager;
     QAction *actionProjectManager;
     QAction *actionTitleEditor;
     QAction *actionPermissionEditor;
-    QAction *actionOptions;
     QAction *actionSettingsReset;
-    QAction *actionWebsite;
-    QAction *actionGithub;
-    QAction *actionDonate;
-    QAction *actionUpdate;
     QAction *actionAboutQt;
     QAction *actionAbout;
     QActionGroup *actionsLanguage;

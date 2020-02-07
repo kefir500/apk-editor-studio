@@ -56,12 +56,12 @@ void Updater::check(bool verbose, QWidget *parent)
 
 void Updater::download()
 {
-    app->visitUpdatePage();
+    app->actions.visitUpdatePage();
 }
 
 void Updater::whatsnew(const QString &version)
 {
-    app->visitBlogPage(QString("apk-editor-studio-v%1-released").arg(version));
+    app->actions.visitBlogPage(QString("apk-editor-studio-v%1-released").arg(version));
 }
 
 QString Updater::parse(const QByteArray &json)

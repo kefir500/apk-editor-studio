@@ -20,6 +20,7 @@ SOURCES += \
     $$PWD/apk/titlenode.cpp \
     $$PWD/apk/xmlmodel.cpp \
     $$PWD/apk/xmlnode.cpp \
+    $$PWD/base/actionprovider.cpp \
     $$PWD/base/application.cpp \
     $$PWD/base/device.cpp \
     $$PWD/base/deviceitemsmodel.cpp \
@@ -110,6 +111,7 @@ HEADERS += \
     $$PWD/apk/titlenode.h \
     $$PWD/apk/xmlmodel.h \
     $$PWD/apk/xmlnode.h \
+    $$PWD/base/actionprovider.h \
     $$PWD/base/application.h \
     $$PWD/base/device.h \
     $$PWD/base/deviceitemsmodel.h \

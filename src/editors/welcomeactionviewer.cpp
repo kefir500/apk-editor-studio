@@ -6,8 +6,12 @@ WelcomeActionViewer::WelcomeActionViewer(QWidget *parent) : ActionViewer(parent)
 {
     btnOpen = addButton();
     btnInstall = addButton();
-    connect(btnOpen, &QPushButton::clicked, [this]() { Dialogs::openApk(this); });
-    connect(btnInstall, &QPushButton::clicked, app, &Application::installExternalApk);
+    connect(btnOpen, &QPushButton::clicked, [=]() {
+        app->actions.openApk(parent);
+    });
+    connect(btnInstall, &QPushButton::clicked, [=]() {
+        app->actions.installExternalApk(parent);
+    });
 }
 
 void WelcomeActionViewer::changeEvent(QEvent *event)
