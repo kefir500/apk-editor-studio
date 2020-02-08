@@ -27,6 +27,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         }
     });
 
+    connect(app->settings, &Settings::toolbarUpdated, [=]() {
+        toolbar->reinitialize();
+    });
+
+    connect(app->settings, &Settings::resetDone, [=]() {
+        restoreGeometry(QByteArray());
+        setInitialSize();
+        restoreState(defaultState);
+    });
+
     QEvent languageChangeEvent(QEvent::LanguageChange);
     app->sendEvent(this, &languageChangeEvent);
 
@@ -171,8 +181,6 @@ void MainWindow::initMenus()
     // Settings Menu:
 
     auto actionOptions = app->actions.getOpenOptions(this);
-    actionSettingsReset = new QAction(this);
-    actionSettingsReset->setIcon(app->icons.get("close.png"));
 
     // Help Menu:
 
@@ -213,7 +221,7 @@ void MainWindow::initMenus()
     menuSettings->addSeparator();
     menuSettings->addMenu(app->actions.getLanguages());
     menuSettings->addSeparator();
-    menuSettings->addAction(actionSettingsReset);
+    menuSettings->addAction(app->actions.getResetSettings(this));
     menuWindow = menuBar()->addMenu(QString());
     menuHelp = menuBar()->addMenu(QString());
     menuHelp->addAction(app->actions.getVisitWebPage());
@@ -227,8 +235,6 @@ void MainWindow::initMenus()
 
     // Tool Bar:
 
-    toolbar = new Toolbar(this);
-    toolbar->setObjectName("Toolbar");
     Toolbar::addToPool("open-project", actionApkOpen);
     Toolbar::addToPool("save-project", actionApkSave);
     Toolbar::addToPool("install-project", actionApkInstall);
@@ -241,6 +247,8 @@ void MainWindow::initMenus()
     Toolbar::addToPool("key-manager", actionKeyManager);
     Toolbar::addToPool("settings", actionOptions);
     Toolbar::addToPool("donate", actionDonate);
+    toolbar = new Toolbar(this);
+    toolbar->setObjectName("Toolbar");
     addToolBar(toolbar);
 
     setActionsEnabled(nullptr);
@@ -258,7 +266,6 @@ void MainWindow::initMenus()
         PermissionEditor permissionEditor(project->manifest, this);
         permissionEditor.exec();
     });
-    connect(actionSettingsReset, &QAction::triggered, this, &MainWindow::resetSettings);
     connect(actionAboutQt, &QAction::triggered, app, &Application::aboutQt);
     connect(actionAbout, &QAction::triggered, [=]() {
         AboutDialog about(this);
@@ -304,10 +311,6 @@ void MainWindow::retranslate()
     //: The "&" is a shortcut key, *not* a conjuction "and". Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionPermissionEditor->setText(tr("Edit Application &Permissions"));
 
-    // Settings Menu:
-
-    actionSettingsReset->setText(tr("&Reset Settings..."));
-
     // Window Menu:
 
     menuWindow->clear();
@@ -324,17 +327,6 @@ void MainWindow::loadSettings()
     qDebug() << "Loading settings...";
     restoreGeometry(app->settings->getMainWindowGeometry());
     restoreState(app->settings->getMainWindowState());
-    toolbar->reinitialize();
-}
-
-void MainWindow::resetSettings()
-{
-    if (app->settings->reset(this)) {
-        restoreGeometry(QByteArray());
-        setInitialSize();
-        toolbar->reinitialize();
-        restoreState(defaultState);
-    }
 }
 
 void MainWindow::saveSettings()

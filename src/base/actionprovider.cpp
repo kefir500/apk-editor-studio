@@ -62,9 +62,20 @@ void ActionProvider::exit()
     app->window->close();
 }
 
-void ActionProvider::checkUpdates(QWidget *parent = nullptr)
+void ActionProvider::checkUpdates(QWidget *parent)
 {
     Updater::check(true, parent);
+}
+
+bool ActionProvider::resetSettings(QWidget *parent)
+{
+    const QString question(tr("Are you sure you want to reset settings?"));
+    const int answer = QMessageBox::question(parent, QString(), question);
+    if (answer != QMessageBox::Yes) {
+        return false;
+    }
+    app->settings->reset();
+    return true;
 }
 
 bool ActionProvider::installExternalApk(QWidget *parent)
@@ -159,6 +170,21 @@ QAction *ActionProvider::getCheckUpdates(QWidget *parent)
 
     connect(action, &QAction::triggered, [=]() {
         checkUpdates(parent);
+    });
+
+    return action;
+}
+
+QAction *ActionProvider::getResetSettings(QWidget *parent)
+{
+    auto action = new QAction(app->icons.get("close.png"), {}, parent);
+
+    auto translate = [=]() { action->setText(tr("&Reset Settings...")); };
+    connect(this, &ActionProvider::languageChanged, translate);
+    translate();
+
+    connect(action, &QAction::triggered, [=]() {
+        resetSettings(parent);
     });
 
     return action;

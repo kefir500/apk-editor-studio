@@ -3,13 +3,15 @@
 
 #include <QSettings>
 
-class Settings
+class Settings : public QObject
 {
+    Q_OBJECT
+
 public:
     Settings();
     ~Settings();
 
-    bool reset(QWidget *parent = nullptr);
+    void reset();
 
     QString getJavaPath() const;
     int getJavaMinHeapSize() const;
@@ -70,6 +72,10 @@ public:
     void setMainWindowState(const QByteArray &state);
     void setRememberState(const QString &identifier, bool state);
     void resetRememberState(const QString &identifier);
+
+signals:
+    void toolbarUpdated() const;
+    void resetDone() const;
 
 private:
     QSettings *settings;

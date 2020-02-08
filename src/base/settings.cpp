@@ -2,7 +2,6 @@
 #include "base/application.h"
 #include "base/password.h"
 #include "tools/apktool.h"
-#include <QMessageBox>
 
 Settings::Settings()
 {
@@ -18,22 +17,19 @@ Settings::~Settings()
     delete settings;
 }
 
-bool Settings::reset(QWidget *parent)
+void Settings::reset()
 {
-    const int answer = QMessageBox::question(parent, QString(), app->translate("Settings", "Are you sure you want to reset settings?"));
-    if (answer == QMessageBox::Yes) {
-        Apktool::reset();
-        settings->clear();
-        app->recent->clear();
-        QDir().mkpath(Apktool::getOutputPath());
-        QDir().mkpath(Apktool::getFrameworksPath());
-        Password passwordKeystore("keystore");
-        Password passwordKey("key");
-        passwordKeystore.remove();
-        passwordKey.remove();
-        return true;
-    }
-    return false;
+    Apktool::reset();
+    settings->clear();
+    app->recent->clear();
+    QDir().mkpath(Apktool::getOutputPath());
+    QDir().mkpath(Apktool::getFrameworksPath());
+    Password passwordKeystore("keystore");
+    Password passwordKey("key");
+    passwordKeystore.remove();
+    passwordKey.remove();
+    emit resetDone();
+    emit toolbarUpdated();
 }
 
 // Getters:
@@ -319,6 +315,7 @@ void Settings::setLanguage(const QString &locale)
 void Settings::setToolbar(const QStringList &actions)
 {
     settings->setValue("MainWindow/Toolbar", actions);
+    emit toolbarUpdated();
 }
 
 void Settings::setMainWindowGeometry(const QByteArray &geometry)

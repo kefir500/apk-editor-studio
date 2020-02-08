@@ -23,7 +23,8 @@ public:
     void visitBlogPage(const QString &post);
     void exit();
 
-    void checkUpdates(QWidget *parent);
+    void checkUpdates(QWidget *parent = nullptr);
+    bool resetSettings(QWidget *parent = nullptr);
     bool installExternalApk(QWidget *parent = nullptr);
 
     void openOptions(QWidget *parent = nullptr);
@@ -38,6 +39,7 @@ public:
     QAction *getExit(QObject *parent = nullptr);
 
     QAction *getCheckUpdates(QWidget *parent = nullptr);
+    QAction *getResetSettings(QWidget *parent = nullptr);
     QAction *getInstallExternalApk(QWidget *parent = nullptr);
     QAction *getOpenOptions(QWidget *parent = nullptr);
     QAction *getOpenDeviceManager(QWidget *parent= nullptr);

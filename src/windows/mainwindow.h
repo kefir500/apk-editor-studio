@@ -34,7 +34,6 @@ private:
     void retranslate();
 
     void loadSettings();
-    void resetSettings();
     void saveSettings();
 
     Viewer *openResource(const QModelIndex &index);
@@ -73,7 +72,6 @@ private:
     QAction *actionProjectManager;
     QAction *actionTitleEditor;
     QAction *actionPermissionEditor;
-    QAction *actionSettingsReset;
     QAction *actionAboutQt;
     QAction *actionAbout;
     QActionGroup *actionsLanguage;
