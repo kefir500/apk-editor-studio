@@ -4,7 +4,6 @@
 #include "windows/dialogs.h"
 #include "windows/keymanager.h"
 #include "windows/optionsdialog.h"
-#include "windows/rememberdialog.h"
 #include "tools/adb.h"
 #include <QMenu>
 #include <QDesktopServices>
