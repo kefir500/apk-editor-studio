@@ -236,59 +236,6 @@ QAction *ActionProvider::getOpenKeyManager(QWidget *parent)
     return action;
 }
 
-QAction *ActionProvider::getOpenAndroidExplorer(QWidget *parent)
-{
-    auto action = new QAction(app->icons.get("explorer.png"), {}, parent);
-    action->setShortcut(QKeySequence("Ctrl+Shift+X"));
-
-    auto translate = [=]() { action->setText(tr("&Android Explorer...")); };
-    connect(this, &ActionProvider::languageChanged, translate);
-    translate();
-
-    connect(action, &QAction::triggered, [=]() {
-        const auto device = Dialogs::getExplorerTargetDevice(parent);
-        if (device) {
-            auto explorer = new AndroidExplorer(device->getSerial(), parent);
-            explorer->setAttribute(Qt::WA_DeleteOnClose);
-            explorer->show();
-        }
-    });
-
-    return action;
-}
-
-QAction *ActionProvider::getTakeScreenshot(QWidget *parent)
-{
-    auto action = new QAction(app->icons.get("screenshot.png"), {}, parent);
-
-    auto translate = [=]() { action->setText(tr("Take &Screenshot...")); };
-    connect(this, &ActionProvider::languageChanged, translate);
-    translate();
-
-    connect(action, &QAction::triggered, [=]() {
-        const auto device = Dialogs::getScreenshotTargetDevice(parent);
-        if (device) {
-            const QString datetime = QDateTime::currentDateTime().toString("yyyy-MM-dd_HH-mm-ss");
-            const QString filename = QString("screenshot_%1.png").arg(datetime);
-            const QString dst = Dialogs::getSaveImageFilename(filename, parent);
-            if (!dst.isEmpty()) {
-                auto screenshot = new Adb::Screenshot(dst, device->getSerial(), parent);
-                app->connect(screenshot, &Adb::Screenshot::finished, [=](bool success) {
-                    if (success) {
-                        RememberDialog::say("ScreenshotSuccess", tr("Screenshot has been successfully created!"), parent);
-                    } else {
-                        QMessageBox::warning(parent, {}, tr("Could not take a screenshot."));
-                    }
-                    screenshot->deleteLater();
-                });
-                screenshot->run();
-            }
-        }
-    });
-
-    return action;
-}
-
 QMenu *ActionProvider::getLanguages(QWidget *parent)
 {
     auto menu = new QMenu(parent);
