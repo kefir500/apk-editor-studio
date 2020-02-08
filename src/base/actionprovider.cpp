@@ -1,6 +1,5 @@
 #include "base/actionprovider.h"
 #include "base/application.h"
-#include "windows/androidexplorer.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
 #include "windows/keymanager.h"
