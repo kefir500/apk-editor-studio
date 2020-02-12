@@ -14,6 +14,9 @@
 ## German
 - [Till Tektronix](https://www.transifex.com/user/profile/Tektronix/)
 
+## Greek
+- [Spiros Kaparos](https://www.transifex.com/user/profile/spkprs/)
+
 ## Japanese
 - [Sakai Hiroki](https://www.transifex.com/user/profile/m07jp/)
 

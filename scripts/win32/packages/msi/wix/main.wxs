@@ -473,6 +473,9 @@
                 <File Name="apk-editor-studio.de.qm" />
                 <File Name="qt.de.qm" />
               </Component>
+              <Component Id="GreekComponent" Guid="EF9ADEEE-D719-4AC8-93D9-ABE61693A4CA">
+                <File Name="apk-editor-studio.el.qm" />
+              </Component>
               <Component Id="JapaneseComponent" Guid="61C2541A-4370-4E10-8D53-FB9492E80A80">
                 <File Name="apk-editor-studio.ja.qm" />
                 <File Name="qt.ja.qm" />
@@ -574,6 +577,7 @@
     </ComponentGroup>
     <ComponentGroup Id="TranslationsComponents">
       <ComponentRef Id="GermanComponent" />
+      <ComponentRef Id="GreekComponent" />
       <ComponentRef Id="JapaneseComponent" />
       <ComponentRef Id="PortugueseComponent" />
       <ComponentRef Id="RomanianComponent" />
@@ -601,6 +605,9 @@
     <Feature Id="TranslationsFeature" Title="Translations" Description="Install additional translations. English is included by default.">
       <Feature Id="GermanFeature" Title="German" Description="German translation.">
         <ComponentRef Id="GermanComponent" />
+      </Feature>
+      <Feature Id="GreekFeature" Title="Greek" Description="Greek translation.">
+        <ComponentRef Id="GreekComponent" />
       </Feature>
       <Feature Id="JapaneseFeature" Title="Japanese" Description="Japanese translation.">
         <ComponentRef Id="JapaneseComponent" />
