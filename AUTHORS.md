@@ -22,6 +22,9 @@
 #### Portuguese
 - [Giancarlo Molinari](https://www.transifex.com/user/profile/pombimsjb/)
 
+#### Romanian
+- [Codrut X](https://www.transifex.com/user/profile/codrut2020/)
+
 #### Russian
 - [Alexander Gorishnyak](https://www.transifex.com/user/profile/kefir500/)
 
