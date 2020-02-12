@@ -23,9 +23,11 @@ include($$PWD/deploy.pri)
 
 EXTRA_TRANSLATIONS += \
     $$PWD/res/translations/apk-editor-studio.de.ts \
+    $$PWD/res/translations/apk-editor-studio.el.ts \
     $$PWD/res/translations/apk-editor-studio.es.ts \
     $$PWD/res/translations/apk-editor-studio.ja.ts \
     $$PWD/res/translations/apk-editor-studio.pt.ts \
+    $$PWD/res/translations/apk-editor-studio.ro.ts \
     $$PWD/res/translations/apk-editor-studio.ru.ts \
     $$PWD/res/translations/apk-editor-studio.tr.ts
 
