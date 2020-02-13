@@ -695,7 +695,7 @@ Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
     <message>
         <location filename="../../src/windows/optionsdialog.cpp" line="251"/>
         <source>Decompile source code (smali)</source>
-        <translation>Kaynak kodunu tersine-derle (küçük)</translation>
+        <translation>Kaynak kodunu tersine-derle (smali)</translation>
     </message>
     <message>
         <location filename="../../src/windows/optionsdialog.cpp" line="252"/>

@@ -49,6 +49,14 @@
     </message>
 </context>
 <context>
+    <name>AndroidExplorer</name>
+    <message>
+        <location filename="../../src/windows/androidexplorer.cpp" line="8"/>
+        <source>Android Explorer</source>
+        <translation>Android Explorer</translation>
+    </message>
+</context>
+<context>
     <name>Application</name>
     <message>
         <location filename="../../src/base/application.cpp" line="310"/>
@@ -574,7 +582,7 @@ Für mehr Information bitte die Details beachten.</translation>
     <message>
         <location filename="../../src/windows/mainwindow.cpp" line="435"/>
         <source>Visit &amp;Website</source>
-        <translation>%Webseite besuchen</translation>
+        <translation>Webseite besuchen</translation>
     </message>
     <message>
         <location filename="../../src/windows/mainwindow.cpp" line="436"/>

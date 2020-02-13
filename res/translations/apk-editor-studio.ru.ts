@@ -49,6 +49,14 @@
     </message>
 </context>
 <context>
+    <name>AndroidExplorer</name>
+    <message>
+        <location filename="../../src/windows/androidexplorer.cpp" line="8"/>
+        <source>Android Explorer</source>
+        <translation>Менеджер Android</translation>
+    </message>
+</context>
+<context>
     <name>Application</name>
     <message>
         <location filename="../../src/base/application.cpp" line="310"/>

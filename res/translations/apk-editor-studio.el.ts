@@ -440,7 +440,7 @@ See details for more information.</source>
     <message>
         <location filename="../../src/windows/mainwindow.cpp" line="380"/>
         <source>Manifest</source>
-        <translation>Δήλωση</translation>
+        <translation>Δεδηλωμένα</translation>
     </message>
     <message>
         <location filename="../../src/windows/mainwindow.cpp" line="381"/>
