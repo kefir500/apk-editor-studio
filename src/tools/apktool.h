@@ -40,11 +40,13 @@ namespace Apktool
 
     public:
         Build(const QString &source, const QString &destination,
-              const QString &frameworks, QObject *parent = nullptr)
+              const QString &frameworks, bool aapt2, QObject *parent = nullptr)
             : Command(parent)
             , source(source)
             , destination(destination)
-            , frameworks(frameworks) {}
+            , frameworks(frameworks)
+            , aapt2(aapt2)
+        {}
 
         void run() override;
 
@@ -52,6 +54,7 @@ namespace Apktool
         const QString source;
         const QString destination;
         const QString frameworks;
+        const bool aapt2;
 
     signals:
         void finished(bool success, const QString &output) const;

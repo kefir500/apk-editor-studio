@@ -40,17 +40,18 @@ void Unpack::run()
 
 // Pack
 
-Pack::Pack(const QString &source, const QString &target, const QString &frameworks)
+Pack::Pack(const QString &source, const QString &target, const QString &frameworks, bool aapt2)
 {
     this->source = source;
     this->target = target;
     this->frameworks = frameworks;
+    this->aapt2 = aapt2;
 }
 
 void Pack::run()
 {
     emit started();
-    auto apktool = new Apktool::Build(source, target, frameworks, this);
+    auto apktool = new Apktool::Build(source, target, frameworks, aapt2, this);
     connect(apktool, &Apktool::Build::finished, [=](bool ok, const QString &message) {
         emit ok ? success() : error(message);
         emit finished();

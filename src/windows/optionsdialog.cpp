@@ -83,6 +83,7 @@ void OptionsDialog::load()
     fileboxApktool->setCurrentPath(app->settings->getApktoolPath());
     fileboxOutput->setCurrentPath(app->settings->getOutputDirectory());
     fileboxFrameworks->setCurrentPath(app->settings->getFrameworksDirectory());
+    checkboxAapt->setChecked(app->settings->getUseAapt2());
     checkboxSources->setChecked(app->settings->getDecompileSources());
     checkboxBrokenResources->setChecked(app->settings->getKeepBrokenResources());
 
@@ -157,6 +158,7 @@ void OptionsDialog::save()
     app->settings->setApktoolPath(fileboxApktool->getCurrentPath());
     app->settings->setOutputDirectory(fileboxOutput->getCurrentPath());
     app->settings->setFrameworksDirectory(fileboxFrameworks->getCurrentPath());
+    app->settings->setUseAapt2(checkboxAapt->isChecked());
     app->settings->setDecompileSources(checkboxSources->isChecked());
     app->settings->setKeepBrokenResources(checkboxBrokenResources->isChecked());
 
@@ -274,12 +276,15 @@ void OptionsDialog::initialize()
     fileboxFrameworks = new FileBox(true, this);
     fileboxFrameworks->setDefaultPath("");
     fileboxFrameworks->setPlaceholderText(Apktool::getDefaultFrameworksPath());
+    checkboxAapt = new QCheckBox("AAPT2", this);
+    //: "Smali" is the name of the tool/format, don't translate it.
     checkboxSources = new QCheckBox(tr("Decompile source code (smali)"), this);
     checkboxBrokenResources = new QCheckBox(tr("Decompile broken resources"), this);
     //: "Apktool" is the name of the tool, don't translate it.
     pageRepack->addRow(tr("Apktool path:"), fileboxApktool);
     pageRepack->addRow(tr("Extraction path:"), fileboxOutput);
     pageRepack->addRow(tr("Frameworks path:"), fileboxFrameworks);
+    pageRepack->addRow(checkboxAapt);
     pageRepack->addRow(checkboxSources);
     pageRepack->addRow(checkboxBrokenResources);
     pageRepack->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);

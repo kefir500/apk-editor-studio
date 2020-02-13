@@ -55,6 +55,9 @@ void Apktool::Build::run()
     if (!frameworks.isEmpty()) {
         arguments << "--frame-path" << frameworks;
     }
+    if (aapt2) {
+        arguments << "--use-aapt2";
+    }
 
     auto process = new Process(this);
     connect(process, &Process::finished, this, &Build::finished);

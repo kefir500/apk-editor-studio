@@ -318,8 +318,9 @@ Tasks::Task *Project::createPackTask(const QString &target)
 {
     const QString source = getContentsPath();
     const QString frameworks = Apktool::getFrameworksPath();
+    const bool aapt2 = app->settings->getUseAapt2();
 
-    auto taskPack = new Tasks::Pack(source, target, frameworks);
+    auto taskPack = new Tasks::Pack(source, target, frameworks, aapt2);
 
     connect(taskPack, &Tasks::Pack::started, this, [=]() {
         journal(tr("Packing APK..."));

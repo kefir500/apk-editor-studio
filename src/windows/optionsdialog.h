@@ -52,6 +52,7 @@ private:
     FileBox *fileboxApktool;
     FileBox *fileboxOutput;
     FileBox *fileboxFrameworks;
+    QCheckBox *checkboxAapt;
     QCheckBox *checkboxSources;
     QCheckBox *checkboxBrokenResources;
 

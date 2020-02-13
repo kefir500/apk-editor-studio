@@ -122,6 +122,11 @@ QString Settings::getApktoolVersion() const
     return settings->value("Apktool/Version").toString();
 }
 
+bool Settings::getUseAapt2() const
+{
+    return settings->value("Apktool/Aapt2", false).toBool();
+}
+
 bool Settings::getDecompileSources() const
 {
     return settings->value("Apktool/Sources", false).toBool();
@@ -275,6 +280,11 @@ void Settings::setKeyPassword(const QString &value)
 void Settings::setApktoolVersion(const QString &version)
 {
     settings->setValue("Apktool/Version", version);
+}
+
+void Settings::setUseAapt2(bool aapt2)
+{
+    settings->setValue("Apktool/Aapt2", aapt2);
 }
 
 void Settings::setDecompileSources(bool smali)
