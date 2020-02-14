@@ -259,7 +259,7 @@ Tasks::Task *Project::createUnpackTask(const QString &source)
 
     auto taskUnpack = new Tasks::Unpack(source, target, frameworks, resources, sources, keepBroken);
 
-    connect(taskUnpack, &Tasks::Pack::started, this, [=]() {
+    connect(taskUnpack, &Tasks::Unpack::started, this, [=]() {
         journal(tr("Unpacking APK..."));
         qDebug() << qPrintable(QString("Unpacking\n  from: %1\n    to: %2\n").arg(source, target));
         state.setCurrentState(ProjectState::StateUnpacking);
