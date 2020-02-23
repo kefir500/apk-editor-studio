@@ -170,6 +170,8 @@ QWidget *AboutDialog::createVersionsTab()
             }
             tab->appendHtml(line);
         }
+        tab->moveCursor(QTextCursor::Start);
+        tab->ensureCursorVisible();
     }
 
     return tab;
