@@ -80,17 +80,27 @@ bool ActionProvider::resetSettings(QWidget *parent)
 
 bool ActionProvider::installExternalApk(QWidget *parent)
 {
+    const auto device = Dialogs::getInstallDevice(parent);
+    if (!device) {
+        return false;
+    }
+    return installExternalApk(device->getSerial(), parent);
+}
+
+bool ActionProvider::installExternalApk(const QString &serial, QWidget *parent)
+{
+    if (serial.isEmpty()) {
+        return installExternalApk(parent);
+    }
+
     const QStringList paths = Dialogs::getOpenApkFilenames(parent);
     if (paths.isEmpty()) {
         return false;
     }
-    const auto device = Dialogs::getInstallTargetDevice(parent);
-    if (!device) {
-        return false;
-    }
+
     for (const QString &path : paths) {
         Project *project = app->openApk(path, false);
-        project->install(device->getSerial());
+        project->install(serial);
     }
     return true;
 }
@@ -192,6 +202,11 @@ QAction *ActionProvider::getResetSettings(QWidget *parent)
 
 QAction *ActionProvider::getInstallExternalApk(QWidget *parent)
 {
+    return getInstallExternalApk({}, parent);
+}
+
+QAction *ActionProvider::getInstallExternalApk(const QString &serial, QWidget *parent)
+{
     auto action = new QAction(app->icons.get("install.png"), {}, parent);
 
     auto translate = [=]() { action->setText(tr("Install &External APK...")); };
@@ -200,7 +215,7 @@ QAction *ActionProvider::getInstallExternalApk(QWidget *parent)
 
     action->setShortcut(QKeySequence("Ctrl+Shift+I"));
     connect(action, &QAction::triggered, [=]() {
-        installExternalApk(parent);
+        installExternalApk(serial, parent);
     });
 
     return action;

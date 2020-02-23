@@ -111,7 +111,7 @@ QString Dialogs::getOpenDirectory(const QString &defaultPath, QWidget *parent)
     return QFileDialog::getExistingDirectory(parent, QString(), path);
 }
 
-QSharedPointer<Device> Dialogs::getInstallTargetDevice(QWidget *parent)
+QSharedPointer<Device> Dialogs::getInstallDevice(QWidget *parent)
 {
     const QString title(app->translate("Dialogs", "Install APK"));
     const QString action(app->translate("Dialogs", "Install"));

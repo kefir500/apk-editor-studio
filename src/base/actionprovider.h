@@ -26,6 +26,7 @@ public:
     void checkUpdates(QWidget *parent = nullptr);
     bool resetSettings(QWidget *parent = nullptr);
     bool installExternalApk(QWidget *parent = nullptr);
+    bool installExternalApk(const QString &serial = QString(), QWidget *parent = nullptr);
 
     void openOptions(QWidget *parent = nullptr);
     void openDeviceManager(QWidget *parent = nullptr);
@@ -41,6 +42,7 @@ public:
     QAction *getCheckUpdates(QWidget *parent = nullptr);
     QAction *getResetSettings(QWidget *parent = nullptr);
     QAction *getInstallExternalApk(QWidget *parent = nullptr);
+    QAction *getInstallExternalApk(const QString &serial = QString(), QWidget *parent = nullptr);
     QAction *getOpenOptions(QWidget *parent = nullptr);
     QAction *getOpenDeviceManager(QWidget *parent= nullptr);
     QAction *getOpenKeyManager(QWidget *parent = nullptr);

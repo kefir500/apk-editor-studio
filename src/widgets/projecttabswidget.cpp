@@ -121,7 +121,7 @@ bool ProjectTabsWidget::saveProject()
 
 bool ProjectTabsWidget::installProject()
 {
-    const auto device = Dialogs::getInstallTargetDevice(this);
+    const auto device = Dialogs::getInstallDevice(this);
     if (!device) {
         return false;
     }
