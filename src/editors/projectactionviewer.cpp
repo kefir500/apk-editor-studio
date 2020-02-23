@@ -47,9 +47,8 @@ void ProjectActionViewer::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
-    } else {
-        QWidget::changeEvent(event);
     }
+    ActionViewer::changeEvent(event);
 }
 
 void ProjectActionViewer::onProjectUpdated()

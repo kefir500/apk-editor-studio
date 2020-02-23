@@ -49,9 +49,8 @@ void Editor::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
-    } else {
-        QWidget::changeEvent(event);
     }
+    Viewer::changeEvent(event);
 }
 
 void Editor::retranslate()

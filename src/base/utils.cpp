@@ -86,7 +86,8 @@ void Utils::rmdir(const QString &path, bool recursive)
     }
 }
 
-namespace  {
+namespace
+{
     bool copy(const QString &src, const QString &dst)
     {
         if (src.isEmpty() || dst.isEmpty() || !QFile::exists(src)) {

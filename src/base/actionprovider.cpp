@@ -70,7 +70,7 @@ void ActionProvider::checkUpdates(QWidget *parent)
 bool ActionProvider::resetSettings(QWidget *parent)
 {
     const QString question(tr("Are you sure you want to reset settings?"));
-    const int answer = QMessageBox::question(parent, QString(), question);
+    const int answer = QMessageBox::question(parent, {}, question);
     if (answer != QMessageBox::Yes) {
         return false;
     }

@@ -43,7 +43,6 @@ private:
     void updateWindowForProject(const Project *project);
 
     ProjectsWidget *projectsWidget;
-
     ProjectList *projectList;
     LogView *logView;
     ManifestView *manifestTable;

@@ -76,9 +76,8 @@ void FileEditor::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
-    } else {
-        Editor::changeEvent(event);
     }
+    Editor::changeEvent(event);
 }
 
 void FileEditor::retranslate()

@@ -21,7 +21,6 @@ void WelcomeActionViewer::changeEvent(QEvent *event)
         setTitle(tr("Welcome to the APK Editor Studio."));
         btnOpen->setText(tr("Open APK"));
         btnInstall->setText(tr("Install APK"));
-    } else {
-        QWidget::changeEvent(event);
     }
+    ActionViewer::changeEvent(event);
 }

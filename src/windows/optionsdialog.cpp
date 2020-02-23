@@ -197,9 +197,8 @@ void OptionsDialog::changeEvent(QEvent *event)
         const int currentPage = pageList->currentRow();
         initialize();
         pageList->setCurrentRow(currentPage);
-    } else {
-        QWidget::changeEvent(event);
     }
+    QDialog::changeEvent(event);
 }
 
 void OptionsDialog::initialize()
