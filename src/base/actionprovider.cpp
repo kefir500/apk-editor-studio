@@ -78,26 +78,26 @@ bool ActionProvider::resetSettings(QWidget *parent)
     return true;
 }
 
-bool ActionProvider::installExternalApk(QWidget *parent)
+bool ActionProvider::installExternalApk(const QString &path, QString serial, QWidget *parent)
 {
-    const auto device = Dialogs::getInstallDevice(parent);
-    if (!device) {
-        return false;
-    }
-    return installExternalApk(device->getSerial(), parent);
+    return installExternalApks(QStringList() << path, serial, parent);
 }
 
-bool ActionProvider::installExternalApk(const QString &serial, QWidget *parent)
+bool ActionProvider::installExternalApks(QStringList paths, QString serial, QWidget *parent)
 {
     if (serial.isEmpty()) {
-        return installExternalApk(parent);
+        const auto device = Dialogs::getInstallDevice(parent);
+        if (!device) {
+            return false;
+        }
+        serial = device->getSerial();
     }
-
-    const QStringList paths = Dialogs::getOpenApkFilenames(parent);
     if (paths.isEmpty()) {
-        return false;
+        paths = Dialogs::getOpenApkFilenames(parent);
+        if (paths.isEmpty()) {
+            return false;
+        }
     }
-
     for (const QString &path : paths) {
         Project *project = app->openApk(path, false);
         project->install(serial);
@@ -215,7 +215,7 @@ QAction *ActionProvider::getInstallExternalApk(const QString &serial, QWidget *p
 
     action->setShortcut(QKeySequence("Ctrl+Shift+I"));
     connect(action, &QAction::triggered, [=]() {
-        installExternalApk(serial, parent);
+        installExternalApks({}, serial, parent);
     });
 
     return action;

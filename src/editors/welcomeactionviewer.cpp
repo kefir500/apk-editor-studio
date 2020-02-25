@@ -10,7 +10,7 @@ WelcomeActionViewer::WelcomeActionViewer(QWidget *parent) : ActionViewer(parent)
         app->actions.openApk(parent);
     });
     connect(btnInstall, &QPushButton::clicked, [=]() {
-        app->actions.installExternalApk(parent);
+        app->actions.installExternalApks({}, {}, parent);
     });
 }
 
