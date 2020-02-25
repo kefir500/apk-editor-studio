@@ -105,6 +105,24 @@ bool ActionProvider::installExternalApks(QStringList paths, QString serial, QWid
     return true;
 }
 
+void ActionProvider::openOptions(QWidget *parent)
+{
+    OptionsDialog settings(parent);
+    settings.exec();
+}
+
+void ActionProvider::openDeviceManager(QWidget *parent)
+{
+    DeviceManager deviceManager(parent);
+    deviceManager.exec();
+}
+
+void ActionProvider::openKeyManager(QWidget *parent)
+{
+    KeyManager keyManager(parent);
+    keyManager.exec();
+}
+
 QAction *ActionProvider::getOpenApk(QWidget *parent)
 {
     auto action = new QAction(app->icons.get("open.png"), {}, parent);
@@ -232,8 +250,7 @@ QAction *ActionProvider::getOpenOptions(QWidget *parent)
     translate();
 
     connect(action, &QAction::triggered, [=]() {
-        OptionsDialog settings(parent);
-        settings.exec();
+        openOptions(parent);
     });
 
     return action;
@@ -250,8 +267,7 @@ QAction *ActionProvider::getOpenDeviceManager(QWidget *parent)
     translate();
 
     connect(action, &QAction::triggered, [=]() {
-        DeviceManager deviceManager(parent);
-        deviceManager.exec();
+        openDeviceManager(parent);
     });
 
     return action;
@@ -268,8 +284,7 @@ QAction *ActionProvider::getOpenKeyManager(QWidget *parent)
     translate();
 
     connect(action, &QAction::triggered, [=]() {
-        KeyManager keyManager(parent);
-        keyManager.exec();
+        openKeyManager(parent);
     });
 
     return action;
