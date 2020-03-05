@@ -7,7 +7,9 @@
 #include "apk/iconitemsmodel.h"
 #include "apk/logmodel.h"
 #include "apk/projectstate.h"
-#include "base/tasks.h"
+#include "base/command.h"
+#include "tools/apktool.h"
+#include "tools/keystore.h"
 #include <QIcon>
 
 class Project : public QObject
@@ -22,8 +24,6 @@ public:
     void save(QString path);
     void install(const QString &serial);
     void saveAndInstall(QString path, const QString &serial);
-
-    Manifest *initialize();
 
     const QString &getTitle() const;
     QString getOriginalPath() const;
@@ -51,12 +51,26 @@ signals:
     void changed() const;
 
 private:
-    Tasks::Task *createUnpackTask(const QString &source);
-    Tasks::Task *createSaveTask(const QString &target); // Combines Pack, Zipalign and Sign tasks
-    Tasks::Task *createPackTask(const QString &target);
-    Tasks::Task *createZipalignTask(const QString &target);
-    Tasks::Task *createSignTask(const QString &target, const Keystore *keystore);
-    Tasks::Task *createInstallTask(const QString &serial);
+    class ProjectCommand : public Commands {
+    public:
+        ProjectCommand(Project *project);
+    };
+
+    class LoadUnpackedCommand : public Command {
+    public:
+        LoadUnpackedCommand(Project *project) : project(project) {}
+        void run() override;
+
+    private:
+        Project *project;
+    };
+
+    Command *createUnpackCommand(const QString &source);
+    Command *createSaveCommand(QString target); // Combines Pack, Zipalign and Sign commands
+    Command *createPackCommand(const QString &target);
+    Command *createZipalignCommand(const QString &target);
+    Command *createSignCommand(const QString &target, const Keystore *keystore);
+    Command *createInstallCommand(const QString &serial);
 
     const Keystore *getKeystore() const;
 
