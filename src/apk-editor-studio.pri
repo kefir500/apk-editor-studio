@@ -22,6 +22,7 @@ SOURCES += \
     $$PWD/apk/xmlnode.cpp \
     $$PWD/base/actionprovider.cpp \
     $$PWD/base/application.cpp \
+    $$PWD/base/command.cpp \
     $$PWD/base/device.cpp \
     $$PWD/base/deviceitemsmodel.cpp \
     $$PWD/base/fileformat.cpp \
@@ -112,6 +113,7 @@ HEADERS += \
     $$PWD/apk/xmlnode.h \
     $$PWD/base/actionprovider.h \
     $$PWD/base/application.h \
+    $$PWD/base/command.h \
     $$PWD/base/device.h \
     $$PWD/base/deviceitemsmodel.h \
     $$PWD/base/fileformat.h \
@@ -139,7 +141,6 @@ HEADERS += \
     $$PWD/tools/adb.h \
     $$PWD/tools/apksigner.h \
     $$PWD/tools/apktool.h \
-    $$PWD/tools/command.h \
     $$PWD/tools/java.h \
     $$PWD/tools/javac.h \
     $$PWD/tools/keystore.h \
