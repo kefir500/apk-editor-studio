@@ -1,7 +1,7 @@
 #ifndef JAVA_H
 #define JAVA_H
 
-#include "tools/command.h"
+#include "base/command.h"
 
 namespace Java
 {
@@ -12,9 +12,10 @@ namespace Java
     public:
         Version(QObject *parent = nullptr) : Command(parent) {}
         void run() override;
+        const QString &version() const;
 
-    signals:
-        void finished(const QString &version) const;
+    private:
+        QString resultVersion;
     };
 }
 

@@ -5,6 +5,8 @@
 
 void Zipalign::Align::run()
 {
+    emit started();
+
     const QString tempApk = apk + ".aligned";
 
     QStringList arguments;
@@ -19,10 +21,16 @@ void Zipalign::Align::run()
             QFile::remove(apk);
             QFile::rename(tempApk, apk);
         }
-        emit finished(success, output);
+        resultOutput = output;
+        emit finished(success);
         process->deleteLater();
     });
     process->run(getPath(), arguments);
+}
+
+const QString &Zipalign::Align::output() const
+{
+    return resultOutput;
 }
 
 QString Zipalign::getPath()

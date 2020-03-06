@@ -1,7 +1,7 @@
 #ifndef KEYTOOL_H
 #define KEYTOOL_H
 
-#include "tools/command.h"
+#include "base/command.h"
 #include "tools/keystore.h"
 
 namespace Keytool

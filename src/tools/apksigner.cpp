@@ -5,10 +5,7 @@
 
 void Apksigner::Sign::run()
 {
-    if (target.isEmpty()) {
-        emit finished(false, "Apksigner: Target path not specified.");
-        return;
-    }
+    emit started();
 
     QStringList arguments;
     arguments << "sign";
@@ -19,19 +16,36 @@ void Apksigner::Sign::run()
     arguments << target;
 
     auto process = new Process(this);
-    connect(process, &Process::finished, this, &Apksigner::Sign::finished);
-    connect(process, &Process::finished, process, &QObject::deleteLater);
+    connect(process, &Process::finished, [=](bool success, const QString &output) {
+        resultOutput = output;
+        emit finished(success);
+        process->deleteLater();
+    });
     process->jar(getPath(), arguments);
+}
+
+const QString &Apksigner::Sign::output() const
+{
+    return resultOutput;
 }
 
 void Apksigner::Version::run()
 {
+    emit started();
     auto process = new Process(this);
     connect(process, &Process::finished, [=](bool success, const QString &output) {
-        emit finished(success ? output : QString());
+        if (success) {
+            resultVersion = output;
+        }
+        emit finished(success);
         process->deleteLater();
     });
     process->jar(getPath(), {"--version"});
+}
+
+const QString &Apksigner::Version::version() const
+{
+    return resultVersion;
 }
 
 QString Apksigner::getPath()

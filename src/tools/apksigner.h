@@ -1,15 +1,13 @@
 #ifndef APKSIGNER_H
 #define APKSIGNER_H
 
-#include "tools/command.h"
+#include "base/command.h"
 #include "tools/keystore.h"
 
 namespace Apksigner
 {
     class Sign : public Command
     {
-        Q_OBJECT
-
     public:
         Sign(const QString &target, const Keystore *keystore, QObject *parent = nullptr)
             : Command(parent)
@@ -29,9 +27,7 @@ namespace Apksigner
             , keyPassword(keyPassword) {}
 
         void run() override;
-
-    signals:
-        void finished(bool success, const QString &output) const;
+        const QString &output() const;
 
     private:
         const QString target;
@@ -39,18 +35,18 @@ namespace Apksigner
         const QString keystorePassword;
         const QString keyAlias;
         const QString keyPassword;
+        QString resultOutput;
     };
 
     class Version : public Command
     {
-        Q_OBJECT
-
     public:
         Version(QObject *parent = nullptr) : Command(parent) {}
         void run() override;
+        const QString &version() const;
 
-    signals:
-        void finished(const QString &version) const;
+    private:
+        QString resultVersion;
     };
 
     QString getPath();

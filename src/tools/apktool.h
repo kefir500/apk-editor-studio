@@ -1,14 +1,12 @@
 #ifndef APKTOOL_H
 #define APKTOOL_H
 
-#include "tools/command.h"
+#include "base/command.h"
 
 namespace Apktool
 {
     class Decode : public Command
     {
-        Q_OBJECT
-
     public:
         Decode(const QString &source, const QString &destination, const QString &frameworks,
                bool resources, bool sources, bool keepBroken, QObject *parent = nullptr)
@@ -21,6 +19,7 @@ namespace Apktool
             , keepBroken(keepBroken) {}
 
         void run() override;
+        const QString &output() const;
 
     private:
         const QString source;
@@ -29,15 +28,11 @@ namespace Apktool
         const bool resources;
         const bool sources;
         const bool keepBroken;
-
-    signals:
-        void finished(bool success, const QString &output) const;
+        QString resultOutput;
     };
 
     class Build : public Command
     {
-        Q_OBJECT
-
     public:
         Build(const QString &source, const QString &destination,
               const QString &frameworks, bool aapt2, QObject *parent = nullptr)
@@ -49,27 +44,25 @@ namespace Apktool
         {}
 
         void run() override;
+        const QString &output() const;
 
     private:
         const QString source;
         const QString destination;
         const QString frameworks;
         const bool aapt2;
-
-    signals:
-        void finished(bool success, const QString &output) const;
+        QString resultOutput;
     };
 
     class Version : public Command
     {
-        Q_OBJECT
-
     public:
         Version(QObject *parent = nullptr) : Command(parent) {}
         void run() override;
+        const QString &version() const;
 
-    signals:
-        void finished(const QString &version) const;
+    private:
+        QString resultVersion;
     };
 
     void reset();

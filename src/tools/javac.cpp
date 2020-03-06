@@ -5,16 +5,20 @@
 
 void Javac::Version::run()
 {
+    emit started();
     auto process = new Process(this);
     connect(process, &Process::finished, [=](bool success, const QString &output) {
         if (success) {
             QRegularExpression regex("javac (.+)");
-            const QString version = regex.match(output).captured(1);
-            emit finished(version);
-        } else {
-            emit finished({});
+            resultVersion = regex.match(output).captured(1);
         }
+        emit finished(success);
         process->deleteLater();
     });
     process->run(app->getJavaBinaryPath("javac"), {"-version"});
+}
+
+const QString &Javac::Version::version() const
+{
+    return resultVersion;
 }

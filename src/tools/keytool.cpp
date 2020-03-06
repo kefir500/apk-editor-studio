@@ -5,6 +5,7 @@
 
 void Keytool::Genkey::run()
 {
+    emit started();
     auto process = new Process(this);
     connect(process, &Process::finished, [=](bool ok, const QString &output) {
         if (ok) {
@@ -46,6 +47,8 @@ void Keytool::Genkey::run()
 
 void Keytool::Aliases::run()
 {
+    emit started();
+
     QRegularExpression regex("^(.+),.+,\\s*PrivateKeyEntry,\\s*$");
     regex.setPatternOptions(QRegularExpression::MultilineOption);
 

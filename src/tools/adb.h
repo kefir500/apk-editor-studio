@@ -1,7 +1,7 @@
 #ifndef ADB_H
 #define ADB_H
 
-#include "tools/command.h"
+#include "base/command.h"
 #include "base/device.h"
 
 namespace Adb
@@ -10,8 +10,6 @@ namespace Adb
 
     class Install : public Command
     {
-        Q_OBJECT
-
     public:
         Install(const QString &apk, const QString &serial = QString(), QObject *parent = nullptr)
             : Command(parent)
@@ -19,13 +17,12 @@ namespace Adb
             , serial(serial) {}
 
         void run() override;
-
-    signals:
-        void finished(bool success, const QString &output) const;
+        const QString &output() const;
 
     private:
         const QString apk;
         const QString serial;
+        QString resultOutput;
     };
 
     // Devices
@@ -37,9 +34,12 @@ namespace Adb
     public:
         Devices(QObject *parent) : Command(parent) {}
         void run() override;
+        const QList<QSharedPointer<Device>> &devices() const;
+        const QString &error() const;
 
-    signals:
-        void finished(bool success, QList<QSharedPointer<Device>> devices) const;
+    private:
+        QList<QSharedPointer<Device>> resultDevices;
+        QString resultError;
     };
 
     // Version
@@ -51,9 +51,10 @@ namespace Adb
     public:
         Version(QObject *parent) : Command(parent) {}
         void run() override;
+        const QString &version() const;
 
-    signals:
-        void finished(const QString &version) const;
+    private:
+        QString resultVersion;
     };
 
     QString getPath();

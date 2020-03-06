@@ -7,6 +7,8 @@
 
 void Adb::Install::run()
 {
+    emit started();
+
     QStringList arguments;
     if (!serial.isEmpty()) {
         arguments << "-s" << serial;
@@ -14,16 +16,25 @@ void Adb::Install::run()
     arguments << "install" << "-r" << apk;
 
     auto process = new Process(this);
-    connect(process, &Process::finished, this, &Install::finished);
-    connect(process, &Process::finished, process, &QObject::deleteLater);
+    connect(process, &Process::finished, [=](bool success, const QString &output) {
+        resultOutput = output;
+        emit finished(success);
+        process->deleteLater();
+    });
     process->run(getPath(), arguments);
+}
+
+const QString &Adb::Install::output() const
+{
+    return resultOutput;
 }
 
 void Adb::Devices::run()
 {
+    emit started();
     auto process = new Process(this);
     connect(process, &Process::finished, [=](bool success, const QString &output) {
-        QList<QSharedPointer<Device>> list;
+        resultDevices.clear();
         if (success) {
             QStringList lines = output.split('\n');
             lines.removeFirst();
@@ -37,30 +48,46 @@ void Adb::Devices::run()
                     device->setModelString(modelString);
                     device->setDeviceString(deviceString);
                     device->setProductString(productString);
-                    list.append(QSharedPointer<Device>(device));
+                    resultDevices.append(QSharedPointer<Device>(device));
                 }
             }
+        } else {
+            resultError = output;
         }
-        emit finished(success, list);
+        emit finished(success);
         process->deleteLater();
     });
     process->run(getPath(), {"devices", "-l"});
 }
 
+const QList<QSharedPointer<Device>> &Adb::Devices::devices() const
+{
+    return resultDevices;
+}
+
+const QString &Adb::Devices::error() const
+{
+    return resultError;
+}
+
 void Adb::Version::run()
 {
+    emit started();
     auto process = new Process(this);
     connect(process, &Process::finished, [=](bool success, const QString &output) {
         if (success) {
             QRegularExpression regex("Android Debug Bridge version (.+)");
-            const QString version = regex.match(output).captured(1).trimmed();
-            emit finished(version);
-        } else {
-            emit finished({});
+            resultVersion = regex.match(output).captured(1).trimmed();
         }
+        emit finished(success);
         process->deleteLater();
     });
     process->run(getPath(), {"version"});
+}
+
+const QString &Adb::Version::version() const
+{
+    return resultVersion;
 }
 
 QString Adb::getPath()
