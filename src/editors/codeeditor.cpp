@@ -11,7 +11,7 @@
 
 // CodeEditor:
 
-CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileEditor(index, parent)
+CodeEditor::CodeEditor(const ResourceModelIndex &index_, QWidget *parent) : FileEditor(index_, parent)
 {
     const QString filename = index.path();
     title = filename.section('/', -2);
@@ -52,6 +52,7 @@ bool CodeEditor::load()
         const int selectionEnd = cursor.selectionEnd();
         const int scrollPosition = editor->verticalScrollBar()->value();
         editor->setPlainText(stream.readAll());
+        codec = stream.codec();
         cursor.setPosition(selectionStart);
         cursor.setPosition(selectionEnd, QTextCursor::KeepAnchor);
         editor->setTextCursor(cursor);
@@ -76,7 +77,8 @@ bool CodeEditor::save(const QString &as)
     if (file->isWritable()) {
         file->resize(0);
         QTextStream stream(file);
-        stream.setCodec("UTF-8");
+        stream.setCodec(codec);
+        stream.setGenerateByteOrderMark(codec->name() != "UTF-8");
         stream << editor->toPlainText();
         if (as.isEmpty()) {
             setModified(false);

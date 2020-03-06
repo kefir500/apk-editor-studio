@@ -24,7 +24,6 @@ bool TitleNode::save() const
         }
         xml.resize(0);
         QTextStream stream(&xml);
-        stream.setCodec("UTF-8");
         node->getDocument().save(stream, 4);
     }
     return true;

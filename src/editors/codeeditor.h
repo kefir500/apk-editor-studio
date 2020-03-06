@@ -2,6 +2,7 @@
 #define CODEEDITOR_H
 
 #include "editors/fileeditor.h"
+#include <QTextCodec>
 #include <QPlainTextEdit>
 #include <QSyntaxHighlighter>
 
@@ -51,6 +52,7 @@ public:
 
 private:
     QFile *file;
+    QTextCodec *codec;
     CodeTextEdit *editor;
     QSyntaxHighlighter *syntax;
 };
