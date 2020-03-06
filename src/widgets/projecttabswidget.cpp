@@ -178,16 +178,16 @@ int ProjectTabsWidget::addTab(Viewer *tab)
             // Project save indicator:
             const_cast<ProjectState &>(project->getState()).setModified(true);
         });
-        connect(editor, &Editor::savedStateChanged, [=](bool tabSaved) {
+        connect(editor, &Editor::modifiedStateChanged, [=](bool modified) {
             // Tab save indicator:
             const QString indicator = QString("%1 ").arg(QChar(0x2022));
             const int tabIndex = indexOf(editor);
             QString tabTitle = tabText(tabIndex);
-            const bool titleModified = tabTitle.startsWith(indicator);
-            if (!tabSaved && !titleModified) {
+            const bool titleHasModifiedMark = tabTitle.startsWith(indicator);
+            if (modified && !titleHasModifiedMark) {
                 tabTitle.prepend(indicator);
                 setTabText(tabIndex, tabTitle);
-            } else if (tabSaved && titleModified) {
+            } else if (!modified && titleHasModifiedMark) {
                 tabTitle.remove(0, indicator.length());
                 setTabText(tabIndex, tabTitle);
             }

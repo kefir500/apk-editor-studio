@@ -42,7 +42,7 @@ bool Editor::isModified() const
 void Editor::setModified(bool value)
 {
     modified = value;
-    emit savedStateChanged(!value);
+    emit modifiedStateChanged(modified);
 }
 
 void Editor::changeEvent(QEvent *event)

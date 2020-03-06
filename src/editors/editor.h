@@ -17,7 +17,7 @@ public:
 
 signals:
     void saved() const;
-    void savedStateChanged(bool saved) const;
+    void modifiedStateChanged(bool modified) const;
 
 protected:
     void setModified(bool value);
@@ -29,7 +29,6 @@ private:
     void retranslate();
 
     bool modified;
-
 };
 
 #endif // EDITOR_H
