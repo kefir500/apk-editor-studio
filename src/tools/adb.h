@@ -3,6 +3,7 @@
 
 #include "base/command.h"
 #include "base/device.h"
+#include <QSharedPointer>
 
 namespace Adb
 {
