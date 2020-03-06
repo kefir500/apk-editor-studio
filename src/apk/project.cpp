@@ -129,7 +129,7 @@ Command *Project::createUnpackCommand(const QString &source)
     connect(command, &Command::started, this, [=]() {
         qDebug() << qPrintable(QString("Unpacking\n  from: %1\n    to: %2\n").arg(source, target));
         journal(tr("Unpacking APK..."));
-        state.setCurrentState(ProjectState::StateUnpacking);
+        state.setCurrentStatus(ProjectState::Status::Unpacking);
     });
     connect(command, &Command::finished, this, [=](bool success) {
         if (success) {
@@ -206,7 +206,7 @@ Command *Project::createPackCommand(const QString &target)
     connect(apktoolBuild, &Command::started, this, [=]() {
         qDebug() << qPrintable(QString("Packing\n  from: %1\n    to: %2\n").arg(source, target));
         journal(tr("Packing APK..."));
-        state.setCurrentState(ProjectState::StatePacking);
+        state.setCurrentStatus(ProjectState::Status::Packing);
     });
 
     connect(apktoolBuild, &Command::finished, this, [=](bool success) {
@@ -227,7 +227,7 @@ Command *Project::createZipalignCommand(const QString &target)
 
     connect(zipalign, &Command::started, this, [=]() {
         journal(tr("Optimizing APK..."));
-        state.setCurrentState(ProjectState::StateOptimizing);
+        state.setCurrentStatus(ProjectState::Status::Optimizing);
     });
 
     connect(zipalign, &Command::finished, this, [=](bool success) {
@@ -245,7 +245,7 @@ Command *Project::createSignCommand(const QString &target, const Keystore *keyst
 
     connect(apksigner, &Command::started, this, [=]() {
         journal(tr("Signing APK..."));
-        state.setCurrentState(ProjectState::StateSigning);
+        state.setCurrentStatus(ProjectState::Status::Signing);
     });
 
     connect(apksigner, &Command::finished, [=](bool success) {
@@ -264,7 +264,7 @@ Command *Project::createInstallCommand(const QString &serial)
 
     connect(command, &Command::started, this, [=]() {
         journal(tr("Installing APK..."));
-        state.setCurrentState(ProjectState::StateInstalling);
+        state.setCurrentStatus(ProjectState::Status::Installing);
     });
 
     connect(command, &Command::finished, this, [=](bool success) {
@@ -332,9 +332,9 @@ Project::ProjectCommand::ProjectCommand(Project *project)
         project->logModel.setLoadingState(false);
         if (success) {
             project->journal(tr("Done."), LogEntry::Success);
-            project->state.setCurrentState(ProjectState::StateNormal);
+            project->state.setCurrentStatus(ProjectState::Status::Normal);
         } else {
-            project->state.setCurrentState(ProjectState::StateErrored);
+            project->state.setCurrentStatus(ProjectState::Status::Errored);
         }
     });
 }

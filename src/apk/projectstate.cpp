@@ -4,12 +4,12 @@ ProjectState::ProjectState()
 {
     unpacked = false;
     modified = false;
-    state = StateNormal;
+    status = Status::Normal;
 }
 
-void ProjectState::setCurrentState(const State &state)
+void ProjectState::setCurrentStatus(const Status &status)
 {
-    this->state = state;
+    this->status = status;
     emit changed();
 }
 
@@ -25,9 +25,9 @@ void ProjectState::setModified(bool modified)
     emit changed();
 }
 
-const ProjectState::State &ProjectState::getCurrentState() const
+const ProjectState::Status &ProjectState::getCurrentStatus() const
 {
-    return state;
+    return status;
 }
 
 bool ProjectState::isUnpacked() const
@@ -42,7 +42,7 @@ bool ProjectState::isModified() const
 
 bool ProjectState::isIdle() const
 {
-    return state == StateNormal || state == StateErrored;
+    return status == Status::Normal || status == Status::Errored;
 }
 
 bool ProjectState::canEdit() const

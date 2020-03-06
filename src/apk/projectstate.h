@@ -8,23 +8,23 @@ class ProjectState : public QObject
     Q_OBJECT
 
 public:
-    enum State {
-        StateNormal,
-        StateErrored,
-        StateUnpacking,
-        StatePacking,
-        StateSigning,
-        StateOptimizing,
-        StateInstalling
+    enum class Status {
+        Normal,
+        Errored,
+        Unpacking,
+        Packing,
+        Signing,
+        Optimizing,
+        Installing
     };
 
     ProjectState();
 
-    void setCurrentState(const State &state);
+    void setCurrentStatus(const Status &status);
     void setUnpacked(bool unpacked);
     void setModified(bool modified);
 
-    const State &getCurrentState() const;
+    const Status &getCurrentStatus() const;
     bool isUnpacked() const;
     bool isModified() const;
     bool isIdle() const;
@@ -41,7 +41,7 @@ signals:
 private:
     bool unpacked;
     bool modified;
-    State state;
+    Status status;
 };
 
 #endif // PROJECTSTATE_H

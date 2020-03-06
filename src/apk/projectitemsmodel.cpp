@@ -73,8 +73,6 @@ QVariant ProjectItemsModel::data(const QModelIndex &index, int role) const
                 return project->getOriginalPath();
             case ContentsPathColumn:
                 return project->getContentsPath();
-            case StateColumn:
-                return project->getState().getCurrentState();
             case IsUnpackedColumn:
                 return project->getState().isUnpacked();
             case IsModifiedColumn:
@@ -84,23 +82,21 @@ QVariant ProjectItemsModel::data(const QModelIndex &index, int role) const
             switch (column) {
             case TitleColumn:
                 return project->getThumbnail();
-            case StateColumn: {
-                const auto currentAction = project->getState().getCurrentState();
-                switch (currentAction) {
-                case ProjectState::StateNormal:
+            case StatusColumn:
+                switch (project->getState().getCurrentStatus()) {
+                case ProjectState::Status::Normal:
                     return app->icons.get("state-idle.png");
-                case ProjectState::StateUnpacking:
+                case ProjectState::Status::Unpacking:
                     return app->icons.get("state-open.png");
-                case ProjectState::StatePacking:
-                case ProjectState::StateSigning:
-                case ProjectState::StateOptimizing:
+                case ProjectState::Status::Packing:
+                case ProjectState::Status::Signing:
+                case ProjectState::Status::Optimizing:
                     return app->icons.get("state-save.png");
-                case ProjectState::StateInstalling:
+                case ProjectState::Status::Installing:
                     return app->icons.get("state-install.png");
-                case ProjectState::StateErrored:
+                case ProjectState::Status::Errored:
                     return app->icons.get("state-error.png");
                 }
-            }
             }
         }
     }

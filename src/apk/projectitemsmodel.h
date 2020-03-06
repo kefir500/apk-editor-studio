@@ -12,7 +12,7 @@ public:
         TitleColumn,
         OriginalPathColumn,
         ContentsPathColumn,
-        StateColumn,
+        StatusColumn,
         IsUnpackedColumn,
         IsModifiedColumn,
         ColumnCount
