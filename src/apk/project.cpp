@@ -287,7 +287,7 @@ QSharedPointer<const Keystore> Project::getKeystore() const
         if (keystore->keystorePath.isEmpty()) {
             keystore->keystorePath = Dialogs::getOpenKeystoreFilename();
             if (keystore->keystorePath.isEmpty()) {
-                return nullptr;
+                return QSharedPointer<const Keystore>(nullptr);
             }
         }
         if (keystore->keystorePassword.isEmpty()) {
