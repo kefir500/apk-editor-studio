@@ -178,9 +178,9 @@ Command *Project::createSaveCommand(QString target) // Combines Pack, Zipalign a
     // Sign APK:
 
     if (app->settings->getSignApk()) {
-        const Keystore *keystore = getKeystore();
+        auto keystore = getKeystore();
         if (keystore) {
-            command->add(createSignCommand(target, keystore), false);
+            command->add(createSignCommand(target, keystore.data()), false);
         }
     }
 
@@ -249,7 +249,6 @@ Command *Project::createSignCommand(const QString &target, const Keystore *keyst
     });
 
     connect(apksigner, &Command::finished, [=](bool success) {
-        delete keystore;
         if (!success) {
             journal(tr("Error signing APK."), apksigner->output(), LogEntry::Error);
         }
@@ -277,9 +276,9 @@ Command *Project::createInstallCommand(const QString &serial)
     return command;
 }
 
-const Keystore *Project::getKeystore() const
+QSharedPointer<const Keystore> Project::getKeystore() const
 {
-    Keystore *keystore = new Keystore;
+    auto keystore = QSharedPointer<Keystore>(new Keystore);
     if (app->settings->getCustomKeystore()) {
         keystore->keystorePath = app->settings->getKeystorePath();
         keystore->keystorePassword = app->settings->getKeystorePassword();
@@ -319,7 +318,7 @@ const Keystore *Project::getKeystore() const
         keystore->keyAlias = "demo";
         keystore->keyPassword = "123456";
     }
-    return keystore;
+    return std::move(keystore);
 }
 
 Project::ProjectCommand::ProjectCommand(Project *project)

@@ -72,7 +72,7 @@ private:
     Command *createSignCommand(const QString &target, const Keystore *keystore);
     Command *createInstallCommand(const QString &serial);
 
-    const Keystore *getKeystore() const;
+    QSharedPointer<const Keystore> getKeystore() const;
 
     ProjectState state;
 
