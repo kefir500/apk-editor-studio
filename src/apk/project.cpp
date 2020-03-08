@@ -294,21 +294,21 @@ QSharedPointer<const Keystore> Project::getKeystore() const
             bool accepted;
             keystore->keystorePassword = QInputDialog::getText(nullptr, QString(), tr("Enter the keystore password:"), QLineEdit::Password, QString(), &accepted);
             if (!accepted) {
-                return nullptr;
+                return QSharedPointer<const Keystore>(nullptr);
             }
         }
         if (keystore->keyAlias.isEmpty()) {
             KeySelector keySelector(keystore->keystorePath, keystore->keystorePassword);
             keystore->keyAlias = keySelector.select();
             if (keystore->keyAlias.isEmpty()) {
-                return nullptr;
+                return QSharedPointer<const Keystore>(nullptr);
             }
         }
         if (keystore->keyPassword.isEmpty()) {
             bool accepted;
             keystore->keyPassword = QInputDialog::getText(nullptr, QString(), tr("Enter the key password:"), QLineEdit::Password, QString(), &accepted);
             if (!accepted) {
-                return nullptr;
+                return QSharedPointer<const Keystore>(nullptr);
             }
         }
     } else {
