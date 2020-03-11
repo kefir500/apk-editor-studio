@@ -78,7 +78,7 @@ private:
     };
 
     bool appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type = TypeIcon);
-    void onResourceAdded(const QModelIndex &index);
+    void sourceRowsInserted(const QModelIndex &parent, int first, int last);
     void sourceRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
     void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
     const Project *apk() const;

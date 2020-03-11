@@ -49,9 +49,6 @@ public:
     const ResourceFile *getResource(const QModelIndex &index) const;
     const Project *getApk() const;
 
-signals:
-    void added(const QModelIndex &index);
-
 private:
     const Project *apk;
     ResourceNode *root;

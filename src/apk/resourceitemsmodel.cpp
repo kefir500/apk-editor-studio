@@ -25,7 +25,6 @@ QModelIndex ResourceItemsModel::addNode(ResourceNode *node, const QModelIndex &p
         parentNode->addChild(node);
     endInsertRows();
     auto index = createIndex(rowCount(parent) - 1, 0, node);
-    emit added(index);
     return index;
 }
 

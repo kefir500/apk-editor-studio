@@ -19,7 +19,7 @@ void IconItemsModel::setSourceModel(QAbstractItemModel *newSourceModel)
 {
     beginResetModel();
         if (sourceModel()) {
-            disconnect(sourceModel(), &ResourceItemsModel::added, this, &IconItemsModel::onResourceAdded);
+            disconnect(sourceModel(), &QAbstractItemModel::rowsInserted, this, &IconItemsModel::sourceRowsInserted);
             disconnect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &IconItemsModel::sourceRowsAboutToBeRemoved);
             disconnect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
             disconnect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
@@ -27,7 +27,7 @@ void IconItemsModel::setSourceModel(QAbstractItemModel *newSourceModel)
         Q_ASSERT(qobject_cast<ResourceItemsModel *>(newSourceModel));
         QAbstractProxyModel::setSourceModel(newSourceModel);
         if (sourceModel()) {
-            connect(sourceModel(), &ResourceItemsModel::added, this, &IconItemsModel::onResourceAdded);
+            connect(sourceModel(), &QAbstractItemModel::rowsInserted, this, &IconItemsModel::sourceRowsInserted);
             connect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &IconItemsModel::sourceRowsAboutToBeRemoved);
             connect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
             connect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
@@ -332,20 +332,23 @@ bool IconItemsModel::appendIcon(const QPersistentModelIndex &index, ManifestScop
     return false;
 }
 
-void IconItemsModel::onResourceAdded(const QModelIndex &index)
+void IconItemsModel::sourceRowsInserted(const QModelIndex &parent, int first, int last)
 {
-    auto resource = sourceModel()->getResource(index);
-    if (resource && Utils::isDrawableResource(resource->getFilePath())) {
-        auto resourceName = resource->getName();
-        auto resourceType = resource->getType();
-        if (!resourceName.isEmpty() && !resourceType.isEmpty()) {
-            for (ManifestScope *scope : apk()->manifest->scopes) {
-                if (resourceName == scope->icon().getResourceName() && resourceType == scope->icon().getResourceType()) {
-                    appendIcon(index, scope, TypeIcon);
-                } else if (resourceName == scope->roundIcon().getResourceName() && resourceType == scope->roundIcon().getResourceType()) {
-                    appendIcon(index, scope, TypeRoundIcon);
-                } else if (resourceName == scope->banner().getResourceName() && resourceType == scope->banner().getResourceType()) {
-                    appendIcon(index, scope, TypeBanner);
+    for (int row = first; row <= last; ++row) {
+        const auto index = sourceModel()->index(row, 0, parent);
+        const auto resource = sourceModel()->getResourceFile(index);
+        if (resource && Utils::isDrawableResource(resource->getFilePath())) {
+            auto resourceName = resource->getName();
+            auto resourceType = resource->getType();
+            if (!resourceName.isEmpty() && !resourceType.isEmpty()) {
+                for (ManifestScope *scope : apk()->manifest->scopes) {
+                    if (resourceName == scope->icon().getResourceName() && resourceType == scope->icon().getResourceType()) {
+                        appendIcon(index, scope, TypeIcon);
+                    } else if (resourceName == scope->roundIcon().getResourceName() && resourceType == scope->roundIcon().getResourceType()) {
+                        appendIcon(index, scope, TypeRoundIcon);
+                    } else if (resourceName == scope->banner().getResourceName() && resourceType == scope->banner().getResourceType()) {
+                        appendIcon(index, scope, TypeBanner);
+                    }
                 }
             }
         }
