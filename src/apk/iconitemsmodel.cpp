@@ -355,7 +355,7 @@ void IconItemsModel::onResourceAdded(const QModelIndex &index)
 void IconItemsModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
 {
     for (int row = first; row <= last; ++row) {
-        auto sourceIndex = parent.child(row, 0);
+        auto sourceIndex = sourceModel()->index(row, 0, parent);
         auto proxyIndex = mapFromSource(sourceIndex);
         if (proxyIndex.isValid()) {
             auto proxyRow = proxyIndex.row();
