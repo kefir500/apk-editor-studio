@@ -46,7 +46,7 @@ public:
 
     QModelIndex findIndex(const QString &path) const;
     QModelIndex findIndex(const QString &path, const QModelIndex &parent) const;
-    const ResourceFile *getResource(const QModelIndex &index) const;
+    const ResourceFile *getResourceFile(const QModelIndex &index) const;
     const Project *getApk() const;
 
 private:

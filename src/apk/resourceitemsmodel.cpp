@@ -208,7 +208,7 @@ QModelIndex ResourceItemsModel::findIndex(const QString &path, const QModelIndex
     return {};
 }
 
-const ResourceFile *ResourceItemsModel::getResource(const QModelIndex &index) const
+const ResourceFile *ResourceItemsModel::getResourceFile(const QModelIndex &index) const
 {
     if (!index.isValid()) {
         return nullptr;
