@@ -31,7 +31,7 @@ public:
         TypeBanner
     };
 
-    explicit IconItemsModel(QObject *parent = nullptr);
+    explicit IconItemsModel(QObject *parent = nullptr) : QAbstractProxyModel(parent) {}
     ~IconItemsModel() override;
 
     void setSourceModel(QAbstractItemModel *sourceModel) override;
@@ -87,8 +87,8 @@ private:
 
     QHash<QPersistentModelIndex, IconNode *> sourceToProxyMap;
     QHash<IconNode *, QPersistentModelIndex> proxyToSourceMap;
-    TreeNode *applicationNode;
-    TreeNode *activitiesNode;
+    TreeNode *applicationNode = nullptr;
+    TreeNode *activitiesNode = nullptr;
 };
 
 #endif // ICONITEMSMODEL_H
