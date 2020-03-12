@@ -355,7 +355,6 @@ void Project::LoadUnpackedCommand::run()
     auto initResourcesFuture = project->resourcesModel.initialize(project->contentsPath + "/res/");
     auto initResourcesFutureWatcher = new QFutureWatcher<void>(this);
     connect(initResourcesFutureWatcher, &QFutureWatcher<void>::finished, [=]() {
-        project->iconsProxy.sort();
         emit finished(true);
     });
     initResourcesFutureWatcher->setFuture(initResourcesFuture);

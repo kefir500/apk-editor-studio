@@ -31,7 +31,7 @@ public:
         TypeBanner
     };
 
-    explicit IconItemsModel(QObject *parent = nullptr) : QAbstractProxyModel(parent) {}
+    explicit IconItemsModel(QObject *parent = nullptr);
     ~IconItemsModel() override;
 
     void setSourceModel(QAbstractItemModel *sourceModel) override;
@@ -79,6 +79,7 @@ private:
 
     bool appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type = TypeIcon);
     void populateFromSource(const QModelIndex &parent = {});
+    void sortIcons();
     void sourceRowsInserted(const QModelIndex &parent, int first, int last);
     void sourceRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
     void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);

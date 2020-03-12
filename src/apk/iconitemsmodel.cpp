@@ -3,6 +3,10 @@
 #include "base/utils.h"
 #include <QDebug>
 
+IconItemsModel::IconItemsModel(QObject *parent) : QAbstractProxyModel(parent)
+{
+    connect(this, &QAbstractItemModel::rowsInserted, this, &IconItemsModel::sortIcons);
+}
 
 IconItemsModel::~IconItemsModel()
 {
@@ -230,37 +234,8 @@ void IconItemsModel::sort(int column, Qt::SortOrder order)
     Q_UNUSED(column)
     Q_UNUSED(order)
 
-    auto sortIcons = [this](TreeNode *node1, TreeNode *node2) -> bool {
-        auto icon1 = static_cast<IconNode *>(node1);
-        auto icon2 = static_cast<IconNode *>(node2);
-        auto index1 = proxyToSourceMap.value(icon1);
-        auto index2 = proxyToSourceMap.value(icon2);
-        if (icon1->type < icon2->type) { return true; }
-        if (icon2->type < icon1->type) { return false; }
-        auto dpi1 = index1.sibling(index1.row(), ResourceItemsModel::DpiColumn).data(ResourceItemsModel::SortRole);
-        auto dpi2 = index2.sibling(index2.row(), ResourceItemsModel::DpiColumn).data(ResourceItemsModel::SortRole);
-        if (dpi1 < dpi2) { return true; }
-        if (dpi2 < dpi1) { return false; }
-        return false;
-    };
-
     beginResetModel();
-
-    auto &applicationIcons = applicationNode->getChildren();
-    std::sort(applicationIcons.begin(), applicationIcons.end(), sortIcons);
-
-    auto &activityScopes = activitiesNode->getChildren();
-    std::sort(activityScopes.begin(), activityScopes.end(), [](const TreeNode *node1, const TreeNode *node2) -> bool {
-        auto activity1 = static_cast<const ActivityNode *>(node1);
-        auto activity2 = static_cast<const ActivityNode *>(node2);
-        return activity1->scope->type() < activity2->scope->type();
-    });
-
-    for (auto activityNode : activityScopes) {
-        auto &activityIcons = activityNode->getChildren();
-        std::sort(activityIcons.begin(), activityIcons.end(), sortIcons);
-    }
-
+    sortIcons();
     endResetModel();
 }
 
@@ -338,6 +313,42 @@ void IconItemsModel::populateFromSource(const QModelIndex &parent)
     sourceRowsInserted(parent, 0, rows);
     for (int row = 0; row < rows; ++row) {
         populateFromSource(sourceModel()->index(row, 0, parent));
+    }
+}
+
+void IconItemsModel::sortIcons()
+{
+    if (!applicationNode || !activitiesNode) {
+        return;
+    }
+
+    auto f = [this](TreeNode *node1, TreeNode *node2) -> bool {
+        auto icon1 = static_cast<IconNode *>(node1);
+        auto icon2 = static_cast<IconNode *>(node2);
+        auto index1 = proxyToSourceMap.value(icon1);
+        auto index2 = proxyToSourceMap.value(icon2);
+        if (icon1->type < icon2->type) { return true; }
+        if (icon2->type < icon1->type) { return false; }
+        auto dpi1 = index1.sibling(index1.row(), ResourceItemsModel::DpiColumn).data(ResourceItemsModel::SortRole);
+        auto dpi2 = index2.sibling(index2.row(), ResourceItemsModel::DpiColumn).data(ResourceItemsModel::SortRole);
+        if (dpi1 < dpi2) { return true; }
+        if (dpi2 < dpi1) { return false; }
+        return false;
+    };
+
+    auto &applicationIcons = applicationNode->getChildren();
+    std::sort(applicationIcons.begin(), applicationIcons.end(), f);
+
+    auto &activityScopes = activitiesNode->getChildren();
+    std::sort(activityScopes.begin(), activityScopes.end(), [](const TreeNode *node1, const TreeNode *node2) -> bool {
+        auto activity1 = static_cast<const ActivityNode *>(node1);
+        auto activity2 = static_cast<const ActivityNode *>(node2);
+        return activity1->scope->type() < activity2->scope->type();
+    });
+
+    for (auto activityNode : activityScopes) {
+        auto &activityIcons = activityNode->getChildren();
+        std::sort(activityIcons.begin(), activityIcons.end(), f);
     }
 }
 
