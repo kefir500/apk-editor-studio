@@ -78,9 +78,11 @@ private:
     };
 
     bool appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type = TypeIcon);
+    void populateFromSource(const QModelIndex &parent = {});
     void sourceRowsInserted(const QModelIndex &parent, int first, int last);
     void sourceRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
     void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
+    void sourceModelReset();
     const Project *apk() const;
 
     QHash<QPersistentModelIndex, IconNode *> sourceToProxyMap;

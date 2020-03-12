@@ -3,36 +3,36 @@
 #include "base/utils.h"
 #include <QDebug>
 
-IconItemsModel::IconItemsModel(QObject *parent) : QAbstractProxyModel(parent)
-{
-    applicationNode = new TreeNode();
-    activitiesNode = new TreeNode();
-}
 
 IconItemsModel::~IconItemsModel()
 {
-    delete applicationNode;
-    delete activitiesNode;
+    if (applicationNode) {
+        delete applicationNode;
+    }
+    if (activitiesNode) {
+        delete activitiesNode;
+    }
 }
 
 void IconItemsModel::setSourceModel(QAbstractItemModel *newSourceModel)
 {
-    beginResetModel();
-        if (sourceModel()) {
-            disconnect(sourceModel(), &QAbstractItemModel::rowsInserted, this, &IconItemsModel::sourceRowsInserted);
-            disconnect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &IconItemsModel::sourceRowsAboutToBeRemoved);
-            disconnect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
-            disconnect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
-        }
-        Q_ASSERT(qobject_cast<ResourceItemsModel *>(newSourceModel));
-        QAbstractProxyModel::setSourceModel(newSourceModel);
-        if (sourceModel()) {
-            connect(sourceModel(), &QAbstractItemModel::rowsInserted, this, &IconItemsModel::sourceRowsInserted);
-            connect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &IconItemsModel::sourceRowsAboutToBeRemoved);
-            connect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
-            connect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
-        }
-    endResetModel();
+    if (sourceModel()) {
+        disconnect(sourceModel(), &QAbstractItemModel::rowsInserted, this, &IconItemsModel::sourceRowsInserted);
+        disconnect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &IconItemsModel::sourceRowsAboutToBeRemoved);
+        disconnect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
+        disconnect(sourceModel(), &QAbstractItemModel::modelReset, this, &IconItemsModel::sourceModelReset);
+        disconnect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
+    }
+    Q_ASSERT(qobject_cast<ResourceItemsModel *>(newSourceModel));
+    QAbstractProxyModel::setSourceModel(newSourceModel);
+    if (sourceModel()) {
+        sourceModelReset();
+        connect(sourceModel(), &QAbstractItemModel::rowsInserted, this, &IconItemsModel::sourceRowsInserted);
+        connect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &IconItemsModel::sourceRowsAboutToBeRemoved);
+        connect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
+        connect(sourceModel(), &QAbstractItemModel::modelReset, this, &IconItemsModel::sourceModelReset);
+        connect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
+    }
 }
 
 ResourceItemsModel *IconItemsModel::sourceModel() const
@@ -332,6 +332,15 @@ bool IconItemsModel::appendIcon(const QPersistentModelIndex &index, ManifestScop
     return false;
 }
 
+void IconItemsModel::populateFromSource(const QModelIndex &parent)
+{
+    const int rows = sourceModel()->rowCount(parent);
+    sourceRowsInserted(parent, 0, rows);
+    for (int row = 0; row < rows; ++row) {
+        populateFromSource(sourceModel()->index(row, 0, parent));
+    }
+}
+
 void IconItemsModel::sourceRowsInserted(const QModelIndex &parent, int first, int last)
 {
     for (int row = first; row <= last; ++row) {
@@ -375,6 +384,25 @@ void IconItemsModel::sourceRowsAboutToBeRemoved(const QModelIndex &parent, int f
 void IconItemsModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
     emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight));
+}
+
+void IconItemsModel::sourceModelReset()
+{
+    beginResetModel();
+    sourceToProxyMap.clear();
+    proxyToSourceMap.clear();
+    if (applicationNode) {
+        delete applicationNode;
+        applicationNode = nullptr;
+    }
+    if (activitiesNode) {
+        delete activitiesNode;
+        activitiesNode = nullptr;
+    }
+    applicationNode = new TreeNode();
+    activitiesNode = new TreeNode();
+    populateFromSource();
+    endResetModel();
 }
 
 const Project *IconItemsModel::apk() const
