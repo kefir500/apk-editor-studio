@@ -4,6 +4,7 @@
 #include "apk/iresourceitemsmodel.h"
 #include "apk/resourcenode.h"
 #include <QAbstractItemModel>
+#include <QFuture>
 
 class Project;
 
@@ -31,6 +32,7 @@ public:
     ResourceItemsModel(const Project *apk, QObject *parent = nullptr);
     ~ResourceItemsModel() override;
 
+    QFuture<void> initialize(const QString &path);
     QModelIndex addNode(ResourceNode *node, const QModelIndex &parent = QModelIndex());
     bool replaceResource(const QModelIndex &index, const QString &file = QString()) override;
     bool removeResource(const QModelIndex &index) override;

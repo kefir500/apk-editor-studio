@@ -8,8 +8,8 @@
 #include "windows/dialogs.h"
 #include "windows/keyselector.h"
 #include <QUuid>
-#include <QDirIterator>
 #include <QInputDialog>
+#include <QFutureWatcher>
 #include <QDebug>
 
 Project::Project(const QString &path) : resourcesModel(this)
@@ -347,56 +347,16 @@ void Project::LoadUnpackedCommand::run()
 
     project->filesystemModel.setRootPath(project->contentsPath);
 
-    // Parse application manifest:
-
     project->manifest = new Manifest(
         project->contentsPath + "/AndroidManifest.xml",
         project->contentsPath + "/apktool.yml");
     project->manifestModel.initialize(project->manifest);
 
-    // Parse resource directories:
-
-    QMap<QString, QModelIndex> mapResourceTypes;
-    QMap<QString, QModelIndex> mapResourceGroups;
-
-    QDirIterator resourceDirectories(project->contentsPath + "/res/", QDir::Dirs | QDir::NoDotAndDotDot);
-    while (resourceDirectories.hasNext()) {
-
-        const QFileInfo resourceDirectory = QFileInfo(resourceDirectories.next());
-        const QString resourceTypeTitle = resourceDirectory.fileName().split('-').first(); // E.g., "drawable", "values"...
-        QModelIndex resourceTypeIndex = mapResourceTypes.value(resourceTypeTitle, QModelIndex());
-        ResourceNode *resourceTypeNode = nullptr;
-        if (resourceTypeIndex.isValid()) {
-            resourceTypeNode = static_cast<ResourceNode *>(resourceTypeIndex.internalPointer());
-        } else {
-            resourceTypeNode = new ResourceNode(resourceTypeTitle, nullptr);
-            resourceTypeIndex = project->resourcesModel.addNode(resourceTypeNode);
-            mapResourceTypes[resourceTypeTitle] = resourceTypeIndex;
-        }
-
-        // Parse resource files:
-
-        QDirIterator resourceFiles(resourceDirectory.filePath(), QDir::Files);
-        while (resourceFiles.hasNext()) {
-
-            const QFileInfo resourceFile(resourceFiles.next());
-            const QString resourceFilename = resourceFile.fileName();
-
-            QModelIndex resourceGroupIndex = mapResourceGroups.value(resourceFilename, QModelIndex());
-            ResourceNode *resourceGroupNode = nullptr;
-            if (resourceGroupIndex.isValid()) {
-                resourceGroupNode = static_cast<ResourceNode *>(resourceGroupIndex.internalPointer());
-            } else {
-                resourceGroupNode = new ResourceNode(resourceFilename, nullptr);
-                resourceGroupIndex = project->resourcesModel.addNode(resourceGroupNode, resourceTypeIndex);
-                mapResourceGroups[resourceFilename] = resourceGroupIndex;
-            }
-
-            ResourceNode *fileNode = new ResourceNode(resourceFilename, new ResourceFile(resourceFile.filePath()));
-            project->resourcesModel.addNode(fileNode, resourceGroupIndex);
-        }
-    }
-
-    project->iconsProxy.sort();
-    emit finished(true);
+    auto initResourcesFuture = project->resourcesModel.initialize(project->contentsPath + "/res/");
+    auto initResourcesFutureWatcher = new QFutureWatcher<void>(this);
+    connect(initResourcesFutureWatcher, &QFutureWatcher<void>::finished, [=]() {
+        project->iconsProxy.sort();
+        emit finished(true);
+    });
+    initResourcesFutureWatcher->setFuture(initResourcesFuture);
 }

@@ -1,6 +1,8 @@
 #include "apk/resourceitemsmodel.h"
 #include "apk/resourcemodelindex.h"
 #include "base/utils.h"
+#include <QtConcurrent/QtConcurrent>
+#include <QDirIterator>
 #include <QIcon>
 
 #ifdef QT_DEBUG
@@ -16,6 +18,53 @@ ResourceItemsModel::ResourceItemsModel(const Project *apk, QObject *parent) : QA
 ResourceItemsModel::~ResourceItemsModel()
 {
     delete root;
+}
+
+QFuture<void> ResourceItemsModel::initialize(const QString &path)
+{
+    beginResetModel();
+
+    return QtConcurrent::run([=] {
+
+        // Parse resource directories:
+
+        QMap<QString, ResourceNode *> mapResourceTypes;
+        QMap<QString, ResourceNode *> mapResourceGroups;
+
+        QDirIterator resourceDirectories(path, QDir::Dirs | QDir::NoDotAndDotDot);
+        while (resourceDirectories.hasNext()) {
+
+            const QFileInfo resourceDirectory = QFileInfo(resourceDirectories.next());
+            const QString resourceTypeTitle = resourceDirectory.fileName().split('-').first(); // E.g., "drawable", "values"...
+            ResourceNode *resourceTypeNode = mapResourceTypes.value(resourceTypeTitle, nullptr);
+            if (!resourceTypeNode) {
+                resourceTypeNode = new ResourceNode(resourceTypeTitle, nullptr);
+                root->addChild(resourceTypeNode);
+                mapResourceTypes[resourceTypeTitle] = resourceTypeNode;
+            }
+
+            // Parse resource files:
+
+            QDirIterator resourceFiles(resourceDirectory.filePath(), QDir::Files);
+            while (resourceFiles.hasNext()) {
+
+                const QFileInfo resourceFile(resourceFiles.next());
+                const QString resourceFilename = resourceFile.fileName();
+
+                ResourceNode *resourceGroupNode  = mapResourceGroups.value(resourceFilename, nullptr);
+                if (!resourceGroupNode) {
+                    resourceGroupNode = new ResourceNode(resourceFilename, nullptr);
+                    resourceTypeNode->addChild(resourceGroupNode);
+                    mapResourceGroups[resourceFilename] = resourceGroupNode;
+                }
+
+                ResourceNode *fileNode = new ResourceNode(resourceFilename, new ResourceFile(resourceFile.filePath()));
+                resourceGroupNode->addChild(fileNode);
+            }
+        }
+
+        endResetModel();
+    });
 }
 
 QModelIndex ResourceItemsModel::addNode(ResourceNode *node, const QModelIndex &parent)
