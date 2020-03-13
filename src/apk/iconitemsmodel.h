@@ -57,10 +57,8 @@ public:
     void sort(int column = 0, Qt::SortOrder order = Qt::AscendingOrder) override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    bool hasChildren(const QModelIndex &parent = QModelIndex()) const override;
     bool removeRows(int row, int count, const QModelIndex &parent) override;
-
-signals:
-    void ready() const;
 
 private:
     struct IconNode : public TreeNode

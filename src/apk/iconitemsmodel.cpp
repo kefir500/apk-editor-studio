@@ -27,7 +27,6 @@ void IconItemsModel::setSourceModel(QAbstractItemModel *newSourceModel)
         disconnect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &IconItemsModel::sourceRowsAboutToBeRemoved);
         disconnect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
         disconnect(sourceModel(), &QAbstractItemModel::modelReset, this, &IconItemsModel::sourceModelReset);
-        disconnect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
     }
     Q_ASSERT(qobject_cast<ResourceItemsModel *>(newSourceModel));
     QAbstractProxyModel::setSourceModel(newSourceModel);
@@ -37,7 +36,6 @@ void IconItemsModel::setSourceModel(QAbstractItemModel *newSourceModel)
         connect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &IconItemsModel::sourceRowsAboutToBeRemoved);
         connect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
         connect(sourceModel(), &QAbstractItemModel::modelReset, this, &IconItemsModel::sourceModelReset);
-        connect(apk(), &Project::unpacked, this, &IconItemsModel::ready);
     }
 }
 
@@ -248,6 +246,14 @@ int IconItemsModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return ColumnCount;
+}
+
+bool IconItemsModel::hasChildren(const QModelIndex &parent) const
+{
+    auto parentNode = parent.isValid()
+        ? static_cast<TreeNode *>(parent.internalPointer())
+        : root;
+    return parentNode->hasChildren();
 }
 
 bool IconItemsModel::removeRows(int row, int count, const QModelIndex &parent)

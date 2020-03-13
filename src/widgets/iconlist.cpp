@@ -20,25 +20,34 @@ IconList::IconList(QWidget *parent) : QTreeView(parent)
 
 void IconList::setModel(QAbstractItemModel *model)
 {
-    if (this->model()) {
-        disconnect(this->model(), &IconItemsModel::ready, this, &IconList::expandApplicationIcons);
-    }
-
     if (model) {
-        auto iconModel = qobject_cast<IconItemsModel *>(model);
-        Q_ASSERT(iconModel);
+        Q_ASSERT(qobject_cast<IconItemsModel *>(model));
         for (int column = 1; column < model->columnCount(); ++column) {
             hideColumn(column);
         }
-        QTreeView::setModel(iconModel);
-        connect(iconModel, &IconItemsModel::ready, this, &IconList::expandApplicationIcons);
-        expandApplicationIcons();
+        QTreeView::setModel(model);
     }
 }
 
 IconItemsModel *IconList::model() const
 {
     return static_cast<IconItemsModel *>(QTreeView::model());
+}
+
+void IconList::rowsInserted(const QModelIndex &parent, int start, int end)
+{
+    QTreeView::rowsInserted(parent, start, end);
+    const auto applicationNodeIndex = model()->index(IconItemsModel::ApplicationRow, 0);
+    if (parent == applicationNodeIndex) {
+        expand(applicationNodeIndex);
+    }
+}
+
+void IconList::reset()
+{
+    QTreeView::reset();
+    const auto applicationNodeIndex = model()->index(IconItemsModel::ApplicationRow, 0);
+    expand(applicationNodeIndex);
 }
 
 void IconList::dragEnterEvent(QDragEnterEvent *event)
@@ -85,9 +94,4 @@ void IconList::dropEvent(QDropEvent *event)
         qDebug() << "TODO: Image dropped";
 #endif
     }
-}
-
-void IconList::expandApplicationIcons()
-{
-    expand(model()->index(IconItemsModel::ApplicationRow, 0));
 }
