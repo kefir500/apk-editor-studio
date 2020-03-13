@@ -45,14 +45,14 @@ void Project::unpack()
     command->run();
 }
 
-void Project::save(QString path)
+void Project::save(const QString &path)
 {
     auto command = new ProjectCommand(this);
     command->add(createSaveCommand(path), true);
     command->run();
 }
 
-void Project::saveAndInstall(QString path, const QString &serial)
+void Project::saveAndInstall(const QString &path, const QString &serial)
 {
     auto command = new ProjectCommand(this);
     command->add(createSaveCommand(path), true);

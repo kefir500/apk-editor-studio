@@ -14,7 +14,7 @@ public:
 
 signals:
     void started() const;
-    void finished(bool success) const;
+    void finished(bool success = true) const;
 };
 
 class Commands : public Command

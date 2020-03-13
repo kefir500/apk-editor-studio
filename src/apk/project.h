@@ -21,9 +21,9 @@ public:
     ~Project() override;
 
     void unpack();
-    void save(QString path);
+    void save(const QString &path);
     void install(const QString &serial);
-    void saveAndInstall(QString path, const QString &serial);
+    void saveAndInstall(const QString &path, const QString &serial);
 
     const QString &getTitle() const;
     QString getOriginalPath() const;
