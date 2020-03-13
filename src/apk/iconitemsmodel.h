@@ -88,8 +88,9 @@ private:
 
     QHash<QPersistentModelIndex, IconNode *> sourceToProxyMap;
     QHash<IconNode *, QPersistentModelIndex> proxyToSourceMap;
-    TreeNode *applicationNode = nullptr;
-    TreeNode *activitiesNode = nullptr;
+    TreeNode *root;
+    TreeNode *applicationNode;
+    TreeNode *activitiesNode;
 };
 
 #endif // ICONITEMSMODEL_H

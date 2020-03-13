@@ -5,17 +5,19 @@
 
 IconItemsModel::IconItemsModel(QObject *parent) : QAbstractProxyModel(parent)
 {
+    root = new TreeNode;
+    applicationNode = new TreeNode;
+    activitiesNode = new TreeNode;
+    beginInsertRows({}, 0, 1);
+    root->addChild(applicationNode);
+    root->addChild(activitiesNode);
+    endInsertRows();
     connect(this, &QAbstractItemModel::rowsInserted, this, &IconItemsModel::sortIcons);
 }
 
 IconItemsModel::~IconItemsModel()
 {
-    if (applicationNode) {
-        delete applicationNode;
-    }
-    if (activitiesNode) {
-        delete activitiesNode;
-    }
+    delete root;
 }
 
 void IconItemsModel::setSourceModel(QAbstractItemModel *newSourceModel)
@@ -179,17 +181,10 @@ QVariant IconItemsModel::data(const QModelIndex &index, int role) const
 QModelIndex IconItemsModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (hasIndex(row, column, parent)) {
-        if (!parent.isValid()) {
-            switch (row) {
-            case ApplicationRow:
-                return createIndex(row, column, applicationNode);
-            case ActivitiesRow:
-                return createIndex(row, column, activitiesNode);
-            }
-        } else {
-            auto parentNode = static_cast<TreeNode *>(parent.internalPointer());
-            return createIndex(row, column, parentNode->getChild(row));
-        }
+        auto parentNode = parent.isValid()
+            ? static_cast<TreeNode *>(parent.internalPointer())
+            : root;
+        return createIndex(row, column, parentNode->getChild(row));
     }
     return QModelIndex();
 }
@@ -200,7 +195,7 @@ QModelIndex IconItemsModel::parent(const QModelIndex &index) const
         auto childNode = static_cast<TreeNode *>(index.internalPointer());
         if (childNode) {
             auto parentNode = childNode->getParent();
-            if (parentNode) {
+            if (parentNode != root) {
                 return createIndex(parentNode->row(), 0, parentNode);
             }
         }
@@ -221,10 +216,12 @@ QModelIndex IconItemsModel::mapFromSource(const QModelIndex &sourceIndex) const
 
 QModelIndex IconItemsModel::mapToSource(const QModelIndex &proxyIndex) const
 {
-    if (proxyIndex.isValid() && proxyIndex.parent().isValid()) {
-        auto node = static_cast<TreeNode *>(proxyIndex.internalPointer());
-        auto iconNode = static_cast<IconNode *>(node);
-        return proxyToSourceMap.value(iconNode);
+    if (proxyIndex.isValid()) {
+        auto proxyNode = static_cast<TreeNode *>(proxyIndex.internalPointer());
+        if (!proxyNode->hasChildren()) {
+            auto iconNode = static_cast<IconNode *>(proxyNode);
+            return proxyToSourceMap.value(iconNode);
+        }
     }
     return QModelIndex();
 }
@@ -241,9 +238,10 @@ void IconItemsModel::sort(int column, Qt::SortOrder order)
 
 int IconItemsModel::rowCount(const QModelIndex &parent) const
 {
-    return parent.isValid()
-        ? static_cast<TreeNode *>(parent.internalPointer())->childCount()
-        : RowCount;
+    auto parentNode = parent.isValid()
+        ? static_cast<TreeNode *>(parent.internalPointer())
+        : root;
+    return parentNode->childCount();
 }
 
 int IconItemsModel::columnCount(const QModelIndex &parent) const
@@ -402,16 +400,8 @@ void IconItemsModel::sourceModelReset()
     beginResetModel();
     sourceToProxyMap.clear();
     proxyToSourceMap.clear();
-    if (applicationNode) {
-        delete applicationNode;
-        applicationNode = nullptr;
-    }
-    if (activitiesNode) {
-        delete activitiesNode;
-        activitiesNode = nullptr;
-    }
-    applicationNode = new TreeNode();
-    activitiesNode = new TreeNode();
+    applicationNode->removeChildren();
+    activitiesNode->removeChildren();
     populateFromSource();
     endResetModel();
 }
