@@ -161,7 +161,7 @@ void MainWindow::initMenus()
     actionApkInstall->setShortcut(QKeySequence("Ctrl+I"));
     actionApkExplore = new QAction(app->icons.get("explore.png"), QString(), this);
     actionApkExplore->setShortcut(QKeySequence("Ctrl+E"));
-    actionApkClose = new QAction(app->icons.get("close-project.png"), QString(), this);
+    actionApkClose = new QAction(app->icons.get("x-blue.png"), QString(), this);
     actionApkClose->setShortcut(QKeySequence("Ctrl+W"));
 
     // Tools Menu:

@@ -87,9 +87,6 @@
                 <Component Id="Icons16Component" Guid="903E4029-505F-4FEC-8638-D59C3C7AB03C">
                   <File Name="add.png" Id="IconAdd16" />
                   <File Name="application.png" Id="IconApplication16" />
-                  <File Name="close.png" Id="IconClose16" />
-                  <File Name="close-project.png" Id="IconCloseProject16" />
-                  <File Name="delete.png" Id="IconDelete16" />
                   <File Name="devices.png" Id="IconDevices16" />
                   <File Name="donate.png" Id="IconDonate16" />
                   <File Name="edit.png" Id="IconEdit16" />
@@ -116,6 +113,9 @@
                   <File Name="title.png" Id="IconTitle16" />
                   <File Name="update.png" Id="IconUpdate16" />
                   <File Name="website.png" Id="IconWebsite16" />
+                  <File Name="x-blue.png" Id="IconXBlue16" />
+                  <File Name="x-red.png" Id="IconXRed16" />
+                  <File Name="x-round.png" Id="IconXRound16" />
                   <File Name="zoom.png" Id="IconZoom16" />
                   <File Name="zoom-in.png" Id="IconZoomIn16" />
                   <File Name="zoom-out.png" Id="IconZoomOut16" />
@@ -134,9 +134,6 @@
               <Directory Id="Icons30Folder" Name="30x30">
                 <Component Id="Icons30Component" Guid="E001659C-3A29-424B-8037-8228AEEB219B">
                   <File Name="add.png" Id="IconAdd30" />
-                  <File Name="close.png" Id="IconClose30" />
-                  <File Name="close-project.png" Id="IconCloseProject30" />
-                  <File Name="delete.png" Id="IconDelete30" />
                   <File Name="devices.png" Id="IconDevices30" />
                   <File Name="donate.png" Id="IconDonate30" />
                   <File Name="edit.png" Id="IconEdit30" />
@@ -160,6 +157,9 @@
                   <File Name="title.png" Id="IconTitle30" />
                   <File Name="update.png" Id="IconUpdate30" />
                   <File Name="website.png" Id="IconWebsite30" />
+                  <File Name="x-blue.png" Id="IconXBlue30" />
+                  <File Name="x-red.png" Id="IconXRed30" />
+                  <File Name="x-round.png" Id="IconXRound30" />
                   <File Name="zoom.png" Id="IconZoom30" />
                   <File Name="zoom-in.png" Id="IconZoomIn30" />
                   <File Name="zoom-out.png" Id="IconZoomOut30" />
@@ -176,9 +176,6 @@
               <Directory Id="Icons40Folder" Name="40x40">
                 <Component Id="Icons40Component" Guid="415AF5F6-5D55-4D64-B357-FCD7ADBB92A6">
                   <File Name="add.png" Id="IconAdd40" />
-                  <File Name="close.png" Id="IconClose40" />
-                  <File Name="close-project.png" Id="IconCloseProject40" />
-                  <File Name="delete.png" Id="IconDelete40" />
                   <File Name="devices.png" Id="IconDevices40" />
                   <File Name="donate.png" Id="IconDonate40" />
                   <File Name="edit.png" Id="IconEdit40" />
@@ -202,6 +199,9 @@
                   <File Name="title.png" Id="IconTitle40" />
                   <File Name="update.png" Id="IconUpdate40" />
                   <File Name="website.png" Id="IconWebsite40" />
+                  <File Name="x-blue.png" Id="IconXBlue40" />
+                  <File Name="x-red.png" Id="IconXRed40" />
+                  <File Name="x-round.png" Id="IconXRound40" />
                   <File Name="zoom.png" Id="IconZoom40" />
                   <File Name="zoom-in.png" Id="IconZoomIn40" />
                   <File Name="zoom-out.png" Id="IconZoomOut40" />

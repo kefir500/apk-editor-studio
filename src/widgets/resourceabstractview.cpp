@@ -55,7 +55,7 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(ResourceModelInd
         resourceIndex.save();
     });
 
-    QAction *actionRemove = menu->addAction(app->icons.get("delete.png"), tr("Delete Resource"));
+    QAction *actionRemove = menu->addAction(app->icons.get("x-round.png"), tr("Delete Resource"));
     connect(actionRemove, &QAction::triggered, [&]() {
         if (!resourceIndex.remove()) {
             QMessageBox::warning(this, QString(), tr("Could not remove the resource."));

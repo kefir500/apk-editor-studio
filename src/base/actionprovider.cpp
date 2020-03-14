@@ -176,7 +176,7 @@ QAction *ActionProvider::getVisitDonatePage(QObject *parent)
 
 QAction *ActionProvider::getExit(QObject *parent)
 {
-    auto action = new QAction(app->icons.get("close.png"), {}, parent);
+    auto action = new QAction(app->icons.get("x-red.png"), {}, parent);
     action->setShortcut(QKeySequence::Quit);
     action->setMenuRole(QAction::QuitRole);
 
@@ -205,7 +205,7 @@ QAction *ActionProvider::getCheckUpdates(QWidget *parent)
 
 QAction *ActionProvider::getResetSettings(QWidget *parent)
 {
-    auto action = new QAction(app->icons.get("close.png"), {}, parent);
+    auto action = new QAction(app->icons.get("x-red.png"), {}, parent);
 
     auto translate = [=]() { action->setText(tr("&Reset Settings...")); };
     connect(this, &ActionProvider::languageChanged, translate);
@@ -361,7 +361,7 @@ QMenu *ActionProvider::getRecent(QWidget *parent)
 
 QAction *ActionProvider::getClearRecent(QObject *parent)
 {
-    auto action = new QAction(app->icons.get("close.png"), {}, parent);
+    auto action = new QAction(app->icons.get("x-red.png"), {}, parent);
 
     auto translate = [=]() { action->setText(tr("&Clear List")); };
     connect(this, &ActionProvider::languageChanged, translate);
