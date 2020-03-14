@@ -103,10 +103,8 @@ bool Updater::compare(const QString &currentVersion, const QString &latestVersio
     for (short i = 0; i < maxSegments; ++i) {
         const int currentVersionSegment = currentVersionSegments.at(i).toInt();
         const int latestVersionSegment = latestVersionSegments.at(i).toInt();
-        if (currentVersionSegment == latestVersionSegment) {
-            continue;
-        } else {
-            return (latestVersionSegment > currentVersionSegment);
+        if (currentVersionSegment != latestVersionSegment) {
+            return latestVersionSegment > currentVersionSegment;
         }
     }
     return false;
