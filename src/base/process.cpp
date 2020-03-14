@@ -60,3 +60,8 @@ void Process::jar(const QString &jar, const QStringList &jarArguments)
     arguments << "-jar" << jar << jarArguments;
     run(app->getJavaBinaryPath("java"), arguments);
 }
+
+void Process::setStandardOutputFile(const QString &filename)
+{
+    process.setStandardOutputFile(filename);
+}

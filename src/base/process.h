@@ -13,6 +13,8 @@ public:
     void run(const QString &program, const QStringList &arguments = {});
     void jar(const QString &jar, const QStringList &arguments = {});
 
+    void setStandardOutputFile(const QString &filename);
+
 signals:
     void started() const;
     void finished(bool success, const QString &output) const;
