@@ -1,5 +1,6 @@
 #include "base/actionprovider.h"
 #include "base/application.h"
+#include "windows/androidexplorer.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
 #include "windows/keymanager.h"
@@ -121,6 +122,57 @@ void ActionProvider::openKeyManager(QWidget *parent)
 {
     KeyManager keyManager(parent);
     keyManager.exec();
+}
+
+bool ActionProvider::openAndroidExplorer(QWidget *parent)
+{
+    const auto device = Dialogs::getExplorerDevice(parent);
+    if (!device) {
+        return false;
+    }
+    return openAndroidExplorer(device->getSerial(), parent);
+}
+
+bool ActionProvider::openAndroidExplorer(const QString &serial, QWidget *parent)
+{
+    if (serial.isEmpty()) {
+        return openAndroidExplorer(parent);
+    }
+    auto explorer = new AndroidExplorer(serial, parent);
+    explorer->setAttribute(Qt::WA_DeleteOnClose);
+    explorer->show();
+    return true;
+}
+
+bool ActionProvider::takeScreenshot(QWidget *parent)
+{
+    const auto device = Dialogs::getScreenshotDevice(parent);
+    if (!device) {
+        return false;
+    }
+    return takeScreenshot(device->getSerial(), parent);
+}
+
+bool ActionProvider::takeScreenshot(const QString &serial, QWidget *parent)
+{
+    if (serial.isEmpty()) {
+        return takeScreenshot(parent);
+    }
+    const QString datetime = QDateTime::currentDateTime().toString("yyyy-MM-dd_HH-mm-ss");
+    const QString filename = QString("screenshot_%1.png").arg(datetime);
+    const QString dst = Dialogs::getSaveImageFilename(filename, parent);
+    if (!dst.isEmpty()) {
+        auto screenshot = new Adb::Screenshot(dst, serial, parent);
+        app->connect(screenshot, &Adb::Screenshot::finished, [=](bool success) {
+            if (!success) {
+                QMessageBox::warning(parent, {}, tr("Could not take a screenshot."));
+            }
+            screenshot->deleteLater();
+        });
+        screenshot->run();
+        return true;
+    }
+    return false;
 }
 
 QAction *ActionProvider::getOpenApk(QWidget *parent)
@@ -285,6 +337,47 @@ QAction *ActionProvider::getOpenKeyManager(QWidget *parent)
 
     connect(action, &QAction::triggered, [=]() {
         openKeyManager(parent);
+    });
+
+    return action;
+}
+
+QAction *ActionProvider::getOpenAndroidExplorer(QWidget *parent)
+{
+    return getOpenAndroidExplorer({}, parent);
+}
+
+QAction *ActionProvider::getOpenAndroidExplorer(const QString &serial, QWidget *parent)
+{
+    auto action = new QAction(app->icons.get("explorer.png"), {}, parent);
+    action->setShortcut(QKeySequence("Ctrl+Shift+X"));
+
+    auto translate = [=]() { action->setText(tr("&Android Explorer...")); };
+    connect(this, &ActionProvider::languageChanged, translate);
+    translate();
+
+    connect(action, &QAction::triggered, [=]() {
+        openAndroidExplorer(serial, parent);
+    });
+
+    return action;
+}
+
+QAction *ActionProvider::getTakeScreenshot(QWidget *parent)
+{
+    return getTakeScreenshot({}, parent);
+}
+
+QAction *ActionProvider::getTakeScreenshot(const QString &serial, QWidget *parent)
+{
+    auto action = new QAction(app->icons.get("screenshot.png"), {}, parent);
+
+    auto translate = [=]() { action->setText(tr("Take &Screenshot...")); };
+    connect(this, &ActionProvider::languageChanged, translate);
+    translate();
+
+    connect(action, &QAction::triggered, [=]() {
+        takeScreenshot(serial, parent);
     });
 
     return action;

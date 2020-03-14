@@ -21,6 +21,8 @@ SOURCES += \
     $$PWD/apk/xmlmodel.cpp \
     $$PWD/apk/xmlnode.cpp \
     $$PWD/base/actionprovider.cpp \
+    $$PWD/base/androidfilesystemitem.cpp \
+    $$PWD/base/androidfilesystemmodel.cpp \
     $$PWD/base/application.cpp \
     $$PWD/base/command.cpp \
     $$PWD/base/device.cpp \
@@ -56,6 +58,7 @@ SOURCES += \
     $$PWD/tools/keytool.cpp \
     $$PWD/tools/zipalign.cpp \
     $$PWD/widgets/decorationsizedelegate.cpp \
+    $$PWD/widgets/deselectablelistview.cpp \
     $$PWD/widgets/elidedlabel.cpp \
     $$PWD/widgets/filebox.cpp \
     $$PWD/widgets/filesystemtree.cpp \
@@ -76,6 +79,7 @@ SOURCES += \
     $$PWD/widgets/spacer.cpp \
     $$PWD/widgets/toolbar.cpp \
     $$PWD/windows/aboutdialog.cpp \
+    $$PWD/windows/androidexplorer.cpp \
     $$PWD/windows/devicemanager.cpp \
     $$PWD/windows/dialogs.cpp \
     $$PWD/windows/keycreator.cpp \
@@ -112,7 +116,10 @@ HEADERS += \
     $$PWD/apk/xmlmodel.h \
     $$PWD/apk/xmlnode.h \
     $$PWD/base/actionprovider.h \
+    $$PWD/base/androidfilesystemitem.h \
+    $$PWD/base/androidfilesystemmodel.h \
     $$PWD/base/application.h \
+    $$PWD/base/clipboard.h \
     $$PWD/base/command.h \
     $$PWD/base/device.h \
     $$PWD/base/deviceitemsmodel.h \
@@ -147,6 +154,7 @@ HEADERS += \
     $$PWD/tools/keytool.h \
     $$PWD/tools/zipalign.h \
     $$PWD/widgets/decorationsizedelegate.h \
+    $$PWD/widgets/deselectablelistview.h \
     $$PWD/widgets/elidedlabel.h \
     $$PWD/widgets/filebox.h \
     $$PWD/widgets/filesystemtree.h \
@@ -167,6 +175,7 @@ HEADERS += \
     $$PWD/widgets/spacer.h \
     $$PWD/widgets/toolbar.h \
     $$PWD/windows/aboutdialog.h \
+    $$PWD/windows/androidexplorer.h \
     $$PWD/windows/devicemanager.h \
     $$PWD/windows/dialogs.h \
     $$PWD/windows/keycreator.h \

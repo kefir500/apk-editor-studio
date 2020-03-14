@@ -54,6 +54,7 @@ namespace Utils
     bool copyFile(const QString &src, QString dst);
     bool replaceFile(const QString &what);
     bool replaceFile(const QString &what, QString with);
+    QString normalizePath(QString path);
 
     // Image utils:
 

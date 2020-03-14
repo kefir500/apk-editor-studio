@@ -87,6 +87,8 @@
                 <Component Id="Icons16Component" Guid="903E4029-505F-4FEC-8638-D59C3C7AB03C">
                   <File Name="add.png" Id="IconAdd16" />
                   <File Name="application.png" Id="IconApplication16" />
+                  <File Name="cut.png" Id="IconCut16" />
+                  <File Name="copy.png" Id="IconCopy16" />
                   <File Name="devices.png" Id="IconDevices16" />
                   <File Name="donate.png" Id="IconDonate16" />
                   <File Name="edit.png" Id="IconEdit16" />
@@ -98,15 +100,18 @@
                   <File Name="more.png" Id="IconMore16" />
                   <File Name="open.png" Id="IconOpen16" />
                   <File Name="pack.png" Id="IconPack16" />
+                  <File Name="paste.png" Id="IconPaste16" />
                   <File Name="permissions.png" Id="IconPermissions16" />
                   <File Name="project.png" Id="IconProject16" />
                   <File Name="qt.png" Id="IconQt16" />
                   <File Name="recent.png" Id="IconRecent16" />
                   <File Name="refresh.png" Id="IconRefresh16" />
+                  <File Name="rename.png" Id="IconRename16" />
                   <File Name="remove.png" Id="IconRemove16" />
                   <File Name="replace.png" Id="IconReplace16" />
                   <File Name="save.png" Id="IconSave16" />
                   <File Name="save-as.png" Id="IconSaveAs16" />
+                  <File Name="screenshot.png" Id="IconScreenshot16" />
                   <File Name="separator.png" Id="IconSeparator16" />
                   <File Name="settings.png" Id="IconSettings16" />
                   <File Name="spacer.png" Id="IconSpacer16" />
@@ -131,9 +136,17 @@
                   <File Name="state-save.png" Id="IconStateSave20" />
                 </Component>
               </Directory>
+              <Directory Id="Icons24Folder" Name="24x24">
+                <Component Id="Icons24Component" Guid="CA9620D9-5AE3-4867-9D3C-4BF09579BDEC">
+                  <File Name="explorer-go.png" Id="IconExplorerGo24" />
+                  <File Name="explorer-up.png" Id="IconExplorerUp24" />
+                </Component>
+              </Directory>
               <Directory Id="Icons30Folder" Name="30x30">
                 <Component Id="Icons30Component" Guid="E001659C-3A29-424B-8037-8228AEEB219B">
                   <File Name="add.png" Id="IconAdd30" />
+                  <File Name="cut.png" Id="IconCut30" />
+                  <File Name="copy.png" Id="IconCopy30" />
                   <File Name="devices.png" Id="IconDevices30" />
                   <File Name="donate.png" Id="IconDonate30" />
                   <File Name="edit.png" Id="IconEdit30" />
@@ -143,14 +156,17 @@
                   <File Name="key.png" Id="IconKey30" />
                   <File Name="open.png" Id="IconOpen30" />
                   <File Name="pack.png" Id="IconPack30" />
+                  <File Name="paste.png" Id="IconPaste30" />
                   <File Name="permissions.png" Id="IconPermissions30" />
                   <File Name="project.png" Id="IconProject30" />
                   <File Name="recent.png" Id="IconRecent30" />
                   <File Name="refresh.png" Id="IconRefresh30" />
                   <File Name="remove.png" Id="IconRemove30" />
+                  <File Name="rename.png" Id="IconRename30" />
                   <File Name="replace.png" Id="IconReplace30" />
                   <File Name="save.png" Id="IconSave30" />
                   <File Name="save-as.png" Id="IconSaveAs30" />
+                  <File Name="screenshot.png" Id="IconScreenshot30" />
                   <File Name="separator.png" Id="IconSeparator30" />
                   <File Name="settings.png" Id="IconSettings30" />
                   <File Name="spacer.png" Id="IconSpacer30" />
@@ -176,6 +192,8 @@
               <Directory Id="Icons40Folder" Name="40x40">
                 <Component Id="Icons40Component" Guid="415AF5F6-5D55-4D64-B357-FCD7ADBB92A6">
                   <File Name="add.png" Id="IconAdd40" />
+                  <File Name="copy.png" Id="IconCopy40" />
+                  <File Name="cut.png" Id="IconCut40" />
                   <File Name="devices.png" Id="IconDevices40" />
                   <File Name="donate.png" Id="IconDonate40" />
                   <File Name="edit.png" Id="IconEdit40" />
@@ -185,14 +203,17 @@
                   <File Name="key.png" Id="IconKey40" />
                   <File Name="open.png" Id="IconOpen40" />
                   <File Name="pack.png" Id="IconPack40" />
+                  <File Name="paste.png" Id="IconPaste40" />
                   <File Name="permissions.png" Id="IconPermissions40" />
                   <File Name="project.png" Id="IconProject40" />
                   <File Name="recent.png" Id="IconRecent40" />
                   <File Name="refresh.png" Id="IconRefresh40" />
                   <File Name="remove.png" Id="IconRemove40" />
+                  <File Name="rename.png" Id="IconRename40" />
                   <File Name="replace.png" Id="IconReplace40" />
                   <File Name="save.png" Id="IconSave40" />
                   <File Name="save-as.png" Id="IconSaveAs40" />
+                  <File Name="screenshot.png" Id="IconScreenshot40" />
                   <File Name="separator.png" Id="IconSeparator40" />
                   <File Name="settings.png" Id="IconSettings40" />
                   <File Name="spacer.png" Id="IconSpacer40" />
@@ -210,6 +231,8 @@
               <Directory Id="Icons48Folder" Name="48x48">
                 <Component Id="Icons48Component" Guid="DE8EF7AE-6B40-4ED3-9680-594EBD7B14A6">
                   <File Name="application.png" Id="IconApplication48" />
+                  <File Name="explorer-go.png" Id="IconExplorerGo48" />
+                  <File Name="explorer-up.png" Id="IconExplorerUp48" />
                 </Component>
               </Directory>
               <Directory Id="Icons256Folder" Name="256x256">
@@ -562,6 +585,7 @@
     <ComponentGroup Id="IconsComponent">
       <ComponentRef Id="Icons16Component" />
       <ComponentRef Id="Icons20Component" />
+      <ComponentRef Id="Icons24Component" />
       <ComponentRef Id="Icons30Component" />
       <ComponentRef Id="Icons32Component" />
       <ComponentRef Id="Icons40Component" />

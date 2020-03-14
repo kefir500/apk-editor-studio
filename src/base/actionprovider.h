@@ -31,6 +31,10 @@ public:
     void openOptions(QWidget *parent = nullptr);
     void openDeviceManager(QWidget *parent = nullptr);
     void openKeyManager(QWidget *parent = nullptr);
+    bool openAndroidExplorer(QWidget *parent = nullptr);
+    bool openAndroidExplorer(const QString &serial = QString(), QWidget *parent = nullptr);
+    bool takeScreenshot(QWidget *parent = nullptr);
+    bool takeScreenshot(const QString &serial = QString(), QWidget *parent = nullptr);
 
     QAction *getOpenApk(QWidget *parent = nullptr);
 
@@ -46,6 +50,10 @@ public:
     QAction *getOpenOptions(QWidget *parent = nullptr);
     QAction *getOpenDeviceManager(QWidget *parent= nullptr);
     QAction *getOpenKeyManager(QWidget *parent = nullptr);
+    QAction *getOpenAndroidExplorer(QWidget *parent = nullptr);
+    QAction *getOpenAndroidExplorer(const QString &serial = QString(), QWidget *parent = nullptr);
+    QAction *getTakeScreenshot(QWidget *parent = nullptr);
+    QAction *getTakeScreenshot(const QString &serial = QString(), QWidget *parent = nullptr);
 
     QMenu *getLanguages(QWidget *parent = nullptr);
     QMenu *getRecent(QWidget *parent = nullptr);

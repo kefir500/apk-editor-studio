@@ -119,6 +119,20 @@ QSharedPointer<Device> Dialogs::getInstallDevice(QWidget *parent)
     return DeviceManager::selectDevice(title, action, icon, parent);
 }
 
+QSharedPointer<Device> Dialogs::getExplorerDevice(QWidget *parent)
+{
+    const QString action(app->translate("AndroidExplorer", "Android Explorer"));
+    const QIcon icon(app->icons.get("explorer.png"));
+    return DeviceManager::selectDevice({}, action, icon, parent);
+}
+
+QSharedPointer<Device> Dialogs::getScreenshotDevice(QWidget *parent)
+{
+    const QString action(app->translate("Dialogs", "Screenshot"));
+    const QIcon icon(app->icons.get("screenshot.png"));
+    return DeviceManager::selectDevice({}, action, icon, parent);
+}
+
 int Dialogs::detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon, QWidget *parent)
 {
     QMessageBox dialog(parent);

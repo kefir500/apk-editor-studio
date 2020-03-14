@@ -156,6 +156,11 @@ bool Utils::replaceFile(const QString &what, QString with)
     return true;
 }
 
+QString Utils::normalizePath(QString path)
+{
+    return path.replace(QRegularExpression("^\\/+[\\.\\./*]*\\/*|$"), "/");
+}
+
 bool Utils::isImageReadable(const QString &path)
 {
     const QString extension = QFileInfo(path).suffix();

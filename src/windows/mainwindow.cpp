@@ -168,6 +168,8 @@ void MainWindow::initMenus()
 
     auto actionKeyManager = app->actions.getOpenKeyManager(this);
     auto actionDeviceManager = app->actions.getOpenDeviceManager(this);
+    auto actionAndroidExplorer = app->actions.getOpenAndroidExplorer(this);
+    auto actionScreenshot = app->actions.getTakeScreenshot(this);
     actionProjectManager = new QAction(this);
     actionProjectManager->setIcon(app->icons.get("project.png"));
     actionProjectManager->setShortcut(QKeySequence("Ctrl+M"));
@@ -212,6 +214,8 @@ void MainWindow::initMenus()
     menuTools->addAction(actionKeyManager);
     menuTools->addSeparator();
     menuTools->addAction(actionDeviceManager);
+    menuTools->addAction(actionAndroidExplorer);
+    menuTools->addAction(actionScreenshot);
     menuTools->addSeparator();
     menuTools->addAction(actionProjectManager);
     menuTools->addAction(actionTitleEditor);
@@ -244,6 +248,8 @@ void MainWindow::initMenus()
     Toolbar::addToPool("title-editor", actionTitleEditor);
     Toolbar::addToPool("permission-editor", actionPermissionEditor);
     Toolbar::addToPool("device-manager", actionDeviceManager);
+    Toolbar::addToPool("android-explorer", actionAndroidExplorer);
+    Toolbar::addToPool("screenshot", actionScreenshot);
     Toolbar::addToPool("key-manager", actionKeyManager);
     Toolbar::addToPool("settings", actionOptions);
     Toolbar::addToPool("donate", actionDonate);

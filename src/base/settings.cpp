@@ -168,6 +168,7 @@ QStringList Settings::getToolbar() const
     defaults << "open-project" << "save-project" << "install-project" << "separator"
              << "save" << "save-as" << "separator"
              << "project-manager" << "separator"
+             << "android-explorer" << "separator"
              << "close-project" << "separator"
              << "settings" << "spacer" << "donate";
     return settings->value("MainWindow/Toolbar", defaults).toStringList();
