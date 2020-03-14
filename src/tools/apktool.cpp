@@ -89,7 +89,6 @@ const QString &Apktool::Version::version() const
 void Apktool::reset()
 {
     auto versionCommand = new Version;
-    // TODO 111 Is app->connect deleted after Version destruction?
     app->connect(versionCommand, &Version::finished, [=]() {
         const QString currentVersion = versionCommand->version();
         const QString previousVersion = app->settings->getApktoolVersion();
@@ -97,6 +96,7 @@ void Apktool::reset()
             QFile::remove(getFrameworksPath() + "/1.apk");
             app->settings->setApktoolVersion(currentVersion);
         }
+        versionCommand->deleteLater();
     });
     versionCommand->run();
 }
