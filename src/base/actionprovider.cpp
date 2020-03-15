@@ -58,6 +58,27 @@ void ActionProvider::visitBlogPage(const QString &post)
     QDesktopServices::openUrl(url);
 }
 
+bool ActionProvider::associateApk()
+{
+#ifdef Q_OS_WIN
+    QSettings registry("HKEY_CURRENT_USER\\Software\\Classes", QSettings::NativeFormat);
+    if (!registry.isWritable()) {
+        return false;
+    }
+    const QString format = "apk";
+    const QString description = "Android Application Package";
+    const QString progid = QString("%1.%2").arg(app->getTitleNoSpaces(), format);
+    const QString executable = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+    registry.setValue(QString(".%1/Default").arg(format), progid);
+    registry.setValue(progid + "/Default", description);
+    registry.setValue(progid + "/Shell/Open/Command/Default", executable + " \"%1\"");
+    registry.setValue(progid + "/DefaultIcon/Default", executable + ",0");
+    return true;
+#else
+    return false;
+#endif
+}
+
 void ActionProvider::exit()
 {
     app->window->close();

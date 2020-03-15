@@ -225,7 +225,7 @@ void OptionsDialog::initialize()
     btnAssociate->setIcon(app->icons.get("application.png"));
     btnAssociate->setMinimumHeight(app->scale(30));
     connect(btnAssociate, &QPushButton::clicked, [this]() {
-        if (app->associate()) {
+        if (app->actions.associateApk()) {
             QMessageBox::information(this, QString(), tr("File association has been created."));
         } else {
             QMessageBox::warning(this, QString(), tr("Could not register file association."));

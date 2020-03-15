@@ -70,7 +70,6 @@ public:
 
     void setLanguage(const QString &locale);
     bool addToRecent(const Project *project);
-    static bool associate();
 
     MainWindow *window;
     Settings *settings;
