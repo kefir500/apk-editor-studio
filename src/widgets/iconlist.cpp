@@ -46,8 +46,10 @@ void IconList::rowsInserted(const QModelIndex &parent, int start, int end)
 void IconList::reset()
 {
     QTreeView::reset();
-    const auto applicationNodeIndex = model()->index(IconItemsModel::ApplicationRow, 0);
-    expand(applicationNodeIndex);
+    if (model()) {
+        const auto applicationNodeIndex = model()->index(IconItemsModel::ApplicationRow, 0);
+        expand(applicationNodeIndex);
+    }
 }
 
 void IconList::dragEnterEvent(QDragEnterEvent *event)
