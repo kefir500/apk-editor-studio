@@ -263,7 +263,7 @@ QString Application::getWebPage()
 
 QString Application::getUpdatePage()
 {
-    return QString("https://qwertycube.com/%1/#utm_source=apk-editor-studio&utm_medium=update").arg(getTitleNoSpaces());
+    return QString("https://qwertycube.com/%1/#utm_campaign=update&utm_source=%1&utm_medium=application").arg(getTitleNoSpaces());
 }
 
 QString Application::getSourcePage()
@@ -288,7 +288,7 @@ QString Application::getTranslatePage()
 
 QString Application::getDonatePage()
 {
-    return "https://qwertycube.com/donate/";
+    return QString("https://qwertycube.com/donate/#utm_campaign=donate&utm_source=%1&utm_medium=application").arg(getTitleNoSpaces());
 }
 
 QString Application::getJrePage()
