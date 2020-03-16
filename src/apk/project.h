@@ -51,12 +51,14 @@ signals:
     void changed() const;
 
 private:
-    class ProjectCommand : public Commands {
+    class ProjectCommand : public Commands
+    {
     public:
         ProjectCommand(Project *project);
     };
 
-    class LoadUnpackedCommand : public Command {
+    class LoadUnpackedCommand : public Command
+    {
     public:
         LoadUnpackedCommand(Project *project) : project(project) {}
         void run() override;
