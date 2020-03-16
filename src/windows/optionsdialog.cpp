@@ -260,7 +260,9 @@ void OptionsDialog::initialize()
     spinboxMinHeapSize->setRange(0, std::numeric_limits<int>::max());
     spinboxMaxHeapSize->setRange(0, std::numeric_limits<int>::max());
     pageJava->addRow(tr("Java path:"), fileboxJava);
+    //: "Heap" refers to a memory heap.
     pageJava->addRow(tr("Initial heap size (MB):"), spinboxMinHeapSize);
+    //: "Heap" refers to a memory heap.
     pageJava->addRow(tr("Maximum heap size (MB):"), spinboxMaxHeapSize);
 
     // Repacking
