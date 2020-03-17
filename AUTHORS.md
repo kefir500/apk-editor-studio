@@ -42,6 +42,7 @@
 - Luis Corominas
 - Kevin Gentry
 - Fu Panwei
+- Smart Shopping
 - Jason Leon Castillo
 - Wisata Gili Permai
 - Samuel Radoc
