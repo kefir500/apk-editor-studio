@@ -279,14 +279,10 @@ void AndroidExplorer::remove(const QModelIndex &index)
 
 void AndroidExplorer::setClipboard(const QModelIndex &index, bool move)
 {
-    if (index.isValid()) {
-        const auto path = fileSystemModel.getItemPath(index);
-        clipboard = ClipboardEntry<QString>(path, move);
-        actionPaste->setEnabled(true);
-    } else {
-        clipboard.data.clear();
-        actionPaste->setEnabled(false);
-    }
+    const bool isValid = index.isValid();
+    clipboard.data = isValid ? fileSystemModel.getItemPath(index) : QString();
+    clipboard.move = move;
+    actionPaste->setEnabled(isValid);
 }
 
 void AndroidExplorer::retranslate()
