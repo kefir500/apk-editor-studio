@@ -30,7 +30,8 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     connect(actionDownload, &QAction::triggered, [=]() {
         const auto index = fileList->currentIndex();
         if (index.isValid()) {
-            download(index);
+            const auto path = fileSystemModel.getItemPath(index);
+            download(path);
         }
     });
 
@@ -71,21 +72,19 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     actionPaste->setShortcut(QKeySequence::Paste);
     toolbar->addAction(actionPaste);
     connect(actionPaste, &QAction::triggered, [=]() {
-        if (!clipboard.data.isValid()) {
-            return;
-        }
+        const QString src = clipboard.data;
         QString dst = fileSystemModel.getCurrentPath();
-        const auto currentIndex = fileList->currentIndex();
-        if (currentIndex.isValid()) {
-            if (fileSystemModel.getItemType(currentIndex) == AndroidFileSystemItem::AndroidFSDirectory) {
-                dst = fileSystemModel.getItemPath(currentIndex);
+        const auto index = fileList->currentIndex();
+        if (index.isValid()) {
+            if (fileSystemModel.getItemType(index) == AndroidFileSystemItem::AndroidFSDirectory) {
+                dst = fileSystemModel.getItemPath(index);
             }
         }
         if (clipboard.move) {
-            move(clipboard.data, dst);
+            move(src, dst);
             setClipboard({});
         } else {
-            copy(clipboard.data, dst);
+            copy(src, dst);
         }
     });
 
@@ -105,7 +104,8 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     connect(actionDelete, &QAction::triggered, [=]() {
         const auto index = fileList->currentIndex();
         if (index.isValid()) {
-            remove(index);
+            const auto path = fileSystemModel.getItemPath(index);
+            remove(path);
         }
     });
 
@@ -153,12 +153,14 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     fileList->setContextMenuPolicy(Qt::CustomContextMenu);
     fileList->setEditTriggers(QListView::SelectedClicked | QListView::EditKeyPressed);
     connect(fileList, &QListView::activated, [=](const QModelIndex &index) {
-        switch (fileSystemModel.getItemType(index)) {
+        const auto type = fileSystemModel.getItemType(index);
+        const auto path = fileSystemModel.getItemPath(index);
+        switch (type) {
         case AndroidFileSystemItem::AndroidFSDirectory:
-            go(fileSystemModel.getItemPath(index));
+            go(path);
             break;
         case AndroidFileSystemItem::AndroidFSFile:
-            download(index);
+            download(path);
             break;
         }
     });
@@ -228,14 +230,14 @@ void AndroidExplorer::goUp()
     go("..");
 }
 
-void AndroidExplorer::download(const QModelIndex &index)
+void AndroidExplorer::download(const QString &path)
 {
-    const auto dst = Dialogs::getSaveFilename(fileSystemModel.getItemPath(index), this);
+    const auto dst = Dialogs::getSaveFilename(path, this);
     if (dst.isEmpty()) {
         return;
     }
 
-    fileSystemModel.download(index, dst);
+    fileSystemModel.download(path, dst);
 }
 
 void AndroidExplorer::upload(const QString &path)
@@ -248,36 +250,33 @@ void AndroidExplorer::upload(const QString &path)
     fileSystemModel.upload(src, path);
 }
 
-void AndroidExplorer::copy(const QModelIndex &src, const QString &dst)
+void AndroidExplorer::copy(const QString &src, const QString &dst)
 {
     fileSystemModel.copy(src, dst);
 }
 
-void AndroidExplorer::move(const QModelIndex &src, const QString &dst)
+void AndroidExplorer::move(const QString &src, const QString &dst)
 {
     fileSystemModel.move(src, dst);
 }
 
-void AndroidExplorer::remove(const QModelIndex &index)
+void AndroidExplorer::remove(const QString &path)
 {
-    QString question;
-    switch (fileSystemModel.getItemType(index)) {
-    case AndroidFileSystemItem::AndroidFSFile:
-        question = tr("Are you sure you want to delete this file?");
-        break;
-    case AndroidFileSystemItem::AndroidFSDirectory:
-        question = tr("Are you sure you want to delete this directory?");
-        break;
-    }
-    if (QMessageBox::question(this, {}, question) == QMessageBox::Yes) {
-        fileSystemModel.remove(index);
+    if (QMessageBox::question(this, {}, tr("Are you sure you want to delete this file?")) == QMessageBox::Yes) {
+        fileSystemModel.remove(path);
     }
 }
 
 void AndroidExplorer::setClipboard(const QModelIndex &index, bool move)
 {
-    clipboard = ClipboardEntry<QPersistentModelIndex>(index, move);
-    actionPaste->setEnabled(index.isValid());
+    if (index.isValid()) {
+        const auto path = fileSystemModel.getItemPath(index);
+        clipboard = ClipboardEntry<QString>(path, move);
+        actionPaste->setEnabled(true);
+    } else {
+        clipboard.data.clear();
+        actionPaste->setEnabled(false);
+    }
 }
 
 void AndroidExplorer::retranslate()

@@ -35,11 +35,11 @@ public:
 
     const QString &getCurrentPath() const;
     void cd(const QString &path);
-    void copy(const QModelIndex &src, const QString &dst);
-    void move(const QModelIndex &src, const QString &dst);
-    void rename(const QModelIndex &src, const QString &dst);
-    void remove(const QModelIndex &path);
-    void download(const QModelIndex &src, const QString &dst);
+    void copy(const QString &src, const QString &dst);
+    void move(const QString &src, const QString &dst);
+    void rename(const QString &src, const QString &dst);
+    void remove(const QString &path);
+    void download(const QString &src, const QString &dst);
     void upload(const QString &src, const QString &dst);
 
 signals:
