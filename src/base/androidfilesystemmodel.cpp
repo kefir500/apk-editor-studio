@@ -23,7 +23,7 @@ bool AndroidFileSystemModel::setData(const QModelIndex &index, const QVariant &v
         if (value != getItemName(index)) {
             const QString fullPath = getItemPath(index);
             const QString directory = QFileInfo(fullPath).path();
-            move(fullPath, QString("%1/%2").arg(directory, value.toString()));
+            rename(fullPath, QString("%1/%2").arg(directory, value.toString()));
             return true;
         }
     }
