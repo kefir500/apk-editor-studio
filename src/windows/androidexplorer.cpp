@@ -256,9 +256,23 @@ void AndroidExplorer::move(const QString &src, const QString &dst)
     fileSystemModel.move(src, dst);
 }
 
-void AndroidExplorer::remove(const QString &path)
+void AndroidExplorer::remove(const QModelIndex &index)
 {
-    if (QMessageBox::question(this, {}, tr("Are you sure you want to delete this file?")) == QMessageBox::Yes) {
+    if (!index.isValid()) {
+        return;
+    }
+
+    QString question;
+    switch (fileSystemModel.getItemType(index)) {
+    case AndroidFileSystemItem::AndroidFSFile:
+        question = tr("Are you sure you want to delete this file?");
+        break;
+    case AndroidFileSystemItem::AndroidFSDirectory:
+        question = tr("Are you sure you want to delete this directory?");
+        break;
+    }
+    if (QMessageBox::question(this, {}, question) == QMessageBox::Yes) {
+        const auto path = fileSystemModel.getItemPath(index);
         fileSystemModel.remove(path);
     }
 }
