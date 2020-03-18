@@ -20,11 +20,11 @@ protected:
 private:
     void go(const QString &directory);
     void goUp();
-    void download(const QString &path);
+    void download(const QModelIndex &index);
     void upload(const QString &path);
-    void copy(const QString &src, const QString &dst);
-    void move(const QString &src, const QString &dst);
-    void remove(const QString &path);
+    void copy(const QModelIndex &src, const QString &dst);
+    void move(const QModelIndex &src, const QString &dst);
+    void remove(const QModelIndex &index);
     void screenshot(const QString &path);
 
     void setClipboard(const QModelIndex &index, bool move = false);
@@ -33,7 +33,7 @@ private:
     QString serial;
     QString currentPath;
     AndroidFileSystemModel fileSystemModel{serial};
-    ClipboardEntry<QString> clipboard;
+    ClipboardEntry<QPersistentModelIndex> clipboard;
 
     QAction *actionDownload;
     QAction *actionUpload;

@@ -21,9 +21,8 @@ bool AndroidFileSystemModel::setData(const QModelIndex &index, const QVariant &v
     Q_UNUSED(role)
     if (index.isValid() && index.column() == NameColumn) {
         if (value != getItemName(index)) {
-            const QString fullPath = getItemPath(index);
-            const QString directory = QFileInfo(fullPath).path();
-            move(fullPath, QString("%1/%2").arg(directory, value.toString()));
+            const QString directory = QFileInfo(getItemPath(index)).path();
+            move(index, QString("%1/%2").arg(directory, value.toString()));
             return true;
         }
     }
@@ -127,72 +126,107 @@ void AndroidFileSystemModel::cd(const QString &path)
     shell->run();
 }
 
-void AndroidFileSystemModel::copy(const QString &src, const QString &dst)
+void AndroidFileSystemModel::copy(const QModelIndex &src, const QString &dst)
 {
-    auto adb = new Adb::Cp(src, dst, serial, this);
+    auto adb = new Adb::Cp(getItemPath(src), dst, serial, this);
     connect(adb, &Adb::Cp::finished, [=](bool success) {
         if (success) {
             if (dst == currentPath) {
                 ls();
             }
         } else {
-            emit error(tr("Could not copy the file or directory."));
+            switch (getItemType(src)) {
+            case AndroidFileSystemItem::AndroidFSFile:
+                emit error(tr("Could not copy the file."));
+                break;
+            case AndroidFileSystemItem::AndroidFSDirectory:
+                emit error(tr("Could not copy the directory."));
+                break;
+            }
         }
         adb->deleteLater();
     });
     adb->run();
 }
 
-void AndroidFileSystemModel::move(const QString &src, const QString &dst)
+void AndroidFileSystemModel::move(const QModelIndex &src, const QString &dst)
 {
-    auto adb = new Adb::Mv(src, dst, serial, this);
+    auto adb = new Adb::Mv(getItemPath(src), dst, serial, this);
     connect(adb, &Adb::Mv::finished, [=](bool success) {
         if (success) {
             if (dst == currentPath) {
                 ls();
             }
         } else {
-            emit error(tr("Could not move the file or directory."));
+            switch (getItemType(src)) {
+            case AndroidFileSystemItem::AndroidFSFile:
+                emit error(tr("Could not move the file."));
+                break;
+            case AndroidFileSystemItem::AndroidFSDirectory:
+                emit error(tr("Could not move the directory."));
+                break;
+            }
         }
         adb->deleteLater();
     });
     adb->run();
 }
 
-void AndroidFileSystemModel::rename(const QString &src, const QString &dst)
+void AndroidFileSystemModel::rename(const QModelIndex &src, const QString &dst)
 {
-    auto adb = new Adb::Mv(src, dst, serial, this);
+    auto adb = new Adb::Mv(getItemPath(src), dst, serial, this);
     connect(adb, &Adb::Mv::finished, [=](bool success) {
         if (success) {
             ls();
         } else {
-            emit error(tr("Could not rename the file or directory."));
+            switch (getItemType(src)) {
+            case AndroidFileSystemItem::AndroidFSFile:
+                emit error(tr("Could not rename the file."));
+                break;
+            case AndroidFileSystemItem::AndroidFSDirectory:
+                emit error(tr("Could not rename the directory."));
+                break;
+            }
         }
         adb->deleteLater();
     });
     adb->run();
 }
 
-void AndroidFileSystemModel::remove(const QString &path)
+void AndroidFileSystemModel::remove(const QModelIndex &path)
 {
-    auto adb = new Adb::Rm(path, serial, this);
+    auto adb = new Adb::Rm(getItemPath(path), serial, this);
     connect(adb, &Adb::Rm::finished, [=](bool success) {
         if (success) {
             ls();
         } else {
-            emit error(tr("Could not delete the file or directory."));
+            switch (getItemType(path)) {
+            case AndroidFileSystemItem::AndroidFSFile:
+                emit error(tr("Could not delete the file."));
+                break;
+            case AndroidFileSystemItem::AndroidFSDirectory:
+                emit error(tr("Could not delete the directory."));
+                break;
+            }
         }
         adb->deleteLater();
     });
     adb->run();
 }
 
-void AndroidFileSystemModel::download(const QString &src, const QString &dst)
+void AndroidFileSystemModel::download(const QModelIndex &src, const QString &dst)
 {
-    auto adb = new Adb::Pull(src, dst, serial, this);
+    auto adb = new Adb::Pull(getItemPath(src), dst, serial, this);
     connect(adb, &Adb::Pull::finished, [=](bool success) {
         if (!success) {
-            emit error(tr("Could not download the file or directory."));
+            switch (getItemType(src)) {
+            case AndroidFileSystemItem::AndroidFSFile:
+                emit error(tr("Could not download the file."));
+                break;
+            case AndroidFileSystemItem::AndroidFSDirectory:
+                emit error(tr("Could not download the directory."));
+                break;
+            }
         }
         adb->deleteLater();
     });
