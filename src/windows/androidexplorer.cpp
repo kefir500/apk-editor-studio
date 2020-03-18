@@ -102,11 +102,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     actionDelete->setShortcut(QKeySequence::Delete);
     toolbar->addAction(actionDelete);
     connect(actionDelete, &QAction::triggered, [=]() {
-        const auto index = fileList->currentIndex();
-        if (index.isValid()) {
-            const auto path = fileSystemModel.getItemPath(index);
-            remove(path);
-        }
+        remove(fileList->currentIndex());
     });
 
     auto fileSelectionActions = new QActionGroup(this);

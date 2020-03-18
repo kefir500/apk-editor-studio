@@ -24,7 +24,7 @@ private:
     void upload(const QString &path);
     void copy(const QString &src, const QString &dst);
     void move(const QString &src, const QString &dst);
-    void remove(const QString &path);
+    void remove(const QModelIndex &index);
     void screenshot(const QString &path);
 
     void setClipboard(const QModelIndex &index, bool move = false);
