@@ -61,7 +61,7 @@ void Adb::Cp::run()
     if (!serial.isEmpty()) {
         arguments << "-s" << serial;
     }
-    arguments << "shell" << "cp" << "-R" << src << dst;
+    arguments << "shell" << "cp" << "-R" << "-n" << src << dst;
 
     auto process = new Process(this);
     connect(process, &Process::finished, [=](bool success, const QString &output) {
@@ -85,7 +85,7 @@ void Adb::Mv::run()
     if (!serial.isEmpty()) {
         arguments << "-s" << serial;
     }
-    arguments << "shell" << "mv" << src << dst;
+    arguments << "shell" << "mv" << "-n" << src << dst;
 
     auto process = new Process(this);
     connect(process, &Process::finished, this, &Command::finished);
