@@ -202,7 +202,7 @@ QAction *ActionProvider::getOpenApk(QWidget *parent)
     action->setShortcut(QKeySequence::Open);
 
     auto translate = [=]() { action->setText(tr("&Open APK...")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, [=]() {
@@ -216,7 +216,7 @@ QAction *ActionProvider::getVisitWebPage(QObject *parent)
     auto action = new QAction(app->icons.get("website.png"), {}, parent);
 
     auto translate = [=]() { action->setText(tr("Visit &Website")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, this, &ActionProvider::visitWebPage);
@@ -228,7 +228,7 @@ QAction *ActionProvider::getVisitSourcePage(QObject *parent)
     auto action = new QAction(app->icons.get("github.png"), {}, parent);
 
     auto translate = [=]() { action->setText(tr("&Source Code")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, this, &ActionProvider::visitSourcePage);
@@ -240,7 +240,7 @@ QAction *ActionProvider::getVisitDonatePage(QObject *parent)
     auto action = new QAction(app->icons.get("donate.png"), {}, parent);
 
     auto translate = [=]() { action->setText(tr("Make a &Donation")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, this, &ActionProvider::visitDonatePage);
@@ -254,7 +254,7 @@ QAction *ActionProvider::getExit(QObject *parent)
     action->setMenuRole(QAction::QuitRole);
 
     auto translate = [=]() { action->setText(tr("E&xit")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, this, &ActionProvider::exit);
@@ -266,7 +266,7 @@ QAction *ActionProvider::getCheckUpdates(QWidget *parent)
     auto action = new QAction(app->icons.get("update.png"), {}, parent);
 
     auto translate = [=]() { action->setText(tr("Check for &Updates")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, [=]() {
@@ -281,7 +281,7 @@ QAction *ActionProvider::getResetSettings(QWidget *parent)
     auto action = new QAction(app->icons.get("x-red.png"), {}, parent);
 
     auto translate = [=]() { action->setText(tr("&Reset Settings...")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, [=]() {
@@ -301,7 +301,7 @@ QAction *ActionProvider::getInstallExternalApk(const QString &serial, QWidget *p
     auto action = new QAction(app->icons.get("install.png"), {}, parent);
 
     auto translate = [=]() { action->setText(tr("Install &External APK...")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     action->setShortcut(QKeySequence("Ctrl+Shift+I"));
@@ -319,7 +319,7 @@ QAction *ActionProvider::getOpenOptions(QWidget *parent)
     action->setMenuRole(QAction::PreferencesRole);
 
     auto translate = [=]() { action->setText(tr("&Options...")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, [=]() {
@@ -336,7 +336,7 @@ QAction *ActionProvider::getOpenDeviceManager(QWidget *parent)
 
     //: This string refers to multiple devices (as in "Manager of devices").
     auto translate = [=]() { action->setText(tr("&Device Manager...")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, [=]() {
@@ -353,7 +353,7 @@ QAction *ActionProvider::getOpenKeyManager(QWidget *parent)
 
     //: This string refers to multiple keys (as in "Manager of keys").
     auto translate = [=]() { action->setText(tr("&Key Manager...")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, [=]() {
@@ -374,7 +374,7 @@ QAction *ActionProvider::getOpenAndroidExplorer(const QString &serial, QWidget *
     action->setShortcut(QKeySequence("Ctrl+Shift+X"));
 
     auto translate = [=]() { action->setText(tr("&Android Explorer...")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, [=]() {
@@ -394,7 +394,7 @@ QAction *ActionProvider::getTakeScreenshot(const QString &serial, QWidget *paren
     auto action = new QAction(app->icons.get("screenshot.png"), {}, parent);
 
     auto translate = [=]() { action->setText(tr("Take &Screenshot...")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, [=]() {
@@ -425,7 +425,7 @@ QMenu *ActionProvider::getLanguages(QWidget *parent)
             }
         }
     };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, menu, translate);
     translate();
 
     QList<Language> languages = app->getLanguages();
@@ -451,7 +451,7 @@ QMenu *ActionProvider::getRecent(QWidget *parent)
     menuRecent->setIcon(app->icons.get("recent.png"));
 
     auto translate = [=]() { menuRecent->setTitle(tr("Open &Recent")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, menuRecent, translate);
     translate();
 
     auto initialize = [=]() {
@@ -478,7 +478,7 @@ QAction *ActionProvider::getClearRecent(QObject *parent)
     auto action = new QAction(app->icons.get("x-red.png"), {}, parent);
 
     auto translate = [=]() { action->setText(tr("&Clear List")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     connect(action, &QAction::triggered, app->recent, &Recent::clear);
@@ -491,7 +491,7 @@ QAction *ActionProvider::getNoRecent(QObject *parent)
     action->setEnabled(false);
 
     auto translate = [=]() { action->setText(tr("No Recent Files")); };
-    connect(this, &ActionProvider::languageChanged, translate);
+    connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
     return action;
