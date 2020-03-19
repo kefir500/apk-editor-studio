@@ -253,17 +253,18 @@ void OptionsDialog::initialize()
     spinboxMinHeapSize = new QSpinBox(this);
     spinboxMaxHeapSize = new QSpinBox(this);
     //: Megabytes
-    spinboxMinHeapSize->setSuffix(tr(" MB"));
-    spinboxMaxHeapSize->setSuffix(tr(" MB"));
+    const QString heapSizeSuffix = QString(" %1").arg(tr("MB"));
+    spinboxMinHeapSize->setSuffix(heapSizeSuffix);
+    spinboxMaxHeapSize->setSuffix(heapSizeSuffix);
     spinboxMinHeapSize->setSpecialValueText(tr("Default"));
     spinboxMaxHeapSize->setSpecialValueText(tr("Default"));
     spinboxMinHeapSize->setRange(0, std::numeric_limits<int>::max());
     spinboxMaxHeapSize->setRange(0, std::numeric_limits<int>::max());
     pageJava->addRow(tr("Java path:"), fileboxJava);
     //: "Heap" refers to a memory heap.
-    pageJava->addRow(tr("Initial heap size (MB):"), spinboxMinHeapSize);
+    pageJava->addRow(tr("Initial heap size:"), spinboxMinHeapSize);
     //: "Heap" refers to a memory heap.
-    pageJava->addRow(tr("Maximum heap size (MB):"), spinboxMaxHeapSize);
+    pageJava->addRow(tr("Maximum heap size:"), spinboxMaxHeapSize);
 
     // Repacking
 
