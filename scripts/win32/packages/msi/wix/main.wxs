@@ -112,9 +112,7 @@
                   <File Name="save.png" Id="IconSave16" />
                   <File Name="save-as.png" Id="IconSaveAs16" />
                   <File Name="screenshot.png" Id="IconScreenshot16" />
-                  <File Name="separator.png" Id="IconSeparator16" />
                   <File Name="settings.png" Id="IconSettings16" />
-                  <File Name="spacer.png" Id="IconSpacer16" />
                   <File Name="title.png" Id="IconTitle16" />
                   <File Name="update.png" Id="IconUpdate16" />
                   <File Name="website.png" Id="IconWebsite16" />
@@ -214,9 +212,7 @@
                   <File Name="save.png" Id="IconSave40" />
                   <File Name="save-as.png" Id="IconSaveAs40" />
                   <File Name="screenshot.png" Id="IconScreenshot40" />
-                  <File Name="separator.png" Id="IconSeparator40" />
                   <File Name="settings.png" Id="IconSettings40" />
-                  <File Name="spacer.png" Id="IconSpacer40" />
                   <File Name="title.png" Id="IconTitle40" />
                   <File Name="update.png" Id="IconUpdate40" />
                   <File Name="website.png" Id="IconWebsite40" />
