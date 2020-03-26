@@ -185,7 +185,7 @@ ZoomGroup::ZoomGroup(QWidget *parent) : QWidget(parent)
 
 void ZoomGroup::setZoomInfo(qreal factor)
 {
-    const int percentage = static_cast<int>(factor) * 100;
+    const int percentage = static_cast<int>(factor * 100);
     labelZoom->setText(QString("%1%").arg(percentage));
 }
 
