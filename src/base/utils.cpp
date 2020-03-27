@@ -77,13 +77,13 @@ bool Utils::explore(const QString &path)
 
 void Utils::rmdir(const QString &path, bool recursive)
 {
-    QtConcurrent::run([=]() {
-        if (!recursive) {
-            QDir().rmdir(path);
-        } else if (!path.isEmpty()) {
+    if (!recursive) {
+        QDir().rmdir(path);
+    } else if (!path.isEmpty()) {
+        QtConcurrent::run([=]() {
             QDir(path).removeRecursively();
-        }
-    });
+        });
+    }
 }
 
 namespace

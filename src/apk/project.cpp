@@ -30,11 +30,8 @@ Project::~Project()
     if (!contentsPath.isEmpty()) {
         qDebug() << qPrintable(QString("Removing \"%1\"...\n").arg(contentsPath));
         // Additional check to prevent accidental recursive deletion of the wrong directory:
-        if (QFile::exists(QString("%1/%2").arg(contentsPath, "AndroidManifest.xml"))) {
-            Utils::rmdir(contentsPath, true);
-        } else {
-            qWarning() << "Warning: Could not delete project directory; no manifest file";
-        }
+        const bool recursive = QFile::exists(QString("%1/%2").arg(contentsPath, "AndroidManifest.xml"));
+        Utils::rmdir(contentsPath, recursive);
     }
 }
 
