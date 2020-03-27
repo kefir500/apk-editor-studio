@@ -127,12 +127,18 @@ Command *Project::createUnpackCommand(const QString &source)
     this->contentsPath = target;
 
     auto command = new Commands(this);
-    command->add(new Apktool::Decode(source, target, frameworks, resources, sources, keepBroken), true);
+    auto apktoolDecode = new Apktool::Decode(source, target, frameworks, resources, sources, keepBroken);
+    command->add(apktoolDecode, true);
     command->add(new LoadUnpackedCommand(this), true);
     connect(command, &Command::started, this, [=]() {
         qDebug() << qPrintable(QString("Unpacking\n  from: %1\n    to: %2\n").arg(source, target));
         journal(tr("Unpacking APK..."));
         state.setCurrentStatus(ProjectState::Status::Unpacking);
+    });
+    connect(apktoolDecode, &Command::finished, this, [=](bool success) {
+        if (!success) {
+            journal(tr("Error unpacking APK."), apktoolDecode->output(), LogEntry::Error);
+        }
     });
     connect(command, &Command::finished, this, [=](bool success) {
         if (success) {
@@ -150,8 +156,6 @@ Command *Project::createUnpackCommand(const QString &source)
                     state.setModified(true);
                 }
             });
-        } else {
-            journal(tr("Error unpacking APK."), {}, LogEntry::Error);
         }
         state.setUnpacked(success);
         emit unpacked(success);
@@ -262,21 +266,21 @@ Command *Project::createSignCommand(const QString &target, const Keystore *keyst
 
 Command *Project::createInstallCommand(const QString &serial)
 {
-    auto command = new Adb::Install(originalPath, serial);
+    auto install = new Adb::Install(originalPath, serial);
 
-    connect(command, &Command::started, this, [=]() {
+    connect(install, &Command::started, this, [=]() {
         journal(tr("Installing APK..."));
         state.setCurrentStatus(ProjectState::Status::Installing);
     });
 
-    connect(command, &Command::finished, this, [=](bool success) {
+    connect(install, &Command::finished, this, [=](bool success) {
         if (!success) {
-            journal(tr("Error installing APK."), command->output(), LogEntry::Error);
+            journal(tr("Error installing APK."), install->output(), LogEntry::Error);
         }
         emit installed(success);
     });
 
-    return command;
+    return install;
 }
 
 QSharedPointer<const Keystore> Project::getKeystore() const
