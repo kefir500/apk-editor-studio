@@ -10,7 +10,6 @@ clean() {
 
 cd "$(dirname "$0")"
 source ../../environment.sh
-source /opt/qt512/bin/qt512-env.sh
 clean
 
 # Build
