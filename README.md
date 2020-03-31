@@ -48,9 +48,8 @@ In order to successfully utilize this software, the following tools should be pr
 You can either get them manually (e.g., using `apt-get` in Debian)
 or **run the `scripts/download.py`** Python 3 script which will automatically download the needed tools.
 
-Also, on **Linux** you may want to optionally install `libsecret` development library to use it as a password storage,
-otherwise GNOME Keyring / KWallet will be used to store your KeyStore passwords.  
-Package aliases:
+Also, on **Linux** you may want an optional support for `libsecret` password storage backend.
+In order to enable it, you will need to install the corresponding library:
 - `libsecret-1-dev` (Debian-based distributions)
 - `libsecret-devel` (RPM-based distributions)
 
