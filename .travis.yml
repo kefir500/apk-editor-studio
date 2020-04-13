@@ -59,6 +59,5 @@ deploy:
   overwrite: true
   skip_cleanup: true
   on:
-    branch:
-      - master
-      - /^\d+\.\d+\.\d+$/
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^(master|[0-9]+\.[0-9]+\.[0-9]+)$
