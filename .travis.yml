@@ -62,4 +62,3 @@ deploy:
     branch:
       - master
       - /^\d+\.\d+\.\d+$/
-    tags: false
