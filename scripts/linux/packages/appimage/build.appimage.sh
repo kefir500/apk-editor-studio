@@ -15,14 +15,14 @@ clean
 # Build
 
 qmake ../../../..
-make
+make || exit
 make install INSTALL_ROOT=appdir
 
 # Package
 
 wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
 chmod +x linuxdeployqt-continuous-x86_64.AppImage
-./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/apk-editor-studio.desktop -appimage
+./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/apk-editor-studio.desktop -appimage || exit
 if [[ $CI != true ]]; then
     mv APK_Editor_Studio*.AppImage apk-editor-studio_linux_$VERSION.AppImage
 else

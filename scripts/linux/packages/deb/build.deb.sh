@@ -22,8 +22,8 @@ cp -R ../../../../src apk-editor-studio-$VERSION/
 cp -R debian apk-editor-studio-$VERSION/
 cd apk-editor-studio-$VERSION
 
-dh_make -y -s -c gpl3 --createorig
-debuild -uc -us
+dh_make -y -s -c gpl3 --createorig || exit
+debuild -uc -us || exit
 
 cd ..
 if [[ $CI != true ]]; then	
