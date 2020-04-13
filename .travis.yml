@@ -13,6 +13,7 @@ matrix:
       - sudo apt-get install qt5-default qttools5-dev-tools libsecret-1-dev dh-make devscripts fakeroot
     script:
       - scripts/linux/packages/deb/build.deb.sh
+
   - name: Linux (AppImage)
     os: linux
     compiler: gcc
@@ -20,10 +21,11 @@ matrix:
       - sudo add-apt-repository ppa:beineri/opt-qt-5.10.1-xenial -y
       - sudo apt-get update -qq
     install:
-      - sudo apt-get install qt510base qt510imageformats qt510svg qt510tools libsecret-1-dev libgl1-mesa-dev
+      - sudo apt-get install qt510base qt510imageformats qt510svg qt510tools libgl1-mesa-dev libsecret-1-dev adb zipalign
       - source /opt/qt510/bin/qt510-env.sh
     script:
       - scripts/linux/packages/appimage/build.appimage.sh
+
   - name: macOS
     os: osx
     compiler: clang
