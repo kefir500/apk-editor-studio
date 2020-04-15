@@ -11,7 +11,11 @@ ResourceAbstractView::ResourceAbstractView(QAbstractItemView *view, QWidget *par
     layout->addWidget(view);
     layout->setMargin(0);
 
-    connect(view, &QAbstractItemView::activated, this, &ResourceAbstractView::editRequested);
+    connect(view, &QAbstractItemView::activated, [=](const QModelIndex &index) {
+        if (!index.model()->hasChildren(index)) {
+            emit editRequested(index);
+        }
+    });
 
     connect(view, &QAbstractItemView::customContextMenuRequested, [=](const QPoint &point) {
         ResourceModelIndex index = view->indexAt(point);

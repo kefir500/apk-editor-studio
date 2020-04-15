@@ -96,14 +96,14 @@ void MainWindow::initWidgets()
     resourceTree = new ResourceAbstractView(new ResourceTree, this);
     resourceLayout->addWidget(resourceTree);
     resourceLayout->setMargin(0);
-    connect(resourceTree, &ResourceAbstractView::editRequested, this, &MainWindow::openResource);
+    connect(resourceTree, &ResourceAbstractView::editRequested, projectsWidget, &ProjectsWidget::openResourceTab);
 
     QWidget *dockFilesystemWidget = new QWidget(this);
     QVBoxLayout *filesystemLayout = new QVBoxLayout(dockFilesystemWidget);
     filesystemTree = new ResourceAbstractView(new FilesystemTree, this);
     filesystemLayout->addWidget(filesystemTree);
     filesystemLayout->setMargin(0);
-    connect(filesystemTree, &ResourceAbstractView::editRequested, this, &MainWindow::openResource);
+    connect(filesystemTree, &ResourceAbstractView::editRequested, projectsWidget, &ProjectsWidget::openResourceTab);
 
     QWidget *dockIconsWidget = new QWidget(this);
     QVBoxLayout *iconsLayout = new QVBoxLayout(dockIconsWidget);
@@ -111,7 +111,7 @@ void MainWindow::initWidgets()
     iconsLayout->addWidget(iconList);
     iconsLayout->setMargin(0);
     iconsLayout->setSpacing(1);
-    connect(iconList, &ResourceAbstractView::editRequested, this, &MainWindow::openResource);
+    connect(iconList, &ResourceAbstractView::editRequested, projectsWidget, &ProjectsWidget::openResourceTab);
 
     QWidget *dockManifestWidget = new QWidget(this);
     QVBoxLayout *manifestLayout = new QVBoxLayout(dockManifestWidget);
@@ -339,14 +339,6 @@ void MainWindow::saveSettings()
 {
     app->settings->setMainWindowGeometry(saveGeometry());
     app->settings->setMainWindowState(saveState());
-}
-
-Viewer *MainWindow::openResource(const QModelIndex &index)
-{
-    if (!index.model()->hasChildren(index)) {
-        return projectsWidget->openResourceTab(index);
-    }
-    return nullptr;
 }
 
 bool MainWindow::setCurrentProject(Project *project)

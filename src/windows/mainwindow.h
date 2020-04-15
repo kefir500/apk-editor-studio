@@ -36,8 +36,6 @@ private:
     void loadSettings();
     void saveSettings();
 
-    Viewer *openResource(const QModelIndex &index);
-
     bool setCurrentProject(Project *project);
     void setActionsEnabled(const Project *project);
     void updateWindowForProject(const Project *project);
