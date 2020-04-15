@@ -10,7 +10,7 @@ matrix:
     os: linux
     compiler: gcc
     install:
-      - sudo apt-get install qt5-default qttools5-dev-tools libsecret-1-dev dh-make devscripts fakeroot
+      - sudo apt-get install qt5-default qttools5-dev-tools libsecret-1-dev devscripts fakeroot
     script:
       - scripts/linux/packages/deb/build.deb.sh
 
