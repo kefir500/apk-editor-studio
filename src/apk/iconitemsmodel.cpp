@@ -273,10 +273,11 @@ void IconItemsModel::sort(int column, Qt::SortOrder order)
 
 int IconItemsModel::rowCount(const QModelIndex &parent) const
 {
-    auto parentNode = parent.isValid()
-        ? static_cast<TreeNode *>(parent.internalPointer())
-        : root;
-    return parentNode->childCount();
+    if (parent.isValid()) {
+        return static_cast<TreeNode *>(parent.internalPointer())->childCount();
+    } else {
+        return applicationNode->hasChildren() + activitiesNode->hasChildren();
+    }
 }
 
 int IconItemsModel::columnCount(const QModelIndex &parent) const
@@ -287,10 +288,11 @@ int IconItemsModel::columnCount(const QModelIndex &parent) const
 
 bool IconItemsModel::hasChildren(const QModelIndex &parent) const
 {
-    auto parentNode = parent.isValid()
-        ? static_cast<TreeNode *>(parent.internalPointer())
-        : root;
-    return parentNode->hasChildren();
+    if (parent.isValid()) {
+        return static_cast<TreeNode *>(parent.internalPointer())->hasChildren();
+    } else {
+        return applicationNode->hasChildren() || activitiesNode->hasChildren();
+    }
 }
 
 bool IconItemsModel::removeRows(int row, int count, const QModelIndex &parent)
