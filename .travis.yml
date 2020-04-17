@@ -30,8 +30,8 @@ matrix:
     os: osx
     compiler: clang
     install:
-      - brew update
-      - brew install qt
+      - brew uninstall --ignore-dependencies qt
+      - brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/a3e89f6b3fcfd6f4240360053b0f730e8ce4a74d/Formula/qt.rb
       - brew link qt --force
       - nvm install node
       - npm i appdmg

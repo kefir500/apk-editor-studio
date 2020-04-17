@@ -55,7 +55,6 @@ macx {
     QMAKE_POST_LINK += $$executable($$DESTDIR/$${TARGET}.app/Contents/MacOS/zipalign)
     QMAKE_INFO_PLIST = $$PWD/res/deploy/macos/Info.plist
     !equals(CI, true) {
-        QMAKE_MAC_SDK = macosx10.7
-        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
+        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.11
     }
 }
