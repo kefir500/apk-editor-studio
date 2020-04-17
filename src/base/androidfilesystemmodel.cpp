@@ -129,7 +129,7 @@ void AndroidFileSystemModel::cd(const QString &path)
 
 void AndroidFileSystemModel::copy(const QString &src, const QString &dst)
 {
-    auto adb = new Adb::Cp(src, dst, serial, this);
+    auto adb = new Adb::Cp(src, dst + '/', serial, this);
     connect(adb, &Adb::Cp::finished, [=](bool success) {
         if (success) {
             if (dst == currentPath) {
@@ -145,7 +145,7 @@ void AndroidFileSystemModel::copy(const QString &src, const QString &dst)
 
 void AndroidFileSystemModel::move(const QString &src, const QString &dst)
 {
-    auto adb = new Adb::Mv(src, dst, serial, this);
+    auto adb = new Adb::Mv(src, dst + '/', serial, this);
     connect(adb, &Adb::Mv::finished, [=](bool success) {
         if (success) {
             if (dst == currentPath) {
