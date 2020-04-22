@@ -12,4 +12,4 @@ set SEVENZIP=C:\Program Files\7-Zip\7z.exe
 
 rem The following line sets the application version number variable. Don't change it.
 
-for /f %%i in ('type %0\..\..\..\VERSION') do (set VERSION=%%i)
+set /p VERSION=<%0\..\..\..\VERSION
