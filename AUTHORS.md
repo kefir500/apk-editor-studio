@@ -22,6 +22,9 @@
 #### Japanese
 - [Sakai Hiroki](https://www.transifex.com/user/profile/m07jp/)
 
+#### Polish
+- Jerzy Puczek
+
 #### Portuguese
 - [Giancarlo Molinari](https://www.transifex.com/user/profile/pombimsjb/)
 
