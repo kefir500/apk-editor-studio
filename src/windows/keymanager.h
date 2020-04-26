@@ -7,6 +7,8 @@
 
 class KeyManager : public QDialog
 {
+    Q_OBJECT
+
 public:
     explicit KeyManager(QWidget *parent = nullptr);
 
