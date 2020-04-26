@@ -5,7 +5,7 @@
         <location filename="../../src/windows/aboutdialog.cpp" line="18"/>
         <location filename="../../src/windows/aboutdialog.cpp" line="23"/>
         <source>About</source>
-        <translation>O</translation>
+        <translation>O programie</translation>
     </message>
     <message>
         <location filename="../../src/windows/aboutdialog.cpp" line="24"/>
