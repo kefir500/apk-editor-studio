@@ -334,7 +334,7 @@ Project::ProjectCommand::ProjectCommand(Project *project)
     connect(this, &Command::finished, this, [=](bool success) {
         project->logModel.setLoadingState(false);
         if (success) {
-            project->journal(tr("Done."), LogEntry::Success);
+            project->journal(Project::tr("Done."), LogEntry::Success);
             project->state.setCurrentStatus(ProjectState::Status::Normal);
         } else {
             project->state.setCurrentStatus(ProjectState::Status::Errored);
@@ -347,7 +347,7 @@ void Project::LoadUnpackedCommand::run()
     emit started();
 
     qDebug() << qPrintable(QString("Initializing \"%1\"...").arg(project->originalPath));
-    project->journal(tr("Reading APK contents..."));
+    project->journal(Project::tr("Reading APK contents..."));
 
     project->filesystemModel.setRootPath(project->contentsPath);
 
