@@ -2,7 +2,6 @@
 #include "base/application.h"
 #include "base/password.h"
 #include "tools/apktool.h"
-#include <QMessageBox>
 
 Settings::Settings()
 {
@@ -18,166 +17,179 @@ Settings::~Settings()
     delete settings;
 }
 
-bool Settings::reset(QWidget *parent)
+void Settings::reset()
 {
-    const int answer = QMessageBox::question(parent, QString(), app->translate("Settings", "Are you sure you want to reset settings?"));
-    if (answer == QMessageBox::Yes) {
-        Apktool apktool(app->getSharedPath("tools/apktool.jar"));
-        apktool.reset();
-        settings->clear();
-        app->recent->clear();
-        QDir().mkpath(Apktool::getOutputPath());
-        QDir().mkpath(Apktool::getFrameworksPath());
-        Password passwordKeystore("keystore");
-        Password passwordKey("key");
-        passwordKeystore.remove();
-        passwordKey.remove();
-        return true;
-    }
-    return false;
+    Apktool::reset();
+    settings->clear();
+    app->recent->clear();
+    QDir().mkpath(Apktool::getOutputPath());
+    QDir().mkpath(Apktool::getFrameworksPath());
+    Password passwordKeystore("keystore");
+    Password passwordKey("key");
+    passwordKeystore.remove();
+    passwordKey.remove();
+    emit resetDone();
+    emit toolbarUpdated();
 }
 
 // Getters:
 
-QString Settings::getJavaPath()
+QString Settings::getJavaPath() const
 {
-    return settings->value("Preferences/Java").toString();
+    const auto defaultValue = settings->value("Preferences/Java");
+    return settings->value("Java/Path", defaultValue).toString();
 }
 
-QString Settings::getApktoolPath()
+int Settings::getJavaMinHeapSize() const
+{
+    return settings->value("Java/MinHeapSize").toInt();
+}
+
+int Settings::getJavaMaxHeapSize() const
+{
+    return settings->value("Java/MaxHeapSize").toInt();
+}
+
+QString Settings::getApktoolPath() const
 {
     return settings->value("Apktool/Path").toString();
 }
 
-QString Settings::getOutputDirectory()
+QString Settings::getOutputDirectory() const
 {
     return settings->value("Apktool/Output").toString();
 }
 
-QString Settings::getFrameworksDirectory()
+QString Settings::getFrameworksDirectory() const
 {
     return settings->value("Apktool/Frameworks").toString();
 }
 
-bool Settings::getSignApk()
+bool Settings::getSignApk() const
 {
     return settings->value("Signer/Enabled", true).toBool();
 }
 
-bool Settings::getOptimizeApk()
+bool Settings::getOptimizeApk() const
 {
     return settings->value("Zipalign/Enabled", true).toBool();
 }
 
-QString Settings::getApksignerPath()
+QString Settings::getApksignerPath() const
 {
     return settings->value("Signer/Path").toString();
 }
 
-QString Settings::getZipalignPath()
+QString Settings::getZipalignPath() const
 {
     return settings->value("Zipalign/Path").toString();
 }
 
-QString Settings::getAdbPath()
+QString Settings::getAdbPath() const
 {
     return settings->value("ADB/Path").toString();
 }
 
-bool Settings::getCustomKeystore()
+bool Settings::getCustomKeystore() const
 {
     return !settings->value("Signer/DemoKey", true).toBool();
 }
 
-QString Settings::getKeystorePath()
+QString Settings::getKeystorePath() const
 {
     return settings->value("Signer/Keystore").toString();
 }
 
-QString Settings::getKeystorePassword()
+QString Settings::getKeystorePassword() const
 {
     Password password("APK Editor Studio - Keystore");
     return password.get();
 }
 
-QString Settings::getKeyAlias()
+QString Settings::getKeyAlias() const
 {
     return settings->value("Signer/Alias").toString();
 }
 
-QString Settings::getKeyPassword()
+QString Settings::getKeyPassword() const
 {
     Password password("APK Editor Studio - Key");
     return password.get();
 }
 
-QString Settings::getApktoolVersion()
+QString Settings::getApktoolVersion() const
 {
     return settings->value("Apktool/Version").toString();
 }
 
-bool Settings::getDecompileSources()
+bool Settings::getUseAapt2() const
+{
+    return settings->value("Apktool/Aapt2", false).toBool();
+}
+
+bool Settings::getDecompileSources() const
 {
     return settings->value("Apktool/Sources", false).toBool();
 }
 
-bool Settings::getKeepBrokenResources()
+bool Settings::getKeepBrokenResources() const
 {
     return settings->value("Apktool/KeepBroken", false).toBool();
 }
 
-QString Settings::getDeviceAlias(const QString &serial)
+QString Settings::getDeviceAlias(const QString &serial) const
 {
     return settings->value(QString("Devices/%1").arg(serial)).toString();
 }
 
-QString Settings::getLastDirectory()
+QString Settings::getLastDirectory() const
 {
     return settings->value("Preferences/LastDirectory").toString();
 }
 
-bool Settings::getAutoUpdates()
+bool Settings::getAutoUpdates() const
 {
     return settings->value("Preferences/AutoUpdates", true).toBool();
 }
 
-int Settings::getRecentLimit()
+int Settings::getRecentLimit() const
 {
     return settings->value("Preferences/MaxRecent", 10).toInt();
 }
 
-QString Settings::getLanguage()
+QString Settings::getLanguage() const
 {
     return settings->value("Preferences/Language", "en").toString();
 }
 
-QStringList Settings::getToolbar()
+QStringList Settings::getToolbar() const
 {
     QStringList defaults;
     defaults << "open-project" << "save-project" << "install-project" << "separator"
              << "save" << "save-as" << "separator"
              << "project-manager" << "separator"
+             << "android-explorer" << "separator"
              << "close-project" << "separator"
              << "settings" << "spacer" << "donate";
     return settings->value("MainWindow/Toolbar", defaults).toStringList();
 }
 
-QByteArray Settings::getMainWindowGeometry()
+QByteArray Settings::getMainWindowGeometry() const
 {
     return settings->value("MainWindow/Geometry").toByteArray();
 }
 
-QByteArray Settings::getMainWindowState()
+QByteArray Settings::getMainWindowState() const
 {
     return settings->value("MainWindow/State").toByteArray();
 }
 
-bool Settings::hasRememberState(const QString &identifier)
+bool Settings::hasRememberState(const QString &identifier) const
 {
     return settings->contains(QString("Remember/%1").arg(identifier));
 }
 
-bool Settings::getRememberState(const QString &identifier)
+bool Settings::getRememberState(const QString &identifier) const
 {
     return settings->value(QString("Remember/%1").arg(identifier)).toBool();
 }
@@ -186,7 +198,17 @@ bool Settings::getRememberState(const QString &identifier)
 
 void Settings::setJavaPath(const QString &path)
 {
-    settings->setValue("Preferences/Java", path);
+    settings->setValue("Java/Path", path);
+}
+
+void Settings::setJavaMinHeapSize(int size)
+{
+    settings->setValue("Java/MinHeapSize", size);
+}
+
+void Settings::setJavaMaxHeapSize(int size)
+{
+    settings->setValue("Java/MaxHeapSize", size);
 }
 
 void Settings::setApktoolPath(const QString &path)
@@ -261,6 +283,11 @@ void Settings::setApktoolVersion(const QString &version)
     settings->setValue("Apktool/Version", version);
 }
 
+void Settings::setUseAapt2(bool aapt2)
+{
+    settings->setValue("Apktool/Aapt2", aapt2);
+}
+
 void Settings::setDecompileSources(bool smali)
 {
     settings->setValue("Apktool/Sources", smali);
@@ -299,6 +326,7 @@ void Settings::setLanguage(const QString &locale)
 void Settings::setToolbar(const QStringList &actions)
 {
     settings->setValue("MainWindow/Toolbar", actions);
+    emit toolbarUpdated();
 }
 
 void Settings::setMainWindowGeometry(const QByteArray &geometry)

@@ -1,5 +1,8 @@
 #include "apk/resourceitemsmodel.h"
+#include "apk/resourcemodelindex.h"
 #include "base/utils.h"
+#include <QtConcurrent/QtConcurrent>
+#include <QDirIterator>
 #include <QIcon>
 
 #ifdef QT_DEBUG
@@ -17,6 +20,53 @@ ResourceItemsModel::~ResourceItemsModel()
     delete root;
 }
 
+QFuture<void> ResourceItemsModel::initialize(const QString &path)
+{
+    beginResetModel();
+
+    return QtConcurrent::run([=] {
+
+        // Parse resource directories:
+
+        QMap<QString, ResourceNode *> mapResourceTypes;
+        QMap<QString, ResourceNode *> mapResourceGroups;
+
+        QDirIterator resourceDirectories(path, QDir::Dirs | QDir::NoDotAndDotDot);
+        while (resourceDirectories.hasNext()) {
+
+            const QFileInfo resourceDirectory = QFileInfo(resourceDirectories.next());
+            const QString resourceTypeTitle = resourceDirectory.fileName().split('-').first(); // E.g., "drawable", "values"...
+            ResourceNode *resourceTypeNode = mapResourceTypes.value(resourceTypeTitle, nullptr);
+            if (!resourceTypeNode) {
+                resourceTypeNode = new ResourceNode(resourceTypeTitle, nullptr);
+                root->addChild(resourceTypeNode);
+                mapResourceTypes[resourceTypeTitle] = resourceTypeNode;
+            }
+
+            // Parse resource files:
+
+            QDirIterator resourceFiles(resourceDirectory.filePath(), QDir::Files);
+            while (resourceFiles.hasNext()) {
+
+                const QFileInfo resourceFile(resourceFiles.next());
+                const QString resourceFilename = resourceFile.fileName();
+
+                ResourceNode *resourceGroupNode  = mapResourceGroups.value(resourceFilename, nullptr);
+                if (!resourceGroupNode) {
+                    resourceGroupNode = new ResourceNode(resourceFilename, nullptr);
+                    resourceTypeNode->addChild(resourceGroupNode);
+                    mapResourceGroups[resourceFilename] = resourceGroupNode;
+                }
+
+                ResourceNode *fileNode = new ResourceNode(resourceFilename, new ResourceFile(resourceFile.filePath()));
+                resourceGroupNode->addChild(fileNode);
+            }
+        }
+
+        endResetModel();
+    });
+}
+
 QModelIndex ResourceItemsModel::addNode(ResourceNode *node, const QModelIndex &parent)
 {
     ResourceNode *parentNode = parent.isValid() ? static_cast<ResourceNode *>(parent.internalPointer()) : root;
@@ -24,13 +74,12 @@ QModelIndex ResourceItemsModel::addNode(ResourceNode *node, const QModelIndex &p
         parentNode->addChild(node);
     endInsertRows();
     auto index = createIndex(rowCount(parent) - 1, 0, node);
-    emit added(index);
     return index;
 }
 
 bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString &with)
 {
-    const QString what = index.data(PathRole).toString();
+    const QString what = ResourceModelIndex(index).path();
     if (Utils::replaceFile(what, with)) {
         emit dataChanged(index, index);
         return true;
@@ -46,6 +95,11 @@ bool ResourceItemsModel::removeResource(const QModelIndex &index)
     return removeRow(index.row(), index.parent());
 }
 
+QString ResourceItemsModel::getResourcePath(const QModelIndex &index) const
+{
+    return index.sibling(index.row(), PathColumn).data().toString();
+}
+
 QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
 {
     if (index.isValid()) {
@@ -54,7 +108,7 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
         switch (role) {
         case Qt::DisplayRole:
         case SortRole:
-            if (column == NodeCaption) {
+            if (column == CaptionColumn) {
                 return node->getCaption();
             }
         }
@@ -63,7 +117,7 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
             switch (role) {
             case SortRole:
                 switch (column) {
-                case ResourceDpi: {
+                case DpiColumn: {
                     auto dpi = file->getDpi().toLower();
                     if (dpi == "ldpi") { return 0; }
                     if (dpi == "mdpi") { return 1; }
@@ -76,41 +130,33 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
                     if (dpi == "anydpi") { return 8; }
                     return 9;
                 }
-                case ResourceApi:
+                case ApiColumn:
                     return file->getApiVersion().remove(0, 1).toInt();
                 }
             case Qt::DisplayRole:
                 switch (column) {
-                case ResourceLanguage:
+                case LanguageColumn:
                     return file->getLanguageName();
-                case ResourceLocale:
+                case LocaleColumn:
                     return file->getLocaleCode();
-                case ResourceDpi:
+                case DpiColumn:
                     return file->getDpi();
-                case ResourceApi:
+                case ApiColumn:
                     return file->getApiVersion();
-                case ResourceQualifiers:
+                case QualifiersColumn:
                     return file->getReadableQualifiers();
-                case ResourcePath:
+                case PathColumn:
                     return file->getFilePath();
                 }
                 break;
-            case PathRole:
-                return file->getFilePath();
-            case IconRole:
-                return file->getFileIcon();
             case Qt::DecorationRole:
                 switch (column) {
-                case NodeCaption:
+                case CaptionColumn:
                     return file->getFileIcon();
-                case ResourceLanguage:
+                case LanguageColumn:
                     return file->getLanguageIcon();
                 }
                 break;
-            case ResourceNameRole:
-                return file->getName();
-            case ResourceTypeRole:
-                return file->getType();
             }
         }
     }
@@ -121,14 +167,21 @@ QVariant ResourceItemsModel::headerData(int section, Qt::Orientation orientation
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
-            case NodeCaption:        return tr("Resource");
-            case ResourceLanguage:   return tr("Language");
-            case ResourceLocale:     return tr("Locale");
+        case CaptionColumn:
+            return tr("Resource");
+        case LanguageColumn:
+            return tr("Language");
+        case LocaleColumn:
+            return tr("Locale");
+        case QualifiersColumn:
             //: This string refers to the Android qualifiers (https://developer.android.com/guide/topics/resources/providing-resources).
-            case ResourceQualifiers: return tr("Qualifiers");
-            case ResourcePath:       return tr("Path");
-            case ResourceDpi:        return "DPI";
-            case ResourceApi:        return "API";
+            return tr("Qualifiers");
+        case PathColumn:
+            return tr("Path");
+        case DpiColumn:
+            return "DPI";
+        case ApiColumn:
+            return "API";
         }
     }
     return QVariant();
@@ -192,7 +245,7 @@ QModelIndex ResourceItemsModel::findIndex(const QString &path) const
 QModelIndex ResourceItemsModel::findIndex(const QString &path, const QModelIndex &parent) const
 {
     for (int row = 0; row < rowCount(parent); ++row) {
-        auto resource = index(row, ResourcePath, parent);
+        auto resource = index(row, PathColumn, parent);
         if (resource.data().toString() == path) {
             return resource;
         }
@@ -204,7 +257,7 @@ QModelIndex ResourceItemsModel::findIndex(const QString &path, const QModelIndex
     return {};
 }
 
-const ResourceFile *ResourceItemsModel::getResource(const QModelIndex &index) const
+const ResourceFile *ResourceItemsModel::getResourceFile(const QModelIndex &index) const
 {
     if (!index.isValid()) {
         return nullptr;

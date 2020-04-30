@@ -9,8 +9,9 @@ rm -rf "APK Editor Studio.app"
 
 # Build & Deploy
 
-qmake ../../../.. QMAKE_CXXFLAGS+=-Wno-inconsistent-missing-override DESTDIR=. && make || { echo "Could not build the project."; exit 1; }
-macdeployqt apk-editor-studio.app || { echo "Could not deploy the project."; exit 2; }
+qmake ../../../.. QMAKE_CXXFLAGS+=-Wno-inconsistent-missing-override DESTDIR=.
+make || exit
+macdeployqt apk-editor-studio.app || exit
 find apk-editor-studio.app -name ".DS_Store" -type f -delete
 
 # Package

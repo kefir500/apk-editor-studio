@@ -1,15 +1,22 @@
 #ifndef JAVA_H
 #define JAVA_H
 
-#include "tools/executable.h"
+#include "base/command.h"
 
-class Java : public Executable
+namespace Java
 {
-public:
-    explicit Java(QObject *parent = nullptr);
-    explicit Java(const QString &path, QObject *parent = nullptr) : Executable(path, parent) {}
+    class Version : public Command
+    {
+        Q_OBJECT
 
-    QString version();
-};
+    public:
+        Version(QObject *parent = nullptr) : Command(parent) {}
+        void run() override;
+        const QString &version() const;
+
+    private:
+        QString resultVersion;
+    };
+}
 
 #endif // JAVA_H

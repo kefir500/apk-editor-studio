@@ -15,6 +15,7 @@ public:
     ResourceItemsModel *sourceModel() const;
     bool replaceResource(const QModelIndex &index, const QString &path = QString()) override;
     bool removeResource(const QModelIndex &index) override;
+    QString getResourcePath(const QModelIndex &index) const override;
 };
 
 #endif // SORTFILTERPROXYMODEL_H

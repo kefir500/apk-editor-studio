@@ -4,13 +4,12 @@ ProjectState::ProjectState()
 {
     unpacked = false;
     modified = false;
-    lastActionFailed = false;
-    currentAction = ProjectIdle;
+    status = Status::Normal;
 }
 
-void ProjectState::setCurrentAction(ProjectAction action)
+void ProjectState::setCurrentStatus(const Status &status)
 {
-    currentAction = action;
+    this->status = status;
     emit changed();
 }
 
@@ -26,15 +25,9 @@ void ProjectState::setModified(bool modified)
     emit changed();
 }
 
-void ProjectState::setLastActionFailed(bool fail)
+const ProjectState::Status &ProjectState::getCurrentStatus() const
 {
-    lastActionFailed = fail;
-    emit changed();
-}
-
-ProjectState::ProjectAction ProjectState::getCurrentAction() const
-{
-    return currentAction;
+    return status;
 }
 
 bool ProjectState::isUnpacked() const
@@ -47,9 +40,9 @@ bool ProjectState::isModified() const
     return modified;
 }
 
-bool ProjectState::isLastActionFailed() const
+bool ProjectState::isIdle() const
 {
-    return lastActionFailed;
+    return status == Status::Normal || status == Status::Errored;
 }
 
 bool ProjectState::canEdit() const
@@ -59,12 +52,12 @@ bool ProjectState::canEdit() const
 
 bool ProjectState::canSave() const
 {
-    return isUnpacked() && (currentAction == ProjectIdle);
+    return isUnpacked() && isIdle();
 }
 
 bool ProjectState::canInstall() const
 {
-    return isUnpacked() && (currentAction == ProjectIdle);
+    return isUnpacked() && isIdle();
 }
 
 bool ProjectState::canExplore() const
@@ -74,5 +67,5 @@ bool ProjectState::canExplore() const
 
 bool ProjectState::canClose() const
 {
-    return currentAction == ProjectIdle;
+    return isIdle();
 }

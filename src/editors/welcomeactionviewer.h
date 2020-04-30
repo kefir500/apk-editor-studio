@@ -16,6 +16,7 @@ protected:
 private:
     QPushButton *btnOpen;
     QPushButton *btnInstall;
+    QPushButton *btnExplorer;
 };
 
 #endif // WELCOMEACTIONVIEWER_H

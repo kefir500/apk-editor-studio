@@ -20,7 +20,11 @@ SOURCES += \
     $$PWD/apk/titlenode.cpp \
     $$PWD/apk/xmlmodel.cpp \
     $$PWD/apk/xmlnode.cpp \
+    $$PWD/base/actionprovider.cpp \
+    $$PWD/base/androidfilesystemitem.cpp \
+    $$PWD/base/androidfilesystemmodel.cpp \
     $$PWD/base/application.cpp \
+    $$PWD/base/command.cpp \
     $$PWD/base/device.cpp \
     $$PWD/base/deviceitemsmodel.cpp \
     $$PWD/base/fileformat.cpp \
@@ -29,9 +33,9 @@ SOURCES += \
     $$PWD/base/language.cpp \
     $$PWD/base/main.cpp \
     $$PWD/base/password.cpp \
+    $$PWD/base/process.cpp \
     $$PWD/base/recent.cpp \
     $$PWD/base/settings.cpp \
-    $$PWD/base/tasks.cpp \
     $$PWD/base/treenode.cpp \
     $$PWD/base/updater.cpp \
     $$PWD/base/utils.cpp \
@@ -49,20 +53,19 @@ SOURCES += \
     $$PWD/tools/adb.cpp \
     $$PWD/tools/apksigner.cpp \
     $$PWD/tools/apktool.cpp \
-    $$PWD/tools/executable.cpp \
-    $$PWD/tools/jar.cpp \
     $$PWD/tools/java.cpp \
     $$PWD/tools/javac.cpp \
     $$PWD/tools/keytool.cpp \
-    $$PWD/tools/which.cpp \
     $$PWD/tools/zipalign.cpp \
     $$PWD/widgets/decorationsizedelegate.cpp \
+    $$PWD/widgets/deselectablelistview.cpp \
     $$PWD/widgets/elidedlabel.cpp \
     $$PWD/widgets/filebox.cpp \
     $$PWD/widgets/filesystemtree.cpp \
     $$PWD/widgets/gradientwidget.cpp \
     $$PWD/widgets/iconlist.cpp \
     $$PWD/widgets/itembuttondelegate.cpp \
+    $$PWD/widgets/loadingwidget.cpp \
     $$PWD/widgets/logdelegate.cpp \
     $$PWD/widgets/logview.cpp \
     $$PWD/widgets/manifestview.cpp \
@@ -76,14 +79,17 @@ SOURCES += \
     $$PWD/widgets/spacer.cpp \
     $$PWD/widgets/toolbar.cpp \
     $$PWD/windows/aboutdialog.cpp \
+    $$PWD/windows/androidexplorer.cpp \
     $$PWD/windows/devicemanager.cpp \
     $$PWD/windows/dialogs.cpp \
+    $$PWD/windows/keycreator.cpp \
     $$PWD/windows/keymanager.cpp \
+    $$PWD/windows/keyselector.cpp \
+    $$PWD/windows/keystorecreator.cpp \
     $$PWD/windows/mainwindow.cpp \
     $$PWD/windows/optionsdialog.cpp \
     $$PWD/windows/permissioneditor.cpp \
     $$PWD/windows/selectdialog.cpp \
-    $$PWD/windows/waitdialog.cpp \
     $$PWD/windows/yesalwaysdialog.cpp
 
 HEADERS += \
@@ -109,7 +115,12 @@ HEADERS += \
     $$PWD/apk/titlenode.h \
     $$PWD/apk/xmlmodel.h \
     $$PWD/apk/xmlnode.h \
+    $$PWD/base/actionprovider.h \
+    $$PWD/base/androidfilesystemitem.h \
+    $$PWD/base/androidfilesystemmodel.h \
     $$PWD/base/application.h \
+    $$PWD/base/clipboard.h \
+    $$PWD/base/command.h \
     $$PWD/base/device.h \
     $$PWD/base/deviceitemsmodel.h \
     $$PWD/base/fileformat.h \
@@ -117,10 +128,9 @@ HEADERS += \
     $$PWD/base/iconprovider.h \
     $$PWD/base/language.h \
     $$PWD/base/password.h \
+    $$PWD/base/process.h \
     $$PWD/base/recent.h \
-    $$PWD/base/result.h \
     $$PWD/base/settings.h \
-    $$PWD/base/tasks.h \
     $$PWD/base/treenode.h \
     $$PWD/base/updater.h \
     $$PWD/base/utils.h \
@@ -138,22 +148,20 @@ HEADERS += \
     $$PWD/tools/adb.h \
     $$PWD/tools/apksigner.h \
     $$PWD/tools/apktool.h \
-    $$PWD/tools/executable.h \
-    $$PWD/tools/jar.h \
     $$PWD/tools/java.h \
     $$PWD/tools/javac.h \
     $$PWD/tools/keystore.h \
     $$PWD/tools/keytool.h \
-    $$PWD/tools/tools.h \
-    $$PWD/tools/which.h \
     $$PWD/tools/zipalign.h \
     $$PWD/widgets/decorationsizedelegate.h \
+    $$PWD/widgets/deselectablelistview.h \
     $$PWD/widgets/elidedlabel.h \
     $$PWD/widgets/filebox.h \
     $$PWD/widgets/filesystemtree.h \
     $$PWD/widgets/gradientwidget.h \
     $$PWD/widgets/iconlist.h \
     $$PWD/widgets/itembuttondelegate.h \
+    $$PWD/widgets/loadingwidget.h \
     $$PWD/widgets/logdelegate.h \
     $$PWD/widgets/logview.h \
     $$PWD/widgets/manifestview.h \
@@ -167,14 +175,17 @@ HEADERS += \
     $$PWD/widgets/spacer.h \
     $$PWD/widgets/toolbar.h \
     $$PWD/windows/aboutdialog.h \
+    $$PWD/windows/androidexplorer.h \
     $$PWD/windows/devicemanager.h \
     $$PWD/windows/dialogs.h \
+    $$PWD/windows/keycreator.h \
     $$PWD/windows/keymanager.h \
+    $$PWD/windows/keyselector.h \
+    $$PWD/windows/keystorecreator.h \
     $$PWD/windows/mainwindow.h \
     $$PWD/windows/optionsdialog.h \
     $$PWD/windows/permissioneditor.h \
     $$PWD/windows/selectdialog.h \
-    $$PWD/windows/waitdialog.h \
     $$PWD/windows/yesalwaysdialog.h
 
 INCLUDEPATH += $$PWD

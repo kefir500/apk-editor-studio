@@ -15,7 +15,7 @@ public:
 
 private:
     QTableView *table;
-    TitleItemsModel *model;
+    TitleItemsModel *model = nullptr;
 };
 
 #endif // TITLEEDITOR_H

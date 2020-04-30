@@ -1,4 +1,5 @@
 #include "windows/dialogs.h"
+#include "windows/devicemanager.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include <QFileDialog>
@@ -104,58 +105,32 @@ QString Dialogs::getSaveKeystoreFilename(const QString &defaultPath, QWidget *pa
     return Dialogs::getSaveFilename(defaultPath, FileFormatList::forKeystore(), parent);
 }
 
-bool Dialogs::openApk(QWidget *parent)
-{
-    return Dialogs::openApk(QString(), parent);
-}
-
-bool Dialogs::openApk(const QString &defaultPath, QWidget *parent)
-{
-    const QStringList paths = getOpenApkFilenames(defaultPath, parent);
-    if (paths.isEmpty()) {
-        return false;
-    }
-    for (const QString &path : paths) {
-        app->openApk(path);
-    }
-    return true;
-}
-
 QString Dialogs::getOpenDirectory(const QString &defaultPath, QWidget *parent)
 {
     const QString path = makePath(defaultPath);
     return QFileDialog::getExistingDirectory(parent, QString(), path);
 }
 
-QString Dialogs::combo(const QStringList &options, QWidget *parent)
+QSharedPointer<Device> Dialogs::getInstallDevice(QWidget *parent)
 {
-    return Dialogs::combo(options, QString(), QString(), parent);
+    const QString title(app->translate("Dialogs", "Install APK"));
+    const QString action(app->translate("Dialogs", "Install"));
+    const QIcon icon(app->icons.get("install.png"));
+    return DeviceManager::selectDevice(title, action, icon, parent);
 }
 
-QString Dialogs::combo(const QStringList &options, const QString &current, QWidget *parent)
+QSharedPointer<Device> Dialogs::getExplorerDevice(QWidget *parent)
 {
-    return Dialogs::combo(options, current, QString(), parent);
+    const QString action(app->translate("AndroidExplorer", "Android Explorer"));
+    const QIcon icon(app->icons.get("explorer.png"));
+    return DeviceManager::selectDevice({}, action, icon, parent);
 }
 
-QString Dialogs::combo(const QStringList &options, const QString &current, const QString &title, QWidget *parent)
+QSharedPointer<Device> Dialogs::getScreenshotDevice(QWidget *parent)
 {
-    QDialog dialog(parent);
-    dialog.setWindowTitle(title);
-    dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
-    QComboBox *combo = new QComboBox(&dialog);
-    combo->addItems(options);
-    combo->setCurrentText(current);
-
-    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
-    app->connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-    app->connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
-
-    QVBoxLayout *layout = new QVBoxLayout(&dialog);
-    layout->addWidget(combo);
-    layout->addWidget(buttons);
-
-    return dialog.exec() == QDialog::Accepted ? combo->currentText() : QString();
+    const QString action(app->translate("Dialogs", "Screenshot"));
+    const QIcon icon(app->icons.get("screenshot.png"));
+    return DeviceManager::selectDevice({}, action, icon, parent);
 }
 
 int Dialogs::detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon, QWidget *parent)

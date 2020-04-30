@@ -1,5 +1,5 @@
 #include "windows/devicemanager.h"
-#include "windows/waitdialog.h"
+#include "widgets/loadingwidget.h"
 #include "base/application.h"
 #include <QFormLayout>
 #include <QGroupBox>
@@ -20,6 +20,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     deviceList = new QListView(this);
     deviceList->setModel(&deviceModel);
     deviceList->setCurrentIndex(QModelIndex());
+    auto loading = new LoadingWidget(deviceList);
 
     QPushButton *btnRefresh = new QPushButton(tr("Refresh"), this);
     btnRefresh->setIcon(app->icons.get("refresh.png"));
@@ -39,11 +40,11 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     QGroupBox *groupInfo = new QGroupBox(tr("Device Information"), this);
 
     QFormLayout *infoLayout = new QFormLayout(groupInfo);
-    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceAlias, Qt::Horizontal).toString(), fieldAlias);
-    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceSerial, Qt::Horizontal).toString(), labelSerial);
-    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceProduct, Qt::Horizontal).toString(), labelProduct);
-    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceModel, Qt::Horizontal).toString(), labelModel);
-    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceDevice, Qt::Horizontal).toString(),labelDevice);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::AliasColumn, Qt::Horizontal).toString(), fieldAlias);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::SerialColumn, Qt::Horizontal).toString(), labelSerial);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::ProductColumn, Qt::Horizontal).toString(), labelProduct);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::ModelColumn, Qt::Horizontal).toString(), labelModel);
+    infoLayout->addRow(deviceModel.headerData(DeviceItemsModel::DeviceColumn, Qt::Horizontal).toString(),labelDevice);
 
     QHBoxLayout *devicesLayout = new QHBoxLayout;
     devicesLayout->addLayout(listLayout, 2);
@@ -57,54 +58,63 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     layout->addWidget(dialogButtons);
 
     connect(deviceList->selectionModel(), &QItemSelectionModel::currentChanged, [=](const QModelIndex &index) {
-        const Device *device = deviceModel.get(index);
-        setCurrentDevice(device);
+        const auto device = deviceModel.get(index);
+        setCurrentDevice(device.data());
     });
     connect(fieldAlias, &QLineEdit::textChanged, [=](const QString &alias) {
-        QModelIndex index = deviceModel.index(deviceList->currentIndex().row(), DeviceItemsModel::DeviceAlias);
+        QModelIndex index = deviceModel.index(deviceList->currentIndex().row(), DeviceItemsModel::AliasColumn);
         deviceModel.setData(index, alias);
     });
-    connect(btnRefresh, &QPushButton::clicked, this, &DeviceManager::refreshDevices);
+    connect(&deviceModel, &DeviceItemsModel::fetching, this, [=]() {
+        loading->show();
+        setEnabled(false);
+    });
+    connect(&deviceModel, &DeviceItemsModel::fetched, this, [=]() {
+        loading->hide();
+        setEnabled(true);
+    });
+    connect(btnRefresh, &QPushButton::clicked, &deviceModel, &DeviceItemsModel::refresh);
     connect(btnApply, &QPushButton::clicked, &deviceModel, &DeviceItemsModel::save);
     connect(dialogButtons, &QDialogButtonBox::accepted, this, &DeviceManager::accept);
     connect(dialogButtons, &QDialogButtonBox::rejected, this, &DeviceManager::reject);
     connect(this, &DeviceManager::accepted, &deviceModel, &DeviceItemsModel::save);
 
     setCurrentDevice(nullptr);
-    refreshDevices();
-}
-
-void DeviceManager::refreshDevices()
-{
-    WAIT
     deviceModel.refresh();
 }
 
-const Device *DeviceManager::getTargetDevice()
+QSharedPointer<Device> DeviceManager::selectDevice(const QString &title, const QString &action, const QIcon &icon, QWidget *parent)
 {
-    setWindowTitle(tr("Install APK"));
-    setWindowIcon(app->icons.get("install.png"));
+    DeviceManager dialog(parent);
+    dialog.setWindowTitle(title.isEmpty() ? tr("Select Device") : title);
+    if (!icon.isNull()) {
+        dialog.setWindowIcon(icon);
+    }
 
-    QPushButton *btnInstall = dialogButtons->button(QDialogButtonBox::Ok);
-    btnInstall->setText(tr("Install"));
-    btnInstall->setIcon(app->icons.get("install.png"));
-    btnInstall->setEnabled(false);
+    auto btnSelect = dialog.dialogButtons->button(QDialogButtonBox::Ok);
+    btnSelect->setEnabled(false);
+    if (!action.isEmpty()) {
+        btnSelect->setText(action);
+    }
+    if (!icon.isNull()) {
+        btnSelect->setIcon(icon);
+    }
 
-    connect(deviceList->selectionModel(), &QItemSelectionModel::currentChanged, [=](const QModelIndex &index) {
-        const Device *device = deviceModel.get(index);
-        btnInstall->setEnabled(device);
+    connect(&dialog, &DeviceManager::currentChanged, [=](const Device *device) {
+        btnSelect->setEnabled(device);
     });
 
-    if (exec() == QDialog::Accepted) {
-        const Device *device = deviceModel.get(deviceList->currentIndex());
+    if (dialog.exec() == QDialog::Accepted) {
+        const auto device = dialog.deviceModel.get(dialog.deviceList->currentIndex());
         return device;
     }
 
-    return nullptr;
+    return {};
 }
 
 bool DeviceManager::setCurrentDevice(const Device *device)
 {
+    emit currentChanged(device);
     if (device) {
         fieldAlias->setEnabled(true);
         fieldAlias->setText(device->getAlias());

@@ -1,8 +1,7 @@
 #include "apk/resourcemodelindex.h"
-#include "apk/resourceitemsmodel.h"
-#include "apk/iconitemsmodel.h"
-#include "apk/filesystemmodel.h"
+#include "apk/iresourceitemsmodel.h"
 #include "base/utils.h"
+#include <QIcon>
 
 #ifdef QT_DEBUG
     #include <QDebug>
@@ -10,12 +9,12 @@
 
 QString ResourceModelIndex::path() const
 {
-    return data(IResourceItemsModel::PathRole).toString();
+    return qobject_cast<IResourceItemsModel *>(model())->getResourcePath(*this);
 }
 
 QIcon ResourceModelIndex::icon() const
 {
-    return data(IResourceItemsModel::IconRole).value<QIcon>();
+    return data(Qt::DecorationRole).value<QIcon>();
 }
 
 bool ResourceModelIndex::save() const

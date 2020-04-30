@@ -6,10 +6,10 @@
 #include "tools/apksigner.h"
 #include "tools/zipalign.h"
 #include "windows/dialogs.h"
-#include "windows/keymanager.h"
+#include "windows/keyselector.h"
 #include <QUuid>
-#include <QDirIterator>
 #include <QInputDialog>
+#include <QFutureWatcher>
 #include <QDebug>
 
 Project::Project(const QString &path) : resourcesModel(this)
@@ -20,10 +20,7 @@ Project::Project(const QString &path) : resourcesModel(this)
     manifest = nullptr;
     filesystemModel.setSourceModel(&resourcesModel);
     iconsProxy.setSourceModel(&resourcesModel);
-    connect(&state, &ProjectState::changed, [this]() {
-        logModel.setLoadingState(state.getCurrentAction() != ProjectState::ProjectIdle);
-        emit changed();
-    });
+    connect(&state, &ProjectState::changed, this, &Project::changed);
 }
 
 Project::~Project()
@@ -40,182 +37,31 @@ Project::~Project()
 
 void Project::unpack()
 {
-    logModel.clear();
-
-    auto taskOpen = createUnpackTask(getOriginalPath());
-
-    connect(taskOpen, &Tasks::Task::started, this, [=]() {
-        state.setLastActionFailed(false);
-    }, Qt::QueuedConnection);
-
-    connect(taskOpen, &Tasks::Task::success, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        journal(tr("Done."), LogEntry::Success);
-    }, Qt::QueuedConnection);
-
-    connect(taskOpen, &Tasks::Task::error, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        state.setLastActionFailed(true);
-    }, Qt::QueuedConnection);
-
-    taskOpen->run();
+    auto command = new ProjectCommand(this);
+    command->add(createUnpackCommand(getOriginalPath()), true);
+    command->run();
 }
 
-void Project::save(QString path)
+void Project::save(const QString &path)
 {
-    logModel.clear();
-
-    path = QDir::toNativeSeparators(path);
-    QFileInfo fileInfo(path);
-    const QString directory = fileInfo.absolutePath();
-    app->settings->setLastDirectory(directory);
-
-    auto taskSave = createSaveTask(path);
-
-    connect(taskSave, &Tasks::Batch::started, this, [=]() {
-        state.setLastActionFailed(false);
-    }, Qt::QueuedConnection);
-
-    connect(taskSave, &Tasks::Batch::success, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        journal(tr("Done."), LogEntry::Success);
-    }, Qt::QueuedConnection);
-
-    connect(taskSave, &Tasks::Batch::error, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        state.setLastActionFailed(true);
-    }, Qt::QueuedConnection);
-
-    taskSave->run();
+    auto command = new ProjectCommand(this);
+    command->add(createSaveCommand(path), true);
+    command->run();
 }
 
-void Project::saveAndInstall(QString path, const QString &serial)
+void Project::saveAndInstall(const QString &path, const QString &serial)
 {
-    logModel.clear();
-
-    path = QDir::toNativeSeparators(path);
-    QFileInfo fileInfo(path);
-    const QString directory = fileInfo.absolutePath();
-    app->settings->setLastDirectory(directory);
-
-    auto tasks = new Tasks::Batch;
-
-    tasks->add(createSaveTask(path), true);
-    tasks->add(createInstallTask(serial), true);
-
-    connect(tasks, &Tasks::Batch::started, this, [=]() {
-        state.setLastActionFailed(false);
-    }, Qt::QueuedConnection);
-
-    connect(tasks, &Tasks::Batch::success, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        journal(tr("Done."), LogEntry::Success);
-    }, Qt::QueuedConnection);
-
-    connect(tasks, &Tasks::Batch::error, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        state.setLastActionFailed(true);
-    }, Qt::QueuedConnection);
-
-    tasks->run();
+    auto command = new ProjectCommand(this);
+    command->add(createSaveCommand(path), true);
+    command->add(createInstallCommand(serial), true);
+    command->run();
 }
 
 void Project::install(const QString &serial)
 {
-    logModel.clear();
-
-    auto taskInstall = createInstallTask(serial);
-
-    connect(taskInstall, &Tasks::Install::started, this, [=]() {
-        state.setLastActionFailed(false);
-    }, Qt::QueuedConnection);
-
-    connect(taskInstall, &Tasks::Install::success, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        journal(tr("Done."), LogEntry::Success);
-    }, Qt::QueuedConnection);
-
-    connect(taskInstall, &Tasks::Install::error, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectIdle);
-        state.setLastActionFailed(true);
-    }, Qt::QueuedConnection);
-
-    taskInstall->run();
-}
-
-Manifest *Project::initialize()
-{
-    qDebug() << qPrintable(QString("Initializing \"%1\"...").arg(getOriginalPath()));
-
-    filesystemModel.setRootPath(contentsPath);
-
-    // Parse application manifest:
-
-    manifest = new Manifest(contentsPath + "/AndroidManifest.xml", contentsPath + "/apktool.yml");
-    manifestModel.initialize(manifest);
-
-    // Parse resource directories:
-
-    QMap<QString, QModelIndex> mapResourceTypes;
-    QMap<QString, QModelIndex> mapResourceGroups;
-
-    QDirIterator resourceDirectories(contentsPath + "/res/", QDir::Dirs | QDir::NoDotAndDotDot);
-    while (resourceDirectories.hasNext()) {
-
-        const QFileInfo resourceDirectory = QFileInfo(resourceDirectories.next());
-        const QString resourceTypeTitle = resourceDirectory.fileName().split('-').first(); // E.g., "drawable", "values"...
-        QModelIndex resourceTypeIndex = mapResourceTypes.value(resourceTypeTitle, QModelIndex());
-        ResourceNode *resourceTypeNode = nullptr;
-        if (resourceTypeIndex.isValid()) {
-            resourceTypeNode = static_cast<ResourceNode *>(resourceTypeIndex.internalPointer());
-        } else {
-            resourceTypeNode = new ResourceNode(resourceTypeTitle, nullptr);
-            resourceTypeIndex = resourcesModel.addNode(resourceTypeNode);
-            mapResourceTypes[resourceTypeTitle] = resourceTypeIndex;
-        }
-
-        // Parse resource files:
-
-        QDirIterator resourceFiles(resourceDirectory.filePath(), QDir::Files);
-        while (resourceFiles.hasNext()) {
-
-            const QFileInfo resourceFile(resourceFiles.next());
-            const QString resourceFilename = resourceFile.fileName();
-
-            QModelIndex resourceGroupIndex = mapResourceGroups.value(resourceFilename, QModelIndex());
-            ResourceNode *resourceGroupNode = nullptr;
-            if (resourceGroupIndex.isValid()) {
-                resourceGroupNode = static_cast<ResourceNode *>(resourceGroupIndex.internalPointer());
-            } else {
-                resourceGroupNode = new ResourceNode(resourceFilename, nullptr);
-                resourceGroupIndex = resourcesModel.addNode(resourceGroupNode, resourceTypeIndex);
-                mapResourceGroups[resourceFilename] = resourceGroupIndex;
-            }
-
-            ResourceNode *fileNode = new ResourceNode(resourceFilename, new ResourceFile(resourceFile.filePath()));
-            resourcesModel.addNode(fileNode, resourceGroupIndex);
-        }
-    }
-
-    iconsProxy.sort();
-
-    connect(&resourcesModel, &ResourceItemsModel::dataChanged, [=] () {
-        state.setModified(true);
-    });
-    connect(&filesystemModel, &QFileSystemModel::dataChanged, [=] () {
-        state.setModified(true);
-    });
-    connect(&iconsProxy, &IconItemsModel::dataChanged, [=] () {
-        state.setModified(true);
-    });
-    connect(&manifestModel, &ManifestModel::dataChanged, [=] (const QModelIndex &, const QModelIndex &, const QVector<int> &roles) {
-        if (roles.contains(Qt::DisplayRole) || roles.contains(Qt::EditRole)) {
-            state.setModified(true);
-        }
-    });
-
-    qDebug();
-    return manifest;
+    auto command = new ProjectCommand(this);
+    command->add(createInstallCommand(serial), true);
+    command->run();
 }
 
 const QString &Project::getTitle() const
@@ -259,7 +105,7 @@ void Project::journal(const QString &brief, const QString &descriptive, LogEntry
     logModel.add(brief, descriptive, type);
 }
 
-Tasks::Task *Project::createUnpackTask(const QString &source)
+Command *Project::createUnpackCommand(const QString &source)
 {
     QString target;
     do {
@@ -277,153 +123,166 @@ Tasks::Task *Project::createUnpackTask(const QString &source)
     // Be careful with the "contentsPath" variable: this directory is recursively removed in the destructor.
     this->contentsPath = target;
 
-    auto taskUnpack = new Tasks::Unpack(source, target, frameworks, resources, sources, keepBroken);
-
-    connect(taskUnpack, &Tasks::Pack::started, this, [=]() {
-        journal(tr("Unpacking APK..."));
+    auto command = new Commands(this);
+    auto apktoolDecode = new Apktool::Decode(source, target, frameworks, resources, sources, keepBroken);
+    command->add(apktoolDecode, true);
+    command->add(new LoadUnpackedCommand(this), true);
+    connect(command, &Command::started, this, [=]() {
         qDebug() << qPrintable(QString("Unpacking\n  from: %1\n    to: %2\n").arg(source, target));
-        state.setCurrentAction(ProjectState::ProjectUnpacking);
-        state.setLastActionFailed(false);
-    }, Qt::QueuedConnection);
-
-    connect(taskUnpack, &Tasks::Unpack::success, this, [=]() {
-        journal(tr("Reading APK contents..."));
-        initialize();
-        state.setUnpacked(true);
-        emit unpacked(true);
-    }, Qt::QueuedConnection);
-
-    connect(taskUnpack, &Tasks::Unpack::error, this, [=](const QString &message) {
-        journal(tr("Error unpacking APK."), message, LogEntry::Error);
-        emit unpacked(false);
-    }, Qt::QueuedConnection);
-
-    return taskUnpack;
+        journal(tr("Unpacking APK..."));
+        state.setCurrentStatus(ProjectState::Status::Unpacking);
+    });
+    connect(apktoolDecode, &Command::finished, this, [=](bool success) {
+        if (!success) {
+            journal(tr("Error unpacking APK."), apktoolDecode->output(), LogEntry::Error);
+        }
+    });
+    connect(command, &Command::finished, this, [=](bool success) {
+        if (success) {
+            connect(&resourcesModel, &ResourceItemsModel::dataChanged, [=] () {
+                state.setModified(true);
+            });
+            connect(&filesystemModel, &QFileSystemModel::dataChanged, [=] () {
+                state.setModified(true);
+            });
+            connect(&iconsProxy, &IconItemsModel::dataChanged, [=] () {
+                state.setModified(true);
+            });
+            connect(&manifestModel, &ManifestModel::dataChanged, [=] (const QModelIndex &, const QModelIndex &, const QVector<int> &roles) {
+                if (!(roles.count() == 1 && roles.contains(Qt::UserRole))) {
+                    state.setModified(true);
+                }
+            });
+        }
+        state.setUnpacked(success);
+        emit unpacked(success);
+    });
+    return command;
 }
 
-Tasks::Task *Project::createSaveTask(const QString &target) // Combines Pack, Zipalign and Sign tasks
+Command *Project::createSaveCommand(QString target) // Combines Pack, Zipalign and Sign commands
 {
-    auto taskSave = new Tasks::Batch;
+    target = QDir::toNativeSeparators(target);
+    QFileInfo fileInfo(target);
+    const QString directory = fileInfo.absolutePath();
+    app->settings->setLastDirectory(directory);
+
+    auto command = new Commands(this);
 
     // Pack APK:
 
-    taskSave->add(createPackTask(target), true);
+    command->add(createPackCommand(target), true);
 
     // Optimize APK:
 
     if (app->settings->getOptimizeApk()) {
-        taskSave->add(createZipalignTask(target));
+        command->add(createZipalignCommand(target), false);
     }
 
     // Sign APK:
 
     if (app->settings->getSignApk()) {
-        const Keystore *keystore = getKeystore();
+        auto keystore = getKeystore();
         if (keystore) {
-            taskSave->add(createSignTask(target, keystore));
+            command->add(createSignCommand(target, keystore.data()), false);
         }
     }
 
     // Done:
 
-    connect(taskSave, &Tasks::Batch::finished, this, [=]() {
+    connect(command, &Commands::finished, this, [=]() {
         QFileInfo fileInfo(target);
         title = fileInfo.fileName();
         originalPath = target;
     });
 
-    connect(taskSave, &Tasks::Batch::success, this, [=]() {
-        state.setModified(false);
-        emit packed(true);
-    }, Qt::QueuedConnection);
-
-    connect(taskSave, &Tasks::Batch::error, this, [=]() {
-        emit packed(false);
-    }, Qt::QueuedConnection);
-
-    return taskSave;
+    return command;
 }
 
-Tasks::Task *Project::createPackTask(const QString &target)
+Command *Project::createPackCommand(const QString &target)
 {
     const QString source = getContentsPath();
     const QString frameworks = Apktool::getFrameworksPath();
+    const bool aapt2 = app->settings->getUseAapt2();
 
-    auto taskPack = new Tasks::Pack(source, target, frameworks);
+    auto apktoolBuild = new Apktool::Build(source, target, frameworks, aapt2);
 
-    connect(taskPack, &Tasks::Pack::started, this, [=]() {
-        journal(tr("Packing APK..."));
+    connect(apktoolBuild, &Command::started, this, [=]() {
         qDebug() << qPrintable(QString("Packing\n  from: %1\n    to: %2\n").arg(source, target));
-        state.setCurrentAction(ProjectState::ProjectPacking);
-    }, Qt::QueuedConnection);
-
-    connect(taskPack, &Tasks::Pack::error, this, [=](const QString &message) {
-        journal(tr("Error packing APK."), message, LogEntry::Error);
-    }, Qt::QueuedConnection);
-
-    return taskPack;
-}
-
-Tasks::Task *Project::createZipalignTask(const QString &target)
-{
-    auto taskZipalign = new Tasks::Align(target);
-
-    connect(taskZipalign, &Tasks::Align::started, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectOptimizing);
-        journal(tr("Optimizing APK..."));
-    }, Qt::QueuedConnection);
-
-    connect(taskZipalign, &Tasks::Align::error, this, [=](const QString &message) {
-        journal(tr("Error optimizing APK."), message, LogEntry::Error);
-    }, Qt::QueuedConnection);
-
-    return taskZipalign;
-}
-
-Tasks::Task *Project::createSignTask(const QString &target, const Keystore *keystore)
-{
-    auto taskSign = new Tasks::Sign(target, keystore);
-
-    connect(taskSign, &Tasks::Sign::finished, [=]() {
-        delete keystore;
+        journal(tr("Packing APK..."));
+        state.setCurrentStatus(ProjectState::Status::Packing);
     });
 
-    connect(taskSign, &Tasks::Sign::started, this, [=]() {
-        state.setCurrentAction(ProjectState::ProjectSigning);
+    connect(apktoolBuild, &Command::finished, this, [=](bool success) {
+        if (success) {
+            state.setModified(false);
+        } else {
+            journal(tr("Error packing APK."), apktoolBuild->output(), LogEntry::Error);
+        }
+        emit packed(success);
+    });
+
+    return apktoolBuild;
+}
+
+Command *Project::createZipalignCommand(const QString &target)
+{
+    auto zipalign = new Zipalign::Align(target);
+
+    connect(zipalign, &Command::started, this, [=]() {
+        journal(tr("Optimizing APK..."));
+        state.setCurrentStatus(ProjectState::Status::Optimizing);
+    });
+
+    connect(zipalign, &Command::finished, this, [=](bool success) {
+        if (!success) {
+            journal(tr("Error optimizing APK."), zipalign->output(), LogEntry::Error);
+        }
+    });
+
+    return zipalign;
+}
+
+Command *Project::createSignCommand(const QString &target, const Keystore *keystore)
+{
+    auto apksigner = new Apksigner::Sign(target, keystore);
+
+    connect(apksigner, &Command::started, this, [=]() {
         journal(tr("Signing APK..."));
-    }, Qt::QueuedConnection);
+        state.setCurrentStatus(ProjectState::Status::Signing);
+    });
 
-    connect(taskSign, &Tasks::Sign::error, this, [=](const QString &message) {
-        journal(tr("Error signing APK."), message, LogEntry::Error);
-    }, Qt::QueuedConnection);
+    connect(apksigner, &Command::finished, [=](bool success) {
+        if (!success) {
+            journal(tr("Error signing APK."), apksigner->output(), LogEntry::Error);
+        }
+    });
 
-    return taskSign;
+    return apksigner;
 }
 
-Tasks::Task *Project::createInstallTask(const QString &serial)
+Command *Project::createInstallCommand(const QString &serial)
 {
-    auto taskInstall = new Tasks::Install(originalPath, serial);
+    auto install = new Adb::Install(originalPath, serial);
 
-    connect(taskInstall, &Tasks::Install::started, this, [=]() {
+    connect(install, &Command::started, this, [=]() {
         journal(tr("Installing APK..."));
-        state.setCurrentAction(ProjectState::ProjectInstalling);
-    }, Qt::QueuedConnection);
+        state.setCurrentStatus(ProjectState::Status::Installing);
+    });
 
-    connect(taskInstall, &Tasks::Install::success, this, [=]() {
-        emit installed(true);
-    }, Qt::QueuedConnection);
+    connect(install, &Command::finished, this, [=](bool success) {
+        if (!success) {
+            journal(tr("Error installing APK."), install->output(), LogEntry::Error);
+        }
+        emit installed(success);
+    });
 
-    connect(taskInstall, &Tasks::Install::error, this, [=](const QString &message) {
-        journal(tr("Error installing APK."), message, LogEntry::Error);
-        emit installed(false);
-    }, Qt::QueuedConnection);
-
-    return taskInstall;
+    return install;
 }
 
-const Keystore *Project::getKeystore() const
+QSharedPointer<const Keystore> Project::getKeystore() const
 {
-    Keystore *keystore = new Keystore;
+    auto keystore = QSharedPointer<Keystore>(new Keystore);
     if (app->settings->getCustomKeystore()) {
         keystore->keystorePath = app->settings->getKeystorePath();
         keystore->keystorePassword = app->settings->getKeystorePassword();
@@ -432,27 +291,28 @@ const Keystore *Project::getKeystore() const
         if (keystore->keystorePath.isEmpty()) {
             keystore->keystorePath = Dialogs::getOpenKeystoreFilename();
             if (keystore->keystorePath.isEmpty()) {
-                return nullptr;
+                return QSharedPointer<const Keystore>(nullptr);
             }
         }
         if (keystore->keystorePassword.isEmpty()) {
             bool accepted;
             keystore->keystorePassword = QInputDialog::getText(nullptr, QString(), tr("Enter the keystore password:"), QLineEdit::Password, QString(), &accepted);
             if (!accepted) {
-                return nullptr;
+                return QSharedPointer<const Keystore>(nullptr);
             }
         }
         if (keystore->keyAlias.isEmpty()) {
-            keystore->keyAlias = KeyManager::selectKey(keystore->keystorePath, keystore->keystorePassword);
+            KeySelector keySelector(keystore->keystorePath, keystore->keystorePassword);
+            keystore->keyAlias = keySelector.select();
             if (keystore->keyAlias.isEmpty()) {
-                return nullptr;
+                return QSharedPointer<const Keystore>(nullptr);
             }
         }
         if (keystore->keyPassword.isEmpty()) {
             bool accepted;
             keystore->keyPassword = QInputDialog::getText(nullptr, QString(), tr("Enter the key password:"), QLineEdit::Password, QString(), &accepted);
             if (!accepted) {
-                return nullptr;
+                return QSharedPointer<const Keystore>(nullptr);
             }
         }
     } else {
@@ -462,5 +322,44 @@ const Keystore *Project::getKeystore() const
         keystore->keyAlias = "demo";
         keystore->keyPassword = "123456";
     }
-    return keystore;
+    return std::move(keystore);
+}
+
+Project::ProjectCommand::ProjectCommand(Project *project)
+{
+    connect(this, &Command::started, [=]() {
+        project->logModel.clear();
+        project->logModel.setLoadingState(true);
+    });
+    connect(this, &Command::finished, this, [=](bool success) {
+        project->logModel.setLoadingState(false);
+        if (success) {
+            project->journal(Project::tr("Done."), LogEntry::Success);
+            project->state.setCurrentStatus(ProjectState::Status::Normal);
+        } else {
+            project->state.setCurrentStatus(ProjectState::Status::Errored);
+        }
+    });
+}
+
+void Project::LoadUnpackedCommand::run()
+{
+    emit started();
+
+    qDebug() << qPrintable(QString("Initializing \"%1\"...").arg(project->originalPath));
+    project->journal(Project::tr("Reading APK contents..."));
+
+    project->filesystemModel.setRootPath(project->contentsPath);
+
+    project->manifest = new Manifest(
+        project->contentsPath + "/AndroidManifest.xml",
+        project->contentsPath + "/apktool.yml");
+    project->manifestModel.initialize(project->manifest);
+
+    auto initResourcesFuture = project->resourcesModel.initialize(project->contentsPath + "/res/");
+    auto initResourcesFutureWatcher = new QFutureWatcher<void>(this);
+    connect(initResourcesFutureWatcher, &QFutureWatcher<void>::finished, [=]() {
+        emit finished(true);
+    });
+    initResourcesFutureWatcher->setFuture(initResourcesFuture);
 }

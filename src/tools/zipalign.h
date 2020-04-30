@@ -1,18 +1,24 @@
 #ifndef ZIPALIGN_H
 #define ZIPALIGN_H
 
-#include "tools/executable.h"
+#include "base/command.h"
 
-class Zipalign : public Executable
+namespace Zipalign
 {
-public:
-    explicit Zipalign(QObject *parent = nullptr) : Zipalign(getPath(), parent) {}
-    explicit Zipalign(const QString &executable, QObject *parent = nullptr) : Executable(executable, parent) {}
+    class Align : public Command
+    {
+    public:
+        Align(const QString &apk, QObject *parent = nullptr) : Command(parent), apk(apk) {}
+        void run() override;
+        const QString &output() const;
 
-    void align(const QString &apk);
+    private:
+        const QString apk;
+        QString resultOutput;
+    };
 
-    static QString getPath();
-    static QString getDefaultPath();
-};
+    QString getPath();
+    QString getDefaultPath();
+}
 
 #endif // ZIPALIGN_H

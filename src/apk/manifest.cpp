@@ -147,7 +147,6 @@ bool Manifest::saveXml()
     if (xmlFile->isWritable()) {
         xmlFile->resize(0);
         QTextStream stream(xmlFile);
-        stream.setCodec("UTF-8");
         xml.save(stream, 4);
         return true;
     } else {

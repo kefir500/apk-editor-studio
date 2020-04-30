@@ -1,21 +1,57 @@
 #ifndef APKSIGNER_H
 #define APKSIGNER_H
 
-#include "tools/jar.h"
+#include "base/command.h"
 #include "tools/keystore.h"
 
-class Apksigner : public Jar
+namespace Apksigner
 {
-public:
-    explicit Apksigner(QObject *parent = nullptr) : Apksigner(getPath(), parent) {}
-    explicit Apksigner(const QString &jar, QObject *parent = nullptr) : Jar(jar, parent) {}
+    class Sign : public Command
+    {
+    public:
+        Sign(const QString &target, const Keystore *keystore, QObject *parent = nullptr)
+            : Command(parent)
+            , target(target)
+            , keystorePath(keystore->keystorePath)
+            , keystorePassword(keystore->keystorePassword)
+            , keyAlias(keystore->keyAlias)
+            , keyPassword(keystore->keyPassword) {}
 
-    void sign(const QString &target, const Keystore *keystore);
-    void sign(const QString &target, const QString &keystorePath, const QString &keystorePassword, const QString &keyAlias, const QString &keyPassword);
-    QString version() const;
+        Sign(const QString &target, const QString &keystorePath, const QString &keystorePassword,
+             const QString &keyAlias, const QString &keyPassword, QObject *parent = nullptr)
+            : Command(parent)
+            , target(target)
+            , keystorePath(keystorePath)
+            , keystorePassword(keystorePassword)
+            , keyAlias(keyAlias)
+            , keyPassword(keyPassword) {}
 
-    static QString getPath();
-    static QString getDefaultPath();
-};
+        void run() override;
+        const QString &output() const;
+
+    private:
+        const QString target;
+        const QString keystorePath;
+        const QString keystorePassword;
+        const QString keyAlias;
+        const QString keyPassword;
+        QString resultOutput;
+    };
+
+    class Version : public Command
+    {
+    public:
+        Version(QObject *parent = nullptr) : Command(parent) {}
+        void run() override;
+        const QString &version() const;
+
+    private:
+        QString resultVersion;
+    };
+
+    QString getPath();
+    QString getDefaultPath();
+}
+
 
 #endif // APKSIGNER_H

@@ -33,7 +33,6 @@ bool ItemButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, c
                 model->setData(index, ButtonStateNone, Qt::UserRole);
                 return true;
             }
-
         } else if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent *click = static_cast<QMouseEvent *>(event);
             if (click->button() == Qt::LeftButton) {
@@ -42,7 +41,6 @@ bool ItemButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, c
                     return true;
                 }
             }
-
         } else if (event->type() == QEvent::MouseButtonRelease) {
             QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
             if (buttonRect(option.rect).contains(mouse->pos())) {

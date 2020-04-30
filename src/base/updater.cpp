@@ -56,12 +56,12 @@ void Updater::check(bool verbose, QWidget *parent)
 
 void Updater::download()
 {
-    app->visitWebPage();
+    app->actions.visitUpdatePage();
 }
 
 void Updater::whatsnew(const QString &version)
 {
-    app->visitBlogPage(QString("apk-editor-studio-v%1-released").arg(version));
+    app->actions.visitBlogPage(QString("apk-editor-studio-v%1-released").arg(version));
 }
 
 QString Updater::parse(const QByteArray &json)
@@ -103,10 +103,8 @@ bool Updater::compare(const QString &currentVersion, const QString &latestVersio
     for (short i = 0; i < maxSegments; ++i) {
         const int currentVersionSegment = currentVersionSegments.at(i).toInt();
         const int latestVersionSegment = latestVersionSegments.at(i).toInt();
-        if (currentVersionSegment == latestVersionSegment) {
-            continue;
-        } else {
-            return (latestVersionSegment > currentVersionSegment);
+        if (currentVersionSegment != latestVersionSegment) {
+            return latestVersionSegment > currentVersionSegment;
         }
     }
     return false;

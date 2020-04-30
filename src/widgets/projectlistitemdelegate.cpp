@@ -5,15 +5,6 @@
 
 // TODO Add indicator for unsaved projects
 
-ProjectListItemDelegate::ProjectListItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
-{
-    iconIdle = app->icons.get("state-idle.png");
-    iconUnpacking = app->icons.get("state-open.png");
-    iconPacking = app->icons.get("state-save.png");
-    iconInstalling = app->icons.get("state-install.png");
-    iconError = app->icons.get("state-error.png");
-}
-
 void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QStyleOptionViewItem itemOption = option;
@@ -27,39 +18,18 @@ void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     itemOption.palette = palette;
 #endif
 
-    // Prepare state icon:
+    // Prepare status icon:
 
-    const int currentProjectAction = index.data(ProjectItemsModel::ProjectActionRole).toInt();
-    const bool lastActionFailed = index.data(ProjectItemsModel::ProjectFailedRole).toBool();
-    QIcon stateIcon;
-    if (lastActionFailed) {
-        stateIcon = iconError;
-    } else {
-        switch (currentProjectAction) {
-        case ProjectState::ProjectIdle:
-            stateIcon = iconIdle;
-            break;
-        case ProjectState::ProjectUnpacking:
-            stateIcon = iconUnpacking;
-            break;
-        case ProjectState::ProjectPacking:
-        case ProjectState::ProjectSigning:
-        case ProjectState::ProjectOptimizing:
-            stateIcon = iconPacking;
-            break;
-        case ProjectState::ProjectInstalling:
-            stateIcon = iconInstalling;
-            break;
-        }
-    }
-    const int stateIconSideMaximum = option.rect.height() - 2;
-    const QSize stateIconSize = stateIcon.actualSize(QSize(stateIconSideMaximum, stateIconSideMaximum));
+    const QModelIndex statusIndex = index.sibling(index.row(), ProjectItemsModel::StatusColumn);
+    const QIcon statusIcon = statusIndex.data(Qt::DecorationRole).value<QIcon>();
+    const int statusIconSideMaximum = option.rect.height() - 2;
+    const QSize statusIconSize = statusIcon.actualSize(QSize(statusIconSideMaximum, statusIconSideMaximum));
 
     // Prepare text:
 
     QRect textRect = itemOption.rect;
     textRect.setLeft(itemOption.decorationSize.width() + 8);
-    textRect.setRight(itemOption.rect.width() - stateIconSize.width() - 8 * 2);
+    textRect.setRight(itemOption.rect.width() - statusIconSize.width() - 8 * 2);
     const QString text = painter->fontMetrics().elidedText(itemOption.text, Qt::ElideMiddle, textRect.width());
     itemOption.text.clear();
 
@@ -75,10 +45,10 @@ void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 
     // Draw state icon:
 
-    const QRect stateIconRect(option.rect.width() - stateIconSize.width() - 8,
-                              option.rect.center().y() - stateIconSize.height() / 2,
-                              stateIconSize.width(),
-                              stateIconSize.height());
+    const QRect stateIconRect(option.rect.width() - statusIconSize.width() - 8,
+                              option.rect.center().y() - statusIconSize.height() / 2,
+                              statusIconSize.width(),
+                              statusIconSize.height());
     const QIcon::Mode stateIconMode = isSelected ? QIcon::Selected : QIcon::Normal;
-    stateIcon.paint(painter, stateIconRect, Qt::AlignRight, stateIconMode);
+    statusIcon.paint(painter, stateIconRect, Qt::AlignRight, stateIconMode);
 }

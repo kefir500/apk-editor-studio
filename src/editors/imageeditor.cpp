@@ -185,13 +185,13 @@ ZoomGroup::ZoomGroup(QWidget *parent) : QWidget(parent)
 
 void ZoomGroup::setZoomInfo(qreal factor)
 {
-    const int percentage = factor * 100;
+    const int percentage = static_cast<int>(factor * 100);
     labelZoom->setText(QString("%1%").arg(percentage));
 }
 
 // GraphicsView
 
-GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent), zoomDelta(1.25)
+GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
     setAcceptDrops(false);
     setDragMode(QGraphicsView::ScrollHandDrag);

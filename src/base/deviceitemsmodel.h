@@ -10,16 +10,16 @@ class DeviceItemsModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    enum DeviceColumn {
-        DeviceAlias,
-        DeviceSerial,
-        DeviceProduct,
-        DeviceModel,
-        DeviceDevice,
+    enum Column {
+        AliasColumn,
+        SerialColumn,
+        ProductColumn,
+        ModelColumn,
+        DeviceColumn,
         ColumnCount
     };
 
-    const Device *get(const QModelIndex &index) const;
+    QSharedPointer<Device> get(const QModelIndex &index) const;
     void refresh();
     void save() const;
 
@@ -29,6 +29,10 @@ public:
     QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+
+signals:
+    void fetching() const;
+    void fetched() const;
 
 private:
     QList<QSharedPointer<Device>> devices;

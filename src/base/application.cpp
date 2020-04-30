@@ -12,7 +12,7 @@
 
 Application::Application(int &argc, char **argv) : QtSingleApplication(argc, argv)
 {
-    qsrand(QDateTime::currentMSecsSinceEpoch());
+    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
 
     setApplicationName(APPLICATION);
     setApplicationVersion(VERSION);
@@ -61,8 +61,7 @@ int Application::exec()
     settings = new Settings();
     recent = new Recent("apk");
 
-    Apktool apktool(getSharedPath("tools/apktool.jar"));
-    apktool.reset();
+    Apktool::reset();
 
     QDir().mkpath(Apktool::getOutputPath());
     QDir().mkpath(Apktool::getFrameworksPath());
@@ -262,6 +261,11 @@ QString Application::getWebPage()
     return QString("https://qwertycube.com/%1/").arg(getTitleNoSpaces());
 }
 
+QString Application::getUpdatePage()
+{
+    return QString("https://qwertycube.com/%1/#utm_campaign=update&utm_source=%1&utm_medium=application").arg(getTitleNoSpaces());
+}
+
 QString Application::getSourcePage()
 {
     return QString("https://github.com/kefir500/%1/").arg(getTitleNoSpaces());
@@ -284,7 +288,7 @@ QString Application::getTranslatePage()
 
 QString Application::getDonatePage()
 {
-    return "https://qwertycube.com/donate/";
+    return QString("https://qwertycube.com/donate/#utm_campaign=donate&utm_source=%1&utm_medium=application").arg(getTitleNoSpaces());
 }
 
 QString Application::getJrePage()
@@ -329,29 +333,6 @@ Project *Application::openApk(const QString &filename, bool unpack)
     return project;
 }
 
-bool Application::installExternalApk()
-{
-    const QStringList paths = Dialogs::getOpenApkFilenames(window);
-    if (paths.isEmpty()) {
-        return false;
-    }
-    DeviceManager devices(window);
-    const Device *device = devices.getTargetDevice();
-    if (!device) {
-        return false;
-    }
-    for (const QString &path : paths) {
-        Project *project = openApk(path, false);
-        project->install(device->getSerial());
-    }
-    return true;
-}
-
-bool Application::closeApk(Project *project)
-{
-    return projects.close(project);
-}
-
 void Application::setLanguage(const QString &locale)
 {
     removeTranslator(&translator);
@@ -374,75 +355,18 @@ bool Application::addToRecent(const Project *project)
     return recent->add(project->getOriginalPath(), project->getThumbnail().pixmap(scale(32, 32)));
 }
 
-bool Application::associate()
-{
-#ifdef Q_OS_WIN
-    QSettings registry("HKEY_CURRENT_USER\\Software\\Classes", QSettings::NativeFormat);
-    if (!registry.isWritable()) {
-        return false;
-    }
-    const QString format = "apk";
-    const QString description = "Android Application Package";
-    const QString progid = QString("%1.%2").arg(getTitleNoSpaces(), format);
-    const QString executable = QString("\"%1\"").arg(QDir::toNativeSeparators(applicationFilePath()));
-    registry.setValue(QString(".%1/Default").arg(format), progid);
-    registry.setValue(progid + "/Default", description);
-    registry.setValue(progid + "/Shell/Open/Command/Default", executable + " \"%1\"");
-    registry.setValue(progid + "/DefaultIcon/Default", executable + ",0");
-    return true;
-#else
-    return false;
-#endif
-}
-
-void Application::visitWebPage()
-{
-    QDesktopServices::openUrl(getWebPage());
-}
-
-void Application::visitBlogPage(const QString &post)
-{
-    const QString url = getWebPage() + "blog/" + post + "/";
-    QDesktopServices::openUrl(url);
-}
-
-void Application::visitSourcePage()
-{
-    QDesktopServices::openUrl(getSourcePage());
-}
-
-void Application::visitContactPage()
-{
-    QDesktopServices::openUrl(getContactPage());
-}
-
-void Application::visitTranslatePage()
-{
-    QDesktopServices::openUrl(getTranslatePage());
-}
-
-void Application::visitDonatePage()
-{
-    QDesktopServices::openUrl(getDonatePage());
-}
-
-void Application::visitJrePage()
-{
-    QDesktopServices::openUrl(getJrePage());
-}
-
-void Application::visitJdkPage()
-{
-    QDesktopServices::openUrl(getJdkPage());
-}
-
 bool Application::event(QEvent *event)
 {
     // File open request on macOS
-    if (event->type() == QEvent::FileOpen) {
+    switch (event->type()) {
+    case QEvent::FileOpen: {
         const QString filePath = static_cast<QFileOpenEvent *>(event)->file();
         openApk(filePath);
         return true;
     }
-    return QApplication::event(event);
+    case QEvent::LanguageChange:
+        postEvent(&actions, new QEvent(QEvent::LanguageChange));
+    default:
+        return QtSingleApplication::event(event);
+    }
 }

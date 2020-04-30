@@ -1,10 +1,12 @@
 #include "tools/zipalign.h"
+#include "base/process.h"
 #include "base/application.h"
 #include <QFile>
-#include <QStringList>
 
-void Zipalign::align(const QString &apk)
+void Zipalign::Align::run()
 {
+    emit started();
+
     const QString tempApk = apk + ".aligned";
 
     QStringList arguments;
@@ -13,13 +15,22 @@ void Zipalign::align(const QString &apk)
     arguments << apk;
     arguments << tempApk;
 
-    disconnect(this, &Zipalign::success, this, nullptr);
-    connect(this, &Zipalign::success, [=]() {
-        QFile::remove(apk);
-        QFile::rename(tempApk, apk);
+    auto process = new Process(this);
+    connect(process, &Process::finished, [=](bool success, const QString &output) {
+        if (success) {
+            QFile::remove(apk);
+            QFile::rename(tempApk, apk);
+        }
+        resultOutput = output;
+        emit finished(success);
+        process->deleteLater();
     });
+    process->run(getPath(), arguments);
+}
 
-    Executable::startAsync(arguments);
+const QString &Zipalign::Align::output() const
+{
+    return resultOutput;
 }
 
 QString Zipalign::getPath()

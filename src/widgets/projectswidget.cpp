@@ -172,9 +172,8 @@ void ProjectsWidget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
-    } else {
-        QWidget::changeEvent(event);
     }
+    QWidget::changeEvent(event);
 }
 
 ProjectTabsWidget *ProjectsWidget::getCurrentProjectTabs() const

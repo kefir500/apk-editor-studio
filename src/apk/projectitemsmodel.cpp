@@ -67,21 +67,36 @@ QVariant ProjectItemsModel::data(const QModelIndex &index, int role) const
         const Project *project = static_cast<Project *>(index.internalPointer());
         if (role == Qt::DisplayRole) {
             switch (column) {
-                case ProjectTitle:        return project->getTitle();
-                case ProjectOriginalPath: return project->getOriginalPath();
-                case ProjectContentsPath: return project->getContentsPath();
+            case TitleColumn:
+                return project->getTitle();
+            case OriginalPathColumn:
+                return project->getOriginalPath();
+            case ContentsPathColumn:
+                return project->getContentsPath();
+            case IsUnpackedColumn:
+                return project->getState().isUnpacked();
+            case IsModifiedColumn:
+                return project->getState().isModified();
             }
         } else if (role == Qt::DecorationRole) {
             switch (column) {
-                case ProjectTitle:
-                    return project->getThumbnail();
-            }
-        } else {
-            switch (role) {
-                case ProjectActionRole:   return project->getState().getCurrentAction();
-                case ProjectUnpackedRole: return project->getState().isUnpacked();
-                case ProjectModifiedRole: return project->getState().isModified();
-                case ProjectFailedRole:   return project->getState().isLastActionFailed();
+            case TitleColumn:
+                return project->getThumbnail();
+            case StatusColumn:
+                switch (project->getState().getCurrentStatus()) {
+                case ProjectState::Status::Normal:
+                    return app->icons.get("state-idle.png");
+                case ProjectState::Status::Unpacking:
+                    return app->icons.get("state-open.png");
+                case ProjectState::Status::Packing:
+                case ProjectState::Status::Signing:
+                case ProjectState::Status::Optimizing:
+                    return app->icons.get("state-save.png");
+                case ProjectState::Status::Installing:
+                    return app->icons.get("state-install.png");
+                case ProjectState::Status::Errored:
+                    return app->icons.get("state-error.png");
+                }
             }
         }
     }

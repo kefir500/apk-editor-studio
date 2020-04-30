@@ -12,6 +12,8 @@ Toolbar::Toolbar(QWidget *parent) : QToolBar(parent)
     const QList<int> availableSizes = {16, 30, 40}; // Hardcoded icon sizes
     const int closestSize = Utils::roundToNearest(app->scale(30, 30).width(), availableSizes);
     setIconSize(QSize(closestSize, closestSize));
+
+    reinitialize();
 }
 
 QMap<QString, QAction *> Toolbar::all()

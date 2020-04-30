@@ -2,7 +2,7 @@
 
 TreeNode::~TreeNode()
 {
-    qDeleteAll(children);
+    removeChildren();
 }
 
 void TreeNode::addChild(TreeNode *node)
@@ -16,11 +16,22 @@ bool TreeNode::hasChild(TreeNode *node) const
     return children.contains(node);
 }
 
+bool TreeNode::hasChildren() const
+{
+    return !children.isEmpty();
+}
+
 bool TreeNode::removeChild(int row)
 {
     delete children[row];
     children.remove(row);
     return true;
+}
+
+void TreeNode::removeChildren()
+{
+    qDeleteAll(children);
+    children.clear();
 }
 
 bool TreeNode::removeSelf()

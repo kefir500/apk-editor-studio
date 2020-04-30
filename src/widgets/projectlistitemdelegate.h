@@ -6,17 +6,10 @@
 class ProjectListItemDelegate : public QStyledItemDelegate
 {
 public:
-    explicit ProjectListItemDelegate(QObject *parent = nullptr);
+    explicit ProjectListItemDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent) {}
 
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-
-private:
-    QIcon iconIdle;
-    QIcon iconUnpacking;
-    QIcon iconPacking;
-    QIcon iconInstalling;
-    QIcon iconError;
 };
 
 #endif // PROJECTDELEGATE_H

@@ -10,9 +10,9 @@ class XmlResourceModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    enum ValueColumn {
-        Key,
-        Value,
+    enum Column {
+        KeyColumn,
+        ValueColumn,
         ColumnCount
     };
 

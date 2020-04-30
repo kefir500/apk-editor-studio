@@ -28,7 +28,7 @@ void ResourceTree::setModel(QAbstractItemModel *model)
     }
     sortProxy->setSourceModel(model);
     sortByColumn(0, Qt::AscendingOrder);
-    setColumnWidth(ResourceItemsModel::NodeCaption, 120);
-    setColumnWidth(ResourceItemsModel::ResourceLocale, 64);
-    setColumnWidth(ResourceItemsModel::ResourcePath, 500);
+    setColumnWidth(ResourceItemsModel::CaptionColumn, 120);
+    setColumnWidth(ResourceItemsModel::LocaleColumn, 64);
+    setColumnWidth(ResourceItemsModel::PathColumn, 500);
 }

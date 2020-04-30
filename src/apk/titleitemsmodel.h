@@ -10,11 +10,11 @@ class TitleItemsModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    enum TitleColumn {
-        Value,
-        ResourceLanguage,
-        ResourceQualifiers,
-        ResourcePath,
+    enum Column {
+        ValueColumn,
+        LanguageColumn,
+        QualifiersColumn,
+        PathColumn,
         ColumnCount
     };
 
@@ -31,9 +31,10 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
-private:
-    void add(const QString &filepath, const QString &key);
+signals:
+    void initialized() const;
 
+private:
     QList<TitleNode *> nodes;
 };
 

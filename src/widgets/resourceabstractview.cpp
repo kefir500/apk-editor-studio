@@ -11,7 +11,11 @@ ResourceAbstractView::ResourceAbstractView(QAbstractItemView *view, QWidget *par
     layout->addWidget(view);
     layout->setMargin(0);
 
-    connect(view, &QAbstractItemView::activated, this, &ResourceAbstractView::editRequested);
+    connect(view, &QAbstractItemView::activated, [=](const QModelIndex &index) {
+        if (!index.model()->hasChildren(index)) {
+            emit editRequested(index);
+        }
+    });
 
     connect(view, &QAbstractItemView::customContextMenuRequested, [=](const QPoint &point) {
         ResourceModelIndex index = view->indexAt(point);
@@ -55,7 +59,7 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(ResourceModelInd
         resourceIndex.save();
     });
 
-    QAction *actionRemove = menu->addAction(app->icons.get("delete.png"), tr("Delete Resource"));
+    QAction *actionRemove = menu->addAction(app->icons.get("x-round.png"), tr("Delete Resource"));
     connect(actionRemove, &QAction::triggered, [&]() {
         if (!resourceIndex.remove()) {
             QMessageBox::warning(this, QString(), tr("Could not remove the resource."));

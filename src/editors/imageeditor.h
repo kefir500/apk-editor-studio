@@ -27,7 +27,7 @@ protected:
 
 private:
     qreal zoomFactor;
-    const qreal zoomDelta;
+    const qreal zoomDelta = 1.25;
 };
 
 // ZoomGroup

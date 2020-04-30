@@ -3,6 +3,7 @@
 
 #include "apk/project.h"
 #include "base/fileformatlist.h"
+#include "base/device.h"
 #include <QMessageBox>
 
 namespace Dialogs
@@ -26,14 +27,11 @@ namespace Dialogs
     QString getOpenKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);
     QString getSaveKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);
 
-    bool openApk(QWidget *parent = nullptr);
-    bool openApk(const QString &defaultPath, QWidget *parent = nullptr);
-
     QString getOpenDirectory(const QString &defaultPath, QWidget *parent = nullptr);
 
-    QString combo(const QStringList &options, QWidget *parent = nullptr);
-    QString combo(const QStringList &options, const QString &current, QWidget *parent = nullptr);
-    QString combo(const QStringList &options, const QString &current, const QString &title, QWidget *parent = nullptr);
+    QSharedPointer<Device> getInstallDevice(QWidget *parent = nullptr);
+    QSharedPointer<Device> getExplorerDevice(QWidget *parent = nullptr);
+    QSharedPointer<Device> getScreenshotDevice(QWidget *parent = nullptr);
 
     int detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon = QMessageBox::Warning, QWidget *parent = nullptr);
     int log(const QString &title, const QString &text, QWidget *parent = nullptr);

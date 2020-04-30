@@ -2,8 +2,6 @@
 
 cd "$(dirname "$0")"
 
-export DEBEMAIL="kefir500@gmail.com"
-export DEBFULLNAME="Alexander Gorishnyak"
 source ../../environment.sh
 
 clean() {
@@ -22,8 +20,8 @@ cp -R ../../../../src apk-editor-studio-$VERSION/
 cp -R debian apk-editor-studio-$VERSION/
 cd apk-editor-studio-$VERSION
 
-dh_make -y -s -c gpl3 --createorig
-debuild -uc -us
+tar -cJf ../apk-editor-studio_$VERSION.orig.tar.xz .
+debuild -uc -us || exit
 
 cd ..
 if [[ $CI != true ]]; then	

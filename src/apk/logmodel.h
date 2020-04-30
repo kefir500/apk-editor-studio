@@ -9,9 +9,9 @@ class LogModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    enum LogColumn {
-        LogBrief,
-        LogDescriptive,
+    enum Column {
+        BriefColumn,
+        DescriptiveColumn,
         ColumnCount
     };
 

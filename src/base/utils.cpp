@@ -86,7 +86,8 @@ void Utils::rmdir(const QString &path, bool recursive)
     }
 }
 
-namespace  {
+namespace
+{
     bool copy(const QString &src, const QString &dst)
     {
         if (src.isEmpty() || dst.isEmpty() || !QFile::exists(src)) {
@@ -155,6 +156,11 @@ bool Utils::replaceFile(const QString &what, QString with)
     return true;
 }
 
+QString Utils::normalizePath(QString path)
+{
+    return path.replace(QRegularExpression("^\\/+[\\.\\./*]*\\/*|$"), "/");
+}
+
 bool Utils::isImageReadable(const QString &path)
 {
     const QString extension = QFileInfo(path).suffix();
@@ -178,59 +184,59 @@ QString Utils::getAndroidCodename(int api)
 {
     // Read more: https://source.android.com/setup/start/build-numbers
     switch (api) {
-    case 3:
+    case ANDROID_3:
         return "1.5 - Cupcake";
-    case 4:
+    case ANDROID_4:
         return "1.6 - Donut";
-    case 5:
+    case ANDROID_5:
         return "2.0 - Eclair";
-    case 6:
+    case ANDROID_6:
         return "2.0.1 - Eclair";
-    case 7:
+    case ANDROID_7:
         return "2.1 - Eclair";
-    case 8:
+    case ANDROID_8:
         return "2.2.x - Froyo";
-    case 9:
+    case ANDROID_9:
         return "2.3 - 2.3.2 - Gingerbread";
-    case 10:
+    case ANDROID_10:
         return "2.3.3 - 2.3.7 - Gingerbread";
-    case 11:
+    case ANDROID_11:
         return "3.0 - Honeycomb";
-    case 12:
+    case ANDROID_12:
         return "3.1 - Honeycomb";
-    case 13:
+    case ANDROID_13:
         return "3.2.x - Honeycomb";
-    case 14:
+    case ANDROID_14:
         return "4.0.1 - 4.0.2 - Ice Cream Sandwich";
-    case 15:
+    case ANDROID_15:
         return "4.0.3 - 4.0.4 - Ice Cream Sandwich";
-    case 16:
+    case ANDROID_16:
         return "4.1.x - Jelly Bean";
-    case 17:
+    case ANDROID_17:
         return "4.2.x - Jelly Bean";
-    case 18:
+    case ANDROID_18:
         return "4.3.x - Jelly Bean";
-    case 19:
+    case ANDROID_19:
         return "4.4 - 4.4.4 - KitKat";
-    case 20:
+    case ANDROID_20:
         return "4.4 - 4.4.4 - KitKat Wear";
-    case 21:
+    case ANDROID_21:
         return "5.0 - Lollipop";
-    case 22:
+    case ANDROID_22:
         return "5.1 - Lollipop";
-    case 23:
+    case ANDROID_23:
         return "6.0 - Marshmallow";
-    case 24:
+    case ANDROID_24:
         return "7.0 - Nougat";
-    case 25:
+    case ANDROID_25:
         return "7.1 - Nougat";
-    case 26:
+    case ANDROID_26:
         return "8.0 - Oreo";
-    case 27:
+    case ANDROID_27:
         return "8.1 - Oreo";
-    case 28:
+    case ANDROID_28:
         return "9.0 - Pie";
-    case 29:
+    case ANDROID_29:
         return "Android 10";
     }
     return QString();

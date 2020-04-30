@@ -21,8 +21,8 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
     setItemDelegate(buttonDelegate);
     connect(buttonDelegate, &ItemButtonDelegate::clicked, [=](int row) {
         switch (row) {
-        case ManifestModel::MinimumSdk: {
-            const QString dialogTitle = model()->headerData(ManifestModel::MinimumSdk, Qt::Vertical).toString();
+        case ManifestModel::MinimumSdkRow: {
+            const QString dialogTitle = model()->headerData(ManifestModel::MinimumSdkRow, Qt::Vertical).toString();
             const int currentApi = model()->getMinimumSdk();
             const int api = selectAndroidApi(dialogTitle, currentApi);
             if (api) {
@@ -30,8 +30,8 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
             }
             break;
         }
-        case ManifestModel::TargetSdk: {
-            const QString dialogTitle = model()->headerData(ManifestModel::TargetSdk, Qt::Vertical).toString();
+        case ManifestModel::TargetSdkRow: {
+            const QString dialogTitle = model()->headerData(ManifestModel::TargetSdkRow, Qt::Vertical).toString();
             const int currentApi = model()->getTargetSdk();
             const int api = selectAndroidApi(dialogTitle, currentApi);
             if (api) {
@@ -40,7 +40,7 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
             break;
         }
         default:
-            emit titleEditorRequested(static_cast<ManifestModel::ManifestRow>(row));
+            emit titleEditorRequested(static_cast<ManifestModel::Row>(row));
         }
     });
 }
@@ -68,7 +68,7 @@ int ManifestView::selectAndroidApi(const QString &dialogTitle, int defaultApi)
     QList<int> apiLevels;
     QStringList apiCodenames;
     int selection = 0;
-    for (int api = 3; api <= 29; ++api) {
+    for (int api = Utils::ANDROID_3; api < Utils::ANDROID_SDK_COUNT; ++api) {
         apiLevels.append(api);
         apiCodenames.append(QString("%1 (%2)").arg(api).arg(Utils::getAndroidCodename(api)));
         if (api == defaultApi) {

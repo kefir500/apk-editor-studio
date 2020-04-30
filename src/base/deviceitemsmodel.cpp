@@ -2,35 +2,35 @@
 #include "base/application.h"
 #include "tools/adb.h"
 
-const Device *DeviceItemsModel::get(const QModelIndex &index) const
+QSharedPointer<Device> DeviceItemsModel::get(const QModelIndex &index) const
 {
     if (index.isValid()) {
-        return devices.at(index.row()).data();
+        return devices.at(index.row());
     }
-    return nullptr;
+    return {};
 }
 
 void DeviceItemsModel::refresh()
 {
-    Adb adb;
-    if (!devices.isEmpty()) {
-        beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
-            devices.clear();
-        endRemoveRows();
-    }
-    const QList<QSharedPointer<Device>> list = adb.devices();
-    if (!list.isEmpty()) {
-        beginInsertRows(QModelIndex(), 0, list.size() - 1);
-            for (const QSharedPointer<Device> &device : list) {
+    emit fetching();
+    auto adb = new Adb::Devices(this);
+    connect(adb, &Adb::Devices::finished, [=](bool success) {
+        beginResetModel();
+        devices.clear();
+        if (success) {
+            devices.append(adb->devices());
+            for (const QSharedPointer<Device> &device : devices) {
                 const QString serial = device->getSerial();
                 const QString alias = app->settings->getDeviceAlias(serial);
                 if (!alias.isEmpty()) {
                     device->setAlias(alias);
                 }
             }
-            devices.append(list);
-        endInsertRows();
-    }
+        }
+        endResetModel();
+        emit fetched();
+    });
+    adb->run();
 }
 
 void DeviceItemsModel::save() const
@@ -45,7 +45,7 @@ void DeviceItemsModel::save() const
 
 bool DeviceItemsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (index.isValid() && role == Qt::EditRole && index.column() == DeviceAlias) {
+    if (index.isValid() && role == Qt::EditRole && index.column() == AliasColumn) {
         devices[index.row()]->setAlias(value.toString());
         emit dataChanged(index, index);
         return true;
@@ -58,17 +58,17 @@ QVariant DeviceItemsModel::data(const QModelIndex &index, int role) const
     if (index.isValid() && role == Qt::DisplayRole) {
         auto device = devices.at(index.row());
         switch (index.column()) {
-        case DeviceAlias: {
+        case AliasColumn: {
             const QString alias = device->getAlias();
             return alias.isEmpty() ? device->getSerial() : alias;
         }
-        case DeviceSerial:
+        case SerialColumn:
             return device->getSerial();
-        case DeviceProduct:
+        case ProductColumn:
             return device->getProductString();
-        case DeviceModel:
+        case ModelColumn:
             return device->getModelString();
-        case DeviceDevice:
+        case DeviceColumn:
             return device->getDeviceString();
         }
     }
@@ -80,11 +80,16 @@ QVariant DeviceItemsModel::headerData(int section, Qt::Orientation orientation, 
     if (orientation == Qt::Horizontal) {
         if (role == Qt::DisplayRole) {
             switch (section) {
-                case DeviceAlias:   return tr("Alias");
-                case DeviceSerial:  return tr("Serial Number");
-                case DeviceProduct: return tr("Product");
-                case DeviceModel:   return tr("Model");
-                case DeviceDevice:  return tr("Device");
+            case AliasColumn:
+                return tr("Alias");
+            case SerialColumn:
+                return tr("Serial Number");
+            case ProductColumn:
+                return tr("Product");
+            case ModelColumn:
+                return tr("Model");
+            case DeviceColumn:
+                return tr("Device");
             }
         }
     }

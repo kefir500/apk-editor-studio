@@ -42,16 +42,15 @@ bool Editor::isModified() const
 void Editor::setModified(bool value)
 {
     modified = value;
-    emit savedStateChanged(!value);
+    emit modifiedStateChanged(modified);
 }
 
 void Editor::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
-    } else {
-        QWidget::changeEvent(event);
     }
+    Viewer::changeEvent(event);
 }
 
 void Editor::retranslate()

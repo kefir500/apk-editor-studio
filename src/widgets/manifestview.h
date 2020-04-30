@@ -20,7 +20,7 @@ private:
     int selectAndroidApi(const QString &dialogTitle, int defaultApi);
 
 signals:
-    void titleEditorRequested(ManifestModel::ManifestRow manifestField);
+    void titleEditorRequested(ManifestModel::Row manifestField);
 };
 
 #endif // MANIFESTVIEW_H

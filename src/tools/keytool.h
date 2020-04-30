@@ -1,21 +1,63 @@
 #ifndef KEYTOOL_H
 #define KEYTOOL_H
 
-#include "tools/executable.h"
+#include "base/command.h"
 #include "tools/keystore.h"
-#include "base/application.h"
 
-class Keytool : public Executable
+namespace Keytool
 {
-public:
-    explicit Keytool(QObject *parent = nullptr) : Keytool(app->getJavaBinaryPath("keytool"), parent) {}
-    explicit Keytool(const QString &executable, QObject *parent = nullptr) : Executable(executable, parent) {}
+    class Genkey : public Command
+    {
+        Q_OBJECT
 
-    Result<QString> create(const Keystore &keystore) const;
-    Result<QString> aliases(const QString &keystore, const QString &password) const;
+    public:
+        enum ErrorType {
+            AliasExistsError,
+            UnknownError
+        };
 
-private:
-    void normalizeDname(Dname &dname) const;
-};
+        Genkey(const Keystore &keystore, QObject *parent = nullptr)
+            : Command(parent)
+            , keystore(keystore) {}
+
+        void run() override;
+
+    signals:
+        void success() const;
+        void error(ErrorType errorType, const QString &brief, const QString &detailed) const;
+
+    private:
+        const Keystore keystore;
+    };
+
+    class Aliases : public Command
+    {
+        Q_OBJECT
+
+    public:
+        enum ErrorType {
+            IncorrectPasswordError,
+            UnknownError
+        };
+
+        Aliases(const QString &keystore, const QString &password, QObject *parent = nullptr)
+            : Command(parent)
+            , keystore(keystore)
+            , password(password) {}
+
+        void run() override;
+
+    signals:
+        void success(const QStringList &aliases) const;
+        void error(ErrorType errorType, const QString &brief, const QString &detailed) const;
+
+    private:
+        const QString keystore;
+        const QString password;
+    };
+
+    void normalizeDname(Dname &dname);
+    QString getPath();
+}
 
 #endif // KEYTOOL_H

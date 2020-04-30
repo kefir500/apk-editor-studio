@@ -2,13 +2,8 @@
 #define KEYMANAGER_H
 
 #include "widgets/filebox.h"
-#include "base/result.h"
 #include <QDialog>
 #include <QGroupBox>
-#include <QSpinBox>
-#include <QFormLayout>
-
-// KeyManager
 
 class KeyManager : public QDialog
 {
@@ -20,11 +15,8 @@ public:
     void load();
     void save();
 
-    bool createKeystore();
-    bool createKey();
-
-    static QString selectKey(const QString &keystore, const QString &password, const QString &currentAlias = QString(), QWidget *parent = nullptr);
-    static Result<QStringList> getCertificates(const QString &keystore, const QString &password, QWidget *parent = nullptr);
+    void createKeystore();
+    void createKey();
 
 private:
     QGroupBox *groupKeystore;
@@ -35,50 +27,6 @@ private:
     QPushButton *btnCreateKeystore;
     QPushButton *btnCreateKey;
     QToolButton *btnSelectKey;
-};
-
-// KeyCreator
-
-class KeyCreator : public QDialog
-{
-    Q_OBJECT
-
-public:
-    enum Type {
-        TypeKeystore,
-        TypeKey
-    };
-
-    explicit KeyCreator(QWidget *parent = nullptr);
-    KeyCreator(const QString &keystorePath, const QString &keystorePassword, QWidget *parent = nullptr);
-
-signals:
-    void createdKeystore(const QString &path);
-    void createdKey(const QString &alias);
-
-private:
-    QFormLayout *initialize(Type type);
-    QFormLayout *createKeyLayout();
-    bool validateFields();
-    bool create();
-
-    Type type;
-    QString keystorePath;
-    QString keystorePassword;
-
-    QLineEdit *editKeystorePassword;
-    QLineEdit *editKeystorePasswordConfirm;
-
-    QLineEdit *editAlias;
-    QLineEdit *editKeyPassword;
-    QLineEdit *editKeyPasswordConfirm;
-    QSpinBox *editYears;
-    QLineEdit *editName;
-    QLineEdit *editUnit;
-    QLineEdit *editOrganization;
-    QLineEdit *editCity;
-    QLineEdit *editState;
-    QLineEdit *editCountry;
 };
 
 #endif // KEYMANAGER_H

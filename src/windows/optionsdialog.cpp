@@ -7,6 +7,7 @@
 #include "tools/apktool.h"
 #include "tools/zipalign.h"
 #include "base/application.h"
+#include <QFormLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QAbstractButton>
@@ -54,7 +55,12 @@ void OptionsDialog::load()
 
     checkboxUpdates->setChecked(app->settings->getAutoUpdates());
     spinboxRecent->setValue(app->settings->getRecentLimit());
+
+    // Java
+
     fileboxJava->setCurrentPath(app->settings->getJavaPath());
+    spinboxMinHeapSize->setValue(app->settings->getJavaMinHeapSize());
+    spinboxMaxHeapSize->setValue(app->settings->getJavaMaxHeapSize());
 
     // Languages
 
@@ -77,6 +83,7 @@ void OptionsDialog::load()
     fileboxApktool->setCurrentPath(app->settings->getApktoolPath());
     fileboxOutput->setCurrentPath(app->settings->getOutputDirectory());
     fileboxFrameworks->setCurrentPath(app->settings->getFrameworksDirectory());
+    checkboxAapt->setChecked(app->settings->getUseAapt2());
     checkboxSources->setChecked(app->settings->getDecompileSources());
     checkboxBrokenResources->setChecked(app->settings->getKeepBrokenResources());
 
@@ -139,13 +146,19 @@ void OptionsDialog::save()
     app->settings->setAutoUpdates(checkboxUpdates->isChecked());
     app->setLanguage(comboLanguages->currentData().toString());
     app->recent->setLimit(spinboxRecent->value());
+
+    // Java
+
     app->settings->setJavaPath(fileboxJava->getCurrentPath());
+    app->settings->setJavaMinHeapSize(spinboxMinHeapSize->value());
+    app->settings->setJavaMaxHeapSize(spinboxMaxHeapSize->value());
 
     // Repacking
 
     app->settings->setApktoolPath(fileboxApktool->getCurrentPath());
     app->settings->setOutputDirectory(fileboxOutput->getCurrentPath());
     app->settings->setFrameworksDirectory(fileboxFrameworks->getCurrentPath());
+    app->settings->setUseAapt2(checkboxAapt->isChecked());
     app->settings->setDecompileSources(checkboxSources->isChecked());
     app->settings->setKeepBrokenResources(checkboxBrokenResources->isChecked());
 
@@ -184,9 +197,8 @@ void OptionsDialog::changeEvent(QEvent *event)
         const int currentPage = pageList->currentRow();
         initialize();
         pageList->setCurrentRow(currentPage);
-    } else {
-        QWidget::changeEvent(event);
     }
+    QDialog::changeEvent(event);
 }
 
 void OptionsDialog::initialize()
@@ -213,10 +225,10 @@ void OptionsDialog::initialize()
     btnAssociate->setIcon(app->icons.get("application.png"));
     btnAssociate->setMinimumHeight(app->scale(30));
     connect(btnAssociate, &QPushButton::clicked, [this]() {
-        if (app->associate()) {
+        if (app->actions.associateApk()) {
             QMessageBox::information(this, QString(), tr("File association has been created."));
         } else {
-            QMessageBox::warning(this, QString(), tr("Could not register file assocation."));
+            QMessageBox::warning(this, QString(), tr("Could not register file association."));
         }
     });
 #ifndef Q_OS_WIN
@@ -226,15 +238,33 @@ void OptionsDialog::initialize()
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
     spinboxRecent->setMaximum(50);
+    pageGeneral->addRow(checkboxUpdates);
+    pageGeneral->addRow(tr("Language:"), comboLanguages);
+    pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
+    pageGeneral->addRow(btnAssociate);
+
+    // Java
+
+    QFormLayout *pageJava = new QFormLayout;
     fileboxJava = new FileBox(true, this);
     fileboxJava->setDefaultPath("");
     const QString javaPath = app->getJavaPath();
     fileboxJava->setPlaceholderText(!javaPath.isEmpty() ? javaPath : tr("Extracted from environment variables by default"));
-    pageGeneral->addRow(checkboxUpdates);
-    pageGeneral->addRow(tr("Language:"), comboLanguages);
-    pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
-    pageGeneral->addRow(tr("Java path:"), fileboxJava);
-    pageGeneral->addRow(btnAssociate);
+    spinboxMinHeapSize = new QSpinBox(this);
+    spinboxMaxHeapSize = new QSpinBox(this);
+    //: Megabytes
+    const QString heapSizeSuffix = QString(" %1").arg(tr("MB"));
+    spinboxMinHeapSize->setSuffix(heapSizeSuffix);
+    spinboxMaxHeapSize->setSuffix(heapSizeSuffix);
+    spinboxMinHeapSize->setSpecialValueText(tr("Default"));
+    spinboxMaxHeapSize->setSpecialValueText(tr("Default"));
+    spinboxMinHeapSize->setRange(0, std::numeric_limits<int>::max());
+    spinboxMaxHeapSize->setRange(0, std::numeric_limits<int>::max());
+    pageJava->addRow(tr("Java path:"), fileboxJava);
+    //: "Heap" refers to a memory heap.
+    pageJava->addRow(tr("Initial heap size:"), spinboxMinHeapSize);
+    //: "Heap" refers to a memory heap.
+    pageJava->addRow(tr("Maximum heap size:"), spinboxMaxHeapSize);
 
     // Repacking
 
@@ -248,12 +278,15 @@ void OptionsDialog::initialize()
     fileboxFrameworks = new FileBox(true, this);
     fileboxFrameworks->setDefaultPath("");
     fileboxFrameworks->setPlaceholderText(Apktool::getDefaultFrameworksPath());
+    checkboxAapt = new QCheckBox("AAPT2", this);
+    //: "Smali" is the name of the tool/format, don't translate it.
     checkboxSources = new QCheckBox(tr("Decompile source code (smali)"), this);
     checkboxBrokenResources = new QCheckBox(tr("Decompile broken resources"), this);
     //: "Apktool" is the name of the tool, don't translate it.
     pageRepack->addRow(tr("Apktool path:"), fileboxApktool);
     pageRepack->addRow(tr("Extraction path:"), fileboxOutput);
     pageRepack->addRow(tr("Frameworks path:"), fileboxFrameworks);
+    pageRepack->addRow(checkboxAapt);
     pageRepack->addRow(checkboxSources);
     pageRepack->addRow(checkboxBrokenResources);
     pageRepack->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
@@ -348,6 +381,7 @@ void OptionsDialog::initialize()
     pageStack->setFrameShape(QFrame::StyledPanel);
     pageList = new QListWidget(this);
     addPage(tr("General"), pageGeneral);
+    addPage("Java", pageJava);
     addPage(tr("Repacking"), pageRepack);
     addPage(tr("Signing APK"), pageSign);
     addPage(tr("Optimizing APK"), pageZipalign);

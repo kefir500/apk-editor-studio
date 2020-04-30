@@ -92,9 +92,8 @@ void FileBox::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
-    } else {
-        QWidget::changeEvent(event);
     }
+    QWidget::changeEvent(event);
 }
 
 void FileBox::dragEnterEvent(QDragEnterEvent *event)

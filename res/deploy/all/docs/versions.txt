@@ -1,5 +1,24 @@
 # Version History
 
+## 1.4.0
+- Added Android Explorer.
+- Added AAPT2 support.
+- Added ability to take screenshots.
+- Added ability to set Java heap size.
+- Added support for UTF-16 and UTF-32.
+- Added Greek translation.
+- Added Polish translation.
+- Added Romanian translation.
+- Added Turkish translation.
+- Fixed GUI freezes and crashes.
+- Fixed project modified state triggers.
+- Updated QtKeychain to 0.10.0.
+- Improved Key Manager layout.
+- macOS: Updated minimum version to 10.11 (El Capitan).
+- macOS: Updated Qt to 5.11.2.
+- Linux: Improved image format support.
+- Linux: Released first AppImage package.
+
 ## 1.3.1
 - Updated Apktool to 2.4.1.
 - Added support for Android 10.

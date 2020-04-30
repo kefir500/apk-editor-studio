@@ -1,15 +1,20 @@
 #ifndef JAVAC_H
 #define JAVAC_H
 
-#include "tools/executable.h"
+#include "base/command.h"
 
-class Javac : public Executable
+namespace Javac
 {
-public:
-    explicit Javac(QObject *parent = nullptr);
-    explicit Javac(const QString &path, QObject *parent = nullptr) : Executable(path, parent) {}
+    class Version : public Command
+    {
+    public:
+        Version(QObject *parent = nullptr) : Command(parent) {}
+        void run() override;
+        const QString &version() const;
 
-    QString version() const;
-};
+    private:
+        QString resultVersion;
+    };
+}
 
 #endif // JAVAC_H

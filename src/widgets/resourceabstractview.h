@@ -13,7 +13,7 @@ public:
 
     void setModel(QAbstractItemModel *model);
 
-    template<class T>
+    template <class T>
     T getView() const {
         return dynamic_cast<T>(view);
     }

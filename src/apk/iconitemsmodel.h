@@ -12,13 +12,13 @@ class IconItemsModel : public QAbstractProxyModel, public IResourceItemsModel
     Q_INTERFACES(IResourceItemsModel)
 
 public:
-    enum IconRow {
+    enum Row {
         ApplicationRow,
         ActivitiesRow,
         RowCount
     };
 
-    enum IconColumn {
+    enum Column {
         CaptionColumn,
         PathColumn,
         TypeColumn,
@@ -26,9 +26,9 @@ public:
     };
 
     enum IconType {
-        Icon,
-        RoundIcon,
-        Banner
+        TypeIcon,
+        TypeRoundIcon,
+        TypeBanner
     };
 
     explicit IconItemsModel(QObject *parent = nullptr);
@@ -47,6 +47,7 @@ public:
     bool replaceApplicationIcons(const QString &path);
     bool replaceResource(const QModelIndex &index, const QString &path = QString()) override;
     bool removeResource(const QModelIndex &index) override;
+    QString getResourcePath(const QModelIndex &index) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
@@ -56,10 +57,8 @@ public:
     void sort(int column = 0, Qt::SortOrder order = Qt::AscendingOrder) override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    bool hasChildren(const QModelIndex &parent = QModelIndex()) const override;
     bool removeRows(int row, int count, const QModelIndex &parent) override;
-
-signals:
-    void ready() const;
 
 private:
     struct IconNode : public TreeNode
@@ -76,14 +75,17 @@ private:
         const ManifestScope *scope;
     };
 
-    bool appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type = Icon);
-    void onResourceAdded(const QModelIndex &index);
+    bool appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type = TypeIcon);
+    void populateFromSource(const QModelIndex &parent = {});
+    void sourceRowsInserted(const QModelIndex &parent, int first, int last);
     void sourceRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
     void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
+    void sourceModelReset();
     const Project *apk() const;
 
     QHash<QPersistentModelIndex, IconNode *> sourceToProxyMap;
     QHash<IconNode *, QPersistentModelIndex> proxyToSourceMap;
+    TreeNode *root;
     TreeNode *applicationNode;
     TreeNode *activitiesNode;
 };

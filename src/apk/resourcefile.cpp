@@ -4,7 +4,6 @@
 #include <QFileInfo>
 #include <QLocale>
 #include <QRegularExpression>
-#include <QFileIconProvider>
 
 namespace Qualifiers
 {
@@ -167,5 +166,5 @@ QIcon ResourceFile::getFileIcon() const
         QPixmap thumbnail(filePath);
         return thumbnail;
     }
-    return QFileIconProvider().icon(QFileInfo(filePath));
+    return app->icons.get(QFileInfo(filePath));
 }

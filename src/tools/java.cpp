@@ -1,18 +1,24 @@
 #include "tools/java.h"
+#include "base/process.h"
 #include "base/application.h"
 #include <QRegularExpression>
 
-Java::Java(QObject *parent) : Java(app->getJavaBinaryPath("java"), parent) {}
-
-QString Java::version()
+void Java::Version::run()
 {
-    QStringList arguments;
-    arguments << "-version";
-    auto result = startSync(arguments);
-    if (!result.success) {
-        return QString();
-    }
-    QRegularExpression regex("version \"(.+)\"");
-    const QString version = regex.match(result.value).captured(1);
-    return version;
+    emit started();
+    auto process = new Process(this);
+    connect(process, &Process::finished, [=](bool success, const QString &output) {
+        if (success) {
+            QRegularExpression regex("version \"(.+)\"");
+            resultVersion = regex.match(output).captured(1);
+        }
+        emit finished(success);
+        process->deleteLater();
+    });
+    process->run(app->getJavaBinaryPath("java"), {"-version"});
+}
+
+const QString &Java::Version::version() const
+{
+    return resultVersion;
 }

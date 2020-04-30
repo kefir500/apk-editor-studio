@@ -4,6 +4,7 @@
 #include "apk/iresourceitemsmodel.h"
 #include "apk/resourcenode.h"
 #include <QAbstractItemModel>
+#include <QFuture>
 
 class Project;
 
@@ -13,29 +14,29 @@ class ResourceItemsModel : public QAbstractItemModel, public IResourceItemsModel
     Q_INTERFACES(IResourceItemsModel)
 
 public:
-    enum ResourceColumn {
-        NodeCaption,
-        ResourceLanguage,
-        ResourceLocale,
-        ResourceDpi,
-        ResourceApi,
-        ResourceQualifiers,
-        ResourcePath,
+    enum Column {
+        CaptionColumn,
+        LanguageColumn,
+        LocaleColumn,
+        DpiColumn,
+        ApiColumn,
+        QualifiersColumn,
+        PathColumn,
         ColumnCount
     };
 
-    enum ResourceRole {
-        ResourceNameRole = RoleCount,
-        ResourceTypeRole,
-        SortRole
+    enum Role {
+        SortRole = Qt::UserRole + 1
     };
 
     ResourceItemsModel(const Project *apk, QObject *parent = nullptr);
     ~ResourceItemsModel() override;
 
+    QFuture<void> initialize(const QString &path);
     QModelIndex addNode(ResourceNode *node, const QModelIndex &parent = QModelIndex());
     bool replaceResource(const QModelIndex &index, const QString &file = QString()) override;
     bool removeResource(const QModelIndex &index) override;
+    QString getResourcePath(const QModelIndex &index) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
@@ -47,11 +48,8 @@ public:
 
     QModelIndex findIndex(const QString &path) const;
     QModelIndex findIndex(const QString &path, const QModelIndex &parent) const;
-    const ResourceFile *getResource(const QModelIndex &index) const;
+    const ResourceFile *getResourceFile(const QModelIndex &index) const;
     const Project *getApk() const;
-
-signals:
-    void added(const QModelIndex &index);
 
 private:
     const Project *apk;

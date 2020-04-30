@@ -1,18 +1,24 @@
 #include "tools/javac.h"
+#include "base/process.h"
 #include "base/application.h"
 #include <QRegularExpression>
 
-Javac::Javac(QObject *parent) : Javac(app->getJavaBinaryPath("javac"), parent) {}
-
-QString Javac::version() const
+void Javac::Version::run()
 {
-    QStringList arguments;
-    arguments << "-version";
-    auto result = startSync(arguments);
-    if (!result.success) {
-        return QString();
-    }
-    QRegularExpression regex("javac (.+)");
-    const QString version = regex.match(result.value).captured(1);
-    return version;
+    emit started();
+    auto process = new Process(this);
+    connect(process, &Process::finished, [=](bool success, const QString &output) {
+        if (success) {
+            QRegularExpression regex("javac (.+)");
+            resultVersion = regex.match(output).captured(1);
+        }
+        emit finished(success);
+        process->deleteLater();
+    });
+    process->run(app->getJavaBinaryPath("javac"), {"-version"});
+}
+
+const QString &Javac::Version::version() const
+{
+    return resultVersion;
 }

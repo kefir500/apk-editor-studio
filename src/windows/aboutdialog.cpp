@@ -4,14 +4,14 @@
 #include "tools/apksigner.h"
 #include "tools/java.h"
 #include "tools/javac.h"
+#include "base/application.h"
 #include <QFormLayout>
 #include <QTabWidget>
 #include <QLabel>
 #include <QPlainTextEdit>
 #include <QTextBrowser>
 #include <QDialogButtonBox>
-#include <QtConcurrent/QtConcurrent>
-#include "base/application.h"
+#include <QTextStream>
 
 AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 {
@@ -170,6 +170,8 @@ QWidget *AboutDialog::createVersionsTab()
             }
             tab->appendHtml(line);
         }
+        tab->moveCursor(QTextCursor::Start);
+        tab->ensureCursorVisible();
     }
 
     return tab;
@@ -201,33 +203,54 @@ QWidget *AboutDialog::createLibrariesTab()
     layout->addRow(new QLabel("Apksigner", this), labelApksigner);
     layout->addRow(new QLabel("ADB", this), labelAdb);
 
-    // Set versions:
+    // Set Qt version:
 
     labelQt->setText(QT_VERSION_STR);
 
-    QtConcurrent::run([=] {
-        // TODO Program crashes if the dialog is closed before this lambda is finished
+    // Set JRE version:
 
-        Java jre;
-        const QString versionJre = jre.version();
-        labelJre->setText(!versionJre.isEmpty() ? versionJre : mdash);
-
-        Javac jdk;
-        const QString versionJdk = jdk.version();
-        labelJdk->setText(!versionJdk.isEmpty() ? versionJdk : mdash);
-
-        Apktool apktool;
-        const QString versionApktool = apktool.version();
-        labelApktool->setText(!versionApktool.isEmpty() ? versionApktool : mdash);
-
-        Apksigner apksigner;
-        const QString versionApksigner = apksigner.version();
-        labelApksigner->setText(!versionApksigner.isEmpty() ? versionApksigner : mdash);
-
-        Adb adb;
-        const QString versionAdb = adb.version();
-        labelAdb->setText(!versionAdb.isEmpty() ? versionAdb : mdash);
+    auto jre = new Java::Version(this);
+    connect(jre, &Java::Version::finished, [=](bool success) {
+        labelJre->setText(success ? jre->version() : mdash);
+        jre->deleteLater();
     });
+    jre->run();
+
+    // Set JDK version:
+
+    auto jdk = new Javac::Version(this);
+    connect(jdk, &Javac::Version::finished, [=](bool success) {
+        labelJdk->setText(success ? jdk->version() : mdash);
+        jdk->deleteLater();
+    });
+    jdk->run();
+
+    // Set Apktool version:
+
+    auto apktool = new Apktool::Version(this);
+    connect(apktool, &Apktool::Version::finished, [=](bool success) {
+        labelApktool->setText(success ? apktool->version() : mdash);
+        apktool->deleteLater();
+    });
+    apktool->run();
+
+    // Set Apksigner version:
+
+    auto apksigner = new Apksigner::Version(this);
+    connect(apksigner, &Apksigner::Version::finished, [=](bool success) {
+        labelApksigner->setText(success ? apksigner->version() : mdash);
+        apksigner->deleteLater();
+    });
+    apksigner->run();
+
+    // Set ADB version:
+
+    auto adb = new Adb::Version(this);
+    connect(adb, &Adb::Version::finished, [=](bool success) {
+        labelAdb->setText(success ? adb->version() : mdash);
+        adb->deleteLater();
+    });
+    adb->run();
 
     return tab;
 }
