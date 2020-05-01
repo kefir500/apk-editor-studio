@@ -48,6 +48,7 @@
 - Fu Panwei
 - Smart Shopping
 - Raymond Laing
+- Jason Swain
 - Jason Leon Castillo
 - Wisata Gili Permai
 - Samuel Radoc
