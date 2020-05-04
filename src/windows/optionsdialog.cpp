@@ -54,6 +54,7 @@ void OptionsDialog::load()
     // General
 
     checkboxUpdates->setChecked(app->settings->getAutoUpdates());
+    checkboxAssociate->setChecked(app->settings->getFileAssociation());
     spinboxRecent->setValue(app->settings->getRecentLimit());
 
     // Java
@@ -146,6 +147,10 @@ void OptionsDialog::save()
     app->settings->setAutoUpdates(checkboxUpdates->isChecked());
     app->setLanguage(comboLanguages->currentData().toString());
     app->recent->setLimit(spinboxRecent->value());
+    if (!app->settings->setFileAssociation(checkboxAssociate->isChecked())) {
+        QMessageBox::warning(this, QString(), tr("Could not register file association."));
+        checkboxAssociate->toggle();
+    }
 
     // Java
 
@@ -221,18 +226,9 @@ void OptionsDialog::initialize()
 
     QFormLayout *pageGeneral = new QFormLayout;
     checkboxUpdates = new QCheckBox(tr("Check for updates automatically"), this);
-    btnAssociate = new QPushButton(tr("Set as default program for APK files"), this);
-    btnAssociate->setIcon(app->icons.get("application.png"));
-    btnAssociate->setMinimumHeight(app->scale(30));
-    connect(btnAssociate, &QPushButton::clicked, [this]() {
-        if (app->actions.associateApk()) {
-            QMessageBox::information(this, QString(), tr("File association has been created."));
-        } else {
-            QMessageBox::warning(this, QString(), tr("Could not register file association."));
-        }
-    });
+    checkboxAssociate = new QCheckBox(tr("Use APK Editor Studio for .apk files"), this);
 #ifndef Q_OS_WIN
-    btnAssociate->hide();
+    checkboxAssociate->hide();
 #endif
     comboLanguages = new QComboBox(this);
     spinboxRecent = new QSpinBox(this);
@@ -241,7 +237,7 @@ void OptionsDialog::initialize()
     pageGeneral->addRow(checkboxUpdates);
     pageGeneral->addRow(tr("Language:"), comboLanguages);
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
-    pageGeneral->addRow(btnAssociate);
+    pageGeneral->addRow(checkboxAssociate);
 
     // Java
 

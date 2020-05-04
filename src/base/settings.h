@@ -43,6 +43,9 @@ public:
     QByteArray getMainWindowState() const;
     bool hasRememberState(const QString &identifier) const;
     bool getRememberState(const QString &identifier) const;
+#ifdef Q_OS_WIN
+    bool getFileAssociation() const;
+#endif
 
     void setJavaPath(const QString &path);
     void setJavaMinHeapSize(int size);
@@ -74,6 +77,9 @@ public:
     void setMainWindowState(const QByteArray &state);
     void setRememberState(const QString &identifier, bool state);
     void resetRememberState(const QString &identifier);
+#ifdef Q_OS_WIN
+    bool setFileAssociation(bool associate);
+#endif
 
 signals:
     void toolbarUpdated() const;

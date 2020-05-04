@@ -21,7 +21,6 @@ public:
     void visitDonatePage();
     void visitUpdatePage();
     void visitBlogPage(const QString &post);
-    bool associateApk();
     void exit();
 
     void checkUpdates(QWidget *parent = nullptr);

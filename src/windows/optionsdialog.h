@@ -41,7 +41,7 @@ private:
     QStackedWidget *pageStack;
 
     QCheckBox *checkboxUpdates;
-    QPushButton *btnAssociate;
+    QCheckBox *checkboxAssociate;
     QSpinBox *spinboxRecent;
     QComboBox *comboLanguages;
 

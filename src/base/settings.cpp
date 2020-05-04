@@ -194,6 +194,17 @@ bool Settings::getRememberState(const QString &identifier) const
     return settings->value(QString("Remember/%1").arg(identifier)).toBool();
 }
 
+#ifdef Q_OS_WIN
+bool Settings::getFileAssociation() const
+{
+    QSettings registry("HKEY_CURRENT_USER\\Software\\Classes", QSettings::NativeFormat);
+    const QString progId("apk-editor-studio.apk");
+    return
+        registry.value(".apk/Default") == progId &&
+        registry.contains(progId + "/Default");
+}
+#endif
+
 // Setters:
 
 void Settings::setJavaPath(const QString &path)
@@ -348,3 +359,28 @@ void Settings::resetRememberState(const QString &identifier)
 {
     settings->remove(QString("Remember/%1").arg(identifier));
 }
+
+#ifdef Q_OS_WIN
+bool Settings::setFileAssociation(bool associate)
+{
+    QSettings registry("HKEY_CURRENT_USER\\Software\\Classes", QSettings::NativeFormat);
+    if (!registry.isWritable()) {
+        return false;
+    }
+    const QString extension(".apk");
+    const QString progId = QString("%1%2").arg(app->getTitleNoSpaces(), extension);
+    const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+    if (associate) {
+        registry.setValue(extension + "/Default", progId);
+        registry.setValue(progId + "/Default", "Android Application Package");
+        registry.setValue(progId + "/DefaultIcon/Default", executablePath + ",0");
+        registry.setValue(progId + "/Shell/Open/Command/Default", executablePath + " \"%1\"");
+    } else {
+        if (getFileAssociation()) {
+            registry.setValue(extension + "/Default", QString());
+        }
+        registry.remove(progId);
+    }
+    return true;
+}
+#endif
