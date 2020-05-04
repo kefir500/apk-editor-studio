@@ -1,5 +1,6 @@
 #include "base/settings.h"
 #include "base/application.h"
+#include "base/fileassociation.h"
 #include "base/password.h"
 #include "tools/apktool.h"
 
