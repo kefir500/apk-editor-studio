@@ -27,6 +27,7 @@ SOURCES += \
     $$PWD/base/command.cpp \
     $$PWD/base/device.cpp \
     $$PWD/base/deviceitemsmodel.cpp \
+    $$PWD/base/fileassociation.cpp \
     $$PWD/base/fileformat.cpp \
     $$PWD/base/fileformatlist.cpp \
     $$PWD/base/iconprovider.cpp \
@@ -123,6 +124,7 @@ HEADERS += \
     $$PWD/base/command.h \
     $$PWD/base/device.h \
     $$PWD/base/deviceitemsmodel.h \
+    $$PWD/base/fileassociation.h \
     $$PWD/base/fileformat.h \
     $$PWD/base/fileformatlist.h \
     $$PWD/base/iconprovider.h \
