@@ -359,6 +359,7 @@ void Settings::resetRememberState(const QString &identifier)
 }
 
 #ifdef Q_OS_WIN
+
 bool Settings::setFileAssociation(bool associate)
 {
     FileAssociation association("apk-editor-studio.apk", "apk");
@@ -371,4 +372,5 @@ bool Settings::setFileAssociation(bool associate)
         return association.unset();
     }
 }
+
 #endif

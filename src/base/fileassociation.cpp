@@ -1,6 +1,8 @@
 #include "base/fileassociation.h"
 #include <QSettings>
 
+#ifdef Q_OS_WIN
+
 FileAssociation::FileAssociation(const QString &progId, const QString &extension)
     : progId(progId)
     , extension(extension)
@@ -41,3 +43,5 @@ bool FileAssociation::isSet() const
         registry->value(QString(".%1/Default").arg(extension)) == progId &&
         registry->contains(progId + "/Default");
 }
+
+#endif

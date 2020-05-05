@@ -1,6 +1,9 @@
 #ifndef FILEASSOCIATION_H
 #define FILEASSOCIATION_H
 
+#include <QtGlobal>
+
+#ifdef Q_OS_WIN
 #include <QString>
 
 class QSettings;
@@ -20,4 +23,5 @@ private:
     std::unique_ptr<QSettings> registry;
 };
 
+#endif
 #endif // FILEASSOCIATION_H

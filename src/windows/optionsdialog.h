@@ -41,9 +41,11 @@ private:
     QStackedWidget *pageStack;
 
     QCheckBox *checkboxUpdates;
-    QCheckBox *checkboxAssociate;
     QSpinBox *spinboxRecent;
     QComboBox *comboLanguages;
+#ifdef Q_OS_WIN
+    QCheckBox *checkboxAssociate;
+#endif
 
     FileBox *fileboxJava;
     QSpinBox *spinboxMinHeapSize;

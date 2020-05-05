@@ -54,8 +54,10 @@ void OptionsDialog::load()
     // General
 
     checkboxUpdates->setChecked(app->settings->getAutoUpdates());
-    checkboxAssociate->setChecked(app->settings->getFileAssociation());
     spinboxRecent->setValue(app->settings->getRecentLimit());
+#ifdef Q_OS_WIN
+    checkboxAssociate->setChecked(app->settings->getFileAssociation());
+#endif
 
     // Java
 
@@ -147,10 +149,12 @@ void OptionsDialog::save()
     app->settings->setAutoUpdates(checkboxUpdates->isChecked());
     app->setLanguage(comboLanguages->currentData().toString());
     app->recent->setLimit(spinboxRecent->value());
+#ifdef Q_OS_WIN
     if (!app->settings->setFileAssociation(checkboxAssociate->isChecked())) {
         QMessageBox::warning(this, QString(), tr("Could not register file association."));
         checkboxAssociate->toggle();
     }
+#endif
 
     // Java
 
@@ -226,9 +230,8 @@ void OptionsDialog::initialize()
 
     QFormLayout *pageGeneral = new QFormLayout;
     checkboxUpdates = new QCheckBox(tr("Check for updates automatically"), this);
+#ifdef Q_OS_WIN
     checkboxAssociate = new QCheckBox(tr("Use APK Editor Studio for .apk files"), this);
-#ifndef Q_OS_WIN
-    checkboxAssociate->hide();
 #endif
     comboLanguages = new QComboBox(this);
     spinboxRecent = new QSpinBox(this);
@@ -237,7 +240,9 @@ void OptionsDialog::initialize()
     pageGeneral->addRow(checkboxUpdates);
     pageGeneral->addRow(tr("Language:"), comboLanguages);
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
+#ifdef Q_OS_WIN
     pageGeneral->addRow(checkboxAssociate);
+#endif
 
     // Java
 
