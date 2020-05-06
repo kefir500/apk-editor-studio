@@ -3,10 +3,10 @@ image: Visual Studio 2017
 environment:
   matrix:
     - NAME: MSI
-      SCRIPT: msi/build.msi.bat
+      SCRIPT: msi\build.msi.bat
       ARTIFACT: scripts\win32\packages\msi\wix\bin\apk-editor-studio_win32_dev.msi
     - NAME: ZIP
-      SCRIPT: zip/build.zip.bat
+      SCRIPT: zip\build.zip.bat
       ARTIFACT: scripts\win32\packages\zip\apk-editor-studio_win32_dev.zip
 
 install:
