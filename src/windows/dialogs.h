@@ -20,9 +20,7 @@ namespace Dialogs
     QStringList getOpenImageFilenames(const QString &defaultPath, QWidget *parent = nullptr);
 
     QStringList getOpenApkFilenames(QWidget *parent = nullptr);
-    QStringList getOpenApkFilenames(const QString &defaultPath, QWidget *parent = nullptr);
     QString getSaveApkFilename(const Project *project, QWidget *parent = nullptr);
-    QString getSaveApkFilename(const Project *project, const QString &defaultPath, QWidget *parent = nullptr);
 
     QString getOpenKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);
     QString getSaveKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);

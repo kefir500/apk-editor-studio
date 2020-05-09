@@ -12,12 +12,7 @@
 
 bool ActionProvider::openApk(QWidget *parent)
 {
-    return openApk(QString(), parent);
-}
-
-bool ActionProvider::openApk(const QString &defaultPath, QWidget *parent)
-{
-    const QStringList paths = Dialogs::getOpenApkFilenames(defaultPath, parent);
+    const QStringList paths = Dialogs::getOpenApkFilenames(parent);
     if (paths.isEmpty()) {
         return false;
     }

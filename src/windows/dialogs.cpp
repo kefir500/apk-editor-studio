@@ -74,25 +74,13 @@ QStringList Dialogs::getOpenImageFilenames(const QString &defaultPath, QWidget *
 
 QStringList Dialogs::getOpenApkFilenames(QWidget *parent)
 {
-    return Dialogs::getOpenApkFilenames(QString(), parent);
-}
-
-QStringList Dialogs::getOpenApkFilenames(const QString &defaultPath, QWidget *parent)
-{
-    return Dialogs::getOpenFilenames(defaultPath, FileFormatList::forApk(), parent);
+    return Dialogs::getOpenFilenames(QString(), FileFormatList::forApk(), parent);
 }
 
 QString Dialogs::getSaveApkFilename(const Project *project, QWidget *parent)
 {
-    return Dialogs::getSaveApkFilename(project, QString(), parent);
-}
-
-QString Dialogs::getSaveApkFilename(const Project *project, const QString &defaultPath, QWidget *parent)
-{
-    const QString directory = makePath(defaultPath);
-    const QString filename = QFileInfo(project->getOriginalPath()).fileName();
-    const QString path = QString("%1/%2").arg(directory, filename);
-    return Dialogs::getSaveFilename(path, FileFormatList::forApk(), parent);
+    const QString defaultPath = project->getOriginalPath();
+    return Dialogs::getSaveFilename(defaultPath, FileFormatList::forApk(), parent);
 }
 
 QString Dialogs::getOpenKeystoreFilename(const QString &defaultPath, QWidget *parent)

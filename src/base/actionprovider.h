@@ -13,7 +13,6 @@ public:
     ActionProvider(QObject *parent = nullptr) : QObject(parent) {}
 
     bool openApk(QWidget *parent = nullptr);
-    bool openApk(const QString &defaultPath, QWidget *parent = nullptr);
     bool closeApk(Project *project);
 
     void visitWebPage();
