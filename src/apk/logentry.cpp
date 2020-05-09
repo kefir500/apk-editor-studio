@@ -29,4 +29,5 @@ QColor LogEntry::getColor() const
     case Error:
         return app->getColor(Application::ColorError);
     }
+    return QPalette().color(QPalette::Base);
 }
