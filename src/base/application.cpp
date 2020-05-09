@@ -366,7 +366,9 @@ bool Application::event(QEvent *event)
     }
     case QEvent::LanguageChange:
         postEvent(&actions, new QEvent(QEvent::LanguageChange));
+        break;
     default:
-        return QtSingleApplication::event(event);
+        break;
     }
+    return QtSingleApplication::event(event);
 }
