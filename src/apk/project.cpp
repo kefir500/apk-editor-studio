@@ -182,7 +182,7 @@ Command *Project::createSaveCommand(QString target) // Combines Pack, Zipalign a
     // Sign APK:
 
     if (app->settings->getSignApk()) {
-        auto keystore = getKeystore();
+        auto keystore = Keystore::get();
         if (keystore) {
             command->add(createSignCommand(target, keystore.data()), false);
         }
@@ -278,51 +278,6 @@ Command *Project::createInstallCommand(const QString &serial)
     });
 
     return install;
-}
-
-QSharedPointer<const Keystore> Project::getKeystore() const
-{
-    auto keystore = QSharedPointer<Keystore>(new Keystore);
-    if (app->settings->getCustomKeystore()) {
-        keystore->keystorePath = app->settings->getKeystorePath();
-        keystore->keystorePassword = app->settings->getKeystorePassword();
-        keystore->keyAlias = app->settings->getKeyAlias();
-        keystore->keyPassword = app->settings->getKeyPassword();
-        if (keystore->keystorePath.isEmpty()) {
-            keystore->keystorePath = Dialogs::getOpenKeystoreFilename();
-            if (keystore->keystorePath.isEmpty()) {
-                return QSharedPointer<const Keystore>(nullptr);
-            }
-        }
-        if (keystore->keystorePassword.isEmpty()) {
-            bool accepted;
-            keystore->keystorePassword = QInputDialog::getText(nullptr, QString(), tr("Enter the keystore password:"), QLineEdit::Password, QString(), &accepted);
-            if (!accepted) {
-                return QSharedPointer<const Keystore>(nullptr);
-            }
-        }
-        if (keystore->keyAlias.isEmpty()) {
-            KeySelector keySelector(keystore->keystorePath, keystore->keystorePassword);
-            keystore->keyAlias = keySelector.select();
-            if (keystore->keyAlias.isEmpty()) {
-                return QSharedPointer<const Keystore>(nullptr);
-            }
-        }
-        if (keystore->keyPassword.isEmpty()) {
-            bool accepted;
-            keystore->keyPassword = QInputDialog::getText(nullptr, QString(), tr("Enter the key password:"), QLineEdit::Password, QString(), &accepted);
-            if (!accepted) {
-                return QSharedPointer<const Keystore>(nullptr);
-            }
-        }
-    } else {
-        // This keystore is provided for demonstrational purposes.
-        keystore->keystorePath = app->getSharedPath("tools/demo.jks");
-        keystore->keystorePassword = "123456";
-        keystore->keyAlias = "demo";
-        keystore->keyPassword = "123456";
-    }
-    return std::move(keystore);
 }
 
 Project::ProjectCommand::ProjectCommand(Project *project)
