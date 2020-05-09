@@ -369,7 +369,7 @@ void MainWindow::setActionsEnabled(const Project *project)
 void MainWindow::updateWindowForProject(const Project *project)
 {
     if (project) {
-        setWindowTitle(QString("%1 [*]").arg(project->getOriginalPath()));
+        setWindowTitle(QString("%1[*]").arg(project->getOriginalPath()));
         setWindowModified(project->getState().isModified());
         setActionsEnabled(project);
     } else {
