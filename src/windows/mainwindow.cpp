@@ -349,9 +349,6 @@ bool MainWindow::setCurrentProject(Project *project)
     iconList->setModel(project ? &project->iconsProxy : nullptr);
     logView->setModel(project ? &project->logModel : nullptr);
     manifestTable->setModel(project ? &project->manifestModel : nullptr);
-    filesystemTree->getView<FilesystemTree *>()->setRootIndex(project
-        ? project->filesystemModel.index(project->getContentsPath())
-        : QModelIndex());
     return project;
 }
 
