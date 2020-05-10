@@ -100,7 +100,7 @@ void MainWindow::initWidgets()
 
     QWidget *dockFilesystemWidget = new QWidget(this);
     QVBoxLayout *filesystemLayout = new QVBoxLayout(dockFilesystemWidget);
-    filesystemTree = new ResourceAbstractView(new FilesystemTree, this);
+    filesystemTree = new ResourceAbstractView(new FileSystemTree, this);
     filesystemLayout->addWidget(filesystemTree);
     filesystemLayout->setMargin(0);
     connect(filesystemTree, &ResourceAbstractView::editRequested, projectsWidget, &ProjectsWidget::openResourceTab);

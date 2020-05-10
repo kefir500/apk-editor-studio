@@ -4,10 +4,10 @@
 #include "apk/filesystemmodel.h"
 #include <QTreeView>
 
-class FilesystemTree : public QTreeView
+class FileSystemTree : public QTreeView
 {
 public:
-    explicit FilesystemTree(QWidget *parent = nullptr) : QTreeView(parent) {}
+    explicit FileSystemTree(QWidget *parent = nullptr) : QTreeView(parent) {}
     FileSystemModel *model() const;
     void setModel(QAbstractItemModel *model) override;
 };
