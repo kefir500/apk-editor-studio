@@ -7,15 +7,15 @@ FileSystemModel *FileSystemTree::model() const
 
 void FileSystemTree::setModel(QAbstractItemModel *newModel)
 {
-    const auto oldModel = qobject_cast<FileSystemModel *>(model());
+    const auto oldModel = model();
     if (oldModel) {
-        disconnect(oldModel, &FileSystemModel::rootPathChanged, this, nullptr);
+        disconnect(oldModel, &QFileSystemModel::rootPathChanged, this, nullptr);
     }
     if (newModel) {
         auto newFileSystemModel = qobject_cast<FileSystemModel *>(newModel);
         Q_ASSERT(newFileSystemModel);
-        QTreeView::setModel(newModel);
-        connect(oldModel, &FileSystemModel::rootPathChanged, [=](const QString &path) {
+        QTreeView::setModel(newFileSystemModel);
+        connect(newFileSystemModel, &QFileSystemModel::rootPathChanged, [=](const QString &path) {
             setRootIndex(newFileSystemModel->index(path));
         });
     }
