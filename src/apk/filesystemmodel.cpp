@@ -22,6 +22,11 @@ void FileSystemModel::setSourceModel(ResourceItemsModel *model)
     }
 }
 
+QModelIndex FileSystemModel::rootIndex() const
+{
+    return index(rootPath());
+}
+
 bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &file)
 {
     if (!sourceModel) {

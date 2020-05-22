@@ -14,6 +14,7 @@ public:
         QFileSystemModel(parent), sourceModel(nullptr) {}
 
     void setSourceModel(ResourceItemsModel *model);
+    QModelIndex rootIndex() const;
 
     bool replaceResource(const QModelIndex &index, const QString &file = QString()) override;
     bool removeResource(const QModelIndex &index) override;
