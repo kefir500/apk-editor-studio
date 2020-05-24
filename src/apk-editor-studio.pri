@@ -56,6 +56,7 @@ SOURCES += \
     $$PWD/tools/apktool.cpp \
     $$PWD/tools/java.cpp \
     $$PWD/tools/javac.cpp \
+    $$PWD/tools/keystore.cpp \
     $$PWD/tools/keytool.cpp \
     $$PWD/tools/zipalign.cpp \
     $$PWD/widgets/decorationsizedelegate.cpp \

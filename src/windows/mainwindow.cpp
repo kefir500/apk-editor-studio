@@ -410,7 +410,7 @@ void MainWindow::dropEvent(QDropEvent *event)
             const QString file = url.toLocalFile();
             const QMimeType mime = QMimeDatabase().mimeTypeForFile(file);
             if (mime.inherits("application/zip")) {
-                app->openApk(file);
+                app->actions.openApk(file, this);
                 event->acceptProposedAction();
             }
         }

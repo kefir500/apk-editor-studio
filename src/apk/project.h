@@ -8,7 +8,6 @@
 #include "apk/logmodel.h"
 #include "apk/projectstate.h"
 #include "base/command.h"
-#include "tools/apktool.h"
 #include "tools/keystore.h"
 #include <QIcon>
 
@@ -20,12 +19,7 @@ public:
     Project(const QString &path);
     ~Project() override;
 
-    void unpack();
-    void save(const QString &path);
-    void install(const QString &serial);
-    void saveAndInstall(const QString &path, const QString &serial);
-
-    const QString &getTitle() const;
+    QString getTitle() const;
     QString getOriginalPath() const;
     QString getContentsPath() const;
     QIcon getThumbnail() const;
@@ -44,13 +38,6 @@ public:
     ManifestModel manifestModel;
     LogModel logModel;
 
-signals:
-    void unpacked(bool success) const;
-    void packed(bool success) const;
-    void installed(bool success) const;
-    void changed() const;
-
-private:
     class ProjectCommand : public Commands
     {
     public:
@@ -67,17 +54,17 @@ private:
         Project *project;
     };
 
-    Command *createUnpackCommand(const QString &source);
-    Command *createSaveCommand(QString target); // Combines Pack, Zipalign and Sign commands
+    Command *createUnpackCommand();
     Command *createPackCommand(const QString &target);
-    Command *createZipalignCommand(const QString &target);
-    Command *createSignCommand(const QString &target, const Keystore *keystore);
-    Command *createInstallCommand(const QString &serial);
+    Command *createZipalignCommand(const QString &apk = QString());
+    Command *createSignCommand(const Keystore *keystore, const QString &apk = QString());
+    Command *createInstallCommand(const QString &serial, const QString &apk = QString());
 
+signals:
+    void changed() const;
 
+private:
     ProjectState state;
-
-    QString title;
     QString originalPath;
     QString contentsPath;
     QIcon thumbnail;

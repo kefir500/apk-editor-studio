@@ -20,7 +20,7 @@ public:
 
     ~ProjectItemsModel() override;
 
-    Project *open(const QString &filename, bool unpack = true);
+    Project *add(const QString &path, QWidget *parent);
     bool close(Project *project);
 
     Project *existing(const QString &filename) const;

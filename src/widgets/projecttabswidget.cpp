@@ -111,11 +111,23 @@ bool ProjectTabsWidget::saveProject()
             return false;
         }
     }
+
     const QString target = Dialogs::getSaveApkFilename(project, this);
     if (target.isEmpty()) {
         return false;
     }
-    project->save(target);
+    auto command = new Project::ProjectCommand(project);
+    command->add(project->createPackCommand(target), true);
+    if (app->settings->getOptimizeApk()) {
+        command->add(project->createZipalignCommand(target), false);
+    }
+    if (app->settings->getSignApk()) {
+        auto keystore = Keystore::get(this);
+        if (keystore) {
+            command->add(project->createSignCommand(keystore.data(), target), false);
+        }
+    }
+    command->run();
     return true;
 }
 
@@ -126,6 +138,8 @@ bool ProjectTabsWidget::installProject()
         return false;
     }
 
+    auto command = new Project::ProjectCommand(project);
+
     if (isUnsaved()) {
         const QString question = tr("Do you want to save changes and pack the APK before installing?");
         const int answer = QMessageBox::question(this, QString(), question, QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
@@ -135,10 +149,20 @@ bool ProjectTabsWidget::installProject()
             saveTabs();
             const QString target = Dialogs::getSaveApkFilename(project, this);
             if (target.isEmpty()) {
+                delete command;
                 return false;
             }
-            project->saveAndInstall(target, device->getSerial());
-            return true;
+            command->add(project->createPackCommand(target), true);
+            if (app->settings->getOptimizeApk()) {
+                command->add(project->createZipalignCommand(), false);
+            }
+            if (app->settings->getSignApk()) {
+                auto keystore = Keystore::get(this);
+                if (keystore) {
+                    command->add(project->createSignCommand(keystore.data()), false);
+                }
+            }
+            break;
         }
         case QMessageBox::No:
         case QMessageBox::Discard:
@@ -148,7 +172,8 @@ bool ProjectTabsWidget::installProject()
         }
     }
 
-    project->install(device->getSerial());
+    command->add(project->createInstallCommand(device->getSerial()));
+    command->run();
     return true;
 }
 

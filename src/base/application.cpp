@@ -2,12 +2,12 @@
 #include "tools/apktool.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
-#include <QDesktopServices>
 #include <QDateTime>
 #include <QFileOpenEvent>
 #include <QPixmapCache>
 #include <QPainter>
 #include <QScreen>
+#include <QStandardPaths>
 #include <QDebug>
 
 Application::Application(int &argc, char **argv) : QtSingleApplication(argc, argv)
@@ -77,7 +77,7 @@ int Application::exec()
     if (args.size() > 1) {
         args.removeFirst();
         for (const QString &arg : args) {
-            openApk(arg);
+            actions.openApk(arg, window);
         }
     }
 
@@ -88,7 +88,7 @@ int Application::exec()
             window->raise();
             const QStringList paths = message.split('\n');
             for (const QString &path : paths) {
-                openApk(path);
+                actions.openApk(path);
             }
         }
     });
@@ -306,33 +306,6 @@ QString Application::getUpdateUrl()
     return getWebPage() + "/versions.json";
 }
 
-Project *Application::openApk(const QString &filename, bool unpack)
-{
-    Project *existing = projects.existing(filename);
-    if (existing) {
-        //: "%1" will be replaced with a path to an APK.
-        const QString question = tr("This APK is already open:\n%1\nDo you want to reopen it and lose any unsaved changes?").arg(existing->getOriginalPath());
-        const int answer = QMessageBox::question(window, QString(), question);
-        if (answer != QMessageBox::Yes) {
-            return existing;
-        }
-        projects.close(existing);
-    }
-
-    Project *project = projects.open(filename, unpack);
-    connect(project, &Project::unpacked, [=]() {
-        addToRecent(project);
-    });
-    connect(project, &Project::packed, [=]() {
-        addToRecent(project);
-    });
-    connect(project, &Project::installed, [=]() {
-        addToRecent(project);
-    });
-
-    return project;
-}
-
 void Application::setLanguage(const QString &locale)
 {
     removeTranslator(&translator);
@@ -350,18 +323,13 @@ void Application::setLanguage(const QString &locale)
     }
 }
 
-bool Application::addToRecent(const Project *project)
-{
-    return recent->add(project->getOriginalPath(), project->getThumbnail().pixmap(scale(32, 32)));
-}
-
 bool Application::event(QEvent *event)
 {
     // File open request on macOS
     switch (event->type()) {
     case QEvent::FileOpen: {
         const QString filePath = static_cast<QFileOpenEvent *>(event)->file();
-        openApk(filePath);
+        actions.openApk(filePath, window);
         return true;
     }
     case QEvent::LanguageChange:

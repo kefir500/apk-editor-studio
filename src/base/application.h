@@ -66,11 +66,8 @@ public:
     static QString getJdkPage();
     static QString getUpdateUrl();
 
-    Project *openApk(const QString &filename, bool unpack = true);
 
     void setLanguage(const QString &locale);
-    bool addToRecent(const Project *project);
-
     MainWindow *window;
     Settings *settings;
     Recent *recent;

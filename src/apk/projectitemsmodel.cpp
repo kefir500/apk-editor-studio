@@ -1,17 +1,25 @@
 #include "apk/projectitemsmodel.h"
 #include "base/application.h"
+#include <QMessageBox>
 
 ProjectItemsModel::~ProjectItemsModel()
 {
     qDeleteAll(projects);
 }
 
-Project *ProjectItemsModel::open(const QString &filename, bool unpack)
+Project *ProjectItemsModel::add(const QString &path, QWidget *parent)
 {
-    auto project = new Project(filename);
-    if (unpack) {
-        project->unpack();
+    Project *existing = this->existing(path);
+    if (existing) {
+        //: "%1" will be replaced with a path to an APK.
+        const QString question = tr("This APK is already open:\n%1\nDo you want to reopen it and lose any unsaved changes?").arg(existing->getOriginalPath());
+        const int answer = QMessageBox::question(parent, QString(), question);
+        if (answer != QMessageBox::Yes) {
+            return nullptr;
+        }
+        close(existing);
     }
+    auto project = new Project(path);
 
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
         projects.append(project);

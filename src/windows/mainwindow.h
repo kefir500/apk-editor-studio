@@ -63,7 +63,6 @@ private:
     QMenu *menuHelp;
     QAction *actionApkSave;
     QAction *actionApkInstall;
-    QAction *actionApkInstallExternal;
     QAction *actionApkExplore;
     QAction *actionApkClose;
     QAction *actionProjectManager;

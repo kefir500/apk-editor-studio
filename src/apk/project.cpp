@@ -5,18 +5,13 @@
 #include "tools/apktool.h"
 #include "tools/apksigner.h"
 #include "tools/zipalign.h"
-#include "windows/dialogs.h"
-#include "windows/keyselector.h"
 #include <QUuid>
-#include <QInputDialog>
 #include <QFutureWatcher>
 #include <QDebug>
 
 Project::Project(const QString &path) : resourcesModel(this)
 {
-    QFileInfo fileInfo(path);
-    title = fileInfo.fileName();
-    originalPath = fileInfo.absoluteFilePath();
+    originalPath = QFileInfo(path).absoluteFilePath();
     manifest = nullptr;
     filesystemModel.setSourceModel(&resourcesModel);
     iconsProxy.setSourceModel(&resourcesModel);
@@ -35,38 +30,9 @@ Project::~Project()
     }
 }
 
-void Project::unpack()
+QString Project::getTitle() const
 {
-    auto command = new ProjectCommand(this);
-    command->add(createUnpackCommand(getOriginalPath()), true);
-    command->run();
-}
-
-void Project::save(const QString &path)
-{
-    auto command = new ProjectCommand(this);
-    command->add(createSaveCommand(path), true);
-    command->run();
-}
-
-void Project::saveAndInstall(const QString &path, const QString &serial)
-{
-    auto command = new ProjectCommand(this);
-    command->add(createSaveCommand(path), true);
-    command->add(createInstallCommand(serial), true);
-    command->run();
-}
-
-void Project::install(const QString &serial)
-{
-    auto command = new ProjectCommand(this);
-    command->add(createInstallCommand(serial), true);
-    command->run();
-}
-
-const QString &Project::getTitle() const
-{
-    return title;
+    return QFileInfo(originalPath).fileName();
 }
 
 QString Project::getOriginalPath() const
@@ -105,8 +71,9 @@ void Project::journal(const QString &brief, const QString &descriptive, LogEntry
     logModel.add(brief, descriptive, type);
 }
 
-Command *Project::createUnpackCommand(const QString &source)
+Command *Project::createUnpackCommand()
 {
+    QString source(getOriginalPath());
     QString target;
     do {
         const QString uuid = QUuid::createUuid().toString();
@@ -121,21 +88,24 @@ Command *Project::createUnpackCommand(const QString &source)
     QDir().mkpath(frameworks);
 
     // Be careful with the "contentsPath" variable: this directory is recursively removed in the destructor.
-    this->contentsPath = target;
+    contentsPath = target;
+
+    auto apktoolDecode = new Apktool::Decode(source, target, frameworks, resources, sources, keepBroken);
+    connect(apktoolDecode, &Command::finished, this, [=](bool success) {
+        if (success) {
+            filesystemModel.setRootPath(contentsPath);
+        } else {
+            journal(tr("Error unpacking APK."), apktoolDecode->output(), LogEntry::Error);
+        }
+    });
 
     auto command = new Commands(this);
-    auto apktoolDecode = new Apktool::Decode(source, target, frameworks, resources, sources, keepBroken);
     command->add(apktoolDecode, true);
     command->add(new LoadUnpackedCommand(this), true);
     connect(command, &Command::started, this, [=]() {
         qDebug() << qPrintable(QString("Unpacking\n  from: %1\n    to: %2\n").arg(source, target));
         journal(tr("Unpacking APK..."));
         state.setCurrentStatus(ProjectState::Status::Unpacking);
-    });
-    connect(apktoolDecode, &Command::finished, this, [=](bool success) {
-        if (!success) {
-            journal(tr("Error unpacking APK."), apktoolDecode->output(), LogEntry::Error);
-        }
     });
     connect(command, &Command::finished, this, [=](bool success) {
         if (success) {
@@ -155,47 +125,7 @@ Command *Project::createUnpackCommand(const QString &source)
             });
         }
         state.setUnpacked(success);
-        emit unpacked(success);
     });
-    return command;
-}
-
-Command *Project::createSaveCommand(QString target) // Combines Pack, Zipalign and Sign commands
-{
-    target = QDir::toNativeSeparators(target);
-    QFileInfo fileInfo(target);
-    const QString directory = fileInfo.absolutePath();
-    app->settings->setLastDirectory(directory);
-
-    auto command = new Commands(this);
-
-    // Pack APK:
-
-    command->add(createPackCommand(target), true);
-
-    // Optimize APK:
-
-    if (app->settings->getOptimizeApk()) {
-        command->add(createZipalignCommand(target), false);
-    }
-
-    // Sign APK:
-
-    if (app->settings->getSignApk()) {
-        auto keystore = Keystore::get();
-        if (keystore) {
-            command->add(createSignCommand(target, keystore.data()), false);
-        }
-    }
-
-    // Done:
-
-    connect(command, &Commands::finished, this, [=]() {
-        QFileInfo fileInfo(target);
-        title = fileInfo.fileName();
-        originalPath = target;
-    });
-
     return command;
 }
 
@@ -215,19 +145,19 @@ Command *Project::createPackCommand(const QString &target)
 
     connect(apktoolBuild, &Command::finished, this, [=](bool success) {
         if (success) {
+            originalPath = target;
             state.setModified(false);
         } else {
             journal(tr("Error packing APK."), apktoolBuild->output(), LogEntry::Error);
         }
-        emit packed(success);
     });
 
     return apktoolBuild;
 }
 
-Command *Project::createZipalignCommand(const QString &target)
+Command *Project::createZipalignCommand(const QString &apk)
 {
-    auto zipalign = new Zipalign::Align(target);
+    auto zipalign = new Zipalign::Align(apk.isEmpty() ? getOriginalPath() : apk);
 
     connect(zipalign, &Command::started, this, [=]() {
         journal(tr("Optimizing APK..."));
@@ -243,9 +173,9 @@ Command *Project::createZipalignCommand(const QString &target)
     return zipalign;
 }
 
-Command *Project::createSignCommand(const QString &target, const Keystore *keystore)
+Command *Project::createSignCommand(const Keystore *keystore, const QString &apk)
 {
-    auto apksigner = new Apksigner::Sign(target, keystore);
+    auto apksigner = new Apksigner::Sign(apk.isEmpty() ? getOriginalPath() : apk, keystore);
 
     connect(apksigner, &Command::started, this, [=]() {
         journal(tr("Signing APK..."));
@@ -261,9 +191,9 @@ Command *Project::createSignCommand(const QString &target, const Keystore *keyst
     return apksigner;
 }
 
-Command *Project::createInstallCommand(const QString &serial)
+Command *Project::createInstallCommand(const QString &serial, const QString &apk)
 {
-    auto install = new Adb::Install(originalPath, serial);
+    auto install = new Adb::Install(apk.isEmpty() ? getOriginalPath() : apk, serial);
 
     connect(install, &Command::started, this, [=]() {
         journal(tr("Installing APK..."));
@@ -274,7 +204,6 @@ Command *Project::createInstallCommand(const QString &serial)
         if (!success) {
             journal(tr("Error installing APK."), install->output(), LogEntry::Error);
         }
-        emit installed(success);
     });
 
     return install;
@@ -294,6 +223,7 @@ Project::ProjectCommand::ProjectCommand(Project *project)
         } else {
             project->state.setCurrentStatus(ProjectState::Status::Errored);
         }
+        app->actions.addToRecent(project);
     });
 }
 
@@ -301,11 +231,7 @@ void Project::LoadUnpackedCommand::run()
 {
     emit started();
 
-    qDebug() << qPrintable(QString("Initializing \"%1\"...").arg(project->originalPath));
     project->journal(Project::tr("Reading APK contents..."));
-
-    project->filesystemModel.setRootPath(project->contentsPath);
-
     project->manifest = new Manifest(
         project->contentsPath + "/AndroidManifest.xml",
         project->contentsPath + "/apktool.yml");

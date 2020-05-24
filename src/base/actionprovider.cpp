@@ -10,16 +10,25 @@
 #include <QDesktopServices>
 #include <QDateTime>
 
-bool ActionProvider::openApk(QWidget *parent)
+void ActionProvider::openApk(QWidget *parent)
 {
     const QStringList paths = Dialogs::getOpenApkFilenames(parent);
-    if (paths.isEmpty()) {
-        return false;
+    if (!paths.isEmpty()) {
+        for (const QString &path : paths) {
+            openApk(path, parent);
+        }
+        app->settings->setLastDirectory(QFileInfo(paths.last()).absolutePath());
     }
-    for (const QString &path : paths) {
-        app->openApk(path);
+}
+
+void ActionProvider::openApk(const QString &path, QWidget *parent)
+{
+    auto project = app->projects.add(path, parent);
+    if (project) {
+        auto command = new Project::ProjectCommand(project);
+        command->add(project->createUnpackCommand(), true);
+        command->run();
     }
-    return true;
 }
 
 bool ActionProvider::closeApk(Project *project)
@@ -58,12 +67,19 @@ void ActionProvider::exit()
     app->window->close();
 }
 
-void ActionProvider::checkUpdates(QWidget *parent)
+void ActionProvider::addToRecent(const Project *project) const
+{
+    const auto path = project->getOriginalPath();
+    const auto icon = project->getThumbnail().pixmap(app->scale(32, 32));
+    app->recent->add(path, icon);
+}
+
+void ActionProvider::checkUpdates(QWidget *parent) const
 {
     Updater::check(true, parent);
 }
 
-bool ActionProvider::resetSettings(QWidget *parent)
+bool ActionProvider::resetSettings(QWidget *parent) const
 {
     const QString question(tr("Are you sure you want to reset settings?"));
     const int answer = QMessageBox::question(parent, {}, question);
@@ -72,11 +88,6 @@ bool ActionProvider::resetSettings(QWidget *parent)
     }
     app->settings->reset();
     return true;
-}
-
-bool ActionProvider::installExternalApk(const QString &path, QString serial, QWidget *parent)
-{
-    return installExternalApks(QStringList() << path, serial, parent);
 }
 
 bool ActionProvider::installExternalApks(QStringList paths, QString serial, QWidget *parent)
@@ -95,8 +106,12 @@ bool ActionProvider::installExternalApks(QStringList paths, QString serial, QWid
         }
     }
     for (const QString &path : paths) {
-        Project *project = app->openApk(path, false);
-        project->install(serial);
+        auto project = app->projects.add(path, parent);
+        if (project) {
+            auto command = new Project::ProjectCommand(project);
+            command->add(project->createInstallCommand(serial), true);
+            command->run();
+        }
     }
     return true;
 }
@@ -435,7 +450,7 @@ QMenu *ActionProvider::getRecent(QWidget *parent)
             QAction *action = new QAction(recentEntry.thumbnail(), recentEntry.filename(), parent);
             menuRecent->addAction(action);
             connect(action, &QAction::triggered, [=]() {
-                app->openApk(recentEntry.filename());
+                openApk(recentEntry.filename(), parent);
             });
         }
         menuRecent->addSeparator();
