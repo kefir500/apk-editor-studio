@@ -4,6 +4,7 @@
 #include <QAction>
 
 class Project;
+class Keystore;
 
 class ActionProvider : public QObject
 {
