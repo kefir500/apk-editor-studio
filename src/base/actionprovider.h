@@ -14,6 +14,10 @@ public:
 
     void openApk(QWidget *parent = nullptr);
     void openApk(const QString &path, QWidget *parent = nullptr);
+    void openApk(const QStringList &paths, QWidget *parent = nullptr);
+    void installApk(QWidget *parent = nullptr);
+    void installApk(const QString &serial, QWidget *parent = nullptr);
+    void installApk(const QStringList &paths, const QString &serial, QWidget *parent = nullptr);
     bool closeApk(Project *project);
 
     void visitWebPage();
@@ -23,7 +27,6 @@ public:
     void visitBlogPage(const QString &post);
     void exit();
 
-    bool installExternalApks(QStringList paths, QString serial, QWidget *parent = nullptr);
     void addToRecent(const Project *project) const;
     void checkUpdates(QWidget *parent = nullptr) const;
     bool resetSettings(QWidget *parent = nullptr) const;
@@ -31,12 +34,14 @@ public:
     void openOptions(QWidget *parent = nullptr);
     void openDeviceManager(QWidget *parent = nullptr);
     void openKeyManager(QWidget *parent = nullptr);
-    bool openAndroidExplorer(QWidget *parent = nullptr);
-    bool openAndroidExplorer(const QString &serial = QString(), QWidget *parent = nullptr);
-    bool takeScreenshot(QWidget *parent = nullptr);
-    bool takeScreenshot(const QString &serial = QString(), QWidget *parent = nullptr);
+    void openAndroidExplorer(QWidget *parent = nullptr);
+    void openAndroidExplorer(const QString &serial, QWidget *parent = nullptr);
+    void takeScreenshot(QWidget *parent = nullptr);
+    void takeScreenshot(const QString &serial, QWidget *parent = nullptr);
 
     QAction *getOpenApk(QWidget *parent = nullptr);
+    QAction *getInstallApk(QWidget *parent = nullptr);
+    QAction *getInstallApk(const QString &serial, QWidget *parent = nullptr);
 
     QAction *getVisitWebPage(QObject *parent = nullptr);
     QAction *getVisitSourcePage(QObject *parent = nullptr);
@@ -45,8 +50,6 @@ public:
 
     QAction *getCheckUpdates(QWidget *parent = nullptr);
     QAction *getResetSettings(QWidget *parent = nullptr);
-    QAction *getInstallExternalApk(QWidget *parent = nullptr);
-    QAction *getInstallExternalApk(const QString &serial, QWidget *parent = nullptr);
     QAction *getOpenOptions(QWidget *parent = nullptr);
     QAction *getOpenDeviceManager(QWidget *parent= nullptr);
     QAction *getOpenKeyManager(QWidget *parent = nullptr);

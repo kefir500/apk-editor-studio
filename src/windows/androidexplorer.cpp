@@ -115,7 +115,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     fileSelectionActions->addAction(actionDelete);
 
     toolbar->addSeparator();
-    toolbar->addAction(app->actions.getInstallExternalApk(serial, this));
+    toolbar->addAction(app->actions.getInstallApk(serial, this));
     toolbar->addSeparator();
     toolbar->addAction(app->actions.getTakeScreenshot(serial, this));
 

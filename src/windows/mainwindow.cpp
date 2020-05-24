@@ -201,7 +201,7 @@ void MainWindow::initMenus()
     menuFile->addAction(actionApkSave);
     menuFile->addSeparator();
     menuFile->addAction(actionApkInstall);
-    menuFile->addAction(app->actions.getInstallExternalApk(this));
+    menuFile->addAction(app->actions.getInstallApk(this));
     menuFile->addSeparator();
     menuFile->addAction(actionApkExplore);
     menuFile->addSeparator();
