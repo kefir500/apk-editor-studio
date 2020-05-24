@@ -79,6 +79,7 @@ protected:
     bool event(QEvent *event) override;
 
 private:
+    void processArguments(const QStringList &arguments);
     qreal scaleFactor;
     QTranslator translator;
     QTranslator translatorQt;

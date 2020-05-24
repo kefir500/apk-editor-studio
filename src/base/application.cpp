@@ -1,5 +1,8 @@
+#include <QCommandLineParser>
 #include "base/application.h"
+#include "apk/project.h"
 #include "tools/apktool.h"
+#include "tools/keystore.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
 #include <QDateTime>
@@ -73,23 +76,13 @@ int Application::exec()
     window = &mainwindow;
     setActivationWindow(window);
 
-    QStringList args = arguments();
-    if (args.size() > 1) {
-        args.removeFirst();
-        for (const QString &arg : args) {
-            actions.openApk(arg, window);
-        }
-    }
-
-    connect(this, &Application::messageReceived, [this](const QString &message) {
+    processArguments(arguments());
+    connect(this, &QtSingleApplication::messageReceived, [this](const QString &message) {
         if (!message.isEmpty()) {
             window->setWindowState((window->windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
             window->activateWindow();
             window->raise();
-            const QStringList paths = message.split('\n');
-            for (const QString &path : paths) {
-                actions.openApk(path);
-            }
+            processArguments(QStringList() << app->applicationFilePath() << message.split('\n'));
         }
     });
 
@@ -339,4 +332,43 @@ bool Application::event(QEvent *event)
         break;
     }
     return QtSingleApplication::event(event);
+}
+
+void Application::processArguments(const QStringList &arguments)
+{
+    QCommandLineParser cli;
+    QCommandLineOption optimizeOption(QStringList{"o", "optimize", "z", "zipalign"});
+    QCommandLineOption signOption(QStringList{"s", "sign"});
+    QCommandLineOption installOption(QStringList{"i", "install"});
+    cli.addOption(optimizeOption);
+    cli.addOption(signOption);
+    cli.addOption(installOption);
+    cli.parse(arguments);
+
+    for (const QString &path : cli.positionalArguments()) {
+        auto project = projects.add(path, window);
+        if (project) {
+            auto command = new Project::ProjectCommand(project);
+            if (!cli.isSet(optimizeOption) && !cli.isSet(signOption) && !cli.isSet(installOption)) {
+                command->add(project->createUnpackCommand(), true);
+            } else {
+                if (cli.isSet(optimizeOption)) {
+                    command->add(project->createZipalignCommand(), true);
+                }
+                if (cli.isSet(signOption)) {
+                    auto keystore = Keystore::get(window);
+                    if (keystore) {
+                        command->add(project->createSignCommand(keystore.data()), true);
+                    }
+                }
+                if (cli.isSet(installOption)) {
+                    const auto device = Dialogs::getInstallDevice(window);
+                    if (device) {
+                        command->add(project->createInstallCommand(device->getSerial()), true);
+                    }
+                }
+            }
+            command->run();
+        }
+    }
 }
