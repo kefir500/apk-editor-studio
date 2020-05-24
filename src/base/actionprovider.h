@@ -15,6 +15,11 @@ public:
     void openApk(QWidget *parent = nullptr);
     void openApk(const QString &path, QWidget *parent = nullptr);
     void openApk(const QStringList &paths, QWidget *parent = nullptr);
+    void optimizeApk(QWidget *parent = nullptr);
+    void optimizeApk(const QStringList &paths, QWidget *parent = nullptr);
+    void signApk(QWidget *parent = nullptr);
+    void signApk(const QStringList &paths, QWidget *parent = nullptr);
+    void signApk(const QStringList &paths, const Keystore *keystore, QWidget *parent = nullptr);
     void installApk(QWidget *parent = nullptr);
     void installApk(const QString &serial, QWidget *parent = nullptr);
     void installApk(const QStringList &paths, const QString &serial, QWidget *parent = nullptr);
@@ -40,6 +45,8 @@ public:
     void takeScreenshot(const QString &serial, QWidget *parent = nullptr);
 
     QAction *getOpenApk(QWidget *parent = nullptr);
+    QAction *getOptimizeApk(QWidget *parent = nullptr);
+    QAction *getSignApk(QWidget *parent = nullptr);
     QAction *getInstallApk(QWidget *parent = nullptr);
     QAction *getInstallApk(const QString &serial, QWidget *parent = nullptr);
 

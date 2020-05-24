@@ -33,6 +33,51 @@ void ActionProvider::openApk(const QStringList &paths, QWidget *parent)
     }
 }
 
+void ActionProvider::optimizeApk(QWidget *parent)
+{
+    const QStringList paths = Dialogs::getOpenApkFilenames(parent);
+    optimizeApk(paths, parent);
+}
+
+void ActionProvider::optimizeApk(const QStringList &paths, QWidget *parent)
+{
+    for (const QString &path : paths) {
+        auto project = app->projects.add(path, parent);
+        if (project) {
+            auto command = new Project::ProjectCommand(project);
+            command->add(project->createZipalignCommand(), true);
+            command->run();
+        }
+    }
+}
+
+void ActionProvider::signApk(QWidget *parent)
+{
+    const QStringList paths = Dialogs::getOpenApkFilenames(parent);
+    signApk(paths, parent);
+}
+
+void ActionProvider::signApk(const QStringList &paths, QWidget *parent)
+{
+    const auto keystore = Keystore::get(parent);
+    if (keystore) {
+        signApk(paths, keystore.data(), parent);
+    }
+}
+
+void ActionProvider::signApk(const QStringList &paths, const Keystore *keystore, QWidget *parent)
+{
+    Q_ASSERT(keystore);
+    for (const QString &path : paths) {
+        auto project = app->projects.add(path, parent);
+        if (project) {
+            auto command = new Project::ProjectCommand(project);
+            command->add(project->createSignCommand(keystore), true);
+            command->run();
+        }
+    }
+}
+
 void ActionProvider::installApk(QWidget *parent)
 {
     const auto device = Dialogs::getInstallDevice(parent);
@@ -188,6 +233,36 @@ QAction *ActionProvider::getOpenApk(QWidget *parent)
     connect(action, &QAction::triggered, [=]() {
         openApk(parent);
     });
+    return action;
+}
+
+QAction *ActionProvider::getOptimizeApk(QWidget *parent)
+{
+    auto action = new QAction(app->icons.get("optimize.png"), {}, parent);
+
+    auto translate = [=]() { action->setText(tr("&Optimize External APK...")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    connect(action, &QAction::triggered, [=]() {
+        optimizeApk(parent);
+    });
+
+    return action;
+}
+
+QAction *ActionProvider::getSignApk(QWidget *parent)
+{
+    auto action = new QAction(app->icons.get("key.png"), {}, parent);
+
+    auto translate = [=]() { action->setText(tr("&Sign External APK...")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    connect(action, &QAction::triggered, [=]() {
+        signApk(parent);
+    });
+
     return action;
 }
 

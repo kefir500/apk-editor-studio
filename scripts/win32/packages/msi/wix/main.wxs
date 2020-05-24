@@ -101,6 +101,7 @@
                   <File Name="key.png" Id="IconKey16" />
                   <File Name="more.png" Id="IconMore16" />
                   <File Name="open.png" Id="IconOpen16" />
+                  <File Name="optimize.png" Id="IconOptimize16" />
                   <File Name="pack.png" Id="IconPack16" />
                   <File Name="paste.png" Id="IconPaste16" />
                   <File Name="permissions.png" Id="IconPermissions16" />
@@ -158,6 +159,7 @@
                   <File Name="install.png" Id="IconInstall30" />
                   <File Name="key.png" Id="IconKey30" />
                   <File Name="open.png" Id="IconOpen30" />
+                  <File Name="optimize.png" Id="IconOptimize30" />
                   <File Name="pack.png" Id="IconPack30" />
                   <File Name="paste.png" Id="IconPaste30" />
                   <File Name="permissions.png" Id="IconPermissions30" />
@@ -208,6 +210,7 @@
                   <File Name="install.png" Id="IconInstall40" />
                   <File Name="key.png" Id="IconKey40" />
                   <File Name="open.png" Id="IconOpen40" />
+                  <File Name="optimize.png" Id="IconOptimize40" />
                   <File Name="pack.png" Id="IconPack40" />
                   <File Name="paste.png" Id="IconPaste40" />
                   <File Name="permissions.png" Id="IconPermissions40" />
