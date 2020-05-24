@@ -74,7 +74,11 @@ QStringList Dialogs::getOpenImageFilenames(const QString &defaultPath, QWidget *
 
 QStringList Dialogs::getOpenApkFilenames(QWidget *parent)
 {
-    return Dialogs::getOpenFilenames(QString(), FileFormatList::forApk(), parent);
+    auto paths = Dialogs::getOpenFilenames(QString(), FileFormatList::forApk(), parent);
+    if (!paths.isEmpty()) {
+        app->settings->setLastDirectory(QFileInfo(paths.last()).absolutePath());
+    }
+    return paths;
 }
 
 QString Dialogs::getSaveApkFilename(const Project *project, QWidget *parent)

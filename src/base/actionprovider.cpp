@@ -13,11 +13,8 @@
 void ActionProvider::openApk(QWidget *parent)
 {
     const QStringList paths = Dialogs::getOpenApkFilenames(parent);
-    if (!paths.isEmpty()) {
-        for (const QString &path : paths) {
-            openApk(path, parent);
-        }
-        app->settings->setLastDirectory(QFileInfo(paths.last()).absolutePath());
+    for (const QString &path : paths) {
+        openApk(path, parent);
     }
 }
 
