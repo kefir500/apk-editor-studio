@@ -58,12 +58,12 @@
     <message>
         <location filename="../../src/base/actionprovider.cpp" line="192"/>
         <source>Screenshot has been successfully created!</source>
-        <translation type="unfinished"/>
+        <translation>Zrzut ekranu został pomyślnie wykonany!</translation>
     </message>
     <message>
         <location filename="../../src/base/actionprovider.cpp" line="194"/>
         <source>Could not take a screenshot.</source>
-        <translation type="unfinished"/>
+        <translation>Nie można zrobić zrzutu ekranu.</translation>
     </message>
     <message>
         <location filename="../../src/base/actionprovider.cpp" line="209"/>
@@ -125,12 +125,12 @@
     <message>
         <location filename="../../src/base/actionprovider.cpp" line="381"/>
         <source>&amp;Android Explorer...</source>
-        <translation>&amp;Android Explorer...</translation>
+        <translation>Eksplorator &amp;Androida...</translation>
     </message>
     <message>
         <location filename="../../src/base/actionprovider.cpp" line="401"/>
         <source>Take &amp;Screenshot...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Robienie zrzutu ekranu...</translation>
     </message>
     <message>
         <location filename="../../src/base/actionprovider.cpp" line="420"/>
@@ -160,66 +160,66 @@
         <location filename="../../src/windows/androidexplorer.cpp" line="298"/>
         <location filename="../../src/windows/dialogs.cpp" line="124"/>
         <source>Android Explorer</source>
-        <translation>Android Explorer</translation>
+        <translation>Eksplorator Androida</translation>
     </message>
     <message>
         <location filename="../../src/windows/androidexplorer.cpp" line="276"/>
         <source>Are you sure you want to delete this file?</source>
-        <translation type="unfinished"/>
+        <translation>Czy na pewno chcesz usunąć ten plik?</translation>
     </message>
     <message>
         <location filename="../../src/windows/androidexplorer.cpp" line="279"/>
         <source>Are you sure you want to delete this directory?</source>
-        <translation type="unfinished"/>
+        <translation>Czy na pewno chcesz usunąć ten katalog?</translation>
     </message>
     <message>
         <location filename="../../src/windows/androidexplorer.cpp" line="299"/>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>Pobieranie</translation>
     </message>
     <message>
         <location filename="../../src/windows/androidexplorer.cpp" line="300"/>
         <source>Upload</source>
-        <translation type="unfinished"/>
+        <translation>Przesyłanie pliku</translation>
     </message>
     <message>
         <location filename="../../src/windows/androidexplorer.cpp" line="301"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopiuj</translation>
     </message>
     <message>
         <location filename="../../src/windows/androidexplorer.cpp" line="302"/>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Wytnij</translation>
     </message>
     <message>
         <location filename="../../src/windows/androidexplorer.cpp" line="303"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Wklej</translation>
     </message>
     <message>
         <location filename="../../src/windows/androidexplorer.cpp" line="304"/>
         <source>Rename</source>
-        <translation type="unfinished"/>
+        <translation>Zmień nazwę</translation>
     </message>
     <message>
         <location filename="../../src/windows/androidexplorer.cpp" line="305"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Usuń</translation>
     </message>
     <message>
         <location filename="../../src/windows/androidexplorer.cpp" line="307"/>
         <location filename="../../src/windows/androidexplorer.cpp" line="308"/>
         <source>Up</source>
         <extracomment>Navigate up one directory in a file manager hierarchy.</extracomment>
-        <translation type="unfinished"/>
+        <translation>W górę</translation>
     </message>
     <message>
         <location filename="../../src/windows/androidexplorer.cpp" line="310"/>
         <location filename="../../src/windows/androidexplorer.cpp" line="311"/>
         <source>Go</source>
         <extracomment>Navigate to a directory in a file manager.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Idź</translation>
     </message>
 </context>
 <context>
@@ -227,37 +227,37 @@
     <message>
         <location filename="../../src/base/androidfilesystemmodel.cpp" line="123"/>
         <source>Could not open the directory.</source>
-        <translation type="unfinished"/>
+        <translation>Nie można otworzyć katalogu.</translation>
     </message>
     <message>
         <location filename="../../src/base/androidfilesystemmodel.cpp" line="139"/>
         <source>Could not copy the file or directory.</source>
-        <translation type="unfinished"/>
+        <translation>Nie można skopiować pliku lub katalogu.</translation>
     </message>
     <message>
         <location filename="../../src/base/androidfilesystemmodel.cpp" line="155"/>
         <source>Could not move the file or directory.</source>
-        <translation type="unfinished"/>
+        <translation>Nie można przenieść pliku lub katalogu.</translation>
     </message>
     <message>
         <location filename="../../src/base/androidfilesystemmodel.cpp" line="169"/>
         <source>Could not rename the file or directory.</source>
-        <translation type="unfinished"/>
+        <translation>Nie można zmienić nazwy pliku lub katalogu.</translation>
     </message>
     <message>
         <location filename="../../src/base/androidfilesystemmodel.cpp" line="183"/>
         <source>Could not delete the file or directory.</source>
-        <translation type="unfinished"/>
+        <translation>Nie można usunąć pliku lub katalogu.</translation>
     </message>
     <message>
         <location filename="../../src/base/androidfilesystemmodel.cpp" line="195"/>
         <source>Could not download the file or directory.</source>
-        <translation type="unfinished"/>
+        <translation>Nie można pobrać pliku lub katalogu.</translation>
     </message>
     <message>
         <location filename="../../src/base/androidfilesystemmodel.cpp" line="211"/>
         <source>Could not upload the file.</source>
-        <translation type="unfinished"/>
+        <translation>Nie można przesłać pliku.</translation>
     </message>
 </context>
 <context>
@@ -350,7 +350,7 @@ Czy chcesz go ponownie otworzyć i utracić niezapisane zmiany?</translation>
     <message>
         <location filename="../../src/windows/dialogs.cpp" line="131"/>
         <source>Screenshot</source>
-        <translation type="unfinished"/>
+        <translation>Zrzut ekranu</translation>
     </message>
     <message>
         <location filename="../../src/windows/dialogs.cpp" line="163"/>
@@ -458,7 +458,7 @@ Czy chcesz go ponownie otworzyć i utracić niezapisane zmiany?</translation>
     <message>
         <location filename="../../src/windows/keycreator.cpp" line="12"/>
         <source>Create Key</source>
-        <translation type="unfinished"/>
+        <translation>Utwórz klucz</translation>
     </message>
     <message>
         <location filename="../../src/windows/keycreator.cpp" line="31"/>
@@ -596,7 +596,7 @@ Czy chcesz go ponownie otworzyć i utracić niezapisane zmiany?</translation>
     <message>
         <location filename="../../src/windows/keystorecreator.cpp" line="10"/>
         <source>Create Keystore</source>
-        <translation type="unfinished"/>
+        <translation>Utwórz magazyn kluczy</translation>
     </message>
     <message>
         <location filename="../../src/windows/keystorecreator.cpp" line="14"/>
@@ -632,7 +632,7 @@ Czy chcesz go ponownie otworzyć i utracić niezapisane zmiany?</translation>
     <message>
         <location filename="../../src/tools/keytool.cpp" line="17"/>
         <source>Could not write to keystore. See details for more information.</source>
-        <translation>Could not write to keystore. See details for more information.</translation>
+        <translation>Nie można napisać do magazynu kluczy. Zobacz szczegóły, aby uzyskać więcej informacji.</translation>
     </message>
 </context>
 <context>
@@ -641,7 +641,7 @@ Czy chcesz go ponownie otworzyć i utracić niezapisane zmiany?</translation>
         <location filename="../../src/widgets/logview.cpp" line="17"/>
         <source>Log</source>
         <extracomment>&quot;Log&quot; as in event log, message log, etc.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Log</translation>
     </message>
 </context>
 <context>
@@ -842,13 +842,13 @@ Czy chcesz je odrzucić i wyjść?</translation>
         <location filename="../../src/windows/optionsdialog.cpp" line="257"/>
         <source>MB</source>
         <extracomment>Megabytes</extracomment>
-        <translation type="unfinished"/>
+        <translation>MB</translation>
     </message>
     <message>
         <location filename="../../src/windows/optionsdialog.cpp" line="258"/>
         <location filename="../../src/windows/optionsdialog.cpp" line="259"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Domyślna</translation>
     </message>
     <message>
         <location filename="../../src/windows/optionsdialog.cpp" line="262"/>
@@ -859,13 +859,13 @@ Czy chcesz je odrzucić i wyjść?</translation>
         <location filename="../../src/windows/optionsdialog.cpp" line="264"/>
         <source>Initial heap size:</source>
         <extracomment>&quot;Heap&quot; refers to a memory heap.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Inicjalna wielkość stosu:</translation>
     </message>
     <message>
         <location filename="../../src/windows/optionsdialog.cpp" line="266"/>
         <source>Maximum heap size:</source>
         <extracomment>&quot;Heap&quot; refers to a memory heap.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Maksymalna wielkość stosu:</translation>
     </message>
     <message>
         <location filename="../../src/windows/optionsdialog.cpp" line="282"/>
@@ -964,7 +964,7 @@ Czy chcesz je odrzucić i wyjść?</translation>
         <location filename="../../src/windows/optionsdialog.cpp" line="413"/>
         <source>Separator</source>
         <extracomment>Separator is a toolbar element which divides buttons with a vertical line.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Separator</translation>
     </message>
     <message>
         <location filename="../../src/windows/optionsdialog.cpp" line="423"/>
@@ -1163,7 +1163,7 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     <message>
         <location filename="../../src/windows/rememberdialog.cpp" line="59"/>
         <source>Don&apos;t show again</source>
-        <translation type="unfinished"/>
+        <translation>Nie pokazuj ponownie</translation>
     </message>
 </context>
 <context>
@@ -1215,7 +1215,7 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     <message>
         <location filename="../../src/apk/resourceitemsmodel.cpp" line="195"/>
         <source>Locale</source>
-        <translation type="unfinished"/>
+        <translation>Locale</translation>
     </message>
     <message>
         <location filename="../../src/apk/resourceitemsmodel.cpp" line="198"/>
@@ -1336,13 +1336,13 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
         <location filename="../../src/apk/xmlnode.cpp" line="37"/>
         <source>String</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/string-resource).</extracomment>
-        <translation>String</translation>
+        <translation>Ciąg</translation>
     </message>
     <message>
         <location filename="../../src/apk/xmlnode.cpp" line="40"/>
         <source>String array</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/string-resource#StringArray).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Tablica ciągów</translation>
     </message>
     <message>
         <location filename="../../src/apk/xmlnode.cpp" line="43"/>
@@ -1372,13 +1372,13 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
         <location filename="../../src/apk/xmlnode.cpp" line="55"/>
         <source>Integer</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#Integer).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Liczba całkowita</translation>
     </message>
     <message>
         <location filename="../../src/apk/xmlnode.cpp" line="58"/>
         <source>Integer Array</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#IntegerArray).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Tablica liczb całkowitych</translation>
     </message>
     <message>
         <location filename="../../src/apk/xmlnode.cpp" line="61"/>
