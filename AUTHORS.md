@@ -22,6 +22,9 @@
 #### Japanese
 - [Sakai Hiroki](https://www.transifex.com/user/profile/m07jp/)
 
+#### Korean
+- [Gyuha Shin](https://www.transifex.com/user/profile/gyuha/)
+
 #### Polish
 - Jerzy Puczek
 

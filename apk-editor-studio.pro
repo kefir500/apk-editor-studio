@@ -26,6 +26,7 @@ EXTRA_TRANSLATIONS += \
     $$PWD/res/translations/apk-editor-studio.el.ts \
     $$PWD/res/translations/apk-editor-studio.es.ts \
     $$PWD/res/translations/apk-editor-studio.ja.ts \
+    $$PWD/res/translations/apk-editor-studio.ko.ts \
     $$PWD/res/translations/apk-editor-studio.pl.ts \
     $$PWD/res/translations/apk-editor-studio.pt.ts \
     $$PWD/res/translations/apk-editor-studio.ro.ts \
