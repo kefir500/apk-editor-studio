@@ -48,6 +48,16 @@ int Utils::roundToNearest(int number, QList<int> numbers)
     return number;
 }
 
+bool Utils::isDark(const QColor &color)
+{
+    return color.lightness() < 127;
+}
+
+bool Utils::isDarkTheme()
+{
+    return isDark(QPalette().color(QPalette::Base));
+}
+
 bool Utils::explore(const QString &path)
 {
     if (path.isEmpty()) {

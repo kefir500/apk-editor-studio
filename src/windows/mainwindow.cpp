@@ -6,6 +6,7 @@
 #include "widgets/filesystemtree.h"
 #include "widgets/iconlist.h"
 #include "base/application.h"
+#include "base/updater.h"
 #include <QMenuBar>
 #include <QDockWidget>
 #include <QMimeData>

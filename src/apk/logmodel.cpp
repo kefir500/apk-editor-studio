@@ -1,5 +1,5 @@
 #include "apk/logmodel.h"
-#include <QBrush>
+#include <QPalette>
 
 LogModel::LogModel()
 {
@@ -60,7 +60,7 @@ QVariant LogModel::data(const QModelIndex &index, int role) const
                 return entry->getDescriptive();
             }
         } else if (role == Qt::ForegroundRole) {
-            return QBrush(Qt::black);
+            return QBrush(QPalette().color(QPalette::Text));
         } else if (role == Qt::BackgroundRole) {
             return QBrush(entry->getColor());
         }

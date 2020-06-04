@@ -39,15 +39,17 @@ void ActionViewer::addWidget(QWidget *widget)
 
 QPushButton *ActionViewer::addButton(const QString &title)
 {
-    const QString btnStyle(
-        "QPushButton { background: rgb(225, 240, 190); border: none; padding: 0 20px } "
-        "QPushButton:hover { background: rgb(215, 230, 180); }"
-        "QPushButton:pressed { background: rgb(205, 220, 170); }"
-    );
     QPushButton *button = new QPushButton(this);
     button->setText(title);
     button->setMinimumHeight(app->scale(34));
-    button->setStyleSheet(btnStyle);
+    if (!Utils::isDarkTheme()) {
+        const QString btnStyle(
+            "QPushButton { background: rgb(225, 240, 190); border: none; padding: 0 20px } "
+            "QPushButton:hover { background: rgb(215, 230, 180); }"
+            "QPushButton:pressed { background: rgb(205, 220, 170); }"
+        );
+        button->setStyleSheet(btnStyle);
+    }
     addWidget(button);
     return button;
 }
@@ -58,8 +60,8 @@ void ActionViewer::paintEvent(QPaintEvent *event)
     const int h = height();
     const int min = qMin(w, h);
 
-    const QColor color1(app->getColor(app->ColorBackgroundStart));
-    const QColor color2(app->getColor(app->ColorBackgroundEnd));
+    const QColor color1(app->theme()->color(Theme::Color::BackgroundGradientStart));
+    const QColor color2(app->theme()->color(Theme::Color::BackgroundGradientEnd));
     QLinearGradient gradient(QPoint(0, min), QPoint(min, 0));
     gradient.setColorAt(0.1, color1);
     gradient.setColorAt(0.5, color2);

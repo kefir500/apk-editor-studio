@@ -23,11 +23,9 @@ QColor LogEntry::getColor() const
     case Information:
         return QPalette().color(QPalette::Base);
     case Success:
-        return app->getColor(Application::ColorSuccess);
-    case Warning:
-        return app->getColor(Application::ColorWarning);
+        return app->theme()->color(Theme::Color::Success);
     case Error:
-        return app->getColor(Application::ColorError);
+        return app->theme()->color(Theme::Color::Error);
     }
     return QPalette().color(QPalette::Base);
 }

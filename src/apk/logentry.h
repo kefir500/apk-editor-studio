@@ -9,7 +9,6 @@ public:
     enum Type {
         Information,
         Success,
-        Warning,
         Error
     };
 

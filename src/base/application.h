@@ -7,28 +7,16 @@
 #include "base/language.h"
 #include "base/recent.h"
 #include "base/settings.h"
-#include "base/updater.h"
+#include "base/theme.h"
 #include "windows/mainwindow.h"
 #include <QtSingleApplication>
 #include <QTranslator>
-#include <QMessageBox>
 
 class Application : public QtSingleApplication
 {
     Q_OBJECT
 
 public:
-    enum Color {
-        ColorLogoPrimary,
-        ColorLogoSecondary,
-        ColorAndroid,
-        ColorBackgroundStart,
-        ColorBackgroundEnd,
-        ColorSuccess,
-        ColorWarning,
-        ColorError,
-    };
-
     Application(int &argc, char **argv);
     ~Application() override;
 
@@ -49,7 +37,8 @@ public:
     static QPixmap getLocaleFlag(const QLocale &locale);
 
     static QList<Language> getLanguages();
-    static QColor getColor(Color color);
+
+    const Theme *theme() const;
 
     int scale(int value) const;
     qreal scale(qreal value) const;
@@ -80,6 +69,8 @@ protected:
 
 private:
     void processArguments(const QStringList &arguments);
+
+    Theme *theme_;
     qreal scaleFactor;
     QTranslator translator;
     QTranslator translatorQt;

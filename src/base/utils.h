@@ -46,6 +46,11 @@ namespace Utils
 
     int roundToNearest(int number, QList<int> numbers);
 
+    // Color utils:
+
+    bool isDark(const QColor &color);
+    bool isDarkTheme();
+
     // File / Directory utils:
 
     bool explore(const QString &path);

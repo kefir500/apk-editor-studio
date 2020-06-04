@@ -42,6 +42,12 @@ Application::Application(int &argc, char **argv) : QtSingleApplication(argc, arg
 #ifdef Q_OS_LINUX
     setWindowIcon(icons.get("application.png"));
 #endif
+
+    if (!Utils::isDarkTheme()) {
+        theme_ = new LightTheme;
+    } else {
+        theme_ = new DarkTheme;
+    }
 }
 
 Application::~Application()
@@ -219,19 +225,9 @@ QList<Language> Application::getLanguages()
     return languages;
 }
 
-QColor Application::getColor(Color color)
+const Theme *Application::theme() const
 {
-    switch (color) {
-        case ColorLogoPrimary:   return QColor(150, 200, 75);  // #96C84B
-        case ColorLogoSecondary: return QColor(195, 218, 108); // #C3DA6C
-        case ColorAndroid:       return QColor(164, 198, 57);  // #A4C639
-        case ColorBackgroundStart: return QColor(250, 255, 230);
-        case ColorBackgroundEnd:   return QColor(240, 245, 220);
-        case ColorSuccess: return QColor(235, 250, 200);
-        case ColorWarning: return QColor(255, 255, 200);
-        case ColorError:   return QColor(255, 200, 200);
-    }
-    return QColor();
+    return theme_;
 }
 
 int Application::scale(int value) const
