@@ -7,11 +7,12 @@
 #include "tools/apktool.h"
 #include "tools/zipalign.h"
 #include "base/application.h"
-#include <QFormLayout>
-#include <QLabel>
-#include <QPushButton>
 #include <QAbstractButton>
 #include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QLabel>
+#include <QMessageBox>
+#include <QPushButton>
 
 #ifdef QT_DEBUG
     #include <QDebug>
