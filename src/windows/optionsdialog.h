@@ -44,7 +44,11 @@ private:
     QSpinBox *spinboxRecent;
     QComboBox *comboLanguages;
 #ifdef Q_OS_WIN
-    QCheckBox *checkboxAssociate;
+    QGroupBox *groupAssociate;
+    QCheckBox *checkboxExplorerOpen;
+    QCheckBox *checkboxExplorerInstall;
+    QCheckBox *checkboxExplorerOptimize;
+    QCheckBox *checkboxExplorerSign;
 #endif
 
     FileBox *fileboxJava;

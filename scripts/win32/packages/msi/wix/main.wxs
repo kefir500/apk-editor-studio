@@ -16,45 +16,22 @@
 
     <MajorUpgrade AllowDowngrades="yes" Schedule="afterInstallInitialize" />
 
-    <UIRef Id="CustomUi" />
+    <UIRef Id="UI_APK_Editor_Studio" />
     <Icon Id="Icon" SourceFile="$(var.Root)\apk-editor-studio.exe" />
     <Property Id="ApplicationFolderName" Value="$(var.ProductName)" />
     <Property Id="ARPPRODUCTICON" Value="Icon" />
 
-    <CustomAction Id="SetExecutableProperty" Property="ExecutableProperty" Value="[INSTALLFOLDER]apk-editor-studio.exe"></CustomAction>
+    <CustomAction Id="SetExecutablePathProperty" Property="ExecutablePath" Value="[INSTALLFOLDER]apk-editor-studio.exe"></CustomAction>
+    <CustomAction Id="SetVerbIconsPathProperty" Property="VerbIconsPath" Value="[INSTALLFOLDER]\resources\icons\other"></CustomAction>
     <InstallExecuteSequence>
-      <Custom Action="SetExecutableProperty" Before="InstallFiles"/>
+      <Custom Action="SetExecutablePathProperty" Before="InstallFiles"/>
+      <Custom Action="SetVerbIconsPathProperty" Before="InstallFiles"/>
     </InstallExecuteSequence>
 
     <WixVariable Id="WixUIDialogBmp" Value="res\banner.bmp" />
     <WixVariable Id="WixUIBannerBmp" Value="res\header.bmp" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Merge Id="VCRedist" SourceFile="$(env.VCREDIST_MSM)" DiskId="1" Language="0"/>
-      <Component Id="AssociationComponent" Guid="C6176BE3-E235-46DF-9BC6-5CA8358B0254">
-        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk" Name="FriendlyTypeName" Value="Android Application Package" Type="string" />
-        <ProgId Id="apk-editor-studio.apk" Description="Android Application Package">
-          <Extension Id="apk">
-            <Verb Id="Open" TargetProperty="ExecutableProperty" Argument="&quot;%1&quot;" />
-          </Extension>
-        </ProgId>
-      </Component>
-      <Directory Id="DesktopFolder">
-        <Component Id="DesktopComponent" Guid="36AEEC75-757E-4267-9174-14D37BAD4271">
-          <Shortcut Id="DesktopExecutableShortcut" Name="$(var.ProductName)" Description="Start $(var.ProductName)" Target="[!Executable]" WorkingDirectory="INSTALLFOLDER" />
-          <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
-        </Component>
-      </Directory>
-      <Directory Id="ProgramMenuFolder">
-        <Directory Id="StartmenuFolder" Name="$(var.ProductName)">
-          <Component Id="StartmenuComponent" Guid="044C201E-47F3-47A0-BD7D-5CF85980EF84">
-            <Shortcut Id="StartmenuExecutableShortcut" Name="$(var.ProductName)" Description="Start $(var.ProductName)" Target="[!Executable]" WorkingDirectory="INSTALLFOLDER" />
-            <Shortcut Id="StartmenuUninstallShortcut" Name="Uninstall $(var.ProductName)" Description="Uninstall $(var.ProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" WorkingDirectory="SystemFolder" />
-            <RemoveFolder Id="RemoveShortcutsFolder" On="uninstall" />
-            <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="StartmenuFolder" Type="integer" Value="1" KeyPath="yes"/>
-          </Component>
-        </Directory>
-      </Directory>
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" FileSource="$(var.Root)">
           <Component Id="ExeComponent" Guid="C6176BE3-E235-46DF-9BC6-5CA8358B0253">
@@ -62,7 +39,7 @@
           </Component>
           <Component Id="UninstallComponent" Guid="F885100C-A957-4C42-8710-E9EF646D93A6">
             <Shortcut Id="UninstallShortcut" Name="Uninstall $(var.ProductName)" Description="Uninstall $(var.ProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" WorkingDirectory="SystemFolder" />
-            <RegistryValue Root="HKLM" Key="Software\$(var.ProductName)" Name="Uninstaller" Type="integer" Value="1" KeyPath="yes"/>
+            <RegistryValue Root="HKMU" Key="Software\$(var.ProductName)" Name="Uninstaller" Type="integer" Value="1" KeyPath="yes"/>
           </Component>
           <Directory Id="ToolsFolder" Name="tools">
             <Component Id="ApktoolComponent" Guid="447CD555-5A52-49F4-808E-B289EBBC8794">
@@ -251,6 +228,11 @@
               <Directory Id="IconsOtherFolder" Name="other">
                 <Component Id="IconsOtherComponent" Guid="674E999F-47EA-4586-91C8-69732B81C8EE">
                   <File Name="about.png" />
+                </Component>
+                <Component Id="IconsForVerbsComponent" Guid="24342A8B-AD55-4570-8830-0D1CC95348D4">
+                  <File Name="verb-install.ico" Id="IconVerbInstall" />
+                  <File Name="verb-optimize.ico" Id="IconVerbOptimize" />
+                  <File Name="verb-sign.ico" Id="IconVerbSign" />
                 </Component>
               </Directory>
             </Directory>
@@ -583,6 +565,44 @@
           </Directory>
         </Directory>
       </Directory>
+      <Directory Id="DesktopFolder">
+        <Component Id="DesktopComponent" Guid="36AEEC75-757E-4267-9174-14D37BAD4271">
+          <Shortcut Id="DesktopExecutableShortcut" Name="$(var.ProductName)" Description="Start $(var.ProductName)" Target="[!Executable]" WorkingDirectory="INSTALLFOLDER" />
+          <RegistryValue Root="HKMU" Key="Software\$(var.ProductName)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+        </Component>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="StartmenuFolder" Name="$(var.ProductName)">
+          <Component Id="StartmenuComponent" Guid="044C201E-47F3-47A0-BD7D-5CF85980EF84">
+            <Shortcut Id="StartmenuExecutableShortcut" Name="$(var.ProductName)" Description="Start $(var.ProductName)" Target="[!Executable]" WorkingDirectory="INSTALLFOLDER" />
+            <Shortcut Id="StartmenuUninstallShortcut" Name="Uninstall $(var.ProductName)" Description="Uninstall $(var.ProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" WorkingDirectory="SystemFolder" />
+            <RemoveFolder Id="RemoveShortcutsFolder" On="uninstall" />
+            <RegistryValue Root="HKMU" Key="Software\$(var.ProductName)" Name="StartmenuFolder" Type="integer" Value="1" KeyPath="yes"/>
+          </Component>
+        </Directory>
+      </Directory>
+      <Component Id="AssociationComponent" Guid="C6176BE3-E235-46DF-9BC6-5CA8358B0254">
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\.apk\OpenWithProgIds\apk-editor-studio.apk" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk" Name="FriendlyTypeName" Value="Android Application Package" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\DefaultIcon" Value="[ExecutablePath],0" Type="string" />
+      </Component>
+      <Component Id="ExplorerOpenComponent" Guid="BB44AFE6-24FA-47FB-9666-2C8B6571FD57">
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Open\Command" Value="&quot;[ExecutablePath]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Open" Name="Icon" Value="[ExecutablePath]" Type="string" />
+      </Component>
+      <Component Id="ExplorerInstallComponent" Guid="AA850177-9883-46D4-8969-39DA835687F2">
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Install APK\Command" Value="&quot;[ExecutablePath]&quot; --install &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Install APK" Name="Icon" Value="[VerbIconsPath]\verb-install.ico" Type="string" />
+      </Component>
+      <Component Id="ExplorerOptimizeComponent" Guid="3516C8E8-EDF6-4CB2-ACC7-E8B51ABF4C4F">
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Optimize APK\Command" Value="&quot;[ExecutablePath]&quot; --optimize &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Optimize APK" Name="Icon" Value="[VerbIconsPath]\verb-optimize.ico" Type="string" />
+      </Component>
+      <Component Id="ExplorerSignComponent" Guid="E22FC079-5557-4C62-8D27-582888A0CB00">
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Sign APK\Command" Value="&quot;[ExecutablePath]&quot; --sign &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Sign APK" Name="Icon" Value="[VerbIconsPath]\verb-sign.ico" Type="string" />
+      </Component>
+      <Merge Id="VCRedist" SourceFile="$(env.VCREDIST_MSM)" DiskId="1" Language="0"/>
     </Directory>
 
     <ComponentGroup Id="ApplicationComponents">
@@ -643,6 +663,21 @@
 		</Feature>
     <Feature Id="AssociationFeature" Title="File Association" Description="Register APK file association.">
       <ComponentRef Id="AssociationComponent" />
+      <Feature Id="ExplorerOpenFeature" Title="Open APK Files" Description="Open APK files with $(var.ProductName).">
+        <ComponentRef Id="ExplorerOpenComponent" />
+      </Feature>
+      <Feature Id="ExplorerIntegrationFeature" Title="Explorer Integration" Description="Add integration to Windows Explorer context menu.">
+        <ComponentRef Id="IconsForVerbsComponent" />
+        <Feature Id="ExplorerInstallFeature" Title="Install APK Action" Description="Add Install APK action to Windows Explorer context menu.">
+          <ComponentRef Id="ExplorerInstallComponent" />
+        </Feature>
+        <Feature Id="ExplorerOptimizeFeature" Title="Optimize APK Action" Description="Add Optimize APK action to Windows Explorer context menu.">
+          <ComponentRef Id="ExplorerOptimizeComponent" />
+        </Feature>
+        <Feature Id="ExplorerSignFeature" Title="Sign APK Action" Description="Add Sign APK action to Windows Explorer context menu.">
+          <ComponentRef Id="ExplorerSignComponent" />
+        </Feature>
+      </Feature>
     </Feature>
     <Feature Id="TranslationsFeature" Title="Translations" Description="Install additional translations. English is included by default.">
       <Feature Id="GermanFeature" Title="German" Description="German translation.">

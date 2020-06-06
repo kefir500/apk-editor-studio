@@ -11,8 +11,11 @@
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QLabel>
-#include <QMessageBox>
 #include <QPushButton>
+
+#ifdef Q_OS_WIN
+    #include <QMessageBox>
+#endif
 
 #ifdef QT_DEBUG
     #include <QDebug>
@@ -57,7 +60,11 @@ void OptionsDialog::load()
     checkboxUpdates->setChecked(app->settings->getAutoUpdates());
     spinboxRecent->setValue(app->settings->getRecentLimit());
 #ifdef Q_OS_WIN
-    checkboxAssociate->setChecked(app->settings->getFileAssociation());
+    groupAssociate->setChecked(app->settings->getFileAssociation());
+    checkboxExplorerOpen->setChecked(app->settings->getExplorerOpenIntegration());
+    checkboxExplorerInstall->setChecked(app->settings->getExplorerInstallIntegration());
+    checkboxExplorerOptimize->setChecked(app->settings->getExplorerOptimizeIntegration());
+    checkboxExplorerSign->setChecked(app->settings->getExplorerSignIntegration());
 #endif
 
     // Java
@@ -151,9 +158,14 @@ void OptionsDialog::save()
     app->setLanguage(comboLanguages->currentData().toString());
     app->recent->setLimit(spinboxRecent->value());
 #ifdef Q_OS_WIN
-    if (!app->settings->setFileAssociation(checkboxAssociate->isChecked())) {
+    bool integrationSuccess =
+        app->settings->setFileAssociation(groupAssociate->isChecked()) &&
+        app->settings->setExplorerOpenIntegration(checkboxExplorerOpen->isChecked()) &&
+        app->settings->setExplorerInstallIntegration(checkboxExplorerInstall->isChecked()) &&
+        app->settings->setExplorerOptimizeIntegration(checkboxExplorerOptimize->isChecked()) &&
+        app->settings->setExplorerSignIntegration(checkboxExplorerSign->isChecked());
+    if (!integrationSuccess) {
         QMessageBox::warning(this, QString(), tr("Could not register file association."));
-        checkboxAssociate->toggle();
     }
 #endif
 
@@ -231,9 +243,6 @@ void OptionsDialog::initialize()
 
     QFormLayout *pageGeneral = new QFormLayout;
     checkboxUpdates = new QCheckBox(tr("Check for updates automatically"), this);
-#ifdef Q_OS_WIN
-    checkboxAssociate = new QCheckBox(tr("Use APK Editor Studio for .apk files"), this);
-#endif
     comboLanguages = new QComboBox(this);
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
@@ -241,8 +250,32 @@ void OptionsDialog::initialize()
     pageGeneral->addRow(checkboxUpdates);
     pageGeneral->addRow(tr("Language:"), comboLanguages);
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
+
 #ifdef Q_OS_WIN
-    pageGeneral->addRow(checkboxAssociate);
+    groupAssociate = new QGroupBox(tr("Use APK Editor Studio for .apk files"), this);
+    groupAssociate->setCheckable(true);
+    checkboxExplorerOpen = new QCheckBox(tr("Use APK Editor Studio to open .apk files"), this);
+    checkboxExplorerOpen->setIcon(app->icons.get("open.png"));
+    //: "%1" will be replaced with an action name (e.g., Install, Optimize, Sign, etc.).
+    const QString strExplorerIntegration(tr("Add %1 action to Windows Explorer context menu"));
+    checkboxExplorerInstall = new QCheckBox(strExplorerIntegration.arg(tr("Install")), this);
+    checkboxExplorerInstall->setIcon(app->icons.get("install.png"));
+    checkboxExplorerOptimize = new QCheckBox(strExplorerIntegration.arg(tr("Optimize")), this);
+    checkboxExplorerOptimize->setIcon(app->icons.get("optimize.png"));
+    checkboxExplorerSign = new QCheckBox(strExplorerIntegration.arg(tr("Sign")), this);
+    checkboxExplorerSign->setIcon(app->icons.get("key.png"));
+    connect(groupAssociate, &QGroupBox::clicked, [=](bool checked) {
+        checkboxExplorerOpen->setChecked(checked);
+        checkboxExplorerInstall->setChecked(checked);
+        checkboxExplorerOptimize->setChecked(checked);
+        checkboxExplorerSign->setChecked(checked);
+    });
+    auto layoutAssocate = new QVBoxLayout(groupAssociate);
+    layoutAssocate->addWidget(checkboxExplorerOpen);
+    layoutAssocate->addWidget(checkboxExplorerInstall);
+    layoutAssocate->addWidget(checkboxExplorerOptimize);
+    layoutAssocate->addWidget(checkboxExplorerSign);
+    pageGeneral->addRow(groupAssociate);
 #endif
 
     // Java

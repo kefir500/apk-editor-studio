@@ -201,6 +201,30 @@ bool Settings::getFileAssociation() const
     FileAssociation association("apk-editor-studio.apk", "apk");
     return association.isSet();
 }
+
+bool Settings::getExplorerOpenIntegration() const
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    return association.hasVerb("Open");
+}
+
+bool Settings::getExplorerInstallIntegration() const
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    return association.hasVerb("Install APK");
+}
+
+bool Settings::getExplorerOptimizeIntegration() const
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    return association.hasVerb("Optimize APK");
+}
+
+bool Settings::getExplorerSignIntegration() const
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    return association.hasVerb("Sign APK");
+}
 #endif
 
 // Setters:
@@ -364,12 +388,58 @@ bool Settings::setFileAssociation(bool associate)
 {
     FileAssociation association("apk-editor-studio.apk", "apk");
     if (associate) {
-        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
-        const QString command(executablePath + " \"%1\"");
-        const QString icon(executablePath + ",0");
-        return association.set(command, icon);
+        const QString iconPath = QString("%1,0").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+        return association.set(iconPath, "Android Application Package");
     } else {
         return association.unset();
+    }
+}
+
+bool Settings::setExplorerOpenIntegration(bool integrate)
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    if (integrate) {
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+        const QString iconPath = executablePath;
+        return association.addVerb("Open", executablePath + " \"%1\"", iconPath);
+    } else {
+        return association.removeVerb("Open");
+    }
+}
+
+bool Settings::setExplorerInstallIntegration(bool integrate)
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    if (integrate) {
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+        const QString iconPath = QDir::toNativeSeparators(app->getSharedPath("resources/icons/other/verb-install.ico"));
+        return association.addVerb("Install APK", executablePath + " --install \"%1\"", iconPath);
+    } else {
+        return association.removeVerb("Install APK");
+    }
+}
+
+bool Settings::setExplorerOptimizeIntegration(bool integrate)
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    if (integrate) {
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+        const QString iconPath = QDir::toNativeSeparators(app->getSharedPath("resources/icons/other/verb-optimize.ico"));
+        return association.addVerb("Optimize APK", executablePath + " --optimize \"%1\"", iconPath);
+    } else {
+        return association.removeVerb("Optimize APK");
+    }
+}
+
+bool Settings::setExplorerSignIntegration(bool integrate)
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    if (integrate) {
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+        const QString iconPath = QDir::toNativeSeparators(app->getSharedPath("resources/icons/other/verb-sign.ico"));
+        return association.addVerb("Sign APK", executablePath + " --sign \"%1\"", iconPath);
+    } else {
+        return association.removeVerb("Sign APK");
     }
 }
 

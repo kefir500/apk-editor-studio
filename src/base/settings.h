@@ -45,6 +45,10 @@ public:
     bool getRememberState(const QString &identifier) const;
 #ifdef Q_OS_WIN
     bool getFileAssociation() const;
+    bool getExplorerOpenIntegration() const;
+    bool getExplorerInstallIntegration() const;
+    bool getExplorerOptimizeIntegration() const;
+    bool getExplorerSignIntegration() const;
 #endif
 
     void setJavaPath(const QString &path);
@@ -79,6 +83,10 @@ public:
     void resetRememberState(const QString &identifier);
 #ifdef Q_OS_WIN
     bool setFileAssociation(bool associate);
+    bool setExplorerOpenIntegration(bool integrate);
+    bool setExplorerInstallIntegration(bool integrate);
+    bool setExplorerOptimizeIntegration(bool integrate);
+    bool setExplorerSignIntegration(bool integrate);
 #endif
 
 signals:
