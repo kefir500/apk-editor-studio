@@ -109,16 +109,16 @@ Command *Project::createUnpackCommand()
     });
     connect(command, &Command::finished, this, [=](bool success) {
         if (success) {
-            connect(&resourcesModel, &ResourceItemsModel::dataChanged, [=] () {
+            connect(&resourcesModel, &ResourceItemsModel::dataChanged, [=]() {
                 state.setModified(true);
             });
-            connect(&filesystemModel, &QFileSystemModel::dataChanged, [=] () {
+            connect(&filesystemModel, &QFileSystemModel::dataChanged, [=]() {
                 state.setModified(true);
             });
-            connect(&iconsProxy, &IconItemsModel::dataChanged, [=] () {
+            connect(&iconsProxy, &IconItemsModel::dataChanged, [=]() {
                 state.setModified(true);
             });
-            connect(&manifestModel, &ManifestModel::dataChanged, [=] (const QModelIndex &, const QModelIndex &, const QVector<int> &roles) {
+            connect(&manifestModel, &ManifestModel::dataChanged, [=](const QModelIndex &, const QModelIndex &, const QVector<int> &roles) {
                 if (!(roles.count() == 1 && roles.contains(Qt::UserRole))) {
                     state.setModified(true);
                 }
