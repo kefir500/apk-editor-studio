@@ -1,26 +1,14 @@
 #include "base/yamlhighlighter.h"
+#include "base/application.h"
 #include <QRegularExpression>
 
-YamlHighlighter::YamlHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
-{
-    formatDefault.setForeground(Qt::black);
-    formatTag.setForeground(Qt::blue);
-    formatKey.setForeground(Qt::darkBlue);
-    formatKey.setFontWeight(QFont::Bold);
-    formatValue.setForeground(Qt::darkGreen);
-    formatValue.setFontWeight(QFont::Bold);
-    formatValueNumber.setForeground(QColor(210, 120, 20));
-    formatValueNumber.setFontWeight(QFont::Bold);
-    formatComment.setForeground(Qt::gray);
-}
 
 void YamlHighlighter::highlightBlock(const QString &text)
 {
-    setFormat(0, text.length(), formatDefault);
-    highlightRegex(text, formatTag, QRegularExpression("!.+$"));
-    highlightRegex(text, formatValue, QRegularExpression("(?<=:|-) *(.+)"));
-    highlightRegex(text, formatValueNumber, QRegularExpression("(?<=:|-) *([\\d.]+) *$"));
-    highlightRegex(text, formatKey, QRegularExpression(" *(.*):"));
+    setFormat(0, text.length(), app->theme()->text(Theme::Text::YamlDefault));
+    highlightRegex(text, app->theme()->text(Theme::Text::YamlValueDefault), QRegularExpression("(?<=:|-) *(.+)"));
+    highlightRegex(text, app->theme()->text(Theme::Text::YamlValueNumber), QRegularExpression("(?<=:|-) *([\\d.]+) *$"));
+    highlightRegex(text, app->theme()->text(Theme::Text::YamlKey), QRegularExpression(" *(.*):"));
 }
 
 void YamlHighlighter::highlightRegex(const QString &text, const QTextCharFormat &format, const QRegularExpression &regex)

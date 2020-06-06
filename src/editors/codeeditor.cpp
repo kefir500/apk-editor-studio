@@ -170,12 +170,19 @@ QSize CodeContainer::sizeHint() const
 void CodeContainer::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.fillRect(0, 0, m_width, height(), QColor::fromRgb(245, 245, 245));
-    painter.setPen(QColor::fromRgb(140, 140, 140));
+    painter.fillRect(0, 0, m_width, height(), QPalette().color(QPalette::Window));
+
+    QColor lineNumberColor(QPalette().color(QPalette::Text));
+    lineNumberColor.setAlpha(110);
+    QColor activeLineNumberColor(QPalette().color(QPalette::Text));
+    activeLineNumberColor.setAlpha(150);
+    painter.setPen(lineNumberColor);
+
     const int lineNumberHeight = parent()->fontMetrics().height();
     QTextBlock block = parent()->firstVisibleBlock();
     int top = static_cast<int>(parent()->blockBoundingGeometry(block).translated(parent()->contentOffset()).top());
     int bottom = top + static_cast<int>(parent()->blockBoundingRect(block).height());
+
     while (block.isValid() && top <= event->rect().bottom()) {
         if (block.isVisible() && bottom >= event->rect().top()) {
             const int blockNumber = block.blockNumber() + 1;
@@ -183,9 +190,9 @@ void CodeContainer::paintEvent(QPaintEvent *event)
                 painter.drawText(0, top, m_width - m_padding / 2, lineNumberHeight, Qt::AlignRight, QString::number(blockNumber));
             } else {
                 painter.save();
+                painter.setPen(activeLineNumberColor);
                 QFont font = painter.font();
                 font.setBold(true);
-                painter.setPen(QColor::fromRgb(100, 100, 100));
                 painter.setFont(font);
                 painter.drawText(0, top, m_width - m_padding / 2, lineNumberHeight, Qt::AlignRight, QString::number(blockNumber));
                 painter.restore();
