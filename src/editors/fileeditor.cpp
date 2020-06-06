@@ -59,7 +59,7 @@ bool FileEditor::saveAs()
 
 bool FileEditor::replace()
 {
-    return index.replace();
+    return index.replace(this);
 }
 
 bool FileEditor::explore() const

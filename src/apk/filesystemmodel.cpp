@@ -27,7 +27,7 @@ QModelIndex FileSystemModel::rootIndex() const
     return index(rootPath());
 }
 
-bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &file)
+bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &file, QWidget *parent)
 {
     if (!sourceModel) {
         return false;
@@ -35,11 +35,11 @@ bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &f
     const auto path = filePath(index);
     const auto resourceIndex = sourceModel->findIndex(path);
     if (resourceIndex.isValid()) {
-        return sourceModel->replaceResource(resourceIndex, file);
+        return sourceModel->replaceResource(resourceIndex, file, parent);
     } else {
-        if (Utils::replaceFile(path)) {
+        if (Utils::replaceFile(path, parent)) {
             updated(index.sibling(index.row(), 0),
-                                  index.sibling(index.row(), columnCount() - 1));
+                    index.sibling(index.row(), columnCount() - 1));
             return true;
         }
         return false;

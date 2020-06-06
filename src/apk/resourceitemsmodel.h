@@ -34,7 +34,7 @@ public:
 
     QFuture<void> initialize(const QString &path);
     QModelIndex addNode(ResourceNode *node, const QModelIndex &parent = QModelIndex());
-    bool replaceResource(const QModelIndex &index, const QString &file = QString()) override;
+    bool replaceResource(const QModelIndex &index, const QString &file = QString(), QWidget *parent = nullptr) override;
     bool removeResource(const QModelIndex &index) override;
     QString getResourcePath(const QModelIndex &index) const override;
 

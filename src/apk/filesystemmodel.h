@@ -16,7 +16,7 @@ public:
     void setSourceModel(ResourceItemsModel *model);
     QModelIndex rootIndex() const;
 
-    bool replaceResource(const QModelIndex &index, const QString &file = QString()) override;
+    bool replaceResource(const QModelIndex &index, const QString &file = QString(), QWidget *parent = nullptr) override;
     bool removeResource(const QModelIndex &index) override;
     QString getResourcePath(const QModelIndex &index) const override;
 

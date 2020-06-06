@@ -79,16 +79,14 @@ int Application::exec()
 
     MainWindow mainwindow;
     mainwindow.show();
-    window = &mainwindow;
-    setActivationWindow(window);
 
     processArguments(arguments());
-    connect(this, &QtSingleApplication::messageReceived, [this](const QString &message) {
+    connect(this, &QtSingleApplication::messageReceived, [this, &mainwindow](const QString &message) {
+        mainwindow.setWindowState((mainwindow.windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+        mainwindow.activateWindow();
+        mainwindow.raise();
         if (!message.isEmpty()) {
-            window->setWindowState((window->windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
-            window->activateWindow();
-            window->raise();
-            processArguments(QStringList() << app->applicationFilePath() << message.split('\n'));
+            processArguments(QStringList() << app->applicationFilePath() << message.split('\n'), &mainwindow);
         }
     });
 
@@ -330,7 +328,7 @@ bool Application::event(QEvent *event)
     return QtSingleApplication::event(event);
 }
 
-void Application::processArguments(const QStringList &arguments)
+void Application::processArguments(const QStringList &arguments, QWidget *window)
 {
     QCommandLineParser cli;
     QCommandLineOption optimizeOption(QStringList{"o", "optimize", "z", "zipalign"});

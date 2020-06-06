@@ -11,8 +11,8 @@ public:
     QString path() const;
     QIcon icon() const;
 
-    bool save() const;
-    bool replace();
+    bool save(QWidget *parent = nullptr) const;
+    bool replace(QWidget *parent = nullptr);
     bool remove();
     bool explore() const;
     void update() const;

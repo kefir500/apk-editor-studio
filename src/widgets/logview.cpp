@@ -35,9 +35,9 @@ void LogView::setModel(QAbstractItemModel *model)
         LogModel *logModel = qobject_cast<LogModel *>(model);
         Q_ASSERT(logModel);
         delegate->setLoading(logModel->getLoadingState());
-        connect(logModel, &LogModel::added, [](LogEntry *entry) {
+        connect(logModel, &LogModel::added, [=](LogEntry *entry) {
             if (entry->getType() != LogEntry::Information) {
-                app->window->activateWindow();
+                activateWindow();
             }
         });
         connect(logModel, &LogModel::loadingStateChanged, delegate, &LogDelegate::setLoading);

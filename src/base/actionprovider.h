@@ -31,7 +31,7 @@ public:
     void visitDonatePage();
     void visitUpdatePage();
     void visitBlogPage(const QString &post);
-    void exit();
+    void exit(QWidget *widget);
 
     void addToRecent(const Project *project) const;
     void checkUpdates(QWidget *parent = nullptr) const;
@@ -54,7 +54,7 @@ public:
     QAction *getVisitWebPage(QObject *parent = nullptr);
     QAction *getVisitSourcePage(QObject *parent = nullptr);
     QAction *getVisitDonatePage(QObject *parent = nullptr);
-    QAction *getExit(QObject *parent = nullptr);
+    QAction *getExit(QWidget *widget);
 
     QAction *getCheckUpdates(QWidget *parent = nullptr);
     QAction *getResetSettings(QWidget *parent = nullptr);

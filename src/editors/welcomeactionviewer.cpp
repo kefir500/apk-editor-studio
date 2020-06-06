@@ -8,13 +8,13 @@ WelcomeActionViewer::WelcomeActionViewer(QWidget *parent) : ActionViewer(parent)
     btnInstall = addButton();
     btnExplorer = addButton();
     connect(btnOpen, &QPushButton::clicked, [=]() {
-        app->actions.openApk(parent);
+        app->actions.openApk(this);
     });
     connect(btnInstall, &QPushButton::clicked, [=]() {
-        app->actions.installApk(parent);
+        app->actions.installApk(this);
     });
     connect(btnExplorer, &QPushButton::clicked, [=]() {
-        app->actions.openAndroidExplorer(parent);
+        app->actions.openAndroidExplorer(this);
     });
 }
 

@@ -25,7 +25,7 @@ public:
     QIcon getThumbnail() const;
     const ProjectState &getState() const;
 
-    void setApplicationIcon(const QString &path);
+    void setApplicationIcon(const QString &path, QWidget *parent = nullptr);
 
     void journal(const QString &brief, LogEntry::Type type = LogEntry::Information);
     void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);

@@ -56,9 +56,9 @@ const ProjectState &Project::getState() const
     return state;
 }
 
-void Project::setApplicationIcon(const QString &path)
+void Project::setApplicationIcon(const QString &path, QWidget *parent)
 {
-    iconsProxy.replaceApplicationIcons(path);
+    iconsProxy.replaceApplicationIcons(path, parent);
 }
 
 void Project::journal(const QString &brief, LogEntry::Type type)

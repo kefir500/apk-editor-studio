@@ -44,8 +44,8 @@ public:
     IconType getIconType(const QModelIndex &index) const;
 
     void createIcon(const QString &qualifiers);
-    bool replaceApplicationIcons(const QString &path);
-    bool replaceResource(const QModelIndex &index, const QString &path = QString()) override;
+    bool replaceApplicationIcons(const QString &path, QWidget *parent = nullptr);
+    bool replaceResource(const QModelIndex &index, const QString &path = QString(), QWidget *parent = nullptr) override;
     bool removeResource(const QModelIndex &index) override;
     QString getResourcePath(const QModelIndex &index) const override;
 

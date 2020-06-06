@@ -136,9 +136,9 @@ void ActionProvider::visitBlogPage(const QString &post)
     QDesktopServices::openUrl(url);
 }
 
-void ActionProvider::exit()
+void ActionProvider::exit(QWidget *widget)
 {
-    app->window->close();
+    widget->close();
 }
 
 void ActionProvider::addToRecent(const Project *project) const
@@ -330,9 +330,9 @@ QAction *ActionProvider::getVisitDonatePage(QObject *parent)
     return action;
 }
 
-QAction *ActionProvider::getExit(QObject *parent)
+QAction *ActionProvider::getExit(QWidget *widget)
 {
-    auto action = new QAction(app->icons.get("x-red.png"), {}, parent);
+    auto action = new QAction(app->icons.get("x-red.png"), {}, widget);
     action->setShortcut(QKeySequence::Quit);
     action->setMenuRole(QAction::QuitRole);
 
@@ -340,7 +340,9 @@ QAction *ActionProvider::getExit(QObject *parent)
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, this, &ActionProvider::exit);
+    connect(action, &QAction::triggered, [=]() {
+        exit(widget);
+    });
     return action;
 }
 

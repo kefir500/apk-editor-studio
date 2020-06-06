@@ -211,7 +211,7 @@ void MainWindow::initMenus()
     menuFile->addSeparator();
     menuFile->addAction(actionApkClose);
     menuFile->addSeparator();
-    menuFile->addAction(app->actions.getExit());
+    menuFile->addAction(app->actions.getExit(this));
     menuEditor = menuBar()->addMenu(QString());
     menuEditor->addActions(projectsWidget->getCurrentTabActions());
     menuTools = menuBar()->addMenu(QString());

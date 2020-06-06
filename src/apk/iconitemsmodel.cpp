@@ -104,7 +104,7 @@ IconItemsModel::IconType IconItemsModel::getIconType(const QModelIndex &index) c
     return node->type;
 }
 
-bool IconItemsModel::replaceApplicationIcons(const QString &path)
+bool IconItemsModel::replaceApplicationIcons(const QString &path, QWidget *parent)
 {
     if (path.isEmpty()) {
         return false;
@@ -117,7 +117,7 @@ bool IconItemsModel::replaceApplicationIcons(const QString &path)
         auto iconType = getIconType(iconIndex);
         if (iconType == TypeIcon || iconType == TypeRoundIcon) {
             if (Utils::isImageWritable(getIconPath(iconIndex))) {
-                if (!sourceModel()->replaceResource(mapToSource(iconIndex), path)) {
+                if (!sourceModel()->replaceResource(mapToSource(iconIndex), path, parent)) {
                     success = false;
                 }
             }
@@ -126,9 +126,9 @@ bool IconItemsModel::replaceApplicationIcons(const QString &path)
     return success;
 }
 
-bool IconItemsModel::replaceResource(const QModelIndex &index, const QString &path)
+bool IconItemsModel::replaceResource(const QModelIndex &index, const QString &path, QWidget *parent)
 {
-    return sourceModel()->replaceResource(mapToSource(index), path);
+    return sourceModel()->replaceResource(mapToSource(index), path, parent);
 }
 
 bool IconItemsModel::removeResource(const QModelIndex &index)

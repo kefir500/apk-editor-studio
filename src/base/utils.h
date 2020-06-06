@@ -55,10 +55,10 @@ namespace Utils
 
     bool explore(const QString &path);
     void rmdir(const QString &path, bool recursive = false);
-    bool copyFile(const QString &src);
-    bool copyFile(const QString &src, QString dst);
-    bool replaceFile(const QString &what);
-    bool replaceFile(const QString &what, QString with);
+    bool copyFile(const QString &src, QWidget *parent = nullptr);
+    bool copyFile(const QString &src, QString dst, QWidget *parent = nullptr);
+    bool replaceFile(const QString &what, QWidget *parent = nullptr);
+    bool replaceFile(const QString &what, QString with, QWidget *parent = nullptr);
     QString normalizePath(QString path);
 
     // Image utils:

@@ -77,10 +77,10 @@ QModelIndex ResourceItemsModel::addNode(ResourceNode *node, const QModelIndex &p
     return index;
 }
 
-bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString &with)
+bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString &with, QWidget *parent)
 {
     const QString what = ResourceModelIndex(index).path();
-    if (Utils::replaceFile(what, with)) {
+    if (Utils::replaceFile(what, with, parent)) {
         emit dataChanged(index, index);
         return true;
     }

@@ -51,12 +51,12 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(ResourceModelInd
 
     QAction *actionReplace = menu->addAction(app->icons.get("replace.png"), tr("Replace Resource..."));
     connect(actionReplace, &QAction::triggered, [&]() {
-        resourceIndex.replace();
+        resourceIndex.replace(this);
     });
 
     QAction *actionSaveAs = menu->addAction(app->icons.get("save-as.png"), tr("Save Resource As..."));
     connect(actionSaveAs, &QAction::triggered, [=]() {
-        resourceIndex.save();
+        resourceIndex.save(this);
     });
 
     QAction *actionRemove = menu->addAction(app->icons.get("x-round.png"), tr("Delete Resource"));

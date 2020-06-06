@@ -57,7 +57,6 @@ public:
 
 
     void setLanguage(const QString &locale);
-    MainWindow *window;
     Settings *settings;
     Recent *recent;
     IconProvider icons;
@@ -68,7 +67,7 @@ protected:
     bool event(QEvent *event) override;
 
 private:
-    void processArguments(const QStringList &arguments);
+    void processArguments(const QStringList &arguments, QWidget *window = nullptr);
 
     Theme *theme_;
     qreal scaleFactor;

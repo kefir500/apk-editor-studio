@@ -17,14 +17,14 @@ QIcon ResourceModelIndex::icon() const
     return data(Qt::DecorationRole).value<QIcon>();
 }
 
-bool ResourceModelIndex::save() const
+bool ResourceModelIndex::save(QWidget *parent) const
 {
-    return Utils::copyFile(path());
+    return Utils::copyFile(path(), parent);
 }
 
-bool ResourceModelIndex::replace()
+bool ResourceModelIndex::replace(QWidget *parent)
 {
-    return qobject_cast<IResourceItemsModel *>(model())->replaceResource(*this);
+    return qobject_cast<IResourceItemsModel *>(model())->replaceResource(*this, {}, parent);
 }
 
 bool ResourceModelIndex::remove()

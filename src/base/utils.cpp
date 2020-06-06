@@ -122,45 +122,45 @@ namespace
     }
 }
 
-bool Utils::copyFile(const QString &src)
+bool Utils::copyFile(const QString &src, QWidget *parent)
 {
-    return copyFile(src, QString());
+    return copyFile(src, QString(), parent);
 }
 
-bool Utils::copyFile(const QString &src, QString dst)
+bool Utils::copyFile(const QString &src, QString dst, QWidget *parent)
 {
     if (dst.isNull()) {
         dst = isImageReadable(src)
-            ? Dialogs::getSaveImageFilename(src, app->window)
-            : Dialogs::getSaveFilename(src, app->window);
+            ? Dialogs::getSaveImageFilename(src, parent)
+            : Dialogs::getSaveFilename(src, parent);
     }
     if (dst.isEmpty()) {
         return false;
     }
     if (!copy(src, dst)) {
-        QMessageBox::warning(app->window, QString(), app->translate("Utils", "Could not save the file."));
+        QMessageBox::warning(parent, QString(), app->translate("Utils", "Could not save the file."));
         return false;
     }
     return true;
 }
 
-bool Utils::replaceFile(const QString &what)
+bool Utils::replaceFile(const QString &what, QWidget *parent)
 {
-    return replaceFile(what, QString());
+    return replaceFile(what, QString(), parent);
 }
 
-bool Utils::replaceFile(const QString &what, QString with)
+bool Utils::replaceFile(const QString &what, QString with, QWidget *parent)
 {
     if (with.isNull()) {
         with = isImageWritable(what)
-            ? Dialogs::getOpenImageFilename(what, app->window)
-            : Dialogs::getOpenFilename(what, app->window);
+            ? Dialogs::getOpenImageFilename(what, parent)
+            : Dialogs::getOpenFilename(what, parent);
     }
     if (with.isEmpty() || QFileInfo(with) == QFileInfo(what)) {
         return false;
     }
     if (!copy(with, what)) {
-        QMessageBox::warning(app->window, QString(), app->translate("Utils", "Could not replace the file."));
+        QMessageBox::warning(parent, QString(), app->translate("Utils", "Could not replace the file."));
         return false;
     }
     return true;

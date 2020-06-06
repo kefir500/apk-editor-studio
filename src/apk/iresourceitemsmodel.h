@@ -8,7 +8,7 @@ class IResourceItemsModel
 {
 public:
     virtual ~IResourceItemsModel() = default;
-    virtual bool replaceResource(const QModelIndex &index, const QString &path = QString()) = 0;
+    virtual bool replaceResource(const QModelIndex &index, const QString &path = QString(), QWidget *parent = nullptr) = 0;
     virtual bool removeResource(const QModelIndex &index) = 0;
     virtual QString getResourcePath(const QModelIndex &index) const = 0;
 };

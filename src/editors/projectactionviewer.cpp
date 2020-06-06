@@ -19,7 +19,7 @@ ProjectActionViewer::ProjectActionViewer(Project *project, QWidget *parent) : Ac
     btnEditIcon = addButton();
     connect(btnEditIcon, &QPushButton::clicked, [=]() {
         const QString iconSource(Dialogs::getOpenImageFilename(this));
-        project->setApplicationIcon(iconSource);
+        project->setApplicationIcon(iconSource, this);
     });
 
     btnExplore = addButton();

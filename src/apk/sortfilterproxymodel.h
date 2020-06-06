@@ -13,7 +13,7 @@ public:
     SortFilterProxyModel(QObject *parent = nullptr) : QSortFilterProxyModel(parent) {}
 
     ResourceItemsModel *sourceModel() const;
-    bool replaceResource(const QModelIndex &index, const QString &path = QString()) override;
+    bool replaceResource(const QModelIndex &index, const QString &path = QString(), QWidget *parent = nullptr) override;
     bool removeResource(const QModelIndex &index) override;
     QString getResourcePath(const QModelIndex &index) const override;
 };
