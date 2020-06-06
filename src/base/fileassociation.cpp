@@ -1,7 +1,9 @@
 #include "base/fileassociation.h"
-#include <QSettings>
 
 #ifdef Q_OS_WIN
+
+#include <QSettings>
+#include <shlobj.h>
 
 FileAssociation::FileAssociation(const QString &progId, const QString &extension)
     : progId(progId)
@@ -21,6 +23,7 @@ bool FileAssociation::set(const QString &icon, const QString &friendlyTypeName)
     if (!icon.isNull()) {
         registry->setValue(progId + "/DefaultIcon/Default", icon);
     }
+    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0);
     return true;
 }
 
