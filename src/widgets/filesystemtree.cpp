@@ -11,10 +11,10 @@ void FileSystemTree::setModel(QAbstractItemModel *newModel)
     if (oldModel) {
         disconnect(oldModel, &QFileSystemModel::rootPathChanged, this, nullptr);
     }
+    QTreeView::setModel(newModel);
     if (newModel) {
         auto newFileSystemModel = qobject_cast<FileSystemModel *>(newModel);
         Q_ASSERT(newFileSystemModel);
-        QTreeView::setModel(newFileSystemModel);
         setRootIndex(newFileSystemModel->rootIndex());
         connect(newFileSystemModel, &QFileSystemModel::rootPathChanged, this, [=](const QString &path) {
             setRootIndex(newFileSystemModel->index(path));

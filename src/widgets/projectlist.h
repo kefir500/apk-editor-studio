@@ -1,23 +1,20 @@
 #ifndef PROJECTLIST_H
 #define PROJECTLIST_H
 
-#include "apk/projectitemsmodel.h"
 #include <QComboBox>
+
+class Project;
 
 class ProjectList : public QComboBox
 {
-    Q_OBJECT
-
 public:
     explicit ProjectList(QWidget *parent = nullptr);
 
+    void setModel(QAbstractItemModel *model);
     bool setCurrentProject(Project *project);
 
-    ProjectItemsModel *model() const;
-    void setModel(ProjectItemsModel *model);
-
-signals:
-    void currentProjectChanged(Project *project) const;
+private:
+    void onRowsInserted(const QModelIndex &parent, int first, int last);
 };
 
 #endif // PROJECTLIST_H

@@ -15,7 +15,7 @@ Project::Project(const QString &path) : resourcesModel(this)
     manifest = nullptr;
     filesystemModel.setSourceModel(&resourcesModel);
     iconsProxy.setSourceModel(&resourcesModel);
-    connect(&state, &ProjectState::changed, this, &Project::changed);
+    connect(&state, &ProjectState::changed, this, &Project::stateUpdated);
 }
 
 Project::~Project()

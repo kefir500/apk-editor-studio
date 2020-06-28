@@ -1,17 +1,23 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "apk/project.h"
-#include "widgets/logview.h"
-#include "widgets/manifestview.h"
-#include "widgets/projectswidget.h"
-#include "widgets/resourceabstractview.h"
-#include "widgets/projectlist.h"
-#include "widgets/toolbar.h"
-#include <QMainWindow>
 #include <QActionGroup>
 #include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QMainWindow>
+#include <QRubberBand>
+
+class ExtraListItemProxy;
+class LogView;
+class CentralWidget;
+class ManifestView;
+class Project;
+class ProjectList;
+class ProjectWidget;
+class ResourceAbstractView;
+class Toolbar;
+class Viewer;
+class WelcomeActionViewer;
 
 class MainWindow : public QMainWindow
 {
@@ -33,14 +39,18 @@ private:
     void initMenus();
     void retranslate();
 
-    void loadSettings();
-    void saveSettings();
+    void updateWindowForProject(Project *project);
+    void updateWindowForTab(Viewer *tab);
 
-    bool setCurrentProject(Project *project);
-    void setActionsEnabled(const Project *project);
-    void updateWindowForProject(const Project *project);
+    void onProjectAdded(const QModelIndex &parent, int first, int last);
+    void onProjectAboutToBeRemoved(const QModelIndex &parent, int first, int last);
+    void onProjectSwitched(Project *project);
 
-    ProjectsWidget *projectsWidget;
+    Project *getCurrentProject() const;
+    ProjectWidget *getCurrentProjectWidget() const;
+    Viewer *getCurrentTab() const;
+
+    CentralWidget *centralWidget;
     ProjectList *projectList;
     LogView *logView;
     ManifestView *manifestTable;
@@ -65,6 +75,8 @@ private:
     QAction *actionApkInstall;
     QAction *actionApkExplore;
     QAction *actionApkClose;
+    QAction *actionFileSave;
+    QAction *actionFileSaveAs;
     QAction *actionProjectManager;
     QAction *actionTitleEditor;
     QAction *actionPermissionEditor;
@@ -75,6 +87,10 @@ private:
     QRubberBand *rubberBand;
 
     QByteArray defaultState;
+
+    QMap<Project *, ProjectWidget *> projectWidgets;
+    WelcomeActionViewer *welcomePage;
+    ExtraListItemProxy *welcomeItemProxy;
 };
 
 #endif // MAINWINDOW_H

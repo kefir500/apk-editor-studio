@@ -1,9 +1,11 @@
 #include "windows/permissioneditor.h"
 #include "windows/yesalwaysdialog.h"
 #include "base/application.h"
+#include <QDesktopServices>
+#include <QLabel>
+#include <QPushButton>
 #include <QScrollArea>
 #include <QToolButton>
-#include <QDesktopServices>
 
 #ifdef QT_DEBUG
     #include <QDebug>

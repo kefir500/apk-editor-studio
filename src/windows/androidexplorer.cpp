@@ -4,12 +4,14 @@
 #include "tools/adb.h"
 #include "base/application.h"
 #include <QBoxLayout>
-#include <QToolButton>
 #include <QDialogButtonBox>
-#include <QMessageBox>
 #include <QInputDialog>
 #include <QMenu>
+#include <QMessageBox>
+#include <QPushButton>
 #include <QShortcut>
+#include <QToolBar>
+#include <QToolButton>
 
 #ifdef QT_DEBUG
     #include <QDebug>

@@ -61,7 +61,7 @@ public:
     Command *createInstallCommand(const QString &serial, const QString &apk = QString());
 
 signals:
-    void changed() const;
+    void stateUpdated() const;
 
 private:
     ProjectState state;

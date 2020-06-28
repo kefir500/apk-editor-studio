@@ -1,18 +1,24 @@
-#include "widgets/projecttabswidget.h"
+#include "widgets/projectwidget.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
+#include "windows/permissioneditor.h"
 #include "editors/codeeditor.h"
 #include "editors/imageeditor.h"
+#include "editors/projectactionviewer.h"
+#include "editors/titleeditor.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include <QDebug>
 
-ProjectTabsWidget::ProjectTabsWidget(Project *project, QWidget *parent) : QTabWidget(parent), project(project)
+ProjectWidget::ProjectWidget(Project *project, QWidget *parent) : QTabWidget(parent), project(project)
 {
     setMovable(true);
     setTabsClosable(true);
 
-    connect(this, &ProjectTabsWidget::tabCloseRequested, [=](int index) {
+    connect(this, &QTabWidget::currentChanged, [this]() {
+        emit currentTabChanged(qobject_cast<Viewer *>(currentWidget()));
+    });
+    connect(this, &QTabWidget::tabCloseRequested, [this](int index) {
         Viewer *tab = static_cast<Viewer *>(widget(index));
         closeTab(tab);
     });
@@ -20,47 +26,45 @@ ProjectTabsWidget::ProjectTabsWidget(Project *project, QWidget *parent) : QTabWi
     openProjectTab();
 }
 
-ProjectActionViewer *ProjectTabsWidget::openProjectTab()
+void ProjectWidget::openProjectTab()
 {
     const QString identifier = "project";
     Viewer *existing = getTabByIdentifier(identifier);
     if (existing) {
         setCurrentIndex(indexOf(existing));
-        return static_cast<ProjectActionViewer *>(existing);
+        return;
     }
 
     ProjectActionViewer *tab = new ProjectActionViewer(project, this);
     tab->setProperty("identifier", identifier);
-    connect(tab, &ProjectActionViewer::titleEditorRequested, this, &ProjectTabsWidget::openTitlesTab);
-    connect(tab, &ProjectActionViewer::apkSaveRequested, this, &ProjectTabsWidget::saveProject);
-    connect(tab, &ProjectActionViewer::apkInstallRequested, this, &ProjectTabsWidget::installProject);
+    connect(tab, &ProjectActionViewer::titleEditorRequested, this, &ProjectWidget::openTitlesTab);
+    connect(tab, &ProjectActionViewer::apkSaveRequested, this, &ProjectWidget::saveProject);
+    connect(tab, &ProjectActionViewer::apkInstallRequested, this, &ProjectWidget::installProject);
     addTab(tab);
-    return tab;
 }
 
-TitleEditor *ProjectTabsWidget::openTitlesTab()
+void ProjectWidget::openTitlesTab()
 {
     const QString identifier = "titles";
     Viewer *existing = getTabByIdentifier(identifier);
     if (existing) {
         setCurrentIndex(indexOf(existing));
-        return static_cast<TitleEditor *>(existing);
+        return;
     }
 
     TitleEditor *editor = new TitleEditor(project, this);
     editor->setProperty("identifier", identifier);
     addTab(editor);
-    return editor;
 }
 
-Viewer *ProjectTabsWidget::openResourceTab(const ResourceModelIndex &index)
+void ProjectWidget::openResourceTab(const ResourceModelIndex &index)
 {
     const QString path = index.path();
     const QString identifier = path;
     Viewer *existing = getTabByIdentifier(identifier);
     if (existing) {
         setCurrentIndex(indexOf(existing));
-        return existing;
+        return;
     }
 
     Editor *editor = nullptr;
@@ -71,14 +75,19 @@ Viewer *ProjectTabsWidget::openResourceTab(const ResourceModelIndex &index)
         editor = new ImageEditor(index, this);
     } else {
         qDebug() << "No suitable editor found for" << extension;
-        return nullptr;
+        return;
     }
     editor->setProperty("identifier", identifier);
     addTab(editor);
-    return editor;
 }
 
-bool ProjectTabsWidget::saveTabs()
+void ProjectWidget::openPermissionEditor()
+{
+    PermissionEditor permissionEditor(project->manifest, this);
+    permissionEditor.exec();
+}
+
+bool ProjectWidget::saveTabs()
 {
     bool result = true;
     for (int index = 0; index < count(); ++index) {
@@ -90,15 +99,16 @@ bool ProjectTabsWidget::saveTabs()
     return result;
 }
 
-bool ProjectTabsWidget::isUnsaved() const
+bool ProjectWidget::isUnsaved() const
 {
     return project->getState().isModified() || hasUnsavedTabs();
 }
 
-bool ProjectTabsWidget::saveProject()
+bool ProjectWidget::saveProject()
 {
     if (hasUnsavedTabs()) {
-        const int answer = QMessageBox::question(this, QString(), tr("Do you want to save changes before packing?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        const QString question = tr("Do you want to save changes before packing?");
+        const int answer = QMessageBox::question(this, QString(), question, QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
         switch (answer) {
         case QMessageBox::Yes:
         case QMessageBox::Save:
@@ -131,7 +141,7 @@ bool ProjectTabsWidget::saveProject()
     return true;
 }
 
-bool ProjectTabsWidget::installProject()
+bool ProjectWidget::installProject()
 {
     const auto device = Dialogs::getInstallDevice(this);
     if (!device) {
@@ -177,15 +187,16 @@ bool ProjectTabsWidget::installProject()
     return true;
 }
 
-bool ProjectTabsWidget::exploreProject()
+bool ProjectWidget::exploreProject()
 {
     return Utils::explore(project->getContentsPath());
 }
 
-bool ProjectTabsWidget::closeProject()
+bool ProjectWidget::closeProject()
 {
     if (project->getState().isModified()) {
-        const int answer = QMessageBox::question(this, QString(), tr("Are you sure you want to close this APK?\nAny unsaved changes will be lost."));
+        const QString question = tr("Are you sure you want to close this APK?\nAny unsaved changes will be lost.");
+        const int answer = QMessageBox::question(this, QString(), question);
         if (answer != QMessageBox::Yes) {
             return false;
         }
@@ -193,8 +204,9 @@ bool ProjectTabsWidget::closeProject()
     return app->projects.close(project);
 }
 
-int ProjectTabsWidget::addTab(Viewer *tab)
+int ProjectWidget::addTab(Viewer *tab)
 {
+    // TODO Tab title is not retranslated on language change
     const int tabIndex = QTabWidget::addTab(tab, tab->getIcon(), tab->getTitle());
     setCurrentIndex(tabIndex);
     auto editor = qobject_cast<Editor *>(tab);
@@ -227,16 +239,16 @@ int ProjectTabsWidget::addTab(Viewer *tab)
     return tabIndex;
 }
 
-bool ProjectTabsWidget::closeTab(Viewer *editor)
+bool ProjectWidget::closeTab(Viewer *tab)
 {
-    if (!editor->finalize()) {
+    if (!tab->finalize()) {
         return false;
     }
-    delete editor;
+    delete tab;
     return true;
 }
 
-bool ProjectTabsWidget::hasUnsavedTabs() const
+bool ProjectWidget::hasUnsavedTabs() const
 {
     for (int i = 0; i < count(); ++i) {
         auto editor = qobject_cast<Editor *>(widget(i));
@@ -247,7 +259,7 @@ bool ProjectTabsWidget::hasUnsavedTabs() const
     return false;
 }
 
-Viewer *ProjectTabsWidget::getTabByIdentifier(const QString &identifier) const
+Viewer *ProjectWidget::getTabByIdentifier(const QString &identifier) const
 {
     for (int index = 0; index < count(); ++index) {
         Viewer *tab = static_cast<Viewer *>(widget(index));

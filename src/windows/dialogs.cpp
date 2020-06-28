@@ -6,6 +6,7 @@
 #include <QBoxLayout>
 #include <QDialogButtonBox>
 #include <QPlainTextEdit>
+#include <QPushButton>
 
 namespace
 {

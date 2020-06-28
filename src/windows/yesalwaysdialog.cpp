@@ -1,6 +1,10 @@
 #include "windows/yesalwaysdialog.h"
 #include "base/application.h"
+#include <QBoxLayout>
 #include <QDialogButtonBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QStyle>
 
 bool YesAlwaysDialog::ask(const QString &identifier, const QString &question, QWidget *parent)
 {

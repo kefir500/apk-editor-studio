@@ -27,6 +27,7 @@ SOURCES += \
     $$PWD/base/command.cpp \
     $$PWD/base/device.cpp \
     $$PWD/base/deviceitemsmodel.cpp \
+    $$PWD/base/extralistitemproxy.cpp \
     $$PWD/base/fileassociation.cpp \
     $$PWD/base/fileformat.cpp \
     $$PWD/base/fileformatlist.cpp \
@@ -60,6 +61,7 @@ SOURCES += \
     $$PWD/tools/keystore.cpp \
     $$PWD/tools/keytool.cpp \
     $$PWD/tools/zipalign.cpp \
+    $$PWD/widgets/centralwidget.cpp \
     $$PWD/widgets/decorationsizedelegate.cpp \
     $$PWD/widgets/deselectablelistview.cpp \
     $$PWD/widgets/elidedlabel.cpp \
@@ -75,8 +77,7 @@ SOURCES += \
     $$PWD/widgets/poollistwidget.cpp \
     $$PWD/widgets/projectlist.cpp \
     $$PWD/widgets/projectlistitemdelegate.cpp \
-    $$PWD/widgets/projectswidget.cpp \
-    $$PWD/widgets/projecttabswidget.cpp \
+    $$PWD/widgets/projectwidget.cpp \
     $$PWD/widgets/resourceabstractview.cpp \
     $$PWD/widgets/resourcetree.cpp \
     $$PWD/widgets/spacer.cpp \
@@ -126,6 +127,7 @@ HEADERS += \
     $$PWD/base/command.h \
     $$PWD/base/device.h \
     $$PWD/base/deviceitemsmodel.h \
+    $$PWD/base/extralistitemproxy.h \
     $$PWD/base/fileassociation.h \
     $$PWD/base/fileformat.h \
     $$PWD/base/fileformatlist.h \
@@ -158,6 +160,7 @@ HEADERS += \
     $$PWD/tools/keystore.h \
     $$PWD/tools/keytool.h \
     $$PWD/tools/zipalign.h \
+    $$PWD/widgets/centralwidget.h \
     $$PWD/widgets/decorationsizedelegate.h \
     $$PWD/widgets/deselectablelistview.h \
     $$PWD/widgets/elidedlabel.h \
@@ -173,8 +176,7 @@ HEADERS += \
     $$PWD/widgets/poollistwidget.h \
     $$PWD/widgets/projectlist.h \
     $$PWD/widgets/projectlistitemdelegate.h \
-    $$PWD/widgets/projectswidget.h \
-    $$PWD/widgets/projecttabswidget.h \
+    $$PWD/widgets/projectwidget.h \
     $$PWD/widgets/resourceabstractview.h \
     $$PWD/widgets/resourcetree.h \
     $$PWD/widgets/spacer.h \

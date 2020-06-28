@@ -5,6 +5,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QThread>
+#include <QPushButton>
 #include <QMessageBox>
 #include <QDebug>
 

@@ -37,7 +37,7 @@ ProjectActionViewer::ProjectActionViewer(Project *project, QWidget *parent) : Ac
         emit apkInstallRequested();
     });
 
-    connect(project, &Project::changed, this, &ProjectActionViewer::onProjectUpdated, Qt::QueuedConnection);
+    connect(project, &Project::stateUpdated, this, &ProjectActionViewer::onProjectUpdated, Qt::QueuedConnection);
 
     onProjectUpdated();
     retranslate();

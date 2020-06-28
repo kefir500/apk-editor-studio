@@ -54,8 +54,8 @@ void ManifestView::setModel(QAbstractItemModel *model)
 {
     if (model) {
         Q_ASSERT(qobject_cast<ManifestModel *>(model));
-        QTableView::setModel(model);
     }
+    QTableView::setModel(model);
 }
 
 QSize ManifestView::sizeHint() const

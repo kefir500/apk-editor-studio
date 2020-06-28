@@ -20,12 +20,12 @@ IconList::IconList(QWidget *parent) : QTreeView(parent)
 
 void IconList::setModel(QAbstractItemModel *model)
 {
+    QTreeView::setModel(model);
     if (model) {
         Q_ASSERT(qobject_cast<IconItemsModel *>(model));
         for (int column = 1; column < model->columnCount(); ++column) {
             hideColumn(column);
         }
-        QTreeView::setModel(model);
     }
 }
 

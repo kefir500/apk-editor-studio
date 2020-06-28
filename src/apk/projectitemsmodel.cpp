@@ -24,12 +24,10 @@ Project *ProjectItemsModel::add(const QString &path, QWidget *parent)
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
         projects.append(project);
     endInsertRows();
-    emit added(project);
 
-    connect(project, &Project::changed, [=]() {
-        const int row = indexOf(project);
+    connect(project, &Project::stateUpdated, [=]() {
+        const int row = projects.indexOf(project);
         emit dataChanged(index(row, 0), index(row, ColumnCount - 1));
-        emit changed(project);
     });
 
     return project;
@@ -37,18 +35,22 @@ Project *ProjectItemsModel::add(const QString &path, QWidget *parent)
 
 bool ProjectItemsModel::close(Project *project)
 {
-    const int row = indexOf(project);
+    const int row = projects.indexOf(project);
     if (row == -1) {
         return false;
     }
 
     beginRemoveRows(QModelIndex(), row, row);
         projects.removeAt(row);
-        delete project;
+        project->deleteLater();
     endRemoveRows();
 
-    emit removed(project);
     return true;
+}
+
+Project *ProjectItemsModel::at(int row) const
+{
+    return projects.at(row);
 }
 
 Project *ProjectItemsModel::existing(const QString &filename) const
@@ -61,11 +63,6 @@ Project *ProjectItemsModel::existing(const QString &filename) const
         }
     }
     return nullptr;
-}
-
-int ProjectItemsModel::indexOf(Project *project) const
-{
-    return projects.indexOf(project);
 }
 
 QVariant ProjectItemsModel::data(const QModelIndex &index, int role) const

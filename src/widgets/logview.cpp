@@ -31,6 +31,7 @@ void LogView::setModel(QAbstractItemModel *model)
         disconnect(previousModel, &LogModel::added, this, nullptr);
         disconnect(previousModel, &LogModel::loadingStateChanged, delegate, &LogDelegate::setLoading);
     }
+    QListView::setModel(model);
     if (model) {
         LogModel *logModel = qobject_cast<LogModel *>(model);
         Q_ASSERT(logModel);
@@ -42,7 +43,6 @@ void LogView::setModel(QAbstractItemModel *model)
         });
         connect(logModel, &LogModel::loadingStateChanged, delegate, &LogDelegate::setLoading);
     }
-    QListView::setModel(model);
 }
 
 QSize LogView::sizeHint() const

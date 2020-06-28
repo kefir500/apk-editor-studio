@@ -1,37 +1,40 @@
 #include "windows/mainwindow.h"
 #include "windows/aboutdialog.h"
 #include "windows/dialogs.h"
-#include "windows/permissioneditor.h"
-#include "widgets/resourcetree.h"
+#include "widgets/centralwidget.h"
 #include "widgets/filesystemtree.h"
 #include "widgets/iconlist.h"
+#include "widgets/logview.h"
+#include "widgets/manifestview.h"
+#include "widgets/projectlist.h"
+#include "widgets/projectwidget.h"
+#include "widgets/resourceabstractview.h"
+#include "widgets/resourcetree.h"
+#include "widgets/toolbar.h"
+#include "editors/fileeditor.h"
+#include "editors/welcomeactionviewer.h"
 #include "base/application.h"
+#include "base/extralistitemproxy.h"
 #include "base/updater.h"
-#include <QMenuBar>
+#include "apk/project.h"
+#include <QDebug>
 #include <QDockWidget>
+#include <QMenuBar>
 #include <QMimeData>
 #include <QMimeDatabase>
 #include <QTimer>
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     setAcceptDrops(true);
 
-    initWidgets();
+    connect(&app->projects, &ProjectItemsModel::rowsInserted, this, &MainWindow::onProjectAdded);
+    connect(&app->projects, &ProjectItemsModel::rowsAboutToBeRemoved, this, &MainWindow::onProjectAboutToBeRemoved);
+
     initMenus();
-    loadSettings();
+    initWidgets();
 
-    connect(&app->projects, &ProjectItemsModel::changed, [=](Project *project) {
-        if (project == projectsWidget->getCurrentProject()) {
-            updateWindowForProject(project);
-        }
-    });
-
-    connect(app->settings, &Settings::toolbarUpdated, [=]() {
-        toolbar->reinitialize();
-    });
-
+    connect(app->settings, &Settings::toolbarUpdated, toolbar, &Toolbar::reinitialize);
     connect(app->settings, &Settings::resetDone, [=]() {
         restoreGeometry(QByteArray());
         setInitialSize();
@@ -63,63 +66,67 @@ void MainWindow::setInitialSize()
 void MainWindow::initWidgets()
 {
     qDebug() << "Initializing widgets...";
+
     setInitialSize();
 
-    projectsWidget = new ProjectsWidget(this);
-    projectsWidget->setModel(&app->projects);
-    setCentralWidget(projectsWidget);
-    connect(projectsWidget, &ProjectsWidget::currentProjectChanged, [=](Project *project) {
-        setCurrentProject(project);
-        projectList->setCurrentProject(project);
-    });
-    connect(projectsWidget, &ProjectsWidget::currentTabChanged, [=]() {
-        menuEditor->clear();
-        menuEditor->addActions(projectsWidget->getCurrentTabActions());
-    });
+    centralWidget = new CentralWidget(this);
+    setCentralWidget(centralWidget);
 
-    QWidget *dockProjectsWidget = new QWidget(this);
-    QVBoxLayout *projectsLayout = new QVBoxLayout(dockProjectsWidget);
-    projectList = new ProjectList(this);
-    projectList->setModel(&app->projects);
-    connect(projectList, &ProjectList::currentProjectChanged, [=](Project *project) {
-        setCurrentProject(project);
-        projectsWidget->setCurrentProject(project);
+    resourceTree = new ResourceAbstractView(new ResourceTree, this);
+    connect(resourceTree, &ResourceAbstractView::editRequested, [this](const ResourceModelIndex &index) {
+        getCurrentProjectWidget()->openResourceTab(index);
     });
+    auto dockResourceWidget = new QWidget(this);
+    auto resourceLayout = new QVBoxLayout(dockResourceWidget);
+    resourceLayout->addWidget(resourceTree);
+    resourceLayout->setMargin(0);
+
+    filesystemTree = new ResourceAbstractView(new FileSystemTree, this);
+    connect(filesystemTree, &ResourceAbstractView::editRequested, [this](const ResourceModelIndex &index) {
+        getCurrentProjectWidget()->openResourceTab(index);
+    });
+    auto dockFilesystemWidget = new QWidget(this);
+    auto filesystemLayout = new QVBoxLayout(dockFilesystemWidget);
+    filesystemLayout->addWidget(filesystemTree);
+    filesystemLayout->setMargin(0);
+
+    iconList = new ResourceAbstractView(new IconList, this);
+    connect(iconList, &ResourceAbstractView::editRequested, [this](const ResourceModelIndex &index) {
+        getCurrentProjectWidget()->openResourceTab(index);
+    });
+    auto dockIconsWidget = new QWidget(this);
+    auto iconsLayout = new QVBoxLayout(dockIconsWidget);
+    iconsLayout->addWidget(iconList);
+    iconsLayout->setMargin(0);
+    iconsLayout->setSpacing(1);
+
+    manifestTable = new ManifestView(this);
+    connect(manifestTable, &ManifestView::titleEditorRequested, [this]() {
+        getCurrentProjectWidget()->openTitlesTab();
+    });
+    auto dockManifestWidget = new QWidget(this);
+    auto manifestLayout = new QVBoxLayout(dockManifestWidget);
+    manifestLayout->addWidget(manifestTable);
+    manifestLayout->setMargin(0);
 
     logView = new LogView(this);
+    projectList = new ProjectList(this);
+    connect(projectList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this]() {
+        onProjectSwitched(getCurrentProject());
+    });
+    welcomeItemProxy = new ExtraListItemProxy(this);
+    welcomeItemProxy->setSourceModel(&app->projects);
+    welcomeItemProxy->prependRow();
+    welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), tr("Welcome"), Qt::DisplayRole);
+    welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), app->icons.get("application.png"), Qt::DecorationRole);
+    welcomePage = new WelcomeActionViewer(this);
+    projectList->setModel(welcomeItemProxy);
+    auto dockProjectsWidget = new QWidget(this);
+    auto projectsLayout = new QVBoxLayout(dockProjectsWidget);
     projectsLayout->addWidget(projectList);
     projectsLayout->addWidget(logView);
     projectsLayout->setMargin(0);
     projectsLayout->setSpacing(1);
-
-    QWidget *dockResourceWidget = new QWidget(this);
-    QVBoxLayout *resourceLayout = new QVBoxLayout(dockResourceWidget);
-    resourceTree = new ResourceAbstractView(new ResourceTree, this);
-    resourceLayout->addWidget(resourceTree);
-    resourceLayout->setMargin(0);
-    connect(resourceTree, &ResourceAbstractView::editRequested, projectsWidget, &ProjectsWidget::openResourceTab);
-
-    QWidget *dockFilesystemWidget = new QWidget(this);
-    QVBoxLayout *filesystemLayout = new QVBoxLayout(dockFilesystemWidget);
-    filesystemTree = new ResourceAbstractView(new FileSystemTree, this);
-    filesystemLayout->addWidget(filesystemTree);
-    filesystemLayout->setMargin(0);
-    connect(filesystemTree, &ResourceAbstractView::editRequested, projectsWidget, &ProjectsWidget::openResourceTab);
-
-    QWidget *dockIconsWidget = new QWidget(this);
-    QVBoxLayout *iconsLayout = new QVBoxLayout(dockIconsWidget);
-    iconList = new ResourceAbstractView(new IconList, this);
-    iconsLayout->addWidget(iconList);
-    iconsLayout->setMargin(0);
-    iconsLayout->setSpacing(1);
-    connect(iconList, &ResourceAbstractView::editRequested, projectsWidget, &ProjectsWidget::openResourceTab);
-
-    QWidget *dockManifestWidget = new QWidget(this);
-    QVBoxLayout *manifestLayout = new QVBoxLayout(dockManifestWidget);
-    manifestTable = new ManifestView(this);
-    manifestLayout->addWidget(manifestTable);
-    manifestLayout->setMargin(0);
-    connect(manifestTable, &ManifestView::titleEditorRequested, projectsWidget, &ProjectsWidget::openTitlesTab);
 
     dockProjects = new QDockWidget(this);
     dockResources = new QDockWidget(this);
@@ -147,6 +154,9 @@ void MainWindow::initWidgets()
     rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
 
     defaultState = saveState();
+
+    restoreGeometry(app->settings->getMainWindowGeometry());
+    restoreState(app->settings->getMainWindowState());
 }
 
 void MainWindow::initMenus()
@@ -213,7 +223,7 @@ void MainWindow::initMenus()
     menuFile->addSeparator();
     menuFile->addAction(app->actions.getExit(this));
     menuEditor = menuBar()->addMenu(QString());
-    menuEditor->addActions(projectsWidget->getCurrentTabActions());
+    menuEditor->setEnabled(false);
     menuTools = menuBar()->addMenu(QString());
     menuTools->addAction(actionKeyManager);
     menuTools->addSeparator();
@@ -243,11 +253,18 @@ void MainWindow::initMenus()
 
     // Tool Bar:
 
+    actionFileSave = new QAction(app->icons.get("save.png"), QString(), this);
+    actionFileSave->setEnabled(false);
+    actionFileSaveAs = new QAction(app->icons.get("save-as.png"), QString(), this);
+    actionFileSaveAs->setEnabled(false);
+
     Toolbar::addToPool("open-project", actionApkOpen);
     Toolbar::addToPool("save-project", actionApkSave);
     Toolbar::addToPool("install-project", actionApkInstall);
     Toolbar::addToPool("open-contents", actionApkExplore);
     Toolbar::addToPool("close-project", actionApkClose);
+    Toolbar::addToPool("save", actionFileSave);
+    Toolbar::addToPool("save-as", actionFileSaveAs);
     Toolbar::addToPool("project-manager", actionProjectManager);
     Toolbar::addToPool("title-editor", actionTitleEditor);
     Toolbar::addToPool("permission-editor", actionPermissionEditor);
@@ -261,20 +278,34 @@ void MainWindow::initMenus()
     toolbar->setObjectName("Toolbar");
     addToolBar(toolbar);
 
-    setActionsEnabled(nullptr);
+    // Signals / Slots:
 
-    // Signals / Slots
-
-    connect(actionApkSave, &QAction::triggered, projectsWidget, &ProjectsWidget::saveCurrentProject);
-    connect(actionApkInstall, &QAction::triggered, projectsWidget, &ProjectsWidget::installCurrentProject);
-    connect(actionApkExplore, &QAction::triggered, projectsWidget, &ProjectsWidget::exploreCurrentProject);
-    connect(actionApkClose, &QAction::triggered, projectsWidget, &ProjectsWidget::closeCurrentProject);
-    connect(actionTitleEditor, &QAction::triggered, projectsWidget, &ProjectsWidget::openTitlesTab);
-    connect(actionProjectManager, &QAction::triggered, projectsWidget, &ProjectsWidget::openProjectTab);
-    connect(actionPermissionEditor, &QAction::triggered, [=]() {
-        const auto project = projectsWidget->getCurrentProject();
-        PermissionEditor permissionEditor(project->manifest, this);
-        permissionEditor.exec();
+    connect(actionApkSave, &QAction::triggered, [this]() {
+        getCurrentProjectWidget()->saveProject();
+    });
+    connect(actionApkInstall, &QAction::triggered, [this]() {
+        getCurrentProjectWidget()->installProject();
+    });
+    connect(actionApkExplore, &QAction::triggered, [this]() {
+        getCurrentProjectWidget()->exploreProject();
+    });
+    connect(actionApkClose, &QAction::triggered, [this]() {
+        getCurrentProjectWidget()->closeProject();
+    });
+    connect(actionTitleEditor, &QAction::triggered, [this]() {
+        getCurrentProjectWidget()->openTitlesTab();
+    });
+    connect(actionProjectManager, &QAction::triggered, [this]() {
+        getCurrentProjectWidget()->openProjectTab();
+    });
+    connect(actionPermissionEditor, &QAction::triggered, [this]() {
+        getCurrentProjectWidget()->openPermissionEditor();
+    });
+    connect(actionFileSave, &QAction::triggered, [this]() {
+        qobject_cast<Editor *>(getCurrentTab())->save();
+    });
+    connect(actionFileSaveAs, &QAction::triggered, [this]() {
+        qobject_cast<FileEditor *>(getCurrentTab())->saveAs();
     });
     connect(actionAboutQt, &QAction::triggered, app, &Application::aboutQt);
     connect(actionAbout, &QAction::triggered, [=]() {
@@ -295,6 +326,8 @@ void MainWindow::retranslate()
     dockFilesystem->setWindowTitle(tr("File System"));
     dockManifest->setWindowTitle(tr("Manifest"));
     dockIcons->setWindowTitle(tr("Icons"));
+    actionFileSave->setText(tr("&Save"));
+    actionFileSaveAs->setText(tr("Save &As..."));
 
     // Menu Bar:
 
@@ -332,32 +365,19 @@ void MainWindow::retranslate()
     actionAboutQt->setText(tr("About &Qt..."));
 }
 
-void MainWindow::loadSettings()
+void MainWindow::updateWindowForProject(Project *project)
 {
-    qDebug() << "Loading settings...";
-    restoreGeometry(app->settings->getMainWindowGeometry());
-    restoreState(app->settings->getMainWindowState());
-}
+    if (project) {
+        setWindowTitle(QString("%1[*]").arg(project->getOriginalPath()));
+        setWindowModified(project->getState().isModified());
+        auto projectWidget = projectWidgets.value(project);
+        updateWindowForTab(qobject_cast<Viewer *>(projectWidget->currentWidget()));
+    } else {
+        setWindowTitle(QString());
+        setWindowModified(false);
+        updateWindowForTab(nullptr);
+    }
 
-void MainWindow::saveSettings()
-{
-    app->settings->setMainWindowGeometry(saveGeometry());
-    app->settings->setMainWindowState(saveState());
-}
-
-bool MainWindow::setCurrentProject(Project *project)
-{
-    updateWindowForProject(project);
-    resourceTree->setModel(project ? &project->resourcesModel : nullptr);
-    filesystemTree->setModel(project ? &project->filesystemModel : nullptr);
-    iconList->setModel(project ? &project->iconsProxy : nullptr);
-    logView->setModel(project ? &project->logModel : nullptr);
-    manifestTable->setModel(project ? &project->manifestModel : nullptr);
-    return project;
-}
-
-void MainWindow::setActionsEnabled(const Project *project)
-{
     actionApkSave->setEnabled(project ? project->getState().canSave() : false);
     actionApkInstall->setEnabled(project ? project->getState().canInstall() : false);
     actionApkExplore->setEnabled(project ? project->getState().canExplore() : false);
@@ -367,17 +387,82 @@ void MainWindow::setActionsEnabled(const Project *project)
     actionProjectManager->setEnabled(project);
 }
 
-void MainWindow::updateWindowForProject(const Project *project)
+void MainWindow::updateWindowForTab(Viewer *tab)
+{
+    menuEditor->clear();
+    if (tab && !tab->actions().isEmpty()) {
+        menuEditor->setEnabled(true);
+        menuEditor->addActions(tab->actions());
+    } else {
+        menuEditor->setEnabled(false);
+    }
+    actionFileSave->setEnabled(qobject_cast<const Editor *>(tab));
+    actionFileSaveAs->setEnabled(qobject_cast<const FileEditor *>(tab));
+}
+
+void MainWindow::onProjectAdded(const QModelIndex &, int first, int last)
+{
+    for (int i = first; i <= last; ++i) {
+        const auto project = app->projects.at(i);
+        auto projectWidget = new ProjectWidget(project, this);
+        projectWidgets.insert(project, projectWidget);
+        connect(project, &Project::stateUpdated, [=]() {
+            if (project == getCurrentProject()) {
+                updateWindowForProject(project);
+            }
+        });
+        connect(projectWidget, &ProjectWidget::currentTabChanged, [=](Viewer *tab) {
+            if (project == getCurrentProject()) {
+                updateWindowForTab(tab);
+            }
+        });
+    }
+}
+
+void MainWindow::onProjectAboutToBeRemoved(const QModelIndex &, int first, int last)
+{
+    for (int i = first; i <= last; ++i) {
+        const auto project = app->projects.at(i);
+        auto projectWidget = projectWidgets.take(project);
+        projectWidget->deleteLater();
+    }
+}
+
+void MainWindow::onProjectSwitched(Project *project)
 {
     if (project) {
-        setWindowTitle(QString("%1[*]").arg(project->getOriginalPath()));
-        setWindowModified(project->getState().isModified());
-        setActionsEnabled(project);
+        centralWidget->set(projectWidgets.value(project));
     } else {
-        setWindowTitle(QString());
-        setWindowModified(false);
-        setActionsEnabled(nullptr);
+        centralWidget->set(welcomePage);
     }
+
+    resourceTree->setModel(project ? &project->resourcesModel : nullptr);
+    filesystemTree->setModel(project ? &project->filesystemModel : nullptr);
+    iconList->setModel(project ? &project->iconsProxy : nullptr);
+    logView->setModel(project ? &project->logModel : nullptr);
+    manifestTable->setModel(project ? &project->manifestModel : nullptr);
+
+    updateWindowForProject(project);
+}
+
+Project *MainWindow::getCurrentProject() const
+{
+    const int row = welcomeItemProxy->mapToSourceRow(projectList->currentIndex());
+    const auto index = app->projects.index(row);
+    return index.isValid() ? static_cast<Project *>(index.internalPointer()) : nullptr;
+}
+
+ProjectWidget *MainWindow::getCurrentProjectWidget() const
+{
+    return projectWidgets.value(getCurrentProject());
+}
+
+Viewer *MainWindow::getCurrentTab() const
+{
+    if (auto projectWidget = getCurrentProjectWidget()) {
+        return qobject_cast<Viewer *>(projectWidget->currentWidget());
+    }
+    return nullptr;
 }
 
 void MainWindow::changeEvent(QEvent *event)
@@ -424,15 +509,23 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    const bool unsaved = projectsWidget->hasUnsavedProjects();
-    if (unsaved) {
-        const QString question = tr("You have unsaved changes.\nDo you want to discard them and exit?");
-        const int answer = QMessageBox::question(this, QString(), question, QMessageBox::Discard, QMessageBox::Cancel);
-        if (answer != QMessageBox::Discard) {
-            event->ignore();
-            return;
+    QMapIterator<Project *, ProjectWidget *> it(projectWidgets);
+    while (it.hasNext()) {
+        it.next();
+        auto tabs = it.value();
+        if (tabs->isUnsaved()) {
+            auto project = it.key();
+            projectList->setCurrentProject(project);
+            const QString question = tr("You have unsaved changes.\nDo you want to discard them and exit?");
+            const int answer = QMessageBox::question(this, QString(), question, QMessageBox::Discard, QMessageBox::Cancel);
+            if (answer != QMessageBox::Discard) {
+                event->ignore();
+                return;
+            }
+            break;
         }
     }
-    saveSettings();
+    app->settings->setMainWindowGeometry(saveGeometry());
+    app->settings->setMainWindowState(saveState());
     event->accept();
 }
