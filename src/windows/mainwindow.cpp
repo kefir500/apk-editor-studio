@@ -34,11 +34,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     initMenus();
     initWidgets();
 
-    connect(app->settings, &Settings::toolbarUpdated, toolbar, &Toolbar::reinitialize);
     connect(app->settings, &Settings::resetDone, [=]() {
         restoreGeometry(QByteArray());
         setInitialSize();
         restoreState(defaultState);
+        toolbar->initialize(app->settings->getMainWindowToolbar());
     });
 
     QEvent languageChangeEvent(QEvent::LanguageChange);
@@ -258,25 +258,27 @@ void MainWindow::initMenus()
     actionFileSaveAs = new QAction(app->icons.get("save-as.png"), QString(), this);
     actionFileSaveAs->setEnabled(false);
 
-    Toolbar::addToPool("open-project", actionApkOpen);
-    Toolbar::addToPool("save-project", actionApkSave);
-    Toolbar::addToPool("install-project", actionApkInstall);
-    Toolbar::addToPool("open-contents", actionApkExplore);
-    Toolbar::addToPool("close-project", actionApkClose);
-    Toolbar::addToPool("save", actionFileSave);
-    Toolbar::addToPool("save-as", actionFileSaveAs);
-    Toolbar::addToPool("project-manager", actionProjectManager);
-    Toolbar::addToPool("title-editor", actionTitleEditor);
-    Toolbar::addToPool("permission-editor", actionPermissionEditor);
-    Toolbar::addToPool("device-manager", actionDeviceManager);
-    Toolbar::addToPool("android-explorer", actionAndroidExplorer);
-    Toolbar::addToPool("screenshot", actionScreenshot);
-    Toolbar::addToPool("key-manager", actionKeyManager);
-    Toolbar::addToPool("settings", actionOptions);
-    Toolbar::addToPool("donate", actionDonate);
     toolbar = new Toolbar(this);
     toolbar->setObjectName("Toolbar");
+    toolbar->addActionToPool("open-project", actionApkOpen);
+    toolbar->addActionToPool("save-project", actionApkSave);
+    toolbar->addActionToPool("install-project", actionApkInstall);
+    toolbar->addActionToPool("open-contents", actionApkExplore);
+    toolbar->addActionToPool("close-project", actionApkClose);
+    toolbar->addActionToPool("save", actionFileSave);
+    toolbar->addActionToPool("save-as", actionFileSaveAs);
+    toolbar->addActionToPool("project-manager", actionProjectManager);
+    toolbar->addActionToPool("title-editor", actionTitleEditor);
+    toolbar->addActionToPool("permission-editor", actionPermissionEditor);
+    toolbar->addActionToPool("device-manager", actionDeviceManager);
+    toolbar->addActionToPool("android-explorer", actionAndroidExplorer);
+    toolbar->addActionToPool("screenshot", actionScreenshot);
+    toolbar->addActionToPool("key-manager", actionKeyManager);
+    toolbar->addActionToPool("settings", actionOptions);
+    toolbar->addActionToPool("donate", actionDonate);
+    toolbar->initialize(app->settings->getMainWindowToolbar());
     addToolBar(toolbar);
+    connect(toolbar, &Toolbar::updated, app->settings, &Settings::setMainWindowToolbar);
 
     // Signals / Slots:
 

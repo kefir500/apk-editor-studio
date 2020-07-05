@@ -1,9 +1,8 @@
 #include "widgets/toolbar.h"
 #include "widgets/spacer.h"
+#include "windows/toolbardialog.h"
 #include "base/application.h"
 #include "base/utils.h"
-
-QMap<QString, QAction *> Toolbar::pool;
 
 Toolbar::Toolbar(QWidget *parent) : QToolBar(parent)
 {
@@ -13,30 +12,94 @@ Toolbar::Toolbar(QWidget *parent) : QToolBar(parent)
     const int closestSize = Utils::roundToNearest(app->scale(30, 30).width(), availableSizes);
     setIconSize(QSize(closestSize, closestSize));
 
-    reinitialize();
+    actionCustomize = new QAction(app->icons.get("toolbar.png"), {}, this);
+    connect(actionCustomize, &QAction::triggered, [=]() {
+        ToolbarDialog toolbarDialog(*this, this);
+        connect(&toolbarDialog, &ToolbarDialog::actionsUpdated, this, &Toolbar::initialize);
+        connect(&toolbarDialog, &ToolbarDialog::actionsUpdated, this, &Toolbar::updated);
+        toolbarDialog.exec();
+    });
+
+    initialize({});
 }
 
-QMap<QString, QAction *> Toolbar::all()
+QString Toolbar::getIdentifier(const QAction *action)
 {
-    return pool;
+    return action->property("identifier").toString();
 }
 
-void Toolbar::addToPool(const QString &identifier, QAction *action)
+const QList<QAction *> &Toolbar::getCurrentActions() const
 {
-    pool.insert(identifier, action);
+    return currentActions;
 }
 
-void Toolbar::reinitialize()
+const QMap<QString, QAction *> &Toolbar::getAvailableActions() const
 {
-    clear();
-    QStringList entries = app->settings->getToolbar();
-    for (const QString &entry : entries) {
-        if (entry == "separator") {
-            addSeparator();
-        } else if (entry == "spacer") {
-            addWidget(new Spacer(this));
-        } else {
-            addAction(pool.value(entry, nullptr));
+    return availableActions;
+}
+
+void Toolbar::addActionToPool(const QString &identifier, QAction *action)
+{
+    availableActions.insert(identifier, action);
+    setIdentifier(action, identifier);
+}
+
+void Toolbar::initialize(const QStringList &actions)
+{
+    // Remove actions:
+
+    for (auto *action : this->actions()) {
+        const auto identifier = getIdentifier(action);
+        if (identifier == "separator" || identifier == "spacer") {
+            delete action;
         }
     }
+    clear();
+    currentActions.clear();
+
+    // Add actions:
+
+    for (const QString &identifier : actions) {
+        if (identifier == "separator") {
+            currentActions.append(addSeparator());
+        } else if (identifier == "spacer") {
+            currentActions.append(addSpacer());
+        } else {
+            auto action = availableActions.value(identifier);
+            addAction(action);
+            currentActions.append(action);
+        }
+    }
+    if (!actions.contains("spacer")) {
+        addSpacer();
+    }
+    addSeparator();
+    addAction(actionCustomize);
+}
+
+void Toolbar::setIdentifier(QAction *action, const QString &identifier)
+{
+    action->setProperty("identifier", identifier);
+}
+
+QAction *Toolbar::addSeparator()
+{
+    auto separator = QToolBar::addSeparator();
+    setIdentifier(separator, "separator");
+    return separator;
+}
+
+QAction *Toolbar::addSpacer()
+{
+    auto spacer = addWidget(new Spacer(this));
+    setIdentifier(spacer, "spacer");
+    return spacer;
+}
+
+void Toolbar::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        actionCustomize->setText(tr("Customize Toolbar..."));
+    }
+    QToolBar::changeEvent(event);
 }

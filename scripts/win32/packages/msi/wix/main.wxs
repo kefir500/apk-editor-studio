@@ -94,6 +94,7 @@
                   <File Name="screenshot.png" Id="IconScreenshot16" />
                   <File Name="settings.png" Id="IconSettings16" />
                   <File Name="title.png" Id="IconTitle16" />
+                  <File Name="toolbar.png" Id="IconToolbar16" />
                   <File Name="update.png" Id="IconUpdate16" />
                   <File Name="upload.png" Id="IconUpload16" />
                   <File Name="website.png" Id="IconWebsite16" />
@@ -153,6 +154,7 @@
                   <File Name="settings.png" Id="IconSettings30" />
                   <File Name="spacer.png" Id="IconSpacer30" />
                   <File Name="title.png" Id="IconTitle30" />
+                  <File Name="toolbar.png" Id="IconToolbar30" />
                   <File Name="update.png" Id="IconUpdate30" />
                   <File Name="upload.png" Id="IconUpload30" />
                   <File Name="website.png" Id="IconWebsite30" />
@@ -202,6 +204,7 @@
                   <File Name="screenshot.png" Id="IconScreenshot40" />
                   <File Name="settings.png" Id="IconSettings40" />
                   <File Name="title.png" Id="IconTitle40" />
+                  <File Name="toolbar.png" Id="IconToolbar40" />
                   <File Name="update.png" Id="IconUpdate40" />
                   <File Name="upload.png" Id="IconUpload40" />
                   <File Name="website.png" Id="IconWebsite40" />

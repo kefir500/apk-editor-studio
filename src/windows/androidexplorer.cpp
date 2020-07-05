@@ -1,6 +1,7 @@
 #include "windows/androidexplorer.h"
 #include "windows/dialogs.h"
 #include "widgets/loadingwidget.h"
+#include "widgets/toolbar.h"
 #include "tools/adb.h"
 #include "base/application.h"
 #include <QBoxLayout>
@@ -10,7 +11,6 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QShortcut>
-#include <QToolBar>
 #include <QToolButton>
 
 #ifdef QT_DEBUG
@@ -22,13 +22,10 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     , serial(serial)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(440, 400));
-
-    auto toolbar = new QToolBar(this);
+    resize(app->scale(500, 400));
 
     actionDownload = new QAction(app->icons.get("download.png"), {}, this);
     actionDownload->setShortcut(QKeySequence::Save);
-    toolbar->addAction(actionDownload);
     connect(actionDownload, &QAction::triggered, [=]() {
         const auto index = fileList->currentIndex();
         if (index.isValid()) {
@@ -39,7 +36,6 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
 
     actionUpload = new QAction(app->icons.get("upload.png"), {}, this);
     actionUpload->setShortcut(QKeySequence("Ctrl+U"));
-    toolbar->addAction(actionUpload);
     connect(actionUpload, &QAction::triggered, [=]() {
         QString path = fileSystemModel.getCurrentPath();
         const auto index = fileList->currentIndex();
@@ -51,11 +47,8 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
         upload(path);
     });
 
-    toolbar->addSeparator();
-
     actionCopy = new QAction(app->icons.get("copy.png"), {}, this);
     actionCopy->setShortcut(QKeySequence::Copy);
-    toolbar->addAction(actionCopy);
     connect(actionCopy, &QAction::triggered, [=]() {
         const auto index = fileList->currentIndex();
         setClipboard(index, false);
@@ -63,7 +56,6 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
 
     actionCut = new QAction(app->icons.get("cut.png"), {}, this);
     actionCut->setShortcut(QKeySequence::Cut);
-    toolbar->addAction(actionCut);
     connect(actionCut, &QAction::triggered, [=]() {
         const auto index = fileList->currentIndex();
         setClipboard(index, true);
@@ -72,7 +64,6 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     actionPaste = new QAction(app->icons.get("paste.png"), {}, this);
     actionPaste->setEnabled(false);
     actionPaste->setShortcut(QKeySequence::Paste);
-    toolbar->addAction(actionPaste);
     connect(actionPaste, &QAction::triggered, [=]() {
         const QString src = clipboard.data;
         QString dst = fileSystemModel.getCurrentPath();
@@ -92,7 +83,6 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
 
     actionRename = new QAction(app->icons.get("rename.png"), {}, this);
     actionRename->setShortcut(QKeySequence("F2"));
-    toolbar->addAction(actionRename);
     connect(actionRename, &QAction::triggered, [=]() {
         const auto index = fileList->currentIndex();
         if (index.isValid()) {
@@ -102,10 +92,25 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
 
     actionDelete = new QAction(app->icons.get("x-red.png"), {}, this);
     actionDelete->setShortcut(QKeySequence::Delete);
-    toolbar->addAction(actionDelete);
     connect(actionDelete, &QAction::triggered, [=]() {
         remove(fileList->currentIndex());
     });
+
+    auto actionInstall = app->actions.getInstallApk(serial, this);
+    auto actionScreenshot = app->actions.getTakeScreenshot(serial, this);
+
+    auto toolbar = new Toolbar(this);
+    toolbar->addActionToPool("download", actionDownload);
+    toolbar->addActionToPool("upload", actionUpload);
+    toolbar->addActionToPool("copy", actionCopy);
+    toolbar->addActionToPool("cut", actionCut);
+    toolbar->addActionToPool("paste", actionPaste);
+    toolbar->addActionToPool("rename", actionRename);
+    toolbar->addActionToPool("delete", actionDelete);
+    toolbar->addActionToPool("install", actionInstall);
+    toolbar->addActionToPool("screenshot", actionScreenshot);
+    toolbar->initialize(app->settings->getAndroidExplorerToolbar());
+    connect(toolbar, &Toolbar::updated, app->settings, &Settings::setAndroidExplorerToolbar);
 
     auto fileSelectionActions = new QActionGroup(this);
     fileSelectionActions->setEnabled(false);
@@ -115,11 +120,6 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     fileSelectionActions->addAction(actionCut);
     fileSelectionActions->addAction(actionRename);
     fileSelectionActions->addAction(actionDelete);
-
-    toolbar->addSeparator();
-    toolbar->addAction(app->actions.getInstallApk(serial, this));
-    toolbar->addSeparator();
-    toolbar->addAction(app->actions.getTakeScreenshot(serial, this));
 
     pathUpButton = new QToolButton(this);
     pathUpButton->setToolTip(pathUpButton->text());

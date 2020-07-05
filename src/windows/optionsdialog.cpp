@@ -112,41 +112,6 @@ void OptionsDialog::load()
 
     fileboxAdb->setCurrentPath(app->settings->getAdbPath());
 
-    // Toolbar
-
-    listToolbarUsed->clear();
-    QMap<QString, QAction *> unusedToolbarActions = Toolbar::all();
-    QStringList usedToolbarActions = app->settings->getToolbar();
-    for (const QString &identifier : usedToolbarActions) {
-        if (identifier == "separator") {
-            listToolbarUsed->addItem(createToolbarSeparatorItem());
-        } else if (identifier == "spacer") {
-            listToolbarUsed->addItem(createToolbarSpacerItem());
-        } else {
-            const QAction *action = unusedToolbarActions.value(identifier);
-            unusedToolbarActions.remove(identifier);
-            if (action) {
-                QListWidgetItem *item = new QListWidgetItem(action->icon(), action->text().remove('&'));
-                item->setData(PoolListWidget::IdentifierRole, identifier);
-                item->setData(PoolListWidget::ReusableRole, false);
-                listToolbarUsed->addItem(item);
-            }
-        }
-    }
-
-    listToolbarUnused->clear();
-    QMapIterator<QString, QAction *> it(unusedToolbarActions);
-    while (it.hasNext()) {
-        it.next();
-        const QString identifier = it.key();
-        const QAction *action = it.value();
-        QListWidgetItem *item = new QListWidgetItem(action->icon(), action->text().remove('&'));
-        item->setData(PoolListWidget::IdentifierRole, identifier);
-        listToolbarUnused->addItem(item, false);
-    }
-    listToolbarUnused->addItem(createToolbarSeparatorItem());
-    listToolbarUnused->addItem(createToolbarSpacerItem());
-
     emit loaded();
 }
 
@@ -197,15 +162,6 @@ void OptionsDialog::save()
     // Installing
 
     app->settings->setAdbPath(fileboxAdb->getCurrentPath());
-
-    // Toolbar
-
-    QStringList toolbar;
-    for (int i = 0; i < listToolbarUsed->count(); ++i) {
-        const QString identifier = listToolbarUsed->item(i)->data(PoolListWidget::IdentifierRole).toString();
-        toolbar.append(identifier);
-    }
-    app->settings->setToolbar(toolbar);
 
     emit saved();
 }
@@ -382,34 +338,6 @@ void OptionsDialog::initialize()
     pageInstall->addRow(btnDeviceManager);
     pageInstall->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
-    // Toolbar
-
-    QHBoxLayout *pageToolbar = new QHBoxLayout;
-    listToolbarUsed = new QListWidget(this);
-    listToolbarUsed->setIconSize(app->scale(20, 20));
-    listToolbarUsed->setDragDropMode(QAbstractItemView::DragDrop);
-    listToolbarUsed->setDefaultDropAction(Qt::MoveAction);
-    listToolbarUnused = new PoolListWidget(this);
-    listToolbarUnused->setIconSize(app->scale(20, 20));
-    connect(listToolbarUsed, &QListWidget::doubleClicked, [=](const QModelIndex &index) {
-        QListWidgetItem *item = listToolbarUsed->takeItem(index.row());
-        const bool reusable = item->data(PoolListWidget::ReusableRole).toBool();
-        if (!reusable) {
-            listToolbarUnused->addItem(item);
-        }
-    });
-    connect(listToolbarUnused, &QListWidget::doubleClicked, [=](const QModelIndex &index) {
-        QListWidgetItem *item = listToolbarUnused->item(index.row());
-        const bool reusable = item->data(PoolListWidget::ReusableRole).toBool();
-        listToolbarUsed->addItem(new QListWidgetItem(*item));
-        if (!reusable) {
-            delete item;
-        }
-    });
-
-    pageToolbar->addWidget(listToolbarUsed);
-    pageToolbar->addWidget(listToolbarUnused);
-
     // Initialize
 
     pageStack = new QStackedWidget(this);
@@ -421,7 +349,6 @@ void OptionsDialog::initialize()
     addPage(tr("Signing APK"), pageSign);
     addPage(tr("Optimizing APK"), pageZipalign);
     addPage(tr("Installing APK"), pageInstall);
-    addPage(tr("Toolbar"), pageToolbar, false);
     pageList->setCurrentRow(0);
     pageList->setMaximumWidth(pageList->sizeHintForColumn(0) + 60);
 
@@ -440,24 +367,4 @@ void OptionsDialog::initialize()
     connect(buttons, &QDialogButtonBox::rejected, this, &OptionsDialog::reject);
     connect(btnApply, &QPushButton::clicked, this, &OptionsDialog::save);
     connect(this, &OptionsDialog::accepted, this, &OptionsDialog::save);
-}
-
-QListWidgetItem *OptionsDialog::createToolbarSeparatorItem() const
-{
-    QIcon icon = app->icons.get("separator.png");
-    //: Separator is a toolbar element which divides buttons with a vertical line.
-    QListWidgetItem *separator = new QListWidgetItem(icon, tr("Separator"));
-    separator->setData(PoolListWidget::IdentifierRole, "separator");
-    separator->setData(PoolListWidget::ReusableRole, true);
-    return separator;
-}
-
-QListWidgetItem *OptionsDialog::createToolbarSpacerItem() const
-{
-    QIcon icon = app->icons.get("spacer.png");
-    //: Spacer is a toolbar element which divides buttons with an empty space.
-    QListWidgetItem *spacer = new QListWidgetItem(icon, tr("Spacer"));
-    spacer->setData(PoolListWidget::IdentifierRole, "spacer");
-    spacer->setData(PoolListWidget::ReusableRole, true);
-    return spacer;
 }

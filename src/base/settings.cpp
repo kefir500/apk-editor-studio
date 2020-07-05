@@ -30,7 +30,6 @@ void Settings::reset()
     passwordKeystore.remove();
     passwordKey.remove();
     emit resetDone();
-    emit toolbarUpdated();
 }
 
 // Getters:
@@ -163,7 +162,7 @@ QString Settings::getLanguage() const
     return settings->value("Preferences/Language", "en").toString();
 }
 
-QStringList Settings::getToolbar() const
+QStringList Settings::getMainWindowToolbar() const
 {
     QStringList defaults;
     defaults << "open-project" << "save-project" << "install-project" << "separator"
@@ -183,6 +182,16 @@ QByteArray Settings::getMainWindowGeometry() const
 QByteArray Settings::getMainWindowState() const
 {
     return settings->value("MainWindow/State").toByteArray();
+}
+
+QStringList Settings::getAndroidExplorerToolbar() const
+{
+    QStringList defaults;
+    defaults << "download" << "upload" << "separator"
+             << "copy" << "cut" << "paste" << "rename" << "delete" << "separator"
+             << "install" << "separator"
+             << "screenshot";
+    return settings->value("AndroidExplorer/Toolbar", defaults).toStringList();
 }
 
 bool Settings::hasRememberState(const QString &identifier) const
@@ -356,10 +365,9 @@ void Settings::setLanguage(const QString &locale)
     settings->setValue("Preferences/Language", locale);
 }
 
-void Settings::setToolbar(const QStringList &actions)
+void Settings::setMainWindowToolbar(const QStringList &actions)
 {
     settings->setValue("MainWindow/Toolbar", actions);
-    emit toolbarUpdated();
 }
 
 void Settings::setMainWindowGeometry(const QByteArray &geometry)
@@ -370,6 +378,11 @@ void Settings::setMainWindowGeometry(const QByteArray &geometry)
 void Settings::setMainWindowState(const QByteArray &state)
 {
     settings->setValue("MainWindow/State", state);
+}
+
+void Settings::setAndroidExplorerToolbar(const QStringList &actions)
+{
+    settings->setValue("AndroidExplorer/Toolbar", actions);
 }
 
 void Settings::setRememberState(const QString &identifier, bool state)

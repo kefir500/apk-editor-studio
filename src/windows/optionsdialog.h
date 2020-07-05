@@ -31,8 +31,6 @@ protected:
 
 private:
     void initialize();
-    QListWidgetItem *createToolbarSeparatorItem() const;
-    QListWidgetItem *createToolbarSpacerItem() const;
 
     QWidget *widget;
     QVBoxLayout *layout;
@@ -69,9 +67,6 @@ private:
     FileBox *fileboxZipalign;
 
     FileBox *fileboxAdb;
-
-    QListWidget *listToolbarUsed;
-    PoolListWidget *listToolbarUnused;
 };
 
 #endif // OPTIONSDIALOG_H

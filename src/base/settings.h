@@ -38,9 +38,10 @@ public:
     bool getAutoUpdates() const;
     int getRecentLimit() const;
     QString getLanguage() const;
-    QStringList getToolbar() const;
+    QStringList getMainWindowToolbar() const;
     QByteArray getMainWindowGeometry() const;
     QByteArray getMainWindowState() const;
+    QStringList getAndroidExplorerToolbar() const;
     bool hasRememberState(const QString &identifier) const;
     bool getRememberState(const QString &identifier) const;
 #ifdef Q_OS_WIN
@@ -76,9 +77,10 @@ public:
     void setAutoUpdates(bool value);
     void setRecentLimit(int limit);
     void setLanguage(const QString &locale);
-    void setToolbar(const QStringList &actions);
+    void setMainWindowToolbar(const QStringList &actions);
     void setMainWindowGeometry(const QByteArray &geometry);
     void setMainWindowState(const QByteArray &state);
+    void setAndroidExplorerToolbar(const QStringList &actions);
     void setRememberState(const QString &identifier, bool state);
     void resetRememberState(const QString &identifier);
 #ifdef Q_OS_WIN
@@ -90,7 +92,6 @@ public:
 #endif
 
 signals:
-    void toolbarUpdated() const;
     void resetDone() const;
 
 private:
