@@ -13,7 +13,8 @@ void FileSystemModel::setSourceModel(ResourceItemsModel *model)
     }
     sourceModel = model;
     if (model) {
-        connect(model, &ResourceItemsModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles) {
+        connect(model, &ResourceItemsModel::dataChanged, this,
+                [=](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles) {
             const auto fromIndex = index(ResourceModelIndex(topLeft).path());
             const auto toIndex = index(ResourceModelIndex(bottomRight).path());
             updated(fromIndex.sibling(fromIndex.row(), 0),
@@ -84,7 +85,7 @@ bool FileSystemModel::removeRows(int row, int count, const QModelIndex &parent)
 void FileSystemModel::updated(const QModelIndex &from, const QModelIndex &to, const QVector<int> &roles)
 {
     auto timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, [=]() {
+    connect(timer, &QTimer::timeout, this, [=]() {
         emit dataChanged(from, to, roles);
         timer->deleteLater();
     });

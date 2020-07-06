@@ -6,10 +6,10 @@ LogView::LogView(QWidget *parent) : QListView(parent)
 {
     delegate = new LogDelegate(this);
     setItemDelegate(delegate);
-    connect(delegate, &LogDelegate::updated, [this]() {
+    connect(delegate, &LogDelegate::updated, this, [this]() {
         viewport()->update();
     });
-    connect(this, &LogView::clicked, [this](const QModelIndex &index) {
+    connect(this, &LogView::clicked, this, [this](const QModelIndex &index) {
         clearSelection();
         const QString message = index.sibling(index.row(), LogModel::DescriptiveColumn).data().toString();
         if (!message.isEmpty()) {
@@ -36,7 +36,7 @@ void LogView::setModel(QAbstractItemModel *model)
         LogModel *logModel = qobject_cast<LogModel *>(model);
         Q_ASSERT(logModel);
         delegate->setLoading(logModel->getLoadingState());
-        connect(logModel, &LogModel::added, [=](LogEntry *entry) {
+        connect(logModel, &LogModel::added, this, [this](LogEntry *entry) {
             if (entry->getType() != LogEntry::Information) {
                 activateWindow();
             }

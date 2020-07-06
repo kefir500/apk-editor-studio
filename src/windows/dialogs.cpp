@@ -154,7 +154,7 @@ int Dialogs::log(const QString &title, const QString &text, QWidget *parent)
     QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok, &dialog);
     QPushButton *btnCopy = new QPushButton(app->translate("Dialogs", "Copy to Clipboard"), buttons);
     buttons->addButton(btnCopy, QDialogButtonBox::ActionRole);
-    app->connect(btnCopy, &QPushButton::clicked, [=]() {
+    app->connect(btnCopy, &QPushButton::clicked, parent, [=]() {
         textBox->selectAll();
         textBox->copy();
     });

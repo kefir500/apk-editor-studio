@@ -57,11 +57,11 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     layout->addLayout(devicesLayout);
     layout->addWidget(dialogButtons);
 
-    connect(deviceList->selectionModel(), &QItemSelectionModel::currentChanged, [=](const QModelIndex &index) {
+    connect(deviceList->selectionModel(), &QItemSelectionModel::currentChanged, this, [this](const QModelIndex &index) {
         const auto device = deviceModel.get(index);
         setCurrentDevice(device.data());
     });
-    connect(fieldAlias, &QLineEdit::textChanged, [=](const QString &alias) {
+    connect(fieldAlias, &QLineEdit::textChanged, this, [this](const QString &alias) {
         QModelIndex index = deviceModel.index(deviceList->currentIndex().row(), DeviceItemsModel::AliasColumn);
         deviceModel.setData(index, alias);
     });
@@ -100,7 +100,7 @@ QSharedPointer<Device> DeviceManager::selectDevice(const QString &title, const Q
         btnSelect->setIcon(icon);
     }
 
-    connect(&dialog, &DeviceManager::currentChanged, [=](const Device *device) {
+    connect(&dialog, &DeviceManager::currentChanged, btnSelect, [btnSelect](const Device *device) {
         btnSelect->setEnabled(device);
     });
 

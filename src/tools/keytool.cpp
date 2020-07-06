@@ -7,7 +7,7 @@ void Keytool::Genkey::run()
 {
     emit started();
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool ok, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool ok, const QString &output) {
         if (ok) {
             emit success();
         } else {
@@ -53,7 +53,7 @@ void Keytool::Aliases::run()
     regex.setPatternOptions(QRegularExpression::MultilineOption);
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool ok, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool ok, const QString &output) {
         if (ok) {
             QStringList aliases;
             QRegularExpressionMatchIterator it = regex.globalMatch(output);

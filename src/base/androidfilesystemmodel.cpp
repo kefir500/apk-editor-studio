@@ -113,7 +113,7 @@ void AndroidFileSystemModel::cd(const QString &path)
     }
     directory = QDir::cleanPath(Utils::normalizePath(directory));
     auto shell = new Adb::Cd(path, serial, this);
-    connect(shell, &Adb::Cd::finished, [=](bool success) {
+    connect(shell, &Adb::Cd::finished, this, [=](bool success) {
         if (success) {
             currentPath = directory;
             emit pathChanged(directory);
@@ -130,7 +130,7 @@ void AndroidFileSystemModel::cd(const QString &path)
 void AndroidFileSystemModel::copy(const QString &src, const QString &dst)
 {
     auto adb = new Adb::Cp(src, dst + '/', serial, this);
-    connect(adb, &Adb::Cp::finished, [=](bool success) {
+    connect(adb, &Adb::Cp::finished, this, [=](bool success) {
         if (success) {
             if (dst == currentPath) {
                 ls();
@@ -146,7 +146,7 @@ void AndroidFileSystemModel::copy(const QString &src, const QString &dst)
 void AndroidFileSystemModel::move(const QString &src, const QString &dst)
 {
     auto adb = new Adb::Mv(src, dst + '/', serial, this);
-    connect(adb, &Adb::Mv::finished, [=](bool success) {
+    connect(adb, &Adb::Mv::finished, this, [=](bool success) {
         if (success) {
             if (dst == currentPath) {
                 ls();
@@ -162,7 +162,7 @@ void AndroidFileSystemModel::move(const QString &src, const QString &dst)
 void AndroidFileSystemModel::rename(const QString &src, const QString &dst)
 {
     auto adb = new Adb::Mv(src, dst, serial, this);
-    connect(adb, &Adb::Mv::finished, [=](bool success) {
+    connect(adb, &Adb::Mv::finished, this, [=](bool success) {
         if (success) {
             ls();
         } else {
@@ -176,7 +176,7 @@ void AndroidFileSystemModel::rename(const QString &src, const QString &dst)
 void AndroidFileSystemModel::remove(const QString &path)
 {
     auto adb = new Adb::Rm(path, serial, this);
-    connect(adb, &Adb::Rm::finished, [=](bool success) {
+    connect(adb, &Adb::Rm::finished, this, [=](bool success) {
         if (success) {
             ls();
         } else {
@@ -190,7 +190,7 @@ void AndroidFileSystemModel::remove(const QString &path)
 void AndroidFileSystemModel::download(const QString &src, const QString &dst)
 {
     auto adb = new Adb::Pull(src, dst, serial, this);
-    connect(adb, &Adb::Pull::finished, [=](bool success) {
+    connect(adb, &Adb::Pull::finished, this, [=](bool success) {
         if (!success) {
             emit error(tr("Could not download the file or directory."));
         }
@@ -202,7 +202,7 @@ void AndroidFileSystemModel::download(const QString &src, const QString &dst)
 void AndroidFileSystemModel::upload(const QString &src, const QString &dst)
 {
     auto adb = new Adb::Push(src, dst, serial, this);
-    connect(adb, &Adb::Push::finished, [=](bool success) {
+    connect(adb, &Adb::Push::finished, this, [=](bool success) {
         if (success) {
             if (dst == currentPath) {
                 ls();
@@ -219,7 +219,7 @@ void AndroidFileSystemModel::ls()
 {
     beginResetModel();
     auto shell = new Adb::Ls(currentPath, serial, this);
-    connect(shell, &Adb::Ls::finished, [=](bool success) {
+    connect(shell, &Adb::Ls::finished, this, [=](bool success) {
         Q_UNUSED(success)
         fileSystemItems.clear();
         fileSystemItems.append(shell->getFileSystemItems());

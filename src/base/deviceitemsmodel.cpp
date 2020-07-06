@@ -14,7 +14,7 @@ void DeviceItemsModel::refresh()
 {
     emit fetching();
     auto adb = new Adb::Devices(this);
-    connect(adb, &Adb::Devices::finished, [=](bool success) {
+    connect(adb, &Adb::Devices::finished, this, [=](bool success) {
         beginResetModel();
         devices.clear();
         if (success) {

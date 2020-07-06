@@ -220,7 +220,7 @@ void OptionsDialog::initialize()
     checkboxExplorerOptimize->setIcon(app->icons.get("optimize.png"));
     checkboxExplorerSign = new QCheckBox(strExplorerIntegration.arg(tr("Sign")), this);
     checkboxExplorerSign->setIcon(app->icons.get("key.png"));
-    connect(groupAssociate, &QGroupBox::clicked, [=](bool checked) {
+    connect(groupAssociate, &QGroupBox::clicked, this, [this](bool checked) {
         checkboxExplorerOpen->setChecked(checked);
         checkboxExplorerInstall->setChecked(checked);
         checkboxExplorerOptimize->setChecked(checked);
@@ -295,7 +295,7 @@ void OptionsDialog::initialize()
     QPushButton *btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
     btnKeyManager->setIcon(app->icons.get("key.png"));
     btnKeyManager->setMinimumHeight(app->scale(30));
-    connect(btnKeyManager, &QPushButton::clicked, [=]() {
+    connect(btnKeyManager, &QPushButton::clicked, this, [this]() {
         KeyManager keyManager(this);
         keyManager.exec();
     });
@@ -329,7 +329,7 @@ void OptionsDialog::initialize()
     QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
     btnDeviceManager->setIcon(app->icons.get("devices.png"));
     btnDeviceManager->setMinimumHeight(app->scale(30));
-    connect(btnDeviceManager, &QPushButton::clicked, [=]() {
+    connect(btnDeviceManager, &QPushButton::clicked, this, [this]() {
         DeviceManager deviceManager(this);
         deviceManager.exec();
     });

@@ -16,7 +16,7 @@ void Zipalign::Align::run()
     arguments << tempApk;
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         if (success) {
             QFile::remove(apk);
             QFile::rename(tempApk, apk);

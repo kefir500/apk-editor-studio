@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     initMenus();
     initWidgets();
 
-    connect(app->settings, &Settings::resetDone, [=]() {
+    connect(app->settings, &Settings::resetDone, this, [this]() {
         restoreGeometry(QByteArray());
         setInitialSize();
         restoreState(defaultState);
@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     if (app->settings->getAutoUpdates()) {
         // Delay to prevent uninitialized window render
         auto timer = new QTimer(this);
-        connect(timer, &QTimer::timeout, [=]() {
+        connect(timer, &QTimer::timeout, this, [=]() {
             Updater::check(false, this);
             timer->deleteLater();
         });
@@ -73,7 +73,7 @@ void MainWindow::initWidgets()
     setCentralWidget(centralWidget);
 
     resourceTree = new ResourceAbstractView(new ResourceTree, this);
-    connect(resourceTree, &ResourceAbstractView::editRequested, [this](const ResourceModelIndex &index) {
+    connect(resourceTree, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
         getCurrentProjectWidget()->openResourceTab(index);
     });
     auto dockResourceWidget = new QWidget(this);
@@ -82,7 +82,7 @@ void MainWindow::initWidgets()
     resourceLayout->setMargin(0);
 
     filesystemTree = new ResourceAbstractView(new FileSystemTree, this);
-    connect(filesystemTree, &ResourceAbstractView::editRequested, [this](const ResourceModelIndex &index) {
+    connect(filesystemTree, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
         getCurrentProjectWidget()->openResourceTab(index);
     });
     auto dockFilesystemWidget = new QWidget(this);
@@ -91,7 +91,7 @@ void MainWindow::initWidgets()
     filesystemLayout->setMargin(0);
 
     iconList = new ResourceAbstractView(new IconList, this);
-    connect(iconList, &ResourceAbstractView::editRequested, [this](const ResourceModelIndex &index) {
+    connect(iconList, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
         getCurrentProjectWidget()->openResourceTab(index);
     });
     auto dockIconsWidget = new QWidget(this);
@@ -101,7 +101,7 @@ void MainWindow::initWidgets()
     iconsLayout->setSpacing(1);
 
     manifestTable = new ManifestView(this);
-    connect(manifestTable, &ManifestView::titleEditorRequested, [this]() {
+    connect(manifestTable, &ManifestView::titleEditorRequested, this, [this]() {
         getCurrentProjectWidget()->openTitlesTab();
     });
     auto dockManifestWidget = new QWidget(this);
@@ -111,7 +111,7 @@ void MainWindow::initWidgets()
 
     logView = new LogView(this);
     projectList = new ProjectList(this);
-    connect(projectList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this]() {
+    connect(projectList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this]() {
         onProjectSwitched(getCurrentProject());
     });
     welcomeItemProxy = new ExtraListItemProxy(this);
@@ -282,38 +282,38 @@ void MainWindow::initMenus()
 
     // Signals / Slots:
 
-    connect(actionApkSave, &QAction::triggered, [this]() {
+    connect(actionApkSave, &QAction::triggered, this, [this]() {
         getCurrentProjectWidget()->saveProject();
     });
-    connect(actionApkInstall, &QAction::triggered, [this]() {
+    connect(actionApkInstall, &QAction::triggered, this, [this]() {
         getCurrentProjectWidget()->installProject();
     });
-    connect(actionApkExplore, &QAction::triggered, [this]() {
+    connect(actionApkExplore, &QAction::triggered, this, [this]() {
         getCurrentProjectWidget()->exploreProject();
     });
-    connect(actionApkClose, &QAction::triggered, [this]() {
+    connect(actionApkClose, &QAction::triggered, this, [this]() {
         getCurrentProjectWidget()->closeProject();
     });
-    connect(actionTitleEditor, &QAction::triggered, [this]() {
+    connect(actionTitleEditor, &QAction::triggered, this, [this]() {
         getCurrentProjectWidget()->openTitlesTab();
     });
-    connect(actionProjectManager, &QAction::triggered, [this]() {
+    connect(actionProjectManager, &QAction::triggered, this, [this]() {
         getCurrentProjectWidget()->openProjectTab();
     });
-    connect(actionPermissionEditor, &QAction::triggered, [this]() {
+    connect(actionPermissionEditor, &QAction::triggered, this, [this]() {
         getCurrentProjectWidget()->openPermissionEditor();
     });
-    connect(actionFileSave, &QAction::triggered, [this]() {
+    connect(actionFileSave, &QAction::triggered, this, [this]() {
         qobject_cast<Editor *>(getCurrentTab())->save();
     });
-    connect(actionFileSaveAs, &QAction::triggered, [this]() {
+    connect(actionFileSaveAs, &QAction::triggered, this, [this]() {
         qobject_cast<FileEditor *>(getCurrentTab())->saveAs();
     });
-    connect(actionAboutQt, &QAction::triggered, app, &Application::aboutQt);
-    connect(actionAbout, &QAction::triggered, [=]() {
+    connect(actionAbout, &QAction::triggered, this, [this]() {
         AboutDialog about(this);
         about.exec();
     });
+    connect(actionAboutQt, &QAction::triggered, app, &Application::aboutQt);
 }
 
 void MainWindow::retranslate()
@@ -408,12 +408,12 @@ void MainWindow::onProjectAdded(const QModelIndex &, int first, int last)
         const auto project = app->projects.at(i);
         auto projectWidget = new ProjectWidget(project, this);
         projectWidgets.insert(project, projectWidget);
-        connect(project, &Project::stateUpdated, [=]() {
+        connect(project, &Project::stateUpdated, this, [=]() {
             if (project == getCurrentProject()) {
                 updateWindowForProject(project);
             }
         });
-        connect(projectWidget, &ProjectWidget::currentTabChanged, [=](Viewer *tab) {
+        connect(projectWidget, &ProjectWidget::currentTabChanged, this, [=](Viewer *tab) {
             if (project == getCurrentProject()) {
                 updateWindowForTab(tab);
             }

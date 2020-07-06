@@ -8,7 +8,7 @@ Editor::Editor(QWidget *parent) : Viewer(parent)
 
     actionSave = new QAction(app->icons.get("save.png"), QString(), this);
     actionSave->setShortcut(QKeySequence::Save);
-    connect(actionSave, &QAction::triggered, [this]() {
+    connect(actionSave, &QAction::triggered, this, [this]() {
         save();
     });
     addAction(actionSave);

@@ -25,7 +25,7 @@ Project *ProjectItemsModel::add(const QString &path, QWidget *parent)
         projects.append(project);
     endInsertRows();
 
-    connect(project, &Project::stateUpdated, [=]() {
+    connect(project, &Project::stateUpdated, this, [=]() {
         const int row = projects.indexOf(project);
         emit dataChanged(index(row, 0), index(row, ColumnCount - 1));
     });

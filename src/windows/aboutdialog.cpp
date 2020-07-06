@@ -210,7 +210,7 @@ QWidget *AboutDialog::createLibrariesTab()
     // Set JRE version:
 
     auto jre = new Java::Version(this);
-    connect(jre, &Java::Version::finished, [=](bool success) {
+    connect(jre, &Java::Version::finished, this, [=](bool success) {
         labelJre->setText(success ? jre->version() : mdash);
         jre->deleteLater();
     });
@@ -219,7 +219,7 @@ QWidget *AboutDialog::createLibrariesTab()
     // Set JDK version:
 
     auto jdk = new Javac::Version(this);
-    connect(jdk, &Javac::Version::finished, [=](bool success) {
+    connect(jdk, &Javac::Version::finished, this, [=](bool success) {
         labelJdk->setText(success ? jdk->version() : mdash);
         jdk->deleteLater();
     });
@@ -228,7 +228,7 @@ QWidget *AboutDialog::createLibrariesTab()
     // Set Apktool version:
 
     auto apktool = new Apktool::Version(this);
-    connect(apktool, &Apktool::Version::finished, [=](bool success) {
+    connect(apktool, &Apktool::Version::finished, this, [=](bool success) {
         labelApktool->setText(success ? apktool->version() : mdash);
         apktool->deleteLater();
     });
@@ -237,7 +237,7 @@ QWidget *AboutDialog::createLibrariesTab()
     // Set Apksigner version:
 
     auto apksigner = new Apksigner::Version(this);
-    connect(apksigner, &Apksigner::Version::finished, [=](bool success) {
+    connect(apksigner, &Apksigner::Version::finished, this, [=](bool success) {
         labelApksigner->setText(success ? apksigner->version() : mdash);
         apksigner->deleteLater();
     });
@@ -246,7 +246,7 @@ QWidget *AboutDialog::createLibrariesTab()
     // Set ADB version:
 
     auto adb = new Adb::Version(this);
-    connect(adb, &Adb::Version::finished, [=](bool success) {
+    connect(adb, &Adb::Version::finished, this, [=](bool success) {
         labelAdb->setText(success ? adb->version() : mdash);
         adb->deleteLater();
     });

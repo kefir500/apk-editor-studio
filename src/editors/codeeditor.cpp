@@ -133,15 +133,15 @@ CodeContainer::CodeContainer(CodeTextEdit *editor) : QWidget(editor)
 {
     m_width = 0;
     m_padding = 20;
-    connect(editor, &CodeTextEdit::blockCountChanged, [=](int blocks) {
+    connect(editor, &CodeTextEdit::blockCountChanged, this, [=](int blocks) {
         m_width = editor->fontMetrics().boundingRect(QString::number(blocks)).width() + m_padding;
         editor->setViewportMargins(m_width, 0, 0, 0);
     });
-    connect(editor, &CodeTextEdit::resized, [=]() {
+    connect(editor, &CodeTextEdit::resized, this, [=]() {
         const QRect contents = editor->contentsRect();
         setGeometry(QRect(contents.left(), contents.top(), m_width, contents.height()));
     });
-    connect(editor, &CodeTextEdit::cursorPositionChanged, [=]() {
+    connect(editor, &CodeTextEdit::cursorPositionChanged, this, [=]() {
         QTextEdit::ExtraSelection selection;
         QColor highlight = QPalette().color(QPalette::Highlight);
         highlight.setAlpha(16);
@@ -152,7 +152,7 @@ CodeContainer::CodeContainer(CodeTextEdit *editor) : QWidget(editor)
         editor->setExtraSelections({selection});
         m_currentLine = editor->textCursor().block().blockNumber() + 1;
     });
-    connect(editor, &CodeTextEdit::updateRequest, [=](const QRect &rect, int dy) {
+    connect(editor, &CodeTextEdit::updateRequest, this, [=](const QRect &rect, int dy) {
         dy ? scroll(0, dy) : update(0, rect.y(), width(), rect.height());
     });
 }

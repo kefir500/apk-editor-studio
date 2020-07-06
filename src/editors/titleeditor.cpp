@@ -28,7 +28,7 @@ TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(paren
         table->resizeColumnsToContents();
         loading->hide();
     });
-    connect(model, &TitleItemsModel::dataChanged, [=]() {
+    connect(model, &TitleItemsModel::dataChanged, this, [this]() {
         setModified(true);
     });
 }

@@ -49,7 +49,7 @@ void Updater::check(bool verbose, QWidget *parent)
     http->moveToThread(thread);
     QObject::connect(http, &QObject::destroyed, thread, &QThread::quit);
     QObject::connect(thread, &QThread::finished, thread, &QThread::deleteLater);
-    QObject::connect(thread, &QThread::started, [=]() {
+    QObject::connect(thread, &QThread::started, http, [http]() {
         http->get(QNetworkRequest(app->getUpdateUrl()));
     });
     thread->start();

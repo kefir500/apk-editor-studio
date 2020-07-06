@@ -7,10 +7,6 @@
 #include <QScrollArea>
 #include <QToolButton>
 
-#ifdef QT_DEBUG
-    #include <QDebug>
-#endif
-
 PermissionEditor::PermissionEditor(Manifest *manifest, QWidget *parent) : QDialog(parent), manifest(manifest)
 {
     //: This string refers to multiple permissions (as in "Editor of permissions").
@@ -194,7 +190,7 @@ PermissionEditor::PermissionEditor(Manifest *manifest, QWidget *parent) : QDialo
     comboAdd->addItems(permissionStrings);
     btnAdd = new QPushButton(app->icons.get("add.png"), tr("Add"), this);
     btnAdd->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    connect(btnAdd, &QPushButton::clicked, [=]() {
+    connect(btnAdd, &QPushButton::clicked, this, [=]() {
         const QString newPermission = QString("android.permission.%1").arg(comboAdd->currentText());
         if (!newPermission.isEmpty()) {
             const auto permissions = manifest->getPermissionList();
@@ -245,7 +241,7 @@ void PermissionEditor::addPermissionLine(const Permission &permission)
     auto btnRemove = new QToolButton(this);
     btnRemove->setToolTip(tr("Remove"));
     btnRemove->setIcon(app->icons.get("remove.png"));
-    connect(btnRemove, &QToolButton::clicked, [=]() {
+    connect(btnRemove, &QToolButton::clicked, this, [=]() {
         //: %1 will be replaced with a programmatic Android permission name (e.g., "android.permission.SEND_SMS", "android.permission.CAMERA", etc.).
         if (YesAlwaysDialog::ask("RemovePermission", tr("Are you sure you want to remove the %1 permission?").arg(permissionName), this)) {
             delete labelTitle;

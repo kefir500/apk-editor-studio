@@ -25,7 +25,7 @@ ToolbarDialog::ToolbarDialog(const Toolbar &toolbar, QWidget *parent) : QDialog(
     usedList->setIconSize(app->scale(20, 20));
     usedList->setDragDropMode(QAbstractItemView::DragDrop);
     usedList->setDefaultDropAction(Qt::MoveAction);
-    connect(usedList, &QListWidget::doubleClicked, [=](const QModelIndex &index) {
+    connect(usedList, &QListWidget::doubleClicked, this, [=](const QModelIndex &index) {
         QListWidgetItem *item = usedList->takeItem(index.row());
         if (!unusedList->isReusable(item)) {
             unusedList->addItem(item);
@@ -34,7 +34,7 @@ ToolbarDialog::ToolbarDialog(const Toolbar &toolbar, QWidget *parent) : QDialog(
 
     auto usedLabel = new QLabel(tr("Available actions:"), this);
     unusedList->setIconSize(app->scale(20, 20));
-    connect(unusedList, &PoolListWidget::pulled, [=](QListWidgetItem *item) {
+    connect(unusedList, &PoolListWidget::pulled, this, [=](QListWidgetItem *item) {
         usedList->addItem(new QListWidgetItem(*item));
     });
 
@@ -86,7 +86,7 @@ ToolbarDialog::ToolbarDialog(const Toolbar &toolbar, QWidget *parent) : QDialog(
 
     // Dialog result:
 
-    connect(this, &QDialog::accepted, [=]() {
+    connect(this, &QDialog::accepted, this, [=]() {
         QStringList actions;
         for (int i = 0; i < usedList->count(); ++i) {
             const QString identifier = usedList->item(i)->data(Qt::UserRole).toString();

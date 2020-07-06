@@ -63,7 +63,7 @@ TitleItemsModel::TitleItemsModel(const Project *apk, QObject *parent) : QAbstrac
     });
 
     auto finishedWatcher = new QFutureWatcher<QList<TitleNode *>>(this);
-    connect(finishedWatcher, &QFutureWatcher<QList<TitleNode *>>::finished, [=]() {
+    connect(finishedWatcher, &QFutureWatcher<QList<TitleNode *>>::finished, this, [=]() {
         const auto result = finishedFuture.result();
         beginInsertRows(QModelIndex(), 0, result.count() - 1);
             nodes = finishedFuture.result();

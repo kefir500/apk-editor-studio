@@ -212,7 +212,7 @@ void ActionProvider::takeScreenshot(const QString &serial, QWidget *parent)
     const QString dst = Dialogs::getSaveImageFilename(filename, parent);
     if (!dst.isEmpty()) {
         auto screenshot = new Adb::Screenshot(dst, serial, parent);
-        app->connect(screenshot, &Adb::Screenshot::finished, [=](bool success) {
+        app->connect(screenshot, &Adb::Screenshot::finished, parent, [=](bool success) {
             if (!success) {
                 QMessageBox::warning(parent, {}, tr("Could not take a screenshot."));
             }
@@ -231,7 +231,7 @@ QAction *ActionProvider::getOpenApk(QWidget *parent)
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, [=]() {
+    connect(action, &QAction::triggered, parent, [=]() {
         openApk(parent);
     });
     return action;
@@ -245,7 +245,7 @@ QAction *ActionProvider::getOptimizeApk(QWidget *parent)
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, [=]() {
+    connect(action, &QAction::triggered, parent, [=]() {
         optimizeApk(parent);
     });
 
@@ -260,7 +260,7 @@ QAction *ActionProvider::getSignApk(QWidget *parent)
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, [=]() {
+    connect(action, &QAction::triggered, parent, [=]() {
         signApk(parent);
     });
 
@@ -282,11 +282,11 @@ QAction *ActionProvider::getInstallApk(const QString &serial, QWidget *parent)
 
     action->setShortcut(QKeySequence("Ctrl+Shift+I"));
     if (serial.isEmpty()) {
-        connect(action, &QAction::triggered, [=]() {
+        connect(action, &QAction::triggered, parent, [=]() {
             installApk(parent);
         });
     } else {
-        connect(action, &QAction::triggered, [=]() {
+        connect(action, &QAction::triggered, parent, [=]() {
             installApk(serial, parent);
         });
     }
@@ -340,7 +340,7 @@ QAction *ActionProvider::getExit(QWidget *widget)
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, [=]() {
+    connect(action, &QAction::triggered, widget, [=]() {
         exit(widget);
     });
     return action;
@@ -354,7 +354,7 @@ QAction *ActionProvider::getCheckUpdates(QWidget *parent)
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, [=]() {
+    connect(action, &QAction::triggered, parent, [=]() {
         checkUpdates(parent);
     });
 
@@ -369,7 +369,7 @@ QAction *ActionProvider::getResetSettings(QWidget *parent)
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, [=]() {
+    connect(action, &QAction::triggered, parent, [=]() {
         resetSettings(parent);
     });
 
@@ -386,7 +386,7 @@ QAction *ActionProvider::getOpenOptions(QWidget *parent)
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, [=]() {
+    connect(action, &QAction::triggered, parent, [=]() {
         openOptions(parent);
     });
 
@@ -403,7 +403,7 @@ QAction *ActionProvider::getOpenDeviceManager(QWidget *parent)
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, [=]() {
+    connect(action, &QAction::triggered, parent, [=]() {
         openDeviceManager(parent);
     });
 
@@ -420,7 +420,7 @@ QAction *ActionProvider::getOpenKeyManager(QWidget *parent)
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, [=]() {
+    connect(action, &QAction::triggered, parent, [=]() {
         openKeyManager(parent);
     });
 
@@ -442,11 +442,11 @@ QAction *ActionProvider::getOpenAndroidExplorer(const QString &serial, QWidget *
     translate();
 
     if (serial.isEmpty()) {
-        connect(action, &QAction::triggered, [=]() {
+        connect(action, &QAction::triggered, parent, [=]() {
             openAndroidExplorer(parent);
         });
     } else {
-        connect(action, &QAction::triggered, [=]() {
+        connect(action, &QAction::triggered, parent, [=]() {
             openAndroidExplorer(serial, parent);
         });
     }
@@ -468,11 +468,11 @@ QAction *ActionProvider::getTakeScreenshot(const QString &serial, QWidget *paren
     translate();
 
     if (serial.isEmpty()) {
-        connect(action, &QAction::triggered, [=]() {
+        connect(action, &QAction::triggered, parent, [=]() {
             takeScreenshot(parent);
         });
     } else {
-        connect(action, &QAction::triggered, [=]() {
+        connect(action, &QAction::triggered, parent, [=]() {
             takeScreenshot(serial, parent);
         });
     }
@@ -536,14 +536,14 @@ QMenu *ActionProvider::getRecent(QWidget *parent)
         for (const RecentFile &recentEntry : recentList) {
             QAction *action = new QAction(recentEntry.thumbnail(), recentEntry.filename(), parent);
             menuRecent->addAction(action);
-            connect(action, &QAction::triggered, [=]() {
+            connect(action, &QAction::triggered, this, [=]() {
                 openApk(recentEntry.filename(), parent);
             });
         }
         menuRecent->addSeparator();
         menuRecent->addAction(recentList.isEmpty() ? getNoRecent(parent) : getClearRecent(parent));
     };
-    connect(app->recent, &Recent::changed, initialize);
+    connect(app->recent, &Recent::changed, parent, initialize);
     initialize();
 
     return menuRecent;

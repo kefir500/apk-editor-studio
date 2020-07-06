@@ -18,7 +18,7 @@ ProjectWidget::ProjectWidget(Project *project, QWidget *parent) : QTabWidget(par
     connect(this, &QTabWidget::currentChanged, [this]() {
         emit currentTabChanged(qobject_cast<Viewer *>(currentWidget()));
     });
-    connect(this, &QTabWidget::tabCloseRequested, [this](int index) {
+    connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
         Viewer *tab = static_cast<Viewer *>(widget(index));
         closeTab(tab);
     });
@@ -211,11 +211,11 @@ int ProjectWidget::addTab(Viewer *tab)
     setCurrentIndex(tabIndex);
     auto editor = qobject_cast<Editor *>(tab);
     if (editor) {
-        connect(editor, &Editor::saved, [=]() {
+        connect(editor, &Editor::saved, this, [this]() {
             // Project save indicator:
             const_cast<ProjectState &>(project->getState()).setModified(true);
         });
-        connect(editor, &Editor::modifiedStateChanged, [=](bool modified) {
+        connect(editor, &Editor::modifiedStateChanged, this, [=](bool modified) {
             // Tab save indicator:
             const QString indicator = QString("%1 ").arg(QChar(0x2022));
             const int tabIndex = indexOf(editor);
@@ -230,10 +230,10 @@ int ProjectWidget::addTab(Viewer *tab)
             }
         });
     }
-    connect(tab, &Viewer::titleChanged, [=](const QString &title) {
+    connect(tab, &Viewer::titleChanged, this, [=](const QString &title) {
         setTabText(indexOf(tab), title);
     });
-    connect(tab, &Viewer::iconChanged, [=](const QIcon &icon) {
+    connect(tab, &Viewer::iconChanged, this, [=](const QIcon &icon) {
         setTabIcon(indexOf(tab), icon);
     });
     return tabIndex;

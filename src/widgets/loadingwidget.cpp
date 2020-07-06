@@ -8,7 +8,7 @@ LoadingWidget::LoadingWidget(int size, QWidget *parent) : QWidget(parent), spinn
     parentChanged();
 
     spinnerAngle = 0;
-    connect(&spinnerTimer, &QTimer::timeout, [=]() {
+    connect(&spinnerTimer, &QTimer::timeout, this, [this]() {
         spinnerAngle = (spinnerAngle > 0) ? spinnerAngle - 80 : 5760;
         update();
     });

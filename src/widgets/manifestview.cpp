@@ -19,7 +19,7 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
 
     ItemButtonDelegate *buttonDelegate = new ItemButtonDelegate(this);
     setItemDelegate(buttonDelegate);
-    connect(buttonDelegate, &ItemButtonDelegate::clicked, [=](int row) {
+    connect(buttonDelegate, &ItemButtonDelegate::clicked, this, [this](int row) {
         switch (row) {
         case ManifestModel::MinimumSdkRow: {
             const QString dialogTitle = model()->headerData(ManifestModel::MinimumSdkRow, Qt::Vertical).toString();

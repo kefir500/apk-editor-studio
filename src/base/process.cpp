@@ -16,7 +16,7 @@ Process::Process(QObject *parent) : QObject(parent)
     connect(&process, &QProcess::started, this, &Process::started);
 
     connect(&process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
-        [=](int exitCode, QProcess::ExitStatus exitStatus)
+            this, [=](int exitCode, QProcess::ExitStatus exitStatus)
     {
         const QString output = process.readAll().replace("\r\n", "\n").trimmed();
         if (exitStatus == QProcess::NormalExit && exitCode == 0) {
@@ -31,7 +31,7 @@ Process::Process(QObject *parent) : QObject(parent)
     });
 
     connect(&process, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error),
-        [=](QProcess::ProcessError processError)
+            this, [=](QProcess::ProcessError processError)
     {
         Q_UNUSED(processError)
         const auto error = QStringLiteral("%1: %2").arg(process.program(), process.errorString());

@@ -12,13 +12,13 @@ ResourceAbstractView::ResourceAbstractView(QAbstractItemView *view, QWidget *par
     layout->addWidget(view);
     layout->setMargin(0);
 
-    connect(view, &QAbstractItemView::activated, [=](const QModelIndex &index) {
+    connect(view, &QAbstractItemView::activated, this, [this](const QModelIndex &index) {
         if (!index.model()->hasChildren(index)) {
             emit editRequested(index);
         }
     });
 
-    connect(view, &QAbstractItemView::customContextMenuRequested, [=](const QPoint &point) {
+    connect(view, &QAbstractItemView::customContextMenuRequested, this, [=](const QPoint &point) {
         ResourceModelIndex index = view->indexAt(point);
         if (index.isValid() && !view->model()->hasChildren(index)) {
             auto menu = generateContextMenu(index);
@@ -44,24 +44,24 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(ResourceModelInd
     auto menu = new QMenu(this);
 
     QAction *actionEdit = menu->addAction(app->icons.get("edit.png"), tr("Edit Resource"));
-    connect(actionEdit, &QAction::triggered, [=]() {
+    connect(actionEdit, &QAction::triggered, this, [=]() {
         emit editRequested(resourceIndex);
     });
 
     menu->addSeparator();
 
     QAction *actionReplace = menu->addAction(app->icons.get("replace.png"), tr("Replace Resource..."));
-    connect(actionReplace, &QAction::triggered, [&]() {
+    connect(actionReplace, &QAction::triggered, this, [&]() {
         resourceIndex.replace(this);
     });
 
     QAction *actionSaveAs = menu->addAction(app->icons.get("save-as.png"), tr("Save Resource As..."));
-    connect(actionSaveAs, &QAction::triggered, [=]() {
+    connect(actionSaveAs, &QAction::triggered, this, [&]() {
         resourceIndex.save(this);
     });
 
     QAction *actionRemove = menu->addAction(app->icons.get("x-round.png"), tr("Delete Resource"));
-    connect(actionRemove, &QAction::triggered, [&]() {
+    connect(actionRemove, &QAction::triggered, this, [&]() {
         if (!resourceIndex.remove()) {
             QMessageBox::warning(this, QString(), tr("Could not remove the resource."));
         }

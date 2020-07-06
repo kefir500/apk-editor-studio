@@ -109,16 +109,17 @@ Command *Project::createUnpackCommand()
     });
     connect(command, &Command::finished, this, [=](bool success) {
         if (success) {
-            connect(&resourcesModel, &ResourceItemsModel::dataChanged, [=]() {
+            connect(&resourcesModel, &ResourceItemsModel::dataChanged, this, [=]() {
                 state.setModified(true);
             });
-            connect(&filesystemModel, &QFileSystemModel::dataChanged, [=]() {
+            connect(&filesystemModel, &QFileSystemModel::dataChanged, this, [=]() {
                 state.setModified(true);
             });
-            connect(&iconsProxy, &IconItemsModel::dataChanged, [=]() {
+            connect(&iconsProxy, &IconItemsModel::dataChanged, this, [=]() {
                 state.setModified(true);
             });
-            connect(&manifestModel, &ManifestModel::dataChanged, [=](const QModelIndex &, const QModelIndex &, const QVector<int> &roles) {
+            connect(&manifestModel, &ManifestModel::dataChanged, this,
+                    [=](const QModelIndex &, const QModelIndex &, const QVector<int> &roles) {
                 if (!(roles.count() == 1 && roles.contains(Qt::UserRole))) {
                     state.setModified(true);
                 }
@@ -182,7 +183,7 @@ Command *Project::createSignCommand(const Keystore *keystore, const QString &apk
         state.setCurrentStatus(ProjectState::Status::Signing);
     });
 
-    connect(apksigner, &Command::finished, [=](bool success) {
+    connect(apksigner, &Command::finished, this, [=](bool success) {
         if (!success) {
             journal(tr("Error signing APK."), apksigner->output(), LogEntry::Error);
         }
@@ -211,11 +212,11 @@ Command *Project::createInstallCommand(const QString &serial, const QString &apk
 
 Project::ProjectCommand::ProjectCommand(Project *project)
 {
-    connect(this, &Command::started, [=]() {
+    connect(this, &Command::started, project, [project]() {
         project->logModel.clear();
         project->logModel.setLoadingState(true);
     });
-    connect(this, &Command::finished, this, [=](bool success) {
+    connect(this, &Command::finished, project, [project](bool success) {
         project->logModel.setLoadingState(false);
         if (success) {
             project->journal(Project::tr("Done."), LogEntry::Success);
@@ -239,7 +240,7 @@ void Project::LoadUnpackedCommand::run()
 
     auto initResourcesFuture = project->resourcesModel.initialize(project->contentsPath + "/res/");
     auto initResourcesFutureWatcher = new QFutureWatcher<void>(this);
-    connect(initResourcesFutureWatcher, &QFutureWatcher<void>::finished, [=]() {
+    connect(initResourcesFutureWatcher, &QFutureWatcher<void>::finished, this, [=]() {
         emit finished(true);
     });
     initResourcesFutureWatcher->setFuture(initResourcesFuture);

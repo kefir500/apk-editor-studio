@@ -21,7 +21,7 @@ void Commands::run()
 void Commands::add(Command *command, bool critical)
 {
     commands.enqueue(command);
-    connect(command, &Command::finished, [=](bool success) {
+    connect(command, &Command::finished, this, [=](bool success) {
         if (success || !critical) {
             dequeue();
         } else {

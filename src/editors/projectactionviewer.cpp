@@ -12,28 +12,28 @@ ProjectActionViewer::ProjectActionViewer(Project *project, QWidget *parent) : Ac
     this->project = project;
 
     btnEditTitle = addButton();
-    connect(btnEditTitle, &QPushButton::clicked, [=]() {
+    connect(btnEditTitle, &QPushButton::clicked, this, [this]() {
         emit titleEditorRequested();
     });
 
     btnEditIcon = addButton();
-    connect(btnEditIcon, &QPushButton::clicked, [=]() {
+    connect(btnEditIcon, &QPushButton::clicked, project, [project, this]() {
         const QString iconSource(Dialogs::getOpenImageFilename(this));
         project->setApplicationIcon(iconSource, this);
     });
 
     btnExplore = addButton();
-    connect(btnExplore, &QPushButton::clicked, [=]() {
+    connect(btnExplore, &QPushButton::clicked, project, [project]() {
         Utils::explore(project->getContentsPath());
     });
 
     btnSave = addButton();
-    connect(btnSave, &QPushButton::clicked, [=]() {
+    connect(btnSave, &QPushButton::clicked, this, [this]() {
         emit apkSaveRequested();
     });
 
     btnInstall = addButton();
-    connect(btnInstall, &QPushButton::clicked, [=]() {
+    connect(btnInstall, &QPushButton::clicked, this, [this]() {
         emit apkInstallRequested();
     });
 

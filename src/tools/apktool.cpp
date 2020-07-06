@@ -25,7 +25,7 @@ void Apktool::Decode::run()
     }
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         resultOutput = output;
         emit finished(success);
         process->deleteLater();
@@ -54,7 +54,7 @@ void Apktool::Build::run()
     }
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         resultOutput = output;
         emit finished(success);
         process->deleteLater();
@@ -71,7 +71,7 @@ void Apktool::Version::run()
 {
     emit started();
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         if (success) {
             resultVersion = output;
         }
