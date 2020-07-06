@@ -19,7 +19,7 @@ public:
     }
 
 signals:
-    void editRequested(const QModelIndex &index) const;
+    void editRequested(const QModelIndex &index);
 
 private:
     QSharedPointer<QMenu> generateContextMenu(ResourceModelIndex &resourceIndex);

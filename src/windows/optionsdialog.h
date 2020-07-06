@@ -23,8 +23,8 @@ public:
     void save();
 
 signals:
-    void loaded() const;
-    void saved() const;
+    void loaded();
+    void saved();
 
 protected:
     void changeEvent(QEvent *event) override;

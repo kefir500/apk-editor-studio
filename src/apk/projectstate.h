@@ -36,7 +36,7 @@ public:
     bool canClose() const;
 
 signals:
-    void changed() const;
+    void changed();
 
 private:
     bool unpacked;

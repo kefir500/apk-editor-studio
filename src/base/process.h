@@ -16,8 +16,8 @@ public:
     void setStandardOutputFile(const QString &filename);
 
 signals:
-    void started() const;
-    void finished(bool success, const QString &output) const;
+    void started();
+    void finished(bool success, const QString &output);
 
 protected:
     QProcess process;

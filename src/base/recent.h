@@ -40,7 +40,7 @@ public:
     QList<QPixmap> thumbnails() const;
 
 signals:
-    void changed() const;
+    void changed();
 
 private:
     void saveToFile() const;

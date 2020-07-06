@@ -32,7 +32,7 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
 signals:
-    void initialized() const;
+    void initialized();
 
 private:
     QList<TitleNode *> nodes;

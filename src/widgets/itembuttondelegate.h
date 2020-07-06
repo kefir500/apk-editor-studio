@@ -13,7 +13,7 @@ public:
     static QRect buttonRect(const QRect &rect);
 
 signals:
-    void clicked(int row) const;
+    void clicked(int row);
 
 protected:
     bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override;

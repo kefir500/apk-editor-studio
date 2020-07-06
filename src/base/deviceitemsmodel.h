@@ -31,8 +31,8 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 signals:
-    void fetching() const;
-    void fetched() const;
+    void fetching();
+    void fetched();
 
 private:
     QList<QSharedPointer<Device>> devices;

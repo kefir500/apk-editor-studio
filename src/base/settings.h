@@ -92,7 +92,7 @@ public:
 #endif
 
 signals:
-    void resetDone() const;
+    void resetDone();
 
 private:
     QSettings *settings;

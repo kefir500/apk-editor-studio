@@ -17,8 +17,8 @@ public:
     virtual bool finalize();
 
 signals:
-    void titleChanged(const QString &title) const;
-    void iconChanged(const QIcon &icon) const;
+    void titleChanged(const QString &title);
+    void iconChanged(const QIcon &icon);
 
 protected:
     QString title;

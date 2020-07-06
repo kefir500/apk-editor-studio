@@ -20,7 +20,7 @@ public:
                                                QWidget *parent = nullptr);
 
 signals:
-    void currentChanged(const Device *device) const;
+    void currentChanged(const Device *device);
 
 private:
     bool setCurrentDevice(const Device *device);

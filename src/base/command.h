@@ -13,8 +13,8 @@ public:
     virtual void run() = 0;
 
 signals:
-    void started() const;
-    void finished(bool success = true) const;
+    void started();
+    void finished(bool success = true);
 };
 
 class Commands : public Command

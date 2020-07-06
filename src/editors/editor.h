@@ -16,8 +16,8 @@ public:
     bool isModified() const;
 
 signals:
-    void saved() const;
-    void modifiedStateChanged(bool modified) const;
+    void saved();
+    void modifiedStateChanged(bool modified);
 
 protected:
     void setModified(bool value);

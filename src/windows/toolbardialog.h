@@ -14,7 +14,7 @@ public:
     ToolbarDialog(const Toolbar &toolbar, QWidget *parent = nullptr);
 
 signals:
-    void actionsUpdated(const QStringList &actions) const;
+    void actionsUpdated(const QStringList &actions);
 
 private:
     QListWidgetItem *createSeparatorItem() const;

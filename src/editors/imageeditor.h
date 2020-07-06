@@ -41,9 +41,9 @@ public:
     void setZoomInfo(qreal factor);
 
 signals:
-    void zoomIn() const;
-    void zoomOut() const;
-    void zoomReset() const;
+    void zoomIn();
+    void zoomOut();
+    void zoomReset();
 
 private:
     QLabel *labelZoom;
