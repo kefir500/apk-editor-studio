@@ -82,8 +82,8 @@ void ActionProvider::signApk(const QStringList &paths, const Keystore *keystore,
 void ActionProvider::installApk(MainWindow *window)
 {
     const auto device = Dialogs::getInstallDevice(window);
-    if (device) {
-        installApk(device->getSerial(), window);
+    if (!device.isNull()) {
+        installApk(device.getSerial(), window);
     }
 }
 
@@ -186,8 +186,8 @@ void ActionProvider::openKeyManager(QWidget *parent)
 void ActionProvider::openAndroidExplorer(MainWindow *window)
 {
     const auto device = Dialogs::getExplorerDevice(window);
-    if (device) {
-        openAndroidExplorer(device->getSerial(), window);
+    if (!device.isNull()) {
+        openAndroidExplorer(device.getSerial(), window);
     }
 }
 
@@ -201,8 +201,8 @@ void ActionProvider::openAndroidExplorer(const QString &serial, MainWindow *wind
 void ActionProvider::takeScreenshot(QWidget *parent)
 {
     const auto device = Dialogs::getScreenshotDevice(parent);
-    if (device) {
-        takeScreenshot(device->getSerial(), parent);
+    if (!device.isNull()) {
+        takeScreenshot(device.getSerial(), parent);
     }
 }
 

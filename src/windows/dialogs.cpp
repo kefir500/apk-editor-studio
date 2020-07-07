@@ -104,7 +104,7 @@ QString Dialogs::getOpenDirectory(const QString &defaultPath, QWidget *parent)
     return QFileDialog::getExistingDirectory(parent, QString(), path);
 }
 
-QSharedPointer<Device> Dialogs::getInstallDevice(QWidget *parent)
+Device Dialogs::getInstallDevice(QWidget *parent)
 {
     const QString title(app->translate("Dialogs", "Install APK"));
     const QString action(app->translate("Dialogs", "Install"));
@@ -112,14 +112,14 @@ QSharedPointer<Device> Dialogs::getInstallDevice(QWidget *parent)
     return DeviceManager::selectDevice(title, action, icon, parent);
 }
 
-QSharedPointer<Device> Dialogs::getExplorerDevice(QWidget *parent)
+Device Dialogs::getExplorerDevice(QWidget *parent)
 {
     const QString action(app->translate("AndroidExplorer", "Android Explorer"));
     const QIcon icon(app->icons.get("explorer.png"));
     return DeviceManager::selectDevice({}, action, icon, parent);
 }
 
-QSharedPointer<Device> Dialogs::getScreenshotDevice(QWidget *parent)
+Device Dialogs::getScreenshotDevice(QWidget *parent)
 {
     const QString action(app->translate("Dialogs", "Screenshot"));
     const QIcon icon(app->icons.get("screenshot.png"));

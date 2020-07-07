@@ -145,7 +145,7 @@ bool ProjectWidget::saveProject()
 bool ProjectWidget::installProject()
 {
     const auto device = Dialogs::getInstallDevice(this);
-    if (!device) {
+    if (device.isNull()) {
         return false;
     }
 
@@ -183,7 +183,7 @@ bool ProjectWidget::installProject()
         }
     }
 
-    command->add(project->createInstallCommand(device->getSerial()));
+    command->add(project->createInstallCommand(device.getSerial()));
     command->run();
     return true;
 }

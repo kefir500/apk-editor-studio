@@ -27,9 +27,9 @@ namespace Dialogs
 
     QString getOpenDirectory(const QString &defaultPath, QWidget *parent = nullptr);
 
-    QSharedPointer<Device> getInstallDevice(QWidget *parent = nullptr);
-    QSharedPointer<Device> getExplorerDevice(QWidget *parent = nullptr);
-    QSharedPointer<Device> getScreenshotDevice(QWidget *parent = nullptr);
+    Device getInstallDevice(QWidget *parent = nullptr);
+    Device getExplorerDevice(QWidget *parent = nullptr);
+    Device getScreenshotDevice(QWidget *parent = nullptr);
 
     int detailed(const QString &text, const QString &detailed, QMessageBox::Icon icon = QMessageBox::Warning, QWidget *parent = nullptr);
     int log(const QString &title, const QString &text, QWidget *parent = nullptr);

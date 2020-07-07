@@ -2,7 +2,7 @@
 #include "base/application.h"
 #include "tools/adb.h"
 
-QSharedPointer<Device> DeviceItemsModel::get(const QModelIndex &index) const
+Device DeviceItemsModel::get(const QModelIndex &index) const
 {
     if (index.isValid()) {
         return devices.at(index.row());
@@ -19,11 +19,11 @@ void DeviceItemsModel::refresh()
         devices.clear();
         if (success) {
             devices.append(adb->devices());
-            for (const QSharedPointer<Device> &device : devices) {
-                const QString serial = device->getSerial();
+            for (auto &device : devices) {
+                const QString serial = device.getSerial();
                 const QString alias = app->settings->getDeviceAlias(serial);
                 if (!alias.isEmpty()) {
-                    device->setAlias(alias);
+                    device.setAlias(alias);
                 }
             }
         }
@@ -35,10 +35,10 @@ void DeviceItemsModel::refresh()
 
 void DeviceItemsModel::save() const
 {
-    for (const QSharedPointer<Device> &device : devices) {
-        const QString alias = device->getAlias();
+    for (const auto &device : devices) {
+        const QString alias = device.getAlias();
         if (!alias.isEmpty()) {
-            app->settings->setDeviceAlias(device->getSerial(), alias);
+            app->settings->setDeviceAlias(device.getSerial(), alias);
         }
     }
 }
@@ -46,7 +46,7 @@ void DeviceItemsModel::save() const
 bool DeviceItemsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (index.isValid() && role == Qt::EditRole && index.column() == AliasColumn) {
-        devices[index.row()]->setAlias(value.toString());
+        devices[index.row()].setAlias(value.toString());
         emit dataChanged(index, index);
         return true;
     }
@@ -59,17 +59,17 @@ QVariant DeviceItemsModel::data(const QModelIndex &index, int role) const
         auto device = devices.at(index.row());
         switch (index.column()) {
         case AliasColumn: {
-            const QString alias = device->getAlias();
-            return alias.isEmpty() ? device->getSerial() : alias;
+            const QString alias = device.getAlias();
+            return alias.isEmpty() ? device.getSerial() : alias;
         }
         case SerialColumn:
-            return device->getSerial();
+            return device.getSerial();
         case ProductColumn:
-            return device->getProductString();
+            return device.getProductString();
         case ModelColumn:
-            return device->getModelString();
+            return device.getModelString();
         case DeviceColumn:
-            return device->getDeviceString();
+            return device.getDeviceString();
         }
     }
     return QVariant();
@@ -100,7 +100,7 @@ QModelIndex DeviceItemsModel::index(int row, int column, const QModelIndex &pare
 {
     Q_UNUSED(parent)
     if (row >= 0 && row < devices.count()) {
-        return createIndex(row, column, devices.at(row).data());
+        return createIndex(row, column);
     }
     return QModelIndex();
 }

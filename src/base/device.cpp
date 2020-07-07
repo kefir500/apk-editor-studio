@@ -1,54 +1,57 @@
 #include "base/device.h"
 
-Device::Device(const QString &serial) : serial(serial)
+Device::Device(const QString &serial)
 {
-    const QChar dash(0x2013);
-    product = dash;
-    model = dash;
-    device = dash;
+    d = new DevicePrivate;
+    d->serial = serial;
 }
 
-QString Device::getSerial() const
+const QString &Device::getSerial() const
 {
-    return serial;
+    return d->serial;
 }
 
-QString Device::getAlias() const
+const QString &Device::getAlias() const
 {
-    return alias;
+    return d->alias;
 }
 
-QString Device::getProductString() const
+const QString &Device::getProductString() const
 {
-    return product;
+    return d->product;
 }
 
-QString Device::getModelString() const
+const QString &Device::getModelString() const
 {
-    return model;
+    return d->model;
 }
 
-QString Device::getDeviceString() const
+const QString &Device::getDeviceString() const
 {
-    return device;
+    return d->device;
+}
+
+bool Device::isNull() const
+{
+    return !d || d->serial.isNull();
 }
 
 void Device::setAlias(const QString &alias)
 {
-    this->alias = alias;
+    d->alias = alias;
 }
 
 void Device::setProductString(const QString &product)
 {
-    this->product = product;
+    d->product = product;
 }
 
 void Device::setModelString(const QString &model)
 {
-    this->model = model;
+    d->model = model;
 }
 
 void Device::setDeviceString(const QString &device)
 {
-    this->device = device;
+    d->device = device;
 }

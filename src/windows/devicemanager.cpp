@@ -59,7 +59,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
 
     connect(deviceList->selectionModel(), &QItemSelectionModel::currentChanged, this, [this](const QModelIndex &index) {
         const auto device = deviceModel.get(index);
-        setCurrentDevice(device.data());
+        setCurrentDevice(device);
     });
     connect(fieldAlias, &QLineEdit::textChanged, this, [this](const QString &alias) {
         QModelIndex index = deviceModel.index(deviceList->currentIndex().row(), DeviceItemsModel::AliasColumn);
@@ -79,11 +79,11 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     connect(dialogButtons, &QDialogButtonBox::rejected, this, &DeviceManager::reject);
     connect(this, &DeviceManager::accepted, &deviceModel, &DeviceItemsModel::save);
 
-    setCurrentDevice(nullptr);
+    setCurrentDevice({});
     deviceModel.refresh();
 }
 
-QSharedPointer<Device> DeviceManager::selectDevice(const QString &title, const QString &action, const QIcon &icon, QWidget *parent)
+Device DeviceManager::selectDevice(const QString &title, const QString &action, const QIcon &icon, QWidget *parent)
 {
     DeviceManager dialog(parent);
     dialog.setWindowTitle(title.isEmpty() ? tr("Select Device") : title);
@@ -100,28 +100,27 @@ QSharedPointer<Device> DeviceManager::selectDevice(const QString &title, const Q
         btnSelect->setIcon(icon);
     }
 
-    connect(&dialog, &DeviceManager::currentChanged, btnSelect, [btnSelect](const Device *device) {
-        btnSelect->setEnabled(device);
+    connect(&dialog, &DeviceManager::currentChanged, btnSelect, [btnSelect](const Device &device) {
+        btnSelect->setEnabled(!device.isNull());
     });
 
     if (dialog.exec() == QDialog::Accepted) {
-        const auto device = dialog.deviceModel.get(dialog.deviceList->currentIndex());
-        return device;
+        return dialog.deviceModel.get(dialog.deviceList->currentIndex());
     }
 
     return {};
 }
 
-bool DeviceManager::setCurrentDevice(const Device *device)
+bool DeviceManager::setCurrentDevice(const Device &device)
 {
     emit currentChanged(device);
-    if (device) {
+    if (!device.isNull()) {
         fieldAlias->setEnabled(true);
-        fieldAlias->setText(device->getAlias());
-        labelSerial->setText(device->getSerial());
-        labelProduct->setText(device->getProductString());
-        labelModel->setText(device->getModelString());
-        labelDevice->setText(device->getDeviceString());
+        fieldAlias->setText(device.getAlias());
+        labelSerial->setText(device.getSerial());
+        labelProduct->setText(device.getProductString());
+        labelModel->setText(device.getModelString());
+        labelDevice->setText(device.getDeviceString());
         return true;
     } else {
         const QChar dash(0x2013);

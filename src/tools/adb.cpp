@@ -1,7 +1,6 @@
 #include "tools/adb.h"
 #include "base/process.h"
 #include "base/application.h"
-#include <QSharedPointer>
 #include <QDebug>
 #include <QRegularExpression>
 
@@ -242,11 +241,11 @@ void Adb::Devices::run()
                     const QString modelString = QRegularExpression("\\s+model:(\\S+)(\\s|$)").match(line).captured(1);
                     const QString deviceString = QRegularExpression("\\s+device:(\\S+)(\\s|$)").match(line).captured(1);
                     const QString productString = QRegularExpression("\\s+product:(\\S+)(\\s|$)").match(line).captured(1);
-                    Device *device = new Device(serial);
-                    device->setModelString(modelString);
-                    device->setDeviceString(deviceString);
-                    device->setProductString(productString);
-                    resultDevices.append(QSharedPointer<Device>(device));
+                    Device device(serial);
+                    device.setModelString(modelString);
+                    device.setDeviceString(deviceString);
+                    device.setProductString(productString);
+                    resultDevices.append(device);
                 }
             }
         } else {
@@ -258,7 +257,7 @@ void Adb::Devices::run()
     process->run(getPath(), {"devices", "-l"});
 }
 
-const QList<QSharedPointer<Device>> &Adb::Devices::devices() const
+const QList<Device> &Adb::Devices::devices() const
 {
     return resultDevices;
 }

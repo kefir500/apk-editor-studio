@@ -366,8 +366,8 @@ void Application::processArguments(const QStringList &arguments, MainWindow *win
                 }
                 if (cli.isSet(installOption)) {
                     const auto device = Dialogs::getInstallDevice(window);
-                    if (device) {
-                        command->add(project->createInstallCommand(device->getSerial()), true);
+                    if (!device.isNull()) {
+                        command->add(project->createInstallCommand(device.getSerial()), true);
                     }
                 }
             }
