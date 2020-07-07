@@ -57,6 +57,7 @@ void OptionsDialog::load()
 {
     // General
 
+    checkboxSingleInstance->setChecked(app->settings->getSingleInstance());
     checkboxUpdates->setChecked(app->settings->getAutoUpdates());
     spinboxRecent->setValue(app->settings->getRecentLimit());
 #ifdef Q_OS_WIN
@@ -119,6 +120,7 @@ void OptionsDialog::save()
 {
     // General
 
+    app->settings->setSingleInstance(checkboxSingleInstance->isChecked());
     app->settings->setAutoUpdates(checkboxUpdates->isChecked());
     app->setLanguage(comboLanguages->currentData().toString());
     app->recent->setLimit(spinboxRecent->value());
@@ -198,11 +200,13 @@ void OptionsDialog::initialize()
     // General
 
     QFormLayout *pageGeneral = new QFormLayout;
+    checkboxSingleInstance = new QCheckBox(tr("Single-window mode"), this);
     checkboxUpdates = new QCheckBox(tr("Check for updates automatically"), this);
     comboLanguages = new QComboBox(this);
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
     spinboxRecent->setMaximum(50);
+    pageGeneral->addRow(checkboxSingleInstance);
     pageGeneral->addRow(checkboxUpdates);
     pageGeneral->addRow(tr("Language:"), comboLanguages);
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);

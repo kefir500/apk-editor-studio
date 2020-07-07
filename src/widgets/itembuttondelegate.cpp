@@ -1,4 +1,5 @@
 #include "widgets/itembuttondelegate.h"
+#include "apk/manifestmodel.h"
 #include "base/application.h"
 #include <QPainter>
 

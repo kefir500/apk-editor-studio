@@ -67,8 +67,9 @@ protected:
     bool event(QEvent *event) override;
 
 private:
-    void processArguments(const QStringList &arguments, QWidget *window = nullptr);
+    void processArguments(const QStringList &arguments, MainWindow *window = nullptr);
 
+    QList<MainWindow *> instances;
     Theme *theme_;
     qreal scaleFactor;
     QTranslator translator;

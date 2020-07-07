@@ -11,21 +11,21 @@
 #include <QDesktopServices>
 #include <QDateTime>
 
-void ActionProvider::openApk(QWidget *parent)
+void ActionProvider::openApk(MainWindow *window)
 {
-    const QStringList paths = Dialogs::getOpenApkFilenames(parent);
-    openApk(paths, parent);
+    const QStringList paths = Dialogs::getOpenApkFilenames(window);
+    openApk(paths, window);
 }
 
-void ActionProvider::openApk(const QString &path, QWidget *parent)
+void ActionProvider::openApk(const QString &path, MainWindow *window)
 {
-    openApk(QStringList(path), parent);
+    openApk(QStringList(path), window);
 }
 
-void ActionProvider::openApk(const QStringList &paths, QWidget *parent)
+void ActionProvider::openApk(const QStringList &paths, MainWindow *window)
 {
     for (const QString &path : paths) {
-        auto project = app->projects.add(path, parent);
+        auto project = app->projects.add(path, window);
         if (project) {
             auto command = new Project::ProjectCommand(project);
             command->add(project->createUnpackCommand(), true);
@@ -34,16 +34,16 @@ void ActionProvider::openApk(const QStringList &paths, QWidget *parent)
     }
 }
 
-void ActionProvider::optimizeApk(QWidget *parent)
+void ActionProvider::optimizeApk(MainWindow *window)
 {
-    const QStringList paths = Dialogs::getOpenApkFilenames(parent);
-    optimizeApk(paths, parent);
+    const QStringList paths = Dialogs::getOpenApkFilenames(window);
+    optimizeApk(paths, window);
 }
 
-void ActionProvider::optimizeApk(const QStringList &paths, QWidget *parent)
+void ActionProvider::optimizeApk(const QStringList &paths, MainWindow *window)
 {
     for (const QString &path : paths) {
-        auto project = app->projects.add(path, parent);
+        auto project = app->projects.add(path, window);
         if (project) {
             auto command = new Project::ProjectCommand(project);
             command->add(project->createZipalignCommand(), true);
@@ -52,25 +52,25 @@ void ActionProvider::optimizeApk(const QStringList &paths, QWidget *parent)
     }
 }
 
-void ActionProvider::signApk(QWidget *parent)
+void ActionProvider::signApk(MainWindow *window)
 {
-    const QStringList paths = Dialogs::getOpenApkFilenames(parent);
-    signApk(paths, parent);
+    const QStringList paths = Dialogs::getOpenApkFilenames(window);
+    signApk(paths, window);
 }
 
-void ActionProvider::signApk(const QStringList &paths, QWidget *parent)
+void ActionProvider::signApk(const QStringList &paths, MainWindow *window)
 {
-    const auto keystore = Keystore::get(parent);
+    const auto keystore = Keystore::get(window);
     if (keystore) {
-        signApk(paths, keystore.data(), parent);
+        signApk(paths, keystore.data(), window);
     }
 }
 
-void ActionProvider::signApk(const QStringList &paths, const Keystore *keystore, QWidget *parent)
+void ActionProvider::signApk(const QStringList &paths, const Keystore *keystore, MainWindow *window)
 {
     Q_ASSERT(keystore);
     for (const QString &path : paths) {
-        auto project = app->projects.add(path, parent);
+        auto project = app->projects.add(path, window);
         if (project) {
             auto command = new Project::ProjectCommand(project);
             command->add(project->createSignCommand(keystore), true);
@@ -79,24 +79,25 @@ void ActionProvider::signApk(const QStringList &paths, const Keystore *keystore,
     }
 }
 
-void ActionProvider::installApk(QWidget *parent)
+void ActionProvider::installApk(MainWindow *window)
 {
-    const auto device = Dialogs::getInstallDevice(parent);
+    const auto device = Dialogs::getInstallDevice(window);
     if (device) {
-        installApk(device->getSerial(), parent);
+        installApk(device->getSerial(), window);
     }
 }
 
-void ActionProvider::installApk(const QString &serial, QWidget *parent)
+void ActionProvider::installApk(const QString &serial, MainWindow *window)
 {
-    const QStringList paths = Dialogs::getOpenApkFilenames(parent);
-    installApk(paths, serial, parent);
+    const QStringList paths = Dialogs::getOpenApkFilenames(window);
+    installApk(paths, serial, window);
 }
 
-void ActionProvider::installApk(const QStringList &paths, const QString &serial, QWidget *parent)
+void ActionProvider::installApk(const QStringList &paths, const QString &serial, MainWindow *window)
 {
+    Q_ASSERT(!serial.isEmpty());
     for (const QString &path : paths) {
-        auto project = app->projects.add(path, parent);
+        auto project = app->projects.add(path, window);
         if (project) {
             auto command = new Project::ProjectCommand(project);
             command->add(project->createInstallCommand(serial), true);
@@ -182,17 +183,17 @@ void ActionProvider::openKeyManager(QWidget *parent)
     keyManager.exec();
 }
 
-void ActionProvider::openAndroidExplorer(QWidget *parent)
+void ActionProvider::openAndroidExplorer(MainWindow *window)
 {
-    const auto device = Dialogs::getExplorerDevice(parent);
+    const auto device = Dialogs::getExplorerDevice(window);
     if (device) {
-        openAndroidExplorer(device->getSerial(), parent);
+        openAndroidExplorer(device->getSerial(), window);
     }
 }
 
-void ActionProvider::openAndroidExplorer(const QString &serial, QWidget *parent)
+void ActionProvider::openAndroidExplorer(const QString &serial, MainWindow *window)
 {
-    auto explorer = new AndroidExplorer(serial, parent);
+    auto explorer = new AndroidExplorer(serial, window);
     explorer->setAttribute(Qt::WA_DeleteOnClose);
     explorer->show();
 }
@@ -222,59 +223,59 @@ void ActionProvider::takeScreenshot(const QString &serial, QWidget *parent)
     }
 }
 
-QAction *ActionProvider::getOpenApk(QWidget *parent)
+QAction *ActionProvider::getOpenApk(MainWindow *window)
 {
-    auto action = new QAction(app->icons.get("open.png"), {}, parent);
+    auto action = new QAction(app->icons.get("open.png"), {}, window);
     action->setShortcut(QKeySequence::Open);
 
     auto translate = [=]() { action->setText(tr("&Open APK...")); };
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, parent, [=]() {
-        openApk(parent);
+    connect(action, &QAction::triggered, window, [=]() {
+        openApk(window);
     });
     return action;
 }
 
-QAction *ActionProvider::getOptimizeApk(QWidget *parent)
+QAction *ActionProvider::getOptimizeApk(MainWindow *window)
 {
-    auto action = new QAction(app->icons.get("optimize.png"), {}, parent);
+    auto action = new QAction(app->icons.get("optimize.png"), {}, window);
 
     auto translate = [=]() { action->setText(tr("&Optimize External APK...")); };
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, parent, [=]() {
-        optimizeApk(parent);
+    connect(action, &QAction::triggered, window, [=]() {
+        optimizeApk(window);
     });
 
     return action;
 }
 
-QAction *ActionProvider::getSignApk(QWidget *parent)
+QAction *ActionProvider::getSignApk(MainWindow *window)
 {
-    auto action = new QAction(app->icons.get("key.png"), {}, parent);
+    auto action = new QAction(app->icons.get("key.png"), {}, window);
 
     auto translate = [=]() { action->setText(tr("&Sign External APK...")); };
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 
-    connect(action, &QAction::triggered, parent, [=]() {
-        signApk(parent);
+    connect(action, &QAction::triggered, window, [=]() {
+        signApk(window);
     });
 
     return action;
 }
 
-QAction *ActionProvider::getInstallApk(QWidget *parent)
+QAction *ActionProvider::getInstallApk(MainWindow *window)
 {
-    return getInstallApk({}, parent);
+    return getInstallApk({}, window);
 }
 
-QAction *ActionProvider::getInstallApk(const QString &serial, QWidget *parent)
+QAction *ActionProvider::getInstallApk(const QString &serial, MainWindow *window)
 {
-    auto action = new QAction(app->icons.get("install.png"), {}, parent);
+    auto action = new QAction(app->icons.get("install.png"), {}, window);
 
     auto translate = [=]() { action->setText(tr("&Install External APK...")); };
     connect(this, &ActionProvider::languageChanged, action, translate);
@@ -282,12 +283,12 @@ QAction *ActionProvider::getInstallApk(const QString &serial, QWidget *parent)
 
     action->setShortcut(QKeySequence("Ctrl+Shift+I"));
     if (serial.isEmpty()) {
-        connect(action, &QAction::triggered, parent, [=]() {
-            installApk(parent);
+        connect(action, &QAction::triggered, window, [=]() {
+            installApk(window);
         });
     } else {
-        connect(action, &QAction::triggered, parent, [=]() {
-            installApk(serial, parent);
+        connect(action, &QAction::triggered, window, [=]() {
+            installApk(serial, window);
         });
     }
 
@@ -427,14 +428,14 @@ QAction *ActionProvider::getOpenKeyManager(QWidget *parent)
     return action;
 }
 
-QAction *ActionProvider::getOpenAndroidExplorer(QWidget *parent)
+QAction *ActionProvider::getOpenAndroidExplorer(MainWindow *window)
 {
-    return getOpenAndroidExplorer({}, parent);
+    return getOpenAndroidExplorer({}, window);
 }
 
-QAction *ActionProvider::getOpenAndroidExplorer(const QString &serial, QWidget *parent)
+QAction *ActionProvider::getOpenAndroidExplorer(const QString &serial, MainWindow *window)
 {
-    auto action = new QAction(app->icons.get("explorer.png"), {}, parent);
+    auto action = new QAction(app->icons.get("explorer.png"), {}, window);
     action->setShortcut(QKeySequence("Ctrl+Shift+X"));
 
     auto translate = [=]() { action->setText(tr("&Android Explorer...")); };
@@ -442,12 +443,12 @@ QAction *ActionProvider::getOpenAndroidExplorer(const QString &serial, QWidget *
     translate();
 
     if (serial.isEmpty()) {
-        connect(action, &QAction::triggered, parent, [=]() {
-            openAndroidExplorer(parent);
+        connect(action, &QAction::triggered, window, [=]() {
+            openAndroidExplorer(window);
         });
     } else {
-        connect(action, &QAction::triggered, parent, [=]() {
-            openAndroidExplorer(serial, parent);
+        connect(action, &QAction::triggered, window, [=]() {
+            openAndroidExplorer(serial, window);
         });
     }
 
@@ -521,9 +522,9 @@ QMenu *ActionProvider::getLanguages(QWidget *parent)
     return menu;
 }
 
-QMenu *ActionProvider::getRecent(QWidget *parent)
+QMenu *ActionProvider::getRecent(MainWindow *window)
 {
-    auto menuRecent = new QMenu(parent);
+    auto menuRecent = new QMenu(window);
     menuRecent->setIcon(app->icons.get("recent.png"));
 
     auto translate = [=]() { menuRecent->setTitle(tr("Open &Recent")); };
@@ -534,16 +535,16 @@ QMenu *ActionProvider::getRecent(QWidget *parent)
         menuRecent->clear();
         auto recentList = app->recent->all();
         for (const RecentFile &recentEntry : recentList) {
-            QAction *action = new QAction(recentEntry.thumbnail(), recentEntry.filename(), parent);
+            QAction *action = new QAction(recentEntry.thumbnail(), recentEntry.filename(), window);
             menuRecent->addAction(action);
             connect(action, &QAction::triggered, this, [=]() {
-                openApk(recentEntry.filename(), parent);
+                openApk(recentEntry.filename(), window);
             });
         }
         menuRecent->addSeparator();
-        menuRecent->addAction(recentList.isEmpty() ? getNoRecent(parent) : getClearRecent(parent));
+        menuRecent->addAction(recentList.isEmpty() ? getNoRecent(window) : getClearRecent(window));
     };
-    connect(app->recent, &Recent::changed, parent, initialize);
+    connect(app->recent, &Recent::changed, window, initialize);
     initialize();
 
     return menuRecent;

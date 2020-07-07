@@ -4,10 +4,11 @@
 #include "base/yamlhighlighter.h"
 #include "base/xmlhighlighter.h"
 #include <QBoxLayout>
-#include <QTextStream>
-#include <QScrollBar>
-#include <QPainter>
 #include <QDebug>
+#include <QPainter>
+#include <QRegularExpression>
+#include <QScrollBar>
+#include <QTextStream>
 
 // CodeEditor:
 

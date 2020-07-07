@@ -1,7 +1,9 @@
 #include "apk/iconitemsmodel.h"
+#include "apk/project.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include <QDebug>
+#include <QDir>
 
 IconItemsModel::IconItemsModel(QObject *parent) : QAbstractProxyModel(parent)
 {

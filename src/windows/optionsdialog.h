@@ -38,6 +38,7 @@ private:
     QListWidget *pageList;
     QStackedWidget *pageStack;
 
+    QCheckBox *checkboxSingleInstance;
     QCheckBox *checkboxUpdates;
     QSpinBox *spinboxRecent;
     QComboBox *comboLanguages;

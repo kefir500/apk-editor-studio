@@ -17,18 +17,6 @@ ProjectList::ProjectList(QWidget *parent) : QComboBox(parent)
     setItemDelegate(new ProjectListItemDelegate(this));
 }
 
-void ProjectList::setModel(QAbstractItemModel *newModel)
-{
-    auto previousModel = model();
-    if (previousModel) {
-        disconnect(previousModel, &ProjectItemsModel::rowsInserted, this, &ProjectList::onRowsInserted);
-    }
-    QComboBox::setModel(newModel);
-    if (newModel) {
-        connect(newModel, &ProjectItemsModel::rowsInserted, this, &ProjectList::onRowsInserted);
-    }
-}
-
 bool ProjectList::setCurrentProject(Project *project)
 {
     const int rowCount = model()->rowCount();
@@ -39,9 +27,4 @@ bool ProjectList::setCurrentProject(Project *project)
         }
     }
     return false;
-}
-
-void ProjectList::onRowsInserted(const QModelIndex &, int, int last)
-{
-    setCurrentIndex(last);
 }

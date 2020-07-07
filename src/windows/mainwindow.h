@@ -25,6 +25,9 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
+    void setCurrentProject(Project *project);
 
 protected:
     void changeEvent(QEvent *event) override;
@@ -91,6 +94,8 @@ private:
     QMap<Project *, ProjectWidget *> projectWidgets;
     WelcomeActionViewer *welcomePage;
     ExtraListItemProxy *welcomeItemProxy;
+
+    static int instances;
 };
 
 #endif // MAINWINDOW_H

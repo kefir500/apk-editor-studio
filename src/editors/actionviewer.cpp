@@ -1,5 +1,6 @@
 #include "editors/actionviewer.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QPainter>
 #include <QPaintEvent>
 #include <QFontDatabase>

@@ -3,6 +3,7 @@
 #include "base/fileassociation.h"
 #include "base/password.h"
 #include "tools/apktool.h"
+#include <QDir>
 
 Settings::Settings()
 {
@@ -145,6 +146,11 @@ QString Settings::getDeviceAlias(const QString &serial) const
 QString Settings::getLastDirectory() const
 {
     return settings->value("Preferences/LastDirectory").toString();
+}
+
+bool Settings::getSingleInstance() const
+{
+    return settings->value("Preferences/SingleInstance", true).toBool();
 }
 
 bool Settings::getAutoUpdates() const
@@ -348,6 +354,11 @@ void Settings::setDeviceAlias(const QString &serial, const QString &alias)
 void Settings::setLastDirectory(const QString &directory)
 {
     settings->setValue("Preferences/LastDirectory", directory);
+}
+
+void Settings::setSingleInstance(bool value)
+{
+    settings->setValue("Preferences/SingleInstance", value);
 }
 
 void Settings::setAutoUpdates(bool value)

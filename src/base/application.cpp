@@ -77,16 +77,25 @@ int Application::exec()
 
     setLanguage(settings->getLanguage());
 
-    MainWindow mainwindow;
-    mainwindow.show();
+    auto firstInstance = new MainWindow;
+    firstInstance->show();
+    instances.append(firstInstance);
 
-    processArguments(arguments());
-    connect(this, &QtSingleApplication::messageReceived, [this, &mainwindow](const QString &message) {
-        mainwindow.setWindowState((mainwindow.windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
-        mainwindow.activateWindow();
-        mainwindow.raise();
+    processArguments(arguments(), firstInstance);
+    connect(this, &QtSingleApplication::messageReceived, this, [this](const QString &message) {
+        MainWindow *instance = nullptr;
+        if (settings->getSingleInstance()) {
+            instance = instances.last();
+            instance->setWindowState((instance->windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+        } else {
+            instance = new MainWindow;
+            instance->show();
+            instances.append(instance);
+        }
+        instance->activateWindow();
+        instance->raise();
         if (!message.isEmpty()) {
-            processArguments(QStringList() << app->applicationFilePath() << message.split('\n'), &mainwindow);
+            processArguments(QStringList() << app->applicationFilePath() << message.split('\n'), instance);
         }
     });
 
@@ -316,7 +325,7 @@ bool Application::event(QEvent *event)
     switch (event->type()) {
     case QEvent::FileOpen: {
         const QString filePath = static_cast<QFileOpenEvent *>(event)->file();
-        actions.openApk(filePath, window);
+        actions.openApk(filePath, instances.last());
         return true;
     }
     case QEvent::LanguageChange:
@@ -328,7 +337,7 @@ bool Application::event(QEvent *event)
     return QtSingleApplication::event(event);
 }
 
-void Application::processArguments(const QStringList &arguments, QWidget *window)
+void Application::processArguments(const QStringList &arguments, MainWindow *window)
 {
     QCommandLineParser cli;
     QCommandLineOption optimizeOption(QStringList{"o", "optimize", "z", "zipalign"});

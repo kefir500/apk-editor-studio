@@ -2,6 +2,7 @@
 #include "base/process.h"
 #include "base/application.h"
 #include <QSharedPointer>
+#include <QDebug>
 #include <QRegularExpression>
 
 void Adb::Cd::run()

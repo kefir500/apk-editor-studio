@@ -1,4 +1,5 @@
 #include "widgets/logdelegate.h"
+#include "apk/logmodel.h"
 #include "base/application.h"
 #include <QPainter>
 

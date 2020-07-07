@@ -17,7 +17,7 @@
     #include <QDebug>
 #endif
 
-AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
+AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
     : QDialog(parent)
     , serial(serial)
 {
@@ -96,7 +96,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
         remove(fileList->currentIndex());
     });
 
-    auto actionInstall = app->actions.getInstallApk(serial, this);
+    auto actionInstall = app->actions.getInstallApk(serial, parent);
     auto actionScreenshot = app->actions.getTakeScreenshot(serial, this);
 
     auto toolbar = new Toolbar(this);

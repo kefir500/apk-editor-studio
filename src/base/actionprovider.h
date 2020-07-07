@@ -5,6 +5,7 @@
 
 class Project;
 class Keystore;
+class MainWindow;
 
 class ActionProvider : public QObject
 {
@@ -13,17 +14,17 @@ class ActionProvider : public QObject
 public:
     ActionProvider(QObject *parent = nullptr) : QObject(parent) {}
 
-    void openApk(QWidget *parent = nullptr);
-    void openApk(const QString &path, QWidget *parent = nullptr);
-    void openApk(const QStringList &paths, QWidget *parent = nullptr);
-    void optimizeApk(QWidget *parent = nullptr);
-    void optimizeApk(const QStringList &paths, QWidget *parent = nullptr);
-    void signApk(QWidget *parent = nullptr);
-    void signApk(const QStringList &paths, QWidget *parent = nullptr);
-    void signApk(const QStringList &paths, const Keystore *keystore, QWidget *parent = nullptr);
-    void installApk(QWidget *parent = nullptr);
-    void installApk(const QString &serial, QWidget *parent = nullptr);
-    void installApk(const QStringList &paths, const QString &serial, QWidget *parent = nullptr);
+    void openApk(MainWindow *window = nullptr);
+    void openApk(const QString &path, MainWindow *window = nullptr);
+    void openApk(const QStringList &paths, MainWindow *window = nullptr);
+    void optimizeApk(MainWindow *window = nullptr);
+    void optimizeApk(const QStringList &paths, MainWindow *window = nullptr);
+    void signApk(MainWindow *window = nullptr);
+    void signApk(const QStringList &paths, MainWindow *window = nullptr);
+    void signApk(const QStringList &paths, const Keystore *keystore, MainWindow *window = nullptr);
+    void installApk(MainWindow *window = nullptr);
+    void installApk(const QString &serial, MainWindow *window = nullptr);
+    void installApk(const QStringList &paths, const QString &serial, MainWindow *window = nullptr);
     bool closeApk(Project *project);
 
     void visitWebPage();
@@ -40,16 +41,16 @@ public:
     void openOptions(QWidget *parent = nullptr);
     void openDeviceManager(QWidget *parent = nullptr);
     void openKeyManager(QWidget *parent = nullptr);
-    void openAndroidExplorer(QWidget *parent = nullptr);
-    void openAndroidExplorer(const QString &serial, QWidget *parent = nullptr);
+    void openAndroidExplorer(MainWindow *window);
+    void openAndroidExplorer(const QString &serial, MainWindow *window);
     void takeScreenshot(QWidget *parent = nullptr);
     void takeScreenshot(const QString &serial, QWidget *parent = nullptr);
 
-    QAction *getOpenApk(QWidget *parent = nullptr);
-    QAction *getOptimizeApk(QWidget *parent = nullptr);
-    QAction *getSignApk(QWidget *parent = nullptr);
-    QAction *getInstallApk(QWidget *parent = nullptr);
-    QAction *getInstallApk(const QString &serial, QWidget *parent = nullptr);
+    QAction *getOpenApk(MainWindow *window);
+    QAction *getOptimizeApk(MainWindow *window);
+    QAction *getSignApk(MainWindow *window);
+    QAction *getInstallApk(MainWindow *window);
+    QAction *getInstallApk(const QString &serial, MainWindow *window);
 
     QAction *getVisitWebPage(QObject *parent = nullptr);
     QAction *getVisitSourcePage(QObject *parent = nullptr);
@@ -61,13 +62,13 @@ public:
     QAction *getOpenOptions(QWidget *parent = nullptr);
     QAction *getOpenDeviceManager(QWidget *parent= nullptr);
     QAction *getOpenKeyManager(QWidget *parent = nullptr);
-    QAction *getOpenAndroidExplorer(QWidget *parent = nullptr);
-    QAction *getOpenAndroidExplorer(const QString &serial, QWidget *parent = nullptr);
+    QAction *getOpenAndroidExplorer(MainWindow *window);
+    QAction *getOpenAndroidExplorer(const QString &serial, MainWindow *window);
     QAction *getTakeScreenshot(QWidget *parent = nullptr);
     QAction *getTakeScreenshot(const QString &serial, QWidget *parent = nullptr);
 
     QMenu *getLanguages(QWidget *parent = nullptr);
-    QMenu *getRecent(QWidget *parent = nullptr);
+    QMenu *getRecent(MainWindow *window);
 
     bool event(QEvent *event) override;
 

@@ -35,6 +35,7 @@ public:
     bool getKeepBrokenResources() const;
     QString getDeviceAlias(const QString &serial) const;
     QString getLastDirectory() const;
+    bool getSingleInstance() const;
     bool getAutoUpdates() const;
     int getRecentLimit() const;
     QString getLanguage() const;
@@ -74,6 +75,7 @@ public:
     void setKeepBrokenResources(bool keepBroken);
     void setDeviceAlias(const QString &serial, const QString &alias);
     void setLastDirectory(const QString &directory);
+    void setSingleInstance(bool value);
     void setAutoUpdates(bool value);
     void setRecentLimit(int limit);
     void setLanguage(const QString &locale);

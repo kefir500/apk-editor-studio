@@ -9,6 +9,7 @@
 #include <QTabWidget>
 #include <QLabel>
 #include <QPlainTextEdit>
+#include <QRegularExpression>
 #include <QTextBrowser>
 #include <QDialogButtonBox>
 #include <QTextStream>

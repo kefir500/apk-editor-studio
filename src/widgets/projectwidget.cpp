@@ -8,6 +8,7 @@
 #include "editors/titleeditor.h"
 #include "base/application.h"
 #include "base/utils.h"
+#include "tools/keystore.h"
 #include <QDebug>
 
 ProjectWidget::ProjectWidget(Project *project, QWidget *parent) : QTabWidget(parent), project(project)

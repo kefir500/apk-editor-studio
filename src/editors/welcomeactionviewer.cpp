@@ -2,19 +2,19 @@
 #include "windows/dialogs.h"
 #include "base/application.h"
 
-WelcomeActionViewer::WelcomeActionViewer(QWidget *parent) : ActionViewer(parent)
+WelcomeActionViewer::WelcomeActionViewer(MainWindow *parent) : ActionViewer(parent)
 {
     btnOpen = addButton();
     btnInstall = addButton();
     btnExplorer = addButton();
-    connect(btnOpen, &QPushButton::clicked, this, [this]() {
-        app->actions.openApk(this);
+    connect(btnOpen, &QPushButton::clicked, parent, [parent]() {
+        app->actions.openApk(parent);
     });
-    connect(btnInstall, &QPushButton::clicked, this, [this]() {
-        app->actions.installApk(this);
+    connect(btnInstall, &QPushButton::clicked, parent, [parent]() {
+        app->actions.installApk(parent);
     });
-    connect(btnExplorer, &QPushButton::clicked, this, [this]() {
-        app->actions.openAndroidExplorer(this);
+    connect(btnExplorer, &QPushButton::clicked, parent, [parent]() {
+        app->actions.openAndroidExplorer(parent);
     });
 }
 

@@ -3,12 +3,14 @@
 
 #include "editors/actionviewer.h"
 
+class MainWindow;
+
 class WelcomeActionViewer : public ActionViewer
 {
     Q_OBJECT
 
 public:
-    explicit WelcomeActionViewer(QWidget *parent = nullptr);
+    explicit WelcomeActionViewer(MainWindow *parent);
 
 protected:
     void changeEvent(QEvent *event) override;

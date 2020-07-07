@@ -24,10 +24,16 @@
 #include <QMimeDatabase>
 #include <QTimer>
 
+int MainWindow::instances = 0;
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
+    ++instances;
+
+    setAttribute(Qt::WA_DeleteOnClose);
     setAcceptDrops(true);
 
+    onProjectAdded({}, 0, app->projects.rowCount() - 1);
     connect(&app->projects, &ProjectItemsModel::rowsInserted, this, &MainWindow::onProjectAdded);
     connect(&app->projects, &ProjectItemsModel::rowsAboutToBeRemoved, this, &MainWindow::onProjectAboutToBeRemoved);
 
@@ -56,6 +62,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     }
 
     qDebug();
+}
+
+MainWindow::~MainWindow()
+{
+    --instances;
+}
+
+void MainWindow::setCurrentProject(Project *project)
+{
+    projectList->setCurrentProject(project);
 }
 
 void MainWindow::setInitialSize()
@@ -511,20 +527,22 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    QMapIterator<Project *, ProjectWidget *> it(projectWidgets);
-    while (it.hasNext()) {
-        it.next();
-        auto tabs = it.value();
-        if (tabs->isUnsaved()) {
-            auto project = it.key();
-            projectList->setCurrentProject(project);
-            const QString question = tr("You have unsaved changes.\nDo you want to discard them and exit?");
-            const int answer = QMessageBox::question(this, QString(), question, QMessageBox::Discard, QMessageBox::Cancel);
-            if (answer != QMessageBox::Discard) {
-                event->ignore();
-                return;
+    if (instances == 1) {
+        QMapIterator<Project *, ProjectWidget *> it(projectWidgets);
+        while (it.hasNext()) {
+            it.next();
+            auto tabs = it.value();
+            if (tabs->isUnsaved()) {
+                auto project = it.key();
+                projectList->setCurrentProject(project);
+                const QString question = tr("You have unsaved changes.\nDo you want to discard them and exit?");
+                const int answer = QMessageBox::question(this, QString(), question, QMessageBox::Discard, QMessageBox::Cancel);
+                if (answer != QMessageBox::Discard) {
+                    event->ignore();
+                    return;
+                }
+                break;
             }
-            break;
         }
     }
     app->settings->setMainWindowGeometry(saveGeometry());

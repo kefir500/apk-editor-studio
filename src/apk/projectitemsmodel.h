@@ -1,7 +1,10 @@
 #ifndef PROJECTITEMSMODEL_H
 #define PROJECTITEMSMODEL_H
 
-#include "apk/project.h"
+#include <QAbstractListModel>
+
+class MainWindow;
+class Project;
 
 class ProjectItemsModel : public QAbstractListModel
 {
@@ -18,7 +21,7 @@ public:
 
     ~ProjectItemsModel() override;
 
-    Project *add(const QString &path, QWidget *parent);
+    Project *add(const QString &path, MainWindow *window = nullptr);
     bool close(Project *project);
 
     Project *at(int row) const;
