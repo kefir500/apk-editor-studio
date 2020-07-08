@@ -7,6 +7,7 @@
 #include "windows/keymanager.h"
 #include "windows/optionsdialog.h"
 #include "tools/adb.h"
+#include "tools/keystore.h"
 #include <QMenu>
 #include <QDesktopServices>
 #include <QDateTime>
@@ -62,7 +63,7 @@ void ActionProvider::signApk(const QStringList &paths, MainWindow *window)
 {
     const auto keystore = Keystore::get(window);
     if (keystore) {
-        signApk(paths, keystore.data(), window);
+        signApk(paths, keystore.get(), window);
     }
 }
 

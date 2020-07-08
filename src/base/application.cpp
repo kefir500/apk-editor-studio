@@ -361,7 +361,7 @@ void Application::processArguments(const QStringList &arguments, MainWindow *win
                 if (cli.isSet(signOption)) {
                     auto keystore = Keystore::get(window);
                     if (keystore) {
-                        command->add(project->createSignCommand(keystore.data()), true);
+                        command->add(project->createSignCommand(keystore.get()), true);
                     }
                 }
                 if (cli.isSet(installOption)) {

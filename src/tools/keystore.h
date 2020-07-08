@@ -1,7 +1,6 @@
 #ifndef KEYSTORE_H
 #define KEYSTORE_H
 
-#include <QSharedPointer>
 #include <QCoreApplication>
 
 struct Dname
@@ -19,7 +18,7 @@ class Keystore
     Q_DECLARE_TR_FUNCTIONS(Keystore)
 
 public:
-    static QSharedPointer<const Keystore> get(QWidget *parent = nullptr);
+    static std::unique_ptr<const Keystore> get(QWidget *parent = nullptr);
     QString keystorePath;
     QString keystorePassword;
     QString keyAlias;

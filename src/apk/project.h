@@ -1,15 +1,16 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
-#include "apk/resourceitemsmodel.h"
-#include "apk/manifestmodel.h"
 #include "apk/filesystemmodel.h"
 #include "apk/iconitemsmodel.h"
 #include "apk/logmodel.h"
+#include "apk/manifestmodel.h"
 #include "apk/projectstate.h"
+#include "apk/resourceitemsmodel.h"
 #include "base/command.h"
-#include "tools/keystore.h"
 #include <QIcon>
+
+class Keystore;
 
 class Project : public QObject
 {

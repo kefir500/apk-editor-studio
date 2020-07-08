@@ -4,6 +4,7 @@
 #include "tools/adb.h"
 #include "tools/apktool.h"
 #include "tools/apksigner.h"
+#include "tools/keystore.h"
 #include "tools/zipalign.h"
 #include <QUuid>
 #include <QFutureWatcher>

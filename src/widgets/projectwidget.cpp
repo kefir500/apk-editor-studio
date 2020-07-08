@@ -135,7 +135,7 @@ bool ProjectWidget::saveProject()
     if (app->settings->getSignApk()) {
         auto keystore = Keystore::get(this);
         if (keystore) {
-            command->add(project->createSignCommand(keystore.data(), target), false);
+            command->add(project->createSignCommand(keystore.get(), target), false);
         }
     }
     command->run();
@@ -170,7 +170,7 @@ bool ProjectWidget::installProject()
             if (app->settings->getSignApk()) {
                 auto keystore = Keystore::get(this);
                 if (keystore) {
-                    command->add(project->createSignCommand(keystore.data()), false);
+                    command->add(project->createSignCommand(keystore.get()), false);
                 }
             }
             break;
