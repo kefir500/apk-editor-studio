@@ -1,6 +1,7 @@
 #include "tools/apktool.h"
 #include "base/process.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QStringList>
 
 void Apktool::Decode::run()
@@ -109,7 +110,7 @@ QString Apktool::getPath()
 
 QString Apktool::getDefaultPath()
 {
-    return app->getSharedPath("tools/apktool.jar");
+    return Utils::getSharedPath("tools/apktool.jar");
 }
 
 QString Apktool::getOutputPath()
@@ -120,7 +121,7 @@ QString Apktool::getOutputPath()
 
 QString Apktool::getDefaultOutputPath()
 {
-    return app->getTemporaryPath("apk");
+    return Utils::getTemporaryPath("apk");
 }
 
 QString Apktool::getFrameworksPath()
@@ -131,5 +132,5 @@ QString Apktool::getFrameworksPath()
 
 QString Apktool::getDefaultFrameworksPath()
 {
-    return app->getLocalConfigPath("frameworks");
+    return Utils::getLocalConfigPath("frameworks");
 }

@@ -1,6 +1,7 @@
 #include "tools/adb.h"
 #include "base/process.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QDebug>
 #include <QRegularExpression>
 
@@ -295,7 +296,7 @@ QString Adb::getPath()
 
 QString Adb::getDefaultPath()
 {
-    return app->getBinaryPath("adb");
+    return Utils::getBinaryPath("adb");
 }
 
 QString Adb::escapePath(QString path)

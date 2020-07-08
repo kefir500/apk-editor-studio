@@ -2,6 +2,7 @@
 #include "windows/dialogs.h"
 #include <QDir>
 #include <QIcon>
+#include <QPainter>
 #include <QProcess>
 #include <QImageReader>
 #include <QImageWriter>
@@ -188,6 +189,173 @@ QPixmap Utils::iconToPixmap(const QIcon &icon)
     const auto sizes = icon.availableSizes();
     const QSize size = !sizes.isEmpty() ? sizes.first() : QSize();
     return icon.pixmap(size);
+}
+
+QString Utils::getTitle()
+{
+    return APPLICATION;
+}
+
+QString Utils::getVersion()
+{
+    return VERSION;
+}
+
+QString Utils::getTitleNoSpaces()
+{
+    return getTitle().toLower().replace(' ', '-');
+}
+
+QString Utils::getTitleAndVersion()
+{
+    return QString("%1 v%2").arg(getTitle(), getVersion());
+}
+
+QString Utils::getExecutableDirectory()
+{
+    return qApp->applicationDirPath() + '/';
+}
+
+QString Utils::getTemporaryPath(const QString &subdirectory)
+{
+#ifndef PORTABLE
+    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getTitleNoSpaces(), subdirectory);
+#else
+    const QString path = QString("%1/data/temp/%2").arg(getExecutableDirectory(), subdirectory);
+#endif
+    return QDir::cleanPath(path);
+}
+
+QString Utils::getLocalConfigPath(const QString &subdirectory)
+{
+#ifndef PORTABLE
+    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getTitleNoSpaces(), subdirectory);
+#else
+    const QString path = QString("%1/data/%2").arg(getExecutableDirectory(), subdirectory);
+#endif
+    return QDir::cleanPath(path);
+}
+
+QString Utils::getSharedPath(const QString &resource)
+{
+#ifndef Q_OS_LINUX
+    const QString path = getExecutableDirectory() + resource;
+#else
+    const QString path = QString("%1/../share/%2/%3").arg(getExecutableDirectory(), getTitleNoSpaces(), resource);
+#endif
+    return QDir::cleanPath(path);
+}
+
+QString Utils::getBinaryPath(const QString &executable)
+{
+#ifdef Q_OS_WIN
+    QString path = getSharedPath("tools/" + executable);
+#else
+    const QString path = getExecutableDirectory() + executable;
+#endif
+
+    QFileInfo fileInfo(path);
+#ifdef Q_OS_WIN
+    if (fileInfo.suffix().isEmpty()) {
+        path.append(".exe");
+        fileInfo.setFile(path);
+    }
+#endif
+    return fileInfo.exists() ? path : fileInfo.fileName();
+}
+
+QString Utils::getJavaPath()
+{
+    const QString userPath = app->settings->getJavaPath();
+    if (!userPath.isEmpty()) {
+        return userPath;
+    }
+    const QString envPath = qgetenv("JAVA_HOME");
+    if (!envPath.isEmpty()) {
+        return envPath;
+    }
+    return QString();
+}
+
+QString Utils::getJavaBinaryPath(const QString &executable)
+{
+    const QString javaPath = getJavaPath();
+    if (!javaPath.isEmpty()) {
+        return QDir(javaPath).filePath(QString("bin/%1").arg(executable));
+    }
+    return executable;
+}
+
+QPixmap Utils::getLocaleFlag(const QLocale &locale)
+{
+    const QLocale::Language localeLanguage = locale.language();
+    const QLocale::Country localeCountry = locale.country();
+    const QStringList localeSegments = QLocale(localeLanguage, localeCountry).name().split('_');
+    if (localeSegments.count() > 1) {
+        QPixmap flag(QString(getSharedPath("resources/flags/%1.png")).arg(localeSegments.at(1).toLower()));
+        const int flagWidth = flag.width();
+        const int flagHeight = flag.height();
+        const int longSide = qMax(flagWidth, flagHeight);
+        QPixmap result(longSide, longSide);
+        result.fill(Qt::transparent);
+        QPainter painter(&result);
+        painter.translate((longSide - flagWidth) / 2.0, (longSide - flagHeight) / 2.0);
+        painter.drawPixmap(0, 0, flag);
+        return result;
+    } else {
+        return QPixmap();
+    }
+}
+
+QString Utils::getWebPage()
+{
+    return QString("https://qwertycube.com/%1/").arg(getTitleNoSpaces());
+}
+
+QString Utils::getUpdatePage()
+{
+    return QString("https://qwertycube.com/%1/#utm_campaign=update&utm_source=%1&utm_medium=application").arg(getTitleNoSpaces());
+}
+
+QString Utils::getSourcePage()
+{
+    return QString("https://github.com/kefir500/%1/").arg(getTitleNoSpaces());
+}
+
+QString Utils::getIssuesPage()
+{
+    return getSourcePage() + "issues";
+}
+
+QString Utils::getContactPage()
+{
+    return getWebPage();
+}
+
+QString Utils::getTranslatePage()
+{
+    return QString("https://www.transifex.com/qwertycube/%1/").arg(getTitleNoSpaces());
+}
+
+QString Utils::getDonatePage()
+{
+    return QString("https://qwertycube.com/donate/#utm_campaign=donate&utm_source=%1&utm_medium=application").arg(getTitleNoSpaces());
+    // See utm_content if you'd like to differ between donate buttons
+}
+
+QString Utils::getJrePage()
+{
+    return "https://www.java.com/en/download/manual.jsp";
+}
+
+QString Utils::getJdkPage()
+{
+    return "http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html";
+}
+
+QString Utils::getUpdateUrl()
+{
+    return getWebPage() + "/versions.json";
 }
 
 QString Utils::getAndroidCodename(int api)

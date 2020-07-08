@@ -1,6 +1,7 @@
 #include "tools/zipalign.h"
-#include "base/process.h"
 #include "base/application.h"
+#include "base/process.h"
+#include "base/utils.h"
 #include <QFile>
 
 void Zipalign::Align::run()
@@ -41,5 +42,5 @@ QString Zipalign::getPath()
 
 QString Zipalign::getDefaultPath()
 {
-    return app->getBinaryPath("zipalign");
+    return Utils::getBinaryPath("zipalign");
 }

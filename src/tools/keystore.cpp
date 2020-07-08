@@ -41,7 +41,7 @@ std::unique_ptr<const Keystore> Keystore::get(QWidget *parent)
         }
     } else {
         // This keystore is provided for demonstrational purposes.
-        keystore->keystorePath = app->getSharedPath("tools/demo.jks");
+        keystore->keystorePath = Utils::getSharedPath("tools/demo.jks");
         keystore->keystorePassword = "123456";
         keystore->keyAlias = "demo";
         keystore->keyPassword = "123456";

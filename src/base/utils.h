@@ -67,6 +67,37 @@ namespace Utils
     bool isImageWritable(const QString &path);
     QPixmap iconToPixmap(const QIcon &icon);
 
+    // Application utils:
+
+    QString getTitle();
+    QString getVersion();
+    QString getTitleNoSpaces();
+    QString getTitleAndVersion();
+
+    // Path utils:
+
+    QString getExecutableDirectory();
+    QString getTemporaryPath(const QString &subdirectory = QString());
+    QString getLocalConfigPath(const QString &subdirectory = QString());
+    QString getSharedPath(const QString &resource = QString());
+    QString getBinaryPath(const QString &executable);
+    QString getJavaPath();
+    QString getJavaBinaryPath(const QString &executable);
+    QPixmap getLocaleFlag(const QLocale &locale);
+
+    // URL utils:
+
+    QString getWebPage();
+    QString getUpdatePage();
+    QString getSourcePage();
+    QString getIssuesPage();
+    QString getContactPage();
+    QString getTranslatePage();
+    QString getDonatePage();
+    QString getJrePage();
+    QString getJdkPage();
+    QString getUpdateUrl();
+
     // Android utils:
 
     bool isDrawableResource(const QFileInfo &file);

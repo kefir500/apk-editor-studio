@@ -1,5 +1,6 @@
 #include "base/process.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QProcess>
 #include <QDebug>
 
@@ -58,7 +59,7 @@ void Process::jar(const QString &jar, const QStringList &jarArguments)
         arguments << QString("-Xmx%1m").arg(maxHeapSize);
     }
     arguments << "-jar" << jar << jarArguments;
-    run(app->getJavaBinaryPath("java"), arguments);
+    run(Utils::getJavaBinaryPath("java"), arguments);
 }
 
 void Process::setStandardOutputFile(const QString &filename)

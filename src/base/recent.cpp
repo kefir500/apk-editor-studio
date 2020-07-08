@@ -1,5 +1,6 @@
 #include "base/recent.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QCryptographicHash>
 #include <QSettings>
 #include <QDir>
@@ -22,10 +23,10 @@ const QPixmap &RecentFile::thumbnail() const
 Recent::Recent(const QString &identifier, QObject *parent) : QObject(parent)
 {
     this->identifier = identifier;
-    this->thumbsPath = QString("%1/%2/").arg(app->getLocalConfigPath("recent/thumbnails"), identifier);
+    this->thumbsPath = QString("%1/%2/").arg(Utils::getLocalConfigPath("recent/thumbnails"), identifier);
     this->limit = app->settings->getRecentLimit();
 
-    QSettings ini(app->getLocalConfigPath("recent/recent.ini"), QSettings::IniFormat);
+    QSettings ini(Utils::getLocalConfigPath("recent/recent.ini"), QSettings::IniFormat);
     ini.beginGroup("Recent");
     QStringList files = ini.value(identifier).toStringList();
     ini.endGroup();
@@ -121,7 +122,7 @@ QList<QPixmap> Recent::thumbnails() const
 
 void Recent::saveToFile() const
 {
-    QSettings ini(app->getLocalConfigPath("recent/recent.ini"), QSettings::IniFormat);
+    QSettings ini(Utils::getLocalConfigPath("recent/recent.ini"), QSettings::IniFormat);
     ini.beginGroup("Recent");
     ini.setValue(identifier, filenames());
     ini.endGroup();

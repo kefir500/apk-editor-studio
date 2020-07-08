@@ -5,6 +5,7 @@
 #include "tools/java.h"
 #include "tools/javac.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QFormLayout>
 #include <QTabWidget>
 #include <QLabel>
@@ -31,7 +32,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
     icon->setContentsMargins(0, 0, 10, 4);
     icon->setPixmap(app->icons.get("application.png").pixmap(app->scale(48, 48)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QLabel *title = new QLabel(app->getTitleAndVersion(), this);
+    QLabel *title = new QLabel(Utils::getTitleAndVersion(), this);
     QFont titleFont = title->font();
 #ifndef Q_OS_OSX
     titleFont.setPointSize(11);
@@ -68,12 +69,12 @@ GradientWidget *AboutDialog::createAboutTab()
     text->setOpenExternalLinks(true);
     const QString tableRow("<tr><td>%1</td><td><a href=\"%2\">%2</a></td></tr>");
     text->setText(
-        QString("<h4>%1</h4>").arg(app->getTitleAndVersion()) +
+        QString("<h4>%1</h4>").arg(Utils::getTitleAndVersion()) +
         QString("<p>%1 %2</p>").arg(tr("Author:"), "Alexander Gorishnyak") +
         QString("<p><table style=\"margin-left: -2px;\">") +
-        QString(tableRow).arg(tr("Website:"), app->getWebPage()) +
-        QString(tableRow).arg(tr("Bug Tracker:"), app->getIssuesPage()) +
-        QString(tableRow).arg(tr("Translation:"), app->getTranslatePage()) +
+        QString(tableRow).arg(tr("Website:"), Utils::getWebPage()) +
+        QString(tableRow).arg(tr("Bug Tracker:"), Utils::getIssuesPage()) +
+        QString(tableRow).arg(tr("Translation:"), Utils::getTranslatePage()) +
         QString("</table></p>") +
         QString("<p>%1 - %2</p>").arg(QString(__DATE__).toUpper(), __TIME__)
     );
@@ -89,7 +90,7 @@ QWidget *AboutDialog::createAuthorsTab()
 {
     QString content = "";
     const QString br("<br />");
-    QFile file(app->getSharedPath("docs/authors.txt"));
+    QFile file(Utils::getSharedPath("docs/authors.txt"));
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         QTextStream stream(&file);
         stream.setCodec("UTF-8");
@@ -140,7 +141,7 @@ QWidget *AboutDialog::createVersionsTab()
     QPlainTextEdit *tab = new QPlainTextEdit(this);
     tab->setReadOnly(true);
 
-    QFile file(app->getSharedPath("docs/versions.txt"));
+    QFile file(Utils::getSharedPath("docs/versions.txt"));
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         QTextStream stream(&file);
         stream.setCodec("UTF-8");
@@ -262,7 +263,7 @@ QWidget *AboutDialog::createLicenseTab()
     tab->setReadOnly(true);
     tab->setOpenExternalLinks(true);
 
-    QFile file(app->getSharedPath("docs/licenses/apk-editor-studio.html"));
+    QFile file(Utils::getSharedPath("docs/licenses/apk-editor-studio.html"));
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         QTextStream stream(&file);
         stream.setCodec("UTF-8");

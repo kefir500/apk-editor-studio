@@ -142,7 +142,7 @@ QString ResourceFile::getLanguageName() const
 
 QPixmap ResourceFile::getLanguageIcon() const
 {
-    return app->getLocaleFlag(QLocale(localeLegacy));
+    return Utils::getLocaleFlag(QLocale(localeLegacy));
 }
 
 QString ResourceFile::getFileName() const

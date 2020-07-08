@@ -1,6 +1,7 @@
 #include "tools/apksigner.h"
 #include "base/process.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QStringList>
 
 void Apksigner::Sign::run()
@@ -56,5 +57,5 @@ QString Apksigner::getPath()
 
 QString Apksigner::getDefaultPath()
 {
-    return app->getSharedPath("tools/apksigner.jar");
+    return Utils::getSharedPath("tools/apksigner.jar");
 }

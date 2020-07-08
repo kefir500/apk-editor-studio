@@ -1,6 +1,7 @@
 #include "base/settings.h"
 #include "base/application.h"
 #include "base/fileassociation.h"
+#include "base/utils.h"
 #include "base/password.h"
 #include "tools/apktool.h"
 #include <QDir>
@@ -8,9 +9,9 @@
 Settings::Settings()
 {
 #ifndef PORTABLE
-    settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, app->getTitleNoSpaces(), "config");
+    settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, Utils::getTitleNoSpaces(), "config");
 #else
-    settings = new QSettings(app->getLocalConfigPath("config/config.ini"), QSettings::IniFormat);
+    settings = new QSettings(Utils::etLocalConfigPath("config/config.ini"), QSettings::IniFormat);
 #endif
 }
 
@@ -436,7 +437,7 @@ bool Settings::setExplorerInstallIntegration(bool integrate)
     FileAssociation association("apk-editor-studio.apk", "apk");
     if (integrate) {
         const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
-        const QString iconPath = QDir::toNativeSeparators(app->getSharedPath("resources/icons/other/verb-install.ico"));
+        const QString iconPath = QDir::toNativeSeparators(Utils::getSharedPath("resources/icons/other/verb-install.ico"));
         return association.addVerb("Install APK", executablePath + " --install \"%1\"", iconPath);
     } else {
         return association.removeVerb("Install APK");
@@ -448,7 +449,7 @@ bool Settings::setExplorerOptimizeIntegration(bool integrate)
     FileAssociation association("apk-editor-studio.apk", "apk");
     if (integrate) {
         const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
-        const QString iconPath = QDir::toNativeSeparators(app->getSharedPath("resources/icons/other/verb-optimize.ico"));
+        const QString iconPath = QDir::toNativeSeparators(Utils::getSharedPath("resources/icons/other/verb-optimize.ico"));
         return association.addVerb("Optimize APK", executablePath + " --optimize \"%1\"", iconPath);
     } else {
         return association.removeVerb("Optimize APK");
@@ -460,7 +461,7 @@ bool Settings::setExplorerSignIntegration(bool integrate)
     FileAssociation association("apk-editor-studio.apk", "apk");
     if (integrate) {
         const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
-        const QString iconPath = QDir::toNativeSeparators(app->getSharedPath("resources/icons/other/verb-sign.ico"));
+        const QString iconPath = QDir::toNativeSeparators(Utils::getSharedPath("resources/icons/other/verb-sign.ico"));
         return association.addVerb("Sign APK", executablePath + " --sign \"%1\"", iconPath);
     } else {
         return association.removeVerb("Sign APK");

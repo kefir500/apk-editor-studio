@@ -1,6 +1,6 @@
 #include "tools/keytool.h"
 #include "base/process.h"
-#include "base/application.h"
+#include "base/utils.h"
 #include <QRegularExpression>
 #include <QStringList>
 
@@ -88,5 +88,5 @@ void Keytool::normalizeDname(Dname &dname)
 
 QString Keytool::getPath()
 {
-    return app->getJavaBinaryPath("keytool");
+    return Utils::getJavaBinaryPath("keytool");
 }

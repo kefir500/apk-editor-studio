@@ -114,27 +114,27 @@ bool ActionProvider::closeApk(Project *project)
 
 void ActionProvider::visitWebPage()
 {
-    QDesktopServices::openUrl(app->getWebPage());
+    QDesktopServices::openUrl(Utils::getWebPage());
 }
 
 void ActionProvider::visitSourcePage()
 {
-    QDesktopServices::openUrl(app->getSourcePage());
+    QDesktopServices::openUrl(Utils::getSourcePage());
 }
 
 void ActionProvider::visitDonatePage()
 {
-    QDesktopServices::openUrl(app->getDonatePage());
+    QDesktopServices::openUrl(Utils::getDonatePage());
 }
 
 void ActionProvider::visitUpdatePage()
 {
-    QDesktopServices::openUrl(app->getUpdatePage());
+    QDesktopServices::openUrl(Utils::getUpdatePage());
 }
 
 void ActionProvider::visitBlogPage(const QString &post)
 {
-    const QString url = app->getWebPage() + "blog/" + post + "/";
+    const QString url = Utils::getWebPage() + "blog/" + post + "/";
     QDesktopServices::openUrl(url);
 }
 
@@ -493,7 +493,7 @@ QMenu *ActionProvider::getLanguages(QWidget *parent)
         menu->setTitle(tr("&Language"));
         // Set icon
         const QString currentLocale = app->settings->getLanguage();
-        QIcon flag(app->getLocaleFlag(currentLocale));
+        QIcon flag(Utils::getLocaleFlag(currentLocale));
         menu->setIcon(flag);
         // Set check mark
         for (QAction *action : actions->actions()) {

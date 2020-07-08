@@ -7,6 +7,7 @@
 #include "tools/apktool.h"
 #include "tools/zipalign.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QAbstractButton>
 #include <QDialogButtonBox>
 #include <QFormLayout>
@@ -243,7 +244,7 @@ void OptionsDialog::initialize()
     QFormLayout *pageJava = new QFormLayout;
     fileboxJava = new FileBox(true, this);
     fileboxJava->setDefaultPath("");
-    const QString javaPath = app->getJavaPath();
+    const QString javaPath = Utils::getJavaPath();
     fileboxJava->setPlaceholderText(!javaPath.isEmpty() ? javaPath : tr("Extracted from environment variables by default"));
     spinboxMinHeapSize = new QSpinBox(this);
     spinboxMaxHeapSize = new QSpinBox(this);

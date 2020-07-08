@@ -1,6 +1,6 @@
 #include "tools/java.h"
 #include "base/process.h"
-#include "base/application.h"
+#include "base/utils.h"
 #include <QRegularExpression>
 
 void Java::Version::run()
@@ -15,7 +15,7 @@ void Java::Version::run()
         emit finished(success);
         process->deleteLater();
     });
-    process->run(app->getJavaBinaryPath("java"), {"-version"});
+    process->run(Utils::getJavaBinaryPath("java"), {"-version"});
 }
 
 const QString &Java::Version::version() const
