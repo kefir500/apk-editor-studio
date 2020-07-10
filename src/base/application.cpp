@@ -41,6 +41,8 @@ Application::Application(int &argc, char **argv) : QtSingleApplication(argc, arg
     setWindowIcon(icons.get("application.png"));
 #endif
 
+    QIcon::setThemeSearchPaths({applicationDirPath() + "/resources/icons"});
+    QIcon::setThemeName("default");
     if (!Utils::isDarkTheme()) {
         theme_ = new LightTheme;
     } else {

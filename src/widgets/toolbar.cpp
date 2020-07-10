@@ -12,7 +12,7 @@ Toolbar::Toolbar(QWidget *parent) : QToolBar(parent)
     const int closestSize = Utils::roundToNearest(app->scale(30, 30).width(), availableSizes);
     setIconSize(QSize(closestSize, closestSize));
 
-    actionCustomize = new QAction(app->icons.get("toolbar.png"), {}, this);
+    actionCustomize = new QAction(QIcon::fromTheme("toolbar-customize"), {}, this);
     connect(actionCustomize, &QAction::triggered, this, [this]() {
         ToolbarDialog toolbarDialog(*this, this);
         connect(&toolbarDialog, &ToolbarDialog::actionsUpdated, this, &Toolbar::initialize);

@@ -1,12 +1,12 @@
 #include "editors/editor.h"
-#include "base/application.h"
+#include <QEvent>
 #include <QMessageBox>
 
 Editor::Editor(QWidget *parent) : Viewer(parent)
 {
     setModified(false);
 
-    actionSave = new QAction(app->icons.get("save.png"), QString(), this);
+    actionSave = new QAction(QIcon::fromTheme("document-save"), QString(), this);
     actionSave->setShortcut(QKeySequence::Save);
     connect(actionSave, &QAction::triggered, this, [this]() {
         save();

@@ -6,7 +6,7 @@
 LogDelegate::LogDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
     spinnerAngle = 0;
-    iconExpand = app->icons.get("more.png");
+    iconExpand = QIcon::fromTheme("emblem-information");
     spinnerTimer.setInterval(25);
     connect(&spinnerTimer, &QTimer::timeout, this, [this]() {
         spinnerAngle = (spinnerAngle > 0) ? spinnerAngle - 160 : 5760;

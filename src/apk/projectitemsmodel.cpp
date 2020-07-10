@@ -1,6 +1,6 @@
 #include "apk/projectitemsmodel.h"
 #include "apk/project.h"
-#include "base/application.h"
+#include "windows/mainwindow.h"
 #include <QMessageBox>
 
 ProjectItemsModel::~ProjectItemsModel()
@@ -95,17 +95,17 @@ QVariant ProjectItemsModel::data(const QModelIndex &index, int role) const
             case StatusColumn:
                 switch (project->getState().getCurrentStatus()) {
                 case ProjectState::Status::Normal:
-                    return app->icons.get("state-idle.png");
+                    return QIcon::fromTheme("apk-idle");
                 case ProjectState::Status::Unpacking:
-                    return app->icons.get("state-open.png");
+                    return QIcon::fromTheme("apk-opening");
                 case ProjectState::Status::Packing:
                 case ProjectState::Status::Signing:
                 case ProjectState::Status::Optimizing:
-                    return app->icons.get("state-save.png");
+                    return QIcon::fromTheme("apk-saving");
                 case ProjectState::Status::Installing:
-                    return app->icons.get("state-install.png");
+                    return QIcon::fromTheme("apk-installing");
                 case ProjectState::Status::Errored:
-                    return app->icons.get("state-error.png");
+                    return QIcon::fromTheme("apk-error");
                 }
             }
         }

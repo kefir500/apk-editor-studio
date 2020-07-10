@@ -11,7 +11,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
 {
     //: This string refers to multiple devices (as in "Manager of devices").
     setWindowTitle(tr("Device Manager"));
-    setWindowIcon(app->icons.get("devices.png"));
+    setWindowIcon(QIcon::fromTheme("smartphone"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     resize(app->scale(560, 300));
 
@@ -23,7 +23,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     auto loading = new LoadingWidget(deviceList);
 
     QPushButton *btnRefresh = new QPushButton(tr("Refresh"), this);
-    btnRefresh->setIcon(app->icons.get("refresh.png"));
+    btnRefresh->setIcon(QIcon::fromTheme("view-refresh"));
 
     QVBoxLayout *listLayout = new QVBoxLayout;
     listLayout->addWidget(caption);

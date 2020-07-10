@@ -1,6 +1,5 @@
 #include "editors/titleeditor.h"
 #include "widgets/loadingwidget.h"
-#include "base/application.h"
 #include <QBoxLayout>
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
@@ -8,7 +7,7 @@
 TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(parent)
 {
     title = tr("Application Title");
-    icon = app->icons.get("title.png");
+    icon = QIcon::fromTheme("tool-titleeditor");
 
     table = new QTableView(this);
     table->setAlternatingRowColors(true);

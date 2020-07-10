@@ -24,7 +24,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     resize(app->scale(500, 400));
 
-    actionDownload = new QAction(app->icons.get("download.png"), {}, this);
+    actionDownload = new QAction(QIcon::fromTheme("download"), {}, this);
     actionDownload->setShortcut(QKeySequence::Save);
     connect(actionDownload, &QAction::triggered, this, [this]() {
         const auto index = fileList->currentIndex();
@@ -34,7 +34,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
         }
     });
 
-    actionUpload = new QAction(app->icons.get("upload.png"), {}, this);
+    actionUpload = new QAction(QIcon::fromTheme("upload"), {}, this);
     actionUpload->setShortcut(QKeySequence("Ctrl+U"));
     connect(actionUpload, &QAction::triggered, this, [this]() {
         QString path = fileSystemModel.getCurrentPath();
@@ -47,21 +47,21 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
         upload(path);
     });
 
-    actionCopy = new QAction(app->icons.get("copy.png"), {}, this);
+    actionCopy = new QAction(QIcon::fromTheme("edit-copy"), {}, this);
     actionCopy->setShortcut(QKeySequence::Copy);
     connect(actionCopy, &QAction::triggered, this, [this]() {
         const auto index = fileList->currentIndex();
         setClipboard(index, false);
     });
 
-    actionCut = new QAction(app->icons.get("cut.png"), {}, this);
+    actionCut = new QAction(QIcon::fromTheme("edit-cut"), {}, this);
     actionCut->setShortcut(QKeySequence::Cut);
     connect(actionCut, &QAction::triggered, this, [this]() {
         const auto index = fileList->currentIndex();
         setClipboard(index, true);
     });
 
-    actionPaste = new QAction(app->icons.get("paste.png"), {}, this);
+    actionPaste = new QAction(QIcon::fromTheme("edit-paste"), {}, this);
     actionPaste->setEnabled(false);
     actionPaste->setShortcut(QKeySequence::Paste);
     connect(actionPaste, &QAction::triggered, this, [this]() {
@@ -81,7 +81,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
         }
     });
 
-    actionRename = new QAction(app->icons.get("rename.png"), {}, this);
+    actionRename = new QAction(QIcon::fromTheme("edit-rename"), {}, this);
     actionRename->setShortcut(QKeySequence("F2"));
     connect(actionRename, &QAction::triggered, this, [this]() {
         const auto index = fileList->currentIndex();
@@ -90,7 +90,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
         }
     });
 
-    actionDelete = new QAction(app->icons.get("x-red.png"), {}, this);
+    actionDelete = new QAction(QIcon::fromTheme("edit-delete"), {}, this);
     actionDelete->setShortcut(QKeySequence::Delete);
     connect(actionDelete, &QAction::triggered, this, [this]() {
         remove(fileList->currentIndex());
@@ -123,7 +123,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
 
     pathUpButton = new QToolButton(this);
     pathUpButton->setToolTip(pathUpButton->text());
-    pathUpButton->setIcon(app->icons.get("explorer-up.png"));
+    pathUpButton->setIcon(QIcon::fromTheme("go-up"));
     connect(pathUpButton, &QToolButton::clicked, this, &AndroidExplorer::goUp);
 
     auto pathUpShortcut = new QShortcut(this);
@@ -132,7 +132,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
 
     pathGoButton = new QToolButton(this);
     pathGoButton->setToolTip(pathGoButton->text());
-    pathGoButton->setIcon(app->icons.get("explorer-go.png"));
+    pathGoButton->setIcon(QIcon::fromTheme("go-next"));
     connect(pathGoButton, &QToolButton::clicked, this, [this]() {
         go(pathInput->text());
     });

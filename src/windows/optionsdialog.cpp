@@ -194,7 +194,7 @@ void OptionsDialog::initialize()
     layout->addWidget(widget);
 
     setWindowTitle(tr("Options"));
-    setWindowIcon(app->icons.get("settings.png"));
+    setWindowIcon(QIcon::fromTheme("configure"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     resize(app->scale(800, 400));
 
@@ -216,15 +216,15 @@ void OptionsDialog::initialize()
     groupAssociate = new QGroupBox(tr("Use APK Editor Studio for .apk files"), this);
     groupAssociate->setCheckable(true);
     checkboxExplorerOpen = new QCheckBox(tr("Use APK Editor Studio to open .apk files"), this);
-    checkboxExplorerOpen->setIcon(app->icons.get("open.png"));
+    checkboxExplorerOpen->setIcon(QIcon::fromTheme("document-open"));
     //: "%1" will be replaced with an action name (e.g., Install, Optimize, Sign, etc.).
     const QString strExplorerIntegration(tr("Add %1 action to Windows Explorer context menu"));
     checkboxExplorerInstall = new QCheckBox(strExplorerIntegration.arg(tr("Install")), this);
-    checkboxExplorerInstall->setIcon(app->icons.get("install.png"));
+    checkboxExplorerInstall->setIcon(QIcon::fromTheme("apk-install"));
     checkboxExplorerOptimize = new QCheckBox(strExplorerIntegration.arg(tr("Optimize")), this);
-    checkboxExplorerOptimize->setIcon(app->icons.get("optimize.png"));
+    checkboxExplorerOptimize->setIcon(QIcon::fromTheme("apk-optimize"));
     checkboxExplorerSign = new QCheckBox(strExplorerIntegration.arg(tr("Sign")), this);
-    checkboxExplorerSign->setIcon(app->icons.get("key.png"));
+    checkboxExplorerSign->setIcon(QIcon::fromTheme("apk-sign"));
     connect(groupAssociate, &QGroupBox::clicked, this, [this](bool checked) {
         checkboxExplorerOpen->setChecked(checked);
         checkboxExplorerInstall->setChecked(checked);
@@ -298,7 +298,7 @@ void OptionsDialog::initialize()
     QFormLayout *layoutSign = new QFormLayout(groupSign);
     //: This string refers to multiple keys (as in "Manager of keys").
     QPushButton *btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
-    btnKeyManager->setIcon(app->icons.get("key.png"));
+    btnKeyManager->setIcon(QIcon::fromTheme("apk-sign"));
     btnKeyManager->setMinimumHeight(app->scale(30));
     connect(btnKeyManager, &QPushButton::clicked, this, [this]() {
         KeyManager keyManager(this);
@@ -332,7 +332,7 @@ void OptionsDialog::initialize()
     fileboxAdb->setPlaceholderText(Adb::getDefaultPath());
     //: This string refers to multiple devices (as in "Manager of devices").
     QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
-    btnDeviceManager->setIcon(app->icons.get("devices.png"));
+    btnDeviceManager->setIcon(QIcon::fromTheme("smartphone"));
     btnDeviceManager->setMinimumHeight(app->scale(30));
     connect(btnDeviceManager, &QPushButton::clicked, this, [this]() {
         DeviceManager deviceManager(this);

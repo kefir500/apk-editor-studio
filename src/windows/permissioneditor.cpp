@@ -11,7 +11,7 @@ PermissionEditor::PermissionEditor(Manifest *manifest, QWidget *parent) : QDialo
 {
     //: This string refers to multiple permissions (as in "Editor of permissions").
     setWindowTitle(tr("Permission Editor"));
-    setWindowIcon(app->icons.get("permissions.png"));
+    setWindowIcon(QIcon::fromTheme("tool-permissioneditor"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     resize(app->scale(550, 400));
 
@@ -188,7 +188,7 @@ PermissionEditor::PermissionEditor(Manifest *manifest, QWidget *parent) : QDialo
     comboAdd = new QComboBox(this);
     comboAdd->setEditable(true);
     comboAdd->addItems(permissionStrings);
-    btnAdd = new QPushButton(app->icons.get("add.png"), tr("Add"), this);
+    btnAdd = new QPushButton(QIcon::fromTheme("list-add"), tr("Add"), this);
     btnAdd->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     connect(btnAdd, &QPushButton::clicked, this, [=]() {
         const QString newPermission = QString("android.permission.%1").arg(comboAdd->currentText());
@@ -228,7 +228,7 @@ void PermissionEditor::addPermissionLine(const Permission &permission)
 
     auto btnHelp = new QToolButton(this);
     btnHelp->setToolTip(tr("Documentation"));
-    btnHelp->setIcon(app->icons.get("help.png"));
+    btnHelp->setIcon(QIcon::fromTheme("help-about"));
     connect(btnHelp, &QToolButton::clicked, [=]() {
         const QString url("https://developer.android.com/reference/android/Manifest.permission.html#%1");
         QDesktopServices::openUrl(url.arg(permissionName.mid(QString("android.permission.").length())));
@@ -240,7 +240,7 @@ void PermissionEditor::addPermissionLine(const Permission &permission)
 
     auto btnRemove = new QToolButton(this);
     btnRemove->setToolTip(tr("Remove"));
-    btnRemove->setIcon(app->icons.get("remove.png"));
+    btnRemove->setIcon(QIcon::fromTheme("list-remove"));
     connect(btnRemove, &QToolButton::clicked, this, [=]() {
         //: %1 will be replaced with a programmatic Android permission name (e.g., "android.permission.SEND_SMS", "android.permission.CAMERA", etc.).
         if (YesAlwaysDialog::ask("RemovePermission", tr("Are you sure you want to remove the %1 permission?").arg(permissionName), this)) {

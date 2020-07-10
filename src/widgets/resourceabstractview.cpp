@@ -1,6 +1,5 @@
 #include "widgets/resourceabstractview.h"
 #include "windows/dialogs.h"
-#include "base/application.h"
 #include <QBoxLayout>
 #include <QMenu>
 
@@ -43,24 +42,24 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(ResourceModelInd
 
     auto menu = new QMenu(this);
 
-    QAction *actionEdit = menu->addAction(app->icons.get("edit.png"), tr("Edit Resource"));
+    QAction *actionEdit = menu->addAction(QIcon::fromTheme("document-edit"), tr("Edit Resource"));
     connect(actionEdit, &QAction::triggered, this, [=]() {
         emit editRequested(resourceIndex);
     });
 
     menu->addSeparator();
 
-    QAction *actionReplace = menu->addAction(app->icons.get("replace.png"), tr("Replace Resource..."));
+    QAction *actionReplace = menu->addAction(QIcon::fromTheme("document-swap"), tr("Replace Resource..."));
     connect(actionReplace, &QAction::triggered, this, [&]() {
         resourceIndex.replace(this);
     });
 
-    QAction *actionSaveAs = menu->addAction(app->icons.get("save-as.png"), tr("Save Resource As..."));
+    QAction *actionSaveAs = menu->addAction(QIcon::fromTheme("document-save-as"), tr("Save Resource As..."));
     connect(actionSaveAs, &QAction::triggered, this, [&]() {
         resourceIndex.save(this);
     });
 
-    QAction *actionRemove = menu->addAction(app->icons.get("x-round.png"), tr("Delete Resource"));
+    QAction *actionRemove = menu->addAction(QIcon::fromTheme("document-delete"), tr("Delete Resource"));
     connect(actionRemove, &QAction::triggered, this, [&]() {
         if (!resourceIndex.remove()) {
             QMessageBox::warning(this, QString(), tr("Could not remove the resource."));
@@ -70,7 +69,7 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(ResourceModelInd
     menu->addSeparator();
 
     //: This string refers to a single resource.
-    QAction *actionExplore = menu->addAction(app->icons.get("explore.png"), tr("Open Resource Directory"));
+    QAction *actionExplore = menu->addAction(QIcon::fromTheme("folder-open"), tr("Open Resource Directory"));
     connect(actionExplore, &QAction::triggered, [=]() {
         resourceIndex.explore();
     });

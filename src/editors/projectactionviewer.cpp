@@ -1,6 +1,5 @@
 #include "editors/projectactionviewer.h"
 #include "windows/dialogs.h"
-#include "base/application.h"
 #include "base/utils.h"
 #include <QEvent>
 
@@ -8,7 +7,7 @@ ProjectActionViewer::ProjectActionViewer(Project *project, QWidget *parent) : Ac
 {
     //: This string refers to a single project (as in "Manager of a project").
     this->title = tr("Project Manager");
-    this->icon = app->icons.get("project.png");
+    this->icon = QIcon::fromTheme("tool-projectmanager");
     this->project = project;
 
     btnEditTitle = addButton();

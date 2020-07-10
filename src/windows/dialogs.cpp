@@ -108,21 +108,21 @@ Device Dialogs::getInstallDevice(QWidget *parent)
 {
     const QString title(app->translate("Dialogs", "Install APK"));
     const QString action(app->translate("Dialogs", "Install"));
-    const QIcon icon(app->icons.get("install.png"));
+    const QIcon icon(QIcon::fromTheme("apk-install"));
     return DeviceManager::selectDevice(title, action, icon, parent);
 }
 
 Device Dialogs::getExplorerDevice(QWidget *parent)
 {
     const QString action(app->translate("AndroidExplorer", "Android Explorer"));
-    const QIcon icon(app->icons.get("explorer.png"));
+    const QIcon icon(QIcon::fromTheme("tool-androidexplorer"));
     return DeviceManager::selectDevice({}, action, icon, parent);
 }
 
 Device Dialogs::getScreenshotDevice(QWidget *parent)
 {
     const QString action(app->translate("Dialogs", "Screenshot"));
-    const QIcon icon(app->icons.get("screenshot.png"));
+    const QIcon icon(QIcon::fromTheme("camera-photo"));
     return DeviceManager::selectDevice({}, action, icon, parent);
 }
 

@@ -134,7 +134,7 @@ void MainWindow::initWidgets()
     welcomeItemProxy->setSourceModel(&app->projects);
     welcomeItemProxy->prependRow();
     welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), tr("Welcome"), Qt::DisplayRole);
-    welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), app->icons.get("application.png"), Qt::DecorationRole);
+    welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), QIcon::fromTheme("apk-editor-studio"), Qt::DecorationRole);
     welcomePage = new WelcomeActionViewer(this);
     projectList->setModel(welcomeItemProxy);
     auto dockProjectsWidget = new QWidget(this);
@@ -182,13 +182,13 @@ void MainWindow::initMenus()
     // File Menu:
 
     auto actionApkOpen = app->actions.getOpenApk(this);
-    actionApkSave = new QAction(app->icons.get("pack.png"), QString(), this);
+    actionApkSave = new QAction(QIcon::fromTheme("apk-save"), QString(), this);
     actionApkSave->setShortcut(QKeySequence("Ctrl+Alt+S"));
-    actionApkInstall = new QAction(app->icons.get("install.png"), QString(), this);
+    actionApkInstall = new QAction(QIcon::fromTheme("apk-install"), QString(), this);
     actionApkInstall->setShortcut(QKeySequence("Ctrl+I"));
-    actionApkExplore = new QAction(app->icons.get("explore.png"), QString(), this);
+    actionApkExplore = new QAction(QIcon::fromTheme("folder-open"), QString(), this);
     actionApkExplore->setShortcut(QKeySequence("Ctrl+E"));
-    actionApkClose = new QAction(app->icons.get("x-blue.png"), QString(), this);
+    actionApkClose = new QAction(QIcon::fromTheme("document-close"), QString(), this);
     actionApkClose->setShortcut(QKeySequence("Ctrl+W"));
 
     // Tools Menu:
@@ -198,13 +198,13 @@ void MainWindow::initMenus()
     auto actionAndroidExplorer = app->actions.getOpenAndroidExplorer(this);
     auto actionScreenshot = app->actions.getTakeScreenshot(this);
     actionProjectManager = new QAction(this);
-    actionProjectManager->setIcon(app->icons.get("project.png"));
+    actionProjectManager->setIcon(QIcon::fromTheme("tool-projectmanager"));
     actionProjectManager->setShortcut(QKeySequence("Ctrl+M"));
     actionTitleEditor = new QAction(this);
-    actionTitleEditor->setIcon(app->icons.get("title.png"));
+    actionTitleEditor->setIcon(QIcon::fromTheme("tool-titleeditor"));
     actionTitleEditor->setShortcut(QKeySequence("Ctrl+T"));
     actionPermissionEditor = new QAction(this);
-    actionPermissionEditor->setIcon(app->icons.get("permissions.png"));
+    actionPermissionEditor->setIcon(QIcon::fromTheme("tool-permissioneditor"));
     actionPermissionEditor->setShortcut(QKeySequence("Ctrl+Shift+P"));
 
     // Settings Menu:
@@ -214,9 +214,9 @@ void MainWindow::initMenus()
     // Help Menu:
 
     auto actionDonate = app->actions.getVisitDonatePage();
-    actionAbout = new QAction(app->icons.get("application.png"), QString(), this);
+    actionAbout = new QAction(QIcon::fromTheme("apk-editor-studio"), QString(), this);
     actionAbout->setMenuRole(QAction::AboutRole);
-    actionAboutQt = new QAction(app->icons.get("qt.png"), QString(), this);
+    actionAboutQt = new QAction(QIcon::fromTheme("qt"), QString(), this);
     actionAboutQt->setMenuRole(QAction::AboutQtRole);
 
     // Menu Bar:
@@ -269,9 +269,9 @@ void MainWindow::initMenus()
 
     // Tool Bar:
 
-    actionFileSave = new QAction(app->icons.get("save.png"), QString(), this);
+    actionFileSave = new QAction(QIcon::fromTheme("document-save"), QString(), this);
     actionFileSave->setEnabled(false);
-    actionFileSaveAs = new QAction(app->icons.get("save-as.png"), QString(), this);
+    actionFileSaveAs = new QAction(QIcon::fromTheme("document-save-as"), QString(), this);
     actionFileSaveAs->setEnabled(false);
 
     toolbar = new Toolbar(this);

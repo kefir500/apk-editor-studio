@@ -49,7 +49,7 @@ QString Project::getContentsPath() const
 QIcon Project::getThumbnail() const
 {
     QIcon thumbnail = iconsProxy.getIcon();
-    return !thumbnail.isNull() ? thumbnail : app->icons.get("application.png");
+    return !thumbnail.isNull() ? thumbnail : QIcon::fromTheme("apk-editor-studio");
 }
 
 const ProjectState &Project::getState() const

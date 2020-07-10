@@ -98,7 +98,7 @@ ToolbarDialog::ToolbarDialog(const Toolbar &toolbar, QWidget *parent) : QDialog(
 
 QListWidgetItem *ToolbarDialog::createSeparatorItem() const
 {
-    QIcon icon = app->icons.get("separator.png");
+    QIcon icon = QIcon::fromTheme("toolbar-separator");
     //: Separator is a toolbar element which divides buttons with a vertical line.
     QListWidgetItem *separator = new QListWidgetItem(icon, tr("Separator"));
     separator->setData(Qt::UserRole, "separator");
@@ -108,7 +108,7 @@ QListWidgetItem *ToolbarDialog::createSeparatorItem() const
 
 QListWidgetItem *ToolbarDialog::createSpacerItem() const
 {
-    QIcon icon = app->icons.get("spacer.png");
+    QIcon icon = QIcon::fromTheme("toolbar-spacer");
     //: Spacer is a toolbar element which divides buttons with an empty space.
     QListWidgetItem *spacer = new QListWidgetItem(icon, tr("Spacer"));
     spacer->setData(Qt::UserRole, "spacer");
