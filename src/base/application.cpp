@@ -38,7 +38,7 @@ Application::Application(int &argc, char **argv) : QtSingleApplication(argc, arg
     qDebug();
 
 #ifdef Q_OS_LINUX
-    setWindowIcon(icons.get("application.png"));
+    setWindowIcon(QIcon::fromTheme("apk-editor-studio"));
 #endif
 
     QIcon::setThemeSearchPaths({applicationDirPath() + "/resources/icons"});
