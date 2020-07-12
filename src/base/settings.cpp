@@ -11,7 +11,7 @@ Settings::Settings()
 #ifndef PORTABLE
     settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, Utils::getTitleNoSpaces(), "config");
 #else
-    settings = new QSettings(Utils::etLocalConfigPath("config/config.ini"), QSettings::IniFormat);
+    settings = new QSettings(Utils::getLocalConfigPath("config/config.ini"), QSettings::IniFormat);
 #endif
 }
 
