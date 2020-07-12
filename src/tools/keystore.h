@@ -2,6 +2,7 @@
 #define KEYSTORE_H
 
 #include <QCoreApplication>
+#include <memory>
 
 struct Dname
 {
