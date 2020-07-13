@@ -18,7 +18,6 @@ public:
     int childCount() const;
     QVector<TreeNode *> &getChildren();
     TreeNode *getChild(int row) const;
-    TreeNode *findChild(TreeNode *node) const;
     TreeNode *getParent() const;
     int row() const;
 
