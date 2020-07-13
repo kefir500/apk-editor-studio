@@ -278,7 +278,7 @@ int IconItemsModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid()) {
         return static_cast<TreeNode *>(parent.internalPointer())->childCount();
     } else {
-        return applicationNode->hasChildren() + activitiesNode->hasChildren();
+        return 1 + activitiesNode->hasChildren();
     }
 }
 
@@ -292,9 +292,8 @@ bool IconItemsModel::hasChildren(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
         return static_cast<TreeNode *>(parent.internalPointer())->hasChildren();
-    } else {
-        return applicationNode->hasChildren() || activitiesNode->hasChildren();
     }
+    return true;
 }
 
 bool IconItemsModel::removeRows(int row, int count, const QModelIndex &parent)
@@ -306,17 +305,17 @@ bool IconItemsModel::removeRows(int row, int count, const QModelIndex &parent)
     return sourceModel()->removeRows(index.row(), count, index.parent());
 }
 
-bool IconItemsModel::appendIcon(const QPersistentModelIndex &index, ManifestScope *scope, IconType type)
+bool IconItemsModel::appendIcon(const QPersistentModelIndex &iconIndex, ManifestScope *scope, IconType type)
 {
-    if (!sourceToProxyMap.contains(index)) {
+    if (!sourceToProxyMap.contains(iconIndex)) {
         switch (scope->type()) {
         case ManifestScope::Type::Application: {
             const int row = applicationNode->childCount();
-            beginInsertRows(this->index(ApplicationRow, 0), row, row);
+            beginInsertRows(index(ApplicationRow, 0), row, row);
                 auto iconNode = new IconNode(type);
                 applicationNode->addChild(iconNode);
-                sourceToProxyMap.insert(index, iconNode);
-                proxyToSourceMap.insert(iconNode, index);
+                sourceToProxyMap.insert(iconIndex, iconNode);
+                proxyToSourceMap.insert(iconNode, iconIndex);
             endInsertRows();
             sort();
             return true;
@@ -334,17 +333,18 @@ bool IconItemsModel::appendIcon(const QPersistentModelIndex &index, ManifestScop
             if (!activityNode) {
                 // Create new activity node:
                 const int row = activitiesNode->childCount();
-                beginInsertRows(this->index(ActivitiesRow, 0), row, row);
+                beginInsertRows(index(ActivitiesRow, 0), row, row);
                     activityNode = new ActivityNode(scope);
                     activitiesNode->addChild(activityNode);
                 endInsertRows();
             }
+            const QModelIndex activityIndex = index(activityNode->row(), 0, index(ActivitiesRow, 0));
             const int row = activityNode->childCount();
-            beginInsertRows(this->index(activityNode->row(), 0, this->index(ActivitiesRow, 0)), row, row);
+            beginInsertRows(activityIndex, row, row);
                 auto iconNode = new IconNode(type);
                 activityNode->addChild(iconNode);
-                sourceToProxyMap.insert(index, iconNode);
-                proxyToSourceMap.insert(iconNode, index);
+                sourceToProxyMap.insert(iconIndex, iconNode);
+                proxyToSourceMap.insert(iconNode, iconIndex);
             endInsertRows();
             sort();
             return true;
