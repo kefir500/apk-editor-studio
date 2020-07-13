@@ -42,11 +42,12 @@ Application::Application(int &argc, char **argv) : QtSingleApplication(argc, arg
 #endif
 
     QIcon::setThemeSearchPaths({applicationDirPath() + "/resources/icons"});
-    QIcon::setThemeName("default");
     if (!Utils::isDarkTheme()) {
         theme_ = new LightTheme;
+        QIcon::setThemeName("default");
     } else {
         theme_ = new DarkTheme;
+        QIcon::setThemeName("dark");
     }
 }
 
