@@ -2,7 +2,7 @@
 Name=Dark
 Comment=Dark APK Editor Studio theme
 Directories=actions/16x16,actions/24x24,actions/30x30,actions/32x32,actions/48x48,emblems/16x16,emblems/32x32
-Inherits=Default
+Inherits=default
 
 [actions/16x16]
 Size=16

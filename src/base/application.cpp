@@ -49,7 +49,6 @@ Application::Application(int &argc, char **argv) : QtSingleApplication(argc, arg
         theme_ = new DarkTheme;
         QIcon::setThemeName("dark");
     }
-    QIcon::setFallbackThemeName("default");
 }
 
 Application::~Application()
