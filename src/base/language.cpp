@@ -6,7 +6,7 @@ Language::Language(const QString &path)
     code = path.split('.').at(1);
     locale = QLocale(code);
     title = Utils::capitalize(locale.nativeLanguageName());
-    flag = QPixmap(Utils::getLocaleFlag(locale));
+    flag = Utils::getLocaleFlag(locale);
 }
 
 QString Language::getTitle() const
@@ -19,7 +19,7 @@ QString Language::getCode() const
     return code;
 }
 
-QPixmap Language::getFlag() const
+QIcon Language::getFlag() const
 {
     return flag;
 }

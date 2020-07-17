@@ -1,7 +1,7 @@
 [Icon Theme]
 Name=Default
 Comment=Default APK Editor Studio theme
-Directories=actions/16x16,actions/24x24,actions/30x30,actions/32x32,actions/40x40,actions/48x48,apps/16x16,apps/20x20,apps/32x32,apps/48x48,apps/256x256,devices/16x16,devices/30x30,devices/40x40,emblems/16x16,emblems/32x32,status/20x20
+Directories=actions/16x16,actions/24x24,actions/30x30,actions/32x32,actions/40x40,actions/48x48,apps/16x16,apps/20x20,apps/32x32,apps/48x48,apps/256x256,devices/16x16,devices/30x30,devices/40x40,emblems/16x16,emblems/32x32,intl,status/20x20
 
 [actions/16x16]
 Size=16
@@ -82,6 +82,11 @@ Context=Emblems
 Size=32
 Type=Fixed
 Context=Emblems
+
+[intl]
+Size=16
+Type=Fixed
+Context=International
 
 [status/20x20]
 Size=20

@@ -510,7 +510,7 @@ QMenu *ActionProvider::getLanguages(QWidget *parent)
     for (const Language &language : languages) {
         const QString localeTitle = language.getTitle();
         const QString localeCode = language.getCode();
-        const QPixmap localeFlag = language.getFlag();
+        const QIcon localeFlag = language.getFlag();
         QAction *action = actions->addAction(localeFlag, localeTitle);
         action->setCheckable(true);
         action->setProperty("locale", localeCode);

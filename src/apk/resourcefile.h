@@ -16,7 +16,7 @@ public:
     QString getDpi() const;
     QString getLocaleCode() const;
     QString getLanguageName() const;
-    QPixmap getLanguageIcon() const;
+    QIcon getLanguageIcon() const;
     QString getApiVersion() const;
     QString getFileName() const;
     QString getFilePath() const;

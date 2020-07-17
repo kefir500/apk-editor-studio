@@ -83,7 +83,7 @@ namespace Utils
     QString getBinaryPath(const QString &executable);
     QString getJavaPath();
     QString getJavaBinaryPath(const QString &executable);
-    QPixmap getLocaleFlag(const QLocale &locale);
+    QIcon getLocaleFlag(const QLocale &locale);
 
     // URL utils:
 

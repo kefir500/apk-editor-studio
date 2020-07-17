@@ -286,25 +286,14 @@ QString Utils::getJavaBinaryPath(const QString &executable)
     return executable;
 }
 
-QPixmap Utils::getLocaleFlag(const QLocale &locale)
+QIcon Utils::getLocaleFlag(const QLocale &locale)
 {
-    const QLocale::Language localeLanguage = locale.language();
-    const QLocale::Country localeCountry = locale.country();
-    const QStringList localeSegments = QLocale(localeLanguage, localeCountry).name().split('_');
-    if (localeSegments.count() > 1) {
-        QPixmap flag(QString(getSharedPath("resources/flags/%1.png")).arg(localeSegments.at(1).toLower()));
-        const int flagWidth = flag.width();
-        const int flagHeight = flag.height();
-        const int longSide = qMax(flagWidth, flagHeight);
-        QPixmap result(longSide, longSide);
-        result.fill(Qt::transparent);
-        QPainter painter(&result);
-        painter.translate((longSide - flagWidth) / 2.0, (longSide - flagHeight) / 2.0);
-        painter.drawPixmap(0, 0, flag);
-        return result;
-    } else {
+    const QStringList localeSegments = locale.name().split('_');
+    if (localeSegments.count() <= 1) {
         return QPixmap();
     }
+    const QString countryCode = localeSegments.at(1).toLower();
+    return QIcon::fromTheme(QString("intl/flag-%1").arg(countryCode));
 }
 
 QString Utils::getWebPage()

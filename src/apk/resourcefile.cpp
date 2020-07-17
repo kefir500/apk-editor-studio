@@ -140,7 +140,7 @@ QString ResourceFile::getLanguageName() const
     return Utils::capitalize(native);
 }
 
-QPixmap ResourceFile::getLanguageIcon() const
+QIcon ResourceFile::getLanguageIcon() const
 {
     return Utils::getLocaleFlag(QLocale(localeLegacy));
 }

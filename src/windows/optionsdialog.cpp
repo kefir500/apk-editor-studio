@@ -81,7 +81,7 @@ void OptionsDialog::load()
     comboLanguages->clear();
     const QString currentLocale = app->settings->getLanguage();
     for (const Language &language : languages) {
-        const QPixmap flag = language.getFlag();
+        const QIcon flag = language.getFlag();
         const QString title = language.getTitle();
         const QString code = language.getCode();
         comboLanguages->addItem(flag, title, code);
