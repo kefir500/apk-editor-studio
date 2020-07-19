@@ -62,7 +62,7 @@ GradientWidget *AboutDialog::createAboutTab()
 
     QLabel *icon = new QLabel(this);
     icon->setMargin(16);
-    icon->setPixmap(QPixmap(Utils::getSharedPath("resources/icons/other/about.png")).scaled(app->scale(128, 128)));
+    icon->setPixmap(QPixmap(":/icons/other/about.png").scaled(app->scale(128, 128)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     QLabel *text = new QLabel(this);

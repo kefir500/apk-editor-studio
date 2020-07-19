@@ -193,8 +193,11 @@ HEADERS += \
     $$PWD/windows/mainwindow.h \
     $$PWD/windows/optionsdialog.h \
     $$PWD/windows/permissioneditor.h \
+    $$PWD/windows/rememberdialog.h \
     $$PWD/windows/selectdialog.h \
     $$PWD/windows/toolbardialog.h \
     $$PWD/windows/yesalwaysdialog.h
 
 INCLUDEPATH += $$PWD
+
+RESOURCES += $$PWD/icons/icons.qrc

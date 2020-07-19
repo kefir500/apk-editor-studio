@@ -293,7 +293,7 @@ QIcon Utils::getLocaleFlag(const QLocale &locale)
         return QPixmap();
     }
     const QString countryCode = localeSegments.at(1).toLower();
-    return QIcon::fromTheme(QString("intl/flag-%1").arg(countryCode));
+    return QIcon::fromTheme(QString("flag-%1").arg(countryCode));
 }
 
 QString Utils::getWebPage()
