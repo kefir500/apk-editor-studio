@@ -17,24 +17,7 @@ DEFINES += VERSION=\\\"$$VERSION\\\"
 #DEFINES += PORTABLE
 
 include($$PWD/src/apk-editor-studio.pri)
+include($$PWD/src/translations/translations.pri)
 include($$PWD/lib/qtkeychain/qt5keychain.pri)
 include($$PWD/lib/qtsingleapplication/src/qtsingleapplication.pri)
 include($$PWD/deploy.pri)
-
-EXTRA_TRANSLATIONS += \
-    $$PWD/res/translations/apk-editor-studio.de.ts \
-    $$PWD/res/translations/apk-editor-studio.el.ts \
-    $$PWD/res/translations/apk-editor-studio.es.ts \
-    $$PWD/res/translations/apk-editor-studio.ja.ts \
-    $$PWD/res/translations/apk-editor-studio.ko.ts \
-    $$PWD/res/translations/apk-editor-studio.pl.ts \
-    $$PWD/res/translations/apk-editor-studio.pt.ts \
-    $$PWD/res/translations/apk-editor-studio.ro.ts \
-    $$PWD/res/translations/apk-editor-studio.ru.ts \
-    $$PWD/res/translations/apk-editor-studio.tr.ts
-
-updateqm.input = EXTRA_TRANSLATIONS
-updateqm.output = $$PWD/res/deploy/all/resources/translations/${QMAKE_FILE_IN_BASE}.qm
-updateqm.commands = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN} -qm ${QMAKE_FILE_OUT}
-updateqm.CONFIG += no_link target_predeps
-QMAKE_EXTRA_COMPILERS += updateqm
