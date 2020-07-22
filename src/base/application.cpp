@@ -41,7 +41,6 @@ Application::Application(int &argc, char **argv) : QtSingleApplication(argc, arg
     setWindowIcon(QIcon::fromTheme("apk-editor-studio"));
 #endif
 
-    QIcon::setThemeSearchPaths({Utils::getSharedPath("/resources/icons")});
     if (!Utils::isDarkTheme()) {
         theme_ = new LightTheme;
         QIcon::setThemeName("default");
