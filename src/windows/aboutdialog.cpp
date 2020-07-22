@@ -58,30 +58,54 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 
 GradientWidget *AboutDialog::createAboutTab()
 {
-    GradientWidget *tab = new GradientWidget(this);
+    auto tab = new GradientWidget(this);
 
-    QLabel *icon = new QLabel(this);
+    auto icon = new QLabel(this);
     icon->setMargin(16);
     icon->setPixmap(QPixmap(":/icons/other/about.png").scaled(app->scale(128, 128)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    QLabel *text = new QLabel(this);
-    text->setOpenExternalLinks(true);
-    const QString tableRow("<tr><td>%1</td><td><a href=\"%2\">%2</a></td></tr>");
-    text->setText(
-        QString("<h4>%1</h4>").arg(Utils::getTitleAndVersion()) +
-        QString("<p>%1 %2</p>").arg(tr("Author:"), "Alexander Gorishnyak") +
-        QString("<p><table style=\"margin-left: -2px;\">") +
-        QString(tableRow).arg(tr("Website:"), Utils::getWebPage()) +
-        QString(tableRow).arg(tr("Bug Tracker:"), Utils::getIssuesPage()) +
-        QString(tableRow).arg(tr("Translation:"), Utils::getTranslatePage()) +
-        QString("</table></p>") +
-        QString("<p>%1 - %2</p>").arg(QString(__DATE__).toUpper(), __TIME__)
-    );
+    const QString link("<a href=\"%1\">%1</a>");
+    auto labelApplicationTitle = new QLabel(QString("<b>%1</b>").arg(Utils::getTitleAndVersion()), this);
+    auto labelAuthor = new QLabel("Alexander Gorishnyak", this);
+    auto labelWebsiteLink = new QLabel(link.arg(Utils::getWebPage()), this);
+    auto labelIssuesLink = new QLabel(link.arg(Utils::getIssuesPage()), this);
+    auto labelTranslateLink = new QLabel(link.arg(Utils::getTranslatePage()), this);
+    auto labelBuildTime = new QLabel(QString("<p>%1 - %2</p>").arg(QString(__DATE__).toUpper(), __TIME__), this);
+    labelWebsiteLink->setOpenExternalLinks(true);
+    labelIssuesLink->setOpenExternalLinks(true);
+    labelTranslateLink->setOpenExternalLinks(true);
+    labelWebsiteLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard);
+    labelIssuesLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard);
+    labelTranslateLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard);
+    if (layoutDirection() == Qt::RightToLeft) {
+        labelApplicationTitle->setAlignment(Qt::AlignRight);
+        labelAuthor->setAlignment(Qt::AlignRight);
+        labelWebsiteLink->setAlignment(Qt::AlignRight);
+        labelIssuesLink->setAlignment(Qt::AlignRight);
+        labelTranslateLink->setAlignment(Qt::AlignRight);
+        labelBuildTime->setAlignment(Qt::AlignRight);
+    }
 
-    QHBoxLayout *layout = new QHBoxLayout(tab);
+    auto formLayout = new QFormLayout;
+    formLayout->setSpacing(2);
+    formLayout->addRow(tr("Author:"), labelAuthor);
+    formLayout->addItem(new QSpacerItem(0, 10));
+    formLayout->addRow(tr("Website:"), labelWebsiteLink);
+    formLayout->addRow(tr("Bug Tracker:"), labelIssuesLink);
+    formLayout->addRow(tr("Translation:"), labelTranslateLink);
+
+    auto contentLayout = new QVBoxLayout;
+    contentLayout->setSpacing(16);
+    contentLayout->addStretch(1);
+    contentLayout->addWidget(labelApplicationTitle);
+    contentLayout->addLayout(formLayout);
+    contentLayout->addWidget(labelBuildTime);
+    contentLayout->addStretch(1);
+
+    auto layout = new QHBoxLayout(tab);
     layout->addWidget(icon);
-    layout->addWidget(text);
+    layout->addLayout(contentLayout);
 
     return tab;
 }

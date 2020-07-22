@@ -40,6 +40,7 @@
         <file>default/actions/16x16/zoom-normal.png</file>
         <file>default/actions/16x16/zoom-out.png</file>
         <file>default/actions/24x24/go-next.png</file>
+        <file>default/actions/24x24/go-previous.png</file>
         <file>default/actions/24x24/go-up.png</file>
         <file>default/actions/30x30/apk-install.png</file>
         <file>default/actions/30x30/apk-optimize.png</file>
@@ -119,6 +120,7 @@
         <file>default/actions/40x40/zoom-normal.png</file>
         <file>default/actions/40x40/zoom-out.png</file>
         <file>default/actions/48x48/go-next.png</file>
+        <file>default/actions/48x48/go-previous.png</file>
         <file>default/actions/48x48/go-up.png</file>
         <file>default/apps/16x16/apk-editor-studio.png</file>
         <file>default/apps/16x16/qt.png</file>
@@ -384,11 +386,13 @@
         <file>dark/index.theme</file>
         <file>dark/actions/16x16/help-source.png</file>
         <file>dark/actions/24x24/go-next.png</file>
+        <file>dark/actions/24x24/go-previous.png</file>
         <file>dark/actions/24x24/go-up.png</file>
         <file>dark/actions/30x30/toolbar-separator.png</file>
         <file>dark/actions/30x30/toolbar-spacer.png</file>
         <file>dark/actions/32x32/help-source.png</file>
         <file>dark/actions/48x48/go-next.png</file>
+        <file>dark/actions/48x48/go-previous.png</file>
         <file>dark/actions/48x48/go-up.png</file>
         <file>dark/emblems/16x16/emblem-information.png</file>
         <file>dark/emblems/32x32/emblem-information.png</file>

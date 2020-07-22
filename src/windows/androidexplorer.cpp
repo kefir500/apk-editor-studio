@@ -132,7 +132,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
 
     pathGoButton = new QToolButton(this);
     pathGoButton->setToolTip(pathGoButton->text());
-    pathGoButton->setIcon(QIcon::fromTheme("go-next"));
+    pathGoButton->setIcon(QIcon::fromTheme(layoutDirection() == Qt::LeftToRight ? "go-next" : "go-previous"));
     connect(pathGoButton, &QToolButton::clicked, this, [this]() {
         go(pathInput->text());
     });

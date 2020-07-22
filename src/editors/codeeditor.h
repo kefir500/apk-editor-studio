@@ -8,27 +8,33 @@
 
 class CodeTextEdit;
 
-class CodeContainer : public QWidget
+class LineNumberArea : public QWidget
 {
 public:
-    CodeContainer(CodeTextEdit *editor);
+    LineNumberArea(CodeTextEdit *parent);
 
-    CodeTextEdit *parent() const;
     QSize sizeHint() const override;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
+protected:
+    void changeEvent(QEvent *event) override;
+
 private:
-    int m_width;
-    int m_padding;
-    int m_currentLine;
+    void updateAreaWidth(int blocks);
+    void updateAreaGeomerty();
+
+    CodeTextEdit *editor;
+    int lineNumberAreaWidth;
+    int lineNumberAreaPadding;
+    int currentLineNumber;
 };
 
 class CodeTextEdit : public QPlainTextEdit
 {
     Q_OBJECT
-    friend CodeContainer;
+    friend LineNumberArea;
 
 public:
     CodeTextEdit(QWidget *parent = nullptr);
