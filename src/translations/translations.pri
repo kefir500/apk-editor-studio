@@ -1,6 +1,5 @@
 CONFIG += lrelease
 
-TRANSLATIONS = $$PWD/apk-editor-studio.en.ts
 EXTRA_TRANSLATIONS += \
     $$PWD/apk-editor-studio.de.ts \
     $$PWD/apk-editor-studio.el.ts \
