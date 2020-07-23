@@ -13,6 +13,9 @@
 
 ### Translators:
 
+#### French
+- [Julien Veuillet](https://www.wakdev.com/)
+
 #### German
 - [Till Tektronix](https://www.transifex.com/user/profile/Tektronix/)
 
