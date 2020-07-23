@@ -31,6 +31,9 @@
 #### Korean
 - [Gyuha Shin](https://www.transifex.com/user/profile/gyuha/)
 
+#### Kurdish
+- [Erfan Muhammad](https://www.transifex.com/user/profile/erfan1371/)
+
 #### Polish
 - Jerzy Puczek
 
