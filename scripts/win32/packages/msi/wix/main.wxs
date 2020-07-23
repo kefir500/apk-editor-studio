@@ -144,7 +144,7 @@
       <Directory Id="DesktopFolder">
         <Component Id="DesktopComponent" Guid="36AEEC75-757E-4267-9174-14D37BAD4271">
           <Shortcut Id="DesktopExecutableShortcut" Name="$(var.ProductName)" Description="Start $(var.ProductName)" Target="[!Executable]" WorkingDirectory="INSTALLFOLDER" />
-          <RegistryValue Root="HKMU" Key="Software\$(var.ProductName)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+          <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
         </Component>
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -153,7 +153,7 @@
             <Shortcut Id="StartmenuExecutableShortcut" Name="$(var.ProductName)" Description="Start $(var.ProductName)" Target="[!Executable]" WorkingDirectory="INSTALLFOLDER" />
             <Shortcut Id="StartmenuUninstallShortcut" Name="Uninstall $(var.ProductName)" Description="Uninstall $(var.ProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" WorkingDirectory="SystemFolder" />
             <RemoveFolder Id="RemoveShortcutsFolder" On="uninstall" />
-            <RegistryValue Root="HKMU" Key="Software\$(var.ProductName)" Name="StartmenuFolder" Type="integer" Value="1" KeyPath="yes"/>
+            <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="StartmenuFolder" Type="integer" Value="1" KeyPath="yes"/>
           </Component>
         </Directory>
       </Directory>
