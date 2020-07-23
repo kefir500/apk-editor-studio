@@ -65,6 +65,9 @@
               <Component Id="GreekComponent" Guid="EF9ADEEE-D719-4AC8-93D9-ABE61693A4CA">
                 <File Name="apk-editor-studio.el.qm" />
               </Component>
+              <Component Id="IndonesianComponent" Guid="165C3B8E-F366-4E50-A177-04BC94C55EBA">
+                <File Name="apk-editor-studio.id.qm" />
+              </Component>
               <Component Id="JapaneseComponent" Guid="61C2541A-4370-4E10-8D53-FB9492E80A80">
                 <File Name="apk-editor-studio.ja.qm" />
                 <File Name="qt.ja.qm" />
@@ -198,6 +201,7 @@
     <ComponentGroup Id="TranslationsComponents">
       <ComponentRef Id="GermanComponent" />
       <ComponentRef Id="GreekComponent" />
+      <ComponentRef Id="IndonesianComponent" />
       <ComponentRef Id="JapaneseComponent" />
       <ComponentRef Id="KoreanComponent" />
       <ComponentRef Id="PolishComponent" />
@@ -244,6 +248,9 @@
       </Feature>
       <Feature Id="GreekFeature" Title="Greek" Description="Greek translation.">
         <ComponentRef Id="GreekComponent" />
+      </Feature>
+      <Feature Id="IndonesianFeature" Title="Indonesian" Description="Indonesian translation.">
+        <ComponentRef Id="IndonesianComponent" />
       </Feature>
       <Feature Id="JapaneseFeature" Title="Japanese" Description="Japanese translation.">
         <ComponentRef Id="JapaneseComponent" />

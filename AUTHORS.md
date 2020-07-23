@@ -19,6 +19,9 @@
 #### Greek
 - [Spiros Kaparos](https://www.transifex.com/user/profile/spkprs/)
 
+#### Indonesian
+- [Triyan W. Nugroho](https://www.transifex.com/user/profile/TriyanWahyuNugroho/)
+
 #### Japanese
 - [Sakai Hiroki](https://www.transifex.com/user/profile/m07jp/)
 
