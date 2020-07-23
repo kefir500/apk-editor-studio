@@ -168,7 +168,8 @@
         </Directory>
       </Directory>
       <Component Id="AssociationComponent" Guid="C6176BE3-E235-46DF-9BC6-5CA8358B0254">
-        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\.apk\OpenWithProgIds\apk-editor-studio.apk" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\.apk" Value="apk-editor-studio.apk" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\.apk\OpenWithProgIds" Name="apk-editor-studio.apk" Value="" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk" Name="FriendlyTypeName" Value="Android Application Package" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\DefaultIcon" Value="[ExecutablePath],0" Type="string" />
       </Component>
