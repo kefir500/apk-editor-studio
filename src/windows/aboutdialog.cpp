@@ -115,7 +115,7 @@ QWidget *AboutDialog::createAuthorsTab()
     QString content = "";
     const QString br("<br />");
     QFile file(Utils::getSharedPath("docs/authors.txt"));
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
+    if (file.open(QFile::ReadOnly)) {
         QTextStream stream(&file);
         stream.setCodec("UTF-8");
         while (!stream.atEnd()) {
@@ -166,7 +166,7 @@ QWidget *AboutDialog::createVersionsTab()
     tab->setReadOnly(true);
 
     QFile file(Utils::getSharedPath("docs/versions.txt"));
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
+    if (file.open(QFile::ReadOnly)) {
         QTextStream stream(&file);
         stream.setCodec("UTF-8");
         while (!stream.atEnd()) {
@@ -288,7 +288,7 @@ QWidget *AboutDialog::createLicenseTab()
     tab->setOpenExternalLinks(true);
 
     QFile file(Utils::getSharedPath("docs/licenses/apk-editor-studio.html"));
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
+    if (file.open(QFile::ReadOnly)) {
         QTextStream stream(&file);
         stream.setCodec("UTF-8");
         tab->setText(stream.readAll());

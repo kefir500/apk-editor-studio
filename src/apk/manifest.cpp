@@ -7,7 +7,7 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
     // XML:
 
     xmlFile = new QFile(xmlPath);
-    if (xmlFile->open(QFile::ReadWrite | QFile::Text)) {
+    if (xmlFile->open(QFile::ReadWrite)) {
         QTextStream stream(xmlFile);
         stream.setCodec("UTF-8");
         xml.setContent(stream.readAll());
@@ -39,7 +39,7 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
     regexVersionName.setPattern("(?<=^  versionName: ).+(?=$)");
 
     ymlFile = new QFile(ymlPath);
-    if (ymlFile->open(QFile::ReadWrite | QFile::Text)) {
+    if (ymlFile->open(QFile::ReadWrite)) {
         QTextStream stream(ymlFile);
         stream.setCodec("UTF-8");
         yml = stream.readAll();
