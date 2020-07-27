@@ -20,6 +20,11 @@ const QPixmap &RecentFile::thumbnail() const
     return d->thumbnail;
 }
 
+bool RecentFile::operator==(const RecentFile &file) const
+{
+    return filename() == file.filename();
+}
+
 Recent::Recent(const QString &identifier, QObject *parent) : QObject(parent)
 {
     this->identifier = identifier;
@@ -50,15 +55,15 @@ bool Recent::add(const QString &filename, const QPixmap &thumbnail)
 
     // Remove duplicates:
 
-    for (int i = 0; i < recent.size(); ++i) {
-        if (recent[i].filename() == filename) {
-            recent.removeAt(i);
-        }
-    }
+    RecentFile recentFile(filename, thumbnail);
+    recent.removeAll(recentFile);
 
-    // Create recent entry:
+    // Add recent entry:
 
-    recent.prepend(RecentFile(filename, thumbnail));
+    recent.prepend(recentFile);
+
+    // Limit to maximum:
+
     while (recent.size() > limit) {
         remove(recent.size() - 1);
     }

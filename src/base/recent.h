@@ -9,6 +9,7 @@ public:
     RecentFile(const QString &filename, const QPixmap &thumbnail);
     const QString &filename() const;
     const QPixmap &thumbnail() const;
+    bool operator==(const RecentFile &) const;
 
 private:
     class RecentFilePrivate : public QSharedData
