@@ -43,8 +43,8 @@ public:
     void openKeyManager(QWidget *parent = nullptr);
     void openAndroidExplorer(MainWindow *window);
     void openAndroidExplorer(const QString &serial, MainWindow *window);
-    void takeScreenshot(QWidget *parent = nullptr);
-    void takeScreenshot(const QString &serial, QWidget *parent = nullptr);
+    void takeScreenshot(QWidget *parent);
+    void takeScreenshot(const QString &serial, QWidget *parent);
 
     QAction *getOpenApk(MainWindow *window);
     QAction *getOptimizeApk(MainWindow *window);
@@ -57,15 +57,15 @@ public:
     QAction *getVisitDonatePage(QObject *parent = nullptr);
     QAction *getExit(QWidget *widget);
 
-    QAction *getCheckUpdates(QWidget *parent = nullptr);
-    QAction *getResetSettings(QWidget *parent = nullptr);
-    QAction *getOpenOptions(QWidget *parent = nullptr);
-    QAction *getOpenDeviceManager(QWidget *parent= nullptr);
-    QAction *getOpenKeyManager(QWidget *parent = nullptr);
+    QAction *getCheckUpdates(QWidget *parent);
+    QAction *getResetSettings(QWidget *parent);
+    QAction *getOpenOptions(QWidget *parent);
+    QAction *getOpenDeviceManager(QWidget *parent);
+    QAction *getOpenKeyManager(QWidget *parent);
     QAction *getOpenAndroidExplorer(MainWindow *window);
     QAction *getOpenAndroidExplorer(const QString &serial, MainWindow *window);
-    QAction *getTakeScreenshot(QWidget *parent = nullptr);
-    QAction *getTakeScreenshot(const QString &serial, QWidget *parent = nullptr);
+    QAction *getTakeScreenshot(QWidget *parent);
+    QAction *getTakeScreenshot(const QString &serial, QWidget *parent);
 
     QMenu *getLanguages(QWidget *parent = nullptr);
     QMenu *getRecent(MainWindow *window);
