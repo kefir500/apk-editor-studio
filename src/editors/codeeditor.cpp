@@ -178,7 +178,6 @@ void LineNumberArea::paintEvent(QPaintEvent *event)
             painter.save();
             const int blockNumber = block.blockNumber() + 1;
             if (blockNumber == currentLineNumber) {
-                painter.save();
                 painter.setPen(activeLineNumberColor);
                 QFont font = painter.font();
                 font.setBold(true);
