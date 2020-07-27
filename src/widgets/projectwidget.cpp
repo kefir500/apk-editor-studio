@@ -195,7 +195,7 @@ bool ProjectWidget::exploreProject()
 
 bool ProjectWidget::closeProject()
 {
-    if (project->getState().isModified()) {
+    if (isUnsaved()) {
         const QString question = tr("Are you sure you want to close this APK?\nAny unsaved changes will be lost.");
         const int answer = QMessageBox::question(this, QString(), question);
         if (answer != QMessageBox::Yes) {
