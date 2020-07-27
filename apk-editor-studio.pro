@@ -5,7 +5,6 @@ CONFIG += c++11
 
 TARGET = apk-editor-studio
 VERSION = 1.4.0
-CI = $$(CI)
 
 QMAKE_TARGET_PRODUCT = APK Editor Studio
 QMAKE_TARGET_COMPANY = Alexander Gorishnyak
