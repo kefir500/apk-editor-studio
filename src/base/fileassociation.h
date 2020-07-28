@@ -27,7 +27,8 @@ private:
 
     const QString progId;
     const QString extension;
-    std::unique_ptr<QSettings> registry;
+    std::unique_ptr<QSettings> hkcuClasses;
+    std::unique_ptr<QSettings> hklmClasses;
 };
 
 #endif

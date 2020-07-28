@@ -8,20 +8,21 @@
 FileAssociation::FileAssociation(const QString &progId, const QString &extension)
     : progId(progId)
     , extension(extension)
-    , registry(new QSettings("HKEY_CURRENT_USER\\Software\\Classes", QSettings::NativeFormat))
+    , hkcuClasses(new QSettings("HKEY_CURRENT_USER\\Software\\Classes", QSettings::NativeFormat))
+    , hklmClasses(new QSettings("HKEY_LOCAL_MACHINE\\Software\\Classes", QSettings::NativeFormat))
 {
 }
 
 bool FileAssociation::set(const QString &icon, const QString &friendlyTypeName)
 {
-    if (!registry->isWritable()) {
+    if (!hkcuClasses->isWritable()) {
         return false;
     }
-    registry->setValue(QString(".%1/Default").arg(extension), progId);
-    registry->setValue(QString(".%1/OpenWithProgIds/%2").arg(extension, progId), QString());
-    registry->setValue(progId + "/FriendlyTypeName", friendlyTypeName);
+    hkcuClasses->setValue(QString(".%1/Default").arg(extension), progId);
+    hkcuClasses->setValue(QString(".%1/OpenWithProgIds/%2").arg(extension, progId), QString());
+    hkcuClasses->setValue(progId + "/FriendlyTypeName", friendlyTypeName);
     if (!icon.isNull()) {
-        registry->setValue(progId + "/DefaultIcon/Default", icon);
+        hkcuClasses->setValue(progId + "/DefaultIcon/Default", icon);
     }
     SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0);
     return true;
@@ -29,51 +30,56 @@ bool FileAssociation::set(const QString &icon, const QString &friendlyTypeName)
 
 bool FileAssociation::unset()
 {
-    if (!registry->isWritable()) {
+    if (!hkcuClasses->isWritable()) {
         return false;
     }
     const QString valueKey = QString(".%1/Default").arg(extension);
-    if (registry->value(valueKey) == progId) {
-        registry->setValue(valueKey, QString());
+    if (hkcuClasses->value(valueKey) == progId) {
+        hkcuClasses->setValue(valueKey, QString());
     }
-    registry->remove(QString(".%1/OpenWithProgIds/%2").arg(extension, progId));
-    registry->remove(progId);
+    hkcuClasses->remove(QString(".%1/OpenWithProgIds/%2").arg(extension, progId));
+    hkcuClasses->remove(progId);
     return true;
 }
 
 bool FileAssociation::addVerb(const QString &verb, const QString &command, const QString &icon)
 {
-    if (!registry->isWritable()) {
+    if (!hkcuClasses->isWritable()) {
         return false;
     }
-    registry->setValue(getVerbKey(verb) + "/Command/Default", command);
+    hkcuClasses->setValue(getVerbKey(verb) + "/Command/Default", command);
     if (!icon.isNull()) {
-        registry->setValue(getVerbKey(verb) + "/Icon", icon);
+        hkcuClasses->setValue(getVerbKey(verb) + "/Icon", icon);
     }
     return true;
 }
 
 bool FileAssociation::removeVerb(const QString &verb)
 {
-    if (!registry->isWritable()) {
+    if (!hkcuClasses->isWritable()) {
         return false;
     }
-    registry->remove(getVerbKey(verb));
+    hkcuClasses->remove(getVerbKey(verb));
     return true;
 }
 
 bool FileAssociation::isSet() const
 {
-    // Qt doesn't check the existence of a registry key with no value.
-    // For this reason the FriendlyTypeName key is checked instead.
-    return
-        registry->contains(progId + "/FriendlyTypeName") &&
-        registry->value(QString(".%1/Default").arg(extension)) == progId;
+    auto f = [this](const QSettings *classes) -> bool {
+        // Qt doesn't check the existence of a registry key with no value.
+        // For this reason the FriendlyTypeName key is checked instead.
+        return
+            classes->contains(progId + "/FriendlyTypeName") &&
+            classes->value(QString(".%1/Default").arg(extension)) == progId;
+    };
+    return f(hkcuClasses.get()) || f(hklmClasses.get());
 }
 
 bool FileAssociation::hasVerb(const QString &verb) const
 {
-    return registry->contains(getVerbKey(verb) + "/Command/Default");
+    return
+        hkcuClasses->contains(getVerbKey(verb) + "/Command/Default") ||
+        hklmClasses->contains(getVerbKey(verb) + "/Command/Default");
 }
 
 QString FileAssociation::getVerbKey(const QString &verb) const
