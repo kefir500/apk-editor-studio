@@ -12,7 +12,7 @@
 # Translators:
 
 ## French
-- [Julien Veuillet](https://www.wakdev.com/)
+- [Julien Veuillet](https://github.com/wakdev)
 
 ## German
 - [Till Tektronix](https://www.transifex.com/user/profile/Tektronix/)
@@ -33,7 +33,7 @@
 - [Erfan Muhammad](https://www.transifex.com/user/profile/erfan1371/)
 
 ## Polish
-- Jerzy Puczek
+- [Jerzy Puczek](https://www.transifex.com/user/profile/Jurek04/)
 
 ## Portuguese
 - [Giancarlo Molinari](https://www.transifex.com/user/profile/pombimsjb/)
