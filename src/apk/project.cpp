@@ -23,12 +23,11 @@ Project::~Project()
 {
     delete manifest;
 
-    if (!contentsPath.isEmpty()) {
-        qDebug() << qPrintable(QString("Removing \"%1\"...\n").arg(contentsPath));
-        // Additional check to prevent accidental recursive deletion of the wrong directory:
-        const bool recursive = QFile::exists(QString("%1/%2").arg(contentsPath, "AndroidManifest.xml"));
-        Utils::rmdir(contentsPath, recursive);
-    }
+    const QString contentsPath = getContentsPath();
+    qDebug() << qPrintable(QString("Removing \"%1\"...\n").arg(contentsPath));
+    // Additional check to prevent accidental recursive deletion of the wrong directory:
+    const bool recursive = QFile::exists(QString("%1/%2").arg(contentsPath, "AndroidManifest.xml"));
+    Utils::rmdir(contentsPath, recursive);
 }
 
 QString Project::getTitle() const
@@ -43,7 +42,7 @@ QString Project::getOriginalPath() const
 
 QString Project::getContentsPath() const
 {
-    return QDir::toNativeSeparators(contentsPath);
+    return contentsPath.get();
 }
 
 QIcon Project::getThumbnail() const
@@ -88,13 +87,12 @@ Command *Project::createUnpackCommand()
     QDir().mkpath(target);
     QDir().mkpath(frameworks);
 
-    // Be careful with the "contentsPath" variable: this directory is recursively removed in the destructor.
-    contentsPath = target;
+    contentsPath.set(target);
 
     auto apktoolDecode = new Apktool::Decode(source, target, frameworks, resources, sources, keepBroken);
     connect(apktoolDecode, &Command::finished, this, [=](bool success) {
         if (success) {
-            filesystemModel.setRootPath(contentsPath);
+            filesystemModel.setRootPath(getContentsPath());
         } else {
             journal(tr("Error unpacking APK."), apktoolDecode->output(), LogEntry::Error);
         }
@@ -233,16 +231,35 @@ void Project::LoadUnpackedCommand::run()
 {
     emit started();
 
+    const QString contentsPath = project->getContentsPath();
+
     project->journal(Project::tr("Reading APK contents..."));
     project->manifest = new Manifest(
-        project->contentsPath + "/AndroidManifest.xml",
-        project->contentsPath + "/apktool.yml");
+        contentsPath + "/AndroidManifest.xml",
+        contentsPath + "/apktool.yml");
     project->manifestModel.initialize(project->manifest);
 
-    auto initResourcesFuture = project->resourcesModel.initialize(project->contentsPath + "/res/");
+    auto initResourcesFuture = project->resourcesModel.initialize(contentsPath + "/res/");
     auto initResourcesFutureWatcher = new QFutureWatcher<void>(this);
     connect(initResourcesFutureWatcher, &QFutureWatcher<void>::finished, this, [=]() {
         emit finished(true);
     });
     initResourcesFutureWatcher->setFuture(initResourcesFuture);
+}
+
+ProjectContentsPath::ProjectContentsPath(const QString &path)
+{
+    set(path);
+}
+
+QString ProjectContentsPath::get() const
+{
+    Q_ASSERT(!path.isEmpty());
+    return QDir::toNativeSeparators(path);
+}
+
+void ProjectContentsPath::set(const QString &path_)
+{
+    Q_ASSERT(!path_.isEmpty() && QFile::exists(path_));
+    path = path_;
 }

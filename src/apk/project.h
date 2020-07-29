@@ -12,6 +12,19 @@
 
 class Keystore;
 
+class ProjectContentsPath
+{
+public:
+    ProjectContentsPath() = default;
+    explicit ProjectContentsPath(const QString &path);
+
+    QString get() const;
+    void set(const QString &path);
+
+private:
+    QString path;
+};
+
 class Project : public QObject
 {
     Q_OBJECT
@@ -67,7 +80,7 @@ signals:
 private:
     ProjectState state;
     QString originalPath;
-    QString contentsPath;
+    ProjectContentsPath contentsPath;
     QIcon thumbnail;
 };
 
