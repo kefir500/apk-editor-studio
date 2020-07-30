@@ -1,19 +1,11 @@
 #include "base/androidfilesystemitem.h"
-#include "base/application.h"
+#include <QFileIconProvider>
 
 AndroidFileSystemItem::AndroidFileSystemItem(const QString &path, Type type)
     : path(path)
     , name(QFileInfo(path).fileName())
     , type(type)
 {
-    switch (type) {
-    case AndroidFSFile:
-        icon = app->icons.get(QFileInfo(this->name.toLower()));
-        break;
-    case AndroidFSDirectory:
-        icon = app->icons.get(QFileIconProvider::Folder);
-        break;
-    }
 }
 
 QString AndroidFileSystemItem::getPath() const
@@ -26,9 +18,16 @@ QString AndroidFileSystemItem::getName() const
     return name;
 }
 
-QIcon AndroidFileSystemItem::getIcon() const
+QIcon AndroidFileSystemItem::getIcon(const QFileIconProvider &iconProvider) const
 {
-    return icon;
+    switch (type) {
+    case AndroidFSFile:
+        return iconProvider.icon(name.toLower());
+    case AndroidFSDirectory:
+        return iconProvider.icon(QFileIconProvider::Folder);
+    default:
+        return QIcon();
+    }
 }
 
 AndroidFileSystemItem::Type AndroidFileSystemItem::getType() const

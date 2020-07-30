@@ -1,7 +1,7 @@
 #include "apk/resourcefile.h"
-#include "base/application.h"
 #include "base/utils.h"
 #include <QDir>
+#include <QFileIconProvider>
 #include <QFileInfo>
 #include <QLocale>
 #include <QRegularExpression>
@@ -160,12 +160,12 @@ QString ResourceFile::getDirectory() const
     return QFileInfo(path).path();
 }
 
-QIcon ResourceFile::getFileIcon() const
+QIcon ResourceFile::getFileIcon(const QFileIconProvider &iconProvider) const
 {
     const QString filePath = getFilePath();
     if (Utils::isImageReadable(filePath)) {
         QPixmap thumbnail(filePath);
         return thumbnail;
     }
-    return app->icons.get(QFileInfo(filePath));
+    return iconProvider.icon(filePath);
 }

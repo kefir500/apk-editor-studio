@@ -1,4 +1,5 @@
 #include "apk/resourceitemsmodel.h"
+#include "apk/resourcenode.h"
 #include "apk/resourcemodelindex.h"
 #include "base/utils.h"
 #include <QtConcurrent/QtConcurrent>
@@ -152,7 +153,7 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
             case Qt::DecorationRole:
                 switch (column) {
                 case CaptionColumn:
-                    return file->getFileIcon();
+                    return file->getFileIcon(iconProvider);
                 case LanguageColumn:
                     return file->getLanguageIcon();
                 }

@@ -3,7 +3,6 @@
 
 #include "apk/projectitemsmodel.h"
 #include "base/actionprovider.h"
-#include "base/iconprovider.h"
 #include "base/language.h"
 #include "base/recent.h"
 #include "base/settings.h"
@@ -34,7 +33,6 @@ public:
     void setLanguage(const QString &locale);
     Settings *settings;
     Recent *recent;
-    IconProvider icons;
     ActionProvider actions;
     ProjectItemsModel projects;
 

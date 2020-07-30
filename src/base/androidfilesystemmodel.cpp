@@ -87,7 +87,7 @@ QString AndroidFileSystemModel::getItemPath(const QModelIndex &index) const
 
 QIcon AndroidFileSystemModel::getItemIcon(const QModelIndex &index) const
 {
-    return fileSystemItems.at(index.row()).getIcon();
+    return fileSystemItems.at(index.row()).getIcon(iconProvider);
 }
 
 AndroidFileSystemItem::Type AndroidFileSystemModel::getItemType(const QModelIndex &index) const

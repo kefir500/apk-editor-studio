@@ -2,11 +2,13 @@
 #define RESOURCEITEMSMODEL_H
 
 #include "apk/iresourceitemsmodel.h"
-#include "apk/resourcenode.h"
 #include <QAbstractItemModel>
+#include <QFileIconProvider>
 #include <QFuture>
 
 class Project;
+class ResourceFile;
+class ResourceNode;
 
 class ResourceItemsModel : public QAbstractItemModel, public IResourceItemsModel
 {
@@ -54,6 +56,7 @@ public:
 private:
     const Project *apk;
     ResourceNode *root;
+    QFileIconProvider iconProvider;
 };
 
 #endif // RESOURCEITEMSMODEL_H

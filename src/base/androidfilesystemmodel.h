@@ -3,6 +3,7 @@
 
 #include "base/androidfilesystemitem.h"
 #include <QAbstractTableModel>
+#include <QFileIconProvider>
 
 class AndroidFileSystemModel : public QAbstractTableModel
 {
@@ -52,6 +53,7 @@ private:
     QList<AndroidFileSystemItem> fileSystemItems;
     QString serial;
     QString currentPath;
+    QFileIconProvider iconProvider;
 };
 
 #endif // ANDROIDFILESYSTEMMODEL_H

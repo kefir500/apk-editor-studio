@@ -1,5 +1,6 @@
 #include "apk/iconitemsmodel.h"
 #include "apk/project.h"
+#include "apk/resourcefile.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include <QDebug>
