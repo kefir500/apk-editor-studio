@@ -14,7 +14,7 @@
 
 KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
 {
-    resize(app->scale(500, 0));
+    resize(Utils::scale(500, 0));
     //: This string refers to multiple keys (as in "Manager of keys").
     setWindowTitle(tr("Key Manager"));
     setWindowIcon(QIcon::fromTheme("apk-sign"));

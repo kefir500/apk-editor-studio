@@ -6,7 +6,6 @@
 #include "base/application.h"
 #include <QBoxLayout>
 #include <QDialogButtonBox>
-#include <QInputDialog>
 #include <QMenu>
 #include <QMessageBox>
 #include <QPushButton>
@@ -22,7 +21,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
     , serial(serial)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(500, 400));
+    resize(Utils::scale(500, 400));
 
     actionDownload = new QAction(QIcon::fromTheme("download"), {}, this);
     actionDownload->setShortcut(QKeySequence::Save);

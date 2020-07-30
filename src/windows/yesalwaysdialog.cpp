@@ -1,5 +1,6 @@
 #include "windows/yesalwaysdialog.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QBoxLayout>
 #include <QDialogButtonBox>
 #include <QLabel>
@@ -49,5 +50,5 @@ YesAlwaysDialog::YesAlwaysDialog(const QString &identifier, const QString &quest
     vLayout->addWidget(buttons);
 
     adjustSize();
-    resize(app->scale(400, 0));
+    resize(Utils::scale(400, 0));
 }

@@ -146,7 +146,7 @@ void ActionProvider::exit(QWidget *widget)
 void ActionProvider::addToRecent(const Project *project) const
 {
     const auto path = project->getOriginalPath();
-    const auto icon = project->getThumbnail().pixmap(app->scale(32, 32));
+    const auto icon = project->getThumbnail().pixmap(Utils::scale(32, 32));
     app->recent->add(path, icon);
 }
 

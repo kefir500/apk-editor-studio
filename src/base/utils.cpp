@@ -1,12 +1,13 @@
 #include "base/utils.h"
 #include "windows/dialogs.h"
+#include <QDesktopServices>
 #include <QDir>
+#include <QFileInfo>
 #include <QIcon>
-#include <QPainter>
-#include <QProcess>
 #include <QImageReader>
 #include <QImageWriter>
-#include <QDesktopServices>
+#include <QProcess>
+#include <QScreen>
 #include <QtConcurrent/QtConcurrent>
 #include "base/application.h"
 
@@ -209,6 +210,31 @@ QString Utils::getTitleNoSpaces()
 QString Utils::getTitleAndVersion()
 {
     return QString("%1 v%2").arg(getTitle(), getVersion());
+}
+
+qreal Utils::getScaleFactor()
+{
+#ifndef Q_OS_OSX
+    const qreal dpi = qApp->primaryScreen()->logicalDotsPerInch();
+    return dpi / 100.0;
+#else
+    return 1;
+#endif
+}
+
+int Utils::scale(int value)
+{
+    return static_cast<int>(value * getScaleFactor());
+}
+
+qreal Utils::scale(qreal value)
+{
+    return value * getScaleFactor();
+}
+
+QSize Utils::scale(int width, int height)
+{
+    return QSize(width, height) * getScaleFactor();
 }
 
 QString Utils::getExecutableDirectory()

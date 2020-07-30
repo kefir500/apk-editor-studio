@@ -1,15 +1,15 @@
 #include "widgets/toolbar.h"
 #include "widgets/spacer.h"
 #include "windows/toolbardialog.h"
-#include "base/application.h"
 #include "base/utils.h"
+#include <QEvent>
 
 Toolbar::Toolbar(QWidget *parent) : QToolBar(parent)
 {
     setMovable(false);
 
     const QList<int> availableSizes = {16, 30, 40}; // Hardcoded icon sizes
-    const int closestSize = Utils::roundToNearest(app->scale(30, 30).width(), availableSizes);
+    const int closestSize = Utils::roundToNearest(Utils::scale(30, 30).width(), availableSizes);
     setIconSize(QSize(closestSize, closestSize));
 
     actionCustomize = new QAction(QIcon::fromTheme("toolbar-customize"), {}, this);

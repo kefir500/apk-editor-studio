@@ -1,7 +1,7 @@
 #include "windows/toolbardialog.h"
 #include "widgets/poollistwidget.h"
 #include "widgets/toolbar.h"
-#include "base/application.h"
+#include "base/utils.h"
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QLabel>
@@ -10,7 +10,7 @@
 
 ToolbarDialog::ToolbarDialog(const Toolbar &toolbar, QWidget *parent) : QDialog(parent)
 {
-    resize(app->scale(500, 400));
+    resize(Utils::scale(500, 400));
     setWindowTitle(tr("Toolbar Customization"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -22,7 +22,7 @@ ToolbarDialog::ToolbarDialog(const Toolbar &toolbar, QWidget *parent) : QDialog(
     auto unusedList = new PoolListWidget(this);
 
     auto unusedLabel = new QLabel(tr("Current actions:"), this);
-    usedList->setIconSize(app->scale(20, 20));
+    usedList->setIconSize(Utils::scale(20, 20));
     usedList->setDragDropMode(QAbstractItemView::DragDrop);
     usedList->setDefaultDropAction(Qt::MoveAction);
     connect(usedList, &QListWidget::doubleClicked, this, [=](const QModelIndex &index) {
@@ -33,7 +33,7 @@ ToolbarDialog::ToolbarDialog(const Toolbar &toolbar, QWidget *parent) : QDialog(
     });
 
     auto usedLabel = new QLabel(tr("Available actions:"), this);
-    unusedList->setIconSize(app->scale(20, 20));
+    unusedList->setIconSize(Utils::scale(20, 20));
     connect(unusedList, &PoolListWidget::pulled, this, [=](QListWidgetItem *item) {
         usedList->addItem(new QListWidgetItem(*item));
     });

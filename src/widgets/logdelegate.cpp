@@ -1,6 +1,7 @@
 #include "widgets/logdelegate.h"
 #include "apk/logmodel.h"
-#include "base/application.h"
+#include "base/utils.h"
+#include <QApplication>
 #include <QPainter>
 
 LogDelegate::LogDelegate(QObject *parent) : QStyledItemDelegate(parent)
@@ -26,12 +27,12 @@ void LogDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     QStyledItemDelegate::paint(painter, option, index);
 
     painter->save();
-    painter->setPen(QPen(QPalette().windowText(), app->scale(1.5)));
+    painter->setPen(QPen(QPalette().windowText(), Utils::scale(1.5)));
     painter->setRenderHint(QPainter::Antialiasing);
 
     const bool ltr = QApplication::layoutDirection() == Qt::LeftToRight;
     const int margin = 2;
-    const int h = option.rect.height() - app->scale(8);
+    const int h = option.rect.height() - Utils::scale(8);
     const int w = h;
     const int x = option.rect.right() - w - margin;
     const int y = option.rect.center().y() - h / 2;

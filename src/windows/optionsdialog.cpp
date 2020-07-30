@@ -196,7 +196,7 @@ void OptionsDialog::initialize()
     setWindowTitle(tr("Options"));
     setWindowIcon(QIcon::fromTheme("configure"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(800, 400));
+    resize(Utils::scale(800, 400));
 
     // General
 
@@ -299,7 +299,7 @@ void OptionsDialog::initialize()
     //: This string refers to multiple keys (as in "Manager of keys").
     QPushButton *btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
     btnKeyManager->setIcon(QIcon::fromTheme("apk-sign"));
-    btnKeyManager->setMinimumHeight(app->scale(30));
+    btnKeyManager->setMinimumHeight(Utils::scale(30));
     connect(btnKeyManager, &QPushButton::clicked, this, [this]() {
         KeyManager keyManager(this);
         keyManager.exec();
@@ -333,7 +333,7 @@ void OptionsDialog::initialize()
     //: This string refers to multiple devices (as in "Manager of devices").
     QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
     btnDeviceManager->setIcon(QIcon::fromTheme("smartphone"));
-    btnDeviceManager->setMinimumHeight(app->scale(30));
+    btnDeviceManager->setMinimumHeight(Utils::scale(30));
     connect(btnDeviceManager, &QPushButton::clicked, this, [this]() {
         DeviceManager deviceManager(this);
         deviceManager.exec();

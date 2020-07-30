@@ -1,6 +1,6 @@
 #include "windows/devicemanager.h"
 #include "widgets/loadingwidget.h"
-#include "base/application.h"
+#include "base/utils.h"
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QPushButton>
@@ -13,7 +13,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     setWindowTitle(tr("Device Manager"));
     setWindowIcon(QIcon::fromTheme("smartphone"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(560, 300));
+    resize(Utils::scale(560, 300));
 
     QLabel *caption = new QLabel(tr("Select a device:"));
 

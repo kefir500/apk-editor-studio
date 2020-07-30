@@ -74,6 +74,13 @@ namespace Utils
     QString getTitleNoSpaces();
     QString getTitleAndVersion();
 
+    // GUI utils:
+
+    qreal getScaleFactor();
+    int scale(int value);
+    qreal scale(qreal value);
+    QSize scale(int width, int height);
+
     // Path utils:
 
     QString getExecutableDirectory();

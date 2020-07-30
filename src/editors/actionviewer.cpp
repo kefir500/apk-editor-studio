@@ -42,7 +42,7 @@ QPushButton *ActionViewer::addButton(const QString &title)
 {
     QPushButton *button = new QPushButton(this);
     button->setText(title);
-    button->setMinimumHeight(app->scale(34));
+    button->setMinimumHeight(Utils::scale(34));
     if (!Utils::isDarkTheme()) {
         const QString btnStyle(
             "QPushButton { background: rgb(225, 240, 190); border: none; padding: 0 20px } "

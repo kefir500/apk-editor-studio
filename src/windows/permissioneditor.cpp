@@ -1,11 +1,12 @@
 #include "windows/permissioneditor.h"
 #include "windows/yesalwaysdialog.h"
-#include "base/application.h"
+#include "base/utils.h"
 #include <QDesktopServices>
 #include <QLabel>
 #include <QPushButton>
 #include <QScrollArea>
 #include <QToolButton>
+#include <QUrl>
 
 PermissionEditor::PermissionEditor(Manifest *manifest, QWidget *parent) : QDialog(parent), manifest(manifest)
 {
@@ -13,7 +14,7 @@ PermissionEditor::PermissionEditor(Manifest *manifest, QWidget *parent) : QDialo
     setWindowTitle(tr("Permission Editor"));
     setWindowIcon(QIcon::fromTheme("tool-permissioneditor"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(550, 400));
+    resize(Utils::scale(550, 400));
 
     const QStringList permissionStrings = {
         "ACCEPT_HANDOVER",

@@ -4,7 +4,6 @@
 #include "tools/apksigner.h"
 #include "tools/java.h"
 #include "tools/javac.h"
-#include "base/application.h"
 #include "base/utils.h"
 #include <QFormLayout>
 #include <QTabWidget>
@@ -19,7 +18,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 {
     setWindowTitle(tr("About"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(700, 400));
+    resize(Utils::scale(700, 400));
 
     QTabWidget *tabs = new QTabWidget(this);
     tabs->addTab(createAboutTab(), tr("About"));
@@ -30,7 +29,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 
     QLabel *icon = new QLabel(this);
     icon->setContentsMargins(0, 0, 10, 4);
-    icon->setPixmap(QIcon::fromTheme("apk-editor-studio").pixmap(app->scale(48, 48)));
+    icon->setPixmap(QIcon::fromTheme("apk-editor-studio").pixmap(Utils::scale(48, 48)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QLabel *title = new QLabel(Utils::getTitleAndVersion(), this);
     QFont titleFont = title->font();
@@ -62,7 +61,7 @@ GradientWidget *AboutDialog::createAboutTab()
 
     auto icon = new QLabel(this);
     icon->setMargin(16);
-    icon->setPixmap(QPixmap(":/icons/other/about.png").scaled(app->scale(128, 128)));
+    icon->setPixmap(QPixmap(":/icons/other/about.png").scaled(Utils::scale(128, 128)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     const QString link("<a href=\"%1\">%1</a>");

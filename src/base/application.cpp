@@ -9,7 +9,6 @@
 #include <QDebug>
 #include <QFileOpenEvent>
 #include <QPixmapCache>
-#include <QScreen>
 
 Application::Application(int &argc, char **argv) : QtSingleApplication(argc, argv)
 {
@@ -58,13 +57,6 @@ Application::~Application()
 
 int Application::exec()
 {
-#ifndef Q_OS_OSX
-    const qreal dpi = this->primaryScreen()->logicalDotsPerInch();
-    scaleFactor = dpi / 100.0;
-#else
-    scaleFactor = 1;
-#endif
-
     QPixmapCache::setCacheLimit(1024 * 100); // 100 MiB
 
     settings = new Settings();
@@ -119,21 +111,6 @@ QList<Language> Application::getLanguages()
 const Theme *Application::theme() const
 {
     return theme_;
-}
-
-int Application::scale(int value) const
-{
-    return static_cast<int>(value * scaleFactor);
-}
-
-qreal Application::scale(qreal value) const
-{
-    return value * scaleFactor;
-}
-
-QSize Application::scale(int width, int height) const
-{
-    return QSize(width, height) * scaleFactor;
 }
 
 void Application::setLanguage(const QString &locale)

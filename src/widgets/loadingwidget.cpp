@@ -1,5 +1,6 @@
 #include "widgets/loadingwidget.h"
-#include "base/application.h"
+#include "base/utils.h"
+#include <QResizeEvent>
 #include <QPainter>
 
 LoadingWidget::LoadingWidget(int size, QWidget *parent) : QWidget(parent), spinnerSize(size)
@@ -26,7 +27,7 @@ void LoadingWidget::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
     painter.fillRect(rect(), palette().color(QPalette::Window));
-    painter.setPen(QPen(palette().color(QPalette::WindowText), app->scale(2.2)));
+    painter.setPen(QPen(palette().color(QPalette::WindowText), Utils::scale(2.2)));
     painter.setRenderHint(QPainter::Antialiasing);
     painter.drawArc(x, y, w, h, spinnerAngle, 12 * 360);
 }

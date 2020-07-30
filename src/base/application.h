@@ -22,15 +22,9 @@ public:
     int exec();
 
     static QList<Language> getLanguages();
-
     const Theme *theme() const;
-
-    int scale(int value) const;
-    qreal scale(qreal value) const;
-    QSize scale(int width, int height) const;
-
-
     void setLanguage(const QString &locale);
+
     Settings *settings;
     Recent *recent;
     ActionProvider actions;
@@ -44,7 +38,6 @@ private:
 
     QList<MainWindow *> instances;
     Theme *theme_;
-    qreal scaleFactor;
     QTranslator translator;
     QTranslator translatorQt;
 };

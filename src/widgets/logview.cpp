@@ -1,6 +1,5 @@
 #include "widgets/logview.h"
 #include "windows/dialogs.h"
-#include "base/application.h"
 
 LogView::LogView(QWidget *parent) : QListView(parent)
 {
@@ -47,5 +46,5 @@ void LogView::setModel(QAbstractItemModel *model)
 
 QSize LogView::sizeHint() const
 {
-    return app->scale(240, 0);
+    return Utils::scale(240, 0);
 }
