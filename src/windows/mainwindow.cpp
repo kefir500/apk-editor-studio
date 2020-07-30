@@ -26,16 +26,18 @@
 
 int MainWindow::instances = 0;
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(ProjectItemsModel &projects, QWidget *parent)
+    : QMainWindow(parent)
+    , projects(projects)
 {
     ++instances;
 
     setAttribute(Qt::WA_DeleteOnClose);
     setAcceptDrops(true);
 
-    onProjectAdded({}, 0, app->projects.rowCount() - 1);
-    connect(&app->projects, &ProjectItemsModel::rowsInserted, this, &MainWindow::onProjectAdded);
-    connect(&app->projects, &ProjectItemsModel::rowsAboutToBeRemoved, this, &MainWindow::onProjectAboutToBeRemoved);
+    onProjectAdded({}, 0, projects.rowCount() - 1);
+    connect(&projects, &ProjectItemsModel::rowsInserted, this, &MainWindow::onProjectAdded);
+    connect(&projects, &ProjectItemsModel::rowsAboutToBeRemoved, this, &MainWindow::onProjectAboutToBeRemoved);
 
     initMenus();
     initWidgets();
@@ -131,7 +133,7 @@ void MainWindow::initWidgets()
         onProjectSwitched(getCurrentProject());
     });
     welcomeItemProxy = new ExtraListItemProxy(this);
-    welcomeItemProxy->setSourceModel(&app->projects);
+    welcomeItemProxy->setSourceModel(&projects);
     welcomeItemProxy->prependRow();
     welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), tr("Welcome"), Qt::DisplayRole);
     welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), QIcon::fromTheme("apk-editor-studio"), Qt::DecorationRole);
@@ -421,8 +423,8 @@ void MainWindow::updateWindowForTab(Viewer *tab)
 void MainWindow::onProjectAdded(const QModelIndex &, int first, int last)
 {
     for (int i = first; i <= last; ++i) {
-        const auto project = app->projects.at(i);
-        auto projectWidget = new ProjectWidget(project, this);
+        const auto project = projects.at(i);
+        auto projectWidget = new ProjectWidget(project, projects, this);
         projectWidgets.insert(project, projectWidget);
         connect(project, &Project::stateUpdated, this, [=]() {
             if (project == getCurrentProject()) {
@@ -440,7 +442,7 @@ void MainWindow::onProjectAdded(const QModelIndex &, int first, int last)
 void MainWindow::onProjectAboutToBeRemoved(const QModelIndex &, int first, int last)
 {
     for (int i = first; i <= last; ++i) {
-        const auto project = app->projects.at(i);
+        const auto project = projects.at(i);
         auto projectWidget = projectWidgets.take(project);
         projectWidget->deleteLater();
     }
@@ -466,7 +468,7 @@ void MainWindow::onProjectSwitched(Project *project)
 Project *MainWindow::getCurrentProject() const
 {
     const int row = welcomeItemProxy->mapToSourceRow(projectList->currentIndex());
-    const auto index = app->projects.index(row);
+    const auto index = projects.index(row);
     return index.isValid() ? static_cast<Project *>(index.internalPointer()) : nullptr;
 }
 

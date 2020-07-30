@@ -12,6 +12,7 @@ class LogView;
 class CentralWidget;
 class ManifestView;
 class Project;
+class ProjectItemsModel;
 class ProjectList;
 class ProjectWidget;
 class ResourceAbstractView;
@@ -24,7 +25,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    MainWindow(ProjectItemsModel &projects, QWidget *parent = nullptr);
     ~MainWindow();
 
     void setCurrentProject(Project *project);
@@ -53,6 +54,9 @@ private:
     ProjectWidget *getCurrentProjectWidget() const;
     Viewer *getCurrentTab() const;
 
+    static int instances;
+    ProjectItemsModel &projects;
+
     CentralWidget *centralWidget;
     ProjectList *projectList;
     LogView *logView;
@@ -60,14 +64,12 @@ private:
     ResourceAbstractView *resourceTree;
     ResourceAbstractView *filesystemTree;
     ResourceAbstractView *iconList;
-
     Toolbar *toolbar;
     QDockWidget *dockProjects;
     QDockWidget *dockResources;
     QDockWidget *dockFilesystem;
     QDockWidget *dockManifest;
     QDockWidget *dockIcons;
-
     QMenu *menuFile;
     QMenu *menuEditor;
     QMenu *menuTools;
@@ -86,7 +88,6 @@ private:
     QAction *actionAboutQt;
     QAction *actionAbout;
     QActionGroup *actionsLanguage;
-
     QRubberBand *rubberBand;
 
     QByteArray defaultState;
@@ -94,8 +95,6 @@ private:
     QMap<Project *, ProjectWidget *> projectWidgets;
     WelcomeActionViewer *welcomePage;
     ExtraListItemProxy *welcomeItemProxy;
-
-    static int instances;
 };
 
 #endif // MAINWINDOW_H

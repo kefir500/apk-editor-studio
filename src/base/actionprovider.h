@@ -4,6 +4,7 @@
 #include <QAction>
 
 class Project;
+class ProjectItemsModel;
 class Keystore;
 class MainWindow;
 
@@ -12,7 +13,9 @@ class ActionProvider : public QObject
     Q_OBJECT
 
 public:
-    ActionProvider(QObject *parent = nullptr) : QObject(parent) {}
+    ActionProvider(ProjectItemsModel &projects, QObject *parent = nullptr)
+        : QObject(parent)
+        , projects(projects) {}
 
     void openApk(MainWindow *window = nullptr);
     void openApk(const QString &path, MainWindow *window = nullptr);
@@ -78,6 +81,8 @@ signals:
 private:
     QAction *getClearRecent(QObject *parent = nullptr);
     QAction *getNoRecent(QObject *parent = nullptr);
+
+    ProjectItemsModel &projects;
 };
 
 #endif // ACTIONPROVIDER_H

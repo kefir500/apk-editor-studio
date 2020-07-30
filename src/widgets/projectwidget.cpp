@@ -11,7 +11,10 @@
 #include "tools/keystore.h"
 #include <QDebug>
 
-ProjectWidget::ProjectWidget(Project *project, QWidget *parent) : QTabWidget(parent), project(project)
+ProjectWidget::ProjectWidget(Project *project, ProjectItemsModel &projects, QWidget *parent)
+    : QTabWidget(parent)
+    , project(project)
+    , projects(projects)
 {
     setMovable(true);
     setTabsClosable(true);
@@ -202,7 +205,7 @@ bool ProjectWidget::closeProject()
             return false;
         }
     }
-    return app->projects.close(project);
+    return projects.close(project);
 }
 
 int ProjectWidget::addTab(Viewer *tab)

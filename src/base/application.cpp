@@ -69,7 +69,7 @@ int Application::exec()
 
     setLanguage(settings->getLanguage());
 
-    auto firstInstance = new MainWindow;
+    auto firstInstance = new MainWindow(projects);
     firstInstance->show();
     instances.append(firstInstance);
 
@@ -80,7 +80,7 @@ int Application::exec()
             instance = instances.last();
             instance->setWindowState((instance->windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
         } else {
-            instance = new MainWindow;
+            instance = new MainWindow(projects);
             instance->show();
             instances.append(instance);
         }

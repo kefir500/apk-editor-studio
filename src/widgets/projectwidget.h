@@ -5,6 +5,7 @@
 #include <QTabWidget>
 
 class Project;
+class ProjectItemsModel;
 class Viewer;
 
 class ProjectWidget : public QTabWidget
@@ -12,7 +13,7 @@ class ProjectWidget : public QTabWidget
     Q_OBJECT
 
 public:
-    explicit ProjectWidget(Project *project, QWidget *parent = nullptr);
+    ProjectWidget(Project *project, ProjectItemsModel &projects, QWidget *parent = nullptr);
 
     void openProjectTab();
     void openTitlesTab();
@@ -37,6 +38,7 @@ private:
     Viewer *getTabByIdentifier(const QString &identifier) const;
 
     Project *project;
+    ProjectItemsModel &projects;
 };
 
 #endif // PROJECTWIDGET_H

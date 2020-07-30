@@ -27,8 +27,7 @@ public:
 
     Settings *settings;
     Recent *recent;
-    ActionProvider actions;
-    ProjectItemsModel projects;
+    ActionProvider actions{projects};
 
 protected:
     bool event(QEvent *event) override;
@@ -37,6 +36,7 @@ private:
     void processArguments(const QStringList &arguments, MainWindow *window = nullptr);
 
     QList<MainWindow *> instances;
+    ProjectItemsModel projects;
     Theme *theme_;
     QTranslator translator;
     QTranslator translatorQt;

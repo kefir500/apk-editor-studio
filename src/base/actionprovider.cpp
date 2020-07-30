@@ -26,7 +26,7 @@ void ActionProvider::openApk(const QString &path, MainWindow *window)
 void ActionProvider::openApk(const QStringList &paths, MainWindow *window)
 {
     for (const QString &path : paths) {
-        auto project = app->projects.add(path, window);
+        auto project = projects.add(path, window);
         if (project) {
             auto command = new Project::ProjectCommand(project);
             command->add(project->createUnpackCommand(), true);
@@ -44,7 +44,7 @@ void ActionProvider::optimizeApk(MainWindow *window)
 void ActionProvider::optimizeApk(const QStringList &paths, MainWindow *window)
 {
     for (const QString &path : paths) {
-        auto project = app->projects.add(path, window);
+        auto project = projects.add(path, window);
         if (project) {
             auto command = new Project::ProjectCommand(project);
             command->add(project->createZipalignCommand(), true);
@@ -71,7 +71,7 @@ void ActionProvider::signApk(const QStringList &paths, const Keystore *keystore,
 {
     Q_ASSERT(keystore);
     for (const QString &path : paths) {
-        auto project = app->projects.add(path, window);
+        auto project = projects.add(path, window);
         if (project) {
             auto command = new Project::ProjectCommand(project);
             command->add(project->createSignCommand(keystore), true);
@@ -98,7 +98,7 @@ void ActionProvider::installApk(const QStringList &paths, const QString &serial,
 {
     Q_ASSERT(!serial.isEmpty());
     for (const QString &path : paths) {
-        auto project = app->projects.add(path, window);
+        auto project = projects.add(path, window);
         if (project) {
             auto command = new Project::ProjectCommand(project);
             command->add(project->createInstallCommand(serial), true);
@@ -109,7 +109,7 @@ void ActionProvider::installApk(const QStringList &paths, const QString &serial,
 
 bool ActionProvider::closeApk(Project *project)
 {
-    return app->projects.close(project);
+    return projects.close(project);
 }
 
 void ActionProvider::visitWebPage()
