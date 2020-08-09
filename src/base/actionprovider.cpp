@@ -143,13 +143,6 @@ void ActionProvider::exit(QWidget *widget)
     widget->close();
 }
 
-void ActionProvider::addToRecent(const Project *project) const
-{
-    const auto path = project->getOriginalPath();
-    const auto icon = project->getThumbnail().pixmap(Utils::scale(32, 32));
-    app->recent->add(path, icon);
-}
-
 void ActionProvider::checkUpdates(QWidget *parent) const
 {
     Updater::check(true, parent);
@@ -521,58 +514,6 @@ QMenu *ActionProvider::getLanguages(QWidget *parent)
     menu->addActions(actions->actions());
 
     return menu;
-}
-
-QMenu *ActionProvider::getRecent(MainWindow *window)
-{
-    auto menuRecent = new QMenu(window);
-    menuRecent->setIcon(QIcon::fromTheme("document-recent"));
-
-    auto translate = [=]() { menuRecent->setTitle(tr("Open &Recent")); };
-    connect(this, &ActionProvider::languageChanged, menuRecent, translate);
-    translate();
-
-    auto initialize = [=]() {
-        menuRecent->clear();
-        auto recentList = app->recent->all();
-        for (const RecentFile &recentEntry : recentList) {
-            QAction *action = new QAction(recentEntry.thumbnail(), recentEntry.filename(), window);
-            menuRecent->addAction(action);
-            connect(action, &QAction::triggered, this, [=]() {
-                openApk(recentEntry.filename(), window);
-            });
-        }
-        menuRecent->addSeparator();
-        menuRecent->addAction(recentList.isEmpty() ? getNoRecent(window) : getClearRecent(window));
-    };
-    connect(app->recent, &Recent::changed, window, initialize);
-    initialize();
-
-    return menuRecent;
-}
-
-QAction *ActionProvider::getClearRecent(QObject *parent)
-{
-    auto action = new QAction(QIcon::fromTheme("edit-delete"), {}, parent);
-
-    auto translate = [=]() { action->setText(tr("&Clear List")); };
-    connect(this, &ActionProvider::languageChanged, action, translate);
-    translate();
-
-    connect(action, &QAction::triggered, app->recent, &Recent::clear);
-    return action;
-}
-
-QAction *ActionProvider::getNoRecent(QObject *parent)
-{
-    auto action = new QAction(parent);
-    action->setEnabled(false);
-
-    auto translate = [=]() { action->setText(tr("No Recent Files")); };
-    connect(this, &ActionProvider::languageChanged, action, translate);
-    translate();
-
-    return action;
 }
 
 bool ActionProvider::event(QEvent *event)

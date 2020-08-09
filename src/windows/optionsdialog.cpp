@@ -123,8 +123,8 @@ void OptionsDialog::save()
 
     app->settings->setSingleInstance(checkboxSingleInstance->isChecked());
     app->settings->setAutoUpdates(checkboxUpdates->isChecked());
+    app->settings->setRecentLimit(spinboxRecent->value());
     app->setLanguage(comboLanguages->currentData().toString());
-    app->recent->setLimit(spinboxRecent->value());
 #ifdef Q_OS_WIN
     bool integrationSuccess =
         app->settings->setFileAssociation(groupAssociate->isChecked()) &&

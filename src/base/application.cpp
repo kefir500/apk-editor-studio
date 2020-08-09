@@ -52,7 +52,6 @@ Application::Application(int &argc, char **argv) : QtSingleApplication(argc, arg
 Application::~Application()
 {
     delete settings;
-    delete recent;
 }
 
 int Application::exec()
@@ -60,7 +59,6 @@ int Application::exec()
     QPixmapCache::setCacheLimit(1024 * 100); // 100 MiB
 
     settings = new Settings();
-    recent = new Recent("apk");
 
     Apktool::reset();
 

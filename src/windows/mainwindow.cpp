@@ -193,6 +193,17 @@ void MainWindow::initMenus()
     actionApkClose = new QAction(QIcon::fromTheme("document-close"), QString(), this);
     actionApkClose->setShortcut(QKeySequence("Ctrl+W"));
 
+    // Recent Menu:
+
+    menuRecent = new QMenu(this);
+    menuRecent->setIcon(QIcon::fromTheme("document-recent"));
+    actionRecentClear = new QAction(QIcon::fromTheme("edit-delete"), QString(), this);
+    connect(actionRecentClear, &QAction::triggered, app->settings, &Settings::clearRecentList);
+    actionRecentNone = new QAction(this);
+    actionRecentNone->setEnabled(false);
+    connect(app->settings, &Settings::recentListUpdated, this, &MainWindow::updateRecentMenu);
+    updateRecentMenu();
+
     // Tools Menu:
 
     auto actionKeyManager = app->actions.getOpenKeyManager(this);
@@ -225,7 +236,7 @@ void MainWindow::initMenus()
 
     menuFile = menuBar()->addMenu(QString());
     menuFile->addAction(actionApkOpen);
-    menuFile->addMenu(app->actions.getRecent(this));
+    menuFile->addMenu(menuRecent);
     menuFile->addSeparator();
     menuFile->addAction(actionApkSave);
     menuFile->addSeparator();
@@ -365,6 +376,12 @@ void MainWindow::retranslate()
     actionApkExplore->setText(tr("O&pen Contents"));
     actionApkClose->setText(tr("&Close APK"));
 
+    // Recent Menu:
+
+    menuRecent->setTitle(tr("Open &Recent"));
+    actionRecentClear->setText(tr("&Clear List"));
+    actionRecentNone->setText(tr("No Recent Files"));
+
     // Tools Menu:
 
     //: This string refers to a single project (as in "Manager of a project").
@@ -418,6 +435,21 @@ void MainWindow::updateWindowForTab(Viewer *tab)
     }
     actionFileSave->setEnabled(qobject_cast<const Editor *>(tab));
     actionFileSaveAs->setEnabled(qobject_cast<const FileEditor *>(tab));
+}
+
+void MainWindow::updateRecentMenu()
+{
+    menuRecent->clear();
+    auto recentList = app->settings->getRecentList();
+    for (const RecentFile &recentEntry : recentList) {
+        auto action = new QAction(recentEntry.thumbnail(), recentEntry.filename(), this);
+        menuRecent->addAction(action);
+        connect(action, &QAction::triggered, this, [=]() {
+            app->actions.openApk(recentEntry.filename(), this);
+        });
+    }
+    menuRecent->addSeparator();
+    menuRecent->addAction(recentList.isEmpty() ? actionRecentNone : actionRecentClear);
 }
 
 void MainWindow::onProjectAdded(const QModelIndex &, int first, int last)

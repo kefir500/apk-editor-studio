@@ -1,7 +1,10 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QSettings>
+#include "base/recent.h"
+
+class Project;
+class QSettings;
 
 class Settings : public QObject
 {
@@ -37,6 +40,7 @@ public:
     QString getLastDirectory() const;
     bool getSingleInstance() const;
     bool getAutoUpdates() const;
+    const QList<RecentFile> &getRecentList() const;
     int getRecentLimit() const;
     QString getLanguage() const;
     QStringList getMainWindowToolbar() const;
@@ -53,6 +57,8 @@ public:
     bool getExplorerSignIntegration() const;
 #endif
 
+    void addToRecent(const Project *project);
+    void clearRecentList();
     void setJavaPath(const QString &path);
     void setJavaMinHeapSize(int size);
     void setJavaMaxHeapSize(int size);
@@ -94,10 +100,12 @@ public:
 #endif
 
 signals:
+    void recentListUpdated();
     void resetDone();
 
 private:
     QSettings *settings;
+    Recent *recent;
 };
 
 #endif // SETTINGS_H

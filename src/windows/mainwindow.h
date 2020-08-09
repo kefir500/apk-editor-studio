@@ -45,6 +45,7 @@ private:
 
     void updateWindowForProject(Project *project);
     void updateWindowForTab(Viewer *tab);
+    void updateRecentMenu();
 
     void onProjectAdded(const QModelIndex &parent, int first, int last);
     void onProjectAboutToBeRemoved(const QModelIndex &parent, int first, int last);
@@ -71,6 +72,7 @@ private:
     QDockWidget *dockManifest;
     QDockWidget *dockIcons;
     QMenu *menuFile;
+    QMenu *menuRecent;
     QMenu *menuEditor;
     QMenu *menuTools;
     QMenu *menuSettings;
@@ -82,6 +84,8 @@ private:
     QAction *actionApkClose;
     QAction *actionFileSave;
     QAction *actionFileSaveAs;
+    QAction *actionRecentClear;
+    QAction *actionRecentNone;
     QAction *actionProjectManager;
     QAction *actionTitleEditor;
     QAction *actionPermissionEditor;

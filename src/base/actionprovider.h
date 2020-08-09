@@ -37,7 +37,6 @@ public:
     void visitBlogPage(const QString &post);
     void exit(QWidget *widget);
 
-    void addToRecent(const Project *project) const;
     void checkUpdates(QWidget *parent = nullptr) const;
     bool resetSettings(QWidget *parent = nullptr) const;
 
@@ -71,7 +70,6 @@ public:
     QAction *getTakeScreenshot(const QString &serial, QWidget *parent);
 
     QMenu *getLanguages(QWidget *parent = nullptr);
-    QMenu *getRecent(MainWindow *window);
 
     bool event(QEvent *event) override;
 
@@ -79,9 +77,6 @@ signals:
     void languageChanged();
 
 private:
-    QAction *getClearRecent(QObject *parent = nullptr);
-    QAction *getNoRecent(QObject *parent = nullptr);
-
     ProjectItemsModel &projects;
 };
 

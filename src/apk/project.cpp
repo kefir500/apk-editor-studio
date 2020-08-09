@@ -223,7 +223,7 @@ Project::ProjectCommand::ProjectCommand(Project *project)
         } else {
             project->state.setCurrentStatus(ProjectState::Status::Errored);
         }
-        app->actions.addToRecent(project);
+        app->settings->addToRecent(project);
     });
 }
 

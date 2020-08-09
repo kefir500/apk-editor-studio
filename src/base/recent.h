@@ -25,10 +25,8 @@ private:
 
 class Recent : public QObject
 {
-    Q_OBJECT
-
 public:
-    Recent(const QString &identifier, QObject *parent = nullptr);
+    Recent(const QString &identifier, int limit = 10, QObject *parent = nullptr);
 
     bool add(const QString &filename, const QPixmap &thumbnail);
     bool remove(int index);
@@ -39,9 +37,6 @@ public:
     const QList<RecentFile> &all() const;
     QStringList filenames() const;
     QList<QPixmap> thumbnails() const;
-
-signals:
-    void changed();
 
 private:
     void saveToFile() const;

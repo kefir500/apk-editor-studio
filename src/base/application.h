@@ -4,7 +4,6 @@
 #include "apk/projectitemsmodel.h"
 #include "base/actionprovider.h"
 #include "base/language.h"
-#include "base/recent.h"
 #include "base/settings.h"
 #include "base/theme.h"
 #include "windows/mainwindow.h"
@@ -26,7 +25,6 @@ public:
     void setLanguage(const QString &locale);
 
     Settings *settings;
-    Recent *recent;
     ActionProvider actions{projects};
 
 protected:

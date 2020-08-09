@@ -1,10 +1,12 @@
 #include "base/settings.h"
-#include "base/application.h"
 #include "base/fileassociation.h"
 #include "base/utils.h"
 #include "base/password.h"
+#include "apk/project.h"
 #include "tools/apktool.h"
+#include <QApplication>
 #include <QDir>
+#include <QSettings>
 
 Settings::Settings()
 {
@@ -13,6 +15,7 @@ Settings::Settings()
 #else
     settings = new QSettings(Utils::getLocalConfigPath("config/config.ini"), QSettings::IniFormat);
 #endif
+    recent = new Recent("apk", getRecentLimit(), this);
 }
 
 Settings::~Settings()
@@ -24,13 +27,14 @@ void Settings::reset()
 {
     Apktool::reset();
     settings->clear();
-    app->recent->clear();
+    recent->clear();
     QDir().mkpath(Apktool::getOutputPath());
     QDir().mkpath(Apktool::getFrameworksPath());
     Password passwordKeystore("keystore");
     Password passwordKey("key");
     passwordKeystore.remove();
     passwordKey.remove();
+    emit recentListUpdated();
     emit resetDone();
 }
 
@@ -159,6 +163,11 @@ bool Settings::getAutoUpdates() const
     return settings->value("Preferences/AutoUpdates", true).toBool();
 }
 
+const QList<RecentFile> &Settings::getRecentList() const
+{
+    return recent->all();
+}
+
 int Settings::getRecentLimit() const
 {
     return settings->value("Preferences/MaxRecent", 10).toInt();
@@ -244,6 +253,20 @@ bool Settings::getExplorerSignIntegration() const
 #endif
 
 // Setters:
+
+void Settings::addToRecent(const Project *project)
+{
+    const auto path = project->getOriginalPath();
+    const auto icon = project->getThumbnail().pixmap(Utils::scale(32, 32));
+    recent->add(path, icon);
+    emit recentListUpdated();
+}
+
+void Settings::clearRecentList()
+{
+    recent->clear();
+    emit recentListUpdated();
+}
 
 void Settings::setJavaPath(const QString &path)
 {
@@ -370,6 +393,8 @@ void Settings::setAutoUpdates(bool value)
 void Settings::setRecentLimit(int limit)
 {
     settings->setValue("Preferences/MaxRecent", limit);
+    recent->setLimit(limit);
+    emit recentListUpdated();
 }
 
 void Settings::setLanguage(const QString &locale)
@@ -413,7 +438,7 @@ bool Settings::setFileAssociation(bool associate)
 {
     FileAssociation association("apk-editor-studio.apk", "apk");
     if (associate) {
-        const QString iconPath = QString("%1,0").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+        const QString iconPath = QString("%1,0").arg(QDir::toNativeSeparators(qApp->applicationFilePath()));
         return association.set(iconPath, "Android Application Package");
     } else {
         return association.unset();
@@ -424,7 +449,7 @@ bool Settings::setExplorerOpenIntegration(bool integrate)
 {
     FileAssociation association("apk-editor-studio.apk", "apk");
     if (integrate) {
-        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(qApp->applicationFilePath()));
         const QString command = executablePath + " \"%1\"";
         const QString icon = executablePath;
         return association.addVerb("Open", command, icon);
@@ -437,7 +462,7 @@ bool Settings::setExplorerInstallIntegration(bool integrate)
 {
     FileAssociation association("apk-editor-studio.apk", "apk");
     if (integrate) {
-        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(qApp->applicationFilePath()));
         const QString command = executablePath + " --install \"%1\"";
         const QString icon = executablePath + ",1";
         return association.addVerb("Install APK", command, icon);
@@ -450,7 +475,7 @@ bool Settings::setExplorerOptimizeIntegration(bool integrate)
 {
     FileAssociation association("apk-editor-studio.apk", "apk");
     if (integrate) {
-        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(qApp->applicationFilePath()));
         const QString command = executablePath + " --optimize \"%1\"";
         const QString icon = executablePath + ",2";
         return association.addVerb("Optimize APK", command, icon);
@@ -463,7 +488,7 @@ bool Settings::setExplorerSignIntegration(bool integrate)
 {
     FileAssociation association("apk-editor-studio.apk", "apk");
     if (integrate) {
-        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(app->applicationFilePath()));
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(qApp->applicationFilePath()));
         const QString command = executablePath + " --sign \"%1\"";
         const QString icon = executablePath + ",3";
         return association.addVerb("Sign APK", command, icon);
