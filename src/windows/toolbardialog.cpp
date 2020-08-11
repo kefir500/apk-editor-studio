@@ -2,6 +2,7 @@
 #include "widgets/poollistwidget.h"
 #include "widgets/toolbar.h"
 #include "base/utils.h"
+#include <QAction>
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QLabel>
