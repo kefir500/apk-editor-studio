@@ -12,7 +12,6 @@ class Settings : public QObject
 
 public:
     Settings();
-    ~Settings();
 
     void reset();
 
