@@ -60,6 +60,7 @@ namespace Utils
     bool replaceFile(const QString &what, QWidget *parent = nullptr);
     bool replaceFile(const QString &what, QString with, QWidget *parent = nullptr);
     QString normalizePath(QString path);
+    QString toAbsolutePath(const QString &path);
 
     // Image utils:
 
@@ -88,8 +89,6 @@ namespace Utils
     QString getLocalConfigPath(const QString &subdirectory = QString());
     QString getSharedPath(const QString &resource = QString());
     QString getBinaryPath(const QString &executable);
-    QString getJavaPath();
-    QString getJavaBinaryPath(const QString &executable);
     QIcon getLocaleFlag(const QLocale &locale);
 
     // URL utils:

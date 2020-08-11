@@ -1,6 +1,5 @@
 #include "base/process.h"
 #include "base/application.h"
-#include "base/utils.h"
 #include <QProcess>
 #include <QDebug>
 
@@ -39,27 +38,11 @@ Process::Process(QObject *parent) : QObject(parent)
         emit finished(false, error);
         process.deleteLater();
     });
-
 }
 
 void Process::run(const QString &program, const QStringList &arguments)
 {
     process.start(program, arguments);
-}
-
-void Process::jar(const QString &jar, const QStringList &jarArguments)
-{
-    QStringList arguments;
-    const int minHeapSize = app->settings->getJavaMinHeapSize();
-    const int maxHeapSize = app->settings->getJavaMaxHeapSize();
-    if (app->settings->getJavaMinHeapSize()) {
-        arguments << QString("-Xms%1m").arg(minHeapSize);
-    }
-    if (app->settings->getJavaMaxHeapSize()) {
-        arguments << QString("-Xmx%1m").arg(maxHeapSize);
-    }
-    arguments << "-jar" << jar << jarArguments;
-    run(Utils::getJavaBinaryPath("java"), arguments);
 }
 
 void Process::setStandardOutputFile(const QString &filename)

@@ -244,8 +244,7 @@ void OptionsDialog::initialize()
     QFormLayout *pageJava = new QFormLayout;
     fileboxJava = new FileBox(true, this);
     fileboxJava->setDefaultPath("");
-    const QString javaPath = Utils::getJavaPath();
-    fileboxJava->setPlaceholderText(!javaPath.isEmpty() ? javaPath : tr("Extracted from environment variables by default"));
+    fileboxJava->setPlaceholderText(tr("Extracted from environment variables by default"));
     spinboxMinHeapSize = new QSpinBox(this);
     spinboxMaxHeapSize = new QSpinBox(this);
     //: Megabytes

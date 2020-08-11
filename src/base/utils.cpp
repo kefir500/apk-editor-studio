@@ -6,10 +6,10 @@
 #include <QIcon>
 #include <QImageReader>
 #include <QImageWriter>
+#include <QApplication>
 #include <QProcess>
 #include <QScreen>
 #include <QtConcurrent/QtConcurrent>
-#include "base/application.h"
 
 QString Utils::capitalize(QString string)
 {
@@ -140,7 +140,7 @@ bool Utils::copyFile(const QString &src, QString dst, QWidget *parent)
         return false;
     }
     if (!copy(src, dst)) {
-        QMessageBox::warning(parent, QString(), app->translate("Utils", "Could not save the file."));
+        QMessageBox::warning(parent, QString(), qApp->translate("Utils", "Could not save the file."));
         return false;
     }
     return true;
@@ -162,7 +162,7 @@ bool Utils::replaceFile(const QString &what, QString with, QWidget *parent)
         return false;
     }
     if (!copy(with, what)) {
-        QMessageBox::warning(parent, QString(), app->translate("Utils", "Could not replace the file."));
+        QMessageBox::warning(parent, QString(), qApp->translate("Utils", "Could not replace the file."));
         return false;
     }
     return true;
@@ -171,6 +171,15 @@ bool Utils::replaceFile(const QString &what, QString with, QWidget *parent)
 QString Utils::normalizePath(QString path)
 {
     return path.replace(QRegularExpression("^\\/+[\\.\\./*]*\\/*|$"), "/");
+}
+
+QString Utils::toAbsolutePath(const QString &path)
+{
+    if (path.isEmpty() || QDir::isAbsolutePath(path)) {
+        return path;
+    } else {
+        return QDir::cleanPath(qApp->applicationDirPath() + '/' + path);
+    }
 }
 
 bool Utils::isImageReadable(const QString &path)
@@ -288,28 +297,6 @@ QString Utils::getBinaryPath(const QString &executable)
     }
 #endif
     return fileInfo.exists() ? path : fileInfo.fileName();
-}
-
-QString Utils::getJavaPath()
-{
-    const QString userPath = app->settings->getJavaPath();
-    if (!userPath.isEmpty()) {
-        return userPath;
-    }
-    const QString envPath = qgetenv("JAVA_HOME");
-    if (!envPath.isEmpty()) {
-        return envPath;
-    }
-    return QString();
-}
-
-QString Utils::getJavaBinaryPath(const QString &executable)
-{
-    const QString javaPath = getJavaPath();
-    if (!javaPath.isEmpty()) {
-        return QDir(javaPath).filePath(QString("bin/%1").arg(executable));
-    }
-    return executable;
 }
 
 QIcon Utils::getLocaleFlag(const QLocale &locale)

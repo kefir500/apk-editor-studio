@@ -1,6 +1,6 @@
 #include "tools/javac.h"
+#include "tools/java.h"
 #include "base/process.h"
-#include "base/utils.h"
 #include <QRegularExpression>
 
 void Javac::Version::run()
@@ -15,7 +15,7 @@ void Javac::Version::run()
         emit finished(success);
         process->deleteLater();
     });
-    process->run(Utils::getJavaBinaryPath("javac"), {"-version"});
+    process->run(Java::getBinaryPath("javac"), {"-version"});
 }
 
 const QString &Javac::Version::version() const

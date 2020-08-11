@@ -36,7 +36,7 @@ const QString &Zipalign::Align::output() const
 
 QString Zipalign::getPath()
 {
-    const QString path = app->settings->getZipalignPath();
+    const QString path = Utils::toAbsolutePath(app->settings->getZipalignPath());
     return !path.isEmpty() ? path : getDefaultPath();
 }
 

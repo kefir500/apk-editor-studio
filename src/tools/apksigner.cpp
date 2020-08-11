@@ -1,5 +1,5 @@
 #include "tools/apksigner.h"
-#include "base/process.h"
+#include "base/jarprocess.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include <QStringList>
@@ -16,13 +16,13 @@ void Apksigner::Sign::run()
     arguments << "--key-pass" << QString("pass:%1").arg(keyPassword);
     arguments << target;
 
-    auto process = new Process(this);
-    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
+    auto process = new JarProcess(this);
+    connect(process, &JarProcess::finished, this, [=](bool success, const QString &output) {
         resultOutput = output;
         emit finished(success);
         process->deleteLater();
     });
-    process->jar(getPath(), arguments);
+    process->run(getPath(), arguments);
 }
 
 const QString &Apksigner::Sign::output() const
@@ -33,15 +33,15 @@ const QString &Apksigner::Sign::output() const
 void Apksigner::Version::run()
 {
     emit started();
-    auto process = new Process(this);
-    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
+    auto process = new JarProcess(this);
+    connect(process, &JarProcess::finished, this, [=](bool success, const QString &output) {
         if (success) {
             resultVersion = output;
         }
         emit finished(success);
         process->deleteLater();
     });
-    process->jar(getPath(), {"--version"});
+    process->run(getPath(), {"--version"});
 }
 
 const QString &Apksigner::Version::version() const
@@ -51,7 +51,7 @@ const QString &Apksigner::Version::version() const
 
 QString Apksigner::getPath()
 {
-    const QString path = app->settings->getApksignerPath();
+    const QString path = Utils::toAbsolutePath(app->settings->getApksignerPath());
     return !path.isEmpty() ? path : getDefaultPath();
 }
 

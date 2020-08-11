@@ -17,6 +17,9 @@ namespace Java
     private:
         QString resultVersion;
     };
+
+    QString getInstallationPath();
+    QString getBinaryPath(const QString &executable);
 }
 
 #endif // JAVA_H

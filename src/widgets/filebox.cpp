@@ -57,7 +57,7 @@ void FileBox::setPlaceholderText(const QString &text)
 
 void FileBox::openPath()
 {
-    const QString oldPath = input->text();
+    const QString oldPath = getCurrentPath();
     const QString newPath = isDirectory ? Dialogs::getOpenDirectory(oldPath, this) : Dialogs::getOpenFilename(oldPath, this);
     if (!newPath.isEmpty()) {
         setCurrentPath(newPath);
@@ -66,7 +66,7 @@ void FileBox::openPath()
 
 void FileBox::checkPath()
 {
-    const QString path = input->text();
+    const QString path = Utils::toAbsolutePath(getCurrentPath());
     const bool exists = isDirectory ? QDir(path).exists() : QFile::exists(path);
     if (exists || path.isEmpty()) {
         input->setPalette(QPalette());

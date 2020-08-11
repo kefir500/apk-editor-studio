@@ -8,7 +8,7 @@ std::unique_ptr<const Keystore> Keystore::get(QWidget *parent)
 {
     auto keystore = std::unique_ptr<Keystore>(new Keystore);
     if (app->settings->getCustomKeystore()) {
-        keystore->keystorePath = app->settings->getKeystorePath();
+        keystore->keystorePath = Utils::toAbsolutePath(app->settings->getKeystorePath());
         keystore->keystorePassword = app->settings->getKeystorePassword();
         keystore->keyAlias = app->settings->getKeyAlias();
         keystore->keyPassword = app->settings->getKeyPassword();

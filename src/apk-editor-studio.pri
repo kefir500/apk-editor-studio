@@ -31,6 +31,7 @@ SOURCES += \
     $$PWD/base/fileassociation.cpp \
     $$PWD/base/fileformat.cpp \
     $$PWD/base/fileformatlist.cpp \
+    $$PWD/base/jarprocess.cpp \
     $$PWD/base/language.cpp \
     $$PWD/base/main.cpp \
     $$PWD/base/password.cpp \
@@ -131,6 +132,7 @@ HEADERS += \
     $$PWD/base/fileassociation.h \
     $$PWD/base/fileformat.h \
     $$PWD/base/fileformatlist.h \
+    $$PWD/base/jarprocess.h \
     $$PWD/base/language.h \
     $$PWD/base/password.h \
     $$PWD/base/process.h \

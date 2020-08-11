@@ -10,8 +10,7 @@ class Process : public QObject
 public:
     Process(QObject *parent = nullptr);
 
-    void run(const QString &program, const QStringList &arguments = {});
-    void jar(const QString &jar, const QStringList &arguments = {});
+    virtual void run(const QString &program, const QStringList &arguments = {});
 
     void setStandardOutputFile(const QString &filename);
 

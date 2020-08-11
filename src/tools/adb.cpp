@@ -290,7 +290,7 @@ const QString &Adb::Version::version() const
 
 QString Adb::getPath()
 {
-    const QString path = app->settings->getAdbPath();
+    const QString path = Utils::toAbsolutePath(app->settings->getAdbPath());
     return !path.isEmpty() ? path : getDefaultPath();
 }
 
