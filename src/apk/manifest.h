@@ -16,7 +16,7 @@ public:
     int getMinSdk() const;
     int getTargetSdk() const;
     int getVersionCode() const;
-    QString getVersionName() const;
+    const QString &getVersionName() const;
 
     void setApplicationLabel(const QString &value);
     void setMinSdk(int value);

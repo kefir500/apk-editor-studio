@@ -72,7 +72,7 @@ int Manifest::getVersionCode() const
     return versionCode;
 }
 
-QString Manifest::getVersionName() const
+const QString &Manifest::getVersionName() const
 {
     return versionName;
 }

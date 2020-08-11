@@ -29,7 +29,7 @@ public:
 
     QString getApplicationLabel() const;
     int getVersionCode() const;
-    QString getVersionName() const;
+    const QString &getVersionName() const;
     int getMinimumSdk() const;
     int getTargetSdk() const;
 
