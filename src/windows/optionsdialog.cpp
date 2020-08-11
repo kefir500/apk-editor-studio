@@ -113,8 +113,6 @@ void OptionsDialog::load()
     // Installing
 
     fileboxAdb->setCurrentPath(app->settings->getAdbPath());
-
-    emit loaded();
 }
 
 void OptionsDialog::save()
@@ -165,8 +163,6 @@ void OptionsDialog::save()
     // Installing
 
     app->settings->setAdbPath(fileboxAdb->getCurrentPath());
-
-    emit saved();
 }
 
 void OptionsDialog::changeEvent(QEvent *event)

@@ -22,10 +22,6 @@ public:
     void load();
     void save();
 
-signals:
-    void loaded();
-    void saved();
-
 protected:
     void changeEvent(QEvent *event) override;
 
