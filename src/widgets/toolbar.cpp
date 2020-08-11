@@ -2,6 +2,7 @@
 #include "widgets/spacer.h"
 #include "windows/toolbardialog.h"
 #include "base/utils.h"
+#include <QAction>
 #include <QEvent>
 
 Toolbar::Toolbar(QWidget *parent) : QToolBar(parent)
