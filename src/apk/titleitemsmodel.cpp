@@ -33,7 +33,7 @@ TitleItemsModel::TitleItemsModel(const Project *apk, QObject *parent) : QAbstrac
                 while (resourceFiles.hasNext()) {
                     const QString resourceFile = QFileInfo(resourceFiles.next()).filePath();
                     QFile xml(resourceFile);
-                    if (xml.open(QFile::ReadOnly | QFile::Text)) {
+                    if (xml.open(QFile::ReadOnly)) {
                         QTextStream stream(&xml);
                         stream.setCodec("UTF-8");
                         QDomDocument xmlDocument;
