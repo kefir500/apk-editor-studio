@@ -12,8 +12,6 @@
 
 Application::Application(int &argc, char **argv) : QtSingleApplication(argc, argv)
 {
-    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
-
     setApplicationName(APPLICATION);
     setApplicationVersion(VERSION);
 
