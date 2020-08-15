@@ -78,7 +78,7 @@ KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
 void KeyManager::load()
 {
     groupKeystore->setChecked(app->settings->getCustomKeystore());
-    editKeystore->setCurrentPath(Utils::toAbsolutePath(app->settings->getKeystorePath()));
+    editKeystore->setCurrentPath(app->settings->getKeystorePath());
     editKeyAlias->setText(app->settings->getKeyAlias());
     editKeystorePassword->setText(app->settings->getKeystorePassword());
     editKeyPassword->setText(app->settings->getKeyPassword());
