@@ -12,6 +12,7 @@
 ## Links
 
 - [Website](https://qwertycube.com/apk-editor-studio/)
+- [Download](https://qwertycube.com/apk-editor-studio/download/)
 - [Donate](https://qwertycube.com/donate/)
 - [Issues](https://github.com/kefir500/apk-editor-studio/issues)
 
@@ -24,6 +25,7 @@
 - Code Editor
 - Manifest Editor
 - Permission Editor
+- Android Explorer
 - APK Signer
 - APK Optimizer
 - APK Installer
@@ -47,6 +49,9 @@ In order to successfully utilize this software, the following tools should be pr
 
 You can either get them manually (e.g., using `apt-get` in Debian)
 or **run the `scripts/download.py`** Python 3 script which will automatically download the needed tools.
+
+Note that this is only needed if you compile APK Editor Studio from the source code.
+[Prebuilt packages](https://github.com/kefir500/apk-editor-studio/releases) already contain these tools.
 
 Also, on **Linux** you may want an optional support for `libsecret` password storage backend.
 In order to enable it, you will need to install the corresponding library:
