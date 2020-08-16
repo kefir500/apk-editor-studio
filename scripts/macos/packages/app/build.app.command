@@ -2,8 +2,8 @@
 
 # Prepare
 
-cd "$(dirname "$0")"
-if [ "$CI" != true ]; then source ../../environment.sh; fi
+cd "$(dirname "$BASH_SOURCE")"
+: ${VERSION:=$(cat ../../../../VERSION)}
 rm -rf apk-editor-studio.app
 rm -rf "APK Editor Studio.app"
 
@@ -18,7 +18,4 @@ find apk-editor-studio.app -name ".DS_Store" -type f -delete
 
 mv apk-editor-studio.app "APK Editor Studio.app"
 ditto -c -k --sequesterRsrc --keepParent "APK Editor Studio.app" "apk-editor-studio_macos_$VERSION.app.zip"
-
-# Clean
-
 make clean
