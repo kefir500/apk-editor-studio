@@ -10,20 +10,20 @@ def unzip(z, src, dst):
     with open(dst, 'wb') as f:
         f.write(z.read(src))
 
-def pathTo(path):
+def resolveExecutableName(path):
+    return path if sys.platform != 'win32' else path + '.exe'
+
+def resolvePath(path):
     return os.path.join(os.path.dirname(__file__), path)
 
-def binDir():
-    path = pathTo('../res/deploy')
+def getTargetPath():
+    path = resolvePath('../res/deploy')
     if sys.platform == 'win32':
         return os.path.join(path, 'win32/tools')
     elif sys.platform == 'linux':
         return os.path.join(path, 'linux/bin')
     elif sys.platform == 'darwin':
         return os.path.join(path, 'macos/bundle/contents/MacOS')
-
-def binFile(path):
-    return path if sys.platform != 'win32' else path + '.exe'
 
 def progress(blocknum, blocksize, totalsize):
     bytesdone = min(blocknum * blocksize, totalsize)
@@ -35,13 +35,14 @@ def progress(blocknum, blocksize, totalsize):
 
 # Prepare
 
-os.makedirs(pathTo('../res/deploy/all/tools'), exist_ok=True)
-os.makedirs(binDir(), exist_ok=True)
+os.makedirs(resolvePath('../res/deploy/all/tools'), exist_ok=True)
+os.makedirs(getTargetPath(), exist_ok=True)
 
 # Download Apktool
 
 print('(1/3) Downloading Apktool...')
-urlretrieve('https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.4.1.jar', pathTo('../res/deploy/all/tools/apktool.jar'), progress)
+urlretrieve('https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.4.1.jar',
+    resolvePath('../res/deploy/all/tools/apktool.jar'), progress)
 
 # Download and unpack Android Build Tools
 
@@ -56,8 +57,8 @@ elif sys.platform == 'darwin':
 urlretrieve(buildToolsUrl, 'build-tools.zip', progress)
 
 with ZipFile('build-tools.zip') as z:
-    unzip(z, 'android-9/lib/apksigner.jar', pathTo('../res/deploy/all/tools/'))
-    unzip(z, binFile('android-9/zipalign'), binDir())
+    unzip(z, 'android-9/lib/apksigner.jar', resolvePath('../res/deploy/all/tools/'))
+    unzip(z, resolveExecutableName('android-9/zipalign'), getTargetPath())
 os.remove('build-tools.zip')
 
 # Download and unpack Android SDK Platform Tools
@@ -73,8 +74,8 @@ elif sys.platform == 'darwin':
 urlretrieve(platformToolsUrl, 'platform-tools.zip', progress)
 
 with ZipFile('platform-tools.zip') as z:
-    unzip(z, binFile('platform-tools/adb'), binDir())
+    unzip(z, resolveExecutableName('platform-tools/adb'), getTargetPath())
     if sys.platform == 'win32':
-        unzip(z, 'platform-tools/AdbWinApi.dll', binDir())
-        unzip(z, 'platform-tools/AdbWinUsbApi.dll', binDir())
+        unzip(z, 'platform-tools/AdbWinApi.dll', getTargetPath())
+        unzip(z, 'platform-tools/AdbWinUsbApi.dll', getTargetPath())
 os.remove('platform-tools.zip')
