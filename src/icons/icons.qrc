@@ -35,6 +35,7 @@
         <file>default/actions/16x16/tool-projectmanager.png</file>
         <file>default/actions/16x16/tool-titleeditor.png</file>
         <file>default/actions/16x16/upload.png</file>
+        <file>default/actions/16x16/view-certificate.png</file>
         <file>default/actions/16x16/view-refresh.png</file>
         <file>default/actions/16x16/window-new.png</file>
         <file>default/actions/16x16/zoom-in.png</file>
@@ -78,6 +79,7 @@
         <file>default/actions/30x30/tool-projectmanager.png</file>
         <file>default/actions/30x30/tool-titleeditor.png</file>
         <file>default/actions/30x30/upload.png</file>
+        <file>default/actions/30x30/view-certificate.png</file>
         <file>default/actions/30x30/view-refresh.png</file>
         <file>default/actions/30x30/window-new.png</file>
         <file>default/actions/30x30/zoom-in.png</file>
@@ -117,6 +119,7 @@
         <file>default/actions/40x40/tool-projectmanager.png</file>
         <file>default/actions/40x40/tool-titleeditor.png</file>
         <file>default/actions/40x40/upload.png</file>
+        <file>default/actions/40x40/view-certificate.png</file>
         <file>default/actions/40x40/view-refresh.png</file>
         <file>default/actions/40x40/window-new.png</file>
         <file>default/actions/40x40/zoom-in.png</file>

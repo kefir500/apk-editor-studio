@@ -78,6 +78,7 @@ SOURCES += \
     $$PWD/widgets/projectlist.cpp \
     $$PWD/widgets/projectlistitemdelegate.cpp \
     $$PWD/widgets/projectwidget.cpp \
+    $$PWD/widgets/readonlycheckbox.cpp \
     $$PWD/widgets/resourceabstractview.cpp \
     $$PWD/widgets/resourcetree.cpp \
     $$PWD/widgets/spacer.cpp \
@@ -94,6 +95,7 @@ SOURCES += \
     $$PWD/windows/optionsdialog.cpp \
     $$PWD/windows/permissioneditor.cpp \
     $$PWD/windows/selectdialog.cpp \
+    $$PWD/windows/signatureviewer.cpp \
     $$PWD/windows/toolbardialog.cpp \
     $$PWD/windows/yesalwaysdialog.cpp
 
@@ -178,6 +180,7 @@ HEADERS += \
     $$PWD/widgets/projectlist.h \
     $$PWD/widgets/projectlistitemdelegate.h \
     $$PWD/widgets/projectwidget.h \
+    $$PWD/widgets/readonlycheckbox.h \
     $$PWD/widgets/resourceabstractview.h \
     $$PWD/widgets/resourcetree.h \
     $$PWD/widgets/spacer.h \
@@ -194,6 +197,7 @@ HEADERS += \
     $$PWD/windows/optionsdialog.h \
     $$PWD/windows/permissioneditor.h \
     $$PWD/windows/selectdialog.h \
+    $$PWD/windows/signatureviewer.h \
     $$PWD/windows/toolbardialog.h \
     $$PWD/windows/yesalwaysdialog.h
 

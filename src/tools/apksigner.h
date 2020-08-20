@@ -38,6 +38,27 @@ namespace Apksigner
         QString resultOutput;
     };
 
+    class Verify : public Command
+    {
+    public:
+        Verify(const QString &apkPath, QObject *parent = nullptr)
+            : Command(parent)
+            , apkPath(apkPath) {}
+
+        void run() override;
+        bool hasV1Scheme() const;
+        bool hasV2Scheme() const;
+        bool hasV3Scheme() const;
+        const QStringList &signersInfo() const;
+
+    private:
+        const QString apkPath;
+        bool resultV1Scheme{false};
+        bool resultV2Scheme{false};
+        bool resultV3Scheme{false};
+        QStringList resultSignersInfo;
+    };
+
     class Version : public Command
     {
     public:

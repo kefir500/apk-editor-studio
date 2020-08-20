@@ -1,6 +1,7 @@
 #include "windows/mainwindow.h"
 #include "windows/aboutdialog.h"
 #include "windows/dialogs.h"
+#include "windows/signatureviewer.h"
 #include "widgets/centralwidget.h"
 #include "widgets/filesystemtree.h"
 #include "widgets/iconlist.h"
@@ -219,6 +220,8 @@ void MainWindow::initMenus()
     actionPermissionEditor = new QAction(this);
     actionPermissionEditor->setIcon(QIcon::fromTheme("tool-permissioneditor"));
     actionPermissionEditor->setShortcut(QKeySequence("Ctrl+Shift+P"));
+    actionViewSignatures = new QAction(this);
+    actionViewSignatures->setIcon(QIcon::fromTheme("view-certificate"));
 
     // Settings Menu:
 
@@ -268,8 +271,11 @@ void MainWindow::initMenus()
     menuTools->addAction(actionScreenshot);
     menuTools->addSeparator();
     menuTools->addAction(actionProjectManager);
+    menuTools->addSeparator();
     menuTools->addAction(actionTitleEditor);
     menuTools->addAction(actionPermissionEditor);
+    menuTools->addSeparator();
+    menuTools->addAction(actionViewSignatures);
     menuSettings = menuBar()->addMenu(QString());
     menuSettings->addAction(actionOptions);
     menuSettings->addSeparator();
@@ -306,6 +312,7 @@ void MainWindow::initMenus()
     toolbar->addActionToPool("project-manager", actionProjectManager);
     toolbar->addActionToPool("title-editor", actionTitleEditor);
     toolbar->addActionToPool("permission-editor", actionPermissionEditor);
+    toolbar->addActionToPool("view-signatures", actionViewSignatures);
     toolbar->addActionToPool("device-manager", actionDeviceManager);
     toolbar->addActionToPool("android-explorer", actionAndroidExplorer);
     toolbar->addActionToPool("screenshot", actionScreenshot);
@@ -339,6 +346,12 @@ void MainWindow::initMenus()
     });
     connect(actionPermissionEditor, &QAction::triggered, this, [this]() {
         getCurrentProjectWidget()->openPermissionEditor();
+    });
+    connect(actionViewSignatures, &QAction::triggered, this, [this]() {
+        const auto project = getCurrentProject();
+        Q_ASSERT(project);
+        SignatureViewer dialog(project->getOriginalPath(), this);
+        dialog.exec();
     });
     connect(actionFileSave, &QAction::triggered, this, [this]() {
         qobject_cast<Editor *>(getCurrentTab())->save();
@@ -398,6 +411,7 @@ void MainWindow::retranslate()
     actionTitleEditor->setText(tr("Edit Application &Title"));
     //: The "&" is a shortcut key, *not* a conjuction "and". Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionPermissionEditor->setText(tr("Edit Application &Permissions"));
+    actionViewSignatures->setText(tr("View &Signatures"));
 
     // Window Menu:
 
@@ -433,6 +447,7 @@ void MainWindow::updateWindowForProject(Project *project)
     actionApkClose->setEnabled(project ? project->getState().canClose() : false);
     actionTitleEditor->setEnabled(project ? project->getState().canEdit() : false);
     actionPermissionEditor->setEnabled(project ? project->getState().canEdit() : false);
+    actionViewSignatures->setEnabled(project);
     actionProjectManager->setEnabled(project);
 }
 
