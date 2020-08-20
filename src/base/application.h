@@ -22,6 +22,8 @@ public:
 
     static QList<Language> getLanguages();
     const Theme *theme() const;
+
+    MainWindow *createNewInstance();
     void setLanguage(const QString &locale);
 
     Settings *settings;

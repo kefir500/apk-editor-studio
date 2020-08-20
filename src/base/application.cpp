@@ -65,10 +65,7 @@ int Application::exec()
 
     setLanguage(settings->getLanguage());
 
-    auto firstInstance = new MainWindow(projects);
-    firstInstance->show();
-    instances.append(firstInstance);
-
+    auto firstInstance = createNewInstance();
     processArguments(arguments(), firstInstance);
     connect(this, &QtSingleApplication::messageReceived, this, [this](const QString &message) {
         MainWindow *instance = nullptr;
@@ -76,9 +73,7 @@ int Application::exec()
             instance = instances.last();
             instance->setWindowState((instance->windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
         } else {
-            instance = new MainWindow(projects);
-            instance->show();
-            instances.append(instance);
+            instance = createNewInstance();
         }
         instance->activateWindow();
         instance->raise();
@@ -107,6 +102,14 @@ QList<Language> Application::getLanguages()
 const Theme *Application::theme() const
 {
     return theme_;
+}
+
+MainWindow *Application::createNewInstance()
+{
+    auto instance = new MainWindow(projects);
+    instance->show();
+    instances.append(instance);
+    return instance;
 }
 
 void Application::setLanguage(const QString &locale)

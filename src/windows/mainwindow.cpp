@@ -224,6 +224,13 @@ void MainWindow::initMenus()
 
     auto actionOptions = app->actions.getOpenOptions(this);
 
+    // Window Menu:
+
+    actionNewWindow = new QAction(this);
+    actionNewWindow->setIcon(QIcon::fromTheme("window-new"));
+    actionNewWindow->setShortcut(QKeySequence("Ctrl+N"));
+    connect(actionNewWindow, &QAction::triggered, app, &Application::createNewInstance);
+
     // Help Menu:
 
     auto actionDonate = app->actions.getVisitDonatePage();
@@ -303,6 +310,7 @@ void MainWindow::initMenus()
     toolbar->addActionToPool("android-explorer", actionAndroidExplorer);
     toolbar->addActionToPool("screenshot", actionScreenshot);
     toolbar->addActionToPool("key-manager", actionKeyManager);
+    toolbar->addActionToPool("new-window", actionNewWindow);
     toolbar->addActionToPool("settings", actionOptions);
     toolbar->addActionToPool("donate", actionDonate);
     toolbar->initialize(app->settings->getMainWindowToolbar());
@@ -393,7 +401,11 @@ void MainWindow::retranslate()
 
     // Window Menu:
 
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    actionNewWindow->setText(tr("Open &New Window"));
     menuWindow->clear();
+    menuWindow->addAction(actionNewWindow);
+    menuWindow->addSeparator();
     menuWindow->addActions(createPopupMenu()->actions());
 
     // Help Menu:
