@@ -11,7 +11,9 @@ matrix:
     install:
       - sudo apt-get install qt5-default qttools5-dev-tools libsecret-1-dev debhelper devscripts fakeroot
     script:
-      - scripts/linux/packages/deb/build.deb.sh
+      - cd scripts/linux/packages/deb
+      - ./build.deb.sh
+      - mv apk-editor-studio_linux_{*,dev}.deb
 
   - name: Linux (AppImage)
     os: linux
@@ -23,7 +25,9 @@ matrix:
       - sudo apt-get install qt510base qt510imageformats qt510svg qt510tools libgl1-mesa-dev libsecret-1-dev adb zipalign
       - source /opt/qt510/bin/qt510-env.sh
     script:
-      - scripts/linux/packages/appimage/build.appimage.sh
+      - cd scripts/linux/packages/appimage
+      - ./build.appimage.sh
+      - mv apk-editor-studio_linux_{*,dev}.AppImage
 
   - name: macOS
     os: osx
@@ -38,15 +42,11 @@ matrix:
       - cd scripts/macos/packages
       - app/build.app.command
       - dmg/build.dmg.command
-      - cd -
+      - mv app/apk-editor-studio_macos_{*,dev}.app.zip
+      - mv dmg/apk-editor-studio_macos_{*,dev}.dmg
 
 before_deploy:
   - export TRAVIS_TAG=development
-  - pwd
-  - mv scripts/linux/packages/appimage/apk-editor-studio_linux_{*,dev}.AppImage
-  - mv scripts/linux/packages/deb/apk-editor-studio_linux_{*,dev}.deb
-  - mv scripts/macos/packages/app/apk-editor-studio_macos_{*,dev}.app.zip
-  - mv scripts/macos/packages/dmg/apk-editor-studio_macos_{*,dev}.dmg
 
 deploy:
   provider: releases
