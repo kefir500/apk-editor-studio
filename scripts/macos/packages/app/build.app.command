@@ -3,7 +3,7 @@
 # Prepare
 
 cd "$(dirname "$BASH_SOURCE")"
-: ${VERSION:=$(cat ../../../../VERSION)}
+VERSION=$(cat ../../../../VERSION)
 rm -rf apk-editor-studio.app
 rm -rf "APK Editor Studio.app"
 

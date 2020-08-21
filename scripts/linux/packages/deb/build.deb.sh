@@ -8,7 +8,7 @@ clean() {
 # Prepare
 
 cd "$(dirname "$BASH_SOURCE")"
-: ${VERSION:=$(cat ../../../../VERSION)}
+VERSION=$(cat ../../../../VERSION)
 
 clean
 rm apk-editor-studio_$VERSION*.deb 2> /dev/null

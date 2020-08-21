@@ -1,7 +1,6 @@
 language: cpp
 
 before_script:
-  - export VERSION=dev
   - python3 scripts/download.py
 
 matrix:
@@ -43,6 +42,11 @@ matrix:
 
 before_deploy:
   - export TRAVIS_TAG=development
+  - pwd
+  - mv scripts/linux/packages/appimage/apk-editor-studio_linux_{*,dev}.AppImage
+  - mv scripts/linux/packages/deb/apk-editor-studio_linux_{*,dev}.deb
+  - mv scripts/macos/packages/app/apk-editor-studio_macos_{*,dev}.app.zip
+  - mv scripts/macos/packages/dmg/apk-editor-studio_macos_{*,dev}.dmg
 
 deploy:
   provider: releases

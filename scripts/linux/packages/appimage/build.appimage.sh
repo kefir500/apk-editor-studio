@@ -9,7 +9,7 @@ clean() {
 # Prepare
 
 cd "$(dirname "$BASH_SOURCE")"
-: ${VERSION:=$(cat ../../../../VERSION)}
+VERSION=$(cat ../../../../VERSION)
 clean
 
 # Build
