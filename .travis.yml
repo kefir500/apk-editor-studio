@@ -14,6 +14,7 @@ matrix:
       - cd scripts/linux/packages/deb
       - ./build.deb.sh
       - mv apk-editor-studio_linux_{*,dev}.deb
+      - cd -
 
   - name: Linux (AppImage)
     os: linux
@@ -28,6 +29,7 @@ matrix:
       - cd scripts/linux/packages/appimage
       - ./build.appimage.sh
       - mv apk-editor-studio_linux_{*,dev}.AppImage
+      - cd -
 
   - name: macOS
     os: osx
@@ -44,6 +46,7 @@ matrix:
       - dmg/build.dmg.command
       - mv app/apk-editor-studio_macos_{*,dev}.app.zip
       - mv dmg/apk-editor-studio_macos_{*,dev}.dmg
+      - cd -
 
 before_deploy:
   - export TRAVIS_TAG=development
