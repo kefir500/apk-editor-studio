@@ -67,8 +67,10 @@ void Toolbar::initialize(const QStringList &actions)
             currentActions.append(addSpacer());
         } else {
             auto action = availableActions.value(identifier);
-            addAction(action);
-            currentActions.append(action);
+            if (action) {
+                addAction(action);
+                currentActions.append(action);
+            }
         }
     }
     if (!actions.contains("spacer")) {
