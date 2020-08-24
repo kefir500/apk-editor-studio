@@ -59,6 +59,8 @@ urlretrieve(buildToolsUrl, 'build-tools.zip', progress)
 with ZipFile('build-tools.zip') as z:
     unzip(z, 'android-10/lib/apksigner.jar', resolvePath('../res/deploy/all/tools/'))
     unzip(z, resolveExecutableName('android-10/zipalign'), getTargetPath())
+    if sys.platform == 'win32':
+        unzip(z, 'android-10/libwinpthread-1.dll', getTargetPath())
 os.remove('build-tools.zip')
 
 # Download and unpack Android SDK Platform Tools

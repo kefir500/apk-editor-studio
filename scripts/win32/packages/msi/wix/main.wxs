@@ -49,6 +49,7 @@
             </Component>
             <Component Id="ZipalignComponent" Guid="77D7F79C-EC9A-4D0A-A803-D74DA4986201">
               <File Name="zipalign.exe" />
+              <File Name="libwinpthread-1.dll" />
             </Component>
             <Component Id="AdbComponent" Guid="3154DCA2-4E3A-4D91-8B87-D43AFCA67D37">
               <File Name="adb.exe" />
