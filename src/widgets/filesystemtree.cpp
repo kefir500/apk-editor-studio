@@ -1,4 +1,11 @@
 #include "widgets/filesystemtree.h"
+#include <QHeaderView>
+
+FileSystemTree::FileSystemTree(QWidget *parent) : QTreeView(parent)
+{
+    setSortingEnabled(true);
+    header()->setSortIndicator(0, Qt::AscendingOrder);
+}
 
 FileSystemModel *FileSystemTree::model() const
 {
