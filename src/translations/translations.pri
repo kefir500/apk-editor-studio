@@ -13,7 +13,8 @@ EXTRA_TRANSLATIONS += \
     $$PWD/apk-editor-studio.pt.ts \
     $$PWD/apk-editor-studio.ro.ts \
     $$PWD/apk-editor-studio.ru.ts \
-    $$PWD/apk-editor-studio.tr.ts
+    $$PWD/apk-editor-studio.tr.ts \
+    $$PWD/apk-editor-studio.zh_CN.ts
 
 updateqm.input = EXTRA_TRANSLATIONS
 updateqm.output = $$PWD/../../res/deploy/all/resources/translations/${QMAKE_FILE_IN_BASE}.qm

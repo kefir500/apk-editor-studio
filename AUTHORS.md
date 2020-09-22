@@ -13,6 +13,9 @@
 
 ### Translators:
 
+#### Chinese (Simplified)
+- [Wang Chenxu](http://www.dayanzai.me)
+
 #### French
 - [Julien Veuillet](https://github.com/wakdev)
 
