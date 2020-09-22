@@ -25,6 +25,10 @@
 #### Greek
 - [Spiros Kaparos](https://www.transifex.com/user/profile/spkprs/)
 
+#### Hungarian
+- [Egyed Ferenc](https://www.transifex.com/user/profile/efi99/)
+- [Szepesfalvy Kristóf](https://www.transifex.com/user/profile/szkristof/)
+
 #### Indonesian
 - [Triyan W. Nugroho](https://www.transifex.com/user/profile/TriyanWahyuNugroho/)
 
