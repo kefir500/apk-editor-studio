@@ -5,6 +5,7 @@
 
 #ifdef Q_OS_WIN
 #include <QString>
+#include <memory>
 
 class QSettings;
 
