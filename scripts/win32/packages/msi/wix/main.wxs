@@ -198,7 +198,6 @@
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Sign APK\Command" Value="&quot;[ExecutablePath]&quot; --sign &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Sign APK" Name="Icon" Value="[ExecutablePath],3" Type="string" />
       </Component>
-      <Merge Id="VCRedist" SourceFile="$(env.VCREDIST_MSM)" DiskId="1" Language="0"/>
     </Directory>
 
     <ComponentGroup Id="ApplicationComponents">
@@ -317,9 +316,6 @@
       <Feature Id="StartmenuFeature" Title="Start Menu Shortcuts" Description="Add $(var.ProductName) shortcut to start menu.">
         <ComponentRef Id="StartmenuComponent" />
       </Feature>
-    </Feature>
-    <Feature Id="VCRedistFeature" Title="Visual C++ 2015 Redistributable" Description="Install Visual C++ 2015 (14.0) Redistributable Package." Display="hidden" AllowAdvertise="no">
-      <MergeRef Id="VCRedist"/>
     </Feature>
 	</Product>
 </Wix>
