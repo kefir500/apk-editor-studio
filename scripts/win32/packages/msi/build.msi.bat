@@ -3,10 +3,9 @@ if /i not "%CI%"=="True" call "%~dp0\..\..\environment.bat"
 
 rem Build
 
-call "%QTDIR%\bin\qtenv2.bat"
+pushd . && call "%QTDIR%\bin\qtenv2.bat" && popd
 qmake "%~dp0\..\..\..\.." "DESTDIR=\"%~dp0\build\"" || exit /b
 nmake || exit /b
-nmake clean
 
 rem Package
 
@@ -22,6 +21,7 @@ popd
 
 rem Clean
 
+nmake clean
 del *.rc
 del .qmake.stash
 del Makefile*

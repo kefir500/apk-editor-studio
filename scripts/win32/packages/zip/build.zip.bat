@@ -3,10 +3,10 @@ if /i not "%CI%"=="True" call "%~dp0\..\..\environment.bat"
 rem Prepare
 
 if /i not "%CI%"=="True" (
-    set FOLDER=APK Editor Studio v%VERSION%
+    set FOLDER=%~dp0\APK Editor Studio v%VERSION%
     set ARCHIVE=%~dp0\apk-editor-studio_win32_%VERSION%.zip
 ) else (
-    set FOLDER=APK Editor Studio - Developer Build
+    set FOLDER=%~dp0\APK Editor Studio - Developer Build
     set ARCHIVE=%~dp0\apk-editor-studio_win32_dev.zip
 )
 
@@ -15,10 +15,9 @@ if exist "%FOLDER%" rmdir /s /q "%FOLDER%"
 
 rem Build
 
-call "%QTDIR%\bin\qtenv2.bat"
+pushd . && call "%QTDIR%\bin\qtenv2.bat" && popd
 qmake "%~dp0\..\..\..\.." "DESTDIR=\"%FOLDER%\"" DEFINES+=PORTABLE || exit /b
 nmake || exit /b
-nmake clean
 
 rem Deploy Qt Libraries
 
@@ -47,6 +46,7 @@ rem Package
 
 rem Clean
 
+nmake clean
 del *.rc
 del .qmake.stash
 del Makefile*
