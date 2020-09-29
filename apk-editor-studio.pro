@@ -15,6 +15,19 @@ DEFINES += APPLICATION='"\\\"$$QMAKE_TARGET_PRODUCT\\\""'
 DEFINES += VERSION=\\\"$$VERSION\\\"
 #DEFINES += PORTABLE
 
+win32 {
+    isEmpty(DESTDIR): DESTDIR = $$PWD/bin/win32
+}
+
+unix:!macx {
+    isEmpty(DESTDIR): DESTDIR = $$PWD/bin/linux
+    DESTDIR = $$DESTDIR/bin # Follow Linux FHS
+}
+
+macx {
+    isEmpty(DESTDIR): DESTDIR = $$PWD/bin/macos
+}
+
 include($$PWD/src/apk-editor-studio.pri)
 include($$PWD/src/translations/translations.pri)
 include($$PWD/lib/qtkeychain/qt5keychain.pri)
