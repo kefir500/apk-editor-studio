@@ -1,6 +1,6 @@
-if /i not "%CI%"=="True" call "%~dp0\..\..\environment.bat"
-
 rem Prepare
+
+set /p VERSION=<%~dp0\..\..\..\..\VERSION
 
 if /i not "%CI%"=="True" (
     set FOLDER=%~dp0\APK Editor Studio v%VERSION%
@@ -15,7 +15,7 @@ if exist "%FOLDER%" rmdir /s /q "%FOLDER%"
 
 rem Build
 
-pushd . && call "%QTDIR%\bin\qtenv2.bat" && popd
+set PATH=%PATH%;%QTDIR%\bin
 qmake "%~dp0\..\..\..\.." "DESTDIR=\"%FOLDER%\"" DEFINES+=PORTABLE || exit /b
 nmake || exit /b
 

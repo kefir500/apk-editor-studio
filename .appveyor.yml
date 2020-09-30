@@ -12,7 +12,7 @@ environment:
 install:
   - set QTDIR=C:\Qt\5.15.0\msvc2019
   - set OPENSSL=C:\OpenSSL-v111-Win32\bin
-  - set WIXDIR=C:\Program Files (x86)\WiX Toolset v3.11\bin
+  - set PATH=%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86
   - C:\Python37\python scripts\download.py
 

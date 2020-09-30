@@ -1,9 +1,10 @@
-setlocal
-if /i not "%CI%"=="True" call "%~dp0\..\..\environment.bat"
+rem Prepare
+
+set /p VERSION=<%~dp0\..\..\..\..\VERSION
 
 rem Build
 
-pushd . && call "%QTDIR%\bin\qtenv2.bat" && popd
+set PATH=%PATH%;%QTDIR%\bin
 qmake "%~dp0\..\..\..\.." "DESTDIR=\"%~dp0\build\"" || exit /b
 nmake || exit /b
 
@@ -15,8 +16,8 @@ if /i not "%CI%"=="True" (
 ) else (
     set OUTPUT=bin\apk-editor-studio_win32_dev.msi
 )
-"%WIXDIR%\candle.exe" -out obj\ -arch x86 -ext WixUIExtension main.wxs ui.wxs || exit /b
-"%WIXDIR%\light.exe" -out %OUTPUT% -pdbout bin\apk-editor-studio.wixpdb -ext WixUIExtension obj\main.wixobj obj\ui.wixobj || exit /b
+candle -out obj\ -arch x86 -ext WixUIExtension main.wxs ui.wxs || exit /b
+light -out %OUTPUT% -pdbout bin\apk-editor-studio.wixpdb -ext WixUIExtension obj\main.wixobj obj\ui.wixobj || exit /b
 popd
 
 rem Clean
