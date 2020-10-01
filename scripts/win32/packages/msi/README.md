@@ -1,0 +1,6 @@
+- Run `../../../scripts/download.py` to download third-party tool binaries.
+- Run `vcvarsall.bat` to configure the **Visual Studio** environment variables.
+- Set the `QTDIR` environment variable to the **Qt** installation directory.
+- Set the `OPENSSL` environment variable to the **OpenSSL** `bin` directory.
+- Add the **WiX Toolset** `bin` directory to the `PATH` environment variable.
+- Run `build.msi.bat`.
