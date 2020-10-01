@@ -7,7 +7,6 @@
   <?else ?>
     <?define ProductVersion="0.0.0" ?>
   <?endif ?>
-  <?define Root="..\build" ?>
 
   <Product Id="*" Name="$(var.ProductName)" Version="$(var.ProductVersion)" UpgradeCode="B889316C-C1B5-4615-8443-F1ADB1B3584D" Manufacturer="Alexander Gorishnyak" Language="1033">
 
@@ -17,7 +16,7 @@
     <MajorUpgrade AllowDowngrades="yes" Schedule="afterInstallInitialize" />
 
     <UIRef Id="UI_APK_Editor_Studio" />
-    <Icon Id="Icon" SourceFile="$(var.Root)\apk-editor-studio.exe" />
+    <Icon Id="Icon" SourceFile="$(var.DistDir)\apk-editor-studio.exe" />
     <Property Id="ApplicationFolderName" Value="$(var.ProductName)" />
     <Property Id="ARPPRODUCTICON" Value="Icon" />
 
@@ -26,12 +25,12 @@
       <Custom Action="SetExecutablePathProperty" Before="InstallFiles"/>
     </InstallExecuteSequence>
 
-    <WixVariable Id="WixUIDialogBmp" Value="res\banner.bmp" />
-    <WixVariable Id="WixUIBannerBmp" Value="res\header.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(sys.SOURCEFILEDIR)\res\banner.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(sys.SOURCEFILEDIR)\res\header.bmp" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" FileSource="$(var.Root)">
+        <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" FileSource="$(var.DistDir)">
           <Component Id="ExeComponent" Guid="C6176BE3-E235-46DF-9BC6-5CA8358B0253">
             <File Name="apk-editor-studio.exe" Id="Executable" />
           </Component>

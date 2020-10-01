@@ -3,11 +3,11 @@ rem Prepare
 set /p VERSION=<%~dp0\..\..\..\..\VERSION
 
 if /i not "%CI%"=="True" (
-    set FOLDER=%~dp0\APK Editor Studio v%VERSION%
-    set ARCHIVE=%~dp0\apk-editor-studio_win32_%VERSION%.zip
+    set FOLDER=APK Editor Studio v%VERSION%
+    set ARCHIVE=apk-editor-studio_win32_%VERSION%.zip
 ) else (
-    set FOLDER=%~dp0\APK Editor Studio - Developer Build
-    set ARCHIVE=%~dp0\apk-editor-studio_win32_dev.zip
+    set FOLDER=APK Editor Studio - Developer Build
+    set ARCHIVE=apk-editor-studio_win32_dev.zip
 )
 
 if exist "%ARCHIVE%" del "%ARCHIVE%"

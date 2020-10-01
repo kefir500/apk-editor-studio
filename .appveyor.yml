@@ -3,11 +3,11 @@ image: Visual Studio 2019
 environment:
   matrix:
     - NAME: MSI
-      SCRIPT: msi\build.msi.bat
-      ARTIFACT: scripts\win32\packages\msi\wix\bin\apk-editor-studio_win32_dev.msi
+      SCRIPT: scripts\win32\packages\msi\build.msi.bat
+      ARTIFACT: apk-editor-studio_win32_dev.msi
     - NAME: ZIP
-      SCRIPT: zip\build.zip.bat
-      ARTIFACT: scripts\win32\packages\zip\apk-editor-studio_win32_dev.zip
+      SCRIPT: scripts\win32\packages\zip\build.zip.bat
+      ARTIFACT: apk-editor-studio_win32_dev.zip
 
 install:
   - set QTDIR=C:\Qt\5.15.0\msvc2019
@@ -15,9 +15,6 @@ install:
   - set PATH=%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86
   - C:\Python37\python scripts\download.py
-
-before_build:
-  - cd scripts\win32\packages
 
 build_script:
   - call %SCRIPT%
