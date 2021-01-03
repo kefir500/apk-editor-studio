@@ -28,6 +28,20 @@
 - APK Optimizer
 - APK Installer
 
+## Project Translation
+
+Please DON'T edit directly the language files in github repository but instead edit the language files in Transiflex repository.
+
+To improve the crowdsourcing experience for non-developers, thia project is translated on Transiflex at this web page
+
+https://www.transifex.com/qwertycube/apk-editor-studio/
+
+Please use the following instructions:
+
+https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide
+
+When the translation will be ready, I manually will add the .ts files to the repo and update the referencing projects files, installer configurations, etc.
+
 ## Compilation
 
 ### Requirements
