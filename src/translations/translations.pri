@@ -6,6 +6,7 @@ EXTRA_TRANSLATIONS += \
     $$PWD/apk-editor-studio.fr.ts \
     $$PWD/apk-editor-studio.hu.ts \
     $$PWD/apk-editor-studio.id.ts \
+    $$PWD/apk-editor-studio.it.ts \
     $$PWD/apk-editor-studio.ja.ts \
     $$PWD/apk-editor-studio.ko.ts \
     $$PWD/apk-editor-studio.pl.ts \

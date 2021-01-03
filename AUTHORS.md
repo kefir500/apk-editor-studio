@@ -32,6 +32,10 @@
 #### Indonesian
 - [Triyan W. Nugroho](https://www.transifex.com/user/profile/TriyanWahyuNugroho/)
 
+#### Italian
+- [bovirus](https://www.transifex.com/user/profile/bovirus/)
+- [Davide Pedretti Biagioni](https://www.transifex.com/user/profile/davide.pedrettibiagioni/)
+
 #### Japanese
 - [Sakai Hiroki](https://www.transifex.com/user/profile/m07jp/)
 
