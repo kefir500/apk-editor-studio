@@ -72,6 +72,14 @@ the corresponding scripts are located at `scripts/**/packages` (where `**` is a 
 Every platform directory contains an `environment` script file which sets the paths to the
 required tools. Feel free to edit these variables to correspond the paths on your system.
 
+## Translation
+
+To improve the crowdsourcing experience for non-developers, this project is translated
+on [Transiflex](https://www.transifex.com/qwertycube/apk-editor-studio/).
+Please follow the [translation instructions](https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide)
+and avoid direct editing of the language files in this repo.
+
+
 ## Third-Party Components
 
 - [Apktool](https://github.com/iBotPeaches/Apktool)
