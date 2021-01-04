@@ -28,20 +28,6 @@
 - APK Optimizer
 - APK Installer
 
-## Project Translation
-
-Please DON'T edit directly the language files in github repository but instead edit the language files in Transiflex repository.
-
-To improve the crowdsourcing experience for non-developers, thia project is translated on Transiflex at this web page
-
-https://www.transifex.com/qwertycube/apk-editor-studio/
-
-Please use the following instructions:
-
-https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide
-
-When the translation will be ready, I manually will add the .ts files to the repo and update the referencing projects files, installer configurations, etc.
-
 ## Compilation
 
 ### Requirements
@@ -85,6 +71,14 @@ If you want to create installation/executable APK Editor Studio packages,
 the corresponding scripts are located at `scripts/**/packages` (where `**` is a platform name).
 Every platform directory contains an `environment` script file which sets the paths to the
 required tools. Feel free to edit these variables to correspond the paths on your system.
+
+## Translation
+
+To improve the crowdsourcing experience for non-developers, this project is translated
+on [Transiflex](https://www.transifex.com/qwertycube/apk-editor-studio/).
+Please follow the [translation instructions](https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide)
+and avoid direct editing of the language files in this repo.
+
 
 ## Third-Party Components
 
