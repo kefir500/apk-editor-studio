@@ -418,6 +418,8 @@ QString Utils::getAndroidCodename(int api)
         return "9.0 - Pie";
     case ANDROID_29:
         return "Android 10";
+    case ANDROID_30:
+        return "Android 11";
     }
     return QString();
 }
