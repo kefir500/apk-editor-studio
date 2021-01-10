@@ -49,6 +49,7 @@ SignatureViewer::SignatureViewer(const QString &apkPath, QWidget *parent) : QDia
             for (int i = 0; i < signers.count(); ++i) {
                 auto signerTab = new QPlainTextEdit(signers.at(i), this);
                 signerTab->setReadOnly(true);
+                //: "%1" will be replaced with a signer index number (e.g., "Signer #1, Signer #7, Signer #42"...).
                 signerTabs->addTab(signerTab, tr("Signer #%1").arg(i + 1));
             }
         } else {

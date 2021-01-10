@@ -32,7 +32,7 @@ YesAlwaysDialog::YesAlwaysDialog(const QString &identifier, const QString &quest
     label->setWordWrap(true);
 
     auto buttons = new QDialogButtonBox(this);
-    //: The "&" is a shortcut key, *not* a conjuction "and". Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     auto btnAlwaysYes = new QPushButton(tr("Yes, &Always"), this);
     buttons->addButton(QDialogButtonBox::Yes);
     buttons->addButton(btnAlwaysYes, QDialogButtonBox::YesRole);

@@ -407,9 +407,9 @@ void MainWindow::retranslate()
 
     //: This string refers to a single project (as in "Manager of a project").
     actionProjectManager->setText(tr("&Project Manager"));
-    //: The "&" is a shortcut key, *not* a conjuction "and". Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionTitleEditor->setText(tr("Edit Application &Title"));
-    //: The "&" is a shortcut key, *not* a conjuction "and". Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionPermissionEditor->setText(tr("Edit Application &Permissions"));
     actionViewSignatures->setText(tr("View &Signatures"));
 
@@ -424,7 +424,9 @@ void MainWindow::retranslate()
 
     // Help Menu:
 
+    //: Don't translate the "APK Editor Studio" part.
     actionAbout->setText(tr("&About APK Editor Studio..."));
+    //: Don't translate the "&Qt" part.
     actionAboutQt->setText(tr("About &Qt..."));
 }
 

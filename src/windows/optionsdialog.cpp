@@ -209,8 +209,10 @@ void OptionsDialog::initialize()
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
 
 #ifdef Q_OS_WIN
+    //: Don't translate the "APK Editor Studio" and ".apk" parts.
     groupAssociate = new QGroupBox(tr("Use APK Editor Studio for .apk files"), this);
     groupAssociate->setCheckable(true);
+    //: Don't translate the "APK Editor Studio" and ".apk" parts.
     checkboxExplorerOpen = new QCheckBox(tr("Use APK Editor Studio to open .apk files"), this);
     checkboxExplorerOpen->setIcon(QIcon::fromTheme("document-open"));
     //: "%1" will be replaced with an action name (e.g., Install, Optimize, Sign, etc.).
@@ -252,9 +254,9 @@ void OptionsDialog::initialize()
     spinboxMinHeapSize->setRange(0, std::numeric_limits<int>::max());
     spinboxMaxHeapSize->setRange(0, std::numeric_limits<int>::max());
     pageJava->addRow(tr("Java path:"), fileboxJava);
-    //: "Heap" refers to a memory heap.
+    //: "Heap" refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.
     pageJava->addRow(tr("Initial heap size:"), spinboxMinHeapSize);
-    //: "Heap" refers to a memory heap.
+    //: "Heap" refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.
     pageJava->addRow(tr("Maximum heap size:"), spinboxMaxHeapSize);
 
     // Repacking
