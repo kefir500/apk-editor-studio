@@ -28,7 +28,7 @@ void DeviceItemsModel::refresh()
             }
         }
         endResetModel();
-        emit fetched();
+        emit fetched(success);
     });
     adb->run();
 }

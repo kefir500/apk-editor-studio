@@ -3,9 +3,10 @@
 #include "base/utils.h"
 #include <QFormLayout>
 #include <QGroupBox>
-#include <QPushButton>
-#include <QLineEdit>
 #include <QHeaderView>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QPushButton>
 
 DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
 {
@@ -78,6 +79,11 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     connect(dialogButtons, &QDialogButtonBox::accepted, this, &DeviceManager::accept);
     connect(dialogButtons, &QDialogButtonBox::rejected, this, &DeviceManager::reject);
     connect(this, &DeviceManager::accepted, &deviceModel, &DeviceItemsModel::save);
+    connect(&deviceModel, &DeviceItemsModel::fetched, [this](bool success) {
+        if (!success) {
+            QMessageBox::warning(this, {}, tr("Could not fetch the device list."));
+        }
+    });
 
     setCurrentDevice({});
     deviceModel.refresh();

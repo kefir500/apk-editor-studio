@@ -31,7 +31,7 @@ public:
 
 signals:
     void fetching();
-    void fetched();
+    void fetched(bool success);
 
 private:
     QList<Device> devices;
