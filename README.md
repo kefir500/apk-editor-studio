@@ -9,11 +9,15 @@
 
 **APK Editor Studio** is a powerful yet easy to use APK reverse-engineering tool written in C++/Qt.
 
-## Links
-
 - [Website](https://qwertycube.com/apk-editor-studio/)
 - [Donate](https://qwertycube.com/donate/)
 - [Issues](https://github.com/kefir500/apk-editor-studio/issues)
+
+## Downloads
+
+- [Latest stable release](https://qwertycube.com/apk-editor-studio/download/)
+- [Latest unstable build](https://github.com/kefir500/apk-editor-studio/releases/tag/development)
+- [Other releases](https://github.com/kefir500/apk-editor-studio/releases)
 
 ## Features
 
