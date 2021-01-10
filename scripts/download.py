@@ -16,7 +16,7 @@ def resolveExecutableName(path):
 def resolvePath(path):
     return os.path.join(os.path.dirname(__file__), path)
 
-def getTargetPath():
+def resolvePlatformPath():
     path = resolvePath('../res/deploy')
     if sys.platform == 'win32':
         return os.path.join(path, 'win32/tools')
@@ -36,7 +36,7 @@ def progress(blocknum, blocksize, totalsize):
 # Prepare
 
 os.makedirs(resolvePath('../res/deploy/all/tools'), exist_ok=True)
-os.makedirs(getTargetPath(), exist_ok=True)
+os.makedirs(resolvePlatformPath(), exist_ok=True)
 
 # Download Apktool
 
@@ -58,9 +58,9 @@ urlretrieve(buildToolsUrl, 'build-tools.zip', progress)
 
 with ZipFile('build-tools.zip') as z:
     unzip(z, 'android-10/lib/apksigner.jar', resolvePath('../res/deploy/all/tools/'))
-    unzip(z, resolveExecutableName('android-10/zipalign'), getTargetPath())
+    unzip(z, resolveExecutableName('android-10/zipalign'), resolvePlatformPath())
     if sys.platform == 'win32':
-        unzip(z, 'android-10/libwinpthread-1.dll', getTargetPath())
+        unzip(z, 'android-10/libwinpthread-1.dll', resolvePlatformPath())
 os.remove('build-tools.zip')
 
 # Download and unpack Android SDK Platform Tools
@@ -76,8 +76,8 @@ elif sys.platform == 'darwin':
 urlretrieve(platformToolsUrl, 'platform-tools.zip', progress)
 
 with ZipFile('platform-tools.zip') as z:
-    unzip(z, resolveExecutableName('platform-tools/adb'), getTargetPath())
+    unzip(z, resolveExecutableName('platform-tools/adb'), resolvePlatformPath())
     if sys.platform == 'win32':
-        unzip(z, 'platform-tools/AdbWinApi.dll', getTargetPath())
-        unzip(z, 'platform-tools/AdbWinUsbApi.dll', getTargetPath())
+        unzip(z, 'platform-tools/AdbWinApi.dll', resolvePlatformPath())
+        unzip(z, 'platform-tools/AdbWinUsbApi.dll', resolvePlatformPath())
 os.remove('platform-tools.zip')
