@@ -74,8 +74,7 @@ Pass the `PREFIX` variable to `qmake` in order to define a different installatio
 
 If you want to create installation/executable APK Editor Studio packages,
 the corresponding scripts are located at `scripts/**/packages` (where `**` is a platform name).
-Every platform directory contains an `environment` script file which sets the paths to the
-required tools. Feel free to edit these variables to correspond the paths on your system.
+Refer to the underlying `README.md` files for more information on the specific platforms.
 
 ## Third-Party Components
 
