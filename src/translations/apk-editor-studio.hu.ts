@@ -327,7 +327,7 @@ Biztos újra akarod nyitni (ezzel minden nem mentett módosítás elvész)?</tra
     <message>
         <location filename="../../src/windows/devicemanager.cpp" line="41"/>
         <source>Device Information</source>
-        <translation>Eszköz információ</translation>
+        <translation>Eszközinformáció</translation>
     </message>
     <message>
         <location filename="../../src/windows/devicemanager.cpp" line="90"/>
@@ -819,7 +819,7 @@ Do you want to discard them and exit?</source>
     <message>
         <location filename="../../src/windows/optionsdialog.cpp" line="231"/>
         <source>Could not register file association.</source>
-        <translation>Nem sikerült beállítani a fájl társítást.</translation>
+        <translation>Nem sikerült beállítani a fájltársítást.</translation>
     </message>
     <message>
         <location filename="../../src/windows/optionsdialog.cpp" line="242"/>
@@ -1081,7 +1081,7 @@ Do you want to discard them and exit?</source>
         <location filename="../../src/editors/projectactionviewer.cpp" line="10"/>
         <source>Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
-        <translation>Projekt kezelő</translation>
+        <translation>Projektkezelő</translation>
     </message>
     <message>
         <location filename="../../src/editors/projectactionviewer.cpp" line="67"/>
@@ -1179,7 +1179,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <location filename="../../src/widgets/resourceabstractview.cpp" line="60"/>
         <source>Save Resource As...</source>
-        <translation>Erőforrása mentése mint...</translation>
+        <translation>Erőforrás mentése mint...</translation>
     </message>
     <message>
         <location filename="../../src/widgets/resourceabstractview.cpp" line="65"/>
@@ -1315,7 +1315,7 @@ Any unsaved changes will be lost.</source>
         <location filename="../../src/editors/welcomeactionviewer.cpp" line="25"/>
         <source>Welcome to the APK Editor Studio.</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>Welcome to APK Editor Studio.</translation>
+        <translation>Üdvözli az APK Editor Studio.</translation>
     </message>
     <message>
         <location filename="../../src/editors/welcomeactionviewer.cpp" line="26"/>
@@ -1358,7 +1358,7 @@ Any unsaved changes will be lost.</source>
         <location filename="../../src/apk/xmlnode.cpp" line="49"/>
         <source>Plurals</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/string-resource#Plurals).</extracomment>
-        <translation>Mennyiség sztingek</translation>
+        <translation>Mennyiség sztringek</translation>
     </message>
     <message>
         <location filename="../../src/apk/xmlnode.cpp" line="52"/>
