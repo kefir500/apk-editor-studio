@@ -25,6 +25,7 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
             }
             applicationChild = applicationChild.nextSiblingElement();
         }
+        packageName = manifestNode.attribute("package");
     }
 
     // YAML:
@@ -77,6 +78,11 @@ const QString &Manifest::getVersionName() const
     return versionName;
 }
 
+const QString &Manifest::getPackageName() const
+{
+    return packageName;
+}
+
 void Manifest::setApplicationLabel(const QString &value)
 {
     scopes.first()->label().setValue(value);
@@ -112,6 +118,13 @@ void Manifest::setVersionName(const QString &value)
     versionName = value;
     yml.replace(regexVersionName, value);
     saveYml();
+}
+
+void Manifest::setPackageName(const QString &value)
+{
+    packageName = value;
+    manifestNode.setAttribute("package", value);
+    saveXml();
 }
 
 QList<Permission> Manifest::getPermissionList() const

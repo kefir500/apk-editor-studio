@@ -1,6 +1,7 @@
 #include "windows/mainwindow.h"
 #include "windows/aboutdialog.h"
 #include "windows/dialogs.h"
+#include "windows/rememberdialog.h"
 #include "windows/signatureviewer.h"
 #include "widgets/centralwidget.h"
 #include "widgets/filesystemtree.h"
@@ -20,6 +21,7 @@
 #include "apk/project.h"
 #include <QDebug>
 #include <QDockWidget>
+#include <QInputDialog>
 #include <QMenuBar>
 #include <QMimeData>
 #include <QMimeDatabase>
@@ -220,6 +222,9 @@ void MainWindow::initMenus()
     actionPermissionEditor = new QAction(this);
     actionPermissionEditor->setIcon(QIcon::fromTheme("tool-permissioneditor"));
     actionPermissionEditor->setShortcut(QKeySequence("Ctrl+Shift+P"));
+    actionPackageRename = new QAction(this);
+    actionPackageRename->setIcon(QIcon::fromTheme("edit-rename"));
+    actionPackageRename->setShortcut(QKeySequence("Ctrl+Shift+R"));
     actionViewSignatures = new QAction(this);
     actionViewSignatures->setIcon(QIcon::fromTheme("view-certificate"));
 
@@ -274,6 +279,7 @@ void MainWindow::initMenus()
     menuTools->addSeparator();
     menuTools->addAction(actionTitleEditor);
     menuTools->addAction(actionPermissionEditor);
+    menuTools->addAction(actionPackageRename);
     menuTools->addSeparator();
     menuTools->addAction(actionViewSignatures);
     menuSettings = menuBar()->addMenu(QString());
@@ -312,6 +318,7 @@ void MainWindow::initMenus()
     toolbar->addActionToPool("project-manager", actionProjectManager);
     toolbar->addActionToPool("title-editor", actionTitleEditor);
     toolbar->addActionToPool("permission-editor", actionPermissionEditor);
+    toolbar->addActionToPool("rename-package", actionPackageRename);
     toolbar->addActionToPool("view-signatures", actionViewSignatures);
     toolbar->addActionToPool("device-manager", actionDeviceManager);
     toolbar->addActionToPool("android-explorer", actionAndroidExplorer);
@@ -346,6 +353,9 @@ void MainWindow::initMenus()
     });
     connect(actionPermissionEditor, &QAction::triggered, this, [this]() {
         getCurrentProjectWidget()->openPermissionEditor();
+    });
+    connect(actionPackageRename, &QAction::triggered, this, [this]() {
+        changePackageName(getCurrentProject());
     });
     connect(actionViewSignatures, &QAction::triggered, this, [this]() {
         const auto project = getCurrentProject();
@@ -411,6 +421,8 @@ void MainWindow::retranslate()
     actionTitleEditor->setText(tr("Edit Application &Title"));
     //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionPermissionEditor->setText(tr("Edit Application &Permissions"));
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    actionPackageRename->setText(tr("Edit Package &Name"));
     actionViewSignatures->setText(tr("View &Signatures"));
 
     // Window Menu:
@@ -449,6 +461,7 @@ void MainWindow::updateWindowForProject(Project *project)
     actionApkClose->setEnabled(project ? project->getState().canClose() : false);
     actionTitleEditor->setEnabled(project ? project->getState().canEdit() : false);
     actionPermissionEditor->setEnabled(project ? project->getState().canEdit() : false);
+    actionPackageRename->setEnabled(project ? project->getState().canEdit() : false);
     actionViewSignatures->setEnabled(project);
     actionProjectManager->setEnabled(project);
 }
@@ -524,6 +537,44 @@ void MainWindow::onProjectSwitched(Project *project)
     manifestTable->setModel(project ? &project->manifestModel : nullptr);
 
     updateWindowForProject(project);
+}
+
+bool MainWindow::changePackageName(Project *project)
+{
+    RememberDialog::say("experimental-rename-package",
+        tr("This is an experimental function. Proper work is not guaranteed."),
+        this);
+
+    if (!app->settings->getDecompileSources() && !project->getWithSources()) {
+        const QString question = tr(
+            "Changing the package name requires the source code decompilation to be turned on. "
+            "Proceed?");
+        if (QMessageBox::question(this, {}, question) == QMessageBox::Yes) {
+            app->settings->setDecompileSources(true);
+            QMessageBox::information(this, {}, tr("Settings have been applied. Please, reopen this APK."));
+        }
+        return false;
+    }
+
+    if (!project->getWithSources()) {
+        QMessageBox::warning(this, {}, tr(
+            "Please, reopen this APK in order to unpack the source code and change the package name."));
+        return false;
+    }
+
+    const QString newPackageName = QInputDialog::getText(this, {}, tr("Package Name:"),
+                                                         QLineEdit::Normal, project->getPackageName());
+    if (newPackageName.isEmpty()) {
+        return false;
+    }
+
+    if (project->setPackageName(newPackageName)) {
+        QMessageBox::information(this, {}, tr("Package name has been successfully changed!"));
+        return true;
+    } else {
+        QMessageBox::warning(this, {}, tr("Could not change the package name."));
+        return false;
+    }
 }
 
 Project *MainWindow::getCurrentProject() const

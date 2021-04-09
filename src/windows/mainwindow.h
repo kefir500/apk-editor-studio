@@ -51,6 +51,8 @@ private:
     void onProjectAboutToBeRemoved(const QModelIndex &parent, int first, int last);
     void onProjectSwitched(Project *project);
 
+    bool changePackageName(Project *project);
+
     Project *getCurrentProject() const;
     ProjectWidget *getCurrentProjectWidget() const;
     Viewer *getCurrentTab() const;
@@ -90,6 +92,7 @@ private:
     QAction *actionTitleEditor;
     QAction *actionPermissionEditor;
     QAction *actionViewSignatures;
+    QAction *actionPackageRename;
     QAction *actionNewWindow;
     QAction *actionAboutQt;
     QAction *actionAbout;

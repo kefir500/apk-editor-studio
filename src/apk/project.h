@@ -36,10 +36,14 @@ public:
     QString getTitle() const;
     QString getOriginalPath() const;
     QString getContentsPath() const;
+    QString getPackageName() const;
     QIcon getThumbnail() const;
     const ProjectState &getState() const;
 
+    bool getWithSources() const;
+
     void setApplicationIcon(const QString &path, QWidget *parent = nullptr);
+    bool setPackageName(const QString &name);
 
     void journal(const QString &brief, LogEntry::Type type = LogEntry::Information);
     void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
@@ -79,9 +83,14 @@ signals:
 
 private:
     ProjectState state;
+
     QString originalPath;
     ProjectContentsPath contentsPath;
     QIcon thumbnail;
+
+    bool withSources = false;
+    bool withResources = false;
+    bool withBrokenResources = false;
 };
 
 #endif // PROJECT_H

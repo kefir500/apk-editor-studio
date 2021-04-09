@@ -45,6 +45,11 @@ QString Project::getContentsPath() const
     return contentsPath.get();
 }
 
+QString Project::getPackageName() const
+{
+    return manifest->getPackageName();
+}
+
 QIcon Project::getThumbnail() const
 {
     QIcon thumbnail = iconsProxy.getIcon();
@@ -56,9 +61,72 @@ const ProjectState &Project::getState() const
     return state;
 }
 
+bool Project::getWithSources() const
+{
+    return withSources;
+}
+
 void Project::setApplicationIcon(const QString &path, QWidget *parent)
 {
     iconsProxy.replaceApplicationIcons(path, parent);
+}
+
+bool Project::setPackageName(const QString &name)
+{
+    if (!withSources) {
+        return false;
+    }
+
+    QString packagePath = name;
+    packagePath.replace('.', '/');
+
+    QString originalPackagePath = getPackageName();
+    originalPackagePath.replace('.', '/');
+
+    const QString contentsPath = getContentsPath();
+
+    if (packagePath.isEmpty() || originalPackagePath.isEmpty()) {
+        return false;
+    }
+
+    // Update manifest:
+
+    manifest->setPackageName(name);
+
+    // Update references in smali:
+
+    const QString smaliPath = contentsPath + "/smali/";
+
+    QDirIterator files(contentsPath, QDir::Files, QDirIterator::Subdirectories);
+    while (files.hasNext()) {
+        const QString path(files.next());
+        QFile file(path);
+        if (file.open(QFile::ReadWrite)) {
+            const QString data(file.readAll());
+            QString newData(data);
+            newData.replace('L' + originalPackagePath, 'L' + packagePath);
+            if (newData != data) {
+                file.seek(0);
+                file.write(newData.toUtf8());
+            }
+            file.close();
+        }
+    }
+
+    // Update directory structure:
+
+    packagePath.prepend(smaliPath);
+    originalPackagePath.prepend(smaliPath);
+    if (!QDir().exists(originalPackagePath)) {
+        return true;
+    }
+
+    QDir().mkpath(QFileInfo(packagePath).path());
+    if (!QDir().rename(originalPackagePath, packagePath)) {
+        return false;
+    }
+
+    return true;
 }
 
 void Project::journal(const QString &brief, LogEntry::Type type)
@@ -73,23 +141,25 @@ void Project::journal(const QString &brief, const QString &descriptive, LogEntry
 
 Command *Project::createUnpackCommand()
 {
-    QString source(getOriginalPath());
     QString target;
     do {
         const QString uuid = QUuid::createUuid().toString();
         target = QDir::toNativeSeparators(QString("%1/%2").arg(Apktool::getOutputPath(), uuid));
     } while (target.isEmpty() || QDir(target).exists());
+
+    const QString source(getOriginalPath());
     const QString frameworks = Apktool::getFrameworksPath();
-    const bool resources = true;
-    const bool sources = app->settings->getDecompileSources();
-    const bool keepBroken = app->settings->getKeepBrokenResources();
+
+    withResources = true;
+    withSources = app->settings->getDecompileSources();
+    withBrokenResources = app->settings->getKeepBrokenResources();
 
     QDir().mkpath(target);
     QDir().mkpath(frameworks);
 
     contentsPath.set(target);
 
-    auto apktoolDecode = new Apktool::Decode(source, target, frameworks, resources, sources, keepBroken);
+    auto apktoolDecode = new Apktool::Decode(source, target, frameworks, withResources, withSources, withBrokenResources);
     connect(apktoolDecode, &Command::finished, this, [=](bool success) {
         if (success) {
             filesystemModel.setRootPath(getContentsPath());
