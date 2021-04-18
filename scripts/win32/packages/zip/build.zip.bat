@@ -2,13 +2,8 @@ rem Prepare
 
 set /p VERSION=<%~dp0\..\..\..\..\VERSION
 
-if /i not "%CI%"=="True" (
-    set FOLDER=APK Editor Studio v%VERSION%
-    set ARCHIVE=apk-editor-studio_win32_%VERSION%.zip
-) else (
-    set FOLDER=APK Editor Studio - Developer Build
-    set ARCHIVE=apk-editor-studio_win32_dev.zip
-)
+set FOLDER=APK Editor Studio v%VERSION%
+set ARCHIVE=apk-editor-studio_win32_%VERSION%.zip
 
 if exist "%ARCHIVE%" del "%ARCHIVE%"
 if exist "%FOLDER%" rmdir /s /q "%FOLDER%"
@@ -37,8 +32,8 @@ xcopy /y "%QTDIR%\plugins\styles\qwindowsvistastyle.dll" "%FOLDER%\styles\" || e
 
 rem Deploy OpenSSL
 
-xcopy /y "%OPENSSL%\libcrypto-1_1.dll" "%FOLDER%\" || exit /b
-xcopy /y "%OPENSSL%\libssl-1_1.dll" "%FOLDER%\"    || exit /b
+xcopy /y "%OPENSSL%\libcrypto-1_1-x64.dll" "%FOLDER%\" || exit /b
+xcopy /y "%OPENSSL%\libssl-1_1-x64.dll" "%FOLDER%\"    || exit /b
 
 rem Package
 

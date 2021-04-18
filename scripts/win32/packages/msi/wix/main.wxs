@@ -2,11 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 
   <?define ProductName="APK Editor Studio" ?>
-  <?ifndef env.CI ?>
-    <?define ProductVersion="$(env.VERSION)" ?>
-  <?else ?>
-    <?define ProductVersion="0.0.0" ?>
-  <?endif ?>
+  <?define ProductVersion="$(env.VERSION)" ?>
 
   <Product Id="*" Name="$(var.ProductName)" Version="$(var.ProductVersion)" UpgradeCode="B889316C-C1B5-4615-8443-F1ADB1B3584D" Manufacturer="Alexander Gorishnyak" Language="1033">
 
@@ -29,7 +25,7 @@
     <WixVariable Id="WixUIBannerBmp" Value="$(sys.SOURCEFILEDIR)\res\header.bmp" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFilesFolder">
+      <Directory Id="ProgramFiles64Folder">
         <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" FileSource="$(var.DistDir)">
           <Component Id="ExeComponent" Guid="C6176BE3-E235-46DF-9BC6-5CA8358B0253">
             <File Name="apk-editor-studio.exe" Id="Executable" />
@@ -139,8 +135,8 @@
             <File Source="$(env.QTDIR)\bin\Qt5Xml.dll" />
           </Component>
           <Component Id="SslComponent" Guid="F309A6A0-AD5B-44A4-97E7-BFF5D5FCAA45">
-            <File Source="$(env.OPENSSL)\libcrypto-1_1.dll" />
-            <File Source="$(env.OPENSSL)\libssl-1_1.dll" />
+            <File Source="$(env.OPENSSL)\libcrypto-1_1-x64.dll" />
+            <File Source="$(env.OPENSSL)\libssl-1_1-x64.dll" />
           </Component>
           <Directory Id="ImageFormatsFolder" Name="imageformats">
             <Component Id="ImageFormatsComponent" Guid="CC89BD49-ED15-4E80-9CA6-4EC52B81E53C">
