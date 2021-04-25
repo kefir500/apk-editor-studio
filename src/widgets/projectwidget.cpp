@@ -196,6 +196,7 @@ bool ProjectWidget::installProject()
         return false;
     }
 
+    QString target;
     auto command = new Project::ProjectCommand(project);
 
     if (isUnsaved()) {
@@ -205,19 +206,19 @@ bool ProjectWidget::installProject()
         case QMessageBox::Yes:
         case QMessageBox::Save: {
             saveTabs();
-            const QString target = Dialogs::getSaveApkFilename(project, this);
+            target = Dialogs::getSaveApkFilename(project, this);
             if (target.isEmpty()) {
                 delete command;
                 return false;
             }
             command->add(project->createPackCommand(target), true);
             if (app->settings->getOptimizeApk()) {
-                command->add(project->createZipalignCommand(), false);
+                command->add(project->createZipalignCommand(target), false);
             }
             if (app->settings->getSignApk()) {
                 auto keystore = Keystore::get(this);
                 if (keystore) {
-                    command->add(project->createSignCommand(keystore.get()), false);
+                    command->add(project->createSignCommand(keystore.get(), target), false);
                 }
             }
             break;
@@ -230,7 +231,7 @@ bool ProjectWidget::installProject()
         }
     }
 
-    command->add(project->createInstallCommand(device.getSerial()));
+    command->add(project->createInstallCommand(device.getSerial(), target));
     command->run();
     return true;
 }
