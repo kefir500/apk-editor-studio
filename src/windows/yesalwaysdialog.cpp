@@ -23,10 +23,10 @@ YesAlwaysDialog::YesAlwaysDialog(const QString &identifier, const QString &quest
     auto vLayout = new QVBoxLayout(this);
     auto hLayout = new QHBoxLayout;
 
-    const int iconSize = app->style()->pixelMetric(QStyle::PM_MessageBoxIconSize, nullptr, this);
+    const int iconSize = qApp->style()->pixelMetric(QStyle::PM_MessageBoxIconSize, nullptr, this);
     auto icon = new QLabel(this);
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    icon->setPixmap(app->style()->standardIcon(QStyle::SP_MessageBoxWarning, nullptr, this).pixmap(iconSize, iconSize));
+    icon->setPixmap(qApp->style()->standardIcon(QStyle::SP_MessageBoxWarning, nullptr, this).pixmap(iconSize, iconSize));
 
     auto label = new QLabel(question, this);
     label->setWordWrap(true);
