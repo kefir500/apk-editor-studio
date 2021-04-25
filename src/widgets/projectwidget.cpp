@@ -1,6 +1,7 @@
 #include "widgets/projectwidget.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
+#include "windows/rememberdialog.h"
 #include "windows/permissioneditor.h"
 #include "editors/codeeditor.h"
 #include "editors/imageeditor.h"
@@ -9,6 +10,7 @@
 #include "base/application.h"
 #include "base/utils.h"
 #include "tools/keystore.h"
+#include <QInputDialog>
 #include <QDebug>
 
 ProjectWidget::ProjectWidget(Project *project, ProjectItemsModel &projects, QWidget *parent)
@@ -89,6 +91,48 @@ void ProjectWidget::openPermissionEditor()
 {
     PermissionEditor permissionEditor(project->manifest, this);
     permissionEditor.exec();
+}
+
+bool ProjectWidget::openPackageRenamer()
+{
+    RememberDialog::say("experimental-rename-package", tr(
+        "Package renaming is an experimental function which, in its current state, "
+        "may lead to crashes and data loss. You can join the discussion and help us "
+        "improve this feature <a href=\"%1\">here</a>."
+    ).arg("https://github.com/kefir500/apk-editor-studio/discussions/1"), this);
+
+    if (!app->settings->getDecompileSources() && !project->hasSourcesUnpacked()) {
+        const QString question = tr(
+            "Changing the package name requires the source code decompilation to be turned on. "
+            "Proceed?");
+        if (QMessageBox::question(this, {}, question) == QMessageBox::Yes) {
+            app->settings->setDecompileSources(true);
+            QMessageBox::information(this, {}, tr("Settings have been applied. Please, reopen this APK."));
+        }
+        return false;
+    }
+
+    if (!project->hasSourcesUnpacked()) {
+        QMessageBox::warning(this, {}, tr(
+            "Please, reopen this APK in order to unpack the source code and change the package name."));
+        return false;
+    }
+
+    const auto inputDialogFlags = QDialog().windowFlags() & ~Qt::WindowContextHelpButtonHint;
+    const QString newPackageName = QInputDialog::getText(this, {}, tr("Package Name:"),
+                                                         QLineEdit::Normal, project->getPackageName(),
+                                                         nullptr, inputDialogFlags);
+    if (newPackageName.isEmpty()) {
+        return false;
+    }
+
+    if (project->setPackageName(newPackageName)) {
+        QMessageBox::information(this, {}, tr("Package name has been successfully changed!"));
+        return true;
+    } else {
+        QMessageBox::warning(this, {}, tr("Could not change the package name."));
+        return false;
+    }
 }
 
 bool ProjectWidget::saveTabs()

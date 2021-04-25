@@ -6,8 +6,8 @@
 #include "tools/apksigner.h"
 #include "tools/keystore.h"
 #include "tools/zipalign.h"
-#include <QUuid>
 #include <QFutureWatcher>
+#include <QUuid>
 #include <QDebug>
 
 Project::Project(const QString &path) : resourcesModel(this)
@@ -61,7 +61,7 @@ const ProjectState &Project::getState() const
     return state;
 }
 
-bool Project::getWithSources() const
+bool Project::hasSourcesUnpacked() const
 {
     return withSources;
 }
@@ -71,19 +71,20 @@ void Project::setApplicationIcon(const QString &path, QWidget *parent)
     iconsProxy.replaceApplicationIcons(path, parent);
 }
 
-bool Project::setPackageName(const QString &name)
+bool Project::setPackageName(const QString &packageName)
 {
     if (!withSources) {
         return false;
     }
 
-    QString packagePath = name;
+    auto packagePath = packageName;
     packagePath.replace('.', '/');
 
-    QString originalPackagePath = getPackageName();
+    const auto originalPackageName = getPackageName();
+    auto originalPackagePath = getPackageName();
     originalPackagePath.replace('.', '/');
 
-    const QString contentsPath = getContentsPath();
+    const auto contentsPath = getContentsPath();
 
     if (packagePath.isEmpty() || originalPackagePath.isEmpty()) {
         return false;
@@ -91,41 +92,65 @@ bool Project::setPackageName(const QString &name)
 
     // Update manifest:
 
-    manifest->setPackageName(name);
+    manifest->setPackageName(packageName);
 
-    // Update references in smali:
+    // Update references in resources:
 
-    const QString smaliPath = contentsPath + "/smali/";
-
-    QDirIterator files(contentsPath, QDir::Files, QDirIterator::Subdirectories);
+    const auto resourcesPath = contentsPath + "/res/";
+    QDirIterator files(resourcesPath, QDir::Files, QDirIterator::Subdirectories);
     while (files.hasNext()) {
         const QString path(files.next());
         QFile file(path);
         if (file.open(QFile::ReadWrite)) {
             const QString data(file.readAll());
             QString newData(data);
-            newData.replace('L' + originalPackagePath, 'L' + packagePath);
+            newData.replace(originalPackageName, packageName);
             if (newData != data) {
-                file.seek(0);
+                file.resize(0);
                 file.write(newData.toUtf8());
             }
             file.close();
         }
     }
 
-    // Update directory structure:
+    const auto smaliDirs = QDir(contentsPath).entryList({"smali*"}, QDir::Dirs);
+    for (const auto &smaliDir : smaliDirs) {
 
-    packagePath.prepend(smaliPath);
-    originalPackagePath.prepend(smaliPath);
-    if (!QDir().exists(originalPackagePath)) {
-        return true;
+        const auto smaliPath = QString("%1/%2/").arg(contentsPath, smaliDir);
+
+        // Update references in smali:
+
+        QDirIterator files(smaliPath, QDir::Files, QDirIterator::Subdirectories);
+        while (files.hasNext()) {
+            const QString path(files.next());
+            QFile file(path);
+            if (file.open(QFile::ReadWrite)) {
+                const QString data(file.readAll());
+                QString newData(data);
+                newData.replace('L' + originalPackagePath, 'L' + packagePath);
+                newData.replace(originalPackageName, packageName);
+                if (newData != data) {
+                    file.resize(0);
+                    file.write(newData.toUtf8());
+                }
+                file.close();
+            }
+        }
+
+        // Update directory structure:
+
+        const auto fullPackagePath = smaliPath + packagePath;
+        const auto fullOriginalPackagePath = smaliPath + originalPackagePath;
+        if (!QDir().exists(fullOriginalPackagePath)) {
+            continue;
+        }
+        QDir().mkpath(QFileInfo(fullPackagePath).path());
+        if (!QDir().rename(fullOriginalPackagePath, fullPackagePath)) {
+            return false;
+        }
     }
 
-    QDir().mkpath(QFileInfo(packagePath).path());
-    if (!QDir().rename(originalPackagePath, packagePath)) {
-        return false;
-    }
-
+    state.setModified(true);
     return true;
 }
 

@@ -39,11 +39,10 @@ public:
     QString getPackageName() const;
     QIcon getThumbnail() const;
     const ProjectState &getState() const;
-
-    bool getWithSources() const;
+    bool hasSourcesUnpacked() const;
 
     void setApplicationIcon(const QString &path, QWidget *parent = nullptr);
-    bool setPackageName(const QString &name);
+    bool setPackageName(const QString &packageName);
 
     void journal(const QString &brief, LogEntry::Type type = LogEntry::Information);
     void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);

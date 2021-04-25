@@ -120,11 +120,19 @@ void Manifest::setVersionName(const QString &value)
     saveYml();
 }
 
-void Manifest::setPackageName(const QString &value)
+void Manifest::setPackageName(const QString &newPackageName)
 {
-    packageName = value;
-    manifestNode.setAttribute("package", value);
-    saveXml();
+    const auto originalPackageName = getPackageName();
+    xmlFile->seek(0);
+    const QString data(xmlFile->readAll());
+    QString newData(data);
+    newData.replace(originalPackageName, newPackageName);
+    if (newData != data) {
+        xmlFile->resize(0);
+        xmlFile->write(newData.toUtf8());
+        xmlFile->flush();
+    }
+    packageName = newPackageName;
 }
 
 QList<Permission> Manifest::getPermissionList() const

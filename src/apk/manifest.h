@@ -24,7 +24,7 @@ public:
     void setTargetSdk(int value);
     void setVersionCode(int value);
     void setVersionName(const QString &value);
-    void setPackageName(const QString &value);
+    void setPackageName(const QString &newPackageName);
 
     QList<Permission> getPermissionList() const;
     Permission addPermission(const QString &permission);

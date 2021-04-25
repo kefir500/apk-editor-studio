@@ -19,6 +19,7 @@ public:
     void openTitlesTab();
     void openResourceTab(const ResourceModelIndex &index);
     void openPermissionEditor();
+    bool openPackageRenamer();
 
     bool saveTabs();
     bool isUnsaved() const;
