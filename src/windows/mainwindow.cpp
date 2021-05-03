@@ -421,6 +421,7 @@ void MainWindow::retranslate()
     actionPermissionEditor->setText(tr("Edit Application &Permissions"));
     //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionPackageRename->setText(tr("Edit Package &Name"));
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionViewSignatures->setText(tr("View &Signatures"));
 
     // Window Menu:

@@ -103,7 +103,7 @@ bool ProjectWidget::openPackageRenamer()
 
     if (!app->settings->getDecompileSources() && !project->hasSourcesUnpacked()) {
         const QString question = tr(
-            "Changing the package name requires the source code decompilation to be turned on. "
+            "Cloning the APK requires the source code decompilation to be turned on. "
             "Proceed?");
         if (QMessageBox::question(this, {}, question) == QMessageBox::Yes) {
             app->settings->setDecompileSources(true);
@@ -114,7 +114,7 @@ bool ProjectWidget::openPackageRenamer()
 
     if (!project->hasSourcesUnpacked()) {
         QMessageBox::warning(this, {}, tr(
-            "Please, reopen this APK in order to unpack the source code and change the package name."));
+            "Please, reopen this APK in order to unpack the source code and clone the APK."));
         return false;
     }
 
@@ -127,10 +127,10 @@ bool ProjectWidget::openPackageRenamer()
     }
 
     if (project->setPackageName(newPackageName)) {
-        QMessageBox::information(this, {}, tr("Package name has been successfully changed!"));
+        QMessageBox::information(this, {}, tr("APK has been successfully cloned!"));
         return true;
     } else {
-        QMessageBox::warning(this, {}, tr("Could not change the package name."));
+        QMessageBox::warning(this, {}, tr("Could not clone the APK."));
         return false;
     }
 }

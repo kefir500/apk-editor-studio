@@ -221,6 +221,7 @@ void OptionsDialog::initialize()
     checkboxExplorerInstall->setIcon(QIcon::fromTheme("apk-install"));
     checkboxExplorerOptimize = new QCheckBox(strExplorerIntegration.arg(tr("Optimize")), this);
     checkboxExplorerOptimize->setIcon(QIcon::fromTheme("apk-optimize"));
+    //: This is a verb.
     checkboxExplorerSign = new QCheckBox(strExplorerIntegration.arg(tr("Sign")), this);
     checkboxExplorerSign->setIcon(QIcon::fromTheme("apk-sign"));
     connect(groupAssociate, &QGroupBox::clicked, this, [this](bool checked) {
