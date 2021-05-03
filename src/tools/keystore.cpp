@@ -18,9 +18,13 @@ std::unique_ptr<const Keystore> Keystore::get(QWidget *parent)
                 return nullptr;
             }
         }
+        const auto inputDialogFlags = QDialog().windowFlags() & ~Qt::WindowContextHelpButtonHint;
         if (keystore->keystorePassword.isEmpty()) {
             bool accepted;
-            keystore->keystorePassword = QInputDialog::getText(parent, QString(), tr("Enter the keystore password:"), QLineEdit::Password, QString(), &accepted);
+            keystore->keystorePassword = QInputDialog::getText(parent, QString(),
+                                                               tr("Enter the keystore password:"),
+                                                               QLineEdit::Password, QString(),
+                                                               &accepted, inputDialogFlags);
             if (!accepted) {
                 return nullptr;
             }
@@ -34,7 +38,10 @@ std::unique_ptr<const Keystore> Keystore::get(QWidget *parent)
         }
         if (keystore->keyPassword.isEmpty()) {
             bool accepted;
-            keystore->keyPassword = QInputDialog::getText(parent, QString(), tr("Enter the key password:"), QLineEdit::Password, QString(), &accepted);
+            keystore->keyPassword = QInputDialog::getText(parent, QString(),
+                                                          tr("Enter the key password:"),
+                                                          QLineEdit::Password, QString(),
+                                                          &accepted, inputDialogFlags);
             if (!accepted) {
                 return nullptr;
             }
