@@ -69,6 +69,10 @@
               <Component Id="GreekComponent" Guid="EF9ADEEE-D719-4AC8-93D9-ABE61693A4CA">
                 <File Name="apk-editor-studio.el.qm" />
               </Component>
+              <Component Id="HebrewComponent" Guid="BA868980-02D4-4D4C-AA7D-AFB28B1316D1">
+                <File Name="apk-editor-studio.he.qm" />
+                <File Name="qt.he.qm" />
+              </Component>
               <Component Id="HungarianComponent" Guid="900AB8B2-3032-4FC1-887B-9F1688B2BC56">
                 <File Name="apk-editor-studio.hu.qm" />
                 <File Name="qt.hu.qm" />
@@ -218,6 +222,7 @@
       <ComponentRef Id="FrenchComponent" />
       <ComponentRef Id="GermanComponent" />
       <ComponentRef Id="GreekComponent" />
+      <ComponentRef Id="HebrewComponent" />
       <ComponentRef Id="HungarianComponent" />
       <ComponentRef Id="IndonesianComponent" />
       <ComponentRef Id="ItalianComponent" />
@@ -274,6 +279,9 @@
       </Feature>
       <Feature Id="GreekFeature" Title="Greek" Description="Greek translation.">
         <ComponentRef Id="GreekComponent" />
+      </Feature>
+      <Feature Id="HebrewFeature" Title="Hebrew" Description="Hebrew translation.">
+        <ComponentRef Id="HebrewComponent" />
       </Feature>
       <Feature Id="HungarianFeature" Title="Hungarian" Description="Hungarian translation.">
         <ComponentRef Id="HungarianComponent" />
