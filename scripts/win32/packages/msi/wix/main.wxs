@@ -61,6 +61,10 @@
                 <File Name="apk-editor-studio.zh_CN.qm" />
                 <File Name="qt.zh_CN.qm" />
               </Component>
+              <Component Id="CzechComponent" Guid="532AA7E5-361D-4CD4-968A-2E64447EB683">
+                <File Name="apk-editor-studio.cs.qm" />
+                <File Name="qt.cs.qm" />
+              </Component>
               <Component Id="FrenchComponent" Guid="7D7079C2-5661-421D-8662-87B637469B5A">
                 <File Name="apk-editor-studio.fr.qm" />
                 <File Name="qt.fr.qm" />
@@ -223,6 +227,7 @@
     <ComponentGroup Id="TranslationsComponents">
       <ComponentRef Id="AzerbaijaniComponent" />
       <ComponentRef Id="ChineseSimplifiedComponent" />
+      <ComponentRef Id="CzechComponent" />
       <ComponentRef Id="FrenchComponent" />
       <ComponentRef Id="GermanComponent" />
       <ComponentRef Id="GreekComponent" />
@@ -277,6 +282,9 @@
       </Feature>
       <Feature Id="ChineseSimplifiedFeature" Title="Chinese (Simplified)" Description="Chinese (Simplified) translation.">
         <ComponentRef Id="ChineseSimplifiedComponent" />
+      </Feature>
+      <Feature Id="CzechFeature" Title="Czech" Description="Czech translation.">
+        <ComponentRef Id="CzechComponent" />
       </Feature>
       <Feature Id="FrenchFeature" Title="French" Description="French translation.">
         <ComponentRef Id="FrenchComponent" />
