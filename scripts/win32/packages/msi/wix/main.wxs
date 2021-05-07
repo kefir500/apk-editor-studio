@@ -65,6 +65,9 @@
                 <File Name="apk-editor-studio.cs.qm" />
                 <File Name="qt.cs.qm" />
               </Component>
+              <Component Id="EnglishBritishComponent" Guid="27366240-741A-4615-A45E-E1EA7645D8D7">
+                <File Name="apk-editor-studio.en_GB.qm" />
+              </Component>
               <Component Id="FrenchComponent" Guid="7D7079C2-5661-421D-8662-87B637469B5A">
                 <File Name="apk-editor-studio.fr.qm" />
                 <File Name="qt.fr.qm" />
