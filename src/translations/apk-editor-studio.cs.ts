@@ -40,12 +40,12 @@
     <message>
         <location filename="../windows/aboutdialog.cpp" line="94"/>
         <source>Bug Tracker:</source>
-        <translation>Hledač bugů</translation>
+        <translation>Hledač bugů:</translation>
     </message>
     <message>
         <location filename="../windows/aboutdialog.cpp" line="95"/>
         <source>Translation:</source>
-        <translation>Překlad</translation>
+        <translation>Překlad:</translation>
     </message>
 </context>
 <context>
@@ -118,7 +118,7 @@
     <message>
         <location filename="../base/actionprovider.cpp" line="383"/>
         <source>&amp;Options...</source>
-        <translation>&amp;Možnosti</translation>
+        <translation>&amp;Možnosti...</translation>
     </message>
     <message>
         <location filename="../base/actionprovider.cpp" line="400"/>
@@ -140,7 +140,7 @@
     <message>
         <location filename="../base/actionprovider.cpp" line="464"/>
         <source>Take &amp;Screenshot...</source>
-        <translation>Snímek &amp;Obrazovky</translation>
+        <translation>Snímek &amp;Obrazovky...</translation>
     </message>
     <message>
         <location filename="../base/actionprovider.cpp" line="489"/>
@@ -387,7 +387,7 @@
         <location filename="../editors/fileeditor.cpp" line="89"/>
         <source>&amp;Open Resource Directory</source>
         <extracomment>This string refers to a single resource.</extracomment>
-        <translation>&amp; Otevřít adresář zdrojů</translation>
+        <translation>&amp;Otevřít adresář zdrojů</translation>
     </message>
 </context>
 <context>
@@ -455,7 +455,7 @@
     <message>
         <location filename="../windows/keycreator.cpp" line="32"/>
         <source>Key Password</source>
-        <translation> Heslo ke Klíči</translation>
+        <translation>Heslo ke Klíči</translation>
     </message>
     <message>
         <location filename="../windows/keycreator.cpp" line="33"/>
@@ -567,7 +567,7 @@
     <message>
         <location filename="../windows/keymanager.cpp" line="52"/>
         <source>Key password:</source>
-        <translation> Heslo od klíče:</translation>
+        <translation>Heslo od klíče:</translation>
     </message>
 </context>
 <context>
@@ -999,7 +999,7 @@ Chcete je zahodit a ukončit?</translation>
         <location filename="../windows/optionsdialog.cpp" line="321"/>
         <source>Zipalign path:</source>
         <extracomment>&quot;Zipalign&quot; is the name of the tool, don't translate it.</extracomment>
-        <translation>Cesta Zipalignu</translation>
+        <translation>Cesta Zipalignu:</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="332"/>

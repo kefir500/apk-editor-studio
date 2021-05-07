@@ -557,7 +557,7 @@
     <message>
         <location filename="../windows/keymanager.cpp" line="50"/>
         <source>Keystore password:</source>
-        <translation>رمز ورود به فروشگاه</translation>
+        <translation>رمز ورود به فروشگاه:</translation>
     </message>
     <message>
         <location filename="../windows/keymanager.cpp" line="51"/>
@@ -1011,7 +1011,7 @@ Do you want to discard them and exit?</source>
         <location filename="../windows/optionsdialog.cpp" line="340"/>
         <source>ADB path:</source>
         <extracomment>&quot;ADB&quot; is the name of the tool, don't translate it.</extracomment>
-        <translation>مسیر ADB : </translation>
+        <translation>مسیر ADB :</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="349"/>
@@ -1447,7 +1447,7 @@ Any unsaved changes will be lost.</source>
         <location filename="../base/updater.cpp" line="121"/>
         <source>APK Editor Studio v%1 is available. Download?</source>
         <extracomment>&quot;v%1&quot; will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>APK Editor Studio v٪1 در دسترس است. دانلود؟</translation>
+        <translation>APK Editor Studio v%1 در دسترس است. دانلود؟</translation>
     </message>
     <message>
         <location filename="../base/updater.cpp" line="124"/>
