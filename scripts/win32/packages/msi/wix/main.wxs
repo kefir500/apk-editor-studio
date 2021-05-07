@@ -54,6 +54,9 @@
           </Directory>
           <Directory Id="ResourcesFolder" Name="resources">
             <Directory Id="LanguagesFolder" Name="translations">
+              <Component Id="AzerbaijaniComponent" Guid="086AE2FD-1FD2-4BAA-85F3-F4170274D286">
+                <File Name="apk-editor-studio.az.qm" />
+              </Component>
               <Component Id="ChineseSimplifiedComponent" Guid="1A4BAEA9-7C60-4345-9B96-27C502B51D71">
                 <File Name="apk-editor-studio.zh_CN.qm" />
                 <File Name="qt.zh_CN.qm" />
@@ -218,6 +221,7 @@
       <ComponentRef Id="AdbComponent" />
     </ComponentGroup>
     <ComponentGroup Id="TranslationsComponents">
+      <ComponentRef Id="AzerbaijaniComponent" />
       <ComponentRef Id="ChineseSimplifiedComponent" />
       <ComponentRef Id="FrenchComponent" />
       <ComponentRef Id="GermanComponent" />
@@ -268,6 +272,9 @@
       </Feature>
     </Feature>
     <Feature Id="TranslationsFeature" Title="Translations" Description="Install additional translations. English is included by default.">
+      <Feature Id="AzerbaijaniFeature" Title="Azerbaijani" Description="Azerbaijani translation.">
+        <ComponentRef Id="AzerbaijaniComponent" />
+      </Feature>
       <Feature Id="ChineseSimplifiedFeature" Title="Chinese (Simplified)" Description="Chinese (Simplified) translation.">
         <ComponentRef Id="ChineseSimplifiedComponent" />
       </Feature>
