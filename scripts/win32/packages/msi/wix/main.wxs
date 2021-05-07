@@ -234,6 +234,7 @@
       <ComponentRef Id="AzerbaijaniComponent" />
       <ComponentRef Id="ChineseSimplifiedComponent" />
       <ComponentRef Id="CzechComponent" />
+      <ComponentRef Id="EnglishBritishComponent" />
       <ComponentRef Id="FrenchComponent" />
       <ComponentRef Id="GermanComponent" />
       <ComponentRef Id="GreekComponent" />
