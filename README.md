@@ -1,8 +1,8 @@
 # APK Editor Studio
 
-[![Build Status (Travis CI)](https://travis-ci.org/kefir500/apk-editor-studio.svg?branch=master)](https://travis-ci.org/kefir500/apk-editor-studio/builds)
-[![Build Status (AppVeyor)](https://ci.appveyor.com/api/projects/status/github/kefir500/apk-editor-studio?svg=true)](https://ci.appveyor.com/project/kefir500/apk-editor-studio)
+[![Build Status (GitHub Actions)](https://img.shields.io/github/workflow/status/kefir500/apk-editor-studio/Build)](https://github.com/kefir500/apk-editor-studio/actions/workflows/build.yml)
 [![Latest Release](https://img.shields.io/github/release/kefir500/apk-editor-studio.svg?maxAge=86400)](https://github.com/kefir500/apk-editor-studio/releases/latest)
+[![Download Count](https://img.shields.io/github/downloads/kefir500/apk-editor-studio/total?color=blue)](https://github.com/kefir500/apk-editor-studio/releases)
 [![License](https://img.shields.io/github/license/kefir500/apk-editor-studio?color=blue)](https://raw.githubusercontent.com/kefir500/apk-editor-studio/master/LICENSE)
 [![Donate via PayPal](https://img.shields.io/badge/donate-PayPal-orange.svg?logo=paypal)](https://paypal.me/kefir500)
 [![Become a Patron](https://img.shields.io/badge/donate-Patreon-orange.svg?logo=patreon)](https://www.patreon.com/kefir500)
