@@ -222,6 +222,7 @@
       <ComponentRef Id="LicensesComponent" />
       <ComponentGroupRef Id="ToolsComponents" />
       <ComponentGroupRef Id="DllComponents" />
+      <ComponentGroupRef Id="CoreTranslationsComponents" />
       <ComponentGroupRef Id="InstallerComponents" />
     </ComponentGroup>
     <ComponentGroup Id="ToolsComponents">
@@ -230,11 +231,13 @@
       <ComponentRef Id="ZipalignComponent" />
       <ComponentRef Id="AdbComponent" />
     </ComponentGroup>
+    <ComponentGroup Id="CoreTranslationsComponents">
+      <ComponentRef Id="EnglishBritishComponent" />
+    </ComponentGroup>
     <ComponentGroup Id="TranslationsComponents">
       <ComponentRef Id="AzerbaijaniComponent" />
       <ComponentRef Id="ChineseSimplifiedComponent" />
       <ComponentRef Id="CzechComponent" />
-      <ComponentRef Id="EnglishBritishComponent" />
       <ComponentRef Id="FrenchComponent" />
       <ComponentRef Id="GermanComponent" />
       <ComponentRef Id="GreekComponent" />
