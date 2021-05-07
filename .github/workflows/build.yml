@@ -30,7 +30,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: APK Editor Studio v${{ env.VERSION }} - Windows Installer (MSI)
+          name: APK Editor Studio - Windows Installer (MSI) Snapshot
           path: apk-editor-studio_win32_${{ env.VERSION }}.msi
   build-windows-zip:
     name: Windows Build (ZIP)
@@ -58,7 +58,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: APK Editor Studio v${{ env.VERSION }} - Windows Portable (ZIP)
+          name: APK Editor Studio - Windows Portable (ZIP) Snapshot
           path: apk-editor-studio_win32_${{ env.VERSION }}.zip
   build-linux-deb:
     name: Linux Build (DEB)
@@ -76,7 +76,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: APK Editor Studio v${{ env.VERSION }} - Linux (DEB)
+          name: APK Editor Studio - Linux (DEB) Snapshot
           path: scripts/linux/packages/deb/apk-editor-studio_linux_${{ env.VERSION }}.deb
   build-linux-appimage:
     name: Linux Build (AppImage)
@@ -98,7 +98,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: APK Editor Studio v${{ env.VERSION }} - Linux (AppImage)
+          name: APK Editor Studio - Linux (AppImage) Snapshot
           path: scripts/linux/packages/appimage/apk-editor-studio_linux_${{ env.VERSION }}.AppImage
   build-macos:
     name: macOS Build (APP, DMG)
@@ -122,10 +122,10 @@ jobs:
       - name: Upload APP Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: APK Editor Studio v${{ env.VERSION }} - macOS (APP)
+          name: APK Editor Studio - macOS (APP) Snapshot
           path: scripts/macos/packages/app/apk-editor-studio_macos_${{ env.VERSION }}.app.zip
       - name: Upload DMG Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: APK Editor Studio v${{ env.VERSION }} - macOS (DMG)
+          name: APK Editor Studio - macOS (DMG) Snapshot
           path: scripts/macos/packages/dmg/apk-editor-studio_macos_${{ env.VERSION }}.dmg
