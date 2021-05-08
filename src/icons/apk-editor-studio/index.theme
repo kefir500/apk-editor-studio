@@ -1,6 +1,6 @@
 [Icon Theme]
-Name=Default
-Comment=Default APK Editor Studio theme
+Name=APK Editor Studio
+Comment=Default APK Editor Studio theme based on Icons8 and famfamfam packs
 Directories=actions/16x16,actions/24x24,actions/30x30,actions/32x32,actions/40x40,actions/48x48,apps/16x16,apps/20x20,apps/32x32,apps/48x48,apps/256x256,devices/16x16,devices/30x30,devices/40x40,emblems/16x16,emblems/32x32,intl,status/20x20
 
 [actions/16x16]

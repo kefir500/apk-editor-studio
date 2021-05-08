@@ -1,8 +1,8 @@
 [Icon Theme]
-Name=Dark
-Comment=Dark APK Editor Studio theme
+Name=APK Editor Studio (Dark)
+Comment=Dark APK Editor Studio theme based on Icons8 and famfamfam packs
 Directories=actions/16x16,actions/24x24,actions/30x30,actions/32x32,actions/48x48,emblems/16x16,emblems/32x32
-Inherits=default
+Inherits=apk-editor-studio
 
 [actions/16x16]
 Size=16

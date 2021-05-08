@@ -40,10 +40,10 @@ Application::Application(int &argc, char **argv) : QtSingleApplication(argc, arg
 
     if (!Utils::isDarkTheme()) {
         theme_ = new LightTheme;
-        QIcon::setThemeName("default");
+        QIcon::setThemeName("apk-editor-studio");
     } else {
         theme_ = new DarkTheme;
-        QIcon::setThemeName("dark");
+        QIcon::setThemeName("apk-editor-studio-dark");
     }
 }
 
