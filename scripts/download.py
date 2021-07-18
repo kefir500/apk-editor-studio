@@ -41,7 +41,7 @@ os.makedirs(resolvePlatformPath(), exist_ok=True)
 # Download Apktool
 
 print('(1/3) Downloading Apktool...')
-urlretrieve('https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.4.1.jar',
+urlretrieve('https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.5.0.jar',
     resolvePath('../res/deploy/all/tools/apktool.jar'), progress)
 
 # Download and unpack Android Build Tools
