@@ -94,16 +94,15 @@ namespace Utils
 
     // URL utils:
 
-    QString getWebPage();
-    QString getUpdatePage();
-    QString getSourcePage();
-    QString getIssuesPage();
-    QString getContactPage();
-    QString getTranslatePage();
-    QString getDonatePage();
-    QString getJrePage();
-    QString getJdkPage();
+
+    QString getWebsiteUrl();
     QString getUpdateUrl();
+    QString getRepositoryUrl();
+    QString getIssuesUrl();
+    QString getTranslationsUrl();
+    QString getDonationsUrl();
+    QString getBlogPostUrl(const QString &slug);
+    QString getVersionInfoUrl();
 
     // Android utils:
 

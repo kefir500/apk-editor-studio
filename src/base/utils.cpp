@@ -309,55 +309,49 @@ QIcon Utils::getLocaleFlag(const QLocale &locale)
     return QIcon::fromTheme(QString("flag-%1").arg(countryCode));
 }
 
-QString Utils::getWebPage()
+QString Utils::getWebsiteUrl()
 {
-    return QString("https://qwertycube.com/%1/").arg(getTitleNoSpaces());
-}
-
-QString Utils::getUpdatePage()
-{
-    return QString("https://qwertycube.com/%1/#utm_campaign=update&utm_source=%1&utm_medium=application").arg(getTitleNoSpaces());
-}
-
-QString Utils::getSourcePage()
-{
-    return QString("https://github.com/kefir500/%1/").arg(getTitleNoSpaces());
-}
-
-QString Utils::getIssuesPage()
-{
-    return getSourcePage() + "issues";
-}
-
-QString Utils::getContactPage()
-{
-    return getWebPage();
-}
-
-QString Utils::getTranslatePage()
-{
-    return QString("https://www.transifex.com/qwertycube/%1/").arg(getTitleNoSpaces());
-}
-
-QString Utils::getDonatePage()
-{
-    return QString("https://qwertycube.com/donate/#utm_campaign=donate&utm_source=%1&utm_medium=application").arg(getTitleNoSpaces());
-    // See utm_content if you'd like to differ between donate buttons
-}
-
-QString Utils::getJrePage()
-{
-    return "https://www.java.com/en/download/manual.jsp";
-}
-
-QString Utils::getJdkPage()
-{
-    return "http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html";
+    return QString("https://qwertycube.com/%1/#utm_source=%1&utm_medium=application")
+        .arg(getTitleNoSpaces());
 }
 
 QString Utils::getUpdateUrl()
 {
-    return getWebPage() + "/versions.json";
+    return QString("https://qwertycube.com/%1/#utm_campaign=update&utm_source=%1&utm_medium=application")
+        .arg(getTitleNoSpaces());
+}
+
+QString Utils::getRepositoryUrl()
+{
+    return QString("https://github.com/kefir500/%1").arg(getTitleNoSpaces());
+}
+
+QString Utils::getIssuesUrl()
+{
+    return getRepositoryUrl() + "/issues";
+}
+
+QString Utils::getTranslationsUrl()
+{
+    return QString("https://www.transifex.com/qwertycube/%1/").arg(getTitleNoSpaces());
+}
+
+QString Utils::getDonationsUrl()
+{
+    return QString("https://qwertycube.com/donate/#utm_campaign=donate&utm_source=%1&utm_medium=application")
+        .arg(getTitleNoSpaces());
+}
+
+QString Utils::getBlogPostUrl(const QString &slug)
+{
+    return QString("https://qwertycube.com/%1/blog/%2/")
+        .arg(getTitleNoSpaces())
+        .arg(slug);
+}
+
+QString Utils::getVersionInfoUrl()
+{
+    return QString("https://qwertycube.com/%1/versions.json").arg(getTitleNoSpaces());
 }
 
 QString Utils::getAndroidCodename(int api)

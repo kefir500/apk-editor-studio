@@ -67,9 +67,9 @@ GradientWidget *AboutDialog::createAboutTab()
     const QString link("<a href=\"%1\">%1</a>");
     auto labelApplicationTitle = new QLabel(QString("<b>%1</b>").arg(Utils::getTitleAndVersion()), this);
     auto labelAuthor = new QLabel("Alexander Gorishnyak", this);
-    auto labelWebsiteLink = new QLabel(link.arg(Utils::getWebPage()), this);
-    auto labelIssuesLink = new QLabel(link.arg(Utils::getIssuesPage()), this);
-    auto labelTranslateLink = new QLabel(link.arg(Utils::getTranslatePage()), this);
+    auto labelWebsiteLink = new QLabel(link.arg(Utils::getWebsiteUrl()), this);
+    auto labelIssuesLink = new QLabel(link.arg(Utils::getIssuesUrl()), this);
+    auto labelTranslateLink = new QLabel(link.arg(Utils::getTranslationsUrl()), this);
     auto labelBuildTime = new QLabel(QString("<p>%1 - %2</p>").arg(QString(__DATE__).toUpper(), __TIME__), this);
     labelWebsiteLink->setOpenExternalLinks(true);
     labelIssuesLink->setOpenExternalLinks(true);

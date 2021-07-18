@@ -114,28 +114,27 @@ bool ActionProvider::closeApk(Project *project)
 
 void ActionProvider::visitWebPage()
 {
-    QDesktopServices::openUrl(Utils::getWebPage());
+    QDesktopServices::openUrl(Utils::getWebsiteUrl());
 }
 
 void ActionProvider::visitSourcePage()
 {
-    QDesktopServices::openUrl(Utils::getSourcePage());
+    QDesktopServices::openUrl(Utils::getRepositoryUrl());
 }
 
 void ActionProvider::visitDonatePage()
 {
-    QDesktopServices::openUrl(Utils::getDonatePage());
+    QDesktopServices::openUrl(Utils::getDonationsUrl());
 }
 
 void ActionProvider::visitUpdatePage()
 {
-    QDesktopServices::openUrl(Utils::getUpdatePage());
+    QDesktopServices::openUrl(Utils::getUpdateUrl());
 }
 
 void ActionProvider::visitBlogPage(const QString &post)
 {
-    const QString url = Utils::getWebPage() + "blog/" + post + "/";
-    QDesktopServices::openUrl(url);
+    QDesktopServices::openUrl(Utils::getBlogPostUrl(post));
 }
 
 void ActionProvider::exit(QWidget *widget)
