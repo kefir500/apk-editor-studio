@@ -19,6 +19,7 @@ private:
     QPushButton *btnOpen;
     QPushButton *btnInstall;
     QPushButton *btnExplorer;
+    QPushButton *btnDonate;
 };
 
 #endif // WELCOMEACTIONVIEWER_H
