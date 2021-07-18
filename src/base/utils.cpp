@@ -246,17 +246,12 @@ QSize Utils::scale(int width, int height)
     return QSize(width, height) * getScaleFactor();
 }
 
-QString Utils::getExecutableDirectory()
-{
-    return qApp->applicationDirPath() + '/';
-}
-
 QString Utils::getTemporaryPath(const QString &subdirectory)
 {
 #ifndef PORTABLE
     const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getTitleNoSpaces(), subdirectory);
 #else
-    const QString path = QString("%1/data/temp/%2").arg(getExecutableDirectory(), subdirectory);
+    const QString path = QString("%1/data/temp/%2").arg(qApp->applicationDirPath(), subdirectory);
 #endif
     return QDir::cleanPath(path);
 }
@@ -266,7 +261,7 @@ QString Utils::getLocalConfigPath(const QString &subdirectory)
 #ifndef PORTABLE
     const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getTitleNoSpaces(), subdirectory);
 #else
-    const QString path = QString("%1/data/%2").arg(getExecutableDirectory(), subdirectory);
+    const QString path = QString("%1/data/%2").arg(qApp->applicationDirPath(), subdirectory);
 #endif
     return QDir::cleanPath(path);
 }
@@ -274,9 +269,9 @@ QString Utils::getLocalConfigPath(const QString &subdirectory)
 QString Utils::getSharedPath(const QString &resource)
 {
 #ifndef Q_OS_LINUX
-    const QString path = getExecutableDirectory() + resource;
+    const QString path = QString("%1/%2").arg(qApp->applicationDirPath(), resource);
 #else
-    const QString path = QString("%1/../share/%2/%3").arg(getExecutableDirectory(), getTitleNoSpaces(), resource);
+    const QString path = QString("%1/../share/%2/%3").arg(qApp->applicationDirPath(), getTitleNoSpaces(), resource);
 #endif
     return QDir::cleanPath(path);
 }
@@ -286,7 +281,7 @@ QString Utils::getBinaryPath(const QString &executable)
 #ifdef Q_OS_WIN
     QString path = getSharedPath("tools/" + executable);
 #else
-    const QString path = getExecutableDirectory() + executable;
+    const QString path = QString("%1/%2").arg(qApp->applicationDirPath(), executable);
 #endif
 
     QFileInfo fileInfo(path);
