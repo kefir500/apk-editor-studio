@@ -203,7 +203,9 @@ void OptionsDialog::initialize()
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
     spinboxRecent->setMaximum(50);
+#ifndef Q_OS_OSX
     pageGeneral->addRow(checkboxSingleInstance);
+#endif
     pageGeneral->addRow(checkboxUpdates);
     pageGeneral->addRow(tr("Language:"), comboLanguages);
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
