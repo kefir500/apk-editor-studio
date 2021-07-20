@@ -31,7 +31,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
     icon->setContentsMargins(0, 0, 10, 4);
     icon->setPixmap(QIcon::fromTheme("apk-editor-studio").pixmap(Utils::scale(48, 48)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QLabel *title = new QLabel(Utils::getTitleAndVersion(), this);
+    QLabel *title = new QLabel(Utils::getAppTitleAndVersion(), this);
     QFont titleFont = title->font();
 #ifndef Q_OS_OSX
     titleFont.setPointSize(11);
@@ -64,7 +64,7 @@ GradientWidget *AboutDialog::createAboutTab()
     icon->setPixmap(QPixmap(":/icons/other/about.png").scaled(Utils::scale(128, 128)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    auto labelApplicationTitle = new QLabel(QString("<b>%1</b>").arg(Utils::getTitleAndVersion()), this);
+    auto labelApplicationTitle = new QLabel(QString("<b>%1</b>").arg(Utils::getAppTitleAndVersion()), this);
     auto labelAuthor = new QLabel("Alexander Gorishnyak", this);
     auto labelWebsiteLink = new QLabel(createLink(Utils::getWebsiteUtmUrl(), Utils::getWebsiteUrl()), this);
     auto labelIssuesLink = new QLabel(createLink(Utils::getIssuesUrl()), this);

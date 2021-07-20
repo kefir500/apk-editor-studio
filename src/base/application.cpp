@@ -88,10 +88,10 @@ int Application::exec()
 QList<Language> Application::getLanguages()
 {
     QList<Language> languages;
-    languages.append(QString("%1.en.qm").arg(Utils::getTitleNoSpaces()));
+    languages.append(QString("%1.en.qm").arg(Utils::getAppTitleSlug()));
 
     const QDir directory(Utils::getSharedPath("resources/translations/"));
-    QStringList paths = directory.entryList({QString("%1.*.qm").arg(Utils::getTitleNoSpaces())});
+    QStringList paths = directory.entryList({QString("%1.*.qm").arg(Utils::getAppTitleSlug())});
     for (const QString &path : paths) {
         languages.append(Language(path));
     }
@@ -118,7 +118,7 @@ void Application::setLanguage(const QString &locale)
     removeTranslator(&translatorQt);
 
     const QString path = Utils::getSharedPath("resources/translations");
-    if (translator.load(QString("%1.%2").arg(Utils::getTitleNoSpaces(), locale), path)) {
+    if (translator.load(QString("%1.%2").arg(Utils::getAppTitleSlug(), locale), path)) {
         translatorQt.load(QString("qt.%1").arg(locale), path);
         installTranslator(&translator);
         installTranslator(&translatorQt);

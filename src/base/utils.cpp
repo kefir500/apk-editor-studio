@@ -201,24 +201,24 @@ QPixmap Utils::iconToPixmap(const QIcon &icon)
     return icon.pixmap(size);
 }
 
-QString Utils::getTitle()
+QString Utils::getAppTitle()
 {
     return APPLICATION;
 }
 
-QString Utils::getVersion()
+QString Utils::getAppVersion()
 {
     return VERSION;
 }
 
-QString Utils::getTitleNoSpaces()
+QString Utils::getAppTitleSlug()
 {
-    return getTitle().toLower().replace(' ', '-');
+    return getAppTitle().toLower().replace(' ', '-');
 }
 
-QString Utils::getTitleAndVersion()
+QString Utils::getAppTitleAndVersion()
 {
-    return QString("%1 v%2").arg(getTitle(), getVersion());
+    return QString("%1 v%2").arg(getAppTitle(), getAppVersion());
 }
 
 qreal Utils::getScaleFactor()
@@ -249,7 +249,7 @@ QSize Utils::scale(int width, int height)
 QString Utils::getTemporaryPath(const QString &subdirectory)
 {
 #ifndef PORTABLE
-    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getTitleNoSpaces(), subdirectory);
+    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getAppTitleSlug(), subdirectory);
 #else
     const QString path = QString("%1/data/temp/%2").arg(qApp->applicationDirPath(), subdirectory);
 #endif
@@ -259,7 +259,7 @@ QString Utils::getTemporaryPath(const QString &subdirectory)
 QString Utils::getLocalConfigPath(const QString &subdirectory)
 {
 #ifndef PORTABLE
-    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getTitleNoSpaces(), subdirectory);
+    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getAppTitleSlug(), subdirectory);
 #else
     const QString path = QString("%1/data/%2").arg(qApp->applicationDirPath(), subdirectory);
 #endif
@@ -306,23 +306,22 @@ QIcon Utils::getLocaleFlag(const QLocale &locale)
 
 QString Utils::getWebsiteUrl()
 {
-    return QString("https://qwertycube.com/%1/").arg(getTitleNoSpaces());
+    return QString("https://qwertycube.com/%1/").arg(getAppTitleSlug());
 }
 
 QString Utils::getWebsiteUtmUrl()
 {
-    return QString("%1#utm_source=%2&utm_medium=application").arg(getWebsiteUrl(), getTitleNoSpaces());
+    return QString("%1#utm_source=%2&utm_medium=application").arg(getWebsiteUrl(), getAppTitleSlug());
 }
 
 QString Utils::getUpdateUrl()
 {
-    return QString("https://qwertycube.com/%1/#utm_campaign=update&utm_source=%1&utm_medium=application")
-        .arg(getTitleNoSpaces());
+    return QString("%1#utm_campaign=update&utm_source=%2&utm_medium=application").arg(getWebsiteUrl(), getAppTitleSlug());
 }
 
 QString Utils::getRepositoryUrl()
 {
-    return QString("https://github.com/kefir500/%1").arg(getTitleNoSpaces());
+    return QString("https://github.com/kefir500/%1").arg(getAppTitleSlug());
 }
 
 QString Utils::getIssuesUrl()
@@ -332,25 +331,22 @@ QString Utils::getIssuesUrl()
 
 QString Utils::getTranslationsUrl()
 {
-    return QString("https://www.transifex.com/qwertycube/%1/").arg(getTitleNoSpaces());
+    return QString("https://www.transifex.com/qwertycube/%1/").arg(getAppTitleSlug());
 }
 
 QString Utils::getDonationsUrl()
 {
-    return QString("https://qwertycube.com/donate/#utm_campaign=donate&utm_source=%1&utm_medium=application")
-        .arg(getTitleNoSpaces());
+    return QString("https://qwertycube.com/donate/#utm_campaign=donate&utm_source=%1&utm_medium=application").arg(getAppTitleSlug());
 }
 
 QString Utils::getBlogPostUrl(const QString &slug)
 {
-    return QString("https://qwertycube.com/%1/blog/%2/")
-        .arg(getTitleNoSpaces())
-        .arg(slug);
+    return QString("%1blog/%2/").arg(getWebsiteUrl(), slug);
 }
 
 QString Utils::getVersionInfoUrl()
 {
-    return QString("https://qwertycube.com/%1/versions.json").arg(getTitleNoSpaces());
+    return QString("%1versions.json").arg(getWebsiteUrl());
 }
 
 QString Utils::getAndroidCodename(int api)

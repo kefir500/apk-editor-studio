@@ -71,10 +71,10 @@ namespace Utils
 
     // Application utils:
 
-    QString getTitle();
-    QString getVersion();
-    QString getTitleNoSpaces();
-    QString getTitleAndVersion();
+    QString getAppTitle();
+    QString getAppVersion();
+    QString getAppTitleSlug();
+    QString getAppTitleAndVersion();
 
     // GUI utils:
 
