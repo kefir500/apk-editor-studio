@@ -271,7 +271,7 @@ QString Utils::getSharedPath(const QString &resource)
 #ifndef Q_OS_LINUX
     const QString path = QString("%1/%2").arg(qApp->applicationDirPath(), resource);
 #else
-    const QString path = QString("%1/../share/%2/%3").arg(qApp->applicationDirPath(), getTitleNoSpaces(), resource);
+    const QString path = QString("%1/../share/%2/%3").arg(qApp->applicationDirPath(), getAppTitleSlug(), resource);
 #endif
     return QDir::cleanPath(path);
 }
