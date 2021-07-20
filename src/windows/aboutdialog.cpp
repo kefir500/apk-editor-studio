@@ -64,12 +64,11 @@ GradientWidget *AboutDialog::createAboutTab()
     icon->setPixmap(QPixmap(":/icons/other/about.png").scaled(Utils::scale(128, 128)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    const QString link("<a href=\"%1\">%1</a>");
     auto labelApplicationTitle = new QLabel(QString("<b>%1</b>").arg(Utils::getTitleAndVersion()), this);
     auto labelAuthor = new QLabel("Alexander Gorishnyak", this);
-    auto labelWebsiteLink = new QLabel(link.arg(Utils::getWebsiteUrl()), this);
-    auto labelIssuesLink = new QLabel(link.arg(Utils::getIssuesUrl()), this);
-    auto labelTranslateLink = new QLabel(link.arg(Utils::getTranslationsUrl()), this);
+    auto labelWebsiteLink = new QLabel(createLink(Utils::getWebsiteUtmUrl(), Utils::getWebsiteUrl()), this);
+    auto labelIssuesLink = new QLabel(createLink(Utils::getIssuesUrl()), this);
+    auto labelTranslateLink = new QLabel(createLink(Utils::getTranslationsUrl()), this);
     auto labelBuildTime = new QLabel(QString("<p>%1 - %2</p>").arg(QString(__DATE__).toUpper(), __TIME__), this);
     labelWebsiteLink->setOpenExternalLinks(true);
     labelIssuesLink->setOpenExternalLinks(true);
@@ -294,4 +293,10 @@ QWidget *AboutDialog::createLicenseTab()
     }
 
     return tab;
+}
+
+QString AboutDialog::createLink(const QString &url, const QString &title) const
+{
+    const QString link("<a href=\"%1\">%2</a>");
+    return link.arg(url, title.isEmpty() ? url : title);
 }

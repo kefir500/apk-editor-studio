@@ -306,8 +306,12 @@ QIcon Utils::getLocaleFlag(const QLocale &locale)
 
 QString Utils::getWebsiteUrl()
 {
-    return QString("https://qwertycube.com/%1/#utm_source=%1&utm_medium=application")
-        .arg(getTitleNoSpaces());
+    return QString("https://qwertycube.com/%1/").arg(getTitleNoSpaces());
+}
+
+QString Utils::getWebsiteUtmUrl()
+{
+    return QString("%1#utm_source=%2&utm_medium=application").arg(getWebsiteUrl(), getTitleNoSpaces());
 }
 
 QString Utils::getUpdateUrl()

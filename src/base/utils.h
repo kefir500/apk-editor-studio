@@ -85,7 +85,6 @@ namespace Utils
 
     // Path utils:
 
-    QString getExecutableDirectory();
     QString getTemporaryPath(const QString &subdirectory = QString());
     QString getLocalConfigPath(const QString &subdirectory = QString());
     QString getSharedPath(const QString &resource = QString());
@@ -96,6 +95,7 @@ namespace Utils
 
 
     QString getWebsiteUrl();
+    QString getWebsiteUtmUrl();
     QString getUpdateUrl();
     QString getRepositoryUrl();
     QString getIssuesUrl();

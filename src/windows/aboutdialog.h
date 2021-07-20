@@ -17,6 +17,7 @@ private:
     QWidget *createVersionsTab();
     QWidget *createLibrariesTab();
     QWidget *createLicenseTab();
+    QString createLink(const QString &url, const QString &title = QString()) const;
 };
 
 #endif // ABOUTDIALOG_H
