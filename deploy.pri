@@ -19,7 +19,7 @@ win32 {
     RC_ICONS += $$PWD/src/icons/other/verb-optimize.ico
     RC_ICONS += $$PWD/src/icons/other/verb-sign.ico
     QMAKE_POST_LINK += $$copy(all, .)
-    QMAKE_POST_LINK += $$copy(win32, .)
+    QMAKE_POST_LINK += $$copy(windows, .)
 }
 
 unix:!macx {
