@@ -27,11 +27,17 @@ jobs:
           call scripts\win32\packages\msi\build.msi.bat || exit
           set /p VERSION=<VERSION
           echo VERSION=%VERSION%>>%GITHUB_ENV%
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+      - name: Upload Assets
+        uses: ncipollo/release-action@v1
         with:
-          name: APK Editor Studio - Windows Installer (MSI) Snapshot
-          path: apk-editor-studio_win32_${{ env.VERSION }}.msi
+          artifacts: apk-editor-studio_win32_${{ env.VERSION }}.msi
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          omitName: true
+          omitBody: true
+          prerelease: true
+          tag: development
+          token: ${{ secrets.GITHUB_TOKEN }}
   build-windows-zip:
     name: Windows Build (ZIP)
     runs-on: windows-latest
@@ -55,11 +61,17 @@ jobs:
           call "scripts\win32\packages\zip\build.zip.bat" || exit
           set /p VERSION=<VERSION
           echo VERSION=%VERSION%>>%GITHUB_ENV%
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+      - name: Upload Assets
+        uses: ncipollo/release-action@v1
         with:
-          name: APK Editor Studio - Windows Portable (ZIP) Snapshot
-          path: apk-editor-studio_win32_${{ env.VERSION }}.zip
+          artifacts: apk-editor-studio_win32_${{ env.VERSION }}.zip
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          omitName: true
+          omitBody: true
+          prerelease: true
+          tag: development
+          token: ${{ secrets.GITHUB_TOKEN }}
   build-linux-deb:
     name: Linux Build (DEB)
     runs-on: ubuntu-16.04
@@ -73,11 +85,17 @@ jobs:
         run: |
           scripts/linux/packages/deb/build.deb.sh
           echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+      - name: Upload Assets
+        uses: ncipollo/release-action@v1
         with:
-          name: APK Editor Studio - Linux (DEB) Snapshot
-          path: scripts/linux/packages/deb/apk-editor-studio_linux_${{ env.VERSION }}.deb
+          artifacts: scripts/linux/packages/deb/apk-editor-studio_linux_${{ env.VERSION }}.deb
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          omitName: true
+          omitBody: true
+          prerelease: true
+          tag: development
+          token: ${{ secrets.GITHUB_TOKEN }}
   build-linux-appimage:
     name: Linux Build (AppImage)
     runs-on: ubuntu-16.04
@@ -95,11 +113,17 @@ jobs:
           source /opt/qt510/bin/qt510-env.sh || true
           scripts/linux/packages/appimage/build.appimage.sh
           echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+      - name: Upload Assets
+        uses: ncipollo/release-action@v1
         with:
-          name: APK Editor Studio - Linux (AppImage) Snapshot
-          path: scripts/linux/packages/appimage/apk-editor-studio_linux_${{ env.VERSION }}.AppImage
+          artifacts: scripts/linux/packages/appimage/apk-editor-studio_linux_${{ env.VERSION }}.AppImage
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          omitName: true
+          omitBody: true
+          prerelease: true
+          tag: development
+          token: ${{ secrets.GITHUB_TOKEN }}
   build-macos:
     name: macOS Build (APP, DMG)
     runs-on: macos-10.15
@@ -119,13 +143,14 @@ jobs:
           npm i appdmg
           scripts/macos/packages/dmg/build.dmg.command
           echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
-      - name: Upload APP Artifact
-        uses: actions/upload-artifact@v2
+      - name: Upload Assets
+        uses: ncipollo/release-action@v1
         with:
-          name: APK Editor Studio - macOS (APP) Snapshot
-          path: scripts/macos/packages/app/apk-editor-studio_macos_${{ env.VERSION }}.app.zip
-      - name: Upload DMG Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: APK Editor Studio - macOS (DMG) Snapshot
-          path: scripts/macos/packages/dmg/apk-editor-studio_macos_${{ env.VERSION }}.dmg
+          artifacts: scripts/macos/packages/app/apk-editor-studio_macos_${{ env.VERSION }}.app.zip,scripts/macos/packages/dmg/apk-editor-studio_macos_${{ env.VERSION }}.dmg
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          omitName: true
+          omitBody: true
+          prerelease: true
+          tag: development
+          token: ${{ secrets.GITHUB_TOKEN }}
