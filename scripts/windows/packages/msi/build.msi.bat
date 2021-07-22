@@ -10,7 +10,7 @@ nmake || exit /b
 
 rem Package
 
-set OUTPUT=apk-editor-studio_win32_%VERSION%.msi
+set OUTPUT=apk-editor-studio_windows_%VERSION%.msi
 candle -dDistDir=build_apk-editor-studio -arch x64 -ext WixUIExtension "%~dp0\wix\main.wxs" "%~dp0\wix\ui.wxs" || exit /b
 light -out %OUTPUT% -ext WixUIExtension main.wixobj ui.wixobj || exit /b
 

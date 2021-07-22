@@ -19,7 +19,7 @@ def resolvePath(path):
 def resolvePlatformPath():
     path = resolvePath('../res/deploy')
     if sys.platform == 'win32':
-        return os.path.join(path, 'win32/tools')
+        return os.path.join(path, 'windows/tools')
     elif sys.platform == 'linux':
         return os.path.join(path, 'linux/bin')
     elif sys.platform == 'darwin':

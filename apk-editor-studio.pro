@@ -16,7 +16,7 @@ DEFINES += VERSION=\\\"$$VERSION\\\"
 #DEFINES += PORTABLE
 
 win32 {
-    isEmpty(DESTDIR): DESTDIR = $$PWD/bin/win32
+    isEmpty(DESTDIR): DESTDIR = $$PWD/bin/windows
 }
 
 unix:!macx {

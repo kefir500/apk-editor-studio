@@ -3,7 +3,7 @@ rem Prepare
 set /p VERSION=<%~dp0\..\..\..\..\VERSION
 
 set FOLDER=APK Editor Studio v%VERSION%
-set ARCHIVE=apk-editor-studio_win32_%VERSION%.zip
+set ARCHIVE=apk-editor-studio_windows_%VERSION%.zip
 
 if exist "%ARCHIVE%" del "%ARCHIVE%"
 if exist "%FOLDER%" rmdir /s /q "%FOLDER%"

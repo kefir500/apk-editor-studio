@@ -24,13 +24,13 @@ jobs:
           set OPENSSL=C:\Program Files\OpenSSL\bin
           set PATH=%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
-          call scripts\win32\packages\msi\build.msi.bat || exit
+          call scripts\windows\packages\msi\build.msi.bat || exit
           set /p VERSION=<VERSION
           echo VERSION=%VERSION%>>%GITHUB_ENV%
       - name: Upload Assets
         uses: ncipollo/release-action@v1
         with:
-          artifacts: apk-editor-studio_win32_${{ env.VERSION }}.msi
+          artifacts: apk-editor-studio_windows_${{ env.VERSION }}.msi
           artifactErrorsFailBuild: true
           allowUpdates: true
           omitName: true
@@ -58,13 +58,13 @@ jobs:
           set QTDIR=%Qt5_DIR%
           set OPENSSL=C:\Program Files\OpenSSL\bin
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
-          call "scripts\win32\packages\zip\build.zip.bat" || exit
+          call "scripts\windows\packages\zip\build.zip.bat" || exit
           set /p VERSION=<VERSION
           echo VERSION=%VERSION%>>%GITHUB_ENV%
       - name: Upload Assets
         uses: ncipollo/release-action@v1
         with:
-          artifacts: apk-editor-studio_win32_${{ env.VERSION }}.zip
+          artifacts: apk-editor-studio_windows_${{ env.VERSION }}.zip
           artifactErrorsFailBuild: true
           allowUpdates: true
           omitName: true
