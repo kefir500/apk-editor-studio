@@ -80,6 +80,8 @@ jobs:
         run: sudo apt-get install qt5-default qttools5-dev-tools libsecret-1-dev dh-make devscripts fakeroot
       - name: Checkout Repo
         uses: actions/checkout@v2
+      - name: Download Tools
+        run: python3 scripts/download.py
       - name: Build DEB Package
         id: build
         run: |
@@ -107,6 +109,8 @@ jobs:
           sudo apt-get install qt510base qt510imageformats qt510svg qt510tools libgl1-mesa-dev libsecret-1-dev adb zipalign
       - name: Checkout Repo
         uses: actions/checkout@v2
+      - name: Download Tools
+        run: python3 scripts/download.py
       - name: Build AppImage Package
         id: build
         run: |
