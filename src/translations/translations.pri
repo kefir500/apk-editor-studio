@@ -23,7 +23,7 @@ EXTRA_TRANSLATIONS += \
     $$PWD/apk-editor-studio.zh_CN.ts
 
 lrelease.input = EXTRA_TRANSLATIONS
-lrelease.output = $$DESTDIR/resources/translations/${QMAKE_FILE_IN_BASE}.qm
+lrelease.output = $$PWD/../../res/deploy/all/resources/translations/${QMAKE_FILE_IN_BASE}.qm
 lrelease.commands = $$shell_path($$[QT_INSTALL_BINS]/lrelease) ${QMAKE_FILE_IN} -qm ${QMAKE_FILE_OUT}
 lrelease.CONFIG += no_link target_predeps
 QMAKE_EXTRA_COMPILERS += lrelease
