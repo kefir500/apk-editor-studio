@@ -109,6 +109,9 @@ MainWindow *Application::createNewInstance()
     auto instance = new MainWindow(projects);
     instance->show();
     instances.append(instance);
+    connect(instance, &MainWindow::destroyed, this, [=]() {
+        instances.removeOne(instance);
+    });
     return instance;
 }
 
