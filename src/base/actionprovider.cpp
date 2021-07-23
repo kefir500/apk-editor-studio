@@ -114,7 +114,7 @@ bool ActionProvider::closeApk(Project *project)
 
 void ActionProvider::visitWebPage()
 {
-    QDesktopServices::openUrl(Utils::getWebsiteUrl());
+    QDesktopServices::openUrl(Utils::getWebsiteUtmUrl());
 }
 
 void ActionProvider::visitSourcePage()
