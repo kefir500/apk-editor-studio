@@ -11,7 +11,8 @@ jobs:
         uses: jurplel/install-qt-action@v2.13.0
         with:
           version: 5.15.2
-          arch: win64_msvc2019_64
+          arch: win32_msvc2019
+          tools: tools_openssl_x86,1.1.1,qt.tools.openssl.win_x86
       - name: Checkout Repo
         uses: actions/checkout@v2
       - name: Download Tools
@@ -21,9 +22,9 @@ jobs:
         shell: cmd
         run: |
           set QTDIR=%Qt5_DIR%
-          set OPENSSL=C:\Program Files\OpenSSL\bin
+          set OPENSSL=%Qt5_DIR%/../../Tools/OpenSSL/Win_x86/bin
           set PATH=%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
           call scripts\windows\packages\msi\build.msi.bat || exit
           set /p VERSION=<VERSION
           echo VERSION=%VERSION%>>%GITHUB_ENV%
@@ -46,7 +47,8 @@ jobs:
         uses: jurplel/install-qt-action@v2.13.0
         with:
           version: 5.15.2
-          arch: win64_msvc2019_64
+          arch: win32_msvc2019
+          tools: tools_openssl_x86,1.1.1,qt.tools.openssl.win_x86
       - name: Checkout Repo
         uses: actions/checkout@v2
       - name: Download Tools
@@ -56,8 +58,8 @@ jobs:
         shell: cmd
         run: |
           set QTDIR=%Qt5_DIR%
-          set OPENSSL=C:\Program Files\OpenSSL\bin
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+          set OPENSSL=%Qt5_DIR%/../../Tools/OpenSSL/Win_x86/bin
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
           call "scripts\windows\packages\zip\build.zip.bat" || exit
           set /p VERSION=<VERSION
           echo VERSION=%VERSION%>>%GITHUB_ENV%

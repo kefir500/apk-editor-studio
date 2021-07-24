@@ -6,7 +6,7 @@
 
   <Product Id="*" Name="$(var.ProductName)" Version="$(var.ProductVersion)" UpgradeCode="B889316C-C1B5-4615-8443-F1ADB1B3584D" Manufacturer="Alexander Gorishnyak" Language="1033">
 
-    <Package InstallerVersion="301" Compressed="yes" />
+    <Package InstallScope="perMachine" InstallerVersion="301" Compressed="yes" />
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
     <MajorUpgrade AllowDowngrades="yes" Schedule="afterInstallInitialize" />
@@ -25,14 +25,14 @@
     <WixVariable Id="WixUIBannerBmp" Value="$(sys.SOURCEFILEDIR)\res\header.bmp" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFiles64Folder">
+      <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" FileSource="$(var.DistDir)">
           <Component Id="ExeComponent" Guid="C6176BE3-E235-46DF-9BC6-5CA8358B0253">
             <File Name="apk-editor-studio.exe" Id="Executable" />
           </Component>
           <Component Id="UninstallComponent" Guid="F885100C-A957-4C42-8710-E9EF646D93A6">
             <Shortcut Id="UninstallShortcut" Name="Uninstall $(var.ProductName)" Description="Uninstall $(var.ProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" WorkingDirectory="SystemFolder" />
-            <RegistryValue Root="HKMU" Key="Software\$(var.ProductName)" Name="Uninstaller" Type="integer" Value="1" KeyPath="yes"/>
+            <RegistryValue Root="HKLM" Key="Software\$(var.ProductName)" Name="Uninstaller" Type="integer" Value="1" KeyPath="yes"/>
           </Component>
           <Directory Id="ToolsFolder" Name="tools">
             <Component Id="ApktoolComponent" Guid="447CD555-5A52-49F4-808E-B289EBBC8794">
@@ -152,8 +152,8 @@
             <File Source="$(env.QTDIR)\bin\Qt5Xml.dll" />
           </Component>
           <Component Id="SslComponent" Guid="F309A6A0-AD5B-44A4-97E7-BFF5D5FCAA45">
-            <File Source="$(env.OPENSSL)\libcrypto-1_1-x64.dll" />
-            <File Source="$(env.OPENSSL)\libssl-1_1-x64.dll" />
+            <File Source="$(env.OPENSSL)\libcrypto-1_1.dll" />
+            <File Source="$(env.OPENSSL)\libssl-1_1.dll" />
           </Component>
           <Directory Id="ImageFormatsFolder" Name="imageformats">
             <Component Id="ImageFormatsComponent" Guid="CC89BD49-ED15-4E80-9CA6-4EC52B81E53C">

@@ -32,8 +32,8 @@ xcopy /y "%QTDIR%\plugins\styles\qwindowsvistastyle.dll" "%FOLDER%\styles\" || e
 
 rem Deploy OpenSSL
 
-xcopy /y "%OPENSSL%\libcrypto-1_1-x64.dll" "%FOLDER%\" || exit /b
-xcopy /y "%OPENSSL%\libssl-1_1-x64.dll" "%FOLDER%\"    || exit /b
+xcopy /y "%OPENSSL%\libcrypto-1_1.dll" "%FOLDER%\" || exit /b
+xcopy /y "%OPENSSL%\libssl-1_1.dll" "%FOLDER%\"    || exit /b
 
 rem Package
 
