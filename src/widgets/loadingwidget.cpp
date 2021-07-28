@@ -33,11 +33,17 @@ void LoadingWidget::paintEvent(QPaintEvent *event)
 
 void LoadingWidget::showEvent(QShowEvent *)
 {
+    if (parent()) {
+        qobject_cast<QWidget *>(parent())->setEnabled(false);
+    }
     spinnerTimer.start();
 }
 
 void LoadingWidget::hideEvent(QHideEvent *)
 {
+    if (parent()) {
+        qobject_cast<QWidget *>(parent())->setEnabled(true);
+    }
     spinnerTimer.stop();
 }
 
