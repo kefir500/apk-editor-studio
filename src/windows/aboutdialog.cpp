@@ -1,18 +1,27 @@
 #include "windows/aboutdialog.h"
+#include "widgets/loadingwidget.h"
 #include "tools/adb.h"
 #include "tools/apktool.h"
 #include "tools/apksigner.h"
 #include "tools/java.h"
 #include "tools/javac.h"
+#include "base/application.h"
 #include "base/utils.h"
-#include <QFormLayout>
-#include <QTabWidget>
-#include <QLabel>
-#include <QPlainTextEdit>
-#include <QRegularExpression>
-#include <QTextBrowser>
 #include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QLabel>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QPlainTextEdit>
+#include <QPushButton>
+#include <QRegularExpression>
+#include <QTabWidget>
+#include <QTextBrowser>
 #include <QTextStream>
+#include <QToolButton>
 
 AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 {
@@ -23,6 +32,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
     QTabWidget *tabs = new QTabWidget(this);
     tabs->addTab(createAboutTab(), tr("About"));
     tabs->addTab(createAuthorsTab(), tr("Authors"));
+    tabs->addTab(createDonationsTab(), tr("Donations"));
     tabs->addTab(createVersionsTab(), tr("Version History"));
     tabs->addTab(createLibrariesTab(), tr("Technologies"));
     tabs->addTab(createLicenseTab(), tr("License"));
@@ -155,6 +165,75 @@ QWidget *AboutDialog::createAuthorsTab()
     tab->setReadOnly(true);
     tab->setOpenExternalLinks(true);
     tab->setText(content);
+    return tab;
+}
+
+QWidget *AboutDialog::createDonationsTab()
+{
+    auto tab = new QWidget(this);
+    auto layout = new QVBoxLayout(tab);
+
+    auto donationList = new QTextBrowser(this);
+    donationList->setReadOnly(true);
+    donationList->setOpenExternalLinks(true);
+    layout->addWidget(donationList);
+
+    auto loadingWidget = new LoadingWidget(20, donationList);
+
+    auto errorWidget = new QWidget(this);
+    layout->addWidget(errorWidget);
+    auto errorLayout = new QVBoxLayout(errorWidget);
+    errorLayout->setAlignment(Qt::AlignCenter);
+
+    auto labelError = new QLabel(tr("Could not fetch the list of donations."), this);
+    errorLayout->addWidget(labelError);
+
+    auto btnRetry = new QPushButton(tr("Retry"), this);
+    layout->addWidget(btnRetry);
+    errorLayout->addWidget(btnRetry);
+
+    auto btnDonate = new QToolButton(this);
+    btnDonate->setDefaultAction(app->actions.getVisitDonatePage(this));
+    btnDonate->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    layout->addWidget(btnDonate);
+
+    auto fetchDonations = [=]() {
+        errorWidget->hide();
+        loadingWidget->show();
+        donationList->show();
+        auto http = new QNetworkAccessManager(this);
+        connect(http, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+            const bool error = reply->error();
+            if (!error) {
+                const auto donations = QJsonDocument::fromJson(reply->readAll()).array();
+                QString donationsHtml;
+                for (const auto &donationNode : donations) {
+                    const auto donation = donationNode.toObject();
+                    const auto donor = donation.value("name").toString();
+                    const auto amount = donation.value("amount").toString();
+                    donationsHtml.append("<div style=\"margin-bottom: 4px;\">");
+                    if (donation.contains("url")) {
+                        const auto url = donation.value("url").toString();
+                        donationsHtml.append(QString("<a href=\"%3\">%1</a> &ndash; %2").arg(donor, amount, url));
+                    } else {
+                        donationsHtml.append(QString("%1 &ndash; %2").arg(donor, amount));
+                    }
+                    donationsHtml.append("</div>");
+                }
+                donationList->setHtml(donationsHtml);
+            }
+            loadingWidget->hide();
+            donationList->setVisible(!error);
+            errorWidget->setVisible(error);
+            reply->deleteLater();
+            http->deleteLater();
+        });
+        http->get(QNetworkRequest(Utils::getDonorsInfoUrl()));
+    };
+
+    fetchDonations();
+    connect(btnRetry, &QPushButton::clicked, this, fetchDonations);
+
     return tab;
 }
 

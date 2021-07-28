@@ -14,6 +14,7 @@ public:
 private:
     GradientWidget *createAboutTab();
     QWidget *createAuthorsTab();
+    QWidget *createDonationsTab();
     QWidget *createVersionsTab();
     QWidget *createLibrariesTab();
     QWidget *createLicenseTab();

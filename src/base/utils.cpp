@@ -349,6 +349,11 @@ QString Utils::getVersionInfoUrl()
     return QString("%1versions.json").arg(getWebsiteUrl());
 }
 
+QString Utils::getDonorsInfoUrl()
+{
+    return QString("https://qwertycube.com/donate/donations.json");
+}
+
 QString Utils::getAndroidCodename(int api)
 {
     // Read more: https://source.android.com/setup/start/build-numbers

@@ -103,6 +103,7 @@ namespace Utils
     QString getDonationsUrl();
     QString getBlogPostUrl(const QString &slug);
     QString getVersionInfoUrl();
+    QString getDonorsInfoUrl();
 
     // Android utils:
 
