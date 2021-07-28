@@ -21,7 +21,7 @@ private:
     void parentChanged();
 
     int spinnerSize;
-    int spinnerAngle;
+    int spinnerAngle = 0;
     QTimer spinnerTimer;
 };
 

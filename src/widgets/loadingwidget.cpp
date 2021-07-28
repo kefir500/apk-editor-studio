@@ -8,7 +8,6 @@ LoadingWidget::LoadingWidget(int size, QWidget *parent) : QWidget(parent), spinn
     setAttribute(Qt::WA_OpaquePaintEvent);
     parentChanged();
 
-    spinnerAngle = 0;
     connect(&spinnerTimer, &QTimer::timeout, this, [this]() {
         spinnerAngle = (spinnerAngle > 0) ? spinnerAngle - 80 : 5760;
         update();
@@ -20,8 +19,8 @@ void LoadingWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
 
-    const int w = 40;
-    const int h = 40;
+    const int w = spinnerSize;
+    const int h = spinnerSize;
     const int x = rect().center().x() - w / 2;
     const int y = rect().center().y() - h / 2;
 
