@@ -90,7 +90,7 @@ private:
     QAction *actionTitleEditor;
     QAction *actionPermissionEditor;
     QAction *actionViewSignatures;
-    QAction *actionPackageRename;
+    QAction *actionCloneApk;
     QAction *actionNewWindow;
     QAction *actionAboutQt;
     QAction *actionAbout;

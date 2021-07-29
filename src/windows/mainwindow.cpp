@@ -220,9 +220,9 @@ void MainWindow::initMenus()
     actionPermissionEditor = new QAction(this);
     actionPermissionEditor->setIcon(QIcon::fromTheme("tool-permissioneditor"));
     actionPermissionEditor->setShortcut(QKeySequence("Ctrl+Shift+P"));
-    actionPackageRename = new QAction(this);
-    actionPackageRename->setIcon(QIcon::fromTheme("edit-copy"));
-    actionPackageRename->setShortcut(QKeySequence("Ctrl+Shift+R"));
+    actionCloneApk = new QAction(this);
+    actionCloneApk->setIcon(QIcon::fromTheme("edit-copy"));
+    actionCloneApk->setShortcut(QKeySequence("Ctrl+Shift+R"));
     actionViewSignatures = new QAction(this);
     actionViewSignatures->setIcon(QIcon::fromTheme("view-certificate"));
 
@@ -277,7 +277,7 @@ void MainWindow::initMenus()
     menuTools->addSeparator();
     menuTools->addAction(actionTitleEditor);
     menuTools->addAction(actionPermissionEditor);
-    menuTools->addAction(actionPackageRename);
+    menuTools->addAction(actionCloneApk);
     menuTools->addSeparator();
     menuTools->addAction(actionViewSignatures);
     menuSettings = menuBar()->addMenu(QString());
@@ -316,7 +316,7 @@ void MainWindow::initMenus()
     toolbar->addActionToPool("project-manager", actionProjectManager);
     toolbar->addActionToPool("title-editor", actionTitleEditor);
     toolbar->addActionToPool("permission-editor", actionPermissionEditor);
-    toolbar->addActionToPool("rename-package", actionPackageRename);
+    toolbar->addActionToPool("rename-package", actionCloneApk);
     toolbar->addActionToPool("view-signatures", actionViewSignatures);
     toolbar->addActionToPool("device-manager", actionDeviceManager);
     toolbar->addActionToPool("android-explorer", actionAndroidExplorer);
@@ -352,7 +352,7 @@ void MainWindow::initMenus()
     connect(actionPermissionEditor, &QAction::triggered, this, [this]() {
         getCurrentProjectWidget()->openPermissionEditor();
     });
-    connect(actionPackageRename, &QAction::triggered, this, [this]() {
+    connect(actionCloneApk, &QAction::triggered, this, [this]() {
         getCurrentProjectWidget()->openPackageRenamer();
     });
     connect(actionViewSignatures, &QAction::triggered, this, [this]() {
@@ -421,7 +421,7 @@ void MainWindow::retranslate()
     actionPermissionEditor->setText(tr("Edit Application &Permissions"));
     //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     tr("Edit Package &Name"); // For possible future use
-    actionPackageRename->setText(tr("&Clone APK"));
+    actionCloneApk->setText(tr("&Clone APK"));
     //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionViewSignatures->setText(tr("View &Signatures"));
 
@@ -461,7 +461,7 @@ void MainWindow::updateWindowForProject(Project *project)
     actionApkClose->setEnabled(project ? project->getState().canClose() : false);
     actionTitleEditor->setEnabled(project ? project->getState().canEdit() : false);
     actionPermissionEditor->setEnabled(project ? project->getState().canEdit() : false);
-    actionPackageRename->setEnabled(project ? project->getState().canEdit() : false);
+    actionCloneApk->setEnabled(project ? project->getState().canEdit() : false);
     actionViewSignatures->setEnabled(project);
     actionProjectManager->setEnabled(project);
 }
