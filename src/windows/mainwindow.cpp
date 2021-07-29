@@ -221,7 +221,7 @@ void MainWindow::initMenus()
     actionPermissionEditor->setIcon(QIcon::fromTheme("tool-permissioneditor"));
     actionPermissionEditor->setShortcut(QKeySequence("Ctrl+Shift+P"));
     actionPackageRename = new QAction(this);
-    actionPackageRename->setIcon(QIcon::fromTheme("edit-rename"));
+    actionPackageRename->setIcon(QIcon::fromTheme("edit-copy"));
     actionPackageRename->setShortcut(QKeySequence("Ctrl+Shift+R"));
     actionViewSignatures = new QAction(this);
     actionViewSignatures->setIcon(QIcon::fromTheme("view-certificate"));
