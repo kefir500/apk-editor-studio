@@ -265,7 +265,7 @@
     <message>
         <location filename="../base/deviceitemsmodel.cpp" line="86"/>
         <source>Serial Number</source>
-        <translation>Numero seriale</translation>
+        <translation>N. seriale</translation>
     </message>
     <message>
         <location filename="../base/deviceitemsmodel.cpp" line="88"/>

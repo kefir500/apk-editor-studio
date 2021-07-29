@@ -314,7 +314,7 @@
     <message>
         <location filename="../windows/devicemanager.cpp" line="85"/>
         <source>Could not fetch the device list.</source>
-        <translation type="unfinished"/>
+        <translation>Cihaz listesi alınamadı.</translation>
     </message>
     <message>
         <location filename="../windows/devicemanager.cpp" line="96"/>
@@ -649,7 +649,7 @@
     <message>
         <location filename="../windows/mainwindow.cpp" line="145"/>
         <source>Welcome</source>
-        <translation type="unfinished"/>
+        <translation>Hoşgeldiniz</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="385"/>
@@ -783,24 +783,24 @@
         <location filename="../windows/mainwindow.cpp" line="429"/>
         <source>Edit Package &amp;Name</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>Paket İsmini Düzenle</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="430"/>
         <source>&amp;Clone APK</source>
-        <translation type="unfinished"/>
+        <translation>APK&apos;yı Klonla</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="432"/>
         <source>View &amp;Signatures</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>İmzaları Görüntüle</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="437"/>
         <source>Open &amp;New Window</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>Yeni Pencere Aç</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="446"/>
@@ -886,19 +886,19 @@ Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
         <location filename="../windows/optionsdialog.cpp" line="213"/>
         <source>Use APK Editor Studio for .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>.apk Dosyaları İçin APK Editor Studio&apos;yu Kullan</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="216"/>
         <source>Use APK Editor Studio to open .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Açık .apk Dosyaları İçin APK Editor Studio&apos;yu Kullan</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="219"/>
         <source>Add %1 action to Windows Explorer context menu</source>
         <extracomment>&quot;%1&quot; will be replaced with an action name (e.g., Install, Optimize, Sign, etc.).</extracomment>
-        <translation type="unfinished"/>
+        <translation>%1 Eylemini Windows Gezgini Sağ Tık Menüsüne Ekle</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="220"/>
@@ -908,13 +908,13 @@ Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="222"/>
         <source>Optimize</source>
-        <translation type="unfinished"/>
+        <translation>Optimize Et</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="225"/>
         <source>Sign</source>
         <extracomment>This is a verb.</extracomment>
-        <translation type="unfinished"/>
+        <translation>İmzala</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="246"/>

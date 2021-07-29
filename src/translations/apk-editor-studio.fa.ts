@@ -73,17 +73,17 @@
     <message>
         <location filename="../base/actionprovider.cpp" line="242"/>
         <source>&amp;Optimize External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;بهینه سازی APK خارجی...</translation>
     </message>
     <message>
         <location filename="../base/actionprovider.cpp" line="257"/>
         <source>&amp;Sign External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;امضا APK خارجی...</translation>
     </message>
     <message>
         <location filename="../base/actionprovider.cpp" line="277"/>
         <source>&amp;Install External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;نصب APK خارجی...</translation>
     </message>
     <message>
         <location filename="../base/actionprovider.cpp" line="299"/>
@@ -103,7 +103,7 @@
     <message>
         <location filename="../base/actionprovider.cpp" line="337"/>
         <source>E&amp;xit</source>
-        <translation>خروج </translation>
+        <translation>خروج</translation>
     </message>
     <message>
         <location filename="../base/actionprovider.cpp" line="351"/>
@@ -314,7 +314,7 @@
     <message>
         <location filename="../windows/devicemanager.cpp" line="85"/>
         <source>Could not fetch the device list.</source>
-        <translation type="unfinished"/>
+        <translation>لیست دستگاه قابل واکشی نیست.</translation>
     </message>
     <message>
         <location filename="../windows/devicemanager.cpp" line="96"/>
@@ -649,7 +649,7 @@
     <message>
         <location filename="../windows/mainwindow.cpp" line="145"/>
         <source>Welcome</source>
-        <translation type="unfinished"/>
+        <translation>خوش آمدی</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="385"/>
@@ -783,36 +783,36 @@
         <location filename="../windows/mainwindow.cpp" line="429"/>
         <source>Edit Package &amp;Name</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>ویرایش بسته &amp;نام</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="430"/>
         <source>&amp;Clone APK</source>
-        <translation type="unfinished"/>
+        <translation>&amp;کلون APK</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="432"/>
         <source>View &amp;Signatures</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>مشاهده &amp;امضا</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="437"/>
         <source>Open &amp;New Window</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>بازکردن &amp;پنجره جدید</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="446"/>
         <source>&amp;About APK Editor Studio...</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>&amp;درباره استودیو ویرایش پکیج اندروید</translation>
+        <translation>&amp;درباره APK Editor Studio</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="448"/>
         <source>About &amp;Qt...</source>
         <extracomment>Don't translate the &quot;&amp;Qt&quot; part.</extracomment>
-        <translation>درباره &amp;تعداد...</translation>
+        <translation>درباره Qt</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="622"/>
@@ -865,7 +865,7 @@ Do you want to discard them and exit?</source>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="200"/>
         <source>Single-window mode</source>
-        <translation type="unfinished"/>
+        <translation>حالت تک پنجره ای</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="201"/>
@@ -886,19 +886,19 @@ Do you want to discard them and exit?</source>
         <location filename="../windows/optionsdialog.cpp" line="213"/>
         <source>Use APK Editor Studio for .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>از APK Editor Studio برای پرونده های .apk استفاده کنید</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="216"/>
         <source>Use APK Editor Studio to open .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>برای باز کردن پرونده های .apk از APK Editor Studio استفاده کنید</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="219"/>
         <source>Add %1 action to Windows Explorer context menu</source>
         <extracomment>&quot;%1&quot; will be replaced with an action name (e.g., Install, Optimize, Sign, etc.).</extracomment>
-        <translation type="unfinished"/>
+        <translation>اضافه کردن %1 عملکرد به فهرست زمینه ویندوز اکسپلورر </translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="220"/>
@@ -908,13 +908,13 @@ Do you want to discard them and exit?</source>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="222"/>
         <source>Optimize</source>
-        <translation type="unfinished"/>
+        <translation>بهینه سازی</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="225"/>
         <source>Sign</source>
         <extracomment>This is a verb.</extracomment>
-        <translation type="unfinished"/>
+        <translation>امضاء</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="246"/>
@@ -1194,37 +1194,38 @@ Do you want to reopen it and lose any unsaved changes?</source>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="99"/>
         <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"/>
+        <translation>تغییر نام بسته عملکردی آزمایشی است که در حالت فعلی ممکن است منجر به خرابی و از بین رفتن اطلاعات شود. شما می توانید به بحث بپیوندید و به ما در بهبود این ویژگی کمک کنید 
+&lt;a href=&quot;%1&quot;&gt;اینجا&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="106"/>
         <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-        <translation type="unfinished"/>
+        <translation>شبیه سازی APK به روشن کردن کد منبع منبع نیاز دارد. ادامه می دهید؟</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="111"/>
         <source>Settings have been applied. Please, reopen this APK.</source>
-        <translation type="unfinished"/>
+        <translation>تنظیمات اعمال شده است لطفاً APK را دوباره باز کنید.</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="117"/>
         <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>لطفاً برای بازکردن کد منبع و شبیه سازی APK ، این APK را دوباره باز کنید.</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="123"/>
         <source>Package Name:</source>
-        <translation type="unfinished"/>
+        <translation>نام بسته:</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="131"/>
         <source>APK has been successfully cloned!</source>
-        <translation type="unfinished"/>
+        <translation>APK با موفقیت کلون شد!</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="134"/>
         <source>Could not clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>نمی توان APK را شبیه سازی کرد.</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="159"/>
@@ -1322,30 +1323,30 @@ Any unsaved changes will be lost.</source>
         <location filename="../windows/signatureviewer.cpp" line="23"/>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
-        <translation type="unfinished"/>
+        <translation>امضای JAR</translation>
     </message>
     <message>
         <location filename="../windows/signatureviewer.cpp" line="27"/>
         <source>APK Signature Scheme v2</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v2</extracomment>
-        <translation type="unfinished"/>
+        <translation>طرح امضا APK v2</translation>
     </message>
     <message>
         <location filename="../windows/signatureviewer.cpp" line="31"/>
         <source>APK Signature Scheme v3</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v3</extracomment>
-        <translation type="unfinished"/>
+        <translation>طرح امضا APK v3</translation>
     </message>
     <message>
         <location filename="../windows/signatureviewer.cpp" line="53"/>
         <source>Signer #%1</source>
         <extracomment>&quot;%1&quot; will be replaced with a signer index number (e.g., &quot;Signer #1, Signer #7, Signer #42&quot;...).</extracomment>
-        <translation type="unfinished"/>
+        <translation>امضا کننده #%1</translation>
     </message>
     <message>
         <location filename="../windows/signatureviewer.cpp" line="56"/>
         <source>Could not retrieve the list of certificates.</source>
-        <translation type="unfinished"/>
+        <translation>لیست گواهی ها بازیابی نمی شود.</translation>
     </message>
 </context>
 <context>
@@ -1385,7 +1386,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <location filename="../widgets/toolbar.cpp" line="105"/>
         <source>Customize Toolbar...</source>
-        <translation type="unfinished"/>
+        <translation>نوار ابزار را سفارشی کنید...</translation>
     </message>
 </context>
 <context>
@@ -1393,17 +1394,17 @@ Any unsaved changes will be lost.</source>
     <message>
         <location filename="../windows/toolbardialog.cpp" line="15"/>
         <source>Toolbar Customization</source>
-        <translation type="unfinished"/>
+        <translation>سفارشی سازی نوار ابزار</translation>
     </message>
     <message>
         <location filename="../windows/toolbardialog.cpp" line="25"/>
         <source>Current actions:</source>
-        <translation type="unfinished"/>
+        <translation>اقدامات فعلی:</translation>
     </message>
     <message>
         <location filename="../windows/toolbardialog.cpp" line="36"/>
         <source>Available actions:</source>
-        <translation type="unfinished"/>
+        <translation>اقدامات قابل انجام:</translation>
     </message>
     <message>
         <location filename="../windows/toolbardialog.cpp" line="104"/>
@@ -1489,7 +1490,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <location filename="../editors/welcomeactionviewer.cpp" line="31"/>
         <source>Support Us</source>
-        <translation type="unfinished"/>
+        <translation>از ما حمایت کنید</translation>
     </message>
 </context>
 <context>

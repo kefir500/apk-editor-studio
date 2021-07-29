@@ -376,7 +376,7 @@
     <message>
         <location filename="../editors/fileeditor.cpp" line="86"/>
         <source>&amp;Save Resource</source>
-        <translation>שמור מקור...</translation>
+        <translation>שמור מקור</translation>
     </message>
     <message>
         <location filename="../editors/fileeditor.cpp" line="87"/>

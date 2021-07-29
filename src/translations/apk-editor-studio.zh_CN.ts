@@ -73,17 +73,17 @@
     <message>
         <location filename="../base/actionprovider.cpp" line="242"/>
         <source>&amp;Optimize External APK...</source>
-        <translation type="unfinished"/>
+        <translation>优化外部 APK...</translation>
     </message>
     <message>
         <location filename="../base/actionprovider.cpp" line="257"/>
         <source>&amp;Sign External APK...</source>
-        <translation type="unfinished"/>
+        <translation>签署外部 APK...</translation>
     </message>
     <message>
         <location filename="../base/actionprovider.cpp" line="277"/>
         <source>&amp;Install External APK...</source>
-        <translation type="unfinished"/>
+        <translation>安装外部 APK...</translation>
     </message>
     <message>
         <location filename="../base/actionprovider.cpp" line="299"/>
@@ -314,7 +314,7 @@
     <message>
         <location filename="../windows/devicemanager.cpp" line="85"/>
         <source>Could not fetch the device list.</source>
-        <translation type="unfinished"/>
+        <translation>无法获取设备列表。</translation>
     </message>
     <message>
         <location filename="../windows/devicemanager.cpp" line="96"/>
@@ -649,7 +649,7 @@
     <message>
         <location filename="../windows/mainwindow.cpp" line="145"/>
         <source>Welcome</source>
-        <translation type="unfinished"/>
+        <translation>欢迎使用</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="385"/>
@@ -783,24 +783,24 @@
         <location filename="../windows/mainwindow.cpp" line="429"/>
         <source>Edit Package &amp;Name</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>编辑包名称(&amp;N)</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="430"/>
         <source>&amp;Clone APK</source>
-        <translation type="unfinished"/>
+        <translation>克隆 APK(&amp;C)</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="432"/>
         <source>View &amp;Signatures</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>查看签名(&amp;S)</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="437"/>
         <source>Open &amp;New Window</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>打开新窗口</translation>
     </message>
     <message>
         <location filename="../windows/mainwindow.cpp" line="446"/>
@@ -865,7 +865,7 @@ Do you want to discard them and exit?</source>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="200"/>
         <source>Single-window mode</source>
-        <translation type="unfinished"/>
+        <translation>单窗口模式</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="201"/>
@@ -886,19 +886,19 @@ Do you want to discard them and exit?</source>
         <location filename="../windows/optionsdialog.cpp" line="213"/>
         <source>Use APK Editor Studio for .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>使用 APK Editor Studio 关联 .apk 文件</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="216"/>
         <source>Use APK Editor Studio to open .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>使用 APK Editor Studio 打开 .apk 文件</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="219"/>
         <source>Add %1 action to Windows Explorer context menu</source>
         <extracomment>&quot;%1&quot; will be replaced with an action name (e.g., Install, Optimize, Sign, etc.).</extracomment>
-        <translation type="unfinished"/>
+        <translation>添加 %1 操作到 Windows 资源管理器上下文菜单</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="220"/>
@@ -908,13 +908,13 @@ Do you want to discard them and exit?</source>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="222"/>
         <source>Optimize</source>
-        <translation type="unfinished"/>
+        <translation>优化</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="225"/>
         <source>Sign</source>
         <extracomment>This is a verb.</extracomment>
-        <translation type="unfinished"/>
+        <translation>签名</translation>
     </message>
     <message>
         <location filename="../windows/optionsdialog.cpp" line="246"/>
@@ -1194,37 +1194,37 @@ Do you want to reopen it and lose any unsaved changes?</source>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="99"/>
         <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"/>
+        <translation>程序包重命名是一项实验性功能，在其当前状态下，可能会导致崩溃和数据丢失。 您可以在 &lt;a href=&quot;%1&quot;&gt;这儿&lt;/a&gt;加入讨论并帮助我们改进此功能。</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="106"/>
         <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-        <translation type="unfinished"/>
+        <translation>克隆 APK 需要打开源代码反编译功能。 继续吗?</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="111"/>
         <source>Settings have been applied. Please, reopen this APK.</source>
-        <translation type="unfinished"/>
+        <translation>设置已应用。 请重新打开此 APK。</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="117"/>
         <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>请重新打开此 APK，以解压缩源代码并克隆 APK。</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="123"/>
         <source>Package Name:</source>
-        <translation type="unfinished"/>
+        <translation>包名称：</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="131"/>
         <source>APK has been successfully cloned!</source>
-        <translation type="unfinished"/>
+        <translation>APK 已成功克隆！</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="134"/>
         <source>Could not clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>无法克隆 APK。</translation>
     </message>
     <message>
         <location filename="../widgets/projectwidget.cpp" line="159"/>
@@ -1322,30 +1322,30 @@ Any unsaved changes will be lost.</source>
         <location filename="../windows/signatureviewer.cpp" line="23"/>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
-        <translation type="unfinished"/>
+        <translation>JAR 签名</translation>
     </message>
     <message>
         <location filename="../windows/signatureviewer.cpp" line="27"/>
         <source>APK Signature Scheme v2</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v2</extracomment>
-        <translation type="unfinished"/>
+        <translation>APK 签名方案 v2</translation>
     </message>
     <message>
         <location filename="../windows/signatureviewer.cpp" line="31"/>
         <source>APK Signature Scheme v3</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v3</extracomment>
-        <translation type="unfinished"/>
+        <translation>APK 签名方案 v3</translation>
     </message>
     <message>
         <location filename="../windows/signatureviewer.cpp" line="53"/>
         <source>Signer #%1</source>
         <extracomment>&quot;%1&quot; will be replaced with a signer index number (e.g., &quot;Signer #1, Signer #7, Signer #42&quot;...).</extracomment>
-        <translation type="unfinished"/>
+        <translation>签名 #%1</translation>
     </message>
     <message>
         <location filename="../windows/signatureviewer.cpp" line="56"/>
         <source>Could not retrieve the list of certificates.</source>
-        <translation type="unfinished"/>
+        <translation>无法检索证书列表。</translation>
     </message>
 </context>
 <context>
@@ -1385,7 +1385,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <location filename="../widgets/toolbar.cpp" line="105"/>
         <source>Customize Toolbar...</source>
-        <translation type="unfinished"/>
+        <translation>自定义工具栏...</translation>
     </message>
 </context>
 <context>
@@ -1393,17 +1393,17 @@ Any unsaved changes will be lost.</source>
     <message>
         <location filename="../windows/toolbardialog.cpp" line="15"/>
         <source>Toolbar Customization</source>
-        <translation type="unfinished"/>
+        <translation>工具栏自定义</translation>
     </message>
     <message>
         <location filename="../windows/toolbardialog.cpp" line="25"/>
         <source>Current actions:</source>
-        <translation type="unfinished"/>
+        <translation>当前操作：</translation>
     </message>
     <message>
         <location filename="../windows/toolbardialog.cpp" line="36"/>
         <source>Available actions:</source>
-        <translation type="unfinished"/>
+        <translation>可用操作：</translation>
     </message>
     <message>
         <location filename="../windows/toolbardialog.cpp" line="104"/>
@@ -1489,7 +1489,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <location filename="../editors/welcomeactionviewer.cpp" line="31"/>
         <source>Support Us</source>
-        <translation type="unfinished"/>
+        <translation>支持我们</translation>
     </message>
 </context>
 <context>

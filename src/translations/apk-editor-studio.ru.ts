@@ -13,6 +13,11 @@
         <translation>Авторы</translation>
     </message>
     <message>
+        <location filename="../windows/aboutdialog.cpp" line="35"/>
+        <source>Donations</source>
+        <translation>Пожертвования</translation>
+    </message>
+    <message>
         <location filename="../windows/aboutdialog.cpp" line="26"/>
         <source>Version History</source>
         <translation>История версий</translation>
@@ -46,6 +51,16 @@
         <location filename="../windows/aboutdialog.cpp" line="95"/>
         <source>Translation:</source>
         <translation>Перевод:</translation>
+    </message>
+    <message>
+        <location filename="../windows/aboutdialog.cpp" line="188"/>
+        <source>Could not fetch the list of donations.</source>
+        <translation>Не удалось получить список пожертвований.</translation>
+    </message>
+    <message>
+        <location filename="../windows/aboutdialog.cpp" line="191"/>
+        <source>Retry</source>
+        <translation>Повторить</translation>
     </message>
 </context>
 <context>

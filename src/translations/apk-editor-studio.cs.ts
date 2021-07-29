@@ -1447,7 +1447,7 @@ Veškeré neuložené změny budou ztraceny.</translation>
         <location filename="../base/updater.cpp" line="121"/>
         <source>APK Editor Studio v%1 is available. Download?</source>
         <extracomment>&quot;v%1&quot; will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation> APK Editor Studio v%1 je k dispozici. Stáhnout?</translation>
+        <translation>APK Editor Studio v%1 je k dispozici. Stáhnout?</translation>
     </message>
     <message>
         <location filename="../base/updater.cpp" line="124"/>
