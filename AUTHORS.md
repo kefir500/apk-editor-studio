@@ -13,17 +13,27 @@
 
 ### Translators:
 
+#### Azerbaijani
+- [Emin Huseynzade](https://www.transifex.com/user/profile/ehsynze/)
+
 #### Chinese (Simplified)
 - [Wang Chenxu](http://www.dayanzai.me)
 
+#### Czech
+- [Michal Mrnka](https://www.transifex.com/user/profile/Mimrixerix/)
+
 #### French
-- [Julien Veuillet](https://github.com/wakdev)
+- [Julien Veuillet](https://www.wakdev.com)
 
 #### German
 - [Till Tektronix](https://www.transifex.com/user/profile/Tektronix/)
+- [daywalk3r666](https://www.transifex.com/user/profile/daywalk3r666/)
 
 #### Greek
 - [Spiros Kaparos](https://www.transifex.com/user/profile/spkprs/)
+
+#### Hebrew
+- [Tomer Shami](https://www.transifex.com/user/profile/PointApps/)
 
 #### Hungarian
 - [Egyed Ferenc](https://www.transifex.com/user/profile/efi99/)
@@ -43,7 +53,11 @@
 - [Gyuha Shin](https://www.transifex.com/user/profile/gyuha/)
 
 #### Kurdish
-- [Erfan Muhammad](https://www.transifex.com/user/profile/erfan1371/)
+- [Erfan Ski](https://www.transifex.com/user/profile/erfan13/)
+
+#### Persian
+- [SSLRI](https://www.transifex.com/user/profile/sslri/)
+- [Milad19s](https://www.transifex.com/user/profile/Milad19s/)
 
 #### Polish
 - [Jerzy Puczek](https://www.transifex.com/user/profile/Jurek04/)
@@ -59,22 +73,11 @@
 
 #### Spanish
 - [Francisco Zamorano](https://www.transifex.com/user/profile/Paco_Zamo/)
+- [Jose Osuna](https://www.transifex.com/user/profile/itp.osuna/)
 
 #### Turkish
 - [emre1393](https://www.transifex.com/user/profile/emre1393/)
 
-### Donors:
+### Supporters:
 
-- Luis Corominas
-- Kevin Gentry
-- David McAuley
-- Fu Panwei
-- Smart Shopping
-- Raymond Laing
-- Jason Swain
-- Jason Leon Castillo
-- Wisata Gili Permai
-- Samuel Radoc
-- Juris Baranovskis
-- Edmundo Paz
-- Heru Yudiono
+You can see the full list of supporters and their donations [here](https://qwertycube.com/donate/).
