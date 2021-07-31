@@ -5,6 +5,8 @@
 
 class ReadOnlyCheckBox : public QCheckBox
 {
+    Q_OBJECT
+
 public:
     explicit ReadOnlyCheckBox(QWidget *parent = nullptr);
     explicit ReadOnlyCheckBox(const QString &text, QWidget *parent = nullptr);

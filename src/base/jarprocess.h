@@ -5,6 +5,8 @@
 
 class JarProcess : public Process
 {
+    Q_OBJECT
+
 public:
     JarProcess(QObject *parent = nullptr) : Process(parent) {}
     void run(const QString &jar, const QStringList &arguments = {}) override;

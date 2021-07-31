@@ -5,6 +5,8 @@
 
 class CentralWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit CentralWidget(QWidget *parent = nullptr);
     void set(QWidget *widget);

@@ -5,6 +5,8 @@
 
 class ProjectListItemDelegate : public QStyledItemDelegate
 {
+    Q_OBJECT
+
 public:
     explicit ProjectListItemDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent) {}
 

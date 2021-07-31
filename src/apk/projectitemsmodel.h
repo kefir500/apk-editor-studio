@@ -8,6 +8,8 @@ class Project;
 
 class ProjectItemsModel : public QAbstractListModel
 {
+    Q_OBJECT
+
 public:
     enum Column {
         TitleColumn,

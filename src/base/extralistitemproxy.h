@@ -5,6 +5,8 @@
 
 class ExtraListItemProxy : public QAbstractProxyModel
 {
+    Q_OBJECT
+
 public:
     explicit ExtraListItemProxy(QObject *parent = nullptr) : QAbstractProxyModel(parent) {}
 

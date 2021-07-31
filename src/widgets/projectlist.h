@@ -7,6 +7,8 @@ class Project;
 
 class ProjectList : public QComboBox
 {
+    Q_OBJECT
+
 public:
     explicit ProjectList(QWidget *parent = nullptr);
     bool setCurrentProject(Project *project);

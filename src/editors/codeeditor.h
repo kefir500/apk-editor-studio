@@ -10,6 +10,8 @@ class CodeTextEdit;
 
 class LineNumberArea : public QWidget
 {
+    Q_OBJECT
+
 public:
     LineNumberArea(CodeTextEdit *parent);
 

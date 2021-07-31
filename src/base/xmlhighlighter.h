@@ -5,6 +5,8 @@
 
 class XmlHighlighter : public QSyntaxHighlighter
 {
+    Q_OBJECT
+
 public:
     XmlHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent) {}
 

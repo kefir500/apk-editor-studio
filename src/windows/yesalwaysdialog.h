@@ -5,6 +5,8 @@
 
 class YesAlwaysDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
     static bool ask(const QString &identifier, const QString &question, QWidget *parent = nullptr);
 

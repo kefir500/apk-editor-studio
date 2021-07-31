@@ -5,6 +5,8 @@
 
 class YamlHighlighter : public QSyntaxHighlighter
 {
+    Q_OBJECT
+
 public:
     YamlHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent) {}
 

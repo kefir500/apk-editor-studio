@@ -5,6 +5,8 @@
 
 class DeselectableListView : public QListView
 {
+    Q_OBJECT
+
 public:
     DeselectableListView(QWidget *parent) : QListView(parent) {}
 

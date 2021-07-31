@@ -6,6 +6,8 @@
 
 class LoadingWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit LoadingWidget(int size, QWidget *parent = nullptr);
     explicit LoadingWidget(QWidget *parent = nullptr) : LoadingWidget(32, parent) {}

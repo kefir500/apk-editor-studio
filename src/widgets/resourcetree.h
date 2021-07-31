@@ -7,6 +7,8 @@
 
 class ResourceTree : public QTreeView
 {
+    Q_OBJECT
+
 public:
     explicit ResourceTree(QWidget *parent = nullptr);
 

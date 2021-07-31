@@ -2,7 +2,6 @@
 #include "base/application.h"
 #include <QRegularExpression>
 
-
 void YamlHighlighter::highlightBlock(const QString &text)
 {
     setFormat(0, text.length(), app->theme()->text(Theme::Text::YamlDefault));

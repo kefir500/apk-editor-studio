@@ -5,6 +5,8 @@
 
 class ElidedLabel : public QLabel
 {
+    Q_OBJECT
+
 public:
     explicit ElidedLabel(QWidget *parent = nullptr);
 

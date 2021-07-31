@@ -6,6 +6,8 @@
 
 class IconList : public QTreeView
 {
+    Q_OBJECT
+
 public:
     explicit IconList(QWidget *parent = nullptr);
 
