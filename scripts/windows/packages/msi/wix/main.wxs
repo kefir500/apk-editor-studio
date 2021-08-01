@@ -9,7 +9,9 @@
     <Package InstallScope="perMachine" InstallerVersion="301" Compressed="yes" />
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
-    <MajorUpgrade AllowDowngrades="yes" Schedule="afterInstallInitialize" />
+    <MajorUpgrade
+      Schedule="afterInstallInitialize"
+      DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
 
     <UIRef Id="UI_APK_Editor_Studio" />
     <Icon Id="Icon" SourceFile="$(var.DistDir)\apk-editor-studio.exe" />
