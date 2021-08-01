@@ -18,9 +18,9 @@
     <Property Id="ApplicationFolderName" Value="$(var.ProductName)" />
     <Property Id="ARPPRODUCTICON" Value="Icon" />
 
-    <CustomAction Id="SetExecutablePathProperty" Property="ExecutablePath" Value="[INSTALLFOLDER]apk-editor-studio.exe"></CustomAction>
+    <CustomAction Id="SetExecutablePathProperty" Property="ExecutablePath" Value="[INSTALLFOLDER]apk-editor-studio.exe" />
     <InstallExecuteSequence>
-      <Custom Action="SetExecutablePathProperty" Before="InstallFiles"/>
+      <Custom Action="SetExecutablePathProperty" Before="InstallFiles" />
     </InstallExecuteSequence>
 
     <WixVariable Id="WixUIDialogBmp" Value="$(sys.SOURCEFILEDIR)\res\banner.bmp" />
@@ -29,190 +29,246 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" FileSource="$(var.DistDir)">
-          <Component Id="ExeComponent" Guid="C6176BE3-E235-46DF-9BC6-5CA8358B0253">
+          <Component Id="ExeComponent">
             <File Name="apk-editor-studio.exe" Id="Executable" />
           </Component>
-          <Component Id="UninstallComponent" Guid="F885100C-A957-4C42-8710-E9EF646D93A6">
+          <Component Id="UninstallComponent">
             <Shortcut Id="UninstallShortcut" Name="Uninstall $(var.ProductName)" Description="Uninstall $(var.ProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" WorkingDirectory="SystemFolder" />
-            <RegistryValue Root="HKLM" Key="Software\$(var.ProductName)" Name="Uninstaller" Type="integer" Value="1" KeyPath="yes"/>
+            <RegistryValue Root="HKLM" Key="Software\$(var.ProductName)" Name="Uninstaller" Type="integer" Value="1" KeyPath="yes" />
           </Component>
           <Directory Id="ToolsFolder" Name="tools">
-            <Component Id="ApktoolComponent" Guid="447CD555-5A52-49F4-808E-B289EBBC8794">
+            <Component Id="ApktoolComponent">
               <File Name="apktool.jar" />
             </Component>
-            <Component Id="SignerComponent" Guid="1E567463-D26C-41B5-8746-7800F8B53F3E">
+            <Component Id="ApksignerComponent">
               <File Name="apksigner.jar" />
+            </Component>
+            <Component Id="KeystoreComponent">
               <File Name="demo.jks" />
             </Component>
-            <Component Id="ZipalignComponent" Guid="77D7F79C-EC9A-4D0A-A803-D74DA4986201">
+            <Component Id="ZipalignComponent">
               <File Name="zipalign.exe" />
+            </Component>
+            <Component Id="LibWinpthreadComponent">
               <File Name="libwinpthread-1.dll" />
             </Component>
-            <Component Id="AdbComponent" Guid="3154DCA2-4E3A-4D91-8B87-D43AFCA67D37">
+            <Component Id="AdbComponent">
               <File Name="adb.exe" />
+            </Component>
+            <Component Id="AdbWinApiComponent">
               <File Name="AdbWinApi.dll" />
+            </Component>
+            <Component Id="AdbWinUsbApiComponent">
               <File Name="AdbWinUsbApi.dll" />
             </Component>
           </Directory>
           <Directory Id="ResourcesFolder" Name="resources">
             <Directory Id="LanguagesFolder" Name="translations">
-              <Component Id="AzerbaijaniComponent" Guid="086AE2FD-1FD2-4BAA-85F3-F4170274D286">
+              <Component Id="AzerbaijaniComponent">
                 <File Name="apk-editor-studio.az.qm" />
               </Component>
-              <Component Id="ChineseSimplifiedComponent" Guid="1A4BAEA9-7C60-4345-9B96-27C502B51D71">
+              <Component Id="ChineseSimplifiedComponent">
                 <File Name="apk-editor-studio.zh_CN.qm" />
+              </Component>
+              <Component Id="ChineseSimplifiedQtComponent">
                 <File Name="qt.zh_CN.qm" />
               </Component>
-              <Component Id="CzechComponent" Guid="532AA7E5-361D-4CD4-968A-2E64447EB683">
+              <Component Id="CzechComponent">
                 <File Name="apk-editor-studio.cs.qm" />
+              </Component>
+              <Component Id="CzechQtComponent">
                 <File Name="qt.cs.qm" />
               </Component>
-              <Component Id="EnglishBritishComponent" Guid="27366240-741A-4615-A45E-E1EA7645D8D7">
+              <Component Id="EnglishBritishComponent">
                 <File Name="apk-editor-studio.en_GB.qm" />
               </Component>
-              <Component Id="FrenchComponent" Guid="7D7079C2-5661-421D-8662-87B637469B5A">
+              <Component Id="FrenchComponent">
                 <File Name="apk-editor-studio.fr.qm" />
+              </Component>
+              <Component Id="FrenchQtComponent">
                 <File Name="qt.fr.qm" />
               </Component>
-              <Component Id="GermanComponent" Guid="F4214D4B-533E-413A-9FB6-42BBFB09A333">
+              <Component Id="GermanComponent">
                 <File Name="apk-editor-studio.de.qm" />
+              </Component>
+              <Component Id="GermanQtComponent">
                 <File Name="qt.de.qm" />
               </Component>
-              <Component Id="GreekComponent" Guid="EF9ADEEE-D719-4AC8-93D9-ABE61693A4CA">
+              <Component Id="GreekComponent">
                 <File Name="apk-editor-studio.el.qm" />
               </Component>
-              <Component Id="HebrewComponent" Guid="BA868980-02D4-4D4C-AA7D-AFB28B1316D1">
+              <Component Id="HebrewComponent">
                 <File Name="apk-editor-studio.he.qm" />
+              </Component>
+              <Component Id="HebrewQtComponent">
                 <File Name="qt.he.qm" />
               </Component>
-              <Component Id="HungarianComponent" Guid="900AB8B2-3032-4FC1-887B-9F1688B2BC56">
+              <Component Id="HungarianComponent">
                 <File Name="apk-editor-studio.hu.qm" />
+              </Component>
+              <Component Id="HungarianQtComponent">
                 <File Name="qt.hu.qm" />
               </Component>
-              <Component Id="IndonesianComponent" Guid="165C3B8E-F366-4E50-A177-04BC94C55EBA">
+              <Component Id="IndonesianComponent">
                 <File Name="apk-editor-studio.id.qm" />
               </Component>
-              <Component Id="ItalianComponent" Guid="0725B964-690B-4D60-B94E-99B2C4D134FC">
+              <Component Id="ItalianComponent">
                 <File Name="apk-editor-studio.it.qm" />
+              </Component>
+              <Component Id="ItalianQtComponent">
                 <File Name="qt.it.qm" />
               </Component>
-              <Component Id="JapaneseComponent" Guid="61C2541A-4370-4E10-8D53-FB9492E80A80">
+              <Component Id="JapaneseComponent">
                 <File Name="apk-editor-studio.ja.qm" />
+              </Component>
+              <Component Id="JapaneseQtComponent">
                 <File Name="qt.ja.qm" />
               </Component>
-              <Component Id="KoreanComponent" Guid="6EF6FABD-F681-4CA3-896E-C13486FA52E3">
+              <Component Id="KoreanComponent">
                 <File Name="apk-editor-studio.ko.qm" />
+              </Component>
+              <Component Id="KoreanQtComponent">
                 <File Name="qt.ko.qm" />
               </Component>
-              <Component Id="KurdishComponent" Guid="EB9E8C61-A3F0-404F-866E-B40E0E27D17B">
+              <Component Id="KurdishComponent">
                 <File Name="apk-editor-studio.ckb.qm" />
               </Component>
-              <Component Id="PersianComponent" Guid="F841BC35-31CD-48F6-AED6-1A06123282D2">
+              <Component Id="PersianComponent">
                 <File Name="apk-editor-studio.fa.qm" />
               </Component>
-              <Component Id="PolishComponent" Guid="2698957B-5F27-410C-902A-655448D5E3F3">
+              <Component Id="PolishComponent">
                 <File Name="apk-editor-studio.pl.qm" />
+              </Component>
+              <Component Id="PolishQtComponent">
                 <File Name="qt.pl.qm" />
               </Component>
-              <Component Id="PortugueseComponent" Guid="6234A343-B835-4775-BEE0-1937F8C11F70">
+              <Component Id="PortugueseComponent">
                 <File Name="apk-editor-studio.pt.qm" />
+              </Component>
+              <Component Id="PortugueseQtComponent">
                 <File Name="qt.pt.qm" />
               </Component>
-              <Component Id="RomanianComponent" Guid="C32C0677-45E0-4172-8029-8396137FF92D">
+              <Component Id="RomanianComponent">
                 <File Name="apk-editor-studio.ro.qm" />
               </Component>
-              <Component Id="RussianComponent" Guid="FAF0AB93-09ED-4B7E-BF1E-80E0B2CAABD3">
+              <Component Id="RussianComponent">
                 <File Name="apk-editor-studio.ru.qm" />
+              </Component>
+              <Component Id="RussianQtComponent">
                 <File Name="qt.ru.qm" />
               </Component>
-              <Component Id="SpanishComponent" Guid="D2BCF8B9-5DDA-4975-A96E-9B3A19A25C70">
+              <Component Id="SpanishComponent">
                 <File Name="apk-editor-studio.es.qm" />
+              </Component>
+              <Component Id="SpanishQtComponent">
                 <File Name="qt.es.qm" />
               </Component>
-              <Component Id="TurkishComponent" Guid="D99AAB1D-4FB5-4BFF-BEC1-0B68887E59B2">
+              <Component Id="TurkishComponent">
                 <File Name="apk-editor-studio.tr.qm" />
               </Component>
             </Directory>
           </Directory>
           <Directory Id="DocsFolder" Name="docs">
-            <Component Id="DocsComponent" Guid="EA9B70EB-B177-4228-B486-0E5A2381AAD4">
+            <Component Id="AuthorsComponent">
               <File Name="authors.txt" />
+            </Component>
+            <Component Id="VersionsComponent">
               <File Name="versions.txt" />
             </Component>
             <Directory Id="LicensesFolder" Name="licenses">
-              <Component Id="LicensesComponent" Guid="D84395BB-7491-40F2-9952-956F73BAD5C6">
+              <Component Id="LicenseComponent">
                 <File Name="apk-editor-studio.html" />
               </Component>
             </Directory>
           </Directory>
-          <Component Id="QtComponent" Guid="50EF20B9-E8A5-4404-94F3-CA22900FF326">
+          <Component Id="QtCoreComponent">
             <File Source="$(env.QTDIR)\bin\Qt5Core.dll" />
+          </Component>
+          <Component Id="QtGuiComponent">
             <File Source="$(env.QTDIR)\bin\Qt5Gui.dll" />
+          </Component>
+          <Component Id="QtNetworkComponent">
             <File Source="$(env.QTDIR)\bin\Qt5Network.dll" />
+          </Component>
+          <Component Id="QtSvgComponent">
             <File Source="$(env.QTDIR)\bin\Qt5Svg.dll" />
+          </Component>
+          <Component Id="QtWidgetsComponent">
             <File Source="$(env.QTDIR)\bin\Qt5Widgets.dll" />
+          </Component>
+          <Component Id="QtXmlComponent">
             <File Source="$(env.QTDIR)\bin\Qt5Xml.dll" />
           </Component>
-          <Component Id="SslComponent" Guid="F309A6A0-AD5B-44A4-97E7-BFF5D5FCAA45">
-            <File Source="$(env.OPENSSL)\libcrypto-1_1.dll" />
+          <Component Id="LibSslComponent">
             <File Source="$(env.OPENSSL)\libssl-1_1.dll" />
           </Component>
+          <Component Id="LibCryptoComponent">
+            <File Source="$(env.OPENSSL)\libcrypto-1_1.dll" />
+          </Component>
           <Directory Id="ImageFormatsFolder" Name="imageformats">
-            <Component Id="ImageFormatsComponent" Guid="CC89BD49-ED15-4E80-9CA6-4EC52B81E53C">
+            <Component Id="QtGifFormatComponent">
               <File Source="$(env.QTDIR)\plugins\imageformats\qgif.dll" />
+            </Component>
+            <Component Id="QtIcnsFormatComponent">
               <File Source="$(env.QTDIR)\plugins\imageformats\qicns.dll" />
+            </Component>
+            <Component Id="QtIcoFormatComponent">
               <File Source="$(env.QTDIR)\plugins\imageformats\qico.dll" />
+            </Component>
+            <Component Id="QtJpegFormatComponent">
               <File Source="$(env.QTDIR)\plugins\imageformats\qjpeg.dll" />
+            </Component>
+            <Component Id="QtSvgFormatComponent">
               <File Source="$(env.QTDIR)\plugins\imageformats\qsvg.dll" />
             </Component>
           </Directory>
           <Directory Id="PlatformsFolder" Name="platforms">
-            <Component Id="PlatformsComponent" Guid="78B25E93-F1B2-4A0A-B41F-8C449355C197">
+            <Component Id="QtPlatformComponent">
               <File Source="$(env.QTDIR)\plugins\platforms\qwindows.dll" />
             </Component>
           </Directory>
           <Directory Id="StylesFolder" Name="styles">
-            <Component Id="StylesComponent" Guid="10940243-0FF5-4977-AF38-30BE68F867E1">
+            <Component Id="QtVistaStyleComponent">
               <File Source="$(env.QTDIR)\plugins\styles\qwindowsvistastyle.dll" />
             </Component>
           </Directory>
         </Directory>
       </Directory>
       <Directory Id="DesktopFolder">
-        <Component Id="DesktopComponent" Guid="36AEEC75-757E-4267-9174-14D37BAD4271">
+        <Component Id="DesktopComponent">
           <Shortcut Id="DesktopExecutableShortcut" Name="$(var.ProductName)" Description="Start $(var.ProductName)" Target="[!Executable]" WorkingDirectory="INSTALLFOLDER" />
           <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
         </Component>
       </Directory>
       <Directory Id="ProgramMenuFolder">
         <Directory Id="StartmenuFolder" Name="$(var.ProductName)">
-          <Component Id="StartmenuComponent" Guid="044C201E-47F3-47A0-BD7D-5CF85980EF84">
+          <Component Id="StartmenuComponent">
             <Shortcut Id="StartmenuExecutableShortcut" Name="$(var.ProductName)" Description="Start $(var.ProductName)" Target="[!Executable]" WorkingDirectory="INSTALLFOLDER" />
             <Shortcut Id="StartmenuUninstallShortcut" Name="Uninstall $(var.ProductName)" Description="Uninstall $(var.ProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" WorkingDirectory="SystemFolder" />
             <RemoveFolder Id="RemoveShortcutsFolder" On="uninstall" />
-            <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="StartmenuFolder" Type="integer" Value="1" KeyPath="yes"/>
+            <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="StartmenuFolder" Type="integer" Value="1" KeyPath="yes" />
           </Component>
         </Directory>
       </Directory>
-      <Component Id="AssociationComponent" Guid="C6176BE3-E235-46DF-9BC6-5CA8358B0254">
+      <Component Id="AssociationComponent">
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\.apk" Value="apk-editor-studio.apk" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\.apk\OpenWithProgIds" Name="apk-editor-studio.apk" Value="" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk" Name="FriendlyTypeName" Value="Android Application Package" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\DefaultIcon" Value="[ExecutablePath],0" Type="string" />
       </Component>
-      <Component Id="ExplorerOpenComponent" Guid="BB44AFE6-24FA-47FB-9666-2C8B6571FD57">
+      <Component Id="ExplorerOpenComponent">
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Open\Command" Value="&quot;[ExecutablePath]&quot; &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Open" Name="Icon" Value="[ExecutablePath]" Type="string" />
       </Component>
-      <Component Id="ExplorerInstallComponent" Guid="AA850177-9883-46D4-8969-39DA835687F2">
+      <Component Id="ExplorerInstallComponent">
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Install APK\Command" Value="&quot;[ExecutablePath]&quot; --install &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Install APK" Name="Icon" Value="[ExecutablePath],1" Type="string" />
       </Component>
-      <Component Id="ExplorerOptimizeComponent" Guid="3516C8E8-EDF6-4CB2-ACC7-E8B51ABF4C4F">
+      <Component Id="ExplorerOptimizeComponent">
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Optimize APK\Command" Value="&quot;[ExecutablePath]&quot; --optimize &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Optimize APK" Name="Icon" Value="[ExecutablePath],2" Type="string" />
       </Component>
-      <Component Id="ExplorerSignComponent" Guid="E22FC079-5557-4C62-8D27-582888A0CB00">
+      <Component Id="ExplorerSignComponent">
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Sign APK\Command" Value="&quot;[ExecutablePath]&quot; --sign &quot;%1&quot;" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Sign APK" Name="Icon" Value="[ExecutablePath],3" Type="string" />
       </Component>
@@ -220,53 +276,52 @@
 
     <ComponentGroup Id="ApplicationComponents">
       <ComponentRef Id="ExeComponent" />
-      <ComponentRef Id="DocsComponent" />
-      <ComponentRef Id="LicensesComponent" />
-      <ComponentGroupRef Id="ToolsComponents" />
-      <ComponentGroupRef Id="DllComponents" />
-      <ComponentGroupRef Id="CoreTranslationsComponents" />
-      <ComponentGroupRef Id="InstallerComponents" />
-    </ComponentGroup>
-    <ComponentGroup Id="ToolsComponents">
       <ComponentRef Id="ApktoolComponent" />
-      <ComponentRef Id="SignerComponent" />
-      <ComponentRef Id="ZipalignComponent" />
-      <ComponentRef Id="AdbComponent" />
-    </ComponentGroup>
-    <ComponentGroup Id="CoreTranslationsComponents">
+      <ComponentRef Id="ApksignerComponent" />
+      <ComponentRef Id="KeystoreComponent" />
+      <ComponentGroupRef Id="QtComponents" />
+      <ComponentGroupRef Id="OpenSslComponents" />
+      <ComponentGroupRef Id="AdbComponents" />
+      <ComponentGroupRef Id="ZipalignComponents" />
+      <ComponentGroupRef Id="DocsComponents" />
       <ComponentRef Id="EnglishBritishComponent" />
-    </ComponentGroup>
-    <ComponentGroup Id="TranslationsComponents">
-      <ComponentRef Id="AzerbaijaniComponent" />
-      <ComponentRef Id="ChineseSimplifiedComponent" />
-      <ComponentRef Id="CzechComponent" />
-      <ComponentRef Id="FrenchComponent" />
-      <ComponentRef Id="GermanComponent" />
-      <ComponentRef Id="GreekComponent" />
-      <ComponentRef Id="HebrewComponent" />
-      <ComponentRef Id="HungarianComponent" />
-      <ComponentRef Id="IndonesianComponent" />
-      <ComponentRef Id="ItalianComponent" />
-      <ComponentRef Id="JapaneseComponent" />
-      <ComponentRef Id="KoreanComponent" />
-      <ComponentRef Id="KurdishComponent" />
-      <ComponentRef Id="PersianComponent" />
-      <ComponentRef Id="PolishComponent" />
-      <ComponentRef Id="PortugueseComponent" />
-      <ComponentRef Id="RomanianComponent" />
-      <ComponentRef Id="RussianComponent" />
-      <ComponentRef Id="SpanishComponent" />
-      <ComponentRef Id="TurkishComponent" />
-    </ComponentGroup>
-    <ComponentGroup Id="DllComponents">
-      <ComponentRef Id="QtComponent" />
-      <ComponentRef Id="SslComponent" />
-      <ComponentRef Id="ImageFormatsComponent" />
-      <ComponentRef Id="PlatformsComponent" />
-      <ComponentRef Id="StylesComponent" />
-    </ComponentGroup>
-    <ComponentGroup Id="InstallerComponents">
       <ComponentRef Id="UninstallComponent" />
+    </ComponentGroup>
+    <ComponentGroup Id="QtComponents">
+      <ComponentRef Id="QtCoreComponent" />
+      <ComponentRef Id="QtGuiComponent" />
+      <ComponentRef Id="QtNetworkComponent" />
+      <ComponentRef Id="QtSvgComponent" />
+      <ComponentRef Id="QtWidgetsComponent" />
+      <ComponentRef Id="QtXmlComponent" />
+      <ComponentRef Id="QtPlatformComponent" />
+      <ComponentRef Id="QtVistaStyleComponent" />
+      <ComponentGroupRef Id="QtImageFormats" />
+    </ComponentGroup>
+    <ComponentGroup Id="QtImageFormats">
+      <ComponentRef Id="QtGifFormatComponent" />
+      <ComponentRef Id="QtIcnsFormatComponent" />
+      <ComponentRef Id="QtIcoFormatComponent" />
+      <ComponentRef Id="QtJpegFormatComponent" />
+      <ComponentRef Id="QtSvgFormatComponent" />
+    </ComponentGroup>
+    <ComponentGroup Id="OpenSslComponents">
+      <ComponentRef Id="LibSslComponent" />
+      <ComponentRef Id="LibCryptoComponent" />
+    </ComponentGroup>
+    <ComponentGroup Id="AdbComponents">
+      <ComponentRef Id="AdbComponent" />
+      <ComponentRef Id="AdbWinApiComponent" />
+      <ComponentRef Id="AdbWinUsbApiComponent" />
+    </ComponentGroup>
+    <ComponentGroup Id="ZipalignComponents">
+      <ComponentRef Id="ZipalignComponent" />
+      <ComponentRef Id="LibWinpthreadComponent" />
+    </ComponentGroup>
+    <ComponentGroup Id="DocsComponents">
+      <ComponentRef Id="AuthorsComponent" />
+      <ComponentRef Id="LicenseComponent" />
+      <ComponentRef Id="VersionsComponent" />
     </ComponentGroup>
 
 		<Feature Id="ApplicationFeature" Title="$(var.ProductName)" Description="Install $(var.ProductName) application files." Absent="disallow" AllowAdvertise="no" ConfigurableDirectory="INSTALLFOLDER">
@@ -295,36 +350,45 @@
       </Feature>
       <Feature Id="ChineseSimplifiedFeature" Title="Chinese (Simplified)" Description="Chinese (Simplified) translation.">
         <ComponentRef Id="ChineseSimplifiedComponent" />
+        <ComponentRef Id="ChineseSimplifiedQtComponent" />
       </Feature>
       <Feature Id="CzechFeature" Title="Czech" Description="Czech translation.">
         <ComponentRef Id="CzechComponent" />
+        <ComponentRef Id="CzechQtComponent" />
       </Feature>
       <Feature Id="FrenchFeature" Title="French" Description="French translation.">
         <ComponentRef Id="FrenchComponent" />
+        <ComponentRef Id="FrenchQtComponent" />
       </Feature>
       <Feature Id="GermanFeature" Title="German" Description="German translation.">
         <ComponentRef Id="GermanComponent" />
+        <ComponentRef Id="GermanQtComponent" />
       </Feature>
       <Feature Id="GreekFeature" Title="Greek" Description="Greek translation.">
         <ComponentRef Id="GreekComponent" />
       </Feature>
       <Feature Id="HebrewFeature" Title="Hebrew" Description="Hebrew translation.">
         <ComponentRef Id="HebrewComponent" />
+        <ComponentRef Id="HebrewQtComponent" />
       </Feature>
       <Feature Id="HungarianFeature" Title="Hungarian" Description="Hungarian translation.">
         <ComponentRef Id="HungarianComponent" />
+        <ComponentRef Id="HungarianQtComponent" />
       </Feature>
       <Feature Id="IndonesianFeature" Title="Indonesian" Description="Indonesian translation.">
         <ComponentRef Id="IndonesianComponent" />
       </Feature>
       <Feature Id="ItalianFeature" Title="Italian" Description="Italian translation.">
         <ComponentRef Id="ItalianComponent" />
+        <ComponentRef Id="ItalianQtComponent" />
       </Feature>
       <Feature Id="JapaneseFeature" Title="Japanese" Description="Japanese translation.">
         <ComponentRef Id="JapaneseComponent" />
+        <ComponentRef Id="JapaneseQtComponent" />
       </Feature>
       <Feature Id="KoreanFeature" Title="Korean" Description="Korean translation.">
         <ComponentRef Id="KoreanComponent" />
+        <ComponentRef Id="KoreanQtComponent" />
       </Feature>
       <Feature Id="KurdishFeature" Title="Kurdish" Description="Kurdish translation.">
         <ComponentRef Id="KurdishComponent" />
@@ -334,18 +398,22 @@
       </Feature>
       <Feature Id="PolishFeature" Title="Polish" Description="Polish translation.">
         <ComponentRef Id="PolishComponent" />
+        <ComponentRef Id="PolishQtComponent" />
       </Feature>
       <Feature Id="PortugueseFeature" Title="Portuguese" Description="Portuguese translation.">
         <ComponentRef Id="PortugueseComponent" />
+        <ComponentRef Id="PortugueseQtComponent" />
       </Feature>
       <Feature Id="RomanianFeature" Title="Romanian" Description="Romanian translation.">
         <ComponentRef Id="RomanianComponent" />
       </Feature>
       <Feature Id="RussianFeature" Title="Russian" Description="Russian translation.">
         <ComponentRef Id="RussianComponent" />
+        <ComponentRef Id="RussianQtComponent" />
       </Feature>
       <Feature Id="SpanishFeature" Title="Spanish" Description="Spanish translation.">
         <ComponentRef Id="SpanishComponent" />
+        <ComponentRef Id="SpanishQtComponent" />
       </Feature>
       <Feature Id="TurkishFeature" Title="Turkish" Description="Turkish translation.">
         <ComponentRef Id="TurkishComponent" />
