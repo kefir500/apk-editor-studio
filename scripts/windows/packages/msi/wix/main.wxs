@@ -251,25 +251,25 @@
         </Directory>
       </Directory>
       <Component Id="AssociationComponent">
-        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\.apk" Value="apk-editor-studio.apk" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\.apk" Value="apk-editor-studio.apk" Type="string" KeyPath="yes" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\.apk\OpenWithProgIds" Name="apk-editor-studio.apk" Value="" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk" Name="FriendlyTypeName" Value="Android Application Package" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\DefaultIcon" Value="[ExecutablePath],0" Type="string" />
       </Component>
       <Component Id="ExplorerOpenComponent">
-        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Open\Command" Value="&quot;[ExecutablePath]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Open\Command" Value="&quot;[ExecutablePath]&quot; &quot;%1&quot;" Type="string" KeyPath="yes" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Open" Name="Icon" Value="[ExecutablePath]" Type="string" />
       </Component>
       <Component Id="ExplorerInstallComponent">
-        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Install APK\Command" Value="&quot;[ExecutablePath]&quot; --install &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Install APK\Command" Value="&quot;[ExecutablePath]&quot; --install &quot;%1&quot;" Type="string" KeyPath="yes" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Install APK" Name="Icon" Value="[ExecutablePath],1" Type="string" />
       </Component>
       <Component Id="ExplorerOptimizeComponent">
-        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Optimize APK\Command" Value="&quot;[ExecutablePath]&quot; --optimize &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Optimize APK\Command" Value="&quot;[ExecutablePath]&quot; --optimize &quot;%1&quot;" Type="string" KeyPath="yes" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Optimize APK" Name="Icon" Value="[ExecutablePath],2" Type="string" />
       </Component>
       <Component Id="ExplorerSignComponent">
-        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Sign APK\Command" Value="&quot;[ExecutablePath]&quot; --sign &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Sign APK\Command" Value="&quot;[ExecutablePath]&quot; --sign &quot;%1&quot;" Type="string" KeyPath="yes" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\apk-editor-studio.apk\Shell\Sign APK" Name="Icon" Value="[ExecutablePath],3" Type="string" />
       </Component>
     </Directory>
