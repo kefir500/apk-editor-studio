@@ -30,6 +30,8 @@
 - Manifest Editor
 - Permission Editor
 - Android Explorer
+- Signature Viewer
+- APK Cloner
 - APK Signer
 - APK Optimizer
 - APK Installer
@@ -86,7 +88,6 @@ To improve the crowdsourcing experience for non-developers, this project is tran
 on [Transifex](https://www.transifex.com/qwertycube/apk-editor-studio/).
 Please follow the [translation instructions](https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide)
 and avoid direct editing of the language files in this repo.
-
 
 ## Third-Party Components
 
