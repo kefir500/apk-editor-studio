@@ -99,7 +99,7 @@ bool ProjectWidget::openPackageRenamer()
         "Package renaming is an experimental function which, in its current state, "
         "may lead to crashes and data loss. You can join the discussion and help us "
         "improve this feature <a href=\"%1\">here</a>."
-    ).arg("https://github.com/kefir500/apk-editor-studio/discussions/1"), this);
+    ).arg("https://github.com/kefir500/apk-editor-studio/discussions/39"), this);
 
     if (!app->settings->getDecompileSources() && !project->hasSourcesUnpacked()) {
         const QString question = tr(
