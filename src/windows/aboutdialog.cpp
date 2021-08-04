@@ -1,36 +1,47 @@
 #include "windows/aboutdialog.h"
+#include "widgets/loadingwidget.h"
 #include "tools/adb.h"
 #include "tools/apktool.h"
 #include "tools/apksigner.h"
 #include "tools/java.h"
 #include "tools/javac.h"
 #include "base/application.h"
-#include <QFormLayout>
-#include <QTabWidget>
-#include <QLabel>
-#include <QPlainTextEdit>
-#include <QTextBrowser>
+#include "base/utils.h"
 #include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QLabel>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QPlainTextEdit>
+#include <QPushButton>
+#include <QRegularExpression>
+#include <QTabWidget>
+#include <QTextBrowser>
 #include <QTextStream>
+#include <QToolButton>
 
 AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 {
     setWindowTitle(tr("About"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(700, 400));
+    resize(Utils::scale(700, 400));
 
     QTabWidget *tabs = new QTabWidget(this);
     tabs->addTab(createAboutTab(), tr("About"));
     tabs->addTab(createAuthorsTab(), tr("Authors"));
+    tabs->addTab(createDonationsTab(), tr("Donations"));
     tabs->addTab(createVersionsTab(), tr("Version History"));
     tabs->addTab(createLibrariesTab(), tr("Technologies"));
     tabs->addTab(createLicenseTab(), tr("License"));
 
     QLabel *icon = new QLabel(this);
     icon->setContentsMargins(0, 0, 10, 4);
-    icon->setPixmap(app->icons.get("application.png").pixmap(app->scale(48, 48)));
+    icon->setPixmap(QIcon::fromTheme("apk-editor-studio").pixmap(Utils::scale(48, 48)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QLabel *title = new QLabel(app->getTitleAndVersion(), this);
+    QLabel *title = new QLabel(Utils::getAppTitleAndVersion(), this);
     QFont titleFont = title->font();
 #ifndef Q_OS_OSX
     titleFont.setPointSize(11);
@@ -56,30 +67,53 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 
 GradientWidget *AboutDialog::createAboutTab()
 {
-    GradientWidget *tab = new GradientWidget(this);
+    auto tab = new GradientWidget(this);
 
-    QLabel *icon = new QLabel(this);
+    auto icon = new QLabel(this);
     icon->setMargin(16);
-    icon->setPixmap(app->icons.get("about.png").pixmap(app->scale(128, 128)));
+    icon->setPixmap(QPixmap(":/icons/other/about.png").scaled(Utils::scale(128, 128)));
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    QLabel *text = new QLabel(this);
-    text->setOpenExternalLinks(true);
-    const QString tableRow("<tr><td>%1</td><td><a href=\"%2\">%2</a></td></tr>");
-    text->setText(
-        QString("<h4>%1</h4>").arg(app->getTitleAndVersion()) +
-        QString("<p>%1 %2</p>").arg(tr("Author:"), "Alexander Gorishnyak") +
-        QString("<p><table style=\"margin-left: -2px;\">") +
-        QString(tableRow).arg(tr("Website:"), app->getWebPage()) +
-        QString(tableRow).arg(tr("Bug Tracker:"), app->getIssuesPage()) +
-        QString(tableRow).arg(tr("Translation:"), app->getTranslatePage()) +
-        QString("</table></p>") +
-        QString("<p>%1 - %2</p>").arg(QString(__DATE__).toUpper(), __TIME__)
-    );
+    auto labelApplicationTitle = new QLabel(QString("<b>%1</b>").arg(Utils::getAppTitleAndVersion()), this);
+    auto labelAuthor = new QLabel("Alexander Gorishnyak", this);
+    auto labelWebsiteLink = new QLabel(createLink(Utils::getWebsiteUtmUrl(), Utils::getWebsiteUrl()), this);
+    auto labelIssuesLink = new QLabel(createLink(Utils::getIssuesUrl()), this);
+    auto labelTranslateLink = new QLabel(createLink(Utils::getTranslationsUrl()), this);
+    auto labelBuildTime = new QLabel(QString("<p>%1 - %2</p>").arg(QString(__DATE__).toUpper(), __TIME__), this);
+    labelWebsiteLink->setOpenExternalLinks(true);
+    labelIssuesLink->setOpenExternalLinks(true);
+    labelTranslateLink->setOpenExternalLinks(true);
+    labelWebsiteLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard);
+    labelIssuesLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard);
+    labelTranslateLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard);
+    if (layoutDirection() == Qt::RightToLeft) {
+        labelApplicationTitle->setAlignment(Qt::AlignRight);
+        labelAuthor->setAlignment(Qt::AlignRight);
+        labelWebsiteLink->setAlignment(Qt::AlignRight);
+        labelIssuesLink->setAlignment(Qt::AlignRight);
+        labelTranslateLink->setAlignment(Qt::AlignRight);
+        labelBuildTime->setAlignment(Qt::AlignRight);
+    }
 
-    QHBoxLayout *layout = new QHBoxLayout(tab);
+    auto formLayout = new QFormLayout;
+    formLayout->setSpacing(2);
+    formLayout->addRow(tr("Author:"), labelAuthor);
+    formLayout->addItem(new QSpacerItem(0, 10));
+    formLayout->addRow(tr("Website:"), labelWebsiteLink);
+    formLayout->addRow(tr("Bug Tracker:"), labelIssuesLink);
+    formLayout->addRow(tr("Translation:"), labelTranslateLink);
+
+    auto contentLayout = new QVBoxLayout;
+    contentLayout->setSpacing(16);
+    contentLayout->addStretch(1);
+    contentLayout->addWidget(labelApplicationTitle);
+    contentLayout->addLayout(formLayout);
+    contentLayout->addWidget(labelBuildTime);
+    contentLayout->addStretch(1);
+
+    auto layout = new QHBoxLayout(tab);
     layout->addWidget(icon);
-    layout->addWidget(text);
+    layout->addLayout(contentLayout);
 
     return tab;
 }
@@ -88,8 +122,8 @@ QWidget *AboutDialog::createAuthorsTab()
 {
     QString content = "";
     const QString br("<br />");
-    QFile file(app->getSharedPath("docs/authors.txt"));
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
+    QFile file(Utils::getSharedPath("docs/authors.txt"));
+    if (file.open(QFile::ReadOnly)) {
         QTextStream stream(&file);
         stream.setCodec("UTF-8");
         while (!stream.atEnd()) {
@@ -134,13 +168,82 @@ QWidget *AboutDialog::createAuthorsTab()
     return tab;
 }
 
+QWidget *AboutDialog::createDonationsTab()
+{
+    auto tab = new QWidget(this);
+    auto layout = new QVBoxLayout(tab);
+
+    auto donationList = new QTextBrowser(this);
+    donationList->setReadOnly(true);
+    donationList->setOpenExternalLinks(true);
+    layout->addWidget(donationList);
+
+    auto loadingWidget = new LoadingWidget(20, donationList);
+
+    auto errorWidget = new QWidget(this);
+    layout->addWidget(errorWidget);
+    auto errorLayout = new QVBoxLayout(errorWidget);
+    errorLayout->setAlignment(Qt::AlignCenter);
+
+    auto labelError = new QLabel(tr("Could not fetch the list of donations."), this);
+    errorLayout->addWidget(labelError);
+
+    auto btnRetry = new QPushButton(tr("Retry"), this);
+    layout->addWidget(btnRetry);
+    errorLayout->addWidget(btnRetry);
+
+    auto btnDonate = new QToolButton(this);
+    btnDonate->setDefaultAction(app->actions.getVisitDonatePage(this));
+    btnDonate->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    layout->addWidget(btnDonate);
+
+    auto fetchDonations = [=]() {
+        errorWidget->hide();
+        loadingWidget->show();
+        donationList->show();
+        auto http = new QNetworkAccessManager(this);
+        connect(http, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+            const bool error = reply->error();
+            if (!error) {
+                const auto donations = QJsonDocument::fromJson(reply->readAll()).array();
+                QString donationsHtml;
+                for (const auto &donationNode : donations) {
+                    const auto donation = donationNode.toObject();
+                    const auto donor = donation.value("name").toString();
+                    const auto amount = donation.value("amount").toString();
+                    donationsHtml.append("<div style=\"margin-bottom: 4px;\">");
+                    if (donation.contains("url")) {
+                        const auto url = donation.value("url").toString();
+                        donationsHtml.append(QString("<a href=\"%3\">%1</a> &ndash; %2").arg(donor, amount, url));
+                    } else {
+                        donationsHtml.append(QString("%1 &ndash; %2").arg(donor, amount));
+                    }
+                    donationsHtml.append("</div>");
+                }
+                donationList->setHtml(donationsHtml);
+            }
+            loadingWidget->hide();
+            donationList->setVisible(!error);
+            errorWidget->setVisible(error);
+            reply->deleteLater();
+            http->deleteLater();
+        });
+        http->get(QNetworkRequest(Utils::getDonorsInfoUrl()));
+    };
+
+    fetchDonations();
+    connect(btnRetry, &QPushButton::clicked, this, fetchDonations);
+
+    return tab;
+}
+
 QWidget *AboutDialog::createVersionsTab()
 {
     QPlainTextEdit *tab = new QPlainTextEdit(this);
     tab->setReadOnly(true);
 
-    QFile file(app->getSharedPath("docs/versions.txt"));
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
+    QFile file(Utils::getSharedPath("docs/versions.txt"));
+    if (file.open(QFile::ReadOnly)) {
         QTextStream stream(&file);
         stream.setCodec("UTF-8");
         while (!stream.atEnd()) {
@@ -210,7 +313,7 @@ QWidget *AboutDialog::createLibrariesTab()
     // Set JRE version:
 
     auto jre = new Java::Version(this);
-    connect(jre, &Java::Version::finished, [=](bool success) {
+    connect(jre, &Java::Version::finished, this, [=](bool success) {
         labelJre->setText(success ? jre->version() : mdash);
         jre->deleteLater();
     });
@@ -219,7 +322,7 @@ QWidget *AboutDialog::createLibrariesTab()
     // Set JDK version:
 
     auto jdk = new Javac::Version(this);
-    connect(jdk, &Javac::Version::finished, [=](bool success) {
+    connect(jdk, &Javac::Version::finished, this, [=](bool success) {
         labelJdk->setText(success ? jdk->version() : mdash);
         jdk->deleteLater();
     });
@@ -228,7 +331,7 @@ QWidget *AboutDialog::createLibrariesTab()
     // Set Apktool version:
 
     auto apktool = new Apktool::Version(this);
-    connect(apktool, &Apktool::Version::finished, [=](bool success) {
+    connect(apktool, &Apktool::Version::finished, this, [=](bool success) {
         labelApktool->setText(success ? apktool->version() : mdash);
         apktool->deleteLater();
     });
@@ -237,7 +340,7 @@ QWidget *AboutDialog::createLibrariesTab()
     // Set Apksigner version:
 
     auto apksigner = new Apksigner::Version(this);
-    connect(apksigner, &Apksigner::Version::finished, [=](bool success) {
+    connect(apksigner, &Apksigner::Version::finished, this, [=](bool success) {
         labelApksigner->setText(success ? apksigner->version() : mdash);
         apksigner->deleteLater();
     });
@@ -246,7 +349,7 @@ QWidget *AboutDialog::createLibrariesTab()
     // Set ADB version:
 
     auto adb = new Adb::Version(this);
-    connect(adb, &Adb::Version::finished, [=](bool success) {
+    connect(adb, &Adb::Version::finished, this, [=](bool success) {
         labelAdb->setText(success ? adb->version() : mdash);
         adb->deleteLater();
     });
@@ -261,12 +364,18 @@ QWidget *AboutDialog::createLicenseTab()
     tab->setReadOnly(true);
     tab->setOpenExternalLinks(true);
 
-    QFile file(app->getSharedPath("docs/licenses/apk-editor-studio.html"));
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
+    QFile file(Utils::getSharedPath("docs/licenses/apk-editor-studio.html"));
+    if (file.open(QFile::ReadOnly)) {
         QTextStream stream(&file);
         stream.setCodec("UTF-8");
         tab->setText(stream.readAll());
     }
 
     return tab;
+}
+
+QString AboutDialog::createLink(const QString &url, const QString &title) const
+{
+    const QString link("<a href=\"%1\">%2</a>");
+    return link.arg(url, title.isEmpty() ? url : title);
 }

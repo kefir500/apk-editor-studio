@@ -27,15 +27,18 @@ SOURCES += \
     $$PWD/base/command.cpp \
     $$PWD/base/device.cpp \
     $$PWD/base/deviceitemsmodel.cpp \
+    $$PWD/base/extralistitemproxy.cpp \
+    $$PWD/base/fileassociation.cpp \
     $$PWD/base/fileformat.cpp \
     $$PWD/base/fileformatlist.cpp \
-    $$PWD/base/iconprovider.cpp \
+    $$PWD/base/jarprocess.cpp \
     $$PWD/base/language.cpp \
     $$PWD/base/main.cpp \
     $$PWD/base/password.cpp \
     $$PWD/base/process.cpp \
     $$PWD/base/recent.cpp \
     $$PWD/base/settings.cpp \
+    $$PWD/base/theme.cpp \
     $$PWD/base/treenode.cpp \
     $$PWD/base/updater.cpp \
     $$PWD/base/utils.cpp \
@@ -55,8 +58,10 @@ SOURCES += \
     $$PWD/tools/apktool.cpp \
     $$PWD/tools/java.cpp \
     $$PWD/tools/javac.cpp \
+    $$PWD/tools/keystore.cpp \
     $$PWD/tools/keytool.cpp \
     $$PWD/tools/zipalign.cpp \
+    $$PWD/widgets/centralwidget.cpp \
     $$PWD/widgets/decorationsizedelegate.cpp \
     $$PWD/widgets/deselectablelistview.cpp \
     $$PWD/widgets/elidedlabel.cpp \
@@ -72,8 +77,8 @@ SOURCES += \
     $$PWD/widgets/poollistwidget.cpp \
     $$PWD/widgets/projectlist.cpp \
     $$PWD/widgets/projectlistitemdelegate.cpp \
-    $$PWD/widgets/projectswidget.cpp \
-    $$PWD/widgets/projecttabswidget.cpp \
+    $$PWD/widgets/projectwidget.cpp \
+    $$PWD/widgets/readonlycheckbox.cpp \
     $$PWD/widgets/resourceabstractview.cpp \
     $$PWD/widgets/resourcetree.cpp \
     $$PWD/widgets/spacer.cpp \
@@ -89,7 +94,10 @@ SOURCES += \
     $$PWD/windows/mainwindow.cpp \
     $$PWD/windows/optionsdialog.cpp \
     $$PWD/windows/permissioneditor.cpp \
+    $$PWD/windows/rememberdialog.cpp \
     $$PWD/windows/selectdialog.cpp \
+    $$PWD/windows/signatureviewer.cpp \
+    $$PWD/windows/toolbardialog.cpp \
     $$PWD/windows/yesalwaysdialog.cpp
 
 HEADERS += \
@@ -123,14 +131,17 @@ HEADERS += \
     $$PWD/base/command.h \
     $$PWD/base/device.h \
     $$PWD/base/deviceitemsmodel.h \
+    $$PWD/base/extralistitemproxy.h \
+    $$PWD/base/fileassociation.h \
     $$PWD/base/fileformat.h \
     $$PWD/base/fileformatlist.h \
-    $$PWD/base/iconprovider.h \
+    $$PWD/base/jarprocess.h \
     $$PWD/base/language.h \
     $$PWD/base/password.h \
     $$PWD/base/process.h \
     $$PWD/base/recent.h \
     $$PWD/base/settings.h \
+    $$PWD/base/theme.h \
     $$PWD/base/treenode.h \
     $$PWD/base/updater.h \
     $$PWD/base/utils.h \
@@ -153,6 +164,7 @@ HEADERS += \
     $$PWD/tools/keystore.h \
     $$PWD/tools/keytool.h \
     $$PWD/tools/zipalign.h \
+    $$PWD/widgets/centralwidget.h \
     $$PWD/widgets/decorationsizedelegate.h \
     $$PWD/widgets/deselectablelistview.h \
     $$PWD/widgets/elidedlabel.h \
@@ -168,8 +180,8 @@ HEADERS += \
     $$PWD/widgets/poollistwidget.h \
     $$PWD/widgets/projectlist.h \
     $$PWD/widgets/projectlistitemdelegate.h \
-    $$PWD/widgets/projectswidget.h \
-    $$PWD/widgets/projecttabswidget.h \
+    $$PWD/widgets/projectwidget.h \
+    $$PWD/widgets/readonlycheckbox.h \
     $$PWD/widgets/resourceabstractview.h \
     $$PWD/widgets/resourcetree.h \
     $$PWD/widgets/spacer.h \
@@ -185,7 +197,12 @@ HEADERS += \
     $$PWD/windows/mainwindow.h \
     $$PWD/windows/optionsdialog.h \
     $$PWD/windows/permissioneditor.h \
+    $$PWD/windows/rememberdialog.h \
     $$PWD/windows/selectdialog.h \
+    $$PWD/windows/signatureviewer.h \
+    $$PWD/windows/toolbardialog.h \
     $$PWD/windows/yesalwaysdialog.h
 
 INCLUDEPATH += $$PWD
+
+RESOURCES += $$PWD/icons/icons.qrc

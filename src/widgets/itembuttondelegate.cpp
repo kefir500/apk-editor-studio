@@ -1,5 +1,7 @@
 #include "widgets/itembuttondelegate.h"
-#include "base/application.h"
+#include "apk/manifestmodel.h"
+#include <QApplication>
+#include <QMouseEvent>
 #include <QPainter>
 
 ItemButtonDelegate::ItemButtonDelegate(QObject *parent) : QStyledItemDelegate(parent)
@@ -76,16 +78,21 @@ void ItemButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         default:
             buttonState = QStyle::State_None;
         }
+        const bool ltr = QApplication::layoutDirection() == Qt::LeftToRight;
         QStyleOptionButton button;
-        button.text = QChar(0x2192);
+        button.text = QChar(ltr ? 0x2192 : 0x2190);
         button.rect = buttonRect(option.rect);
         button.state = QStyle::State_Enabled | QStyle::State_Raised | buttonState;
         // Paint base:
         QStyleOptionViewItem base = option;
-        base.rect.setWidth(base.rect.width() - button.rect.width());
+        if (ltr) {
+            base.rect.setWidth(base.rect.width() - button.rect.width());
+        } else {
+            base.rect.setX(button.rect.width());
+        }
         QStyledItemDelegate::paint(painter, base, index);
         // Paint button:
-        app->style()->drawControl(QStyle::CE_PushButton, &button, painter);
+        QApplication::style()->drawControl(QStyle::CE_PushButton, &button, painter);
     } else {
         QStyledItemDelegate::paint(painter, option, index);
     }
@@ -93,9 +100,10 @@ void ItemButtonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
 QRect ItemButtonDelegate::buttonRect(const QRect &rect)
 {
+    const bool ltr = QApplication::layoutDirection() == Qt::LeftToRight;
     const int w = rect.height();
     const int h = rect.height();
-    const int x = rect.left() + rect.width() - w;
+    const int x = ltr ? rect.left() + rect.width() - w : 0;
     const int y = rect.top();
     return QRect(x, y, w, h);
 }

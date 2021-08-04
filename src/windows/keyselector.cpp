@@ -42,14 +42,15 @@ void KeySelector::refresh(const QString &defaultAlias)
 {
     loading->show();
     auto keytool = new Keytool::Aliases(keystore, password, this);
-    connect(keytool, &Keytool::Aliases::success, [=](const QStringList &aliases) {
+    connect(keytool, &Keytool::Aliases::success, this, [=](const QStringList &aliases) {
         combo->clear();
         combo->addItems(aliases);
         combo->setCurrentText(defaultAlias);
         loading->hide();
         keytool->deleteLater();
     });
-    connect(keytool, &Keytool::Aliases::error, [=](Keytool::Aliases::ErrorType, const QString &brief, const QString &detailed) {
+    connect(keytool, &Keytool::Aliases::error, this,
+            [=](Keytool::Aliases::ErrorType, const QString &brief, const QString &detailed) {
         Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
         keytool->deleteLater();
         close();

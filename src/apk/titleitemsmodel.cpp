@@ -33,7 +33,7 @@ TitleItemsModel::TitleItemsModel(const Project *apk, QObject *parent) : QAbstrac
                 while (resourceFiles.hasNext()) {
                     const QString resourceFile = QFileInfo(resourceFiles.next()).filePath();
                     QFile xml(resourceFile);
-                    if (xml.open(QFile::ReadOnly | QFile::Text)) {
+                    if (xml.open(QFile::ReadOnly)) {
                         QTextStream stream(&xml);
                         stream.setCodec("UTF-8");
                         QDomDocument xmlDocument;
@@ -63,11 +63,13 @@ TitleItemsModel::TitleItemsModel(const Project *apk, QObject *parent) : QAbstrac
     });
 
     auto finishedWatcher = new QFutureWatcher<QList<TitleNode *>>(this);
-    connect(finishedWatcher, &QFutureWatcher<QList<TitleNode *>>::finished, [=]() {
+    connect(finishedWatcher, &QFutureWatcher<QList<TitleNode *>>::finished, this, [=]() {
         const auto result = finishedFuture.result();
-        beginInsertRows(QModelIndex(), 0, result.count() - 1);
-            nodes = finishedFuture.result();
-        endInsertRows();
+        if (!result.isEmpty()) {
+            beginInsertRows(QModelIndex(), 0, result.count() - 1);
+                nodes = result;
+            endInsertRows();
+        }
         emit initialized();
     });
     finishedWatcher->setFuture(finishedFuture);

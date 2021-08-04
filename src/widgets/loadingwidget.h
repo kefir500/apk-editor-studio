@@ -6,6 +6,8 @@
 
 class LoadingWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit LoadingWidget(int size, QWidget *parent = nullptr);
     explicit LoadingWidget(QWidget *parent = nullptr) : LoadingWidget(32, parent) {}
@@ -21,7 +23,7 @@ private:
     void parentChanged();
 
     int spinnerSize;
-    int spinnerAngle;
+    int spinnerAngle = 0;
     QTimer spinnerTimer;
 };
 

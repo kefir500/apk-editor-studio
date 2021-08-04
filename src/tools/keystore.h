@@ -1,7 +1,8 @@
 #ifndef KEYSTORE_H
 #define KEYSTORE_H
 
-#include <QString>
+#include <QCoreApplication>
+#include <memory>
 
 struct Dname
 {
@@ -13,8 +14,12 @@ struct Dname
     QString countryCode;
 };
 
-struct Keystore
+class Keystore
 {
+    Q_DECLARE_TR_FUNCTIONS(Keystore)
+
+public:
+    static std::unique_ptr<const Keystore> get(QWidget *parent = nullptr);
     QString keystorePath;
     QString keystorePassword;
     QString keyAlias;

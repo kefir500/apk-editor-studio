@@ -1,4 +1,4 @@
-#include "spacer.h"
+#include "widgets/spacer.h"
 
 Spacer::Spacer(QWidget *parent) : QWidget(parent)
 {

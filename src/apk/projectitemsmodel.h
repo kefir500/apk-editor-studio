@@ -1,7 +1,10 @@
 #ifndef PROJECTITEMSMODEL_H
 #define PROJECTITEMSMODEL_H
 
-#include "apk/project.h"
+#include <QAbstractListModel>
+
+class MainWindow;
+class Project;
 
 class ProjectItemsModel : public QAbstractListModel
 {
@@ -20,20 +23,15 @@ public:
 
     ~ProjectItemsModel() override;
 
-    Project *open(const QString &filename, bool unpack = true);
+    Project *add(const QString &path, MainWindow *window = nullptr);
     bool close(Project *project);
 
+    Project *at(int row) const;
     Project *existing(const QString &filename) const;
-    int indexOf(Project *project) const;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-
-signals:
-    void added(Project *project) const;
-    void changed(Project *project) const;
-    void removed(Project *project) const;
 
 private:
     QList<Project *> projects;

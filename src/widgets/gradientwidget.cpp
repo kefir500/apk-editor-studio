@@ -9,8 +9,8 @@ void GradientWidget::paintEvent(QPaintEvent *event)
     const int h = height();
     const int min = qMin(w, h);
 
-    const QColor color1(app->getColor(app->ColorBackgroundStart));
-    const QColor color2(app->getColor(app->ColorBackgroundEnd));
+    const QColor color1(app->theme()->color(Theme::Color::BackgroundGradientStart));
+    const QColor color2(app->theme()->color(Theme::Color::BackgroundGradientEnd));
     QLinearGradient gradient(QPoint(0, min), QPoint(min, 0));
     gradient.setColorAt(0.1, color1);
     gradient.setColorAt(0.5, color2);

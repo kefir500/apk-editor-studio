@@ -9,6 +9,7 @@ public:
     RecentFile(const QString &filename, const QPixmap &thumbnail);
     const QString &filename() const;
     const QPixmap &thumbnail() const;
+    bool operator==(const RecentFile &) const;
 
 private:
     class RecentFilePrivate : public QSharedData
@@ -24,10 +25,8 @@ private:
 
 class Recent : public QObject
 {
-    Q_OBJECT
-
 public:
-    Recent(const QString &identifier, QObject *parent = nullptr);
+    Recent(const QString &identifier, int limit = 10, QObject *parent = nullptr);
 
     bool add(const QString &filename, const QPixmap &thumbnail);
     bool remove(int index);
@@ -38,9 +37,6 @@ public:
     const QList<RecentFile> &all() const;
     QStringList filenames() const;
     QList<QPixmap> thumbnails() const;
-
-signals:
-    void changed() const;
 
 private:
     void saveToFile() const;

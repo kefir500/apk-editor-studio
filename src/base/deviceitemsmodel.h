@@ -3,7 +3,6 @@
 
 #include "base/device.h"
 #include <QAbstractTableModel>
-#include <QSharedPointer>
 
 class DeviceItemsModel : public QAbstractTableModel
 {
@@ -19,7 +18,7 @@ public:
         ColumnCount
     };
 
-    QSharedPointer<Device> get(const QModelIndex &index) const;
+    Device get(const QModelIndex &index) const;
     void refresh();
     void save() const;
 
@@ -31,11 +30,11 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 signals:
-    void fetching() const;
-    void fetched() const;
+    void fetching();
+    void fetched(bool success);
 
 private:
-    QList<QSharedPointer<Device>> devices;
+    QList<Device> devices;
 };
 
 #endif // DEVICEITEMSMODEL_H

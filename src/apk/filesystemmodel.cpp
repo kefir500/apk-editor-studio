@@ -13,7 +13,8 @@ void FileSystemModel::setSourceModel(ResourceItemsModel *model)
     }
     sourceModel = model;
     if (model) {
-        connect(model, &ResourceItemsModel::dataChanged, [=](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles) {
+        connect(model, &ResourceItemsModel::dataChanged, this,
+                [=](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles) {
             const auto fromIndex = index(ResourceModelIndex(topLeft).path());
             const auto toIndex = index(ResourceModelIndex(bottomRight).path());
             updated(fromIndex.sibling(fromIndex.row(), 0),
@@ -22,7 +23,12 @@ void FileSystemModel::setSourceModel(ResourceItemsModel *model)
     }
 }
 
-bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &file)
+QModelIndex FileSystemModel::rootIndex() const
+{
+    return index(rootPath());
+}
+
+bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &file, QWidget *parent)
 {
     if (!sourceModel) {
         return false;
@@ -30,11 +36,11 @@ bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &f
     const auto path = filePath(index);
     const auto resourceIndex = sourceModel->findIndex(path);
     if (resourceIndex.isValid()) {
-        return sourceModel->replaceResource(resourceIndex, file);
+        return sourceModel->replaceResource(resourceIndex, file, parent);
     } else {
-        if (Utils::replaceFile(path)) {
+        if (Utils::replaceFile(path, parent)) {
             updated(index.sibling(index.row(), 0),
-                                  index.sibling(index.row(), columnCount() - 1));
+                    index.sibling(index.row(), columnCount() - 1));
             return true;
         }
         return false;
@@ -79,7 +85,7 @@ bool FileSystemModel::removeRows(int row, int count, const QModelIndex &parent)
 void FileSystemModel::updated(const QModelIndex &from, const QModelIndex &to, const QVector<int> &roles)
 {
     auto timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, [=]() {
+    connect(timer, &QTimer::timeout, this, [=]() {
         emit dataChanged(from, to, roles);
         timer->deleteLater();
     });

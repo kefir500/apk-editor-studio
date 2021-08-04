@@ -23,7 +23,7 @@ int ManifestModel::getVersionCode() const
     return manifest->getVersionCode();
 }
 
-QString ManifestModel::getVersionName() const
+const QString &ManifestModel::getVersionName() const
 {
     return manifest->getVersionName();
 }

@@ -16,7 +16,7 @@ Process::Process(QObject *parent) : QObject(parent)
     connect(&process, &QProcess::started, this, &Process::started);
 
     connect(&process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
-        [=](int exitCode, QProcess::ExitStatus exitStatus)
+            this, [=](int exitCode, QProcess::ExitStatus exitStatus)
     {
         const QString output = process.readAll().replace("\r\n", "\n").trimmed();
         if (exitStatus == QProcess::NormalExit && exitCode == 0) {
@@ -31,34 +31,18 @@ Process::Process(QObject *parent) : QObject(parent)
     });
 
     connect(&process, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error),
-        [=](QProcess::ProcessError processError)
+            this, [=](QProcess::ProcessError processError)
     {
         Q_UNUSED(processError)
         const auto error = QStringLiteral("%1: %2").arg(process.program(), process.errorString());
         emit finished(false, error);
         process.deleteLater();
     });
-
 }
 
 void Process::run(const QString &program, const QStringList &arguments)
 {
     process.start(program, arguments);
-}
-
-void Process::jar(const QString &jar, const QStringList &jarArguments)
-{
-    QStringList arguments;
-    const int minHeapSize = app->settings->getJavaMinHeapSize();
-    const int maxHeapSize = app->settings->getJavaMaxHeapSize();
-    if (app->settings->getJavaMinHeapSize()) {
-        arguments << QString("-Xms%1m").arg(minHeapSize);
-    }
-    if (app->settings->getJavaMaxHeapSize()) {
-        arguments << QString("-Xmx%1m").arg(maxHeapSize);
-    }
-    arguments << "-jar" << jar << jarArguments;
-    run(app->getJavaBinaryPath("java"), arguments);
 }
 
 void Process::setStandardOutputFile(const QString &filename)

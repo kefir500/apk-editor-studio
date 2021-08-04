@@ -1,5 +1,4 @@
 #include "editors/viewer.h"
-#include <QAction>
 
 const QString &Viewer::getTitle() const
 {

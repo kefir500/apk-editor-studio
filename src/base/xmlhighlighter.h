@@ -5,21 +5,16 @@
 
 class XmlHighlighter : public QSyntaxHighlighter
 {
+    Q_OBJECT
+
 public:
-    XmlHighlighter(QTextDocument *parent);
+    XmlHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent) {}
 
 protected:
     void highlightBlock(const QString &text) override;
 
 private:
     void highlightRegex(const QString &text, const QTextCharFormat &format, const QRegularExpression &regex);
-    QString selectionText;
-    QTextCharFormat formatDefault;
-    QTextCharFormat formatTag;
-    QTextCharFormat formatElement;
-    QTextCharFormat formatAttribute;
-    QTextCharFormat formatValue;
-    QTextCharFormat formatComment;
 };
 
 #endif // XMLHIGHLIGHTER_H

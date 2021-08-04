@@ -1,15 +1,13 @@
 #include "editors/imageeditor.h"
-#include "base/application.h"
 #include "base/fileformatlist.h"
 #include "base/utils.h"
 #include "windows/dialogs.h"
-#include <QGraphicsScene>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsColorizeEffect>
-#include <QWheelEvent>
-#include <QMimeData>
 #include <QFormLayout>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
+#include <QMimeData>
 #include <QToolButton>
+#include <QWheelEvent>
 
 #ifdef QT_DEBUG
     #include <QDebug>
@@ -164,9 +162,9 @@ ZoomGroup::ZoomGroup(QWidget *parent) : QWidget(parent)
     QToolButton *btnZoomIn = new QToolButton(this);
     QToolButton *btnZoomOut = new QToolButton(this);
     QToolButton *btnZoomNormal = new QToolButton(this);
-    btnZoomIn->setIcon(app->icons.get("zoom-in.png"));
-    btnZoomOut->setIcon(app->icons.get("zoom-out.png"));
-    btnZoomNormal->setIcon(app->icons.get("zoom.png"));
+    btnZoomIn->setIcon(QIcon::fromTheme("zoom-in"));
+    btnZoomOut->setIcon(QIcon::fromTheme("zoom-out"));
+    btnZoomNormal->setIcon(QIcon::fromTheme("zoom-normal"));
 
     labelZoom = new QLabel(this);
 

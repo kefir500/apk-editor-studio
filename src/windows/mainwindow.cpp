@@ -1,40 +1,53 @@
 #include "windows/mainwindow.h"
 #include "windows/aboutdialog.h"
 #include "windows/dialogs.h"
-#include "windows/permissioneditor.h"
-#include "widgets/resourcetree.h"
+#include "windows/signatureviewer.h"
+#include "widgets/centralwidget.h"
 #include "widgets/filesystemtree.h"
 #include "widgets/iconlist.h"
+#include "widgets/logview.h"
+#include "widgets/manifestview.h"
+#include "widgets/projectlist.h"
+#include "widgets/projectwidget.h"
+#include "widgets/resourceabstractview.h"
+#include "widgets/resourcetree.h"
+#include "widgets/toolbar.h"
+#include "editors/fileeditor.h"
+#include "editors/welcomeactionviewer.h"
 #include "base/application.h"
-#include <QMenuBar>
+#include "base/extralistitemproxy.h"
+#include "base/updater.h"
+#include "apk/project.h"
+#include <QDebug>
 #include <QDockWidget>
+#include <QMenuBar>
 #include <QMimeData>
 #include <QMimeDatabase>
 #include <QTimer>
-#include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+int MainWindow::instances = 0;
+
+MainWindow::MainWindow(ProjectItemsModel &projects, QWidget *parent)
+    : QMainWindow(parent)
+    , projects(projects)
 {
+    ++instances;
+
+    setAttribute(Qt::WA_DeleteOnClose);
     setAcceptDrops(true);
 
-    initWidgets();
+    onProjectAdded({}, 0, projects.rowCount() - 1);
+    connect(&projects, &ProjectItemsModel::rowsInserted, this, &MainWindow::onProjectAdded);
+    connect(&projects, &ProjectItemsModel::rowsAboutToBeRemoved, this, &MainWindow::onProjectAboutToBeRemoved);
+
     initMenus();
-    loadSettings();
+    initWidgets();
 
-    connect(&app->projects, &ProjectItemsModel::changed, [=](Project *project) {
-        if (project == projectsWidget->getCurrentProject()) {
-            updateWindowForProject(project);
-        }
-    });
-
-    connect(app->settings, &Settings::toolbarUpdated, [=]() {
-        toolbar->reinitialize();
-    });
-
-    connect(app->settings, &Settings::resetDone, [=]() {
+    connect(app->settings, &Settings::resetDone, this, [this]() {
         restoreGeometry(QByteArray());
         setInitialSize();
         restoreState(defaultState);
+        toolbar->initialize(app->settings->getMainWindowToolbar());
     });
 
     QEvent languageChangeEvent(QEvent::LanguageChange);
@@ -43,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     if (app->settings->getAutoUpdates()) {
         // Delay to prevent uninitialized window render
         auto timer = new QTimer(this);
-        connect(timer, &QTimer::timeout, [=]() {
+        connect(timer, &QTimer::timeout, this, [=]() {
             Updater::check(false, this);
             timer->deleteLater();
         });
@@ -54,71 +67,85 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     qDebug();
 }
 
+MainWindow::~MainWindow()
+{
+    --instances;
+}
+
+void MainWindow::setCurrentProject(Project *project)
+{
+    projectList->setCurrentProject(project);
+}
+
 void MainWindow::setInitialSize()
 {
-    resize(app->scale(1100, 600));
+    resize(Utils::scale(1100, 600));
 }
 
 void MainWindow::initWidgets()
 {
     qDebug() << "Initializing widgets...";
+
     setInitialSize();
 
-    projectsWidget = new ProjectsWidget(this);
-    projectsWidget->setModel(&app->projects);
-    setCentralWidget(projectsWidget);
-    connect(projectsWidget, &ProjectsWidget::currentProjectChanged, [=](Project *project) {
-        setCurrentProject(project);
-        projectList->setCurrentProject(project);
-    });
-    connect(projectsWidget, &ProjectsWidget::currentTabChanged, [=]() {
-        menuEditor->clear();
-        menuEditor->addActions(projectsWidget->getCurrentTabActions());
-    });
+    centralWidget = new CentralWidget(this);
+    setCentralWidget(centralWidget);
 
-    QWidget *dockProjectsWidget = new QWidget(this);
-    QVBoxLayout *projectsLayout = new QVBoxLayout(dockProjectsWidget);
-    projectList = new ProjectList(this);
-    projectList->setModel(&app->projects);
-    connect(projectList, &ProjectList::currentProjectChanged, [=](Project *project) {
-        setCurrentProject(project);
-        projectsWidget->setCurrentProject(project);
+    resourceTree = new ResourceAbstractView(new ResourceTree, this);
+    connect(resourceTree, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
+        getCurrentProjectWidget()->openResourceTab(index);
     });
+    auto dockResourceWidget = new QWidget(this);
+    auto resourceLayout = new QVBoxLayout(dockResourceWidget);
+    resourceLayout->addWidget(resourceTree);
+    resourceLayout->setMargin(0);
+
+    filesystemTree = new ResourceAbstractView(new FileSystemTree, this);
+    connect(filesystemTree, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
+        getCurrentProjectWidget()->openResourceTab(index);
+    });
+    auto dockFilesystemWidget = new QWidget(this);
+    auto filesystemLayout = new QVBoxLayout(dockFilesystemWidget);
+    filesystemLayout->addWidget(filesystemTree);
+    filesystemLayout->setMargin(0);
+
+    iconList = new ResourceAbstractView(new IconList, this);
+    connect(iconList, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
+        getCurrentProjectWidget()->openResourceTab(index);
+    });
+    auto dockIconsWidget = new QWidget(this);
+    auto iconsLayout = new QVBoxLayout(dockIconsWidget);
+    iconsLayout->addWidget(iconList);
+    iconsLayout->setMargin(0);
+    iconsLayout->setSpacing(1);
+
+    manifestTable = new ManifestView(this);
+    connect(manifestTable, &ManifestView::titleEditorRequested, this, [this]() {
+        getCurrentProjectWidget()->openTitlesTab();
+    });
+    auto dockManifestWidget = new QWidget(this);
+    auto manifestLayout = new QVBoxLayout(dockManifestWidget);
+    manifestLayout->addWidget(manifestTable);
+    manifestLayout->setMargin(0);
 
     logView = new LogView(this);
+    projectList = new ProjectList(this);
+    connect(projectList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this]() {
+        onProjectSwitched(getCurrentProject());
+    });
+    welcomeItemProxy = new ExtraListItemProxy(this);
+    welcomeItemProxy->setSourceModel(&projects);
+    welcomeItemProxy->prependRow();
+    welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), tr("Welcome"), Qt::DisplayRole);
+    welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), QIcon::fromTheme("apk-editor-studio"), Qt::DecorationRole);
+    welcomePage = new WelcomeActionViewer(this);
+    projectList->setModel(welcomeItemProxy);
+    auto dockProjectsWidget = new QWidget(this);
+    auto projectsLayout = new QVBoxLayout(dockProjectsWidget);
     projectsLayout->addWidget(projectList);
     projectsLayout->addWidget(logView);
     projectsLayout->setMargin(0);
     projectsLayout->setSpacing(1);
-
-    QWidget *dockResourceWidget = new QWidget(this);
-    QVBoxLayout *resourceLayout = new QVBoxLayout(dockResourceWidget);
-    resourceTree = new ResourceAbstractView(new ResourceTree, this);
-    resourceLayout->addWidget(resourceTree);
-    resourceLayout->setMargin(0);
-    connect(resourceTree, &ResourceAbstractView::editRequested, projectsWidget, &ProjectsWidget::openResourceTab);
-
-    QWidget *dockFilesystemWidget = new QWidget(this);
-    QVBoxLayout *filesystemLayout = new QVBoxLayout(dockFilesystemWidget);
-    filesystemTree = new ResourceAbstractView(new FilesystemTree, this);
-    filesystemLayout->addWidget(filesystemTree);
-    filesystemLayout->setMargin(0);
-    connect(filesystemTree, &ResourceAbstractView::editRequested, projectsWidget, &ProjectsWidget::openResourceTab);
-
-    QWidget *dockIconsWidget = new QWidget(this);
-    QVBoxLayout *iconsLayout = new QVBoxLayout(dockIconsWidget);
-    iconList = new ResourceAbstractView(new IconList, this);
-    iconsLayout->addWidget(iconList);
-    iconsLayout->setMargin(0);
-    iconsLayout->setSpacing(1);
-    connect(iconList, &ResourceAbstractView::editRequested, projectsWidget, &ProjectsWidget::openResourceTab);
-
-    QWidget *dockManifestWidget = new QWidget(this);
-    QVBoxLayout *manifestLayout = new QVBoxLayout(dockManifestWidget);
-    manifestTable = new ManifestView(this);
-    manifestLayout->addWidget(manifestTable);
-    manifestLayout->setMargin(0);
-    connect(manifestTable, &ManifestView::titleEditorRequested, projectsWidget, &ProjectsWidget::openTitlesTab);
 
     dockProjects = new QDockWidget(this);
     dockResources = new QDockWidget(this);
@@ -146,6 +173,9 @@ void MainWindow::initWidgets()
     rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
 
     defaultState = saveState();
+
+    restoreGeometry(app->settings->getMainWindowGeometry());
+    restoreState(app->settings->getMainWindowState());
 }
 
 void MainWindow::initMenus()
@@ -155,14 +185,25 @@ void MainWindow::initMenus()
     // File Menu:
 
     auto actionApkOpen = app->actions.getOpenApk(this);
-    actionApkSave = new QAction(app->icons.get("pack.png"), QString(), this);
+    actionApkSave = new QAction(QIcon::fromTheme("apk-save"), QString(), this);
     actionApkSave->setShortcut(QKeySequence("Ctrl+Alt+S"));
-    actionApkInstall = new QAction(app->icons.get("install.png"), QString(), this);
+    actionApkInstall = new QAction(QIcon::fromTheme("apk-install"), QString(), this);
     actionApkInstall->setShortcut(QKeySequence("Ctrl+I"));
-    actionApkExplore = new QAction(app->icons.get("explore.png"), QString(), this);
+    actionApkExplore = new QAction(QIcon::fromTheme("folder-open"), QString(), this);
     actionApkExplore->setShortcut(QKeySequence("Ctrl+E"));
-    actionApkClose = new QAction(app->icons.get("x-blue.png"), QString(), this);
+    actionApkClose = new QAction(QIcon::fromTheme("document-close"), QString(), this);
     actionApkClose->setShortcut(QKeySequence("Ctrl+W"));
+
+    // Recent Menu:
+
+    menuRecent = new QMenu(this);
+    menuRecent->setIcon(QIcon::fromTheme("document-recent"));
+    actionRecentClear = new QAction(QIcon::fromTheme("edit-delete"), QString(), this);
+    connect(actionRecentClear, &QAction::triggered, app->settings, &Settings::clearRecentList);
+    actionRecentNone = new QAction(this);
+    actionRecentNone->setEnabled(false);
+    connect(app->settings, &Settings::recentListUpdated, this, &MainWindow::updateRecentMenu);
+    updateRecentMenu();
 
     // Tools Menu:
 
@@ -171,45 +212,60 @@ void MainWindow::initMenus()
     auto actionAndroidExplorer = app->actions.getOpenAndroidExplorer(this);
     auto actionScreenshot = app->actions.getTakeScreenshot(this);
     actionProjectManager = new QAction(this);
-    actionProjectManager->setIcon(app->icons.get("project.png"));
+    actionProjectManager->setIcon(QIcon::fromTheme("tool-projectmanager"));
     actionProjectManager->setShortcut(QKeySequence("Ctrl+M"));
     actionTitleEditor = new QAction(this);
-    actionTitleEditor->setIcon(app->icons.get("title.png"));
+    actionTitleEditor->setIcon(QIcon::fromTheme("tool-titleeditor"));
     actionTitleEditor->setShortcut(QKeySequence("Ctrl+T"));
     actionPermissionEditor = new QAction(this);
-    actionPermissionEditor->setIcon(app->icons.get("permissions.png"));
+    actionPermissionEditor->setIcon(QIcon::fromTheme("tool-permissioneditor"));
     actionPermissionEditor->setShortcut(QKeySequence("Ctrl+Shift+P"));
+    actionCloneApk = new QAction(this);
+    actionCloneApk->setIcon(QIcon::fromTheme("edit-copy"));
+    actionCloneApk->setShortcut(QKeySequence("Ctrl+Shift+R"));
+    actionViewSignatures = new QAction(this);
+    actionViewSignatures->setIcon(QIcon::fromTheme("view-certificate"));
 
     // Settings Menu:
 
     auto actionOptions = app->actions.getOpenOptions(this);
 
+    // Window Menu:
+
+    actionNewWindow = new QAction(this);
+    actionNewWindow->setIcon(QIcon::fromTheme("window-new"));
+    actionNewWindow->setShortcut(QKeySequence("Ctrl+N"));
+    connect(actionNewWindow, &QAction::triggered, app, &Application::createNewInstance);
+
     // Help Menu:
 
     auto actionDonate = app->actions.getVisitDonatePage();
-    actionAbout = new QAction(app->icons.get("application.png"), QString(), this);
+    actionAbout = new QAction(QIcon::fromTheme("apk-editor-studio"), QString(), this);
     actionAbout->setMenuRole(QAction::AboutRole);
-    actionAboutQt = new QAction(app->icons.get("qt.png"), QString(), this);
+    actionAboutQt = new QAction(QIcon::fromTheme("qt"), QString(), this);
     actionAboutQt->setMenuRole(QAction::AboutQtRole);
 
     // Menu Bar:
 
     menuFile = menuBar()->addMenu(QString());
     menuFile->addAction(actionApkOpen);
-    menuFile->addMenu(app->actions.getRecent(this));
+    menuFile->addMenu(menuRecent);
     menuFile->addSeparator();
     menuFile->addAction(actionApkSave);
     menuFile->addSeparator();
     menuFile->addAction(actionApkInstall);
-    menuFile->addAction(app->actions.getInstallExternalApk(this));
+    menuFile->addSeparator();
+    menuFile->addAction(app->actions.getInstallApk(this));
+    menuFile->addAction(app->actions.getOptimizeApk(this));
+    menuFile->addAction(app->actions.getSignApk(this));
     menuFile->addSeparator();
     menuFile->addAction(actionApkExplore);
     menuFile->addSeparator();
     menuFile->addAction(actionApkClose);
     menuFile->addSeparator();
-    menuFile->addAction(app->actions.getExit());
+    menuFile->addAction(app->actions.getExit(this));
     menuEditor = menuBar()->addMenu(QString());
-    menuEditor->addActions(projectsWidget->getCurrentTabActions());
+    menuEditor->setEnabled(false);
     menuTools = menuBar()->addMenu(QString());
     menuTools->addAction(actionKeyManager);
     menuTools->addSeparator();
@@ -218,8 +274,12 @@ void MainWindow::initMenus()
     menuTools->addAction(actionScreenshot);
     menuTools->addSeparator();
     menuTools->addAction(actionProjectManager);
+    menuTools->addSeparator();
     menuTools->addAction(actionTitleEditor);
     menuTools->addAction(actionPermissionEditor);
+    menuTools->addAction(actionCloneApk);
+    menuTools->addSeparator();
+    menuTools->addAction(actionViewSignatures);
     menuSettings = menuBar()->addMenu(QString());
     menuSettings->addAction(actionOptions);
     menuSettings->addSeparator();
@@ -239,44 +299,79 @@ void MainWindow::initMenus()
 
     // Tool Bar:
 
-    Toolbar::addToPool("open-project", actionApkOpen);
-    Toolbar::addToPool("save-project", actionApkSave);
-    Toolbar::addToPool("install-project", actionApkInstall);
-    Toolbar::addToPool("open-contents", actionApkExplore);
-    Toolbar::addToPool("close-project", actionApkClose);
-    Toolbar::addToPool("project-manager", actionProjectManager);
-    Toolbar::addToPool("title-editor", actionTitleEditor);
-    Toolbar::addToPool("permission-editor", actionPermissionEditor);
-    Toolbar::addToPool("device-manager", actionDeviceManager);
-    Toolbar::addToPool("android-explorer", actionAndroidExplorer);
-    Toolbar::addToPool("screenshot", actionScreenshot);
-    Toolbar::addToPool("key-manager", actionKeyManager);
-    Toolbar::addToPool("settings", actionOptions);
-    Toolbar::addToPool("donate", actionDonate);
+    actionFileSave = new QAction(QIcon::fromTheme("document-save"), QString(), this);
+    actionFileSave->setEnabled(false);
+    actionFileSaveAs = new QAction(QIcon::fromTheme("document-save-as"), QString(), this);
+    actionFileSaveAs->setEnabled(false);
+
     toolbar = new Toolbar(this);
     toolbar->setObjectName("Toolbar");
+    toolbar->addActionToPool("open-project", actionApkOpen);
+    toolbar->addActionToPool("save-project", actionApkSave);
+    toolbar->addActionToPool("install-project", actionApkInstall);
+    toolbar->addActionToPool("open-contents", actionApkExplore);
+    toolbar->addActionToPool("close-project", actionApkClose);
+    toolbar->addActionToPool("save", actionFileSave);
+    toolbar->addActionToPool("save-as", actionFileSaveAs);
+    toolbar->addActionToPool("project-manager", actionProjectManager);
+    toolbar->addActionToPool("title-editor", actionTitleEditor);
+    toolbar->addActionToPool("permission-editor", actionPermissionEditor);
+    toolbar->addActionToPool("rename-package", actionCloneApk);
+    toolbar->addActionToPool("view-signatures", actionViewSignatures);
+    toolbar->addActionToPool("device-manager", actionDeviceManager);
+    toolbar->addActionToPool("android-explorer", actionAndroidExplorer);
+    toolbar->addActionToPool("screenshot", actionScreenshot);
+    toolbar->addActionToPool("key-manager", actionKeyManager);
+    toolbar->addActionToPool("new-window", actionNewWindow);
+    toolbar->addActionToPool("settings", actionOptions);
+    toolbar->addActionToPool("donate", actionDonate);
+    toolbar->initialize(app->settings->getMainWindowToolbar());
     addToolBar(toolbar);
+    connect(toolbar, &Toolbar::updated, app->settings, &Settings::setMainWindowToolbar);
 
-    setActionsEnabled(nullptr);
+    // Signals / Slots:
 
-    // Signals / Slots
-
-    connect(actionApkSave, &QAction::triggered, projectsWidget, &ProjectsWidget::saveCurrentProject);
-    connect(actionApkInstall, &QAction::triggered, projectsWidget, &ProjectsWidget::installCurrentProject);
-    connect(actionApkExplore, &QAction::triggered, projectsWidget, &ProjectsWidget::exploreCurrentProject);
-    connect(actionApkClose, &QAction::triggered, projectsWidget, &ProjectsWidget::closeCurrentProject);
-    connect(actionTitleEditor, &QAction::triggered, projectsWidget, &ProjectsWidget::openTitlesTab);
-    connect(actionProjectManager, &QAction::triggered, projectsWidget, &ProjectsWidget::openProjectTab);
-    connect(actionPermissionEditor, &QAction::triggered, [=]() {
-        const auto project = projectsWidget->getCurrentProject();
-        PermissionEditor permissionEditor(project->manifest, this);
-        permissionEditor.exec();
+    connect(actionApkSave, &QAction::triggered, this, [this]() {
+        getCurrentProjectWidget()->saveProject();
     });
-    connect(actionAboutQt, &QAction::triggered, app, &Application::aboutQt);
-    connect(actionAbout, &QAction::triggered, [=]() {
+    connect(actionApkInstall, &QAction::triggered, this, [this]() {
+        getCurrentProjectWidget()->installProject();
+    });
+    connect(actionApkExplore, &QAction::triggered, this, [this]() {
+        getCurrentProjectWidget()->exploreProject();
+    });
+    connect(actionApkClose, &QAction::triggered, this, [this]() {
+        getCurrentProjectWidget()->closeProject();
+    });
+    connect(actionTitleEditor, &QAction::triggered, this, [this]() {
+        getCurrentProjectWidget()->openTitlesTab();
+    });
+    connect(actionProjectManager, &QAction::triggered, this, [this]() {
+        getCurrentProjectWidget()->openProjectTab();
+    });
+    connect(actionPermissionEditor, &QAction::triggered, this, [this]() {
+        getCurrentProjectWidget()->openPermissionEditor();
+    });
+    connect(actionCloneApk, &QAction::triggered, this, [this]() {
+        getCurrentProjectWidget()->openPackageRenamer();
+    });
+    connect(actionViewSignatures, &QAction::triggered, this, [this]() {
+        const auto project = getCurrentProject();
+        Q_ASSERT(project);
+        SignatureViewer dialog(project->getOriginalPath(), this);
+        dialog.exec();
+    });
+    connect(actionFileSave, &QAction::triggered, this, [this]() {
+        qobject_cast<Editor *>(getCurrentTab())->save();
+    });
+    connect(actionFileSaveAs, &QAction::triggered, this, [this]() {
+        qobject_cast<FileEditor *>(getCurrentTab())->saveAs();
+    });
+    connect(actionAbout, &QAction::triggered, this, [this]() {
         AboutDialog about(this);
         about.exec();
     });
+    connect(actionAboutQt, &QAction::triggered, app, &Application::aboutQt);
 }
 
 void MainWindow::retranslate()
@@ -291,6 +386,8 @@ void MainWindow::retranslate()
     dockFilesystem->setWindowTitle(tr("File System"));
     dockManifest->setWindowTitle(tr("Manifest"));
     dockIcons->setWindowTitle(tr("Icons"));
+    actionFileSave->setText(tr("&Save"));
+    actionFileSaveAs->setText(tr("Save &As..."));
 
     // Menu Bar:
 
@@ -308,75 +405,158 @@ void MainWindow::retranslate()
     actionApkExplore->setText(tr("O&pen Contents"));
     actionApkClose->setText(tr("&Close APK"));
 
+    // Recent Menu:
+
+    menuRecent->setTitle(tr("Open &Recent"));
+    actionRecentClear->setText(tr("&Clear List"));
+    actionRecentNone->setText(tr("No Recent Files"));
+
     // Tools Menu:
 
     //: This string refers to a single project (as in "Manager of a project").
     actionProjectManager->setText(tr("&Project Manager"));
-    //: The "&" is a shortcut key, *not* a conjuction "and". Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionTitleEditor->setText(tr("Edit Application &Title"));
-    //: The "&" is a shortcut key, *not* a conjuction "and". Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionPermissionEditor->setText(tr("Edit Application &Permissions"));
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    tr("Edit Package &Name"); // For possible future use
+    actionCloneApk->setText(tr("&Clone APK"));
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    actionViewSignatures->setText(tr("View &Signatures"));
 
     // Window Menu:
 
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    actionNewWindow->setText(tr("Open &New Window"));
     menuWindow->clear();
+    menuWindow->addAction(actionNewWindow);
+    menuWindow->addSeparator();
     menuWindow->addActions(createPopupMenu()->actions());
 
     // Help Menu:
 
+    //: Don't translate the "APK Editor Studio" part.
     actionAbout->setText(tr("&About APK Editor Studio..."));
+    //: Don't translate the "&Qt" part.
     actionAboutQt->setText(tr("About &Qt..."));
 }
 
-void MainWindow::loadSettings()
+void MainWindow::updateWindowForProject(Project *project)
 {
-    qDebug() << "Loading settings...";
-    restoreGeometry(app->settings->getMainWindowGeometry());
-    restoreState(app->settings->getMainWindowState());
-}
+    if (project) {
+        setWindowTitle(QString("%1[*]").arg(project->getOriginalPath()));
+        setWindowModified(project->getState().isModified());
+        auto projectWidget = projectWidgets.value(project);
+        updateWindowForTab(qobject_cast<Viewer *>(projectWidget->currentWidget()));
+    } else {
+        setWindowTitle(QString());
+        setWindowModified(false);
+        updateWindowForTab(nullptr);
+    }
 
-void MainWindow::saveSettings()
-{
-    app->settings->setMainWindowGeometry(saveGeometry());
-    app->settings->setMainWindowState(saveState());
-}
-
-bool MainWindow::setCurrentProject(Project *project)
-{
-    updateWindowForProject(project);
-    resourceTree->setModel(project ? &project->resourcesModel : nullptr);
-    filesystemTree->setModel(project ? &project->filesystemModel : nullptr);
-    iconList->setModel(project ? &project->iconsProxy : nullptr);
-    logView->setModel(project ? &project->logModel : nullptr);
-    manifestTable->setModel(project ? &project->manifestModel : nullptr);
-    filesystemTree->getView<FilesystemTree *>()->setRootIndex(project
-        ? project->filesystemModel.index(project->getContentsPath())
-        : QModelIndex());
-    return project;
-}
-
-void MainWindow::setActionsEnabled(const Project *project)
-{
     actionApkSave->setEnabled(project ? project->getState().canSave() : false);
     actionApkInstall->setEnabled(project ? project->getState().canInstall() : false);
     actionApkExplore->setEnabled(project ? project->getState().canExplore() : false);
     actionApkClose->setEnabled(project ? project->getState().canClose() : false);
     actionTitleEditor->setEnabled(project ? project->getState().canEdit() : false);
     actionPermissionEditor->setEnabled(project ? project->getState().canEdit() : false);
+    actionCloneApk->setEnabled(project ? project->getState().canEdit() : false);
+    actionViewSignatures->setEnabled(project);
     actionProjectManager->setEnabled(project);
 }
 
-void MainWindow::updateWindowForProject(const Project *project)
+void MainWindow::updateWindowForTab(Viewer *tab)
+{
+    menuEditor->clear();
+    if (tab && !tab->actions().isEmpty()) {
+        menuEditor->setEnabled(true);
+        menuEditor->addActions(tab->actions());
+    } else {
+        menuEditor->setEnabled(false);
+    }
+    actionFileSave->setEnabled(qobject_cast<const Editor *>(tab));
+    actionFileSaveAs->setEnabled(qobject_cast<const FileEditor *>(tab));
+}
+
+void MainWindow::updateRecentMenu()
+{
+    menuRecent->clear();
+    auto recentList = app->settings->getRecentList();
+    for (const RecentFile &recentEntry : recentList) {
+        auto action = new QAction(recentEntry.thumbnail(), recentEntry.filename(), this);
+        menuRecent->addAction(action);
+        connect(action, &QAction::triggered, this, [=]() {
+            app->actions.openApk(recentEntry.filename(), this);
+        });
+    }
+    menuRecent->addSeparator();
+    menuRecent->addAction(recentList.isEmpty() ? actionRecentNone : actionRecentClear);
+}
+
+void MainWindow::onProjectAdded(const QModelIndex &, int first, int last)
+{
+    for (int i = first; i <= last; ++i) {
+        const auto project = projects.at(i);
+        auto projectWidget = new ProjectWidget(project, projects, this);
+        projectWidgets.insert(project, projectWidget);
+        connect(project, &Project::stateUpdated, this, [=]() {
+            if (project == getCurrentProject()) {
+                updateWindowForProject(project);
+            }
+        });
+        connect(projectWidget, &ProjectWidget::currentTabChanged, this, [=](Viewer *tab) {
+            if (project == getCurrentProject()) {
+                updateWindowForTab(tab);
+            }
+        });
+    }
+}
+
+void MainWindow::onProjectAboutToBeRemoved(const QModelIndex &, int first, int last)
+{
+    for (int i = first; i <= last; ++i) {
+        const auto project = projects.at(i);
+        auto projectWidget = projectWidgets.take(project);
+        projectWidget->deleteLater();
+    }
+}
+
+void MainWindow::onProjectSwitched(Project *project)
 {
     if (project) {
-        setWindowTitle(QString("%1 [*]").arg(project->getOriginalPath()));
-        setWindowModified(project->getState().isModified());
-        setActionsEnabled(project);
+        centralWidget->set(projectWidgets.value(project));
     } else {
-        setWindowTitle(QString());
-        setWindowModified(false);
-        setActionsEnabled(nullptr);
+        centralWidget->set(welcomePage);
     }
+
+    resourceTree->setModel(project ? &project->resourcesModel : nullptr);
+    filesystemTree->setModel(project ? &project->filesystemModel : nullptr);
+    iconList->setModel(project ? &project->iconsProxy : nullptr);
+    logView->setModel(project ? &project->logModel : nullptr);
+    manifestTable->setModel(project ? &project->manifestModel : nullptr);
+
+    updateWindowForProject(project);
+}
+
+Project *MainWindow::getCurrentProject() const
+{
+    const int row = welcomeItemProxy->mapToSourceRow(projectList->currentIndex());
+    const auto index = projects.index(row);
+    return index.isValid() ? static_cast<Project *>(index.internalPointer()) : nullptr;
+}
+
+ProjectWidget *MainWindow::getCurrentProjectWidget() const
+{
+    return projectWidgets.value(getCurrentProject());
+}
+
+Viewer *MainWindow::getCurrentTab() const
+{
+    if (auto projectWidget = getCurrentProjectWidget()) {
+        return qobject_cast<Viewer *>(projectWidget->currentWidget());
+    }
+    return nullptr;
 }
 
 void MainWindow::changeEvent(QEvent *event)
@@ -413,7 +593,7 @@ void MainWindow::dropEvent(QDropEvent *event)
             const QString file = url.toLocalFile();
             const QMimeType mime = QMimeDatabase().mimeTypeForFile(file);
             if (mime.inherits("application/zip")) {
-                app->openApk(file);
+                app->actions.openApk(file, this);
                 event->acceptProposedAction();
             }
         }
@@ -423,15 +603,25 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    const bool unsaved = projectsWidget->hasUnsavedProjects();
-    if (unsaved) {
-        const QString question = tr("You have unsaved changes.\nDo you want to discard them and exit?");
-        const int answer = QMessageBox::question(this, QString(), question, QMessageBox::Discard, QMessageBox::Cancel);
-        if (answer != QMessageBox::Discard) {
-            event->ignore();
-            return;
+    if (instances == 1) {
+        QMapIterator<Project *, ProjectWidget *> it(projectWidgets);
+        while (it.hasNext()) {
+            it.next();
+            auto tabs = it.value();
+            if (tabs->isUnsaved()) {
+                auto project = it.key();
+                projectList->setCurrentProject(project);
+                const QString question = tr("You have unsaved changes.\nDo you want to discard them and exit?");
+                const int answer = QMessageBox::question(this, QString(), question, QMessageBox::Discard, QMessageBox::Cancel);
+                if (answer != QMessageBox::Discard) {
+                    event->ignore();
+                    return;
+                }
+                break;
+            }
         }
     }
-    saveSettings();
+    app->settings->setMainWindowGeometry(saveGeometry());
+    app->settings->setMainWindowState(saveState());
     event->accept();
 }

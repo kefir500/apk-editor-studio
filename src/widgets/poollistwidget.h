@@ -5,18 +5,25 @@
 
 class PoolListWidget : public QListWidget
 {
-public:
-    using QListWidget::addItem;
+    Q_OBJECT
 
+public:
     enum Role {
-        IdentifierRole = Qt::UserRole + 1,
-        ReusableRole
+        ReusableRole = Qt::UserRole + 1
     };
 
+    using QListWidget::addItem;
+
     PoolListWidget(QWidget *parent = nullptr);
+
     void addItem(QListWidgetItem *item, bool reusable);
     void startDrag(Qt::DropActions supportedActions) override;
     void dropEvent(QDropEvent *event) override;
+
+    static bool isReusable(QListWidgetItem *item);
+
+signals:
+    void pulled(QListWidgetItem *item);
 };
 
 #endif // POOLLISTWIDGET_H

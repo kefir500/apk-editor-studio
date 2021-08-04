@@ -1,0 +1,2 @@
+- Make sure the Qt `bin` directory is in the `PATH` environment variable.
+- Run `build.app.command`.

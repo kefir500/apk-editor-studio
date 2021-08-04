@@ -35,6 +35,7 @@ namespace Utils
         ANDROID_27,
         ANDROID_28,
         ANDROID_29,
+        ANDROID_30,
         ANDROID_SDK_COUNT
     };
 
@@ -46,21 +47,63 @@ namespace Utils
 
     int roundToNearest(int number, QList<int> numbers);
 
+    // Color utils:
+
+    bool isDark(const QColor &color);
+    bool isDarkTheme();
+
     // File / Directory utils:
 
     bool explore(const QString &path);
     void rmdir(const QString &path, bool recursive = false);
-    bool copyFile(const QString &src);
-    bool copyFile(const QString &src, QString dst);
-    bool replaceFile(const QString &what);
-    bool replaceFile(const QString &what, QString with);
+    bool copyFile(const QString &src, QWidget *parent = nullptr);
+    bool copyFile(const QString &src, QString dst, QWidget *parent = nullptr);
+    bool replaceFile(const QString &what, QWidget *parent = nullptr);
+    bool replaceFile(const QString &what, QString with, QWidget *parent = nullptr);
     QString normalizePath(QString path);
+    QString toAbsolutePath(const QString &path);
 
     // Image utils:
 
     bool isImageReadable(const QString &path);
     bool isImageWritable(const QString &path);
     QPixmap iconToPixmap(const QIcon &icon);
+
+    // Application utils:
+
+    QString getAppTitle();
+    QString getAppVersion();
+    QString getAppTitleSlug();
+    QString getAppTitleAndVersion();
+
+    // GUI utils:
+
+    qreal getScaleFactor();
+    int scale(int value);
+    qreal scale(qreal value);
+    QSize scale(int width, int height);
+
+    // Path utils:
+
+    QString getTemporaryPath(const QString &subdirectory = QString());
+    QString getLocalConfigPath(const QString &subdirectory = QString());
+    QString getSharedPath(const QString &resource = QString());
+    QString getBinaryPath(const QString &executable);
+    QIcon getLocaleFlag(const QLocale &locale);
+
+    // URL utils:
+
+
+    QString getWebsiteUrl();
+    QString getWebsiteUtmUrl();
+    QString getUpdateUrl();
+    QString getRepositoryUrl();
+    QString getIssuesUrl();
+    QString getTranslationsUrl();
+    QString getDonationsUrl();
+    QString getBlogPostUrl(const QString &slug);
+    QString getVersionInfoUrl();
+    QString getDonorsInfoUrl();
 
     // Android utils:
 

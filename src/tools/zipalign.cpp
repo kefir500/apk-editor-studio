@@ -1,6 +1,7 @@
 #include "tools/zipalign.h"
-#include "base/process.h"
 #include "base/application.h"
+#include "base/process.h"
+#include "base/utils.h"
 #include <QFile>
 
 void Zipalign::Align::run()
@@ -16,7 +17,7 @@ void Zipalign::Align::run()
     arguments << tempApk;
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         if (success) {
             QFile::remove(apk);
             QFile::rename(tempApk, apk);
@@ -35,11 +36,11 @@ const QString &Zipalign::Align::output() const
 
 QString Zipalign::getPath()
 {
-    const QString path = app->settings->getZipalignPath();
+    const QString path = Utils::toAbsolutePath(app->settings->getZipalignPath());
     return !path.isEmpty() ? path : getDefaultPath();
 }
 
 QString Zipalign::getDefaultPath()
 {
-    return app->getBinaryPath("zipalign");
+    return Utils::getBinaryPath("zipalign");
 }

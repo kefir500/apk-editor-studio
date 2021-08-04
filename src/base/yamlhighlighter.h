@@ -5,20 +5,16 @@
 
 class YamlHighlighter : public QSyntaxHighlighter
 {
+    Q_OBJECT
+
 public:
-    YamlHighlighter(QTextDocument *parent);
+    YamlHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent) {}
 
 protected:
     void highlightBlock(const QString &text) override;
 
 private:
     void highlightRegex(const QString &text, const QTextCharFormat &format, const QRegularExpression &regex);
-    QTextCharFormat formatDefault;
-    QTextCharFormat formatTag;
-    QTextCharFormat formatKey;
-    QTextCharFormat formatValue;
-    QTextCharFormat formatValueNumber;
-    QTextCharFormat formatComment;
 };
 
 #endif // YAMLHIGHLIGHTER_H

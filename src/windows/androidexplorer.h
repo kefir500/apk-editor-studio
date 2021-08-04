@@ -7,12 +7,14 @@
 #include <QDialog>
 #include <QLineEdit>
 
+class MainWindow;
+
 class AndroidExplorer : public QDialog
 {
     Q_OBJECT
 
 public:
-    AndroidExplorer(const QString &serial, QWidget *parent = nullptr);
+    AndroidExplorer(const QString &serial, MainWindow *parent);
 
 protected:
     void changeEvent(QEvent *event);

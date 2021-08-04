@@ -5,9 +5,9 @@ ResourceItemsModel *SortFilterProxyModel::sourceModel() const
     return static_cast<ResourceItemsModel *>(QSortFilterProxyModel::sourceModel());
 }
 
-bool SortFilterProxyModel::replaceResource(const QModelIndex &index, const QString &path)
+bool SortFilterProxyModel::replaceResource(const QModelIndex &index, const QString &path, QWidget *parent)
 {
-    return sourceModel()->replaceResource(mapToSource(index), path);
+    return sourceModel()->replaceResource(mapToSource(index), path, parent);
 }
 
 bool SortFilterProxyModel::removeResource(const QModelIndex &index)

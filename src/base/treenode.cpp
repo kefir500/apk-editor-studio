@@ -54,23 +54,6 @@ TreeNode *TreeNode::getChild(int row) const
     return children.at(row);
 }
 
-TreeNode *TreeNode::findChild(TreeNode *node) const
-{
-    TreeNode *result = nullptr;
-    auto it = std::find(children.begin(), children.end(), node);
-    if (it != children.end()) {
-        result = *it;
-    } else {
-        for (auto child : children) {
-            result = child->findChild(node);
-            if (result) {
-                break;
-            }
-        }
-    }
-    return result;
-}
-
 TreeNode *TreeNode::getParent() const
 {
     return parent;

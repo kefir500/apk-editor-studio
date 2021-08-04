@@ -1,14 +1,30 @@
 #include "widgets/filesystemtree.h"
+#include <QHeaderView>
 
-FileSystemModel *FilesystemTree::model() const
+FileSystemTree::FileSystemTree(QWidget *parent) : QTreeView(parent)
+{
+    setSortingEnabled(true);
+    header()->setSortIndicator(0, Qt::AscendingOrder);
+}
+
+FileSystemModel *FileSystemTree::model() const
 {
     return static_cast<FileSystemModel *>(QTreeView::model());
 }
 
-void FilesystemTree::setModel(QAbstractItemModel *model)
+void FileSystemTree::setModel(QAbstractItemModel *newModel)
 {
-    if (model) {
-        Q_ASSERT(qobject_cast<FileSystemModel *>(model));
-        QTreeView::setModel(model);
+    const auto oldModel = model();
+    if (oldModel) {
+        disconnect(oldModel, &QFileSystemModel::rootPathChanged, this, nullptr);
+    }
+    QTreeView::setModel(newModel);
+    if (newModel) {
+        auto newFileSystemModel = qobject_cast<FileSystemModel *>(newModel);
+        Q_ASSERT(newFileSystemModel);
+        setRootIndex(newFileSystemModel->rootIndex());
+        connect(newFileSystemModel, &QFileSystemModel::rootPathChanged, this, [=](const QString &path) {
+            setRootIndex(newFileSystemModel->index(path));
+        });
     }
 }

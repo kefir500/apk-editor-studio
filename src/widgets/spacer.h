@@ -5,6 +5,8 @@
 
 class Spacer : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit Spacer(QWidget *parent = nullptr);
 };

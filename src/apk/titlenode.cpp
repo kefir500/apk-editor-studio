@@ -18,7 +18,7 @@ bool TitleNode::save() const
 {
     if (node->wasModified()) {
         QFile xml(file->getFilePath());
-        if (!xml.open(QFile::ReadWrite | QFile::Text)) {
+        if (!xml.open(QFile::ReadWrite)) {
             qWarning() << "Error: Could not save titles resource file";
             return false;
         }

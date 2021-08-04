@@ -12,9 +12,9 @@ public:
     explicit ProjectActionViewer(Project *project, QWidget *parent = nullptr);
 
 signals:
-    void apkSaveRequested() const;
-    void apkInstallRequested() const;
-    void titleEditorRequested() const;
+    void apkSaveRequested();
+    void apkInstallRequested();
+    void titleEditorRequested();
 
 protected:
     void changeEvent(QEvent *event) override;

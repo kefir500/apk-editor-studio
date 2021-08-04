@@ -1,16 +1,29 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
-#include "apk/resourceitemsmodel.h"
-#include "apk/manifestmodel.h"
 #include "apk/filesystemmodel.h"
 #include "apk/iconitemsmodel.h"
 #include "apk/logmodel.h"
+#include "apk/manifestmodel.h"
 #include "apk/projectstate.h"
+#include "apk/resourceitemsmodel.h"
 #include "base/command.h"
-#include "tools/apktool.h"
-#include "tools/keystore.h"
 #include <QIcon>
+
+class Keystore;
+
+class ProjectContentsPath
+{
+public:
+    ProjectContentsPath() = default;
+    explicit ProjectContentsPath(const QString &path);
+
+    QString get() const;
+    void set(const QString &path);
+
+private:
+    QString path;
+};
 
 class Project : public QObject
 {
@@ -20,18 +33,16 @@ public:
     Project(const QString &path);
     ~Project() override;
 
-    void unpack();
-    void save(const QString &path);
-    void install(const QString &serial);
-    void saveAndInstall(const QString &path, const QString &serial);
-
-    const QString &getTitle() const;
+    QString getTitle() const;
     QString getOriginalPath() const;
     QString getContentsPath() const;
+    QString getPackageName() const;
     QIcon getThumbnail() const;
     const ProjectState &getState() const;
+    bool hasSourcesUnpacked() const;
 
-    void setApplicationIcon(const QString &path);
+    void setApplicationIcon(const QString &path, QWidget *parent = nullptr);
+    bool setPackageName(const QString &packageName);
 
     void journal(const QString &brief, LogEntry::Type type = LogEntry::Information);
     void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
@@ -44,13 +55,6 @@ public:
     ManifestModel manifestModel;
     LogModel logModel;
 
-signals:
-    void unpacked(bool success) const;
-    void packed(bool success) const;
-    void installed(bool success) const;
-    void changed() const;
-
-private:
     class ProjectCommand : public Commands
     {
     public:
@@ -67,21 +71,25 @@ private:
         Project *project;
     };
 
-    Command *createUnpackCommand(const QString &source);
-    Command *createSaveCommand(QString target); // Combines Pack, Zipalign and Sign commands
+    Command *createUnpackCommand();
     Command *createPackCommand(const QString &target);
-    Command *createZipalignCommand(const QString &target);
-    Command *createSignCommand(const QString &target, const Keystore *keystore);
-    Command *createInstallCommand(const QString &serial);
+    Command *createZipalignCommand(const QString &apk = QString());
+    Command *createSignCommand(const Keystore *keystore, const QString &apk = QString());
+    Command *createInstallCommand(const QString &serial, const QString &apk = QString());
 
-    QSharedPointer<const Keystore> getKeystore() const;
+signals:
+    void stateUpdated();
 
+private:
     ProjectState state;
 
-    QString title;
     QString originalPath;
-    QString contentsPath;
+    ProjectContentsPath contentsPath;
     QIcon thumbnail;
+
+    bool withSources = false;
+    bool withResources = false;
+    bool withBrokenResources = false;
 };
 
 #endif // PROJECT_H

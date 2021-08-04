@@ -3,6 +3,8 @@
 
 #include <QIcon>
 
+class QFileIconProvider;
+
 class AndroidFileSystemItem
 {
 public:
@@ -13,7 +15,7 @@ public:
     AndroidFileSystemItem(const QString &path, Type type);
     QString getPath() const;
     QString getName() const;
-    QIcon getIcon() const;
+    QIcon getIcon(const QFileIconProvider &iconProvider) const;
     Type getType() const;
 
 private:

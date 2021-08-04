@@ -1,6 +1,7 @@
 #include "tools/apktool.h"
-#include "base/process.h"
+#include "base/jarprocess.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QStringList>
 
 void Apktool::Decode::run()
@@ -24,13 +25,13 @@ void Apktool::Decode::run()
         arguments << "--keep-broken-res";
     }
 
-    auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    auto process = new JarProcess(this);
+    connect(process, &JarProcess::finished, this, [=](bool success, const QString &output) {
         resultOutput = output;
         emit finished(success);
         process->deleteLater();
     });
-    process->jar(getPath(), arguments);
+    process->run(getPath(), arguments);
 }
 
 const QString &Apktool::Decode::output() const
@@ -53,13 +54,13 @@ void Apktool::Build::run()
         arguments << "--use-aapt2";
     }
 
-    auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    auto process = new JarProcess(this);
+    connect(process, &JarProcess::finished, this, [=](bool success, const QString &output) {
         resultOutput = output;
         emit finished(success);
         process->deleteLater();
     });
-    process->jar(getPath(), arguments);
+    process->run(getPath(), arguments);
 }
 
 const QString &Apktool::Build::output() const
@@ -70,15 +71,15 @@ const QString &Apktool::Build::output() const
 void Apktool::Version::run()
 {
     emit started();
-    auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    auto process = new JarProcess(this);
+    connect(process, &JarProcess::finished, this, [=](bool success, const QString &output) {
         if (success) {
             resultVersion = output;
         }
         emit finished(success);
         process->deleteLater();
     });
-    process->jar(getPath(), {"-version"});
+    process->run(getPath(), {"-version"});
 }
 
 const QString &Apktool::Version::version() const
@@ -103,33 +104,33 @@ void Apktool::reset()
 
 QString Apktool::getPath()
 {
-    const QString path = app->settings->getApktoolPath();
+    const QString path = Utils::toAbsolutePath(app->settings->getApktoolPath());
     return !path.isEmpty() ? path : getDefaultPath();
 }
 
 QString Apktool::getDefaultPath()
 {
-    return app->getSharedPath("tools/apktool.jar");
+    return Utils::getSharedPath("tools/apktool.jar");
 }
 
 QString Apktool::getOutputPath()
 {
-    const QString path = app->settings->getOutputDirectory();
+    const QString path = Utils::toAbsolutePath(app->settings->getOutputDirectory());
     return !path.isEmpty() ? path : getDefaultOutputPath();
 }
 
 QString Apktool::getDefaultOutputPath()
 {
-    return app->getTemporaryPath("apk");
+    return Utils::getTemporaryPath("apk");
 }
 
 QString Apktool::getFrameworksPath()
 {
-    const QString path = app->settings->getFrameworksDirectory();
+    const QString path = Utils::toAbsolutePath(app->settings->getFrameworksDirectory());
     return !path.isEmpty() ? path : getDefaultFrameworksPath();
 }
 
 QString Apktool::getDefaultFrameworksPath()
 {
-    return app->getLocalConfigPath("frameworks");
+    return Utils::getLocalConfigPath("frameworks");
 }

@@ -7,11 +7,16 @@
 #include "tools/apktool.h"
 #include "tools/zipalign.h"
 #include "base/application.h"
+#include "base/utils.h"
+#include <QAbstractButton>
+#include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QLabel>
 #include <QPushButton>
-#include <QAbstractButton>
-#include <QDialogButtonBox>
+
+#ifdef Q_OS_WIN
+    #include <QMessageBox>
+#endif
 
 #ifdef QT_DEBUG
     #include <QDebug>
@@ -53,8 +58,16 @@ void OptionsDialog::load()
 {
     // General
 
+    checkboxSingleInstance->setChecked(app->settings->getSingleInstance());
     checkboxUpdates->setChecked(app->settings->getAutoUpdates());
     spinboxRecent->setValue(app->settings->getRecentLimit());
+#ifdef Q_OS_WIN
+    groupAssociate->setChecked(app->settings->getFileAssociation());
+    checkboxExplorerOpen->setChecked(app->settings->getExplorerOpenIntegration());
+    checkboxExplorerInstall->setChecked(app->settings->getExplorerInstallIntegration());
+    checkboxExplorerOptimize->setChecked(app->settings->getExplorerOptimizeIntegration());
+    checkboxExplorerSign->setChecked(app->settings->getExplorerSignIntegration());
+#endif
 
     // Java
 
@@ -68,7 +81,7 @@ void OptionsDialog::load()
     comboLanguages->clear();
     const QString currentLocale = app->settings->getLanguage();
     for (const Language &language : languages) {
-        const QPixmap flag = language.getFlag();
+        const QIcon flag = language.getFlag();
         const QString title = language.getTitle();
         const QString code = language.getCode();
         comboLanguages->addItem(flag, title, code);
@@ -100,52 +113,27 @@ void OptionsDialog::load()
     // Installing
 
     fileboxAdb->setCurrentPath(app->settings->getAdbPath());
-
-    // Toolbar
-
-    listToolbarUsed->clear();
-    QMap<QString, QAction *> unusedToolbarActions = Toolbar::all();
-    QStringList usedToolbarActions = app->settings->getToolbar();
-    for (const QString &identifier : usedToolbarActions) {
-        if (identifier == "separator") {
-            listToolbarUsed->addItem(createToolbarSeparatorItem());
-        } else if (identifier == "spacer") {
-            listToolbarUsed->addItem(createToolbarSpacerItem());
-        } else {
-            const QAction *action = unusedToolbarActions.value(identifier);
-            unusedToolbarActions.remove(identifier);
-            if (action) {
-                QListWidgetItem *item = new QListWidgetItem(action->icon(), action->text().remove('&'));
-                item->setData(PoolListWidget::IdentifierRole, identifier);
-                item->setData(PoolListWidget::ReusableRole, false);
-                listToolbarUsed->addItem(item);
-            }
-        }
-    }
-
-    listToolbarUnused->clear();
-    QMapIterator<QString, QAction *> it(unusedToolbarActions);
-    while (it.hasNext()) {
-        it.next();
-        const QString identifier = it.key();
-        const QAction *action = it.value();
-        QListWidgetItem *item = new QListWidgetItem(action->icon(), action->text().remove('&'));
-        item->setData(PoolListWidget::IdentifierRole, identifier);
-        listToolbarUnused->addItem(item, false);
-    }
-    listToolbarUnused->addItem(createToolbarSeparatorItem());
-    listToolbarUnused->addItem(createToolbarSpacerItem());
-
-    emit loaded();
 }
 
 void OptionsDialog::save()
 {
     // General
 
+    app->settings->setSingleInstance(checkboxSingleInstance->isChecked());
     app->settings->setAutoUpdates(checkboxUpdates->isChecked());
+    app->settings->setRecentLimit(spinboxRecent->value());
     app->setLanguage(comboLanguages->currentData().toString());
-    app->recent->setLimit(spinboxRecent->value());
+#ifdef Q_OS_WIN
+    bool integrationSuccess =
+        app->settings->setFileAssociation(groupAssociate->isChecked()) &&
+        app->settings->setExplorerOpenIntegration(checkboxExplorerOpen->isChecked()) &&
+        app->settings->setExplorerInstallIntegration(checkboxExplorerInstall->isChecked()) &&
+        app->settings->setExplorerOptimizeIntegration(checkboxExplorerOptimize->isChecked()) &&
+        app->settings->setExplorerSignIntegration(checkboxExplorerSign->isChecked());
+    if (!integrationSuccess) {
+        QMessageBox::warning(this, QString(), tr("Could not register file association."));
+    }
+#endif
 
     // Java
 
@@ -175,17 +163,6 @@ void OptionsDialog::save()
     // Installing
 
     app->settings->setAdbPath(fileboxAdb->getCurrentPath());
-
-    // Toolbar
-
-    QStringList toolbar;
-    for (int i = 0; i < listToolbarUsed->count(); ++i) {
-        const QString identifier = listToolbarUsed->item(i)->data(PoolListWidget::IdentifierRole).toString();
-        toolbar.append(identifier);
-    }
-    app->settings->setToolbar(toolbar);
-
-    emit saved();
 }
 
 void OptionsDialog::changeEvent(QEvent *event)
@@ -213,43 +190,63 @@ void OptionsDialog::initialize()
     layout->addWidget(widget);
 
     setWindowTitle(tr("Options"));
-    setWindowIcon(app->icons.get("settings.png"));
+    setWindowIcon(QIcon::fromTheme("configure"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(800, 400));
+    resize(Utils::scale(800, 400));
 
     // General
 
     QFormLayout *pageGeneral = new QFormLayout;
+    checkboxSingleInstance = new QCheckBox(tr("Single-window mode"), this);
     checkboxUpdates = new QCheckBox(tr("Check for updates automatically"), this);
-    btnAssociate = new QPushButton(tr("Set as default program for APK files"), this);
-    btnAssociate->setIcon(app->icons.get("application.png"));
-    btnAssociate->setMinimumHeight(app->scale(30));
-    connect(btnAssociate, &QPushButton::clicked, [this]() {
-        if (app->actions.associateApk()) {
-            QMessageBox::information(this, QString(), tr("File association has been created."));
-        } else {
-            QMessageBox::warning(this, QString(), tr("Could not register file association."));
-        }
-    });
-#ifndef Q_OS_WIN
-    btnAssociate->hide();
-#endif
     comboLanguages = new QComboBox(this);
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
     spinboxRecent->setMaximum(50);
+#ifdef Q_OS_OSX
+    checkboxSingleInstance->hide();
+#endif
+    pageGeneral->addRow(checkboxSingleInstance);
     pageGeneral->addRow(checkboxUpdates);
     pageGeneral->addRow(tr("Language:"), comboLanguages);
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
-    pageGeneral->addRow(btnAssociate);
+
+#ifdef Q_OS_WIN
+    //: Don't translate the "APK Editor Studio" and ".apk" parts.
+    groupAssociate = new QGroupBox(tr("Use APK Editor Studio for .apk files"), this);
+    groupAssociate->setCheckable(true);
+    //: Don't translate the "APK Editor Studio" and ".apk" parts.
+    checkboxExplorerOpen = new QCheckBox(tr("Use APK Editor Studio to open .apk files"), this);
+    checkboxExplorerOpen->setIcon(QIcon::fromTheme("document-open"));
+    //: "%1" will be replaced with an action name (e.g., Install, Optimize, Sign, etc.).
+    const QString strExplorerIntegration(tr("Add %1 action to Windows Explorer context menu"));
+    checkboxExplorerInstall = new QCheckBox(strExplorerIntegration.arg(tr("Install")), this);
+    checkboxExplorerInstall->setIcon(QIcon::fromTheme("apk-install"));
+    checkboxExplorerOptimize = new QCheckBox(strExplorerIntegration.arg(tr("Optimize")), this);
+    checkboxExplorerOptimize->setIcon(QIcon::fromTheme("apk-optimize"));
+    //: This is a verb.
+    checkboxExplorerSign = new QCheckBox(strExplorerIntegration.arg(tr("Sign")), this);
+    checkboxExplorerSign->setIcon(QIcon::fromTheme("apk-sign"));
+    connect(groupAssociate, &QGroupBox::clicked, this, [this](bool checked) {
+        checkboxExplorerOpen->setChecked(checked);
+        checkboxExplorerInstall->setChecked(checked);
+        checkboxExplorerOptimize->setChecked(checked);
+        checkboxExplorerSign->setChecked(checked);
+    });
+    auto layoutAssocate = new QVBoxLayout(groupAssociate);
+    layoutAssocate->addWidget(checkboxExplorerOpen);
+    layoutAssocate->addWidget(checkboxExplorerInstall);
+    layoutAssocate->addWidget(checkboxExplorerOptimize);
+    layoutAssocate->addWidget(checkboxExplorerSign);
+    pageGeneral->addRow(groupAssociate);
+#endif
 
     // Java
 
     QFormLayout *pageJava = new QFormLayout;
     fileboxJava = new FileBox(true, this);
     fileboxJava->setDefaultPath("");
-    const QString javaPath = app->getJavaPath();
-    fileboxJava->setPlaceholderText(!javaPath.isEmpty() ? javaPath : tr("Extracted from environment variables by default"));
+    fileboxJava->setPlaceholderText(tr("Extracted from environment variables by default"));
     spinboxMinHeapSize = new QSpinBox(this);
     spinboxMaxHeapSize = new QSpinBox(this);
     //: Megabytes
@@ -261,9 +258,9 @@ void OptionsDialog::initialize()
     spinboxMinHeapSize->setRange(0, std::numeric_limits<int>::max());
     spinboxMaxHeapSize->setRange(0, std::numeric_limits<int>::max());
     pageJava->addRow(tr("Java path:"), fileboxJava);
-    //: "Heap" refers to a memory heap.
+    //: "Heap" refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.
     pageJava->addRow(tr("Initial heap size:"), spinboxMinHeapSize);
-    //: "Heap" refers to a memory heap.
+    //: "Heap" refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.
     pageJava->addRow(tr("Maximum heap size:"), spinboxMaxHeapSize);
 
     // Repacking
@@ -302,9 +299,9 @@ void OptionsDialog::initialize()
     QFormLayout *layoutSign = new QFormLayout(groupSign);
     //: This string refers to multiple keys (as in "Manager of keys").
     QPushButton *btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
-    btnKeyManager->setIcon(app->icons.get("key.png"));
-    btnKeyManager->setMinimumHeight(app->scale(30));
-    connect(btnKeyManager, &QPushButton::clicked, [=]() {
+    btnKeyManager->setIcon(QIcon::fromTheme("apk-sign"));
+    btnKeyManager->setMinimumHeight(Utils::scale(30));
+    connect(btnKeyManager, &QPushButton::clicked, this, [this]() {
         KeyManager keyManager(this);
         keyManager.exec();
     });
@@ -336,9 +333,9 @@ void OptionsDialog::initialize()
     fileboxAdb->setPlaceholderText(Adb::getDefaultPath());
     //: This string refers to multiple devices (as in "Manager of devices").
     QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
-    btnDeviceManager->setIcon(app->icons.get("devices.png"));
-    btnDeviceManager->setMinimumHeight(app->scale(30));
-    connect(btnDeviceManager, &QPushButton::clicked, [=]() {
+    btnDeviceManager->setIcon(QIcon::fromTheme("smartphone"));
+    btnDeviceManager->setMinimumHeight(Utils::scale(30));
+    connect(btnDeviceManager, &QPushButton::clicked, this, [this]() {
         DeviceManager deviceManager(this);
         deviceManager.exec();
     });
@@ -346,34 +343,6 @@ void OptionsDialog::initialize()
     pageInstall->addRow(tr("ADB path:"), fileboxAdb);
     pageInstall->addRow(btnDeviceManager);
     pageInstall->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
-
-    // Toolbar
-
-    QHBoxLayout *pageToolbar = new QHBoxLayout;
-    listToolbarUsed = new QListWidget(this);
-    listToolbarUsed->setIconSize(app->scale(20, 20));
-    listToolbarUsed->setDragDropMode(QAbstractItemView::DragDrop);
-    listToolbarUsed->setDefaultDropAction(Qt::MoveAction);
-    listToolbarUnused = new PoolListWidget(this);
-    listToolbarUnused->setIconSize(app->scale(20, 20));
-    connect(listToolbarUsed, &QListWidget::doubleClicked, [=](const QModelIndex &index) {
-        QListWidgetItem *item = listToolbarUsed->takeItem(index.row());
-        const bool reusable = item->data(PoolListWidget::ReusableRole).toBool();
-        if (!reusable) {
-            listToolbarUnused->addItem(item);
-        }
-    });
-    connect(listToolbarUnused, &QListWidget::doubleClicked, [=](const QModelIndex &index) {
-        QListWidgetItem *item = listToolbarUnused->item(index.row());
-        const bool reusable = item->data(PoolListWidget::ReusableRole).toBool();
-        listToolbarUsed->addItem(new QListWidgetItem(*item));
-        if (!reusable) {
-            delete item;
-        }
-    });
-
-    pageToolbar->addWidget(listToolbarUsed);
-    pageToolbar->addWidget(listToolbarUnused);
 
     // Initialize
 
@@ -386,7 +355,6 @@ void OptionsDialog::initialize()
     addPage(tr("Signing APK"), pageSign);
     addPage(tr("Optimizing APK"), pageZipalign);
     addPage(tr("Installing APK"), pageInstall);
-    addPage(tr("Toolbar"), pageToolbar, false);
     pageList->setCurrentRow(0);
     pageList->setMaximumWidth(pageList->sizeHintForColumn(0) + 60);
 
@@ -405,24 +373,4 @@ void OptionsDialog::initialize()
     connect(buttons, &QDialogButtonBox::rejected, this, &OptionsDialog::reject);
     connect(btnApply, &QPushButton::clicked, this, &OptionsDialog::save);
     connect(this, &OptionsDialog::accepted, this, &OptionsDialog::save);
-}
-
-QListWidgetItem *OptionsDialog::createToolbarSeparatorItem() const
-{
-    QIcon icon = app->icons.get("separator.png");
-    //: Separator is a toolbar element which divides buttons with a vertical line.
-    QListWidgetItem *separator = new QListWidgetItem(icon, tr("Separator"));
-    separator->setData(PoolListWidget::IdentifierRole, "separator");
-    separator->setData(PoolListWidget::ReusableRole, true);
-    return separator;
-}
-
-QListWidgetItem *OptionsDialog::createToolbarSpacerItem() const
-{
-    QIcon icon = app->icons.get("spacer.png");
-    //: Spacer is a toolbar element which divides buttons with an empty space.
-    QListWidgetItem *spacer = new QListWidgetItem(icon, tr("Spacer"));
-    spacer->setData(PoolListWidget::IdentifierRole, "spacer");
-    spacer->setData(PoolListWidget::ReusableRole, true);
-    return spacer;
 }

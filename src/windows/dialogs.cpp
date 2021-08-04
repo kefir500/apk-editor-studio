@@ -6,6 +6,7 @@
 #include <QBoxLayout>
 #include <QDialogButtonBox>
 #include <QPlainTextEdit>
+#include <QPushButton>
 
 namespace
 {
@@ -74,25 +75,17 @@ QStringList Dialogs::getOpenImageFilenames(const QString &defaultPath, QWidget *
 
 QStringList Dialogs::getOpenApkFilenames(QWidget *parent)
 {
-    return Dialogs::getOpenApkFilenames(QString(), parent);
-}
-
-QStringList Dialogs::getOpenApkFilenames(const QString &defaultPath, QWidget *parent)
-{
-    return Dialogs::getOpenFilenames(defaultPath, FileFormatList::forApk(), parent);
+    auto paths = Dialogs::getOpenFilenames(QString(), FileFormatList::forApk(), parent);
+    if (!paths.isEmpty()) {
+        app->settings->setLastDirectory(QFileInfo(paths.last()).absolutePath());
+    }
+    return paths;
 }
 
 QString Dialogs::getSaveApkFilename(const Project *project, QWidget *parent)
 {
-    return Dialogs::getSaveApkFilename(project, QString(), parent);
-}
-
-QString Dialogs::getSaveApkFilename(const Project *project, const QString &defaultPath, QWidget *parent)
-{
-    const QString directory = makePath(defaultPath);
-    const QString filename = QFileInfo(project->getOriginalPath()).fileName();
-    const QString path = QString("%1/%2").arg(directory, filename);
-    return Dialogs::getSaveFilename(path, FileFormatList::forApk(), parent);
+    const QString defaultPath = project->getOriginalPath();
+    return Dialogs::getSaveFilename(defaultPath, FileFormatList::forApk(), parent);
 }
 
 QString Dialogs::getOpenKeystoreFilename(const QString &defaultPath, QWidget *parent)
@@ -111,25 +104,25 @@ QString Dialogs::getOpenDirectory(const QString &defaultPath, QWidget *parent)
     return QFileDialog::getExistingDirectory(parent, QString(), path);
 }
 
-QSharedPointer<Device> Dialogs::getInstallDevice(QWidget *parent)
+Device Dialogs::getInstallDevice(QWidget *parent)
 {
-    const QString title(app->translate("Dialogs", "Install APK"));
-    const QString action(app->translate("Dialogs", "Install"));
-    const QIcon icon(app->icons.get("install.png"));
+    const QString title(qApp->translate("Dialogs", "Install APK"));
+    const QString action(qApp->translate("Dialogs", "Install"));
+    const QIcon icon(QIcon::fromTheme("apk-install"));
     return DeviceManager::selectDevice(title, action, icon, parent);
 }
 
-QSharedPointer<Device> Dialogs::getExplorerDevice(QWidget *parent)
+Device Dialogs::getExplorerDevice(QWidget *parent)
 {
-    const QString action(app->translate("AndroidExplorer", "Android Explorer"));
-    const QIcon icon(app->icons.get("explorer.png"));
+    const QString action(qApp->translate("AndroidExplorer", "Android Explorer"));
+    const QIcon icon(QIcon::fromTheme("tool-androidexplorer"));
     return DeviceManager::selectDevice({}, action, icon, parent);
 }
 
-QSharedPointer<Device> Dialogs::getScreenshotDevice(QWidget *parent)
+Device Dialogs::getScreenshotDevice(QWidget *parent)
 {
-    const QString action(app->translate("Dialogs", "Screenshot"));
-    const QIcon icon(app->icons.get("screenshot.png"));
+    const QString action(qApp->translate("Dialogs", "Screenshot"));
+    const QIcon icon(QIcon::fromTheme("camera-photo"));
     return DeviceManager::selectDevice({}, action, icon, parent);
 }
 
@@ -149,7 +142,7 @@ int Dialogs::log(const QString &title, const QString &text, QWidget *parent)
     QDialog dialog(parent);
     dialog.setWindowTitle(title);
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    dialog.resize(app->scale(600, 360));
+    dialog.resize(Utils::scale(600, 360));
 
     QPlainTextEdit *textBox = new QPlainTextEdit(text, &dialog);
     textBox->setReadOnly(true);
@@ -159,14 +152,14 @@ int Dialogs::log(const QString &title, const QString &text, QWidget *parent)
     textBox->setFont(font);
 
     QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok, &dialog);
-    QPushButton *btnCopy = new QPushButton(app->translate("Dialogs", "Copy to Clipboard"), buttons);
+    QPushButton *btnCopy = new QPushButton(qApp->translate("Dialogs", "Copy to Clipboard"), buttons);
     buttons->addButton(btnCopy, QDialogButtonBox::ActionRole);
-    app->connect(btnCopy, &QPushButton::clicked, [=]() {
+    qApp->connect(btnCopy, &QPushButton::clicked, parent, [=]() {
         textBox->selectAll();
         textBox->copy();
     });
-    app->connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-    app->connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    qApp->connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    qApp->connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
     QVBoxLayout *layout = new QVBoxLayout(&dialog);
     layout->addWidget(textBox);

@@ -1,13 +1,15 @@
 #include "base/utils.h"
 #include "windows/dialogs.h"
+#include <QDesktopServices>
 #include <QDir>
+#include <QFileInfo>
 #include <QIcon>
-#include <QProcess>
 #include <QImageReader>
 #include <QImageWriter>
-#include <QDesktopServices>
+#include <QApplication>
+#include <QProcess>
+#include <QScreen>
 #include <QtConcurrent/QtConcurrent>
-#include "base/application.h"
 
 QString Utils::capitalize(QString string)
 {
@@ -46,6 +48,16 @@ int Utils::roundToNearest(int number, QList<int> numbers)
         }
     }
     return number;
+}
+
+bool Utils::isDark(const QColor &color)
+{
+    return color.lightness() < 127;
+}
+
+bool Utils::isDarkTheme()
+{
+    return isDark(QPalette().color(QPalette::Base));
 }
 
 bool Utils::explore(const QString &path)
@@ -112,45 +124,45 @@ namespace
     }
 }
 
-bool Utils::copyFile(const QString &src)
+bool Utils::copyFile(const QString &src, QWidget *parent)
 {
-    return copyFile(src, QString());
+    return copyFile(src, QString(), parent);
 }
 
-bool Utils::copyFile(const QString &src, QString dst)
+bool Utils::copyFile(const QString &src, QString dst, QWidget *parent)
 {
     if (dst.isNull()) {
         dst = isImageReadable(src)
-            ? Dialogs::getSaveImageFilename(src, app->window)
-            : Dialogs::getSaveFilename(src, app->window);
+            ? Dialogs::getSaveImageFilename(src, parent)
+            : Dialogs::getSaveFilename(src, parent);
     }
     if (dst.isEmpty()) {
         return false;
     }
     if (!copy(src, dst)) {
-        QMessageBox::warning(app->window, QString(), app->translate("Utils", "Could not save the file."));
+        QMessageBox::warning(parent, QString(), qApp->translate("Utils", "Could not save the file."));
         return false;
     }
     return true;
 }
 
-bool Utils::replaceFile(const QString &what)
+bool Utils::replaceFile(const QString &what, QWidget *parent)
 {
-    return replaceFile(what, QString());
+    return replaceFile(what, QString(), parent);
 }
 
-bool Utils::replaceFile(const QString &what, QString with)
+bool Utils::replaceFile(const QString &what, QString with, QWidget *parent)
 {
     if (with.isNull()) {
         with = isImageWritable(what)
-            ? Dialogs::getOpenImageFilename(what, app->window)
-            : Dialogs::getOpenFilename(what, app->window);
+            ? Dialogs::getOpenImageFilename(what, parent)
+            : Dialogs::getOpenFilename(what, parent);
     }
     if (with.isEmpty() || QFileInfo(with) == QFileInfo(what)) {
         return false;
     }
     if (!copy(with, what)) {
-        QMessageBox::warning(app->window, QString(), app->translate("Utils", "Could not replace the file."));
+        QMessageBox::warning(parent, QString(), qApp->translate("Utils", "Could not replace the file."));
         return false;
     }
     return true;
@@ -159,6 +171,15 @@ bool Utils::replaceFile(const QString &what, QString with)
 QString Utils::normalizePath(QString path)
 {
     return path.replace(QRegularExpression("^\\/+[\\.\\./*]*\\/*|$"), "/");
+}
+
+QString Utils::toAbsolutePath(const QString &path)
+{
+    if (path.isEmpty() || QDir::isAbsolutePath(path)) {
+        return path;
+    } else {
+        return QDir::cleanPath(qApp->applicationDirPath() + '/' + path);
+    }
 }
 
 bool Utils::isImageReadable(const QString &path)
@@ -178,6 +199,159 @@ QPixmap Utils::iconToPixmap(const QIcon &icon)
     const auto sizes = icon.availableSizes();
     const QSize size = !sizes.isEmpty() ? sizes.first() : QSize();
     return icon.pixmap(size);
+}
+
+QString Utils::getAppTitle()
+{
+    return APPLICATION;
+}
+
+QString Utils::getAppVersion()
+{
+    return VERSION;
+}
+
+QString Utils::getAppTitleSlug()
+{
+    return getAppTitle().toLower().replace(' ', '-');
+}
+
+QString Utils::getAppTitleAndVersion()
+{
+    return QString("%1 v%2").arg(getAppTitle(), getAppVersion());
+}
+
+qreal Utils::getScaleFactor()
+{
+#ifndef Q_OS_OSX
+    const qreal dpi = qApp->primaryScreen()->logicalDotsPerInch();
+    return dpi / 100.0;
+#else
+    return 1;
+#endif
+}
+
+int Utils::scale(int value)
+{
+    return static_cast<int>(value * getScaleFactor());
+}
+
+qreal Utils::scale(qreal value)
+{
+    return value * getScaleFactor();
+}
+
+QSize Utils::scale(int width, int height)
+{
+    return QSize(width, height) * getScaleFactor();
+}
+
+QString Utils::getTemporaryPath(const QString &subdirectory)
+{
+#ifndef PORTABLE
+    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::TempLocation), getAppTitleSlug(), subdirectory);
+#else
+    const QString path = QString("%1/data/temp/%2").arg(qApp->applicationDirPath(), subdirectory);
+#endif
+    return QDir::cleanPath(path);
+}
+
+QString Utils::getLocalConfigPath(const QString &subdirectory)
+{
+#ifndef PORTABLE
+    const QString path = QString("%1/%2/%3").arg(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation), getAppTitleSlug(), subdirectory);
+#else
+    const QString path = QString("%1/data/%2").arg(qApp->applicationDirPath(), subdirectory);
+#endif
+    return QDir::cleanPath(path);
+}
+
+QString Utils::getSharedPath(const QString &resource)
+{
+#ifndef Q_OS_LINUX
+    const QString path = QString("%1/%2").arg(qApp->applicationDirPath(), resource);
+#else
+    const QString path = QString("%1/../share/%2/%3").arg(qApp->applicationDirPath(), getAppTitleSlug(), resource);
+#endif
+    return QDir::cleanPath(path);
+}
+
+QString Utils::getBinaryPath(const QString &executable)
+{
+#ifdef Q_OS_WIN
+    QString path = getSharedPath("tools/" + executable);
+#else
+    const QString path = QString("%1/%2").arg(qApp->applicationDirPath(), executable);
+#endif
+
+    QFileInfo fileInfo(path);
+#ifdef Q_OS_WIN
+    if (fileInfo.suffix().isEmpty()) {
+        path.append(".exe");
+        fileInfo.setFile(path);
+    }
+#endif
+    return fileInfo.exists() ? path : fileInfo.fileName();
+}
+
+QIcon Utils::getLocaleFlag(const QLocale &locale)
+{
+    const QStringList localeSegments = locale.name().split('_');
+    if (localeSegments.count() <= 1) {
+        return QPixmap();
+    }
+    const QString countryCode = localeSegments.at(1).toLower();
+    return QIcon::fromTheme(QString("flag-%1").arg(countryCode));
+}
+
+QString Utils::getWebsiteUrl()
+{
+    return QString("https://qwertycube.com/%1/").arg(getAppTitleSlug());
+}
+
+QString Utils::getWebsiteUtmUrl()
+{
+    return QString("%1#utm_source=%2&utm_medium=application").arg(getWebsiteUrl(), getAppTitleSlug());
+}
+
+QString Utils::getUpdateUrl()
+{
+    return QString("%1#utm_campaign=update&utm_source=%2&utm_medium=application").arg(getWebsiteUrl(), getAppTitleSlug());
+}
+
+QString Utils::getRepositoryUrl()
+{
+    return QString("https://github.com/kefir500/%1").arg(getAppTitleSlug());
+}
+
+QString Utils::getIssuesUrl()
+{
+    return getRepositoryUrl() + "/issues";
+}
+
+QString Utils::getTranslationsUrl()
+{
+    return QString("https://www.transifex.com/qwertycube/%1/").arg(getAppTitleSlug());
+}
+
+QString Utils::getDonationsUrl()
+{
+    return QString("https://qwertycube.com/donate/#utm_campaign=donate&utm_source=%1&utm_medium=application").arg(getAppTitleSlug());
+}
+
+QString Utils::getBlogPostUrl(const QString &slug)
+{
+    return QString("%1blog/%2/").arg(getWebsiteUrl(), slug);
+}
+
+QString Utils::getVersionInfoUrl()
+{
+    return QString("%1versions.json").arg(getWebsiteUrl());
+}
+
+QString Utils::getDonorsInfoUrl()
+{
+    return QString("https://qwertycube.com/donate/donations.json");
 }
 
 QString Utils::getAndroidCodename(int api)
@@ -238,6 +412,8 @@ QString Utils::getAndroidCodename(int api)
         return "9.0 - Pie";
     case ANDROID_29:
         return "Android 10";
+    case ANDROID_30:
+        return "Android 11";
     }
     return QString();
 }

@@ -10,14 +10,13 @@ class Process : public QObject
 public:
     Process(QObject *parent = nullptr);
 
-    void run(const QString &program, const QStringList &arguments = {});
-    void jar(const QString &jar, const QStringList &arguments = {});
+    virtual void run(const QString &program, const QStringList &arguments = {});
 
     void setStandardOutputFile(const QString &filename);
 
 signals:
-    void started() const;
-    void finished(bool success, const QString &output) const;
+    void started();
+    void finished(bool success, const QString &output);
 
 protected:
     QProcess process;

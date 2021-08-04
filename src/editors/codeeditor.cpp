@@ -1,17 +1,18 @@
 #include "editors/codeeditor.h"
-#include "base/application.h"
 #include "base/fileformatlist.h"
 #include "base/yamlhighlighter.h"
 #include "base/xmlhighlighter.h"
 #include <QBoxLayout>
-#include <QTextStream>
-#include <QScrollBar>
-#include <QPainter>
 #include <QDebug>
+#include <QFileInfo>
+#include <QPainter>
+#include <QRegularExpression>
+#include <QScrollBar>
+#include <QTextStream>
 
 // CodeEditor:
 
-CodeEditor::CodeEditor(const ResourceModelIndex &index_, QWidget *parent) : FileEditor(index_, parent)
+CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileEditor(index, parent)
 {
     const QString filename = index.path();
     title = filename.section('/', -2);
@@ -22,7 +23,7 @@ CodeEditor::CodeEditor(const ResourceModelIndex &index_, QWidget *parent) : File
     icon = index.icon();
 
     editor = new CodeTextEdit(this);
-    new CodeContainer(editor);
+    new LineNumberArea(editor);
 
     const QString suffix = QFileInfo(filename).suffix().toLower();
     if (FileFormat::fromExtension("xml").hasExtension(suffix) || FileFormat::fromExtension("html").hasExtension(suffix)) {
@@ -129,19 +130,13 @@ void CodeTextEdit::resizeEvent(QResizeEvent *event)
 
 // CodeContainer:
 
-CodeContainer::CodeContainer(CodeTextEdit *editor) : QWidget(editor)
+LineNumberArea::LineNumberArea(CodeTextEdit *parent) : QWidget(parent), editor(parent)
 {
-    m_width = 0;
-    m_padding = 20;
-    connect(editor, &CodeTextEdit::blockCountChanged, [=](int blocks) {
-        m_width = editor->fontMetrics().boundingRect(QString::number(blocks)).width() + m_padding;
-        editor->setViewportMargins(m_width, 0, 0, 0);
-    });
-    connect(editor, &CodeTextEdit::resized, [=]() {
-        const QRect contents = editor->contentsRect();
-        setGeometry(QRect(contents.left(), contents.top(), m_width, contents.height()));
-    });
-    connect(editor, &CodeTextEdit::cursorPositionChanged, [=]() {
+    lineNumberAreaWidth = 0;
+    lineNumberAreaPadding = 20;
+    connect(editor, &CodeTextEdit::blockCountChanged, this, &LineNumberArea::updateAreaWidth);
+    connect(editor, &CodeTextEdit::resized, this, &LineNumberArea::updateAreaGeomerty);
+    connect(editor, &CodeTextEdit::cursorPositionChanged, this, [=]() {
         QTextEdit::ExtraSelection selection;
         QColor highlight = QPalette().color(QPalette::Highlight);
         highlight.setAlpha(16);
@@ -150,49 +145,79 @@ CodeContainer::CodeContainer(CodeTextEdit *editor) : QWidget(editor)
         selection.cursor = editor->textCursor();
         selection.cursor.clearSelection();
         editor->setExtraSelections({selection});
-        m_currentLine = editor->textCursor().block().blockNumber() + 1;
+        currentLineNumber = editor->textCursor().block().blockNumber() + 1;
     });
-    connect(editor, &CodeTextEdit::updateRequest, [=](const QRect &rect, int dy) {
+    connect(editor, &CodeTextEdit::updateRequest, this, [=](const QRect &rect, int dy) {
         dy ? scroll(0, dy) : update(0, rect.y(), width(), rect.height());
     });
 }
 
-CodeTextEdit *CodeContainer::parent() const
+QSize LineNumberArea::sizeHint() const
 {
-    return qobject_cast<CodeTextEdit *>(QWidget::parent());
+    return QSize(lineNumberAreaWidth, editor->viewport()->height());
 }
 
-QSize CodeContainer::sizeHint() const
-{
-    return QSize(m_width, parent()->viewport()->height());
-}
-
-void CodeContainer::paintEvent(QPaintEvent *event)
+void LineNumberArea::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.fillRect(0, 0, m_width, height(), QColor::fromRgb(245, 245, 245));
-    painter.setPen(QColor::fromRgb(140, 140, 140));
-    const int lineNumberHeight = parent()->fontMetrics().height();
-    QTextBlock block = parent()->firstVisibleBlock();
-    int top = static_cast<int>(parent()->blockBoundingGeometry(block).translated(parent()->contentOffset()).top());
-    int bottom = top + static_cast<int>(parent()->blockBoundingRect(block).height());
+    painter.fillRect(0, 0, lineNumberAreaWidth, height(), QPalette().color(QPalette::Window));
+
+    QColor lineNumberColor(QPalette().color(QPalette::Text));
+    lineNumberColor.setAlpha(110);
+    QColor activeLineNumberColor(QPalette().color(QPalette::Text));
+    activeLineNumberColor.setAlpha(150);
+    painter.setPen(lineNumberColor);
+
+    const int lineNumberHeight = editor->fontMetrics().height();
+    QTextBlock block = editor->firstVisibleBlock();
+    int top = static_cast<int>(editor->blockBoundingGeometry(block).translated(editor->contentOffset()).top());
+    int bottom = top + static_cast<int>(editor->blockBoundingRect(block).height());
+
     while (block.isValid() && top <= event->rect().bottom()) {
         if (block.isVisible() && bottom >= event->rect().top()) {
+            painter.save();
             const int blockNumber = block.blockNumber() + 1;
-            if (blockNumber != m_currentLine) {
-                painter.drawText(0, top, m_width - m_padding / 2, lineNumberHeight, Qt::AlignRight, QString::number(blockNumber));
-            } else {
-                painter.save();
+            if (blockNumber == currentLineNumber) {
+                painter.setPen(activeLineNumberColor);
                 QFont font = painter.font();
                 font.setBold(true);
-                painter.setPen(QColor::fromRgb(100, 100, 100));
                 painter.setFont(font);
-                painter.drawText(0, top, m_width - m_padding / 2, lineNumberHeight, Qt::AlignRight, QString::number(blockNumber));
-                painter.restore();
             }
+            painter.drawText(lineNumberAreaPadding / 2, top, lineNumberAreaWidth - lineNumberAreaPadding,
+                             lineNumberHeight, Qt::AlignRight, QString::number(blockNumber));
+            painter.restore();
         }
         block = block.next();
         top = bottom;
-        bottom = top + static_cast<int>(parent()->blockBoundingRect(block).height());
+        bottom = top + static_cast<int>(editor->blockBoundingRect(block).height());
+    }
+}
+
+void LineNumberArea::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LayoutDirectionChange) {
+        updateAreaWidth(editor->blockCount());
+        updateAreaGeomerty();
+    }
+    QWidget::changeEvent(event);
+}
+
+void LineNumberArea::updateAreaWidth(int blocks)
+{
+    lineNumberAreaWidth = editor->fontMetrics().boundingRect(QString::number(blocks)).width() + lineNumberAreaPadding;
+    if (layoutDirection() == Qt::LeftToRight) {
+        editor->setViewportMargins(lineNumberAreaWidth, 0, 0, 0);
+    } else {
+        editor->setViewportMargins(0, 0, lineNumberAreaWidth, 0);
+    }
+}
+
+void LineNumberArea::updateAreaGeomerty()
+{
+    const QRect contents = editor->contentsRect();
+    if (layoutDirection() == Qt::LeftToRight) {
+        setGeometry(QRect(contents.left(), contents.top(), lineNumberAreaWidth, contents.height()));
+    } else {
+        setGeometry(QRect(contents.right() - lineNumberAreaWidth, contents.top(), lineNumberAreaWidth, contents.height()));
     }
 }

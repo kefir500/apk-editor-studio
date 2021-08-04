@@ -1,15 +1,14 @@
 #include "widgets/logview.h"
 #include "windows/dialogs.h"
-#include "base/application.h"
 
 LogView::LogView(QWidget *parent) : QListView(parent)
 {
     delegate = new LogDelegate(this);
     setItemDelegate(delegate);
-    connect(delegate, &LogDelegate::updated, [this]() {
+    connect(delegate, &LogDelegate::updated, this, [this]() {
         viewport()->update();
     });
-    connect(this, &LogView::clicked, [this](const QModelIndex &index) {
+    connect(this, &LogView::clicked, this, [this](const QModelIndex &index) {
         clearSelection();
         const QString message = index.sibling(index.row(), LogModel::DescriptiveColumn).data().toString();
         if (!message.isEmpty()) {
@@ -31,21 +30,21 @@ void LogView::setModel(QAbstractItemModel *model)
         disconnect(previousModel, &LogModel::added, this, nullptr);
         disconnect(previousModel, &LogModel::loadingStateChanged, delegate, &LogDelegate::setLoading);
     }
+    QListView::setModel(model);
     if (model) {
         LogModel *logModel = qobject_cast<LogModel *>(model);
         Q_ASSERT(logModel);
         delegate->setLoading(logModel->getLoadingState());
-        connect(logModel, &LogModel::added, [](LogEntry *entry) {
+        connect(logModel, &LogModel::added, this, [this](LogEntry *entry) {
             if (entry->getType() != LogEntry::Information) {
-                app->window->activateWindow();
+                activateWindow();
             }
         });
         connect(logModel, &LogModel::loadingStateChanged, delegate, &LogDelegate::setLoading);
     }
-    QListView::setModel(model);
 }
 
 QSize LogView::sizeHint() const
 {
-    return app->scale(240, 0);
+    return Utils::scale(240, 0);
 }

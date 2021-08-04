@@ -32,7 +32,7 @@ public:
 
 signals:
     void added(LogEntry *entry);
-    void loadingStateChanged(bool state) const;
+    void loadingStateChanged(bool state);
 
 private:
     QList<LogEntry *> entries;

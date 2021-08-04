@@ -1,10 +1,12 @@
 #include "base/updater.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QThread>
+#include <QPushButton>
 #include <QMessageBox>
 #include <QDebug>
 
@@ -48,8 +50,8 @@ void Updater::check(bool verbose, QWidget *parent)
     http->moveToThread(thread);
     QObject::connect(http, &QObject::destroyed, thread, &QThread::quit);
     QObject::connect(thread, &QThread::finished, thread, &QThread::deleteLater);
-    QObject::connect(thread, &QThread::started, [=]() {
-        http->get(QNetworkRequest(app->getUpdateUrl()));
+    QObject::connect(thread, &QThread::started, http, [http]() {
+        http->get(QNetworkRequest(Utils::getVersionInfoUrl()));
     });
     thread->start();
 }

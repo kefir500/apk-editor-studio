@@ -1,6 +1,5 @@
 #include "editors/projectactionviewer.h"
 #include "windows/dialogs.h"
-#include "base/application.h"
 #include "base/utils.h"
 #include <QEvent>
 
@@ -8,36 +7,36 @@ ProjectActionViewer::ProjectActionViewer(Project *project, QWidget *parent) : Ac
 {
     //: This string refers to a single project (as in "Manager of a project").
     this->title = tr("Project Manager");
-    this->icon = app->icons.get("project.png");
+    this->icon = QIcon::fromTheme("tool-projectmanager");
     this->project = project;
 
     btnEditTitle = addButton();
-    connect(btnEditTitle, &QPushButton::clicked, [=]() {
+    connect(btnEditTitle, &QPushButton::clicked, this, [this]() {
         emit titleEditorRequested();
     });
 
     btnEditIcon = addButton();
-    connect(btnEditIcon, &QPushButton::clicked, [=]() {
+    connect(btnEditIcon, &QPushButton::clicked, project, [project, this]() {
         const QString iconSource(Dialogs::getOpenImageFilename(this));
-        project->setApplicationIcon(iconSource);
+        project->setApplicationIcon(iconSource, this);
     });
 
     btnExplore = addButton();
-    connect(btnExplore, &QPushButton::clicked, [=]() {
+    connect(btnExplore, &QPushButton::clicked, project, [project]() {
         Utils::explore(project->getContentsPath());
     });
 
     btnSave = addButton();
-    connect(btnSave, &QPushButton::clicked, [=]() {
+    connect(btnSave, &QPushButton::clicked, this, [this]() {
         emit apkSaveRequested();
     });
 
     btnInstall = addButton();
-    connect(btnInstall, &QPushButton::clicked, [=]() {
+    connect(btnInstall, &QPushButton::clicked, this, [this]() {
         emit apkInstallRequested();
     });
 
-    connect(project, &Project::changed, this, &ProjectActionViewer::onProjectUpdated, Qt::QueuedConnection);
+    connect(project, &Project::stateUpdated, this, &ProjectActionViewer::onProjectUpdated, Qt::QueuedConnection);
 
     onProjectUpdated();
     retranslate();

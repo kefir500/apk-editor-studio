@@ -1,8 +1,9 @@
 #ifndef RESOURCEFILE_H
 #define RESOURCEFILE_H
 
-#include <QString>
-#include <QPixmap>
+#include <QIcon>
+
+class QFileIconProvider;
 
 class ResourceFile
 {
@@ -16,12 +17,12 @@ public:
     QString getDpi() const;
     QString getLocaleCode() const;
     QString getLanguageName() const;
-    QPixmap getLanguageIcon() const;
+    QIcon getLanguageIcon() const;
     QString getApiVersion() const;
     QString getFileName() const;
     QString getFilePath() const;
     QString getDirectory() const;
-    QIcon getFileIcon() const;
+    QIcon getFileIcon(const QFileIconProvider &iconProvider) const;
 
 private:
     QString path;

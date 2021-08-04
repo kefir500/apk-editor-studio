@@ -2,8 +2,8 @@
 
 # Prepare
 
-cd "$(dirname "$0")"
-if [ "$CI" != true ]; then source ../../environment.sh; fi
+cd "$(dirname "$BASH_SOURCE")"
+VERSION=$(cat ../../../../VERSION)
 
 # Package
 

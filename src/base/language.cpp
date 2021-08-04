@@ -1,5 +1,4 @@
 #include "base/language.h"
-#include "base/application.h"
 #include "base/utils.h"
 
 Language::Language(const QString &path)
@@ -7,7 +6,7 @@ Language::Language(const QString &path)
     code = path.split('.').at(1);
     locale = QLocale(code);
     title = Utils::capitalize(locale.nativeLanguageName());
-    flag = QPixmap(app->getLocaleFlag(locale));
+    flag = Utils::getLocaleFlag(locale);
 }
 
 QString Language::getTitle() const
@@ -20,7 +19,7 @@ QString Language::getCode() const
     return code;
 }
 
-QPixmap Language::getFlag() const
+QIcon Language::getFlag() const
 {
     return flag;
 }

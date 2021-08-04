@@ -1,19 +1,20 @@
 #include "windows/devicemanager.h"
 #include "widgets/loadingwidget.h"
-#include "base/application.h"
+#include "base/utils.h"
 #include <QFormLayout>
 #include <QGroupBox>
-#include <QPushButton>
-#include <QLineEdit>
 #include <QHeaderView>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QPushButton>
 
 DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
 {
     //: This string refers to multiple devices (as in "Manager of devices").
     setWindowTitle(tr("Device Manager"));
-    setWindowIcon(app->icons.get("devices.png"));
+    setWindowIcon(QIcon::fromTheme("smartphone"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(560, 300));
+    resize(Utils::scale(560, 300));
 
     QLabel *caption = new QLabel(tr("Select a device:"));
 
@@ -23,7 +24,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     auto loading = new LoadingWidget(deviceList);
 
     QPushButton *btnRefresh = new QPushButton(tr("Refresh"), this);
-    btnRefresh->setIcon(app->icons.get("refresh.png"));
+    btnRefresh->setIcon(QIcon::fromTheme("view-refresh"));
 
     QVBoxLayout *listLayout = new QVBoxLayout;
     listLayout->addWidget(caption);
@@ -57,11 +58,11 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     layout->addLayout(devicesLayout);
     layout->addWidget(dialogButtons);
 
-    connect(deviceList->selectionModel(), &QItemSelectionModel::currentChanged, [=](const QModelIndex &index) {
+    connect(deviceList->selectionModel(), &QItemSelectionModel::currentChanged, this, [this](const QModelIndex &index) {
         const auto device = deviceModel.get(index);
-        setCurrentDevice(device.data());
+        setCurrentDevice(device);
     });
-    connect(fieldAlias, &QLineEdit::textChanged, [=](const QString &alias) {
+    connect(fieldAlias, &QLineEdit::textChanged, this, [this](const QString &alias) {
         QModelIndex index = deviceModel.index(deviceList->currentIndex().row(), DeviceItemsModel::AliasColumn);
         deviceModel.setData(index, alias);
     });
@@ -78,12 +79,17 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     connect(dialogButtons, &QDialogButtonBox::accepted, this, &DeviceManager::accept);
     connect(dialogButtons, &QDialogButtonBox::rejected, this, &DeviceManager::reject);
     connect(this, &DeviceManager::accepted, &deviceModel, &DeviceItemsModel::save);
+    connect(&deviceModel, &DeviceItemsModel::fetched, [this](bool success) {
+        if (!success) {
+            QMessageBox::warning(this, {}, tr("Could not fetch the device list."));
+        }
+    });
 
-    setCurrentDevice(nullptr);
+    setCurrentDevice({});
     deviceModel.refresh();
 }
 
-QSharedPointer<Device> DeviceManager::selectDevice(const QString &title, const QString &action, const QIcon &icon, QWidget *parent)
+Device DeviceManager::selectDevice(const QString &title, const QString &action, const QIcon &icon, QWidget *parent)
 {
     DeviceManager dialog(parent);
     dialog.setWindowTitle(title.isEmpty() ? tr("Select Device") : title);
@@ -100,28 +106,27 @@ QSharedPointer<Device> DeviceManager::selectDevice(const QString &title, const Q
         btnSelect->setIcon(icon);
     }
 
-    connect(&dialog, &DeviceManager::currentChanged, [=](const Device *device) {
-        btnSelect->setEnabled(device);
+    connect(&dialog, &DeviceManager::currentChanged, btnSelect, [btnSelect](const Device &device) {
+        btnSelect->setEnabled(!device.isNull());
     });
 
     if (dialog.exec() == QDialog::Accepted) {
-        const auto device = dialog.deviceModel.get(dialog.deviceList->currentIndex());
-        return device;
+        return dialog.deviceModel.get(dialog.deviceList->currentIndex());
     }
 
     return {};
 }
 
-bool DeviceManager::setCurrentDevice(const Device *device)
+bool DeviceManager::setCurrentDevice(const Device &device)
 {
     emit currentChanged(device);
-    if (device) {
+    if (!device.isNull()) {
         fieldAlias->setEnabled(true);
-        fieldAlias->setText(device->getAlias());
-        labelSerial->setText(device->getSerial());
-        labelProduct->setText(device->getProductString());
-        labelModel->setText(device->getModelString());
-        labelDevice->setText(device->getDeviceString());
+        fieldAlias->setText(device.getAlias());
+        labelSerial->setText(device.getSerial());
+        labelProduct->setText(device.getProductString());
+        labelModel->setText(device.getModelString());
+        labelDevice->setText(device.getDeviceString());
         return true;
     } else {
         const QChar dash(0x2013);

@@ -1,46 +1,61 @@
 #include "apk/projectitemsmodel.h"
-#include "base/application.h"
+#include "apk/project.h"
+#include "windows/mainwindow.h"
+#include <QMessageBox>
 
 ProjectItemsModel::~ProjectItemsModel()
 {
     qDeleteAll(projects);
 }
 
-Project *ProjectItemsModel::open(const QString &filename, bool unpack)
+Project *ProjectItemsModel::add(const QString &path, MainWindow *window)
 {
-    auto project = new Project(filename);
-    if (unpack) {
-        project->unpack();
+    Project *existing = this->existing(path);
+    if (existing) {
+        //: "%1" will be replaced with a path to an APK.
+        const QString question = tr("This APK is already open:\n%1\nDo you want to reopen it and lose any unsaved changes?").arg(existing->getOriginalPath());
+        const int answer = QMessageBox::question(window, QString(), question);
+        if (answer != QMessageBox::Yes) {
+            return nullptr;
+        }
+        close(existing);
     }
+    auto project = new Project(path);
 
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
         projects.append(project);
     endInsertRows();
-    emit added(project);
 
-    connect(project, &Project::changed, [=]() {
-        const int row = indexOf(project);
+    connect(project, &Project::stateUpdated, this, [=]() {
+        const int row = projects.indexOf(project);
         emit dataChanged(index(row, 0), index(row, ColumnCount - 1));
-        emit changed(project);
     });
+
+    if (window) {
+        window->setCurrentProject(project);
+    }
 
     return project;
 }
 
 bool ProjectItemsModel::close(Project *project)
 {
-    const int row = indexOf(project);
+    const int row = projects.indexOf(project);
     if (row == -1) {
         return false;
     }
 
     beginRemoveRows(QModelIndex(), row, row);
         projects.removeAt(row);
-        delete project;
+        project->deleteLater();
     endRemoveRows();
 
-    emit removed(project);
     return true;
+}
+
+Project *ProjectItemsModel::at(int row) const
+{
+    return projects.at(row);
 }
 
 Project *ProjectItemsModel::existing(const QString &filename) const
@@ -53,11 +68,6 @@ Project *ProjectItemsModel::existing(const QString &filename) const
         }
     }
     return nullptr;
-}
-
-int ProjectItemsModel::indexOf(Project *project) const
-{
-    return projects.indexOf(project);
 }
 
 QVariant ProjectItemsModel::data(const QModelIndex &index, int role) const
@@ -85,17 +95,17 @@ QVariant ProjectItemsModel::data(const QModelIndex &index, int role) const
             case StatusColumn:
                 switch (project->getState().getCurrentStatus()) {
                 case ProjectState::Status::Normal:
-                    return app->icons.get("state-idle.png");
+                    return QIcon::fromTheme("apk-idle");
                 case ProjectState::Status::Unpacking:
-                    return app->icons.get("state-open.png");
+                    return QIcon::fromTheme("apk-opening");
                 case ProjectState::Status::Packing:
                 case ProjectState::Status::Signing:
                 case ProjectState::Status::Optimizing:
-                    return app->icons.get("state-save.png");
+                    return QIcon::fromTheme("apk-saving");
                 case ProjectState::Status::Installing:
-                    return app->icons.get("state-install.png");
+                    return QIcon::fromTheme("apk-installing");
                 case ProjectState::Status::Errored:
-                    return app->icons.get("state-error.png");
+                    return QIcon::fromTheme("apk-error");
                 }
             }
         }

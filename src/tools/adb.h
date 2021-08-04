@@ -206,11 +206,11 @@ namespace Adb
     public:
         Devices(QObject *parent) : Command(parent) {}
         void run() override;
-        const QList<QSharedPointer<Device>> &devices() const;
+        const QList<Device> &devices() const;
         const QString &error() const;
 
     private:
-        QList<QSharedPointer<Device>> resultDevices;
+        QList<Device> resultDevices;
         QString resultError;
     };
 

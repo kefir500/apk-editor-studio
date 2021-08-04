@@ -21,7 +21,7 @@ private:
     int spinnerAngle;
 
 signals:
-    void updated() const;
+    void updated();
 };
 
 #endif // LOGDELEGATE_H

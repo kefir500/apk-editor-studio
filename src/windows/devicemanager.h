@@ -14,16 +14,16 @@ class DeviceManager : public QDialog
 public:
     explicit DeviceManager(QWidget *parent = nullptr);
 
-    static QSharedPointer<Device> selectDevice(const QString &title = QString(),
-                                               const QString &action = QString(),
-                                               const QIcon &icon = QIcon(),
-                                               QWidget *parent = nullptr);
+    static Device selectDevice(const QString &title = QString(),
+                               const QString &action = QString(),
+                               const QIcon &icon = QIcon(),
+                               QWidget *parent = nullptr);
 
 signals:
-    void currentChanged(const Device *device) const;
+    void currentChanged(const Device &device);
 
 private:
-    bool setCurrentDevice(const Device *device);
+    bool setCurrentDevice(const Device &device);
 
     QListView *deviceList;
     DeviceItemsModel deviceModel;

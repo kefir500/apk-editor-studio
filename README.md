@@ -1,8 +1,8 @@
 # APK Editor Studio
 
-[![Build Status (Travis CI)](https://travis-ci.org/kefir500/apk-editor-studio.svg?branch=master)](https://travis-ci.org/kefir500/apk-editor-studio/builds)
-[![Build Status (AppVeyor)](https://ci.appveyor.com/api/projects/status/github/kefir500/apk-editor-studio?svg=true)](https://ci.appveyor.com/project/kefir500/apk-editor-studio)
+[![Build Status (GitHub Actions)](https://img.shields.io/github/workflow/status/kefir500/apk-editor-studio/Build)](https://github.com/kefir500/apk-editor-studio/actions/workflows/build.yml)
 [![Latest Release](https://img.shields.io/github/release/kefir500/apk-editor-studio.svg?maxAge=86400)](https://github.com/kefir500/apk-editor-studio/releases/latest)
+[![Download Count](https://img.shields.io/github/downloads/kefir500/apk-editor-studio/total?color=blue)](https://github.com/kefir500/apk-editor-studio/releases)
 [![License](https://img.shields.io/github/license/kefir500/apk-editor-studio?color=blue)](https://raw.githubusercontent.com/kefir500/apk-editor-studio/master/LICENSE)
 [![Donate via PayPal](https://img.shields.io/badge/donate-PayPal-orange.svg?logo=paypal)](https://paypal.me/kefir500)
 [![Become a Patron](https://img.shields.io/badge/donate-Patreon-orange.svg?logo=patreon)](https://www.patreon.com/kefir500)
@@ -10,6 +10,7 @@
 **APK Editor Studio** is a powerful yet easy to use APK reverse-engineering tool written in C++/Qt.
 
 - [Website](https://qwertycube.com/apk-editor-studio/)
+- [Download](https://qwertycube.com/apk-editor-studio/download/)
 - [Donate](https://qwertycube.com/donate/)
 - [Issues](https://github.com/kefir500/apk-editor-studio/issues)
 
@@ -28,6 +29,7 @@
 - Code Editor
 - Manifest Editor
 - Permission Editor
+- Android Explorer
 - APK Signer
 - APK Optimizer
 - APK Installer
@@ -52,6 +54,9 @@ In order to successfully utilize this software, the following tools should be pr
 You can either get them manually (e.g., using `apt-get` in Debian)
 or **run the `scripts/download.py`** Python 3 script which will automatically download the needed tools.
 
+Note that this is only needed if you compile APK Editor Studio from the source code.
+[Prebuilt packages](https://github.com/kefir500/apk-editor-studio/releases) already contain these tools.
+
 Also, on **Linux** you may want an optional support for `libsecret` password storage backend.
 In order to enable it, you will need to install the corresponding library:
 - `libsecret-1-dev` (Debian-based distributions)
@@ -73,8 +78,7 @@ Pass the `PREFIX` variable to `qmake` in order to define a different installatio
 
 If you want to create installation/executable APK Editor Studio packages,
 the corresponding scripts are located at `scripts/**/packages` (where `**` is a platform name).
-Every platform directory contains an `environment` script file which sets the paths to the
-required tools. Feel free to edit these variables to correspond the paths on your system.
+Refer to the underlying `README.md` files for more information on the specific platforms.
 
 ## Translation
 

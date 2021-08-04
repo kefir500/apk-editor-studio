@@ -42,7 +42,7 @@ void KeystoreCreator::create()
 
     loading->show();
     auto keytool = new Keytool::Genkey(keystore, this);
-    connect(keytool, &Keytool::Genkey::success, [=]() {
+    connect(keytool, &Keytool::Genkey::success, this, [=]() {
         loading->hide();
         QMessageBox::information(this, QString(), tr("Keystore has been successfully created!"));
         emit createdKeystore(keystore.keystorePath);
@@ -50,7 +50,8 @@ void KeystoreCreator::create()
         accept();
         keytool->deleteLater();
     });
-    connect(keytool, &Keytool::Genkey::error, [=](Keytool::Genkey::ErrorType, const QString &brief, const QString &detailed) {
+    connect(keytool, &Keytool::Genkey::error, this,
+            [=](Keytool::Genkey::ErrorType, const QString &brief, const QString &detailed) {
         loading->hide();
         Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
         keytool->deleteLater();

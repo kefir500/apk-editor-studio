@@ -2,20 +2,22 @@
 #include "windows/dialogs.h"
 #include "base/application.h"
 
-WelcomeActionViewer::WelcomeActionViewer(QWidget *parent) : ActionViewer(parent)
+WelcomeActionViewer::WelcomeActionViewer(MainWindow *parent) : ActionViewer(parent)
 {
     btnOpen = addButton();
     btnInstall = addButton();
     btnExplorer = addButton();
-    connect(btnOpen, &QPushButton::clicked, [=]() {
+    btnDonate = addButton();
+    connect(btnOpen, &QPushButton::clicked, parent, [parent]() {
         app->actions.openApk(parent);
     });
-    connect(btnInstall, &QPushButton::clicked, [=]() {
-        app->actions.installExternalApks({}, {}, parent);
+    connect(btnInstall, &QPushButton::clicked, parent, [parent]() {
+        app->actions.installApk(parent);
     });
-    connect(btnExplorer, &QPushButton::clicked, [=]() {
+    connect(btnExplorer, &QPushButton::clicked, parent, [parent]() {
         app->actions.openAndroidExplorer(parent);
     });
+    connect(btnDonate, &QPushButton::clicked, &app->actions, &ActionProvider::visitDonatePage);
 }
 
 void WelcomeActionViewer::changeEvent(QEvent *event)
@@ -26,6 +28,7 @@ void WelcomeActionViewer::changeEvent(QEvent *event)
         btnOpen->setText(tr("Open APK"));
         btnInstall->setText(tr("Install APK"));
         btnExplorer->setText(app->translate("AndroidExplorer", "Android Explorer"));
+        btnDonate->setText(tr("Support Us"));
     }
     ActionViewer::changeEvent(event);
 }

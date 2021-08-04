@@ -72,11 +72,12 @@ KeyCreator::KeyCreator(const QString &keystorePath, const QString &keystorePassw
 
     if (!keystorePath.isNull()) {
         auto keytool = new Keytool::Aliases(keystorePath, keystorePassword, this);
-        connect(keytool, &Keytool::Aliases::success, [=]() {
+        connect(keytool, &Keytool::Aliases::success, this, [=]() {
             loading->hide();
             keytool->deleteLater();
         });
-        connect(keytool, &Keytool::Aliases::error, [=](Keytool::Aliases::ErrorType, const QString &brief, const QString &detailed) {
+        connect(keytool, &Keytool::Aliases::error, this,
+                [=](Keytool::Aliases::ErrorType, const QString &brief, const QString &detailed) {
             Dialogs::detailed(brief, detailed, QMessageBox::Warning, this);
             keytool->deleteLater();
             close();
@@ -96,14 +97,15 @@ void KeyCreator::create()
 
     loading->show();
     auto keytool = new Keytool::Genkey(keystore, this);
-    connect(keytool, &Keytool::Genkey::success, [=]() {
+    connect(keytool, &Keytool::Genkey::success, this, [=]() {
         loading->hide();
         QMessageBox::information(this, QString(), tr("Key has been successfully created!"));
         emit createdKey(keystore.keyAlias);
         accept();
         keytool->deleteLater();
     });
-    connect(keytool, &Keytool::Genkey::error, [=](Keytool::Genkey::ErrorType errorType, const QString &brief, const QString &detailed) {
+    connect(keytool, &Keytool::Genkey::error, this,
+            [=](Keytool::Genkey::ErrorType errorType, const QString &brief, const QString &detailed) {
         if (errorType == Keytool::Genkey::AliasExistsError) {
             editAlias->setFocus();
             editAlias->selectAll();

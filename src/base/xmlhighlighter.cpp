@@ -1,25 +1,15 @@
 #include "base/xmlhighlighter.h"
+#include "base/application.h"
 #include <QRegularExpression>
-
-XmlHighlighter::XmlHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
-{
-    formatDefault.setForeground(Qt::black);
-    formatDefault.setFontWeight(QFont::Bold);
-    formatTag.setForeground(Qt::blue);
-    formatElement.setForeground(Qt::blue);
-    formatAttribute.setForeground(Qt::red);
-    formatValue.setForeground(Qt::darkMagenta);
-    formatComment.setForeground(Qt::gray);
-}
 
 void XmlHighlighter::highlightBlock(const QString &text)
 {
-    setFormat(0, text.length(), formatDefault);
-    highlightRegex(text, formatElement, QRegularExpression("<\\/?\\?*([\\w\\-.?]+)"));
-    highlightRegex(text, formatTag, QRegularExpression("[<?>\\/]"));
-    highlightRegex(text, formatAttribute, QRegularExpression("[\\w:]+(?==)"));
-    highlightRegex(text, formatValue, QRegularExpression("(?<==)\"[^\"]+\""));
-    highlightRegex(text, formatComment, QRegularExpression("<!--.*-->"));
+    setFormat(0, text.length(), app->theme()->text(Theme::Text::XmlDefault));
+    highlightRegex(text, app->theme()->text(Theme::Text::XmlTagName), QRegularExpression("<\\/?\\?*([\\w\\-.?]+)"));
+    highlightRegex(text, app->theme()->text(Theme::Text::XmlTagBracket), QRegularExpression("[<?>\\/]"));
+    highlightRegex(text, app->theme()->text(Theme::Text::XmlAttribute), QRegularExpression("[\\w:]+(?==)"));
+    highlightRegex(text, app->theme()->text(Theme::Text::XmlValue), QRegularExpression("(?<==)\"[^\"]+\""));
+    highlightRegex(text, app->theme()->text(Theme::Text::XmlComment), QRegularExpression("<!--.*-->"));
 }
 
 void XmlHighlighter::highlightRegex(const QString &text, const QTextCharFormat &format, const QRegularExpression &regex)

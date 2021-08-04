@@ -1,0 +1,4 @@
+- Make sure the Qt `bin` directory is in the `PATH` environment variable.
+- Make sure `NodeJS` is installed and run `npm i appdmg`.
+- Run `build.app.command` located in the `../app`.
+- Run `build.dmg.command`.

@@ -1,35 +1,36 @@
 #include "base/settings.h"
-#include "base/application.h"
+#include "base/fileassociation.h"
+#include "base/utils.h"
 #include "base/password.h"
+#include "apk/project.h"
 #include "tools/apktool.h"
+#include <QApplication>
+#include <QDir>
+#include <QSettings>
 
 Settings::Settings()
 {
 #ifndef PORTABLE
-    settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, app->getTitleNoSpaces(), "config");
+    settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, Utils::getAppTitleSlug(), "config", this);
 #else
-    settings = new QSettings(app->getLocalConfigPath("config/config.ini"), QSettings::IniFormat);
+    settings = new QSettings(Utils::getLocalConfigPath("config/config.ini"), QSettings::IniFormat, this);
 #endif
-}
-
-Settings::~Settings()
-{
-    delete settings;
+    recent = new Recent("apk", getRecentLimit(), this);
 }
 
 void Settings::reset()
 {
     Apktool::reset();
     settings->clear();
-    app->recent->clear();
+    recent->clear();
     QDir().mkpath(Apktool::getOutputPath());
     QDir().mkpath(Apktool::getFrameworksPath());
     Password passwordKeystore("keystore");
     Password passwordKey("key");
     passwordKeystore.remove();
     passwordKey.remove();
+    emit recentListUpdated();
     emit resetDone();
-    emit toolbarUpdated();
 }
 
 // Getters:
@@ -147,9 +148,19 @@ QString Settings::getLastDirectory() const
     return settings->value("Preferences/LastDirectory").toString();
 }
 
+bool Settings::getSingleInstance() const
+{
+    return settings->value("Preferences/SingleInstance", true).toBool();
+}
+
 bool Settings::getAutoUpdates() const
 {
     return settings->value("Preferences/AutoUpdates", true).toBool();
+}
+
+const QList<RecentFile> &Settings::getRecentList() const
+{
+    return recent->all();
 }
 
 int Settings::getRecentLimit() const
@@ -162,7 +173,7 @@ QString Settings::getLanguage() const
     return settings->value("Preferences/Language", "en").toString();
 }
 
-QStringList Settings::getToolbar() const
+QStringList Settings::getMainWindowToolbar() const
 {
     QStringList defaults;
     defaults << "open-project" << "save-project" << "install-project" << "separator"
@@ -184,6 +195,16 @@ QByteArray Settings::getMainWindowState() const
     return settings->value("MainWindow/State").toByteArray();
 }
 
+QStringList Settings::getAndroidExplorerToolbar() const
+{
+    QStringList defaults;
+    defaults << "download" << "upload" << "separator"
+             << "copy" << "cut" << "paste" << "rename" << "delete" << "separator"
+             << "install" << "separator"
+             << "screenshot";
+    return settings->value("AndroidExplorer/Toolbar", defaults).toStringList();
+}
+
 bool Settings::hasRememberState(const QString &identifier) const
 {
     return settings->contains(QString("Remember/%1").arg(identifier));
@@ -194,7 +215,53 @@ bool Settings::getRememberState(const QString &identifier) const
     return settings->value(QString("Remember/%1").arg(identifier)).toBool();
 }
 
+#ifdef Q_OS_WIN
+bool Settings::getFileAssociation() const
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    return association.isSet();
+}
+
+bool Settings::getExplorerOpenIntegration() const
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    return association.hasVerb("Open");
+}
+
+bool Settings::getExplorerInstallIntegration() const
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    return association.hasVerb("Install APK");
+}
+
+bool Settings::getExplorerOptimizeIntegration() const
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    return association.hasVerb("Optimize APK");
+}
+
+bool Settings::getExplorerSignIntegration() const
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    return association.hasVerb("Sign APK");
+}
+#endif
+
 // Setters:
+
+void Settings::addToRecent(const Project *project)
+{
+    const auto path = project->getOriginalPath();
+    const auto icon = project->getThumbnail().pixmap(Utils::scale(32, 32));
+    recent->add(path, icon);
+    emit recentListUpdated();
+}
+
+void Settings::clearRecentList()
+{
+    recent->clear();
+    emit recentListUpdated();
+}
 
 void Settings::setJavaPath(const QString &path)
 {
@@ -308,6 +375,11 @@ void Settings::setLastDirectory(const QString &directory)
     settings->setValue("Preferences/LastDirectory", directory);
 }
 
+void Settings::setSingleInstance(bool value)
+{
+    settings->setValue("Preferences/SingleInstance", value);
+}
+
 void Settings::setAutoUpdates(bool value)
 {
     settings->setValue("Preferences/AutoUpdates", value);
@@ -316,6 +388,8 @@ void Settings::setAutoUpdates(bool value)
 void Settings::setRecentLimit(int limit)
 {
     settings->setValue("Preferences/MaxRecent", limit);
+    recent->setLimit(limit);
+    emit recentListUpdated();
 }
 
 void Settings::setLanguage(const QString &locale)
@@ -323,10 +397,9 @@ void Settings::setLanguage(const QString &locale)
     settings->setValue("Preferences/Language", locale);
 }
 
-void Settings::setToolbar(const QStringList &actions)
+void Settings::setMainWindowToolbar(const QStringList &actions)
 {
     settings->setValue("MainWindow/Toolbar", actions);
-    emit toolbarUpdated();
 }
 
 void Settings::setMainWindowGeometry(const QByteArray &geometry)
@@ -339,6 +412,11 @@ void Settings::setMainWindowState(const QByteArray &state)
     settings->setValue("MainWindow/State", state);
 }
 
+void Settings::setAndroidExplorerToolbar(const QStringList &actions)
+{
+    settings->setValue("AndroidExplorer/Toolbar", actions);
+}
+
 void Settings::setRememberState(const QString &identifier, bool state)
 {
     settings->setValue(QString("Remember/%1").arg(identifier), state);
@@ -348,3 +426,70 @@ void Settings::resetRememberState(const QString &identifier)
 {
     settings->remove(QString("Remember/%1").arg(identifier));
 }
+
+#ifdef Q_OS_WIN
+
+bool Settings::setFileAssociation(bool associate)
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    if (associate) {
+        const QString iconPath = QString("%1,0").arg(QDir::toNativeSeparators(qApp->applicationFilePath()));
+        return association.set(iconPath, "Android Application Package");
+    } else {
+        return association.unset();
+    }
+}
+
+bool Settings::setExplorerOpenIntegration(bool integrate)
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    if (integrate) {
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(qApp->applicationFilePath()));
+        const QString command = executablePath + " \"%1\"";
+        const QString icon = executablePath;
+        return association.addVerb("Open", command, icon);
+    } else {
+        return association.removeVerb("Open");
+    }
+}
+
+bool Settings::setExplorerInstallIntegration(bool integrate)
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    if (integrate) {
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(qApp->applicationFilePath()));
+        const QString command = executablePath + " --install \"%1\"";
+        const QString icon = executablePath + ",1";
+        return association.addVerb("Install APK", command, icon);
+    } else {
+        return association.removeVerb("Install APK");
+    }
+}
+
+bool Settings::setExplorerOptimizeIntegration(bool integrate)
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    if (integrate) {
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(qApp->applicationFilePath()));
+        const QString command = executablePath + " --optimize \"%1\"";
+        const QString icon = executablePath + ",2";
+        return association.addVerb("Optimize APK", command, icon);
+    } else {
+        return association.removeVerb("Optimize APK");
+    }
+}
+
+bool Settings::setExplorerSignIntegration(bool integrate)
+{
+    FileAssociation association("apk-editor-studio.apk", "apk");
+    if (integrate) {
+        const QString executablePath = QString("\"%1\"").arg(QDir::toNativeSeparators(qApp->applicationFilePath()));
+        const QString command = executablePath + " --sign \"%1\"";
+        const QString icon = executablePath + ",3";
+        return association.addVerb("Sign APK", command, icon);
+    } else {
+        return association.removeVerb("Sign APK");
+    }
+}
+
+#endif

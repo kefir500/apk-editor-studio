@@ -7,6 +7,8 @@
 
 class KeySelector : public QDialog
 {
+    Q_OBJECT
+
 public:
     KeySelector(const QString &keystore, const QString &password,
                 const QString &defaultAlias = QString(), QWidget *parent = nullptr);

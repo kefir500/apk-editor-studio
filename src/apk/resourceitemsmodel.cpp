@@ -1,4 +1,5 @@
 #include "apk/resourceitemsmodel.h"
+#include "apk/resourcenode.h"
 #include "apk/resourcemodelindex.h"
 #include "base/utils.h"
 #include <QtConcurrent/QtConcurrent>
@@ -77,10 +78,10 @@ QModelIndex ResourceItemsModel::addNode(ResourceNode *node, const QModelIndex &p
     return index;
 }
 
-bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString &with)
+bool ResourceItemsModel::replaceResource(const QModelIndex &index, const QString &with, QWidget *parent)
 {
     const QString what = ResourceModelIndex(index).path();
-    if (Utils::replaceFile(what, with)) {
+    if (Utils::replaceFile(what, with, parent)) {
         emit dataChanged(index, index);
         return true;
     }
@@ -152,7 +153,7 @@ QVariant ResourceItemsModel::data(const QModelIndex &index, int role) const
             case Qt::DecorationRole:
                 switch (column) {
                 case CaptionColumn:
-                    return file->getFileIcon();
+                    return file->getFileIcon(iconProvider);
                 case LanguageColumn:
                     return file->getLanguageIcon();
                 }

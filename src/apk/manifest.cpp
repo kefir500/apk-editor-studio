@@ -7,7 +7,7 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
     // XML:
 
     xmlFile = new QFile(xmlPath);
-    if (xmlFile->open(QFile::ReadWrite | QFile::Text)) {
+    if (xmlFile->open(QFile::ReadWrite)) {
         QTextStream stream(xmlFile);
         stream.setCodec("UTF-8");
         xml.setContent(stream.readAll());
@@ -25,6 +25,7 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
             }
             applicationChild = applicationChild.nextSiblingElement();
         }
+        packageName = manifestNode.attribute("package");
     }
 
     // YAML:
@@ -39,7 +40,7 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
     regexVersionName.setPattern("(?<=^  versionName: ).+(?=$)");
 
     ymlFile = new QFile(ymlPath);
-    if (ymlFile->open(QFile::ReadWrite | QFile::Text)) {
+    if (ymlFile->open(QFile::ReadWrite)) {
         QTextStream stream(ymlFile);
         stream.setCodec("UTF-8");
         yml = stream.readAll();
@@ -72,9 +73,14 @@ int Manifest::getVersionCode() const
     return versionCode;
 }
 
-QString Manifest::getVersionName() const
+const QString &Manifest::getVersionName() const
 {
     return versionName;
+}
+
+const QString &Manifest::getPackageName() const
+{
+    return packageName;
 }
 
 void Manifest::setApplicationLabel(const QString &value)
@@ -112,6 +118,21 @@ void Manifest::setVersionName(const QString &value)
     versionName = value;
     yml.replace(regexVersionName, value);
     saveYml();
+}
+
+void Manifest::setPackageName(const QString &newPackageName)
+{
+    const auto originalPackageName = getPackageName();
+    xmlFile->seek(0);
+    const QString data(xmlFile->readAll());
+    QString newData(data);
+    newData.replace(originalPackageName, newPackageName);
+    if (newData != data) {
+        xmlFile->resize(0);
+        xmlFile->write(newData.toUtf8());
+        xmlFile->flush();
+    }
+    packageName = newPackageName;
 }
 
 QList<Permission> Manifest::getPermissionList() const

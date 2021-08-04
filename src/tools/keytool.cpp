@@ -1,13 +1,14 @@
 #include "tools/keytool.h"
+#include "tools/java.h"
 #include "base/process.h"
-#include "base/application.h"
+#include <QRegularExpression>
 #include <QStringList>
 
 void Keytool::Genkey::run()
 {
     emit started();
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool ok, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool ok, const QString &output) {
         if (ok) {
             emit success();
         } else {
@@ -53,7 +54,7 @@ void Keytool::Aliases::run()
     regex.setPatternOptions(QRegularExpression::MultilineOption);
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool ok, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool ok, const QString &output) {
         if (ok) {
             QStringList aliases;
             QRegularExpressionMatchIterator it = regex.globalMatch(output);
@@ -87,5 +88,5 @@ void Keytool::normalizeDname(Dname &dname)
 
 QString Keytool::getPath()
 {
-    return app->getJavaBinaryPath("keytool");
+    return Java::getBinaryPath("keytool");
 }

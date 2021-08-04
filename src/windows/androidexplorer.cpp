@@ -1,33 +1,31 @@
 #include "windows/androidexplorer.h"
 #include "windows/dialogs.h"
 #include "widgets/loadingwidget.h"
+#include "widgets/toolbar.h"
 #include "tools/adb.h"
 #include "base/application.h"
 #include <QBoxLayout>
-#include <QToolButton>
 #include <QDialogButtonBox>
-#include <QMessageBox>
-#include <QInputDialog>
 #include <QMenu>
+#include <QMessageBox>
+#include <QPushButton>
 #include <QShortcut>
+#include <QToolButton>
 
 #ifdef QT_DEBUG
     #include <QDebug>
 #endif
 
-AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
+AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
     : QDialog(parent)
     , serial(serial)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(app->scale(440, 400));
+    resize(Utils::scale(500, 400));
 
-    auto toolbar = new QToolBar(this);
-
-    actionDownload = new QAction(app->icons.get("download.png"), {}, this);
+    actionDownload = new QAction(QIcon::fromTheme("download"), {}, this);
     actionDownload->setShortcut(QKeySequence::Save);
-    toolbar->addAction(actionDownload);
-    connect(actionDownload, &QAction::triggered, [=]() {
+    connect(actionDownload, &QAction::triggered, this, [this]() {
         const auto index = fileList->currentIndex();
         if (index.isValid()) {
             const auto path = fileSystemModel.getItemPath(index);
@@ -35,10 +33,9 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
         }
     });
 
-    actionUpload = new QAction(app->icons.get("upload.png"), {}, this);
+    actionUpload = new QAction(QIcon::fromTheme("upload"), {}, this);
     actionUpload->setShortcut(QKeySequence("Ctrl+U"));
-    toolbar->addAction(actionUpload);
-    connect(actionUpload, &QAction::triggered, [=]() {
+    connect(actionUpload, &QAction::triggered, this, [this]() {
         QString path = fileSystemModel.getCurrentPath();
         const auto index = fileList->currentIndex();
         if (index.isValid()) {
@@ -49,29 +46,24 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
         upload(path);
     });
 
-    toolbar->addSeparator();
-
-    actionCopy = new QAction(app->icons.get("copy.png"), {}, this);
+    actionCopy = new QAction(QIcon::fromTheme("edit-copy"), {}, this);
     actionCopy->setShortcut(QKeySequence::Copy);
-    toolbar->addAction(actionCopy);
-    connect(actionCopy, &QAction::triggered, [=]() {
+    connect(actionCopy, &QAction::triggered, this, [this]() {
         const auto index = fileList->currentIndex();
         setClipboard(index, false);
     });
 
-    actionCut = new QAction(app->icons.get("cut.png"), {}, this);
+    actionCut = new QAction(QIcon::fromTheme("edit-cut"), {}, this);
     actionCut->setShortcut(QKeySequence::Cut);
-    toolbar->addAction(actionCut);
-    connect(actionCut, &QAction::triggered, [=]() {
+    connect(actionCut, &QAction::triggered, this, [this]() {
         const auto index = fileList->currentIndex();
         setClipboard(index, true);
     });
 
-    actionPaste = new QAction(app->icons.get("paste.png"), {}, this);
+    actionPaste = new QAction(QIcon::fromTheme("edit-paste"), {}, this);
     actionPaste->setEnabled(false);
     actionPaste->setShortcut(QKeySequence::Paste);
-    toolbar->addAction(actionPaste);
-    connect(actionPaste, &QAction::triggered, [=]() {
+    connect(actionPaste, &QAction::triggered, this, [this]() {
         const QString src = clipboard.data;
         QString dst = fileSystemModel.getCurrentPath();
         const auto index = fileList->currentIndex();
@@ -88,22 +80,36 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
         }
     });
 
-    actionRename = new QAction(app->icons.get("rename.png"), {}, this);
+    actionRename = new QAction(QIcon::fromTheme("edit-rename"), {}, this);
     actionRename->setShortcut(QKeySequence("F2"));
-    toolbar->addAction(actionRename);
-    connect(actionRename, &QAction::triggered, [=]() {
+    connect(actionRename, &QAction::triggered, this, [this]() {
         const auto index = fileList->currentIndex();
         if (index.isValid()) {
             fileList->edit(index);
         }
     });
 
-    actionDelete = new QAction(app->icons.get("x-red.png"), {}, this);
+    actionDelete = new QAction(QIcon::fromTheme("edit-delete"), {}, this);
     actionDelete->setShortcut(QKeySequence::Delete);
-    toolbar->addAction(actionDelete);
-    connect(actionDelete, &QAction::triggered, [=]() {
+    connect(actionDelete, &QAction::triggered, this, [this]() {
         remove(fileList->currentIndex());
     });
+
+    auto actionInstall = app->actions.getInstallApk(serial, parent);
+    auto actionScreenshot = app->actions.getTakeScreenshot(serial, this);
+
+    auto toolbar = new Toolbar(this);
+    toolbar->addActionToPool("download", actionDownload);
+    toolbar->addActionToPool("upload", actionUpload);
+    toolbar->addActionToPool("copy", actionCopy);
+    toolbar->addActionToPool("cut", actionCut);
+    toolbar->addActionToPool("paste", actionPaste);
+    toolbar->addActionToPool("rename", actionRename);
+    toolbar->addActionToPool("delete", actionDelete);
+    toolbar->addActionToPool("install", actionInstall);
+    toolbar->addActionToPool("screenshot", actionScreenshot);
+    toolbar->initialize(app->settings->getAndroidExplorerToolbar());
+    connect(toolbar, &Toolbar::updated, app->settings, &Settings::setAndroidExplorerToolbar);
 
     auto fileSelectionActions = new QActionGroup(this);
     fileSelectionActions->setEnabled(false);
@@ -114,14 +120,9 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     fileSelectionActions->addAction(actionRename);
     fileSelectionActions->addAction(actionDelete);
 
-    toolbar->addSeparator();
-    toolbar->addAction(app->actions.getInstallExternalApk(serial, this));
-    toolbar->addSeparator();
-    toolbar->addAction(app->actions.getTakeScreenshot(serial, this));
-
     pathUpButton = new QToolButton(this);
     pathUpButton->setToolTip(pathUpButton->text());
-    pathUpButton->setIcon(app->icons.get("explorer-up.png"));
+    pathUpButton->setIcon(QIcon::fromTheme("go-up"));
     connect(pathUpButton, &QToolButton::clicked, this, &AndroidExplorer::goUp);
 
     auto pathUpShortcut = new QShortcut(this);
@@ -130,8 +131,8 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
 
     pathGoButton = new QToolButton(this);
     pathGoButton->setToolTip(pathGoButton->text());
-    pathGoButton->setIcon(app->icons.get("explorer-go.png"));
-    connect(pathGoButton, &QToolButton::clicked, [this]() {
+    pathGoButton->setIcon(QIcon::fromTheme(layoutDirection() == Qt::LeftToRight ? "go-next" : "go-previous"));
+    connect(pathGoButton, &QToolButton::clicked, this, [this]() {
         go(pathInput->text());
     });
 
@@ -148,7 +149,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     fileList->setModel(&fileSystemModel);
     fileList->setContextMenuPolicy(Qt::CustomContextMenu);
     fileList->setEditTriggers(QListView::SelectedClicked | QListView::EditKeyPressed);
-    connect(fileList, &QListView::activated, [=](const QModelIndex &index) {
+    connect(fileList, &QListView::activated, this, [this](const QModelIndex &index) {
         const auto type = fileSystemModel.getItemType(index);
         const auto path = fileSystemModel.getItemPath(index);
         switch (type) {
@@ -160,7 +161,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
             break;
         }
     });
-    connect(fileList, &QListView::customContextMenuRequested, [=](const QPoint &point) {
+    connect(fileList, &QListView::customContextMenuRequested, this, [this](const QPoint &point) {
         QMenu context(this);
         context.addSeparator();
         context.addAction(actionDownload);
@@ -173,25 +174,26 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
         context.addAction(actionDelete);
         context.exec(fileList->viewport()->mapToGlobal(point));
     });
-    connect(fileList->selectionModel(), &QItemSelectionModel::currentChanged, [=](const QModelIndex &index) {
+    connect(fileList->selectionModel(), &QItemSelectionModel::currentChanged,
+            fileSelectionActions, [fileSelectionActions](const QModelIndex &index) {
         fileSelectionActions->setEnabled(index.isValid());
     });
 
     auto loading = new LoadingWidget(fileList);
 
-    connect(&fileSystemModel, &AndroidFileSystemModel::pathChanged, [=](const QString &path) {
+    connect(&fileSystemModel, &AndroidFileSystemModel::pathChanged, this, [=](const QString &path) {
         pathInput->setText(path);
         fileSelectionActions->setEnabled(false);
     });
-    connect(&fileSystemModel, &AndroidFileSystemModel::modelAboutToBeReset, [=]() {
+    connect(&fileSystemModel, &AndroidFileSystemModel::modelAboutToBeReset, this, [=]() {
         loading->show();
         fileSelectionActions->setEnabled(false);
     });
-    connect(&fileSystemModel, &AndroidFileSystemModel::modelReset, [=]() {
+    connect(&fileSystemModel, &AndroidFileSystemModel::modelReset, this, [=]() {
         loading->hide();
         fileList->scrollToTop();
     });
-    connect(&fileSystemModel, &AndroidFileSystemModel::error, [=](const QString &error) {
+    connect(&fileSystemModel, &AndroidFileSystemModel::error, this, [this](const QString &error) {
         QMessageBox::warning(this, QString(), error);
     });
 

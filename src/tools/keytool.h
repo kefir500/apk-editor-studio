@@ -23,8 +23,8 @@ namespace Keytool
         void run() override;
 
     signals:
-        void success() const;
-        void error(ErrorType errorType, const QString &brief, const QString &detailed) const;
+        void success();
+        void error(ErrorType errorType, const QString &brief, const QString &detailed);
 
     private:
         const Keystore keystore;
@@ -48,8 +48,8 @@ namespace Keytool
         void run() override;
 
     signals:
-        void success(const QStringList &aliases) const;
-        void error(ErrorType errorType, const QString &brief, const QString &detailed) const;
+        void success(const QStringList &aliases);
+        void error(ErrorType errorType, const QString &brief, const QString &detailed);
 
     private:
         const QString keystore;

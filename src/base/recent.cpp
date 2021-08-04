@@ -1,5 +1,5 @@
 #include "base/recent.h"
-#include "base/application.h"
+#include "base/utils.h"
 #include <QCryptographicHash>
 #include <QSettings>
 #include <QDir>
@@ -19,13 +19,18 @@ const QPixmap &RecentFile::thumbnail() const
     return d->thumbnail;
 }
 
-Recent::Recent(const QString &identifier, QObject *parent) : QObject(parent)
+bool RecentFile::operator==(const RecentFile &file) const
 {
-    this->identifier = identifier;
-    this->thumbsPath = QString("%1/%2/").arg(app->getLocalConfigPath("recent/thumbnails"), identifier);
-    this->limit = app->settings->getRecentLimit();
+    return filename() == file.filename();
+}
 
-    QSettings ini(app->getLocalConfigPath("recent/recent.ini"), QSettings::IniFormat);
+Recent::Recent(const QString &identifier, int limit, QObject *parent)
+    : QObject(parent)
+    , identifier(identifier)
+    , thumbsPath(QString("%1/%2/").arg(Utils::getLocalConfigPath("recent/thumbnails"), identifier))
+    , limit(limit)
+{
+    QSettings ini(Utils::getLocalConfigPath("recent/recent.ini"), QSettings::IniFormat);
     ini.beginGroup("Recent");
     QStringList files = ini.value(identifier).toStringList();
     ini.endGroup();
@@ -33,7 +38,6 @@ Recent::Recent(const QString &identifier, QObject *parent) : QObject(parent)
     for (const QString &file : files) {
         recent.append(RecentFile(file, thumbnailPath(file)));
     }
-    emit changed();
 }
 
 bool Recent::add(const QString &filename, const QPixmap &thumbnail)
@@ -43,27 +47,24 @@ bool Recent::add(const QString &filename, const QPixmap &thumbnail)
     }
 
     // Save cached thumbnail:
-
     QDir().mkpath(thumbsPath);
     thumbnail.save(thumbnailPath(filename));
 
     // Remove duplicates:
+    RecentFile recentFile(filename, thumbnail);
+    recent.removeAll(recentFile);
 
-    for (int i = 0; i < recent.size(); ++i) {
-        if (recent[i].filename() == filename) {
-            recent.removeAt(i);
-        }
-    }
+    // Add recent entry:
+    recent.prepend(recentFile);
 
-    // Create recent entry:
-
-    recent.prepend(RecentFile(filename, thumbnail));
+    // Limit to maximum:
     while (recent.size() > limit) {
         remove(recent.size() - 1);
     }
 
+    // Save recent list:
     saveToFile();
-    emit changed();
+
     return true;
 }
 
@@ -72,11 +73,17 @@ bool Recent::remove(int index)
     if (index >= recent.size()) {
         return false;
     }
+
+    // Remove thumbnail:
     const QString filename = recent[index].filename();
     QFile::remove(thumbnailPath(filename));
+
+    // Remove recent entry:
     recent.removeAt(index);
+
+    // Save recent list:
     saveToFile();
-    emit changed();
+
     return true;
 }
 
@@ -87,13 +94,12 @@ void Recent::clear()
     }
 }
 
-void Recent::setLimit(int limit)
+void Recent::setLimit(int value)
 {
-    this->limit = limit;
+    limit = value;
     while (recent.size() > limit) {
         remove(recent.size() - 1);
     }
-    app->settings->setRecentLimit(limit);
 }
 
 const QList<RecentFile> &Recent::all() const
@@ -121,7 +127,7 @@ QList<QPixmap> Recent::thumbnails() const
 
 void Recent::saveToFile() const
 {
-    QSettings ini(app->getLocalConfigPath("recent/recent.ini"), QSettings::IniFormat);
+    QSettings ini(Utils::getLocalConfigPath("recent/recent.ini"), QSettings::IniFormat);
     ini.beginGroup("Recent");
     ini.setValue(identifier, filenames());
     ini.endGroup();

@@ -1,7 +1,8 @@
 #include "tools/adb.h"
 #include "base/process.h"
 #include "base/application.h"
-#include <QSharedPointer>
+#include "base/utils.h"
+#include <QDebug>
 #include <QRegularExpression>
 
 void Adb::Cd::run()
@@ -15,7 +16,7 @@ void Adb::Cd::run()
     arguments << "shell" << "cd" << path;
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         resultOutput = output;
         emit finished(success);
         process->deleteLater();
@@ -40,7 +41,7 @@ void Adb::Mkdir::run()
     arguments << "shell" << "mkdir" << path;
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         resultOutput = output;
         emit finished(success);
         process->deleteLater();
@@ -64,7 +65,7 @@ void Adb::Cp::run()
     arguments << "shell" << "cp" << "-R" << "-n" << src << dst;
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         resultOutput = output;
         emit finished(success);
         process->deleteLater();
@@ -120,7 +121,7 @@ void Adb::Ls::run()
     arguments << "shell" << "stat" << "-L" << "-c" << "'%F,%n'" << QString("%1/*").arg(path);
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         fileSystemItems.clear();
         const auto entries = output.split('\n');
         for (const QString &entry : entries) {
@@ -161,7 +162,7 @@ void Adb::Install::run()
     arguments << "install" << "-r" << apk;
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         resultOutput = output;
         emit finished(success);
         process->deleteLater();
@@ -215,7 +216,7 @@ void Adb::Screenshot::run()
     arguments << "exec-out" << "screencap" << "-p";
 
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success) {
+    connect(process, &Process::finished, this, [=](bool success) {
         if (!success) {
             QFile::remove(dst);
         }
@@ -230,7 +231,7 @@ void Adb::Devices::run()
 {
     emit started();
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         resultDevices.clear();
         if (success) {
             QStringList lines = output.split('\n');
@@ -241,11 +242,11 @@ void Adb::Devices::run()
                     const QString modelString = QRegularExpression("\\s+model:(\\S+)(\\s|$)").match(line).captured(1);
                     const QString deviceString = QRegularExpression("\\s+device:(\\S+)(\\s|$)").match(line).captured(1);
                     const QString productString = QRegularExpression("\\s+product:(\\S+)(\\s|$)").match(line).captured(1);
-                    Device *device = new Device(serial);
-                    device->setModelString(modelString);
-                    device->setDeviceString(deviceString);
-                    device->setProductString(productString);
-                    resultDevices.append(QSharedPointer<Device>(device));
+                    Device device(serial);
+                    device.setModelString(modelString);
+                    device.setDeviceString(deviceString);
+                    device.setProductString(productString);
+                    resultDevices.append(device);
                 }
             }
         } else {
@@ -257,7 +258,7 @@ void Adb::Devices::run()
     process->run(getPath(), {"devices", "-l"});
 }
 
-const QList<QSharedPointer<Device>> &Adb::Devices::devices() const
+const QList<Device> &Adb::Devices::devices() const
 {
     return resultDevices;
 }
@@ -271,7 +272,7 @@ void Adb::Version::run()
 {
     emit started();
     auto process = new Process(this);
-    connect(process, &Process::finished, [=](bool success, const QString &output) {
+    connect(process, &Process::finished, this, [=](bool success, const QString &output) {
         if (success) {
             QRegularExpression regex("Android Debug Bridge version (.+)");
             resultVersion = regex.match(output).captured(1).trimmed();
@@ -289,13 +290,13 @@ const QString &Adb::Version::version() const
 
 QString Adb::getPath()
 {
-    const QString path = app->settings->getAdbPath();
+    const QString path = Utils::toAbsolutePath(app->settings->getAdbPath());
     return !path.isEmpty() ? path : getDefaultPath();
 }
 
 QString Adb::getDefaultPath()
 {
-    return app->getBinaryPath("adb");
+    return Utils::getBinaryPath("adb");
 }
 
 QString Adb::escapePath(QString path)

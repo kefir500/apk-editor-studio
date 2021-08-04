@@ -1,6 +1,5 @@
 #include "editors/fileeditor.h"
 #include "windows/dialogs.h"
-#include "base/application.h"
 
 FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Editor(parent), index(index)
 {
@@ -9,7 +8,7 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
     // Initialize file watcher:
 
     watcher.addPath(index.path());
-    connect(&watcher, &QFileSystemWatcher::fileChanged, [this]() {
+    connect(&watcher, &QFileSystemWatcher::fileChanged, this, [this]() {
         if (this->index.isValid()) {
             this->index.update();
             if (!isModified()) {
@@ -26,9 +25,9 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
         return separator;
     };
 
-    actionReplace = new QAction(app->icons.get("replace.png"), QString(), this);
-    actionSaveAs = new QAction(app->icons.get("save-as.png"), QString(), this);
-    actionExplore = new QAction(app->icons.get("explore.png"), QString(), this);
+    actionReplace = new QAction(QIcon::fromTheme("document-swap"), QString(), this);
+    actionSaveAs = new QAction(QIcon::fromTheme("document-save-as"), QString(), this);
+    actionExplore = new QAction(QIcon::fromTheme("folder-open"), QString(), this);
 
     actionReplace->setShortcut(QKeySequence("Ctrl+R"));
     actionSaveAs->setShortcut(QKeySequence("Ctrl+Shift+S"));
@@ -59,7 +58,7 @@ bool FileEditor::saveAs()
 
 bool FileEditor::replace()
 {
-    return index.replace();
+    return index.replace(this);
 }
 
 bool FileEditor::explore() const

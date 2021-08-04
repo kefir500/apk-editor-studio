@@ -1,7 +1,10 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QSettings>
+#include "base/recent.h"
+
+class Project;
+class QSettings;
 
 class Settings : public QObject
 {
@@ -9,7 +12,6 @@ class Settings : public QObject
 
 public:
     Settings();
-    ~Settings();
 
     void reset();
 
@@ -35,15 +37,27 @@ public:
     bool getKeepBrokenResources() const;
     QString getDeviceAlias(const QString &serial) const;
     QString getLastDirectory() const;
+    bool getSingleInstance() const;
     bool getAutoUpdates() const;
+    const QList<RecentFile> &getRecentList() const;
     int getRecentLimit() const;
     QString getLanguage() const;
-    QStringList getToolbar() const;
+    QStringList getMainWindowToolbar() const;
     QByteArray getMainWindowGeometry() const;
     QByteArray getMainWindowState() const;
+    QStringList getAndroidExplorerToolbar() const;
     bool hasRememberState(const QString &identifier) const;
     bool getRememberState(const QString &identifier) const;
+#ifdef Q_OS_WIN
+    bool getFileAssociation() const;
+    bool getExplorerOpenIntegration() const;
+    bool getExplorerInstallIntegration() const;
+    bool getExplorerOptimizeIntegration() const;
+    bool getExplorerSignIntegration() const;
+#endif
 
+    void addToRecent(const Project *project);
+    void clearRecentList();
     void setJavaPath(const QString &path);
     void setJavaMinHeapSize(int size);
     void setJavaMaxHeapSize(int size);
@@ -66,21 +80,31 @@ public:
     void setKeepBrokenResources(bool keepBroken);
     void setDeviceAlias(const QString &serial, const QString &alias);
     void setLastDirectory(const QString &directory);
+    void setSingleInstance(bool value);
     void setAutoUpdates(bool value);
     void setRecentLimit(int limit);
     void setLanguage(const QString &locale);
-    void setToolbar(const QStringList &actions);
+    void setMainWindowToolbar(const QStringList &actions);
     void setMainWindowGeometry(const QByteArray &geometry);
     void setMainWindowState(const QByteArray &state);
+    void setAndroidExplorerToolbar(const QStringList &actions);
     void setRememberState(const QString &identifier, bool state);
     void resetRememberState(const QString &identifier);
+#ifdef Q_OS_WIN
+    bool setFileAssociation(bool associate);
+    bool setExplorerOpenIntegration(bool integrate);
+    bool setExplorerInstallIntegration(bool integrate);
+    bool setExplorerOptimizeIntegration(bool integrate);
+    bool setExplorerSignIntegration(bool integrate);
+#endif
 
 signals:
-    void toolbarUpdated() const;
-    void resetDone() const;
+    void recentListUpdated();
+    void resetDone();
 
 private:
     QSettings *settings;
+    Recent *recent;
 };
 
 #endif // SETTINGS_H

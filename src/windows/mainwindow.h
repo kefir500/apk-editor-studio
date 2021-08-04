@@ -1,24 +1,34 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "apk/project.h"
-#include "widgets/logview.h"
-#include "widgets/manifestview.h"
-#include "widgets/projectswidget.h"
-#include "widgets/resourceabstractview.h"
-#include "widgets/projectlist.h"
-#include "widgets/toolbar.h"
-#include <QMainWindow>
 #include <QActionGroup>
 #include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QMainWindow>
+#include <QRubberBand>
+
+class ExtraListItemProxy;
+class LogView;
+class CentralWidget;
+class ManifestView;
+class Project;
+class ProjectItemsModel;
+class ProjectList;
+class ProjectWidget;
+class ResourceAbstractView;
+class Toolbar;
+class Viewer;
+class WelcomeActionViewer;
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    MainWindow(ProjectItemsModel &projects, QWidget *parent = nullptr);
+    ~MainWindow();
+
+    void setCurrentProject(Project *project);
 
 protected:
     void changeEvent(QEvent *event) override;
@@ -33,29 +43,36 @@ private:
     void initMenus();
     void retranslate();
 
-    void loadSettings();
-    void saveSettings();
+    void updateWindowForProject(Project *project);
+    void updateWindowForTab(Viewer *tab);
+    void updateRecentMenu();
 
-    bool setCurrentProject(Project *project);
-    void setActionsEnabled(const Project *project);
-    void updateWindowForProject(const Project *project);
+    void onProjectAdded(const QModelIndex &parent, int first, int last);
+    void onProjectAboutToBeRemoved(const QModelIndex &parent, int first, int last);
+    void onProjectSwitched(Project *project);
 
-    ProjectsWidget *projectsWidget;
+    Project *getCurrentProject() const;
+    ProjectWidget *getCurrentProjectWidget() const;
+    Viewer *getCurrentTab() const;
+
+    static int instances;
+    ProjectItemsModel &projects;
+
+    CentralWidget *centralWidget;
     ProjectList *projectList;
     LogView *logView;
     ManifestView *manifestTable;
     ResourceAbstractView *resourceTree;
     ResourceAbstractView *filesystemTree;
     ResourceAbstractView *iconList;
-
     Toolbar *toolbar;
     QDockWidget *dockProjects;
     QDockWidget *dockResources;
     QDockWidget *dockFilesystem;
     QDockWidget *dockManifest;
     QDockWidget *dockIcons;
-
     QMenu *menuFile;
+    QMenu *menuRecent;
     QMenu *menuEditor;
     QMenu *menuTools;
     QMenu *menuSettings;
@@ -63,19 +80,28 @@ private:
     QMenu *menuHelp;
     QAction *actionApkSave;
     QAction *actionApkInstall;
-    QAction *actionApkInstallExternal;
     QAction *actionApkExplore;
     QAction *actionApkClose;
+    QAction *actionFileSave;
+    QAction *actionFileSaveAs;
+    QAction *actionRecentClear;
+    QAction *actionRecentNone;
     QAction *actionProjectManager;
     QAction *actionTitleEditor;
     QAction *actionPermissionEditor;
+    QAction *actionViewSignatures;
+    QAction *actionCloneApk;
+    QAction *actionNewWindow;
     QAction *actionAboutQt;
     QAction *actionAbout;
     QActionGroup *actionsLanguage;
-
     QRubberBand *rubberBand;
 
     QByteArray defaultState;
+
+    QMap<Project *, ProjectWidget *> projectWidgets;
+    WelcomeActionViewer *welcomePage;
+    ExtraListItemProxy *welcomeItemProxy;
 };
 
 #endif // MAINWINDOW_H

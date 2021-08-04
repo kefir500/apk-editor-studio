@@ -1,8 +1,9 @@
 #ifndef PROJECTLIST_H
 #define PROJECTLIST_H
 
-#include "apk/projectitemsmodel.h"
 #include <QComboBox>
+
+class Project;
 
 class ProjectList : public QComboBox
 {
@@ -10,14 +11,7 @@ class ProjectList : public QComboBox
 
 public:
     explicit ProjectList(QWidget *parent = nullptr);
-
     bool setCurrentProject(Project *project);
-
-    ProjectItemsModel *model() const;
-    void setModel(ProjectItemsModel *model);
-
-signals:
-    void currentProjectChanged(Project *project) const;
 };
 
 #endif // PROJECTLIST_H

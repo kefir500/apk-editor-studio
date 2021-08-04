@@ -20,12 +20,12 @@ IconList::IconList(QWidget *parent) : QTreeView(parent)
 
 void IconList::setModel(QAbstractItemModel *model)
 {
+    QTreeView::setModel(model);
     if (model) {
         Q_ASSERT(qobject_cast<IconItemsModel *>(model));
         for (int column = 1; column < model->columnCount(); ++column) {
             hideColumn(column);
         }
-        QTreeView::setModel(model);
     }
 }
 
@@ -88,7 +88,7 @@ void IconList::dropEvent(QDropEvent *event)
         if (!path.isEmpty()) {
             const QModelIndex index = indexAt(event->pos());
             if (index.isValid() && rect().contains(event->pos())) {
-                model()->replaceResource(index, path);
+                model()->replaceResource(index, path, this);
             }
         }
     } else if (mimeData->hasImage()) {

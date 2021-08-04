@@ -22,17 +22,11 @@ public:
     void load();
     void save();
 
-signals:
-    void loaded() const;
-    void saved() const;
-
 protected:
     void changeEvent(QEvent *event) override;
 
 private:
     void initialize();
-    QListWidgetItem *createToolbarSeparatorItem() const;
-    QListWidgetItem *createToolbarSpacerItem() const;
 
     QWidget *widget;
     QVBoxLayout *layout;
@@ -40,10 +34,17 @@ private:
     QListWidget *pageList;
     QStackedWidget *pageStack;
 
+    QCheckBox *checkboxSingleInstance;
     QCheckBox *checkboxUpdates;
-    QPushButton *btnAssociate;
     QSpinBox *spinboxRecent;
     QComboBox *comboLanguages;
+#ifdef Q_OS_WIN
+    QGroupBox *groupAssociate;
+    QCheckBox *checkboxExplorerOpen;
+    QCheckBox *checkboxExplorerInstall;
+    QCheckBox *checkboxExplorerOptimize;
+    QCheckBox *checkboxExplorerSign;
+#endif
 
     FileBox *fileboxJava;
     QSpinBox *spinboxMinHeapSize;
@@ -63,9 +64,6 @@ private:
     FileBox *fileboxZipalign;
 
     FileBox *fileboxAdb;
-
-    QListWidget *listToolbarUsed;
-    PoolListWidget *listToolbarUnused;
 };
 
 #endif // OPTIONSDIALOG_H

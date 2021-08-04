@@ -46,7 +46,7 @@ QString XmlNode::getReadableType() const
         return tr("Dimension");
     } else if (tag == "plurals") {
         //: This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/string-resource#Plurals).
-        return tr("Plurals"); // TODO Rename to "Quantity Strings"?
+        return tr("Plurals");
     } else if (tag == "item") {
         //: This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#Id).
         return tr("ID");

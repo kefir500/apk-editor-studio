@@ -14,10 +14,10 @@
 
 KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
 {
-    resize(app->scale(500, 0));
+    resize(Utils::scale(500, 0));
     //: This string refers to multiple keys (as in "Manager of keys").
     setWindowTitle(tr("Key Manager"));
-    setWindowIcon(app->icons.get("key.png"));
+    setWindowIcon(QIcon::fromTheme("apk-sign"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     groupKeystore = new QGroupBox(tr("Custom Keystore"), this);
@@ -60,7 +60,7 @@ KeyManager::KeyManager(QWidget *parent) : QDialog(parent)
 
     connect(btnCreateKeystore, &QToolButton::clicked, this, &KeyManager::createKeystore);
     connect(btnCreateKey, &QToolButton::clicked, this, &KeyManager::createKey);
-    connect(btnSelectKey, &QToolButton::clicked, [this]() {
+    connect(btnSelectKey, &QToolButton::clicked, this, [this]() {
         const QString keystore = editKeystore->getCurrentPath();
         const QString password = editKeystorePassword->text();
         const QString defaultAlias = editKeyAlias->text();
@@ -96,12 +96,12 @@ void KeyManager::save()
 void KeyManager::createKeystore()
 {
     KeystoreCreator dialog(this);
-    connect(&dialog, &KeystoreCreator::createdKeystore, [&](const QString &keystore) {
+    connect(&dialog, &KeystoreCreator::createdKeystore, this, [this](const QString &keystore) {
         if (!keystore.isEmpty()) {
             editKeystore->setCurrentPath(keystore);
         }
     });
-    connect(&dialog, &KeystoreCreator::createdKey, [&](const QString &alias) {
+    connect(&dialog, &KeystoreCreator::createdKey, this, [this](const QString &alias) {
         if (!alias.isEmpty()) {
             editKeyAlias->setText(alias);
         }
@@ -115,7 +115,7 @@ void KeyManager::createKey()
     const QString password = editKeystorePassword->text();
 
     KeyCreator dialog(keystore, password, this);
-    connect(&dialog, &KeyCreator::createdKey, [&](const QString &alias) {
+    connect(&dialog, &KeyCreator::createdKey, this, [this](const QString &alias) {
         if (!alias.isEmpty()) {
             editKeyAlias->setText(alias);
         }

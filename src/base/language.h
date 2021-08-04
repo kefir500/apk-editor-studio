@@ -2,7 +2,7 @@
 #define LANGUAGE_H
 
 #include <QLocale>
-#include <QPixmap>
+#include <QIcon>
 
 class Language
 {
@@ -11,13 +11,13 @@ public:
 
     QString getTitle() const;
     QString getCode() const;
-    QPixmap getFlag() const;
+    QIcon getFlag() const;
 
 private:
     QLocale locale;
     QString title;
     QString code;
-    QPixmap flag;
+    QIcon flag;
 };
 
 #endif // LANGUAGE_H

@@ -4,12 +4,12 @@ Upstream-Contact: Alexander Gorishnyak <kefir500@gmail.com>
 Source: https://github.com/kefir500/apk-editor-studio
 
 Files: *
-Copyright: 2019-2020 Alexander Gorishnyak <kefir500@gmail.com>
+Copyright: 2019-2021 Alexander Gorishnyak <kefir500@gmail.com>
 License: GPL-3.0+
 
 Files: res/deploy/all/tools/apktool.jar
 Copyright: 2010-2011 Ryszard Wiśniewski
-           2012-2020 Connor Tumbleson
+           2012-2021 Connor Tumbleson
 License: Apache-2.0
 
 Files: res/deploy/all/tools/apksigner.jar
@@ -25,14 +25,26 @@ Copyright: 2008 The Android Open Source Project
 License: Apache-2.0
 
 Files: lib/qtkeychain/*
-Copyright: 2011-2020 Frank Osterfeld
+Copyright: 2011-2021 Frank Osterfeld
 License: BSD-3-clause
 
-Files: res/deploy/all/resources/icons/*
-Copyright: 2020 Icons8 LLC
+Files: src/icons/*.png
+Copyright: 2021 Icons8 LLC
 License: CC-BY-ND-3.0
 
-Files: res/deploy/all/resources/flags/*
+Files: src/icons/*/help-source.png
+Copyright: 2021 GitHub, Inc.
+License: CC-BY-ND-3.0
+
+Files: src/icons/default/apps/*/apk-editor-studio.png
+Copyright: 2019-2021 Alexander Gorishnyak <kefir500@gmail.com>
+License: CC-BY-ND-3.0
+
+Files: src/icons/default/apps/*/qt.png
+Copyright: 2021 The Qt Company
+License: CC-BY-ND-3.0
+
+Files: src/icons/default/intl/*
 Copyright: 2005-2006 Mark James
 License: CC-BY-3.0
 
@@ -69,7 +81,7 @@ License: Apache-2.0
  On Debian systems, the complete text of the Apache version 2.0 license
  can be found in "/usr/share/common-licenses/Apache-2.0".
 
-Licnse: BSD-3-clause
+License: BSD-3-clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are
  met:

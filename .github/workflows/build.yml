@@ -1,0 +1,162 @@
+name: Build
+
+on: push
+
+jobs:
+  build-windows-msi:
+    name: Windows Build (MSI)
+    runs-on: windows-latest
+    steps:
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.13.0
+        with:
+          version: 5.15.2
+          arch: win32_msvc2019
+          tools: tools_openssl_x86,1.1.1,qt.tools.openssl.win_x86
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Download Tools
+        run: python scripts\download.py
+      - name: Build MSI Package
+        id: build
+        shell: cmd
+        run: |
+          set QTDIR=%Qt5_DIR%
+          set OPENSSL=%Qt5_DIR%/../../Tools/OpenSSL/Win_x86/bin
+          set PATH=%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
+          call scripts\windows\packages\msi\build.msi.bat || exit
+          set /p VERSION=<VERSION
+          echo VERSION=%VERSION%>>%GITHUB_ENV%
+      - name: Upload Assets
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: apk-editor-studio_windows_${{ env.VERSION }}.msi
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          omitName: true
+          omitBody: true
+          prerelease: true
+          tag: development
+          token: ${{ secrets.GITHUB_TOKEN }}
+  build-windows-zip:
+    name: Windows Build (ZIP)
+    runs-on: windows-latest
+    steps:
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.13.0
+        with:
+          version: 5.15.2
+          arch: win32_msvc2019
+          tools: tools_openssl_x86,1.1.1,qt.tools.openssl.win_x86
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Download Tools
+        run: python scripts\download.py
+      - name: Build ZIP Package
+        id: build
+        shell: cmd
+        run: |
+          set QTDIR=%Qt5_DIR%
+          set OPENSSL=%Qt5_DIR%/../../Tools/OpenSSL/Win_x86/bin
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
+          call "scripts\windows\packages\zip\build.zip.bat" || exit
+          set /p VERSION=<VERSION
+          echo VERSION=%VERSION%>>%GITHUB_ENV%
+      - name: Upload Assets
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: apk-editor-studio_windows_${{ env.VERSION }}.zip
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          omitName: true
+          omitBody: true
+          prerelease: true
+          tag: development
+          token: ${{ secrets.GITHUB_TOKEN }}
+  build-linux-deb:
+    name: Linux Build (DEB)
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Install Dependencies
+        run: sudo apt-get install qt5-default qttools5-dev-tools libsecret-1-dev dh-make devscripts fakeroot
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Download Tools
+        run: python3 scripts/download.py
+      - name: Build DEB Package
+        id: build
+        run: |
+          scripts/linux/packages/deb/build.deb.sh
+          echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+      - name: Upload Assets
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: scripts/linux/packages/deb/apk-editor-studio_linux_${{ env.VERSION }}.deb
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          omitName: true
+          omitBody: true
+          prerelease: true
+          tag: development
+          token: ${{ secrets.GITHUB_TOKEN }}
+  build-linux-appimage:
+    name: Linux Build (AppImage)
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Install Dependencies
+        run: |
+          sudo add-apt-repository ppa:beineri/opt-qt-5.10.1-xenial -y
+          sudo apt-get update -qq
+          sudo apt-get install qt510base qt510imageformats qt510svg qt510tools libgl1-mesa-dev libsecret-1-dev adb zipalign
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Download Tools
+        run: python3 scripts/download.py
+      - name: Build AppImage Package
+        id: build
+        run: |
+          source /opt/qt510/bin/qt510-env.sh || true
+          scripts/linux/packages/appimage/build.appimage.sh
+          echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+      - name: Upload Assets
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: scripts/linux/packages/appimage/apk-editor-studio_linux_${{ env.VERSION }}.AppImage
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          omitName: true
+          omitBody: true
+          prerelease: true
+          tag: development
+          token: ${{ secrets.GITHUB_TOKEN }}
+  build-macos:
+    name: macOS Build (APP, DMG)
+    runs-on: macos-10.15
+    steps:
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.13.0
+        with:
+          version: 5.15.2
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Download Tools
+        run: python3 scripts/download.py
+      - name: Build APP/DMG Package
+        id: build
+        run: |
+          scripts/macos/packages/app/build.app.command
+          npm i appdmg
+          scripts/macos/packages/dmg/build.dmg.command
+          echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+      - name: Upload Assets
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: scripts/macos/packages/app/apk-editor-studio_macos_${{ env.VERSION }}.app.zip,scripts/macos/packages/dmg/apk-editor-studio_macos_${{ env.VERSION }}.dmg
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          omitName: true
+          omitBody: true
+          prerelease: true
+          tag: development
+          token: ${{ secrets.GITHUB_TOKEN }}

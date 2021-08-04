@@ -1,9 +1,7 @@
 #include "widgets/manifestview.h"
 #include "widgets/itembuttondelegate.h"
 #include "windows/selectdialog.h"
-#include "base/application.h"
 #include "base/utils.h"
-#include <QEvent>
 #include <QHeaderView>
 
 ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
@@ -19,7 +17,7 @@ ManifestView::ManifestView(QWidget *parent) : QTableView(parent)
 
     ItemButtonDelegate *buttonDelegate = new ItemButtonDelegate(this);
     setItemDelegate(buttonDelegate);
-    connect(buttonDelegate, &ItemButtonDelegate::clicked, [=](int row) {
+    connect(buttonDelegate, &ItemButtonDelegate::clicked, this, [this](int row) {
         switch (row) {
         case ManifestModel::MinimumSdkRow: {
             const QString dialogTitle = model()->headerData(ManifestModel::MinimumSdkRow, Qt::Vertical).toString();
@@ -54,13 +52,13 @@ void ManifestView::setModel(QAbstractItemModel *model)
 {
     if (model) {
         Q_ASSERT(qobject_cast<ManifestModel *>(model));
-        QTableView::setModel(model);
     }
+    QTableView::setModel(model);
 }
 
 QSize ManifestView::sizeHint() const
 {
-    return QSize(app->scale(240), 117);
+    return QSize(Utils::scale(240), 117);
 }
 
 int ManifestView::selectAndroidApi(const QString &dialogTitle, int defaultApi)
