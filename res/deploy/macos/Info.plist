@@ -19,7 +19,7 @@
 	<key>CFBundleIconFile</key>
 	<string>apk-editor-studio.icns</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (C) Alexander Gorishnyak 2019-2020</string>
+	<string>Copyright (C) Alexander Gorishnyak 2019-2021</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
