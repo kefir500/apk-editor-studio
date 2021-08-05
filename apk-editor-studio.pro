@@ -4,7 +4,7 @@ QT += core gui widgets xml network
 CONFIG += c++11
 
 TARGET = apk-editor-studio
-VERSION = 1.4.0
+VERSION = 1.5.0
 
 QMAKE_TARGET_PRODUCT = APK Editor Studio
 QMAKE_TARGET_COMPANY = Alexander Gorishnyak

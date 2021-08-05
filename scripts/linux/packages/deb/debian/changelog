@@ -1,3 +1,35 @@
+apk-editor-studio (1.5.0-1) unstable; urgency=low
+
+  * Added APK cloning (experimental).
+	* Added signature viewer.
+	* Added command line parameters.
+	* Added ability to sign and optimize APK without unpacking.
+	* Added support for multi-window mode.
+	* Added support for system dark mode.
+	* Added support for relative tool paths.
+	* Added explicit toolbar customization.
+	* Added RTL UI support.
+	* Added Android 11 support.
+	* Updated Apktool to 2.5.0.
+	* Added Azerbaijani translation.
+	* Added Chinese (Simplified) translation.
+	* Added Czech translation.
+	* Added English (British) translation.
+	* Added French translation.
+	* Added Hebrew translation.
+	* Added Hungarian translation.
+	* Added Indonesian translation.
+	* Added Italian translation.
+	* Added Korean translation.
+	* Added Kurdish translation.
+	* Added Persian translation.
+	* Fixed installation of an unsaved project.
+	* Fixed confirmation when closing modified tabs.
+	* Fixed crash on empty application title.
+	* Fixed potential duplicates in recent list.
+
+ -- Alexander Gorishnyak <kefir500@gmail.com>  Thu, 05 Aug 2021 15:32:28 +0600
+
 apk-editor-studio (1.4.0-1) unstable; urgency=low
 
   * Added Android Explorer.
