@@ -33,6 +33,7 @@ public:
     QString getKeyPassword() const;
     QString getApktoolVersion() const;
     bool getUseAapt2() const;
+    bool getMakeDebuggable() const;
     bool getDecompileSources() const;
     bool getKeepBrokenResources() const;
     QString getDeviceAlias(const QString &serial) const;
@@ -76,6 +77,7 @@ public:
     void setKeyPassword(const QString &password);
     void setApktoolVersion(const QString &version);
     void setUseAapt2(bool aapt2);
+    void setMakeDebuggable(bool debuggable);
     void setDecompileSources(bool smali);
     void setKeepBrokenResources(bool keepBroken);
     void setDeviceAlias(const QString &serial, const QString &alias);
