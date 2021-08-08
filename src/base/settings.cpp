@@ -128,6 +128,11 @@ bool Settings::getUseAapt2() const
     return settings->value("Apktool/Aapt2", false).toBool();
 }
 
+bool Settings::getMakeDebuggable() const
+{
+    return settings->value("Apktool/Debuggable", false).toBool();
+}
+
 bool Settings::getDecompileSources() const
 {
     return settings->value("Apktool/Sources", false).toBool();
@@ -353,6 +358,11 @@ void Settings::setApktoolVersion(const QString &version)
 void Settings::setUseAapt2(bool aapt2)
 {
     settings->setValue("Apktool/Aapt2", aapt2);
+}
+
+void Settings::setMakeDebuggable(bool debuggable)
+{
+    settings->setValue("Apktool/Debuggable", debuggable);
 }
 
 void Settings::setDecompileSources(bool smali)

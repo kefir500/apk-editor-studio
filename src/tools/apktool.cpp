@@ -53,6 +53,9 @@ void Apktool::Build::run()
     if (aapt2) {
         arguments << "--use-aapt2";
     }
+    if (debuggable) {
+        arguments << "--debug";
+    }
 
     auto process = new JarProcess(this);
     connect(process, &JarProcess::finished, this, [=](bool success, const QString &output) {

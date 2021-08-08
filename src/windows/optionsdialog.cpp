@@ -97,6 +97,7 @@ void OptionsDialog::load()
     fileboxOutput->setCurrentPath(app->settings->getOutputDirectory());
     fileboxFrameworks->setCurrentPath(app->settings->getFrameworksDirectory());
     checkboxAapt->setChecked(app->settings->getUseAapt2());
+    checkboxDebuggable->setChecked(app->settings->getMakeDebuggable());
     checkboxSources->setChecked(app->settings->getDecompileSources());
     checkboxBrokenResources->setChecked(app->settings->getKeepBrokenResources());
 
@@ -147,6 +148,7 @@ void OptionsDialog::save()
     app->settings->setOutputDirectory(fileboxOutput->getCurrentPath());
     app->settings->setFrameworksDirectory(fileboxFrameworks->getCurrentPath());
     app->settings->setUseAapt2(checkboxAapt->isChecked());
+    app->settings->setMakeDebuggable(checkboxDebuggable->isChecked());
     app->settings->setDecompileSources(checkboxSources->isChecked());
     app->settings->setKeepBrokenResources(checkboxBrokenResources->isChecked());
 
@@ -276,6 +278,7 @@ void OptionsDialog::initialize()
     fileboxFrameworks->setDefaultPath("");
     fileboxFrameworks->setPlaceholderText(Apktool::getDefaultFrameworksPath());
     checkboxAapt = new QCheckBox("AAPT2", this);
+    checkboxDebuggable = new QCheckBox("Make Debuggable", this);
     //: "Smali" is the name of the tool/format, don't translate it.
     checkboxSources = new QCheckBox(tr("Decompile source code (smali)"), this);
     checkboxBrokenResources = new QCheckBox(tr("Decompile broken resources"), this);
@@ -284,6 +287,7 @@ void OptionsDialog::initialize()
     pageRepack->addRow(tr("Extraction path:"), fileboxOutput);
     pageRepack->addRow(tr("Frameworks path:"), fileboxFrameworks);
     pageRepack->addRow(checkboxAapt);
+    pageRepack->addRow(checkboxDebuggable);
     pageRepack->addRow(checkboxSources);
     pageRepack->addRow(checkboxBrokenResources);
     pageRepack->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);

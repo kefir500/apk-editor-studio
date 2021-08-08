@@ -54,6 +54,7 @@ private:
     FileBox *fileboxOutput;
     FileBox *fileboxFrameworks;
     QCheckBox *checkboxAapt;
+    QCheckBox *checkboxDebuggable;
     QCheckBox *checkboxSources;
     QCheckBox *checkboxBrokenResources;
 
