@@ -4,6 +4,10 @@
 
 - [Alexander Gorishnyak](https://github.com/kefir500)
 
+### Contributors:
+
+- [Sukhmeet Singh](https://github.com/MadGuyyy)
+
 ### Special Thanks:
 
 - [Connor Tumbleson](https://github.com/iBotPeaches) and [contributors](https://github.com/iBotPeaches/Apktool/blob/master/CONTRIBUTORS.md) — Apktool
