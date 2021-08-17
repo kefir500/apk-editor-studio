@@ -5,7 +5,7 @@ Source: https://github.com/kefir500/apk-editor-studio
 
 Files: *
 Copyright: 2019-2021 Alexander Gorishnyak <kefir500@gmail.com>
-License: GPL-3.0+
+License: GPL-3.0-only
 
 Files: res/deploy/all/tools/apktool.jar
 Copyright: 2010-2011 Ryszard Wiśniewski
@@ -28,27 +28,33 @@ Files: lib/qtkeychain/*
 Copyright: 2011-2021 Frank Osterfeld
 License: BSD-3-clause
 
-Files: src/icons/*.png
+Files: src/icons/apk-editor-studio*/*.png
 Copyright: 2021 Icons8 LLC
-License: CC-BY-ND-3.0
+License: icons8-license
+ https://icons8.com/license
 
-Files: src/icons/*/help-source.png
+Files: src/icons/apk-editor-studio*/actions/*/help-source.png
 Copyright: 2021 GitHub, Inc.
-License: CC-BY-ND-3.0
+License: github-trademark
+ https://github.com/logos
 
-Files: src/icons/default/apps/*/apk-editor-studio.png
-Copyright: 2019-2021 Alexander Gorishnyak <kefir500@gmail.com>
-License: CC-BY-ND-3.0
-
-Files: src/icons/default/apps/*/qt.png
+Files: src/icons/apk-editor-studio*/apps/*/qt.png
 Copyright: 2021 The Qt Company
-License: CC-BY-ND-3.0
+License: qt-trademark
+ https://www.qt.io/trademark/
 
-Files: src/icons/default/intl/*
+Files: src/icons/apk-editor-studio*/apps/*/apk-editor-studio.png
+       src/icons/other/*
+Copyright: 2019-2021 Alexander Gorishnyak <kefir500@gmail.com>
+License: GPL-3.0-only
+
+Files: src/icons/apk-editor-studio*/intl/*
 Copyright: 2005-2006 Mark James
-License: CC-BY-3.0
+License: public-domain
+ These flag icons are available for free use
+ for any purpose with no requirement for attribution.
 
-License: GPL-3.0+
+License: GPL-3.0-only
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
@@ -81,6 +87,25 @@ License: Apache-2.0
  On Debian systems, the complete text of the Apache version 2.0 license
  can be found in "/usr/share/common-licenses/Apache-2.0".
 
+License: MIT
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+
 License: BSD-3-clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are
@@ -109,34 +134,3 @@ License: BSD-3-clause
  STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
-
-License: CC-BY-ND-3.0
- You are free to:
- Share - copy and redistribute the material in any medium or format
- for any purpose, even commercially.
- The licensor cannot revoke these freedoms
- as long as you follow the license terms.
- .
- Under the following terms:
- Attribution - You must give appropriate credit, provide a link to the license,
- and indicate if changes were made. You may do so in any reasonable manner,
- but not in any way that suggests the licensor endorses you or your use.
- .
- No additional restrictions - You may not apply legal terms or technological
- measures that legally restrict others from doing anything the license permits.
-
-License: CC-BY-3.0
- You are free to:
- Share - copy and redistribute the material in any medium or format
- Adapt - remix, transform, and build upon the material
- for any purpose, even commercially.
- The licensor cannot revoke these freedoms
- as long as you follow the license terms.
- .
- Under the following terms:
- Attribution - You must give appropriate credit, provide a link to the license,
- and indicate if changes were made. You may do so in any reasonable manner,
- but not in any way that suggests the licensor endorses you or your use.
- .
- No additional restrictions - You may not apply legal terms or technological
- measures that legally restrict others from doing anything the license permits.
