@@ -22,7 +22,7 @@ jobs:
         shell: cmd
         run: |
           set QTDIR=%Qt5_DIR%
-          set OPENSSL=%Qt5_DIR%/../../Tools/OpenSSL/Win_x86/bin
+          set OPENSSL=%Qt5_DIR%/../../Tools/OpenSSL/Win_x86
           set PATH=%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
           call scripts\windows\packages\msi\build.msi.bat || exit
@@ -58,7 +58,7 @@ jobs:
         shell: cmd
         run: |
           set QTDIR=%Qt5_DIR%
-          set OPENSSL=%Qt5_DIR%/../../Tools/OpenSSL/Win_x86/bin
+          set OPENSSL=%Qt5_DIR%/../../Tools/OpenSSL/Win_x86
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
           call "scripts\windows\packages\zip\build.zip.bat" || exit
           set /p VERSION=<VERSION
@@ -67,32 +67,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: apk-editor-studio_windows_${{ env.VERSION }}.zip
-          artifactErrorsFailBuild: true
-          allowUpdates: true
-          omitName: true
-          omitBody: true
-          prerelease: true
-          tag: development
-          token: ${{ secrets.GITHUB_TOKEN }}
-  build-linux-deb:
-    name: Linux Build (DEB)
-    runs-on: ubuntu-16.04
-    steps:
-      - name: Install Dependencies
-        run: sudo apt-get install qt5-default qttools5-dev-tools libsecret-1-dev dh-make devscripts fakeroot
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Download Tools
-        run: python3 scripts/download.py
-      - name: Build DEB Package
-        id: build
-        run: |
-          scripts/linux/packages/deb/build.deb.sh
-          echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
-      - name: Upload Assets
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: scripts/linux/packages/deb/apk-editor-studio_linux_${{ env.VERSION }}.deb
           artifactErrorsFailBuild: true
           allowUpdates: true
           omitName: true

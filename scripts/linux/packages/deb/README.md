@@ -1,2 +1,0 @@
-- Run `sudo apt-get install qt5-default qttools5-dev-tools libsecret-1-dev debhelper devscripts fakeroot`.
-- Run `build.deb.sh`.
