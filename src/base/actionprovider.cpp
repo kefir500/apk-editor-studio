@@ -13,18 +13,18 @@
 #include <QDesktopServices>
 #include <QDateTime>
 
-void ActionProvider::openApk(MainWindow *window)
+void ActionProvider::openApk(MainWindow *window) const
 {
     const QStringList paths = Dialogs::getOpenApkFilenames(window);
     openApk(paths, window);
 }
 
-void ActionProvider::openApk(const QString &path, MainWindow *window)
+void ActionProvider::openApk(const QString &path, MainWindow *window) const
 {
     openApk(QStringList(path), window);
 }
 
-void ActionProvider::openApk(const QStringList &paths, MainWindow *window)
+void ActionProvider::openApk(const QStringList &paths, MainWindow *window) const
 {
     for (const QString &path : paths) {
         auto project = projects.add(path, window);
@@ -36,13 +36,13 @@ void ActionProvider::openApk(const QStringList &paths, MainWindow *window)
     }
 }
 
-void ActionProvider::optimizeApk(MainWindow *window)
+void ActionProvider::optimizeApk(MainWindow *window) const
 {
     const QStringList paths = Dialogs::getOpenApkFilenames(window);
     optimizeApk(paths, window);
 }
 
-void ActionProvider::optimizeApk(const QStringList &paths, MainWindow *window)
+void ActionProvider::optimizeApk(const QStringList &paths, MainWindow *window) const
 {
     for (const QString &path : paths) {
         auto project = projects.add(path, window);
@@ -54,13 +54,13 @@ void ActionProvider::optimizeApk(const QStringList &paths, MainWindow *window)
     }
 }
 
-void ActionProvider::signApk(MainWindow *window)
+void ActionProvider::signApk(MainWindow *window) const
 {
     const QStringList paths = Dialogs::getOpenApkFilenames(window);
     signApk(paths, window);
 }
 
-void ActionProvider::signApk(const QStringList &paths, MainWindow *window)
+void ActionProvider::signApk(const QStringList &paths, MainWindow *window) const
 {
     const auto keystore = Keystore::get(window);
     if (keystore) {
@@ -68,7 +68,7 @@ void ActionProvider::signApk(const QStringList &paths, MainWindow *window)
     }
 }
 
-void ActionProvider::signApk(const QStringList &paths, const Keystore *keystore, MainWindow *window)
+void ActionProvider::signApk(const QStringList &paths, const Keystore *keystore, MainWindow *window) const
 {
     Q_ASSERT(keystore);
     for (const QString &path : paths) {
@@ -81,7 +81,7 @@ void ActionProvider::signApk(const QStringList &paths, const Keystore *keystore,
     }
 }
 
-void ActionProvider::installApk(MainWindow *window)
+void ActionProvider::installApk(MainWindow *window) const
 {
     const auto device = Dialogs::getInstallDevice(window);
     if (!device.isNull()) {
@@ -89,13 +89,13 @@ void ActionProvider::installApk(MainWindow *window)
     }
 }
 
-void ActionProvider::installApk(const QString &serial, MainWindow *window)
+void ActionProvider::installApk(const QString &serial, MainWindow *window) const
 {
     const QStringList paths = Dialogs::getOpenApkFilenames(window);
     installApk(paths, serial, window);
 }
 
-void ActionProvider::installApk(const QStringList &paths, const QString &serial, MainWindow *window)
+void ActionProvider::installApk(const QStringList &paths, const QString &serial, MainWindow *window) const
 {
     Q_ASSERT(!serial.isEmpty());
     for (const QString &path : paths) {
@@ -108,37 +108,37 @@ void ActionProvider::installApk(const QStringList &paths, const QString &serial,
     }
 }
 
-bool ActionProvider::closeApk(Project *project)
+bool ActionProvider::closeApk(Project *project) const
 {
     return projects.close(project);
 }
 
-void ActionProvider::visitWebPage()
+void ActionProvider::visitWebPage() const
 {
     QDesktopServices::openUrl(Utils::getWebsiteUtmUrl());
 }
 
-void ActionProvider::visitSourcePage()
+void ActionProvider::visitSourcePage() const
 {
     QDesktopServices::openUrl(Utils::getRepositoryUrl());
 }
 
-void ActionProvider::visitDonatePage()
+void ActionProvider::visitDonatePage() const
 {
     QDesktopServices::openUrl(Utils::getDonationsUrl());
 }
 
-void ActionProvider::visitUpdatePage()
+void ActionProvider::visitUpdatePage() const
 {
     QDesktopServices::openUrl(Utils::getUpdateUrl());
 }
 
-void ActionProvider::visitBlogPage(const QString &post)
+void ActionProvider::visitBlogPage(const QString &post) const
 {
     QDesktopServices::openUrl(Utils::getBlogPostUrl(post));
 }
 
-void ActionProvider::exit(QWidget *widget)
+void ActionProvider::exit(QWidget *widget) const
 {
     widget->close();
 }
@@ -159,25 +159,25 @@ bool ActionProvider::resetSettings(QWidget *parent) const
     return true;
 }
 
-void ActionProvider::openOptions(QWidget *parent)
+void ActionProvider::openOptions(QWidget *parent) const
 {
     OptionsDialog settings(parent);
     settings.exec();
 }
 
-void ActionProvider::openDeviceManager(QWidget *parent)
+void ActionProvider::openDeviceManager(QWidget *parent) const
 {
     DeviceManager deviceManager(parent);
     deviceManager.exec();
 }
 
-void ActionProvider::openKeyManager(QWidget *parent)
+void ActionProvider::openKeyManager(QWidget *parent) const
 {
     KeyManager keyManager(parent);
     keyManager.exec();
 }
 
-void ActionProvider::openAndroidExplorer(MainWindow *window)
+void ActionProvider::openAndroidExplorer(MainWindow *window) const
 {
     const auto device = Dialogs::getExplorerDevice(window);
     if (!device.isNull()) {
@@ -185,14 +185,14 @@ void ActionProvider::openAndroidExplorer(MainWindow *window)
     }
 }
 
-void ActionProvider::openAndroidExplorer(const QString &serial, MainWindow *window)
+void ActionProvider::openAndroidExplorer(const QString &serial, MainWindow *window) const
 {
     auto explorer = new AndroidExplorer(serial, window);
     explorer->setAttribute(Qt::WA_DeleteOnClose);
     explorer->show();
 }
 
-void ActionProvider::takeScreenshot(QWidget *parent)
+void ActionProvider::takeScreenshot(QWidget *parent) const
 {
     const auto device = Dialogs::getScreenshotDevice(parent);
     if (!device.isNull()) {
@@ -200,7 +200,7 @@ void ActionProvider::takeScreenshot(QWidget *parent)
     }
 }
 
-void ActionProvider::takeScreenshot(const QString &serial, QWidget *parent)
+void ActionProvider::takeScreenshot(const QString &serial, QWidget *parent) const
 {
     const QString datetime = QDateTime::currentDateTime().toString("yyyy-MM-dd_HH-mm-ss");
     const QString filename = QString("screenshot_%1.png").arg(datetime);
@@ -219,7 +219,7 @@ void ActionProvider::takeScreenshot(const QString &serial, QWidget *parent)
     }
 }
 
-QAction *ActionProvider::getOpenApk(MainWindow *window)
+QAction *ActionProvider::getOpenApk(MainWindow *window) const
 {
     auto action = new QAction(QIcon::fromTheme("document-open"), {}, window);
     action->setShortcut(QKeySequence::Open);
@@ -234,7 +234,7 @@ QAction *ActionProvider::getOpenApk(MainWindow *window)
     return action;
 }
 
-QAction *ActionProvider::getOptimizeApk(MainWindow *window)
+QAction *ActionProvider::getOptimizeApk(MainWindow *window) const
 {
     auto action = new QAction(QIcon::fromTheme("apk-optimize"), {}, window);
 
@@ -249,7 +249,7 @@ QAction *ActionProvider::getOptimizeApk(MainWindow *window)
     return action;
 }
 
-QAction *ActionProvider::getSignApk(MainWindow *window)
+QAction *ActionProvider::getSignApk(MainWindow *window) const
 {
     auto action = new QAction(QIcon::fromTheme("apk-sign"), {}, window);
 
@@ -264,12 +264,12 @@ QAction *ActionProvider::getSignApk(MainWindow *window)
     return action;
 }
 
-QAction *ActionProvider::getInstallApk(MainWindow *window)
+QAction *ActionProvider::getInstallApk(MainWindow *window) const
 {
     return getInstallApk({}, window);
 }
 
-QAction *ActionProvider::getInstallApk(const QString &serial, MainWindow *window)
+QAction *ActionProvider::getInstallApk(const QString &serial, MainWindow *window) const
 {
     auto action = new QAction(QIcon::fromTheme("apk-install"), {}, window);
 
@@ -291,7 +291,7 @@ QAction *ActionProvider::getInstallApk(const QString &serial, MainWindow *window
     return action;
 }
 
-QAction *ActionProvider::getVisitWebPage(QObject *parent)
+QAction *ActionProvider::getVisitWebPage(QObject *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("help-website"), {}, parent);
 
@@ -303,7 +303,7 @@ QAction *ActionProvider::getVisitWebPage(QObject *parent)
     return action;
 }
 
-QAction *ActionProvider::getVisitSourcePage(QObject *parent)
+QAction *ActionProvider::getVisitSourcePage(QObject *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("help-source"), {}, parent);
 
@@ -315,7 +315,7 @@ QAction *ActionProvider::getVisitSourcePage(QObject *parent)
     return action;
 }
 
-QAction *ActionProvider::getVisitDonatePage(QObject *parent)
+QAction *ActionProvider::getVisitDonatePage(QObject *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("help-donate"), {}, parent);
 
@@ -327,7 +327,7 @@ QAction *ActionProvider::getVisitDonatePage(QObject *parent)
     return action;
 }
 
-QAction *ActionProvider::getExit(QWidget *widget)
+QAction *ActionProvider::getExit(QWidget *widget) const
 {
     auto action = new QAction(QIcon::fromTheme("application-exit"), {}, widget);
     action->setShortcut(QKeySequence::Quit);
@@ -343,7 +343,7 @@ QAction *ActionProvider::getExit(QWidget *widget)
     return action;
 }
 
-QAction *ActionProvider::getCheckUpdates(QWidget *parent)
+QAction *ActionProvider::getCheckUpdates(QWidget *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("help-update"), {}, parent);
 
@@ -358,7 +358,7 @@ QAction *ActionProvider::getCheckUpdates(QWidget *parent)
     return action;
 }
 
-QAction *ActionProvider::getResetSettings(QWidget *parent)
+QAction *ActionProvider::getResetSettings(QWidget *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("edit-delete"), {}, parent);
 
@@ -373,7 +373,7 @@ QAction *ActionProvider::getResetSettings(QWidget *parent)
     return action;
 }
 
-QAction *ActionProvider::getOpenOptions(QWidget *parent)
+QAction *ActionProvider::getOpenOptions(QWidget *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("configure"), {}, parent);
     action->setShortcut(QKeySequence("Ctrl+P"));
@@ -390,7 +390,7 @@ QAction *ActionProvider::getOpenOptions(QWidget *parent)
     return action;
 }
 
-QAction *ActionProvider::getOpenDeviceManager(QWidget *parent)
+QAction *ActionProvider::getOpenDeviceManager(QWidget *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("smartphone"), {}, parent);
     action->setShortcut(QKeySequence("Ctrl+D"));
@@ -407,7 +407,7 @@ QAction *ActionProvider::getOpenDeviceManager(QWidget *parent)
     return action;
 }
 
-QAction *ActionProvider::getOpenKeyManager(QWidget *parent)
+QAction *ActionProvider::getOpenKeyManager(QWidget *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("apk-sign"), {}, parent);
     action->setShortcut(QKeySequence("Ctrl+K"));
@@ -424,12 +424,12 @@ QAction *ActionProvider::getOpenKeyManager(QWidget *parent)
     return action;
 }
 
-QAction *ActionProvider::getOpenAndroidExplorer(MainWindow *window)
+QAction *ActionProvider::getOpenAndroidExplorer(MainWindow *window) const
 {
     return getOpenAndroidExplorer({}, window);
 }
 
-QAction *ActionProvider::getOpenAndroidExplorer(const QString &serial, MainWindow *window)
+QAction *ActionProvider::getOpenAndroidExplorer(const QString &serial, MainWindow *window) const
 {
     auto action = new QAction(QIcon::fromTheme("tool-androidexplorer"), {}, window);
     action->setShortcut(QKeySequence("Ctrl+Shift+X"));
@@ -451,12 +451,12 @@ QAction *ActionProvider::getOpenAndroidExplorer(const QString &serial, MainWindo
     return action;
 }
 
-QAction *ActionProvider::getTakeScreenshot(QWidget *parent)
+QAction *ActionProvider::getTakeScreenshot(QWidget *parent) const
 {
     return getTakeScreenshot({}, parent);
 }
 
-QAction *ActionProvider::getTakeScreenshot(const QString &serial, QWidget *parent)
+QAction *ActionProvider::getTakeScreenshot(const QString &serial, QWidget *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("camera-photo"), {}, parent);
 
@@ -477,7 +477,7 @@ QAction *ActionProvider::getTakeScreenshot(const QString &serial, QWidget *paren
     return action;
 }
 
-QMenu *ActionProvider::getLanguages(QWidget *parent)
+QMenu *ActionProvider::getLanguages(QWidget *parent) const
 {
     auto menu = new QMenu(parent);
     auto actions = new QActionGroup(parent);
