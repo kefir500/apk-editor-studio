@@ -18,6 +18,7 @@
 #include "base/extralistitemproxy.h"
 #include "base/updater.h"
 #include "apk/project.h"
+#include <QBoxLayout>
 #include <QDebug>
 #include <QDockWidget>
 #include <QMenuBar>

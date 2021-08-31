@@ -3,8 +3,11 @@
 
 #include "editors/viewer.h"
 #include "widgets/elidedlabel.h"
-#include <QBoxLayout>
 #include <QPushButton>
+
+class QVBoxLayout;
+class QPushButton;
+class GradientWidget;
 
 class ActionViewer : public Viewer
 {
@@ -17,10 +20,11 @@ public:
 protected:
     void addWidget(QWidget *widget);
     QPushButton *addButton(const QString &title = QString());
-    void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     QVBoxLayout *layout;
+    GradientWidget *background;
     ElidedLabel *label;
 };
 

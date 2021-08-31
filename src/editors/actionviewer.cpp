@@ -1,12 +1,20 @@
 #include "editors/actionviewer.h"
 #include "base/application.h"
 #include "base/utils.h"
+#include "widgets/gradientwidget.h"
+#include <QBoxLayout>
 #include <QPainter>
 #include <QPaintEvent>
-#include <QFontDatabase>
+
+#ifdef Q_OS_OSX
+    #include <QFontDatabase>
+#endif
 
 ActionViewer::ActionViewer(QWidget *parent) : Viewer(parent)
 {
+    background = new GradientWidget(this);
+    background->resize(size());
+
     label = new ElidedLabel(this);
 #if defined(Q_OS_WIN)
     label->setFont(QFont("Segoe UI", 14));
@@ -55,31 +63,7 @@ QPushButton *ActionViewer::addButton(const QString &title)
     return button;
 }
 
-void ActionViewer::paintEvent(QPaintEvent *event)
+void ActionViewer::resizeEvent(QResizeEvent *event)
 {
-    const int w = width();
-    const int h = height();
-    const int min = qMin(w, h);
-
-    const QColor color1(app->theme()->color(Theme::Color::BackgroundGradientStart));
-    const QColor color2(app->theme()->color(Theme::Color::BackgroundGradientEnd));
-    QLinearGradient gradient(QPoint(0, min), QPoint(min, 0));
-    gradient.setColorAt(0.1, color1);
-    gradient.setColorAt(0.5, color2);
-    gradient.setColorAt(1.0, color1);
-
-    QPainter painter(this);
-    painter.setPen(Qt::NoPen);
-    painter.fillRect(event->rect(), color1);
-
-    QVector<QPoint> points;
-    points.append(QPoint(0, min));
-    points.append(QPoint(0, h));
-    points.append(QPoint(w, h));
-    points.append(QPoint(w, 0));
-    points.append(QPoint(min, 0));
-
-    painter.translate((w / 2.0 - min / 2.0), (h / 2.0 - min / 2.0));
-    painter.setBrush(gradient);
-    painter.drawPolygon(QPolygon(points));
+    background->resize(event->size());
 }
