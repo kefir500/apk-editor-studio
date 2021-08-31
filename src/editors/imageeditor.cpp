@@ -101,11 +101,6 @@ bool ImageEditor::saveAs()
     return save(destination);
 }
 
-QStringList ImageEditor::supportedFormats()
-{
-    return FileFormatList::forReadableImages().getExtensions();
-}
-
 void ImageEditor::setSizeInfo(int width, int height)
 {
     labelSize->setText(QString("%1x%2").arg(width).arg(height));

@@ -42,8 +42,6 @@ target_sources(apk-editor-studio PRIVATE
     base/treenode.cpp
     base/updater.cpp
     base/utils.cpp
-    base/xmlhighlighter.cpp
-    base/yamlhighlighter.cpp
     editors/actionviewer.cpp
     editors/codeeditor.cpp
     editors/editor.cpp

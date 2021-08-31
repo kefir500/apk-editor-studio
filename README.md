@@ -50,6 +50,7 @@ and avoid direct editing of the language files in this repo.
 ## Third-Party Components
 
 - [Apktool](https://github.com/iBotPeaches/Apktool)
+- [KSyntaxHighlighting](https://invent.kde.org/frameworks/syntax-highlighting)
 - [QtKeychain](https://github.com/frankosterfeld/qtkeychain)
 - [SingleApplication](https://github.com/itay-grudev/SingleApplication)
 - [Android SDK Tools](https://android.googlesource.com)

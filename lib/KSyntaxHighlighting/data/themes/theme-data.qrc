@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+ <qresource prefix="/org.kde.syntax-highlighting/themes">
+  <file>breeze-dark.theme</file>
+  <file>breeze-light.theme</file>
+ </qresource>
+</RCC>

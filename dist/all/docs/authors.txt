@@ -9,6 +9,7 @@
 # Special Thanks:
 
 - [Connor Tumbleson](https://github.com/iBotPeaches) and [contributors](https://github.com/iBotPeaches/Apktool/blob/master/CONTRIBUTORS.md) — Apktool
+- [The KDE Community](https://kde.org/community/whatiskde/) — KSyntaxHighlighting
 - [Frank Osterfeld](https://github.com/frankosterfeld) — QtKeychain
 - [Itay Grudev](https://github.com/itay-grudev) — SingleApplication
 - [Icons8](https://icons8.com) — Action icons

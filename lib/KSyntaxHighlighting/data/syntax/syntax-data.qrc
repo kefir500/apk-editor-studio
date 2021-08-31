@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/org.kde.syntax-highlighting/syntax">
+        <file>alert.xml</file>
+        <file>comments.xml</file>
+        <file>html.xml</file>
+        <file>modelines.xml</file>
+        <file>smali.xml</file>
+        <file>spdx-comments.xml</file>
+        <file>xml.xml</file>
+        <file>yaml.xml</file>
+    </qresource>
+</RCC>

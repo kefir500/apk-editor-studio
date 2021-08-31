@@ -73,6 +73,9 @@ qt5_add_translation(QM_FILES ${TS_FILES})
 target_sources(apk-editor-studio PRIVATE ${QM_FILES})
 target_include_directories(apk-editor-studio PRIVATE src lib)
 
+# KSyntaxHighlighting
+add_subdirectory(lib/KSyntaxHighlighting EXCLUDE_FROM_ALL)
+
 # QtKeychain
 set(QTKEYCHAIN_STATIC ON CACHE BOOL "Build QtKeychain statically")
 set(BUILD_TRANSLATIONS OFF CACHE BOOL "Build QtKeychain translations")
@@ -87,6 +90,7 @@ target_link_libraries(apk-editor-studio
     Qt5::Widgets
     Qt5::Xml
     Qt5::Network
+    KSyntaxHighlighting
     SingleApplication::SingleApplication
     qt5keychain
 )

@@ -62,8 +62,6 @@ public:
     bool save(const QString &as = QString()) override;
     bool saveAs() override;
 
-    static QStringList supportedFormats();
-
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragLeaveEvent(QDragLeaveEvent *event) override;

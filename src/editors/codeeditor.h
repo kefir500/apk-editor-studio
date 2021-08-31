@@ -4,7 +4,10 @@
 #include "editors/fileeditor.h"
 #include <QTextCodec>
 #include <QPlainTextEdit>
-#include <QSyntaxHighlighter>
+
+namespace KSyntaxHighlighting {
+   class SyntaxHighlighter;
+}
 
 class CodeTextEdit;
 
@@ -56,13 +59,11 @@ public:
     bool load() override;
     bool save(const QString &as = QString()) override;
 
-    static QStringList supportedFormats();
-
 private:
     QFile *file;
     QTextCodec *codec;
     CodeTextEdit *editor;
-    QSyntaxHighlighter *syntax;
+    KSyntaxHighlighting::SyntaxHighlighter *highlighter;
 };
 
 #endif // CODEEDITOR_H

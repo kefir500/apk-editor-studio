@@ -8,6 +8,7 @@
 #include "base/theme.h"
 #include "windows/mainwindow.h"
 #include <SingleApplication>
+#include <KSyntaxHighlighting/Repository>
 #include <QTranslator>
 
 class Application : public SingleApplication
@@ -28,6 +29,7 @@ public:
 
     Settings *settings;
     ActionProvider actions{projects};
+    KSyntaxHighlighting::Repository highlightingRepository;
 
 protected:
     bool event(QEvent *event) override;

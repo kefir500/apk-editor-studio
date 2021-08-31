@@ -74,14 +74,11 @@ void ProjectWidget::openResourceTab(const ResourceModelIndex &index)
     }
 
     Editor *editor = nullptr;
-    const QString extension = QFileInfo(path).suffix();
-    if (CodeEditor::supportedFormats().contains(extension)) {
-        editor = new CodeEditor(index, this);
-    } else if (ImageEditor::supportedFormats().contains(extension)) {
+    const auto extension = QFileInfo(path).suffix();
+    if (FileFormatList::forReadableImages().getExtensions().contains(extension)) {
         editor = new ImageEditor(index, this);
     } else {
-        qDebug() << "No suitable editor found for" << extension;
-        return;
+        editor = new CodeEditor(index, this);
     }
     editor->setProperty("identifier", identifier);
     addTab(editor);

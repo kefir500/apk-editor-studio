@@ -1,7 +1,9 @@
 #include "editors/codeeditor.h"
-#include "base/fileformatlist.h"
-#include "base/yamlhighlighter.h"
-#include "base/xmlhighlighter.h"
+#include "base/application.h"
+#include "base/utils.h"
+#include <KSyntaxHighlighting/SyntaxHighlighter>
+#include <KSyntaxHighlighting/Definition>
+#include <KSyntaxHighlighting/Theme>
 #include <QBoxLayout>
 #include <QDebug>
 #include <QFileInfo>
@@ -25,12 +27,11 @@ CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileE
     editor = new CodeTextEdit(this);
     new LineNumberArea(editor);
 
-    const QString suffix = QFileInfo(filename).suffix().toLower();
-    if (FileFormat::fromExtension("xml").hasExtension(suffix) || FileFormat::fromExtension("html").hasExtension(suffix)) {
-        syntax = new XmlHighlighter(editor->document());
-    } else if (FileFormat::fromExtension("yml").getExtensions().contains(suffix)) {
-        syntax = new YamlHighlighter(editor->document());
-    }
+    highlighter = new KSyntaxHighlighting::SyntaxHighlighter(editor->document());
+    highlighter->setDefinition(app->highlightingRepository.definitionForFileName(filename));
+    highlighter->setTheme(app->highlightingRepository.defaultTheme(Utils::isDarkTheme()
+        ? KSyntaxHighlighting::Repository::DarkTheme
+        : KSyntaxHighlighting::Repository::LightTheme));
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(editor);
@@ -95,15 +96,6 @@ bool CodeEditor::save(const QString &as)
         delete file;
     }
     return result;
-}
-
-QStringList CodeEditor::supportedFormats()
-{
-    FileFormatList filter;
-    filter.add(FileFormat::fromExtension("xml"));
-    filter.add(FileFormat::fromExtension("html"));
-    filter.add(FileFormat::fromExtension("yml"));
-    return filter.getExtensions();
 }
 
 // CodeTextEdit:

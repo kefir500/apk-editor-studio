@@ -17,8 +17,6 @@ public:
     bool replace();
     bool explore() const;
 
-    static QStringList supportedFormats();
-
 protected:
     void changeEvent(QEvent *event) override;
 

@@ -66,11 +66,6 @@ bool FileEditor::explore() const
     return index.explore();
 }
 
-QStringList FileEditor::supportedFormats()
-{
-    return QStringList();
-}
-
 void FileEditor::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
