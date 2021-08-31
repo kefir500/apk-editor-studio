@@ -36,7 +36,8 @@ target_sources(apk-editor-studio PRIVATE
     base/main.cpp
     base/password.cpp
     base/process.cpp
-    base/recent.cpp
+    base/recentfile.cpp
+    base/recentlist.cpp
     base/settings.cpp
     base/theme.cpp
     base/treenode.cpp

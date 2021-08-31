@@ -1,7 +1,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include "base/recent.h"
+#include "base/recentlist.h"
 
 class Project;
 class QSettings;
@@ -106,7 +106,7 @@ signals:
 
 private:
     QSettings *settings;
-    Recent *recent;
+    RecentList *recent;
 };
 
 #endif // SETTINGS_H

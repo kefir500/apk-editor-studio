@@ -15,7 +15,7 @@ Settings::Settings()
 #else
     settings = new QSettings(Utils::getLocalConfigPath("config/config.ini"), QSettings::IniFormat, this);
 #endif
-    recent = new Recent("apk", getRecentLimit(), this);
+    recent = new RecentList("apk", getRecentLimit(), this);
 }
 
 void Settings::reset()
