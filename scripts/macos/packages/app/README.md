@@ -1,2 +1,3 @@
-- Make sure the Qt `bin` directory is in the `PATH` environment variable.
+- Prepare the requirements listed in `COMPILATION.md`.
+- Run `scripts/download.py` to download third-party tool binaries.
 - Run `build.app.command`.

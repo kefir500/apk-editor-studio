@@ -7,10 +7,10 @@
 #include "base/settings.h"
 #include "base/theme.h"
 #include "windows/mainwindow.h"
-#include <QtSingleApplication>
+#include <SingleApplication>
 #include <QTranslator>
 
-class Application : public QtSingleApplication
+class Application : public SingleApplication
 {
     Q_OBJECT
 

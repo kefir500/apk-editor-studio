@@ -25,7 +25,7 @@ protected:
 
 private:
     void updateAreaWidth(int blocks);
-    void updateAreaGeomerty();
+    void updateAreaGeometry();
 
     CodeTextEdit *editor;
     int lineNumberAreaWidth;

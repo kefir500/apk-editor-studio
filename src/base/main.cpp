@@ -3,12 +3,11 @@
 int main(int argc, char *argv[])
 {
     Application application(argc, argv);
-    if (application.isRunning()) {
+    if (application.isSecondary()) {
         QStringList args = application.arguments();
         args.removeFirst();
-        if (application.sendMessage(args.join('\n'))) {
-            return 0;
-        }
+        application.sendMessage(args.join('\n').toUtf8());
+        return 0;
     }
     return application.exec();
 }

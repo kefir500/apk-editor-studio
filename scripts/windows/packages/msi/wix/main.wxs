@@ -182,54 +182,54 @@
             </Directory>
           </Directory>
           <Component Id="QtCoreComponent">
-            <File Source="$(env.QTDIR)\bin\Qt5Core.dll" />
+            <File Name="Qt5Core.dll" />
           </Component>
           <Component Id="QtGuiComponent">
-            <File Source="$(env.QTDIR)\bin\Qt5Gui.dll" />
+            <File Name="Qt5Gui.dll" />
           </Component>
           <Component Id="QtNetworkComponent">
-            <File Source="$(env.QTDIR)\bin\Qt5Network.dll" />
+            <File Name="Qt5Network.dll" />
           </Component>
           <Component Id="QtSvgComponent">
-            <File Source="$(env.QTDIR)\bin\Qt5Svg.dll" />
+            <File Name="Qt5Svg.dll" />
           </Component>
           <Component Id="QtWidgetsComponent">
-            <File Source="$(env.QTDIR)\bin\Qt5Widgets.dll" />
+            <File Name="Qt5Widgets.dll" />
           </Component>
           <Component Id="QtXmlComponent">
-            <File Source="$(env.QTDIR)\bin\Qt5Xml.dll" />
+            <File Name="Qt5Xml.dll" />
           </Component>
           <Component Id="LibSslComponent">
-            <File Source="$(env.OPENSSL)\libssl-1_1.dll" />
+            <File Name="libssl-1_1.dll" />
           </Component>
           <Component Id="LibCryptoComponent">
-            <File Source="$(env.OPENSSL)\libcrypto-1_1.dll" />
+            <File Name="libcrypto-1_1.dll" />
           </Component>
           <Directory Id="ImageFormatsFolder" Name="imageformats">
             <Component Id="QtGifFormatComponent">
-              <File Source="$(env.QTDIR)\plugins\imageformats\qgif.dll" />
+              <File Name="qgif.dll" />
             </Component>
             <Component Id="QtIcnsFormatComponent">
-              <File Source="$(env.QTDIR)\plugins\imageformats\qicns.dll" />
+              <File Name="qicns.dll" />
             </Component>
             <Component Id="QtIcoFormatComponent">
-              <File Source="$(env.QTDIR)\plugins\imageformats\qico.dll" />
+              <File Name="qico.dll" />
             </Component>
             <Component Id="QtJpegFormatComponent">
-              <File Source="$(env.QTDIR)\plugins\imageformats\qjpeg.dll" />
+              <File Name="qjpeg.dll" />
             </Component>
             <Component Id="QtSvgFormatComponent">
-              <File Source="$(env.QTDIR)\plugins\imageformats\qsvg.dll" />
+              <File Name="qsvg.dll" />
             </Component>
           </Directory>
           <Directory Id="PlatformsFolder" Name="platforms">
             <Component Id="QtPlatformComponent">
-              <File Source="$(env.QTDIR)\plugins\platforms\qwindows.dll" />
+              <File Name="qwindows.dll" />
             </Component>
           </Directory>
           <Directory Id="StylesFolder" Name="styles">
             <Component Id="QtVistaStyleComponent">
-              <File Source="$(env.QTDIR)\plugins\styles\qwindowsvistastyle.dll" />
+              <File Name="qwindowsvistastyle.dll" />
             </Component>
           </Directory>
         </Directory>

@@ -1,5 +1,5 @@
 #include "base/password.h"
-#include "qtkeychain/keychain.h"
+#include <QtKeychain/keychain.h>
 #include <QEventLoop>
 #include <QDebug>
 

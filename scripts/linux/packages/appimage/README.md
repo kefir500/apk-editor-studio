@@ -1,0 +1,3 @@
+- Prepare the requirements listed in `COMPILATION.md`.
+- Install `adb` and `zipalign` packages.
+- Run `build.appimage.sh`.

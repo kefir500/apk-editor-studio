@@ -38,49 +38,7 @@
 
 ## Compilation
 
-### Requirements
-
-- Qt 5
-- C++11 compiler
-
-### Setting Up
-
-**APK Editor Studio** depends on multiple third-party binary tools which are not included in this repository.
-In order to successfully utilize this software, the following tools should be present on your system:
-
-- `apktool` to (un)pack APK
-- `apksigner` to sign APK
-- `zipalign` to optimize APK
-- `adb` to install APK and manage Android devices
-
-You can either get them manually (e.g., using `apt-get` in Debian)
-or **run the `scripts/download.py`** Python 3 script which will automatically download the needed tools.
-
-Note that this is only needed if you compile APK Editor Studio from the source code.
-[Prebuilt packages](https://github.com/kefir500/apk-editor-studio/releases) already contain these tools.
-
-Also, on **Linux** you may want an optional support for `libsecret` password storage backend.
-In order to enable it, you will need to install the corresponding library:
-- `libsecret-1-dev` (Debian-based distributions)
-- `libsecret-devel` (RPM-based distributions)
-
-### Building
-
-- `qmake`
-- `make`
-
-Note that the build tools may vary on different platforms (e.g., `make`/`nmake`/`jom`).
-You can also use Qt Creator IDE to compile APK Editor Studio
-without manually specifying the paths and running the build tools.
-
-Optionally, run `make install` to install APK Editor Studio to `/usr`.  
-Pass the `PREFIX` variable to `qmake` in order to define a different installation directory.
-
-### Packaging
-
-If you want to create installation/executable APK Editor Studio packages,
-the corresponding scripts are located at `scripts/**/packages` (where `**` is a platform name).
-Refer to the underlying `README.md` files for more information on the specific platforms.
+Follow the [compilation guide](COMPILATION.md) if you want to manually build APK Editor Studio from source.
 
 ## Translation
 
@@ -93,6 +51,7 @@ and avoid direct editing of the language files in this repo.
 
 - [Apktool](https://github.com/iBotPeaches/Apktool)
 - [QtKeychain](https://github.com/frankosterfeld/qtkeychain)
+- [SingleApplication](https://github.com/itay-grudev/SingleApplication)
 - [Android SDK Tools](https://android.googlesource.com)
 
 ## Notice

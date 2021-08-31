@@ -135,7 +135,7 @@ LineNumberArea::LineNumberArea(CodeTextEdit *parent) : QWidget(parent), editor(p
     lineNumberAreaWidth = 0;
     lineNumberAreaPadding = 20;
     connect(editor, &CodeTextEdit::blockCountChanged, this, &LineNumberArea::updateAreaWidth);
-    connect(editor, &CodeTextEdit::resized, this, &LineNumberArea::updateAreaGeomerty);
+    connect(editor, &CodeTextEdit::resized, this, &LineNumberArea::updateAreaGeometry);
     connect(editor, &CodeTextEdit::cursorPositionChanged, this, [=]() {
         QTextEdit::ExtraSelection selection;
         QColor highlight = QPalette().color(QPalette::Highlight);
@@ -197,7 +197,7 @@ void LineNumberArea::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LayoutDirectionChange) {
         updateAreaWidth(editor->blockCount());
-        updateAreaGeomerty();
+        updateAreaGeometry();
     }
     QWidget::changeEvent(event);
 }
@@ -212,7 +212,7 @@ void LineNumberArea::updateAreaWidth(int blocks)
     }
 }
 
-void LineNumberArea::updateAreaGeomerty()
+void LineNumberArea::updateAreaGeometry()
 {
     const QRect contents = editor->contentsRect();
     if (layoutDirection() == Qt::LeftToRight) {

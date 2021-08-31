@@ -1,16 +1,11 @@
 #include <QCommandLineParser>
 #include "base/application.h"
-#include "apk/project.h"
 #include "tools/apktool.h"
 #include "tools/keystore.h"
-#include "windows/devicemanager.h"
 #include "windows/dialogs.h"
-#include <QDateTime>
-#include <QDebug>
-#include <QFileOpenEvent>
 #include <QPixmapCache>
 
-Application::Application(int &argc, char **argv) : QtSingleApplication(argc, argv)
+Application::Application(int &argc, char **argv) : SingleApplication(argc, argv, true)
 {
     setApplicationName(APPLICATION);
     setApplicationVersion(VERSION);
@@ -67,7 +62,7 @@ int Application::exec()
 
     auto firstInstance = createNewInstance();
     processArguments(arguments(), firstInstance);
-    connect(this, &QtSingleApplication::messageReceived, this, [this](const QString &message) {
+    connect(this, &SingleApplication::receivedMessage, this, [this](quint32, QByteArray message) {
         MainWindow *instance = nullptr;
         if (settings->getSingleInstance()) {
             instance = instances.last();
@@ -78,7 +73,7 @@ int Application::exec()
         instance->activateWindow();
         instance->raise();
         if (!message.isEmpty()) {
-            processArguments(QStringList() << app->applicationFilePath() << message.split('\n'), instance);
+            processArguments(QStringList() << app->applicationFilePath() << QString(message).split('\n'), instance);
         }
     });
 
@@ -147,7 +142,7 @@ bool Application::event(QEvent *event)
     default:
         break;
     }
-    return QtSingleApplication::event(event);
+    return SingleApplication::event(event);
 }
 
 void Application::processArguments(const QStringList &arguments, MainWindow *window)

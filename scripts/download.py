@@ -5,10 +5,12 @@ import sys
 from urllib.request import urlretrieve
 from zipfile import ZipFile
 
-def unzip(z, src, dst):
+def unzip(z, src, dst, binary=False):
     dst = os.path.join(dst, os.path.basename(src))
     with open(dst, 'wb') as f:
         f.write(z.read(src))
+    if binary and sys.platform != 'win32':
+        os.chmod(dst, 0o755)
 
 def resolveExecutableName(path):
     return path if sys.platform != 'win32' else path + '.exe'
@@ -17,13 +19,13 @@ def resolvePath(path):
     return os.path.join(os.path.dirname(__file__), path)
 
 def resolvePlatformPath():
-    path = resolvePath('../res/deploy')
+    path = resolvePath('../dist')
     if sys.platform == 'win32':
         return os.path.join(path, 'windows/tools')
     elif sys.platform == 'linux':
         return os.path.join(path, 'linux/bin')
     elif sys.platform == 'darwin':
-        return os.path.join(path, 'macos/bundle/contents/MacOS')
+        return os.path.join(path, 'macos/app/Contents/MacOS')
 
 def progress(blocknum, blocksize, totalsize):
     bytesdone = min(blocknum * blocksize, totalsize)
@@ -35,14 +37,14 @@ def progress(blocknum, blocksize, totalsize):
 
 # Prepare
 
-os.makedirs(resolvePath('../res/deploy/all/tools'), exist_ok=True)
+os.makedirs(resolvePath('../dist/all/tools'), exist_ok=True)
 os.makedirs(resolvePlatformPath(), exist_ok=True)
 
 # Download Apktool
 
 print('(1/3) Downloading Apktool...')
 urlretrieve('https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.5.0.jar',
-    resolvePath('../res/deploy/all/tools/apktool.jar'), progress)
+    resolvePath('../dist/all/tools/apktool.jar'), progress)
 
 # Download and unpack Android Build Tools
 
@@ -57,8 +59,8 @@ elif sys.platform == 'darwin':
 urlretrieve(buildToolsUrl, 'build-tools.zip', progress)
 
 with ZipFile('build-tools.zip') as z:
-    unzip(z, 'android-10/lib/apksigner.jar', resolvePath('../res/deploy/all/tools/'))
-    unzip(z, resolveExecutableName('android-10/zipalign'), resolvePlatformPath())
+    unzip(z, 'android-10/lib/apksigner.jar', resolvePath('../dist/all/tools/'))
+    unzip(z, resolveExecutableName('android-10/zipalign'), resolvePlatformPath(), True)
     if sys.platform == 'win32':
         unzip(z, 'android-10/libwinpthread-1.dll', resolvePlatformPath())
 os.remove('build-tools.zip')
@@ -76,7 +78,7 @@ elif sys.platform == 'darwin':
 urlretrieve(platformToolsUrl, 'platform-tools.zip', progress)
 
 with ZipFile('platform-tools.zip') as z:
-    unzip(z, resolveExecutableName('platform-tools/adb'), resolvePlatformPath())
+    unzip(z, resolveExecutableName('platform-tools/adb'), resolvePlatformPath(), True)
     if sys.platform == 'win32':
         unzip(z, 'platform-tools/AdbWinApi.dll', resolvePlatformPath())
         unzip(z, 'platform-tools/AdbWinUsbApi.dll', resolvePlatformPath())

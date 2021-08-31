@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleName</key>
+	<string>APK Editor Studio</string>
+	<key>CFBundleVersion</key>
+	<string>${VERSION}</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${VERSION}</string>
+	<key>CFBundleExecutable</key>
+	<string>apk-editor-studio</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.qwertycube.apk-editor-studio</string>
+	<key>CFBundleIconFile</key>
+	<string>apk-editor-studio.icns</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright (C) Alexander Gorishnyak 2019-2021</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Android Application Package</string>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>apk</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>apk-editor-studio.icns</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false />
+			<key>NSPersistentStoreTypeKey</key>
+			<string>Binary</string>
+		</dict>
+	</array>
+</dict>
+</plist>

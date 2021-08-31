@@ -1,6 +1,6 @@
-- Run `../../../scripts/download.py` to download third-party tool binaries.
-- Run `vcvarsall.bat` to configure the **Visual Studio** environment variables.
+- Prepare the requirements listed in `COMPILATION.md`.
+- Run `scripts/download.py` to download third-party tool binaries.
 - Set the `QTDIR` environment variable to the **Qt** installation directory.
-- Set the `OPENSSL` environment variable to the **OpenSSL** `bin` directory.
+- Set the `OPENSSL` environment variable to the **OpenSSL** installation directory.
 - Add the **7-Zip** directory to the `PATH` environment variable.
 - Run `build.zip.bat`.

@@ -1,11 +1,10 @@
-bin/
-obj/
+build/
+adb
 apk-editor-studio.*.qm
-.qmake.cache
-.qmake.stash
-.vagrant/
+zipalign
 .vs/
 .vscode/
+*.app/
 *.ai
 *.autosave
 *.deb
@@ -17,8 +16,6 @@ apk-editor-studio.*.qm
 *.o
 *.obj
 *.pdb
-*.pro.user
-*.pro.user.*
 *.psd
 *.rc
 *.res
