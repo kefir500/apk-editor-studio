@@ -6,6 +6,7 @@
 #include "windows/dialogs.h"
 #include "windows/keymanager.h"
 #include "windows/optionsdialog.h"
+#include "windows/rememberdialog.h"
 #include "tools/adb.h"
 #include "tools/keystore.h"
 #include <QMenu>
@@ -207,7 +208,9 @@ void ActionProvider::takeScreenshot(const QString &serial, QWidget *parent)
     if (!dst.isEmpty()) {
         auto screenshot = new Adb::Screenshot(dst, serial, parent);
         app->connect(screenshot, &Adb::Screenshot::finished, parent, [=](bool success) {
-            if (!success) {
+            if (success) {
+                RememberDialog::say("ScreenshotSuccess", tr("Screenshot has been successfully created!"), parent);
+            } else {
                 QMessageBox::warning(parent, {}, tr("Could not take a screenshot."));
             }
             screenshot->deleteLater();
