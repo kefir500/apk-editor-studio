@@ -104,11 +104,15 @@ CodeTextEdit::CodeTextEdit(QWidget *parent) : QPlainTextEdit(parent)
 {
     setLineWrapMode(CodeTextEdit::NoWrap);
 
+#if defined(Q_OS_WIN)
+    QFont font("Consolas");
+    font.setPointSize(11);
+#elif defined(Q_OS_OSX)
     QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
-#ifndef Q_OS_OSX
-    font.setPointSize(10);
-#else
     font.setPointSize(12);
+#elif defined(Q_OS_LINUX)
+    QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+    font.setPointSize(10);
 #endif
     setFont(font);
     setTabStopWidth(4 * QFontMetrics(font).width(' '));
