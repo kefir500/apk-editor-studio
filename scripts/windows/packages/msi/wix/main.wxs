@@ -221,6 +221,9 @@
             <Component Id="QtSvgFormatComponent">
               <File Name="qsvg.dll" />
             </Component>
+            <Component Id="QtWebPFormatComponent">
+              <File Name="qwebp.dll" />
+            </Component>
           </Directory>
           <Directory Id="PlatformsFolder" Name="platforms">
             <Component Id="QtPlatformComponent">
@@ -304,6 +307,7 @@
       <ComponentRef Id="QtIcoFormatComponent" />
       <ComponentRef Id="QtJpegFormatComponent" />
       <ComponentRef Id="QtSvgFormatComponent" />
+      <ComponentRef Id="QtWebPFormatComponent" />
     </ComponentGroup>
     <ComponentGroup Id="OpenSslComponents">
       <ComponentRef Id="LibSslComponent" />

@@ -4,6 +4,7 @@
 - Migrated to a new syntax highlighter.
 - Added Smali syntax highlighting.
 - Added ability to build debuggable APKs.
+- Windows: Fixed WebP image format support.
 
 ## 1.5.0
 - Added APK cloning (experimental).
