@@ -1,5 +1,5 @@
 #include "widgets/gradientwidget.h"
-#include "base/application.h"
+#include "base/utils.h"
 #include <QPainter>
 #include <QPaintEvent>
 
@@ -9,8 +9,12 @@ void GradientWidget::paintEvent(QPaintEvent *event)
     const int h = height();
     const int min = qMin(w, h);
 
-    const QColor color1(app->theme()->color(Theme::Color::BackgroundGradientStart));
-    const QColor color2(app->theme()->color(Theme::Color::BackgroundGradientEnd));
+    const QColor color1 = Utils::isLightTheme()
+        ? QColor(250, 255, 230)
+        : QPalette().color(QPalette::Window);
+    const QColor color2 = Utils::isLightTheme()
+        ? QColor(240, 245, 220)
+        : QPalette().color(QPalette::Window).lighter(120);
     QLinearGradient gradient(QPoint(0, min), QPoint(min, 0));
     gradient.setColorAt(0.1, color1);
     gradient.setColorAt(0.5, color2);

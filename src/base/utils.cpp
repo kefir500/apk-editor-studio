@@ -50,14 +50,14 @@ int Utils::roundToNearest(int number, QList<int> numbers)
     return number;
 }
 
-bool Utils::isDark(const QColor &color)
-{
-    return color.lightness() < 127;
-}
-
 bool Utils::isDarkTheme()
 {
-    return isDark(QPalette().color(QPalette::Base));
+    return QPalette().color(QPalette::Base).lightness() < 127;
+}
+
+bool Utils::isLightTheme()
+{
+    return !isDarkTheme();
 }
 
 bool Utils::explore(const QString &path)

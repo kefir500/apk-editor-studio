@@ -5,7 +5,6 @@
 #include "base/actionprovider.h"
 #include "base/language.h"
 #include "base/settings.h"
-#include "base/theme.h"
 #include "windows/mainwindow.h"
 #include <SingleApplication>
 #include <KSyntaxHighlighting/Repository>
@@ -22,7 +21,6 @@ public:
     int exec();
 
     static QList<Language> getLanguages();
-    const Theme *theme() const;
 
     MainWindow *createNewInstance();
     void setLanguage(const QString &locale);
@@ -39,7 +37,6 @@ private:
 
     QList<MainWindow *> instances;
     ProjectItemsModel projects;
-    Theme *theme_;
     QTranslator translator;
     QTranslator translatorQt;
 };

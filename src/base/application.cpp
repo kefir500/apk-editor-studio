@@ -33,13 +33,7 @@ Application::Application(int &argc, char **argv) : SingleApplication(argc, argv,
     setWindowIcon(QIcon::fromTheme("apk-editor-studio"));
 #endif
 
-    if (!Utils::isDarkTheme()) {
-        theme_ = new LightTheme;
-        QIcon::setThemeName("apk-editor-studio");
-    } else {
-        theme_ = new DarkTheme;
-        QIcon::setThemeName("apk-editor-studio-dark");
-    }
+    QIcon::setThemeName(Utils::isLightTheme() ? "apk-editor-studio" : "apk-editor-studio-dark");
 }
 
 Application::~Application()
@@ -92,11 +86,6 @@ QList<Language> Application::getLanguages()
     }
 
     return languages;
-}
-
-const Theme *Application::theme() const
-{
-    return theme_;
 }
 
 MainWindow *Application::createNewInstance()

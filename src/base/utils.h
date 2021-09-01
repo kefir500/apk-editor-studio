@@ -49,8 +49,8 @@ namespace Utils
 
     // Color utils:
 
-    bool isDark(const QColor &color);
     bool isDarkTheme();
+    bool isLightTheme();
 
     // File / Directory utils:
 
