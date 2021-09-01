@@ -69,7 +69,7 @@ bool Utils::explore(const QString &path)
 #if defined(Q_OS_WIN)
     const QString nativePath = QDir::toNativeSeparators(fileInfo.canonicalFilePath());
     const QString argument = fileInfo.isDir() ? nativePath : QString("/select,%1").arg(nativePath);
-    return QProcess::startDetached(QString("explorer.exe %1").arg(argument));
+    return QProcess::startDetached("explorer.exe", {argument});
 #elif defined(Q_OS_OSX)
     QStringList arguments;
     const QString action = fileInfo.isDir() ? "open" : "reveal";
