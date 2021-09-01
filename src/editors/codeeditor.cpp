@@ -115,7 +115,7 @@ CodeTextEdit::CodeTextEdit(QWidget *parent) : QPlainTextEdit(parent)
     font.setPointSize(10);
 #endif
     setFont(font);
-    setTabStopWidth(4 * QFontMetrics(font).width(' '));
+    setTabStopDistance(4 * QFontMetrics(font).horizontalAdvance(' '));
 }
 
 void CodeTextEdit::resizeEvent(QResizeEvent *event)
