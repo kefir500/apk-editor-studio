@@ -305,17 +305,17 @@ void OptionsDialog::initialize()
     pageApktool->addWidget(groupUnpacking, 1, 0);
     pageApktool->addWidget(groupPacking, 1, 1);
 
-    // Signing
+    // Apksigner
 
-    QVBoxLayout *pageSign = new QVBoxLayout;
+    auto pageApksigner = new QVBoxLayout;
     groupSign = new QGroupBox(tr("Enable"), this);
     groupSign->setCheckable(true);
     fileboxApksigner = new FileBox(false, this);
     fileboxApksigner->setDefaultPath("");
     fileboxApksigner->setPlaceholderText(Apksigner::getDefaultPath());
-    QFormLayout *layoutSign = new QFormLayout(groupSign);
+    auto layoutSign = new QFormLayout(groupSign);
     //: This string refers to multiple keys (as in "Manager of keys").
-    QPushButton *btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
+    auto btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
     btnKeyManager->setIcon(QIcon::fromTheme("apk-sign"));
     btnKeyManager->setMinimumHeight(Utils::scale(30));
     connect(btnKeyManager, &QPushButton::clicked, this, [this]() {
@@ -326,30 +326,30 @@ void OptionsDialog::initialize()
     layoutSign->addRow(tr("Apksigner path:"), fileboxApksigner);
     layoutSign->addRow(btnKeyManager);
     layoutSign->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
-    pageSign->addWidget(groupSign);
+    pageApksigner->addWidget(groupSign);
 
-    // Optimizing
+    // Zipalign
 
-    QVBoxLayout *pageZipalign = new QVBoxLayout;
+    auto pageZipalign = new QVBoxLayout;
     groupZipalign = new QGroupBox(tr("Enable"), this);
     groupZipalign->setCheckable(true);
     fileboxZipalign = new FileBox(false, this);
     fileboxZipalign->setDefaultPath("");
     fileboxZipalign->setPlaceholderText(Zipalign::getDefaultPath());
-    QFormLayout *layoutZipalign = new QFormLayout(groupZipalign);
+    auto layoutZipalign = new QFormLayout(groupZipalign);
     //: "Zipalign" is the name of the tool, don't translate it.
     layoutZipalign->addRow(tr("Zipalign path:"), fileboxZipalign);
     layoutZipalign->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
     pageZipalign->addWidget(groupZipalign);
 
-    // Installing
+    // ADB
 
-    QFormLayout *pageInstall = new QFormLayout;
+    auto pageAdb = new QFormLayout;
     fileboxAdb = new FileBox(false, this);
     fileboxAdb->setDefaultPath("");
     fileboxAdb->setPlaceholderText(Adb::getDefaultPath());
     //: This string refers to multiple devices (as in "Manager of devices").
-    QPushButton *btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
+    auto btnDeviceManager = new QPushButton(tr("Open Device Manager"), this);
     btnDeviceManager->setIcon(QIcon::fromTheme("smartphone"));
     btnDeviceManager->setMinimumHeight(Utils::scale(30));
     connect(btnDeviceManager, &QPushButton::clicked, this, [this]() {
@@ -357,9 +357,9 @@ void OptionsDialog::initialize()
         deviceManager.exec();
     });
     //: "ADB" is the name of the tool, don't translate it.
-    pageInstall->addRow(tr("ADB path:"), fileboxAdb);
-    pageInstall->addRow(btnDeviceManager);
-    pageInstall->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
+    pageAdb->addRow(tr("ADB path:"), fileboxAdb);
+    pageAdb->addRow(btnDeviceManager);
+    pageAdb->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
     // Initialize
 
@@ -368,10 +368,10 @@ void OptionsDialog::initialize()
     pageList = new QListWidget(this);
     addPage(tr("General"), pageGeneral);
     addPage("Java", pageJava);
-    addPage(tr("Repacking"), pageApktool);
-    addPage(tr("Signing APK"), pageSign);
-    addPage(tr("Optimizing APK"), pageZipalign);
-    addPage(tr("Installing APK"), pageInstall);
+    addPage("Apktool", pageApktool);
+    addPage("Apksigner", pageApksigner);
+    addPage("Zipalign", pageZipalign);
+    addPage("ADB", pageAdb);
     pageList->setCurrentRow(0);
     pageList->setMaximumWidth(pageList->sizeHintForColumn(0) + 60);
 
