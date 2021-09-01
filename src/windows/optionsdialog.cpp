@@ -265,9 +265,10 @@ void OptionsDialog::initialize()
     //: "Heap" refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.
     pageJava->addRow(tr("Maximum heap size:"), spinboxMaxHeapSize);
 
-    // Repacking
+    // Apktool
 
-    QFormLayout *pageRepack = new QFormLayout;
+    auto pageApktool = new QGridLayout;
+
     fileboxApktool = new FileBox(false, this);
     fileboxApktool->setDefaultPath("");
     fileboxApktool->setPlaceholderText(Apktool::getDefaultPath());
@@ -277,20 +278,32 @@ void OptionsDialog::initialize()
     fileboxFrameworks = new FileBox(true, this);
     fileboxFrameworks->setDefaultPath("");
     fileboxFrameworks->setPlaceholderText(Apktool::getDefaultFrameworksPath());
-    checkboxAapt = new QCheckBox("AAPT2", this);
-    checkboxDebuggable = new QCheckBox("Make Debuggable", this);
+    auto formApktool = new QFormLayout;
+    //: "Apktool" is the name of the tool, don't translate it.
+    formApktool->addRow(tr("Apktool path:"), fileboxApktool);
+    formApktool->addRow(tr("Extraction path:"), fileboxOutput);
+    formApktool->addRow(tr("Frameworks path:"), fileboxFrameworks);
+    formApktool->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
+
+    auto groupUnpacking = new QGroupBox(tr("Unpacking"), this);
     //: "Smali" is the name of the tool/format, don't translate it.
     checkboxSources = new QCheckBox(tr("Decompile source code (smali)"), this);
     checkboxBrokenResources = new QCheckBox(tr("Decompile broken resources"), this);
-    //: "Apktool" is the name of the tool, don't translate it.
-    pageRepack->addRow(tr("Apktool path:"), fileboxApktool);
-    pageRepack->addRow(tr("Extraction path:"), fileboxOutput);
-    pageRepack->addRow(tr("Frameworks path:"), fileboxFrameworks);
-    pageRepack->addRow(checkboxAapt);
-    pageRepack->addRow(checkboxDebuggable);
-    pageRepack->addRow(checkboxSources);
-    pageRepack->addRow(checkboxBrokenResources);
-    pageRepack->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
+    auto layoutUnpacking = new QVBoxLayout(groupUnpacking);
+    layoutUnpacking->addWidget(checkboxSources);
+    layoutUnpacking->addWidget(checkboxBrokenResources);
+
+    auto groupPacking = new QGroupBox(tr("Packing"), this);
+    //: "AAPT2" is the name of the tool, don't translate it.
+    checkboxAapt = new QCheckBox(tr("Use AAPT2"), this);
+    checkboxDebuggable = new QCheckBox(tr("Pack for debugging"), this);
+    auto layoutPacking = new QVBoxLayout(groupPacking);
+    layoutPacking->addWidget(checkboxAapt);
+    layoutPacking->addWidget(checkboxDebuggable);
+
+    pageApktool->addLayout(formApktool, 0, 0, 1, 2);
+    pageApktool->addWidget(groupUnpacking, 1, 0);
+    pageApktool->addWidget(groupPacking, 1, 1);
 
     // Signing
 
@@ -355,7 +368,7 @@ void OptionsDialog::initialize()
     pageList = new QListWidget(this);
     addPage(tr("General"), pageGeneral);
     addPage("Java", pageJava);
-    addPage(tr("Repacking"), pageRepack);
+    addPage(tr("Repacking"), pageApktool);
     addPage(tr("Signing APK"), pageSign);
     addPage(tr("Optimizing APK"), pageZipalign);
     addPage(tr("Installing APK"), pageInstall);
