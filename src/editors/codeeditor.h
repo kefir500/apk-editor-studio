@@ -11,6 +11,8 @@ namespace KSyntaxHighlighting {
     class Definition;
 }
 
+class CodeTextEditSidebar;
+
 class CodeTextEdit : public QPlainTextEdit
 {
     Q_OBJECT
