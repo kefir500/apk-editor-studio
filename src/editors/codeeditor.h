@@ -6,7 +6,9 @@
 #include <QPlainTextEdit>
 
 namespace KSyntaxHighlighting {
-   class SyntaxHighlighter;
+    class SyntaxHighlighter;
+    class Definition;
+    class Theme;
 }
 
 class CodeTextEdit;
@@ -44,11 +46,19 @@ class CodeTextEdit : public QPlainTextEdit
 public:
     CodeTextEdit(QWidget *parent = nullptr);
 
+    const KSyntaxHighlighting::Theme getTheme() const;
+
+    void setTheme(const KSyntaxHighlighting::Theme &theme);
+    void setDefinition(const KSyntaxHighlighting::Definition &definition);
+
 signals:
     void resized();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
+
+private:
+    KSyntaxHighlighting::SyntaxHighlighter *highlighter;
 };
 
 class CodeEditor : public FileEditor
@@ -63,7 +73,6 @@ private:
     QFile *file;
     QTextCodec *codec;
     CodeTextEdit *editor;
-    KSyntaxHighlighting::SyntaxHighlighter *highlighter;
 };
 
 #endif // CODEEDITOR_H

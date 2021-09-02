@@ -25,13 +25,8 @@ CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileE
     icon = index.icon();
 
     editor = new CodeTextEdit(this);
+    editor->setDefinition(app->highlightingRepository.definitionForFileName(filename));
     new LineNumberArea(editor);
-
-    highlighter = new KSyntaxHighlighting::SyntaxHighlighter(editor->document());
-    highlighter->setDefinition(app->highlightingRepository.definitionForFileName(filename));
-    highlighter->setTheme(app->highlightingRepository.defaultTheme(Utils::isDarkTheme()
-        ? KSyntaxHighlighting::Repository::DarkTheme
-        : KSyntaxHighlighting::Repository::LightTheme));
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(editor);
@@ -100,9 +95,16 @@ bool CodeEditor::save(const QString &as)
 
 // CodeTextEdit:
 
-CodeTextEdit::CodeTextEdit(QWidget *parent) : QPlainTextEdit(parent)
+CodeTextEdit::CodeTextEdit(QWidget *parent)
+    : QPlainTextEdit(parent)
+    , highlighter(new KSyntaxHighlighting::SyntaxHighlighter(document()))
 {
     setLineWrapMode(CodeTextEdit::NoWrap);
+
+    const auto defaultTheme = app->highlightingRepository.defaultTheme(Utils::isDarkTheme()
+        ? KSyntaxHighlighting::Repository::DarkTheme
+        : KSyntaxHighlighting::Repository::LightTheme);
+    setTheme(defaultTheme);
 
 #if defined(Q_OS_WIN)
     QFont font("Consolas");
@@ -115,7 +117,28 @@ CodeTextEdit::CodeTextEdit(QWidget *parent) : QPlainTextEdit(parent)
     font.setPointSize(10);
 #endif
     setFont(font);
-    setTabStopDistance(4 * QFontMetrics(font).horizontalAdvance(' '));
+}
+
+const KSyntaxHighlighting::Theme CodeTextEdit::getTheme() const
+{
+    return highlighter->theme();
+}
+
+void CodeTextEdit::setTheme(const KSyntaxHighlighting::Theme &theme)
+{
+    auto newPalette(palette());
+    newPalette.setColor(QPalette::Base, theme.editorColor(KSyntaxHighlighting::Theme::BackgroundColor));
+    newPalette.setColor(QPalette::Highlight, theme.editorColor(KSyntaxHighlighting::Theme::TextSelection));
+    setPalette(newPalette);
+    highlighter->setTheme(theme);
+    highlighter->rehighlight();
+}
+
+void CodeTextEdit::setDefinition(const KSyntaxHighlighting::Definition &definition)
+{
+    highlighter->setDefinition(definition);
+    highlighter->rehighlight();
+    setTabStopDistance(4 * QFontMetrics(font()).horizontalAdvance(' '));
 }
 
 void CodeTextEdit::resizeEvent(QResizeEvent *event)
@@ -134,9 +157,7 @@ LineNumberArea::LineNumberArea(CodeTextEdit *parent) : QWidget(parent), editor(p
     connect(editor, &CodeTextEdit::resized, this, &LineNumberArea::updateAreaGeometry);
     connect(editor, &CodeTextEdit::cursorPositionChanged, this, [=]() {
         QTextEdit::ExtraSelection selection;
-        QColor highlight = QPalette().color(QPalette::Highlight);
-        highlight.setAlpha(16);
-        selection.format.setBackground(highlight);
+        selection.format.setBackground(QColor(editor->getTheme().editorColor(KSyntaxHighlighting::Theme::CurrentLine)));
         selection.format.setProperty(QTextFormat::FullWidthSelection, true);
         selection.cursor = editor->textCursor();
         selection.cursor.clearSelection();
@@ -156,13 +177,8 @@ QSize LineNumberArea::sizeHint() const
 void LineNumberArea::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.fillRect(0, 0, lineNumberAreaWidth, height(), QPalette().color(QPalette::Window));
-
-    QColor lineNumberColor(QPalette().color(QPalette::Text));
-    lineNumberColor.setAlpha(110);
-    QColor activeLineNumberColor(QPalette().color(QPalette::Text));
-    activeLineNumberColor.setAlpha(150);
-    painter.setPen(lineNumberColor);
+    painter.fillRect(0, 0, lineNumberAreaWidth, height(), editor->getTheme().editorColor(KSyntaxHighlighting::Theme::IconBorder));
+    painter.setPen(editor->getTheme().editorColor(KSyntaxHighlighting::Theme::LineNumbers));
 
     const int lineNumberHeight = editor->fontMetrics().height();
     QTextBlock block = editor->firstVisibleBlock();
@@ -174,7 +190,7 @@ void LineNumberArea::paintEvent(QPaintEvent *event)
             painter.save();
             const int blockNumber = block.blockNumber() + 1;
             if (blockNumber == currentLineNumber) {
-                painter.setPen(activeLineNumberColor);
+                painter.setPen(editor->getTheme().editorColor(KSyntaxHighlighting::Theme::CurrentLineNumber));
                 QFont font = painter.font();
                 font.setBold(true);
                 painter.setFont(font);
