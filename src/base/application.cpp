@@ -23,8 +23,8 @@ Application::Application(int &argc, char **argv) : SingleApplication(argc, argv,
     qDebug() << "Platform: Windows";
 #elif defined(Q_OS_OSX)
     qDebug() << "Platform: macOS";
-#else
-    qDebug() << "Platform: Unix";
+#elif defined(Q_OS_LINUX)
+    qDebug() << "Platform: Linux";
 #endif
     qDebug() << qPrintable(QString("Qt %1").arg(QT_VERSION_STR));
     qDebug();
