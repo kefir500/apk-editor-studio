@@ -3,11 +3,11 @@
 #include "base/utils.h"
 #include <KSyntaxHighlighting/SyntaxHighlighter>
 #include <KSyntaxHighlighting/Definition>
-#include <KSyntaxHighlighting/Theme>
 #include <QBoxLayout>
 #include <QDebug>
 #include <QFileInfo>
 #include <QPainter>
+#include <QPainterPath>
 #include <QRegularExpression>
 #include <QScrollBar>
 #include <QTextStream>
@@ -26,7 +26,6 @@ CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileE
 
     editor = new CodeTextEdit(this);
     editor->setDefinition(app->highlightingRepository.definitionForFileName(filename));
-    new LineNumberArea(editor);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(editor);
@@ -97,6 +96,7 @@ bool CodeEditor::save(const QString &as)
 
 CodeTextEdit::CodeTextEdit(QWidget *parent)
     : QPlainTextEdit(parent)
+    , sidebar(new CodeTextEditSidebar(this))
     , highlighter(new KSyntaxHighlighting::SyntaxHighlighter(document()))
 {
     setLineWrapMode(CodeTextEdit::NoWrap);
@@ -117,11 +117,8 @@ CodeTextEdit::CodeTextEdit(QWidget *parent)
     font.setPointSize(10);
 #endif
     setFont(font);
-}
+    sidebar->setFont(font);
 
-const KSyntaxHighlighting::Theme CodeTextEdit::getTheme() const
-{
-    return highlighter->theme();
 }
 
 int CodeTextEdit::getTabWidth() const
@@ -130,6 +127,72 @@ int CodeTextEdit::getTabWidth() const
         return 2;
     }
     return 4;
+}
+
+QRgb CodeTextEdit::getColor(KSyntaxHighlighting::Theme::EditorColorRole role) const
+{
+    return highlighter->theme().editorColor(role);
+}
+
+QTextBlock CodeTextEdit::blockAtPosition(int y) const
+{
+    auto block = firstVisibleBlock();
+    if (!block.isValid()) {
+        return QTextBlock();
+    }
+
+    int top = blockBoundingGeometry(block).translated(contentOffset()).top();
+    int bottom = top + blockBoundingRect(block).height();
+    do {
+        if (top <= y && y <= bottom) {
+            return block;
+        }
+        block = block.next();
+        top = bottom;
+        bottom = top + blockBoundingRect(block).height();
+    } while (block.isValid());
+
+    return QTextBlock();
+}
+
+bool CodeTextEdit::isFoldable(const QTextBlock &block) const
+{
+    return highlighter->startsFoldingRegion(block);
+}
+
+bool CodeTextEdit::isFolded(const QTextBlock &block) const
+{
+    if (!block.isValid()) {
+        return false;
+    }
+    const auto nextBlock = block.next();
+    if (!nextBlock.isValid()) {
+        return false;
+    }
+    return !nextBlock.isVisible();
+}
+
+void CodeTextEdit::toggleFold(const QTextBlock &startBlock)
+{
+    const auto endBlock = highlighter->findFoldingRegionEnd(startBlock).next();
+    if (isFolded(startBlock)) {
+        auto block = startBlock.next();
+        while (block.isValid() && !block.isVisible()) {
+            block.setVisible(true);
+            block.setLineCount(block.layout()->lineCount());
+            block = block.next();
+        }
+
+    } else {
+        auto block = startBlock.next();
+        while (block.isValid() && block != endBlock) {
+            block.setVisible(false);
+            block.setLineCount(0);
+            block = block.next();
+        }
+    }
+    document()->markContentsDirty(startBlock.position(), endBlock.position() - startBlock.position() + 1);
+    emit document()->documentLayout()->documentSizeChanged(document()->documentLayout()->documentSize());
 }
 
 void CodeTextEdit::setTheme(const KSyntaxHighlighting::Theme &theme)
@@ -147,6 +210,12 @@ void CodeTextEdit::setDefinition(const KSyntaxHighlighting::Definition &definiti
     highlighter->setDefinition(definition);
     highlighter->rehighlight();
     setTabStopDistance(getTabWidth() * QFontMetrics(font()).horizontalAdvance(' '));
+}
+
+void CodeTextEdit::resizeEvent(QResizeEvent *event)
+{
+    QPlainTextEdit::resizeEvent(event);
+    sidebar->updateSidebarGeometry();
 }
 
 void CodeTextEdit::keyPressEvent(QKeyEvent *event)
@@ -194,95 +263,132 @@ void CodeTextEdit::keyPressEvent(QKeyEvent *event)
     QPlainTextEdit::keyPressEvent(event);
 }
 
-void CodeTextEdit::resizeEvent(QResizeEvent *event)
-{
-    Q_UNUSED(event)
-    emit resized();
-}
+// CodeTextEditSidebar:
 
-// CodeContainer:
-
-LineNumberArea::LineNumberArea(CodeTextEdit *parent) : QWidget(parent), editor(parent)
+CodeTextEditSidebar::CodeTextEditSidebar(CodeTextEdit *parent)
+    : QWidget(parent)
+    , editor(parent)
 {
-    lineNumberAreaWidth = 0;
-    lineNumberAreaPadding = 20;
-    connect(editor, &CodeTextEdit::blockCountChanged, this, &LineNumberArea::updateAreaWidth);
-    connect(editor, &CodeTextEdit::resized, this, &LineNumberArea::updateAreaGeometry);
-    connect(editor, &CodeTextEdit::cursorPositionChanged, this, [=]() {
-        QTextEdit::ExtraSelection selection;
-        selection.format.setBackground(QColor(editor->getTheme().editorColor(KSyntaxHighlighting::Theme::CurrentLine)));
-        selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-        selection.cursor = editor->textCursor();
-        selection.cursor.clearSelection();
-        editor->setExtraSelections({selection});
-        currentLineNumber = editor->textCursor().block().blockNumber() + 1;
-    });
+    connect(editor, &CodeTextEdit::blockCountChanged, this, &CodeTextEditSidebar::updateSidebarWidth);
+    connect(editor, &CodeTextEdit::cursorPositionChanged, this, &CodeTextEditSidebar::highlightCurrentLine);
     connect(editor, &CodeTextEdit::updateRequest, this, [=](const QRect &rect, int dy) {
         dy ? scroll(0, dy) : update(0, rect.y(), width(), rect.height());
     });
 }
 
-QSize LineNumberArea::sizeHint() const
+QSize CodeTextEditSidebar::sizeHint() const
 {
-    return QSize(lineNumberAreaWidth, editor->viewport()->height());
+    return QSize(sidebarWidth, editor->viewport()->height());
 }
 
-void LineNumberArea::paintEvent(QPaintEvent *event)
+void CodeTextEditSidebar::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LayoutDirectionChange) {
+        updateSidebarWidth(editor->blockCount());
+        updateSidebarGeometry();
+    }
+    QWidget::changeEvent(event);
+}
+
+void CodeTextEditSidebar::mouseReleaseEvent(QMouseEvent *event)
+{
+    const bool isFoldingMarkerClicked = layoutDirection() == Qt::LeftToRight
+        ? event->x() >= width() - editor->fontMetrics().lineSpacing()
+        : event->x() <= editor->fontMetrics().lineSpacing();
+
+    if (isFoldingMarkerClicked) {
+        auto block = editor->blockAtPosition(event->y());
+        if (block.isValid() && editor->isFoldable(block)) {
+            editor->toggleFold(block);
+        }
+    }
+
+    QWidget::mouseReleaseEvent(event);
+}
+
+void CodeTextEditSidebar::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.fillRect(0, 0, lineNumberAreaWidth, height(), editor->getTheme().editorColor(KSyntaxHighlighting::Theme::IconBorder));
-    painter.setPen(editor->getTheme().editorColor(KSyntaxHighlighting::Theme::LineNumbers));
+    painter.fillRect(0, 0, width(), height(), editor->getColor(KSyntaxHighlighting::Theme::IconBorder));
 
-    const int lineNumberHeight = editor->fontMetrics().height();
     QTextBlock block = editor->firstVisibleBlock();
     int top = static_cast<int>(editor->blockBoundingGeometry(block).translated(editor->contentOffset()).top());
     int bottom = top + static_cast<int>(editor->blockBoundingRect(block).height());
+    const int lineNumberHeight = editor->fontMetrics().height();
+    const int foldingMarkerSize = editor->fontMetrics().lineSpacing();
 
     while (block.isValid() && top <= event->rect().bottom()) {
+
+        // Line number
         if (block.isVisible() && bottom >= event->rect().top()) {
-            painter.save();
             const int blockNumber = block.blockNumber() + 1;
-            if (blockNumber == currentLineNumber) {
-                painter.setPen(editor->getTheme().editorColor(KSyntaxHighlighting::Theme::CurrentLineNumber));
-                QFont font = painter.font();
-                font.setBold(true);
-                painter.setFont(font);
+            painter.setPen(editor->getColor(blockNumber == currentLineNumber
+                 ? KSyntaxHighlighting::Theme::CurrentLineNumber
+                 : KSyntaxHighlighting::Theme::LineNumbers));
+            painter.drawText(layoutDirection() == Qt::LeftToRight ? sidebarPadding : sidebarPadding + foldingMarkerSize,
+                             top, width() - sidebarPadding * 2 - foldingMarkerSize, lineNumberHeight,
+                             Qt::AlignRight, QString::number(blockNumber));
+        }
+
+        // Folding marker
+        if (block.isVisible() && editor->highlighter->startsFoldingRegion(block)) {
+            QPainterPath foldingMarker;
+            if (!editor->isFolded(block)) {
+                foldingMarker.moveTo(5, 7);
+                foldingMarker.lineTo(foldingMarkerSize / 2, foldingMarkerSize - 7);
+                foldingMarker.lineTo(foldingMarkerSize - 5, 7);
+            } else if (layoutDirection() == Qt::LeftToRight) {
+                foldingMarker.moveTo(7, 5);
+                foldingMarker.lineTo(foldingMarkerSize - 7, foldingMarkerSize / 2);
+                foldingMarker.lineTo(7, foldingMarkerSize - 5);
+            } else if (layoutDirection() == Qt::RightToLeft) {
+                foldingMarker.moveTo(foldingMarkerSize - 7, 5);
+                foldingMarker.lineTo(7, foldingMarkerSize / 2);
+                foldingMarker.lineTo(foldingMarkerSize - 7, foldingMarkerSize - 5);
             }
-            painter.drawText(lineNumberAreaPadding / 2, top, lineNumberAreaWidth - lineNumberAreaPadding,
-                             lineNumberHeight, Qt::AlignRight, QString::number(blockNumber));
+            painter.save();
+            painter.setRenderHint(QPainter::Antialiasing);
+            painter.setPen(QPen(QColor(editor->getColor(KSyntaxHighlighting::Theme::LineNumbers)), 2));
+            painter.translate(layoutDirection() == Qt::LeftToRight ? width() - foldingMarkerSize : 0, top);
+            painter.drawPath(foldingMarker);
             painter.restore();
         }
+
         block = block.next();
         top = bottom;
         bottom = top + static_cast<int>(editor->blockBoundingRect(block).height());
     }
 }
 
-void LineNumberArea::changeEvent(QEvent *event)
+void CodeTextEditSidebar::highlightCurrentLine()
 {
-    if (event->type() == QEvent::LayoutDirectionChange) {
-        updateAreaWidth(editor->blockCount());
-        updateAreaGeometry();
-    }
-    QWidget::changeEvent(event);
+    QTextEdit::ExtraSelection selection;
+    selection.format.setBackground(QColor(editor->getColor(KSyntaxHighlighting::Theme::CurrentLine)));
+    selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+    selection.cursor = editor->textCursor();
+    selection.cursor.clearSelection();
+    editor->setExtraSelections({selection});
+    currentLineNumber = editor->textCursor().blockNumber() + 1;
 }
 
-void LineNumberArea::updateAreaWidth(int blocks)
+void CodeTextEditSidebar::updateSidebarWidth(int blocks)
 {
-    lineNumberAreaWidth = editor->fontMetrics().boundingRect(QString::number(blocks)).width() + lineNumberAreaPadding;
+    sidebarWidth = fontMetrics().horizontalAdvance(QString::number(blocks))
+        + fontMetrics().lineSpacing()
+        + sidebarPadding * 2;
     if (layoutDirection() == Qt::LeftToRight) {
-        editor->setViewportMargins(lineNumberAreaWidth, 0, 0, 0);
+        editor->setViewportMargins(sidebarWidth, 0, 0, 0);
     } else {
-        editor->setViewportMargins(0, 0, lineNumberAreaWidth, 0);
+        editor->setViewportMargins(0, 0, sidebarWidth, 0);
     }
 }
 
-void LineNumberArea::updateAreaGeometry()
+void CodeTextEditSidebar::updateSidebarGeometry()
 {
     const QRect contents = editor->contentsRect();
     if (layoutDirection() == Qt::LeftToRight) {
-        setGeometry(QRect(contents.left(), contents.top(), lineNumberAreaWidth, contents.height()));
+        setGeometry(QRect(contents.left(), contents.top(), sidebarWidth, contents.height()));
     } else {
-        setGeometry(QRect(contents.right() - lineNumberAreaWidth, contents.top(), lineNumberAreaWidth, contents.height()));
+        setGeometry(QRect(contents.right() - sidebarWidth, contents.top(), sidebarWidth, contents.height()));
     }
 }

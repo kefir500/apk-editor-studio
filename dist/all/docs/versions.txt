@@ -3,6 +3,7 @@
 ## 1.6.0
 - Migrated to a new syntax highlighter.
 - Added Smali syntax highlighting.
+- Added code folding.
 - Added code indentation control (Tab, Shift+Tab).
 - Added ability to build debuggable APKs.
 - Windows: Fixed WebP image format support.
