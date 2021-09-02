@@ -47,6 +47,7 @@ public:
     CodeTextEdit(QWidget *parent = nullptr);
 
     const KSyntaxHighlighting::Theme getTheme() const;
+    int getTabWidth() const;
 
     void setTheme(const KSyntaxHighlighting::Theme &theme);
     void setDefinition(const KSyntaxHighlighting::Definition &definition);

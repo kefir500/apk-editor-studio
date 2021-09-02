@@ -124,6 +124,14 @@ const KSyntaxHighlighting::Theme CodeTextEdit::getTheme() const
     return highlighter->theme();
 }
 
+int CodeTextEdit::getTabWidth() const
+{
+    if (highlighter->definition().name() == "YAML") {
+        return 2;
+    }
+    return 4;
+}
+
 void CodeTextEdit::setTheme(const KSyntaxHighlighting::Theme &theme)
 {
     auto newPalette(palette());
@@ -138,7 +146,7 @@ void CodeTextEdit::setDefinition(const KSyntaxHighlighting::Definition &definiti
 {
     highlighter->setDefinition(definition);
     highlighter->rehighlight();
-    setTabStopDistance(4 * QFontMetrics(font()).horizontalAdvance(' '));
+    setTabStopDistance(getTabWidth() * QFontMetrics(font()).horizontalAdvance(' '));
 }
 
 void CodeTextEdit::resizeEvent(QResizeEvent *event)
