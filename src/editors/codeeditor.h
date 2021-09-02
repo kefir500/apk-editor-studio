@@ -56,6 +56,7 @@ signals:
     void resized();
 
 protected:
+    void keyPressEvent(QKeyEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
 
 private:

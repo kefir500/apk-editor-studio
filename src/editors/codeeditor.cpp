@@ -149,6 +149,51 @@ void CodeTextEdit::setDefinition(const KSyntaxHighlighting::Definition &definiti
     setTabStopDistance(getTabWidth() * QFontMetrics(font()).horizontalAdvance(' '));
 }
 
+void CodeTextEdit::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Tab) {
+        auto cursor = textCursor();
+        cursor.setPosition(textCursor().selectionStart());
+        const int startBlock = cursor.blockNumber();
+        cursor.setPosition(textCursor().selectionEnd());
+        const int endBlock = cursor.blockNumber();
+        if (endBlock - startBlock > 0) {
+            cursor.beginEditBlock();
+            forever {
+                cursor.movePosition(QTextCursor::StartOfBlock);
+                cursor.insertText(QString(' ').repeated(getTabWidth()));
+                if (cursor.blockNumber() == startBlock) {
+                    break;
+                }
+                cursor.movePosition(QTextCursor::PreviousBlock);
+            }
+            cursor.endEditBlock();
+            return;
+        }
+    } else if (event->key() == Qt::Key_Backtab) {
+        auto cursor = textCursor();
+        cursor.setPosition(textCursor().selectionStart());
+        const int startBlock = cursor.blockNumber();
+        cursor.setPosition(textCursor().selectionEnd());
+        cursor.beginEditBlock();
+        forever {
+            const auto indentRegex = QRegularExpression(QString("^( {1,%1}|\\t)").arg(getTabWidth()));
+            const auto indentMatch = indentRegex.match(cursor.block().text());
+            const int indentLength = indentMatch.capturedLength();
+            cursor.movePosition(QTextCursor::StartOfBlock);
+            cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, indentLength);
+            cursor.removeSelectedText();
+            if (cursor.blockNumber() == startBlock) {
+                break;
+            }
+            cursor.movePosition(QTextCursor::PreviousBlock);
+        }
+        cursor.endEditBlock();
+        return;
+    }
+    QPlainTextEdit::keyPressEvent(event);
+}
+
 void CodeTextEdit::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event)
