@@ -7,7 +7,7 @@ ProjectList::ProjectList(QWidget *parent) : QComboBox(parent)
 #if defined(Q_OS_WIN)
     setMinimumHeight(Utils::scale(40));
     setIconSize(Utils::scale(32, 32));
-#elif defined(Q_OS_OSX)
+#elif defined(Q_OS_MACOS)
     setIconSize(Utils::scale(16, 16));
 #else
     setMinimumHeight(Utils::scale(46));

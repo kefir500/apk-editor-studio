@@ -21,7 +21,7 @@ Application::Application(int &argc, char **argv) : SingleApplication(argc, argv,
     qDebug() << qPrintable(applicationDisplayName());
 #if defined(Q_OS_WIN)
     qDebug() << "Platform: Windows";
-#elif defined(Q_OS_OSX)
+#elif defined(Q_OS_MACOS)
     qDebug() << "Platform: macOS";
 #elif defined(Q_OS_LINUX)
     qDebug() << "Platform: Linux";

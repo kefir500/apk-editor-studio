@@ -70,7 +70,7 @@ QString Updater::parse(const QByteArray &json)
 {
 #if defined(Q_OS_WIN)
     const QString os = "windows";
-#elif defined(Q_OS_OSX)
+#elif defined(Q_OS_MACOS)
     const QString os = "macos";
 #elif defined(Q_OS_LINUX)
     const QString os = "linux";

@@ -43,7 +43,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
     icon->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QLabel *title = new QLabel(Utils::getAppTitleAndVersion(), this);
     QFont titleFont = title->font();
-#ifndef Q_OS_OSX
+#ifndef Q_OS_MACOS
     titleFont.setPointSize(11);
 #else
     titleFont.setPointSize(16);

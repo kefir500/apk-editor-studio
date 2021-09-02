@@ -109,7 +109,7 @@ CodeTextEdit::CodeTextEdit(QWidget *parent)
 #if defined(Q_OS_WIN)
     QFont font("Consolas");
     font.setPointSize(11);
-#elif defined(Q_OS_OSX)
+#elif defined(Q_OS_MACOS)
     QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
     font.setPointSize(12);
 #elif defined(Q_OS_LINUX)

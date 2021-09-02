@@ -38,7 +38,7 @@ void OptionsDialog::addPage(const QString &title, QLayout *page, bool stretch)
     titleLine->setFrameShape(QFrame::HLine);
     titleLine->setFrameShadow(QFrame::Sunken);
     QFont titleFont = titleLabel->font();
-#ifndef Q_OS_OSX
+#ifndef Q_OS_MACOS
     titleFont.setPointSize(13);
 #else
     titleFont.setPointSize(17);
@@ -205,7 +205,7 @@ void OptionsDialog::initialize()
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
     spinboxRecent->setMaximum(50);
-#ifdef Q_OS_OSX
+#ifdef Q_OS_MACOS
     checkboxSingleInstance->hide();
 #endif
     pageGeneral->addRow(checkboxSingleInstance);

@@ -18,7 +18,7 @@ ActionViewer::ActionViewer(QWidget *parent) : Viewer(parent)
     label = new ElidedLabel(this);
 #if defined(Q_OS_WIN)
     label->setFont(QFont("Segoe UI", 14));
-#elif defined(Q_OS_OSX)
+#elif defined(Q_OS_MACOS)
     label->setFont(QFont(".SF NS Text", 18));
 #elif defined(Q_OS_LINUX)
     QFont font = QFontDatabase::systemFont(QFontDatabase::TitleFont);

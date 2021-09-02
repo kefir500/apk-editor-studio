@@ -70,7 +70,7 @@ bool Utils::explore(const QString &path)
     const QString nativePath = QDir::toNativeSeparators(fileInfo.canonicalFilePath());
     const QString argument = fileInfo.isDir() ? nativePath : QString("/select,%1").arg(nativePath);
     return QProcess::startDetached("explorer.exe", {argument});
-#elif defined(Q_OS_OSX)
+#elif defined(Q_OS_MACOS)
     QStringList arguments;
     const QString action = fileInfo.isDir() ? "open" : "reveal";
     arguments << "-e"
@@ -223,7 +223,7 @@ QString Utils::getAppTitleAndVersion()
 
 qreal Utils::getScaleFactor()
 {
-#ifndef Q_OS_OSX
+#ifndef Q_OS_MACOS
     const qreal dpi = qApp->primaryScreen()->logicalDotsPerInch();
     return dpi / 100.0;
 #else
