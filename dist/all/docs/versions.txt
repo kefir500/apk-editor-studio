@@ -6,6 +6,7 @@
 - Added code folding.
 - Added code indentation control (Tab, Shift+Tab).
 - Added ability to build debuggable APKs.
+- Updated Apktool to 2.6.0.
 - Windows: Fixed WebP image format support.
 - Windows: Changed default editor font to Consolas.
 
