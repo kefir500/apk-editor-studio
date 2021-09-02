@@ -6,7 +6,7 @@
 #include <QPainter>
 #include <QPaintEvent>
 
-#ifdef Q_OS_OSX
+#ifdef Q_OS_LINUX
     #include <QFontDatabase>
 #endif
 
@@ -20,7 +20,7 @@ ActionViewer::ActionViewer(QWidget *parent) : Viewer(parent)
     label->setFont(QFont("Segoe UI", 14));
 #elif defined(Q_OS_OSX)
     label->setFont(QFont(".SF NS Text", 18));
-#else
+#elif defined(Q_OS_LINUX)
     QFont font = QFontDatabase::systemFont(QFontDatabase::TitleFont);
     font.setPointSize(14);
     label->setFont(font);
