@@ -19,12 +19,6 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
 
     // Initialize menu actions:
 
-    auto separator = [this]() -> QAction * {
-        QAction *separator = new QAction(this);
-        separator->setSeparator(true);
-        return separator;
-    };
-
     actionReplace = new QAction(QIcon::fromTheme("document-swap"), QString(), this);
     actionSaveAs = new QAction(QIcon::fromTheme("document-save-as"), QString(), this);
     actionExplore = new QAction(QIcon::fromTheme("folder-open"), QString(), this);
@@ -37,10 +31,10 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
     connect(actionExplore, &QAction::triggered, this, &FileEditor::explore);
 
     addAction(actionReplace);
-    addAction(separator());
+    addSeparator();
     addAction(actionSave);
     addAction(actionSaveAs);
-    addAction(separator());
+    addSeparator();
     addAction(actionExplore);
 
     retranslate();

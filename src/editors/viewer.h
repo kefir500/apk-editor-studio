@@ -21,6 +21,8 @@ signals:
     void iconChanged(const QIcon &icon);
 
 protected:
+    void addSeparator();
+
     QString title;
     QIcon icon;
 };

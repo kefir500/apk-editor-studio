@@ -1,4 +1,5 @@
 #include "editors/viewer.h"
+#include <QAction>
 
 const QString &Viewer::getTitle() const
 {
@@ -13,4 +14,11 @@ const QIcon &Viewer::getIcon() const
 bool Viewer::finalize()
 {
     return true;
+}
+
+void Viewer::addSeparator()
+{
+    auto separator = new QAction(this);
+    separator->setSeparator(true);
+    addAction(separator);
 }
