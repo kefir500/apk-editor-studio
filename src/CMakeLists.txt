@@ -42,15 +42,15 @@ target_sources(apk-editor-studio PRIVATE
     base/treenode.cpp
     base/updater.cpp
     base/utils.cpp
-    editors/actionviewer.cpp
-    editors/codeeditor.cpp
-    editors/editor.cpp
-    editors/fileeditor.cpp
-    editors/imageeditor.cpp
-    editors/projectactionviewer.cpp
-    editors/titleeditor.cpp
-    editors/viewer.cpp
-    editors/welcomeactionviewer.cpp
+    sheets/basesheet.cpp
+    sheets/baseactionsheet.cpp
+    sheets/baseeditablesheet.cpp
+    sheets/basefilesheet.cpp
+    sheets/codesheet.cpp
+    sheets/imagesheet.cpp
+    sheets/projectsheet.cpp
+    sheets/titlesheet.cpp
+    sheets/welcomesheet.cpp
     tools/adb.cpp
     tools/apksigner.cpp
     tools/apktool.cpp
