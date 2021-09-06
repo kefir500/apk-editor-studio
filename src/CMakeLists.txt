@@ -60,6 +60,8 @@ target_sources(apk-editor-studio PRIVATE
     tools/keytool.cpp
     tools/zipalign.cpp
     widgets/centralwidget.cpp
+    widgets/codeeditor.cpp
+    widgets/codesidebar.cpp
     widgets/decorationsizedelegate.cpp
     widgets/deselectablelistview.cpp
     widgets/elidedlabel.cpp
