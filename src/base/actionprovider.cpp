@@ -291,6 +291,58 @@ QAction *ActionProvider::getInstallApk(const QString &serial, MainWindow *window
     return action;
 }
 
+QAction *ActionProvider::getFind(QWidget *parent) const
+{
+    auto action = new QAction(QIcon::fromTheme("edit-find"), {}, parent);
+    action->setShortcut(QKeySequence::Find);
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+
+    auto translate = [=]() { action->setText(tr("&Find")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    return action;
+}
+
+QAction *ActionProvider::getFindNext(QWidget *parent) const
+{
+    auto action = new QAction(QIcon::fromTheme("go-down-search"), {}, parent);
+    action->setShortcut(QKeySequence::FindNext);
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+
+    auto translate = [=]() { action->setText(tr("Find &Next")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    return action;
+}
+
+QAction *ActionProvider::getFindPrevious(QWidget *parent) const
+{
+    auto action = new QAction(QIcon::fromTheme("go-up-search"), {}, parent);
+    action->setShortcut(QKeySequence::FindPrevious);
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+
+    auto translate = [=]() { action->setText(tr("Find Pre&vious")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    return action;
+}
+
+QAction *ActionProvider::getReplace(QWidget *parent) const
+{
+    auto action = new QAction(QIcon::fromTheme("edit-find-replace"), {}, parent);
+    action->setShortcut(QKeySequence::Replace);
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+
+    auto translate = [=]() { action->setText(tr("Find and &Replace")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    return action;
+}
+
 QAction *ActionProvider::getVisitWebPage(QObject *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("help-website"), {}, parent);

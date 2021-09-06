@@ -9,10 +9,26 @@ CodeSideBar::CodeSideBar(CodeEditor *parent)
     , editor(parent)
 {
     connect(editor, &CodeEditor::blockCountChanged, this, &CodeSideBar::updateSidebarWidth);
-    connect(editor, &CodeEditor::cursorPositionChanged, this, &CodeSideBar::highlightCurrentLine);
     connect(editor, &CodeEditor::updateRequest, this, [=](const QRect &rect, int dy) {
         dy ? scroll(0, dy) : update(0, rect.y(), width(), rect.height());
     });
+}
+
+void CodeSideBar::setCurrentLine(int line)
+{
+    currentLineNumber = line;
+}
+
+void CodeSideBar::updateSidebarWidth(int blocks)
+{
+    sidebarWidth = fontMetrics().horizontalAdvance(QString::number(blocks))
+        + fontMetrics().lineSpacing()
+        + sidebarPadding * 2;
+    if (layoutDirection() == Qt::LeftToRight) {
+        editor->setViewportMargins(sidebarWidth, 0, 0, 0);
+    } else {
+        editor->setViewportMargins(0, 0, sidebarWidth, 0);
+    }
 }
 
 QSize CodeSideBar::sizeHint() const
@@ -48,7 +64,7 @@ void CodeSideBar::mouseReleaseEvent(QMouseEvent *event)
 void CodeSideBar::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.fillRect(0, 0, width(), height(), editor->getColor(KSyntaxHighlighting::Theme::IconBorder));
+    painter.fillRect(0, 0, width(), height(), editor->getEditorColor(KSyntaxHighlighting::Theme::IconBorder));
 
     QTextBlock block = editor->firstVisibleBlock();
     int top = static_cast<int>(editor->blockBoundingGeometry(block).translated(editor->contentOffset()).top());
@@ -61,7 +77,7 @@ void CodeSideBar::paintEvent(QPaintEvent *event)
         // Line number
         if (block.isVisible() && bottom >= event->rect().top()) {
             const int blockNumber = block.blockNumber() + 1;
-            painter.setPen(editor->getColor(blockNumber == currentLineNumber
+            painter.setPen(editor->getEditorColor(blockNumber == currentLineNumber
                  ? KSyntaxHighlighting::Theme::CurrentLineNumber
                  : KSyntaxHighlighting::Theme::LineNumbers));
             painter.drawText(layoutDirection() == Qt::LeftToRight ? sidebarPadding : sidebarPadding + foldingMarkerSize,
@@ -87,7 +103,7 @@ void CodeSideBar::paintEvent(QPaintEvent *event)
             }
             painter.save();
             painter.setRenderHint(QPainter::Antialiasing);
-            painter.setPen(QPen(QColor(editor->getColor(KSyntaxHighlighting::Theme::LineNumbers)), 2));
+            painter.setPen(QPen(QColor(editor->getEditorColor(KSyntaxHighlighting::Theme::LineNumbers)), 2));
             painter.translate(layoutDirection() == Qt::LeftToRight ? width() - foldingMarkerSize : 0, top);
             painter.drawPath(foldingMarker);
             painter.restore();
@@ -96,29 +112,6 @@ void CodeSideBar::paintEvent(QPaintEvent *event)
         block = block.next();
         top = bottom;
         bottom = top + static_cast<int>(editor->blockBoundingRect(block).height());
-    }
-}
-
-void CodeSideBar::highlightCurrentLine()
-{
-    QTextEdit::ExtraSelection selection;
-    selection.format.setBackground(QColor(editor->getColor(KSyntaxHighlighting::Theme::CurrentLine)));
-    selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-    selection.cursor = editor->textCursor();
-    selection.cursor.clearSelection();
-    editor->setExtraSelections({selection});
-    currentLineNumber = editor->textCursor().blockNumber() + 1;
-}
-
-void CodeSideBar::updateSidebarWidth(int blocks)
-{
-    sidebarWidth = fontMetrics().horizontalAdvance(QString::number(blocks))
-        + fontMetrics().lineSpacing()
-        + sidebarPadding * 2;
-    if (layoutDirection() == Qt::LeftToRight) {
-        editor->setViewportMargins(sidebarWidth, 0, 0, 0);
-    } else {
-        editor->setViewportMargins(0, 0, sidebarWidth, 0);
     }
 }
 

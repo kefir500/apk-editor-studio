@@ -3,13 +3,18 @@
 
 #include <QWidget>
 
+class CodeEditor;
+
 class CodeSideBar : public QWidget
 {
     Q_OBJECT
-    friend class CodeEditor;
 
 public:
     CodeSideBar(CodeEditor *parent);
+
+    void setCurrentLine(int line);
+    void updateSidebarGeometry();
+
     QSize sizeHint() const override;
 
 protected:
@@ -18,9 +23,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    void highlightCurrentLine();
     void updateSidebarWidth(int blocks);
-    void updateSidebarGeometry();
 
     CodeEditor *editor;
     int sidebarWidth = 0;

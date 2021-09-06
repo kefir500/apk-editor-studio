@@ -1,13 +1,12 @@
 #include "sheets/codesheet.h"
 #include "widgets/codeeditor.h"
+#include "widgets/codesearchbar.h"
 #include "base/application.h"
 #include <KSyntaxHighlighting/Definition>
 #include <QBoxLayout>
-#include <QDebug>
 #include <QRegularExpression>
 #include <QScrollBar>
 #include <QTextCodec>
-#include <QTextStream>
 
 CodeSheet::CodeSheet(const ResourceModelIndex &index, QWidget *parent) : BaseFileSheet(index, parent)
 {
@@ -22,14 +21,44 @@ CodeSheet::CodeSheet(const ResourceModelIndex &index, QWidget *parent) : BaseFil
     editor = new CodeEditor(this);
     editor->setDefinition(app->highlightingRepository.definitionForFileName(filename));
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    searchBar = new CodeSearchBar(editor);
+    connect(editor, &CodeEditor::searchFinished, searchBar, &CodeSearchBar::setResults);
+
+    auto layout = new QVBoxLayout(this);
     layout->addWidget(editor);
+    layout->addWidget(searchBar);
     layout->setMargin(0);
+    layout->setSpacing(0);
 
     file = new QFile(filename, this);
     load();
-
     connect(editor, &QPlainTextEdit::modificationChanged, this, &CodeSheet::setModified);
+
+    // Initialize actions:
+
+    addSeparator();
+
+    auto actionFind = app->actions.getFind(this);
+    addAction(actionFind);
+    connect(actionFind, &QAction::triggered, this, &CodeSheet::findSelectedText);
+
+    auto actionFindNext = app->actions.getFindNext(this);
+    addAction(actionFindNext);
+    connect(actionFindNext, &QAction::triggered, this, [=]() {
+        searchBar->show();
+        editor->nextSearchQuery();
+    });
+
+    auto actionFindPrevious = app->actions.getFindPrevious(this);
+    addAction(actionFindPrevious);
+    connect(actionFindPrevious, &QAction::triggered, this, [=]() {
+        searchBar->show();
+        editor->prevSearchQuery();
+    });
+
+    auto actionReplace = app->actions.getReplace(this);
+    addAction(actionReplace);
+    connect(actionReplace, &QAction::triggered, this, &CodeSheet::replaceSelectedText);
 }
 
 bool CodeSheet::load()
@@ -87,10 +116,37 @@ bool CodeSheet::save(const QString &as)
     return result;
 }
 
+void CodeSheet::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape) {
+        searchBar->hide();
+    }
+    BaseFileSheet::keyPressEvent(event);
+}
 
+void CodeSheet::findSelectedText()
+{
+    auto cursor = editor->textCursor();
+    if (!cursor.hasSelection()) {
+        cursor.select(QTextCursor::WordUnderCursor);
+    }
+    const auto selection(cursor.selectedText());
+    cursor.setPosition(cursor.selectionStart()); // Move to the beginning of the selection and clear it
+    editor->setTextCursor(cursor);
+    searchBar->setFindText(selection);
+    searchBar->show();
+    searchBar->focusFindBar();
+}
 
-
-
-
-
-
+void CodeSheet::replaceSelectedText()
+{
+    const auto selection = editor->textCursor().selectedText();
+    searchBar->show();
+    searchBar->showReplaceBar();
+    if (selection.isEmpty()) {
+        searchBar->focusFindBar();
+    } else {
+        searchBar->setFindText(selection);
+        searchBar->focusReplaceBar();
+    }
+}

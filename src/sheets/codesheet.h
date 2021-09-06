@@ -4,8 +4,8 @@
 #include "sheets/basefilesheet.h"
 
 class CodeEditor;
+class CodeSearchBar;
 class QFile;
-class QTextCodec;
 
 class CodeSheet : public BaseFileSheet
 {
@@ -15,10 +15,17 @@ public:
     bool load() override;
     bool save(const QString &as = QString()) override;
 
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
 private:
+    void findSelectedText();
+    void replaceSelectedText();
+
     QFile *file;
     QTextCodec *codec;
     CodeEditor *editor;
+    CodeSearchBar *searchBar;
 };
 
 #endif // CODESHEET_H

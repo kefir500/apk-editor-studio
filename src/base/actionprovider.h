@@ -54,6 +54,11 @@ public:
     QAction *getInstallApk(MainWindow *window) const;
     QAction *getInstallApk(const QString &serial, MainWindow *window) const;
 
+    QAction *getFind(QWidget *parent) const;
+    QAction *getFindNext(QWidget *parent) const;
+    QAction *getFindPrevious(QWidget *parent) const;
+    QAction *getReplace(QWidget *parent) const;
+
     QAction *getVisitWebPage(QObject *parent = nullptr) const;
     QAction *getVisitSourcePage(QObject *parent = nullptr) const;
     QAction *getVisitDonatePage(QObject *parent = nullptr) const;
