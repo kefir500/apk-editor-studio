@@ -1,4 +1,4 @@
-#include "editors/actionviewer.h"
+#include "sheets/baseactionsheet.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include "widgets/gradientwidget.h"
@@ -10,7 +10,7 @@
     #include <QFontDatabase>
 #endif
 
-ActionViewer::ActionViewer(QWidget *parent) : Viewer(parent)
+BaseActionSheet::BaseActionSheet(QWidget *parent) : BaseSheet(parent)
 {
     background = new GradientWidget(this);
     background->resize(size());
@@ -36,17 +36,17 @@ ActionViewer::ActionViewer(QWidget *parent) : Viewer(parent)
     layout->addStretch();
 }
 
-void ActionViewer::setTitle(const QString &title)
+void BaseActionSheet::setTitle(const QString &title)
 {
     label->setText(title);
 }
 
-void ActionViewer::addWidget(QWidget *widget)
+void BaseActionSheet::addWidget(QWidget *widget)
 {
     layout->insertWidget(layout->count() - 1, widget);
 }
 
-QPushButton *ActionViewer::addButton(const QString &title)
+QPushButton *BaseActionSheet::addButton(const QString &title)
 {
     QPushButton *button = new QPushButton(this);
     button->setText(title);
@@ -63,7 +63,7 @@ QPushButton *ActionViewer::addButton(const QString &title)
     return button;
 }
 
-void ActionViewer::resizeEvent(QResizeEvent *event)
+void BaseActionSheet::resizeEvent(QResizeEvent *event)
 {
     background->resize(event->size());
 }

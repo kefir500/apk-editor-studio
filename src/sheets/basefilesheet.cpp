@@ -1,7 +1,7 @@
-#include "editors/fileeditor.h"
+#include "sheets/basefilesheet.h"
 #include "windows/dialogs.h"
 
-FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Editor(parent), index(index)
+BaseFileSheet::BaseFileSheet(const ResourceModelIndex &index, QWidget *parent) : BaseEditableSheet(parent), index(index)
 {
     icon = index.icon();
 
@@ -26,9 +26,9 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
     actionReplace->setShortcut(QKeySequence("Ctrl+R"));
     actionSaveAs->setShortcut(QKeySequence("Ctrl+Shift+S"));
 
-    connect(actionReplace, &QAction::triggered, this, &FileEditor::replace);
-    connect(actionSaveAs, &QAction::triggered, this, &FileEditor::saveAs);
-    connect(actionExplore, &QAction::triggered, this, &FileEditor::explore);
+    connect(actionReplace, &QAction::triggered, this, &BaseFileSheet::replace);
+    connect(actionSaveAs, &QAction::triggered, this, &BaseFileSheet::saveAs);
+    connect(actionExplore, &QAction::triggered, this, &BaseFileSheet::explore);
 
     addAction(actionReplace);
     addSeparator();
@@ -40,7 +40,7 @@ FileEditor::FileEditor(const ResourceModelIndex &index, QWidget *parent) : Edito
     retranslate();
 }
 
-bool FileEditor::saveAs()
+bool BaseFileSheet::saveAs()
 {
     const QString filename = index.path();
     const QString destination = Dialogs::getSaveFilename(filename, this);
@@ -50,25 +50,25 @@ bool FileEditor::saveAs()
     return save(destination);
 }
 
-bool FileEditor::replace()
+bool BaseFileSheet::replace()
 {
     return index.replace(this);
 }
 
-bool FileEditor::explore() const
+bool BaseFileSheet::explore() const
 {
     return index.explore();
 }
 
-void FileEditor::changeEvent(QEvent *event)
+void BaseFileSheet::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
     }
-    Editor::changeEvent(event);
+    BaseEditableSheet::changeEvent(event);
 }
 
-void FileEditor::retranslate()
+void BaseFileSheet::retranslate()
 {
     actionReplace->setText(tr("&Replace Resource..."));
     actionSave->setText(tr("&Save Resource"));

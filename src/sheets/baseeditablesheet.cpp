@@ -1,8 +1,8 @@
-#include "editors/editor.h"
+#include "sheets/baseeditablesheet.h"
 #include <QEvent>
 #include <QMessageBox>
 
-Editor::Editor(QWidget *parent) : Viewer(parent)
+BaseEditableSheet::BaseEditableSheet(QWidget *parent) : BaseSheet(parent)
 {
     setModified(false);
 
@@ -16,7 +16,7 @@ Editor::Editor(QWidget *parent) : Viewer(parent)
     retranslate();
 }
 
-bool Editor::finalize()
+bool BaseEditableSheet::finalize()
 {
     if (isModified()) {
         const int answer = QMessageBox::question(this, QString(), tr("Save the changes?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
@@ -33,26 +33,26 @@ bool Editor::finalize()
     return true;
 }
 
-bool Editor::isModified() const
+bool BaseEditableSheet::isModified() const
 {
     return modified;
 }
 
-void Editor::setModified(bool value)
+void BaseEditableSheet::setModified(bool value)
 {
     modified = value;
     emit modifiedStateChanged(modified);
 }
 
-void Editor::changeEvent(QEvent *event)
+void BaseEditableSheet::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
     }
-    Viewer::changeEvent(event);
+    BaseSheet::changeEvent(event);
 }
 
-void Editor::retranslate()
+void BaseEditableSheet::retranslate()
 {
     actionSave->setText(tr("&Save"));
 }

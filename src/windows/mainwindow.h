@@ -7,9 +7,10 @@
 #include <QMainWindow>
 #include <QRubberBand>
 
+class BaseSheet;
+class CentralWidget;
 class ExtraListItemProxy;
 class LogView;
-class CentralWidget;
 class ManifestView;
 class Project;
 class ProjectItemsModel;
@@ -17,8 +18,7 @@ class ProjectList;
 class ProjectWidget;
 class ResourceAbstractView;
 class Toolbar;
-class Viewer;
-class WelcomeActionViewer;
+class WelcomeSheet;
 
 class MainWindow : public QMainWindow
 {
@@ -44,7 +44,7 @@ private:
     void retranslate();
 
     void updateWindowForProject(Project *project);
-    void updateWindowForTab(Viewer *tab);
+    void updateWindowForTab(BaseSheet *tab);
     void updateRecentMenu();
 
     void onProjectAdded(const QModelIndex &parent, int first, int last);
@@ -53,7 +53,7 @@ private:
 
     Project *getCurrentProject() const;
     ProjectWidget *getCurrentProjectWidget() const;
-    Viewer *getCurrentTab() const;
+    BaseSheet *getCurrentTab() const;
 
     static int instances;
     ProjectItemsModel &projects;
@@ -73,7 +73,7 @@ private:
     QDockWidget *dockIcons;
     QMenu *menuFile;
     QMenu *menuRecent;
-    QMenu *menuEditor;
+    QMenu *menuTab;
     QMenu *menuTools;
     QMenu *menuSettings;
     QMenu *menuWindow;
@@ -100,7 +100,7 @@ private:
     QByteArray defaultState;
 
     QMap<Project *, ProjectWidget *> projectWidgets;
-    WelcomeActionViewer *welcomePage;
+    WelcomeSheet *welcomePage;
     ExtraListItemProxy *welcomeItemProxy;
 };
 

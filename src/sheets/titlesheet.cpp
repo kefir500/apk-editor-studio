@@ -1,10 +1,10 @@
-#include "editors/titleeditor.h"
+#include "sheets/titlesheet.h"
 #include "widgets/loadingwidget.h"
 #include <QBoxLayout>
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
 
-TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(parent)
+TitleSheet::TitleSheet(const Project *project, QWidget *parent) : BaseEditableSheet(parent)
 {
     title = tr("Application Title");
     icon = QIcon::fromTheme("tool-titleeditor");
@@ -32,7 +32,7 @@ TitleEditor::TitleEditor(const Project *project, QWidget *parent) : Editor(paren
     });
 }
 
-bool TitleEditor::save(const QString &as)
+bool TitleSheet::save(const QString &as)
 {
     Q_UNUSED(as)
     if (!model || !model->save()) {

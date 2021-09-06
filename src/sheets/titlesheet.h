@@ -1,16 +1,16 @@
 #ifndef TITLEEDITOR_H
 #define TITLEEDITOR_H
 
-#include "editors/editor.h"
+#include "sheets/baseeditablesheet.h"
 #include "apk/titleitemsmodel.h"
 #include <QTableView>
 
-class TitleEditor : public Editor
+class TitleSheet : public BaseEditableSheet
 {
     Q_OBJECT
 
 public:
-    TitleEditor(const Project *project, QWidget *parent = nullptr);
+    TitleSheet(const Project *project, QWidget *parent = nullptr);
     bool save(const QString &as = QString()) override;
 
 private:

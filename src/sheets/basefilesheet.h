@@ -1,16 +1,16 @@
-#ifndef FILEEDITOR_H
-#define FILEEDITOR_H
+#ifndef BASEFILESHEET_H
+#define BASEFILESHEET_H
 
-#include "editors/editor.h"
+#include "sheets/baseeditablesheet.h"
 #include "apk/resourcemodelindex.h"
 #include <QFileSystemWatcher>
 
-class FileEditor : public Editor
+class BaseFileSheet : public BaseEditableSheet
 {
     Q_OBJECT
 
 public:
-    FileEditor(const ResourceModelIndex &index, QWidget *parent = nullptr);
+    BaseFileSheet(const ResourceModelIndex &index, QWidget *parent = nullptr);
 
     virtual bool load() = 0;
     virtual bool saveAs();
@@ -32,4 +32,4 @@ private:
     QAction *actionExplore;
 };
 
-#endif // FILEEDITOR_H
+#endif // BASEFILESHEET_H

@@ -1,15 +1,15 @@
-#ifndef PROJECTACTIONVIEWER_H
-#define PROJECTACTIONVIEWER_H
+#ifndef PROJECTSHEET_H
+#define PROJECTSHEET_H
 
-#include "editors/actionviewer.h"
+#include "sheets/baseactionsheet.h"
 #include "apk/project.h"
 
-class ProjectActionViewer : public ActionViewer
+class ProjectSheet : public BaseActionSheet
 {
     Q_OBJECT
 
 public:
-    explicit ProjectActionViewer(Project *project, QWidget *parent = nullptr);
+    explicit ProjectSheet(Project *project, QWidget *parent = nullptr);
 
 signals:
     void apkSaveRequested();
@@ -32,4 +32,4 @@ private:
     QPushButton *btnInstall;
 };
 
-#endif // PROJECTACTIONVIEWER_H
+#endif // PROJECTSHEET_H

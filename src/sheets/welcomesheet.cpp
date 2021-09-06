@@ -1,8 +1,8 @@
-#include "editors/welcomeactionviewer.h"
+#include "sheets/welcomesheet.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
 
-WelcomeActionViewer::WelcomeActionViewer(MainWindow *parent) : ActionViewer(parent)
+WelcomeSheet::WelcomeSheet(MainWindow *parent) : BaseActionSheet(parent)
 {
     btnOpen = addButton();
     btnInstall = addButton();
@@ -20,7 +20,7 @@ WelcomeActionViewer::WelcomeActionViewer(MainWindow *parent) : ActionViewer(pare
     connect(btnDonate, &QPushButton::clicked, &app->actions, &ActionProvider::visitDonatePage);
 }
 
-void WelcomeActionViewer::changeEvent(QEvent *event)
+void WelcomeSheet::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         //: Don't translate the "APK Editor Studio" part.
@@ -30,5 +30,5 @@ void WelcomeActionViewer::changeEvent(QEvent *event)
         btnExplorer->setText(app->translate("AndroidExplorer", "Android Explorer"));
         btnDonate->setText(tr("Support Us"));
     }
-    ActionViewer::changeEvent(event);
+    BaseActionSheet::changeEvent(event);
 }

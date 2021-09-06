@@ -1,7 +1,7 @@
-#ifndef ACTIONVIEWER_H
-#define ACTIONVIEWER_H
+#ifndef BASEACTIONSHEET_H
+#define BASEACTIONSHEET_H
 
-#include "editors/viewer.h"
+#include "sheets/basesheet.h"
 #include "widgets/elidedlabel.h"
 #include <QPushButton>
 
@@ -9,12 +9,12 @@ class QVBoxLayout;
 class QPushButton;
 class GradientWidget;
 
-class ActionViewer : public Viewer
+class BaseActionSheet : public BaseSheet
 {
     Q_OBJECT
 
 public:
-    explicit ActionViewer(QWidget *parent = nullptr);
+    explicit BaseActionSheet(QWidget *parent = nullptr);
     void setTitle(const QString &title);
 
 protected:
@@ -28,4 +28,4 @@ private:
     ElidedLabel *label;
 };
 
-#endif // ACTIONVIEWER_H
+#endif // BASEACTIONSHEET_H

@@ -1,4 +1,4 @@
-#include "editors/imageeditor.h"
+#include "sheets/imagesheet.h"
 #include "base/fileformatlist.h"
 #include "base/utils.h"
 #include "windows/dialogs.h"
@@ -13,9 +13,9 @@
     #include <QDebug>
 #endif
 
-// ImageEditor
+// ImageSheet
 
-ImageEditor::ImageEditor(const ResourceModelIndex &index, QWidget *parent) : FileEditor(index, parent)
+ImageSheet::ImageSheet(const ResourceModelIndex &index, QWidget *parent) : BaseFileSheet(index, parent)
 {
     title = index.path().section('/', -2);
 
@@ -47,7 +47,7 @@ ImageEditor::ImageEditor(const ResourceModelIndex &index, QWidget *parent) : Fil
     load();
 }
 
-bool ImageEditor::load()
+bool ImageSheet::load()
 {
     QPixmap pixmap(index.path());
     if (pixmap.isNull()) {
@@ -67,7 +67,7 @@ bool ImageEditor::load()
     return true;
 }
 
-void ImageEditor::setImage(const QPixmap &image)
+void ImageSheet::setImage(const QPixmap &image)
 {
     scene->clear();
     view->zoomReset();
@@ -77,7 +77,7 @@ void ImageEditor::setImage(const QPixmap &image)
     setSizeInfo(image.size());
 }
 
-bool ImageEditor::save(const QString &as)
+bool ImageSheet::save(const QString &as)
 {
     if (as.isEmpty()) {
         if (!pixmapItem->pixmap().save(index.path())) {
@@ -91,7 +91,7 @@ bool ImageEditor::save(const QString &as)
     }
 }
 
-bool ImageEditor::saveAs()
+bool ImageSheet::saveAs()
 {
     const QString filename = index.path();
     const QString destination = Dialogs::getSaveImageFilename(filename, this);
@@ -101,17 +101,17 @@ bool ImageEditor::saveAs()
     return save(destination);
 }
 
-void ImageEditor::setSizeInfo(int width, int height)
+void ImageSheet::setSizeInfo(int width, int height)
 {
     labelSize->setText(QString("%1x%2").arg(width).arg(height));
 }
 
-void ImageEditor::setSizeInfo(const QSize &size)
+void ImageSheet::setSizeInfo(const QSize &size)
 {
     setSizeInfo(size.width(), size.height());
 }
 
-void ImageEditor::dragEnterEvent(QDragEnterEvent *event)
+void ImageSheet::dragEnterEvent(QDragEnterEvent *event)
 {
     const QMimeData *mimeData = event->mimeData();
     const bool isImage = (mimeData->hasUrls() && Utils::isImageReadable(mimeData->urls().at(0).path())) || mimeData->hasImage();
@@ -119,13 +119,13 @@ void ImageEditor::dragEnterEvent(QDragEnterEvent *event)
     rubberBand->setVisible(isImage);
 }
 
-void ImageEditor::dragLeaveEvent(QDragLeaveEvent *event)
+void ImageSheet::dragLeaveEvent(QDragLeaveEvent *event)
 {
     Q_UNUSED(event)
     rubberBand->hide();
 }
 
-void ImageEditor::dropEvent(QDropEvent *event)
+void ImageSheet::dropEvent(QDropEvent *event)
 {
     const QMimeData *mimeData = event->mimeData();
     if (mimeData->hasUrls()) {
@@ -144,7 +144,7 @@ void ImageEditor::dropEvent(QDropEvent *event)
     rubberBand->hide();
 }
 
-void ImageEditor::resizeEvent(QResizeEvent *event)
+void ImageSheet::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event)
     rubberBand->setGeometry(geometry());

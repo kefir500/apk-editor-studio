@@ -1,4 +1,4 @@
-#include "editors/codeeditor.h"
+#include "sheets/codesheet.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include <KSyntaxHighlighting/SyntaxHighlighter>
@@ -14,7 +14,7 @@
 
 // CodeEditor:
 
-CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileEditor(index, parent)
+CodeSheet::CodeSheet(const ResourceModelIndex &index, QWidget *parent) : BaseFileSheet(index, parent)
 {
     const QString filename = index.path();
     title = filename.section('/', -2);
@@ -34,10 +34,10 @@ CodeEditor::CodeEditor(const ResourceModelIndex &index, QWidget *parent) : FileE
     file = new QFile(filename, this);
     load();
 
-    connect(editor, &QPlainTextEdit::modificationChanged, this, &CodeEditor::setModified);
+    connect(editor, &QPlainTextEdit::modificationChanged, this, &CodeSheet::setModified);
 }
 
-bool CodeEditor::load()
+bool CodeSheet::load()
 {
     file->close();
     if (file->open(QFile::ReadWrite)) {
@@ -61,7 +61,7 @@ bool CodeEditor::load()
     }
 }
 
-bool CodeEditor::save(const QString &as)
+bool CodeSheet::save(const QString &as)
 {
     QFile *file = this->file;
     if (!as.isEmpty()) {

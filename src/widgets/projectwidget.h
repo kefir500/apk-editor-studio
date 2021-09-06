@@ -6,7 +6,7 @@
 
 class Project;
 class ProjectItemsModel;
-class Viewer;
+class BaseSheet;
 
 class ProjectWidget : public QTabWidget
 {
@@ -30,13 +30,13 @@ public:
     bool closeProject();
 
 signals:
-    void currentTabChanged(Viewer *viewer);
+    void currentTabChanged(BaseSheet *sheet);
 
 private:
-    int addTab(Viewer *tab);
-    bool closeTab(Viewer *tab);
+    int addTab(BaseSheet *tab);
+    bool closeTab(BaseSheet *tab);
     bool hasUnsavedTabs() const;
-    Viewer *getTabByIdentifier(const QString &identifier) const;
+    BaseSheet *getTabByIdentifier(const QString &identifier) const;
 
     Project *project;
     ProjectItemsModel &projects;

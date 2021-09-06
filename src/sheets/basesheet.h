@@ -1,15 +1,15 @@
-#ifndef VIEWER_H
-#define VIEWER_H
+#ifndef BASESHEET_H
+#define BASESHEET_H
 
 #include <QWidget>
 #include <QIcon>
 
-class Viewer : public QWidget
+class BaseSheet : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Viewer(QWidget *parent = nullptr) : QWidget(parent) {}
+    explicit BaseSheet(QWidget *parent = nullptr) : QWidget(parent) {}
 
     const QString &getTitle() const;
     const QIcon &getIcon() const;
@@ -27,4 +27,4 @@ protected:
     QIcon icon;
 };
 
-#endif // VIEWER_H
+#endif // BASESHEET_H

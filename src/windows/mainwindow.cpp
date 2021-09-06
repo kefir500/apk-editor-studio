@@ -12,8 +12,8 @@
 #include "widgets/resourceabstractview.h"
 #include "widgets/resourcetree.h"
 #include "widgets/toolbar.h"
-#include "editors/fileeditor.h"
-#include "editors/welcomeactionviewer.h"
+#include "sheets/basefilesheet.h"
+#include "sheets/welcomesheet.h"
 #include "base/application.h"
 #include "base/extralistitemproxy.h"
 #include "base/updater.h"
@@ -139,7 +139,7 @@ void MainWindow::initWidgets()
     welcomeItemProxy->prependRow();
     welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), tr("Welcome"), Qt::DisplayRole);
     welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), QIcon::fromTheme("apk-editor-studio"), Qt::DecorationRole);
-    welcomePage = new WelcomeActionViewer(this);
+    welcomePage = new WelcomeSheet(this);
     projectList->setModel(welcomeItemProxy);
     auto dockProjectsWidget = new QWidget(this);
     auto projectsLayout = new QVBoxLayout(dockProjectsWidget);
@@ -265,8 +265,8 @@ void MainWindow::initMenus()
     menuFile->addAction(actionApkClose);
     menuFile->addSeparator();
     menuFile->addAction(app->actions.getExit(this));
-    menuEditor = menuBar()->addMenu(QString());
-    menuEditor->setEnabled(false);
+    menuTab = menuBar()->addMenu(QString());
+    menuTab->setEnabled(false);
     menuTools = menuBar()->addMenu(QString());
     menuTools->addAction(actionKeyManager);
     menuTools->addSeparator();
@@ -363,10 +363,10 @@ void MainWindow::initMenus()
         dialog.exec();
     });
     connect(actionFileSave, &QAction::triggered, this, [this]() {
-        qobject_cast<Editor *>(getCurrentTab())->save();
+        qobject_cast<BaseEditableSheet *>(getCurrentTab())->save();
     });
     connect(actionFileSaveAs, &QAction::triggered, this, [this]() {
-        qobject_cast<FileEditor *>(getCurrentTab())->saveAs();
+        qobject_cast<BaseFileSheet *>(getCurrentTab())->saveAs();
     });
     connect(actionAbout, &QAction::triggered, this, [this]() {
         AboutDialog about(this);
@@ -393,7 +393,7 @@ void MainWindow::retranslate()
     // Menu Bar:
 
     menuFile->setTitle(tr("&File"));
-    menuEditor->setTitle(tr("&Editor"));
+    menuTab->setTitle(tr("Ta&b"));
     menuTools->setTitle(tr("&Tools"));
     menuSettings->setTitle(tr("&Settings"));
     menuWindow->setTitle(tr("&Window"));
@@ -449,7 +449,7 @@ void MainWindow::updateWindowForProject(Project *project)
         setWindowTitle(QString("%1[*]").arg(project->getOriginalPath()));
         setWindowModified(project->getState().isModified());
         auto projectWidget = projectWidgets.value(project);
-        updateWindowForTab(qobject_cast<Viewer *>(projectWidget->currentWidget()));
+        updateWindowForTab(qobject_cast<BaseSheet *>(projectWidget->currentWidget()));
     } else {
         setWindowTitle(QString());
         setWindowModified(false);
@@ -467,17 +467,17 @@ void MainWindow::updateWindowForProject(Project *project)
     actionProjectManager->setEnabled(project);
 }
 
-void MainWindow::updateWindowForTab(Viewer *tab)
+void MainWindow::updateWindowForTab(BaseSheet *tab)
 {
-    menuEditor->clear();
+    menuTab->clear();
     if (tab && !tab->actions().isEmpty()) {
-        menuEditor->setEnabled(true);
-        menuEditor->addActions(tab->actions());
+        menuTab->setEnabled(true);
+        menuTab->addActions(tab->actions());
     } else {
-        menuEditor->setEnabled(false);
+        menuTab->setEnabled(false);
     }
-    actionFileSave->setEnabled(qobject_cast<const Editor *>(tab));
-    actionFileSaveAs->setEnabled(qobject_cast<const FileEditor *>(tab));
+    actionFileSave->setEnabled(qobject_cast<const BaseEditableSheet *>(tab));
+    actionFileSaveAs->setEnabled(qobject_cast<const BaseFileSheet *>(tab));
 }
 
 void MainWindow::updateRecentMenu()
@@ -506,7 +506,7 @@ void MainWindow::onProjectAdded(const QModelIndex &, int first, int last)
                 updateWindowForProject(project);
             }
         });
-        connect(projectWidget, &ProjectWidget::currentTabChanged, this, [=](Viewer *tab) {
+        connect(projectWidget, &ProjectWidget::currentTabChanged, this, [=](BaseSheet *tab) {
             if (project == getCurrentProject()) {
                 updateWindowForTab(tab);
             }
@@ -552,10 +552,10 @@ ProjectWidget *MainWindow::getCurrentProjectWidget() const
     return projectWidgets.value(getCurrentProject());
 }
 
-Viewer *MainWindow::getCurrentTab() const
+BaseSheet *MainWindow::getCurrentTab() const
 {
     if (auto projectWidget = getCurrentProjectWidget()) {
-        return qobject_cast<Viewer *>(projectWidget->currentWidget());
+        return qobject_cast<BaseSheet *>(projectWidget->currentWidget());
     }
     return nullptr;
 }

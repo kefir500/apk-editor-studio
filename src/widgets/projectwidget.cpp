@@ -3,10 +3,10 @@
 #include "windows/dialogs.h"
 #include "windows/rememberdialog.h"
 #include "windows/permissioneditor.h"
-#include "editors/codeeditor.h"
-#include "editors/imageeditor.h"
-#include "editors/projectactionviewer.h"
-#include "editors/titleeditor.h"
+#include "sheets/codesheet.h"
+#include "sheets/imagesheet.h"
+#include "sheets/projectsheet.h"
+#include "sheets/titlesheet.h"
 #include "base/application.h"
 #include "base/utils.h"
 #include "tools/keystore.h"
@@ -22,10 +22,10 @@ ProjectWidget::ProjectWidget(Project *project, ProjectItemsModel &projects, QWid
     setTabsClosable(true);
 
     connect(this, &QTabWidget::currentChanged, [this]() {
-        emit currentTabChanged(qobject_cast<Viewer *>(currentWidget()));
+        emit currentTabChanged(qobject_cast<BaseSheet *>(currentWidget()));
     });
     connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
-        Viewer *tab = static_cast<Viewer *>(widget(index));
+        auto tab = static_cast<BaseSheet *>(widget(index));
         closeTab(tab);
     });
 
@@ -35,30 +35,30 @@ ProjectWidget::ProjectWidget(Project *project, ProjectItemsModel &projects, QWid
 void ProjectWidget::openProjectTab()
 {
     const QString identifier = "project";
-    Viewer *existing = getTabByIdentifier(identifier);
+    auto existing = getTabByIdentifier(identifier);
     if (existing) {
         setCurrentIndex(indexOf(existing));
         return;
     }
 
-    ProjectActionViewer *tab = new ProjectActionViewer(project, this);
+    auto tab = new ProjectSheet(project, this);
     tab->setProperty("identifier", identifier);
-    connect(tab, &ProjectActionViewer::titleEditorRequested, this, &ProjectWidget::openTitlesTab);
-    connect(tab, &ProjectActionViewer::apkSaveRequested, this, &ProjectWidget::saveProject);
-    connect(tab, &ProjectActionViewer::apkInstallRequested, this, &ProjectWidget::installProject);
+    connect(tab, &ProjectSheet::titleEditorRequested, this, &ProjectWidget::openTitlesTab);
+    connect(tab, &ProjectSheet::apkSaveRequested, this, &ProjectWidget::saveProject);
+    connect(tab, &ProjectSheet::apkInstallRequested, this, &ProjectWidget::installProject);
     addTab(tab);
 }
 
 void ProjectWidget::openTitlesTab()
 {
     const QString identifier = "titles";
-    Viewer *existing = getTabByIdentifier(identifier);
+    auto existing = getTabByIdentifier(identifier);
     if (existing) {
         setCurrentIndex(indexOf(existing));
         return;
     }
 
-    TitleEditor *editor = new TitleEditor(project, this);
+    auto editor = new TitleSheet(project, this);
     editor->setProperty("identifier", identifier);
     addTab(editor);
 }
@@ -67,18 +67,18 @@ void ProjectWidget::openResourceTab(const ResourceModelIndex &index)
 {
     const QString path = index.path();
     const QString identifier = path;
-    Viewer *existing = getTabByIdentifier(identifier);
+    auto existing = getTabByIdentifier(identifier);
     if (existing) {
         setCurrentIndex(indexOf(existing));
         return;
     }
 
-    Editor *editor = nullptr;
+    BaseEditableSheet *editor = nullptr;
     const auto extension = QFileInfo(path).suffix();
     if (FileFormatList::forReadableImages().getExtensions().contains(extension)) {
-        editor = new ImageEditor(index, this);
+        editor = new ImageSheet(index, this);
     } else {
-        editor = new CodeEditor(index, this);
+        editor = new CodeSheet(index, this);
     }
     editor->setProperty("identifier", identifier);
     addTab(editor);
@@ -136,7 +136,7 @@ bool ProjectWidget::saveTabs()
 {
     bool result = true;
     for (int index = 0; index < count(); ++index) {
-        Editor *tab = qobject_cast<Editor *>(widget(index));
+        auto tab = qobject_cast<BaseEditableSheet *>(widget(index));
         if (tab && !tab->save()) {
             result = false;
         }
@@ -250,18 +250,18 @@ bool ProjectWidget::closeProject()
     return projects.close(project);
 }
 
-int ProjectWidget::addTab(Viewer *tab)
+int ProjectWidget::addTab(BaseSheet *tab)
 {
     // TODO Tab title is not retranslated on language change
     const int tabIndex = QTabWidget::addTab(tab, tab->getIcon(), tab->getTitle());
     setCurrentIndex(tabIndex);
-    auto editor = qobject_cast<Editor *>(tab);
+    auto editor = qobject_cast<BaseEditableSheet *>(tab);
     if (editor) {
-        connect(editor, &Editor::saved, this, [this]() {
+        connect(editor, &BaseEditableSheet::saved, this, [this]() {
             // Project save indicator:
             const_cast<ProjectState &>(project->getState()).setModified(true);
         });
-        connect(editor, &Editor::modifiedStateChanged, this, [=](bool modified) {
+        connect(editor, &BaseEditableSheet::modifiedStateChanged, this, [=](bool modified) {
             // Tab save indicator:
             const QString indicator = QString("%1 ").arg(QChar(0x2022));
             const int tabIndex = indexOf(editor);
@@ -276,16 +276,16 @@ int ProjectWidget::addTab(Viewer *tab)
             }
         });
     }
-    connect(tab, &Viewer::titleChanged, this, [=](const QString &title) {
+    connect(tab, &BaseSheet::titleChanged, this, [=](const QString &title) {
         setTabText(indexOf(tab), title);
     });
-    connect(tab, &Viewer::iconChanged, this, [=](const QIcon &icon) {
+    connect(tab, &BaseSheet::iconChanged, this, [=](const QIcon &icon) {
         setTabIcon(indexOf(tab), icon);
     });
     return tabIndex;
 }
 
-bool ProjectWidget::closeTab(Viewer *tab)
+bool ProjectWidget::closeTab(BaseSheet *tab)
 {
     if (!tab->finalize()) {
         return false;
@@ -297,7 +297,7 @@ bool ProjectWidget::closeTab(Viewer *tab)
 bool ProjectWidget::hasUnsavedTabs() const
 {
     for (int i = 0; i < count(); ++i) {
-        auto editor = qobject_cast<Editor *>(widget(i));
+        auto editor = qobject_cast<BaseEditableSheet *>(widget(i));
         if (editor && editor->isModified()) {
             return true;
         }
@@ -305,10 +305,10 @@ bool ProjectWidget::hasUnsavedTabs() const
     return false;
 }
 
-Viewer *ProjectWidget::getTabByIdentifier(const QString &identifier) const
+BaseSheet *ProjectWidget::getTabByIdentifier(const QString &identifier) const
 {
     for (int index = 0; index < count(); ++index) {
-        Viewer *tab = static_cast<Viewer *>(widget(index));
+        auto tab = static_cast<BaseSheet *>(widget(index));
         if (tab->property("identifier") == identifier) {
             return tab;
         }

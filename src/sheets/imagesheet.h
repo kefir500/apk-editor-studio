@@ -1,7 +1,7 @@
-#ifndef IMAGEEDITOR_H
-#define IMAGEEDITOR_H
+#ifndef IMAGESHEET_H
+#define IMAGESHEET_H
 
-#include "editors/fileeditor.h"
+#include "sheets/basefilesheet.h"
 #include <QGraphicsView>
 #include <QLabel>
 #include <QRubberBand>
@@ -49,14 +49,14 @@ private:
     QLabel *labelZoom;
 };
 
-// ImageEditor
+// ImageSheet
 
-class ImageEditor : public FileEditor
+class ImageSheet : public BaseFileSheet
 {
     Q_OBJECT
 
 public:
-    ImageEditor(const ResourceModelIndex &index, QWidget *parent = nullptr);
+    ImageSheet(const ResourceModelIndex &index, QWidget *parent = nullptr);
 
     bool load() override;
     bool save(const QString &as = QString()) override;
@@ -81,4 +81,4 @@ private:
     QRubberBand *rubberBand;
 };
 
-#endif // IMAGEEDITOR_H
+#endif // IMAGESHEET_H

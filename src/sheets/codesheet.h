@@ -1,7 +1,7 @@
-#ifndef CODEEDITOR_H
-#define CODEEDITOR_H
+#ifndef CODESHEET_H
+#define CODESHEET_H
 
-#include "editors/fileeditor.h"
+#include "sheets/basefilesheet.h"
 #include <KSyntaxHighlighting/Theme>
 #include <QTextCodec>
 #include <QPlainTextEdit>
@@ -64,10 +64,10 @@ private:
     int currentLineNumber;
 };
 
-class CodeEditor : public FileEditor
+class CodeSheet : public BaseFileSheet
 {
 public:
-    CodeEditor(const ResourceModelIndex &index, QWidget *parent = nullptr);
+    CodeSheet(const ResourceModelIndex &index, QWidget *parent = nullptr);
 
     bool load() override;
     bool save(const QString &as = QString()) override;
@@ -78,4 +78,4 @@ private:
     CodeTextEdit *editor;
 };
 
-#endif // CODEEDITOR_H
+#endif // CODESHEET_H

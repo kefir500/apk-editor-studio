@@ -1,15 +1,15 @@
-#ifndef EDITOR_H
-#define EDITOR_H
+#ifndef BASEEDITABLESHEET_H
+#define BASEEDITABLESHEET_H
 
-#include "editors/viewer.h"
+#include "sheets/basesheet.h"
 #include <QAction>
 
-class Editor : public Viewer
+class BaseEditableSheet : public BaseSheet
 {
     Q_OBJECT
 
 public:
-    Editor(QWidget *parent = nullptr);
+    BaseEditableSheet(QWidget *parent = nullptr);
     virtual bool save(const QString &as = QString()) = 0;
 
     bool finalize() override;
@@ -31,4 +31,4 @@ private:
     bool modified;
 };
 
-#endif // EDITOR_H
+#endif // BASEEDITABLESHEET_H

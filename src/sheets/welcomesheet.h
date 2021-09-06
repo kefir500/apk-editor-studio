@@ -1,16 +1,16 @@
-#ifndef WELCOMEACTIONVIEWER_H
-#define WELCOMEACTIONVIEWER_H
+#ifndef WELCOMESHEET_H
+#define WELCOMESHEET_H
 
-#include "editors/actionviewer.h"
+#include "sheets/baseactionsheet.h"
 
 class MainWindow;
 
-class WelcomeActionViewer : public ActionViewer
+class WelcomeSheet : public BaseActionSheet
 {
     Q_OBJECT
 
 public:
-    explicit WelcomeActionViewer(MainWindow *parent);
+    explicit WelcomeSheet(MainWindow *parent);
 
 protected:
     void changeEvent(QEvent *event) override;
@@ -22,4 +22,4 @@ private:
     QPushButton *btnDonate;
 };
 
-#endif // WELCOMEACTIONVIEWER_H
+#endif // WELCOMESHEET_H
