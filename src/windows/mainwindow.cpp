@@ -137,7 +137,6 @@ void MainWindow::initWidgets()
     welcomeItemProxy = new ExtraListItemProxy(this);
     welcomeItemProxy->setSourceModel(&projects);
     welcomeItemProxy->prependRow();
-    welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), tr("Welcome"), Qt::DisplayRole);
     welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), QIcon::fromTheme("apk-editor-studio"), Qt::DecorationRole);
     welcomePage = new WelcomeSheet(this);
     projectList->setModel(welcomeItemProxy);
@@ -441,6 +440,10 @@ void MainWindow::retranslate()
     actionAbout->setText(tr("&About APK Editor Studio..."));
     //: Don't translate the "&Qt" part.
     actionAboutQt->setText(tr("About &Qt..."));
+
+    // Miscellaneous:
+
+    welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), tr("Welcome"), Qt::DisplayRole);
 }
 
 void MainWindow::updateWindowForProject(Project *project)
