@@ -193,8 +193,8 @@ void CodeSearchBar::retranslate()
     findLabel->setText(tr("Find:"));
     replaceLabel->setText(tr("Replace:"));
     btnClose->setToolTip(tr("Close"));
-    btnReplace->setToolTip("Replace");
-    btnReplaceAll->setToolTip("Replace All");
-    btnCloseReplaceBar->setToolTip(tr("Close Replace Bar"));
+    btnReplace->setToolTip(tr("Replace"));
+    btnReplaceAll->setToolTip(tr("Replace All"));
+    btnCloseReplaceBar->setToolTip(tr("Hide the Replace Bar"));
     updateResults();
 }
