@@ -12,7 +12,7 @@
 
 SignatureViewer::SignatureViewer(const QString &apkPath, QWidget *parent) : QDialog(parent)
 {
-    setWindowTitle("Signatures");
+    setWindowTitle(tr("Signatures"));
     setWindowIcon(QIcon::fromTheme("view-certificate"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     resize(Utils::scale(640, 300));
