@@ -387,11 +387,13 @@ void MainWindow::retranslate()
     dockManifest->setWindowTitle(tr("Manifest"));
     dockIcons->setWindowTitle(tr("Icons"));
     actionFileSave->setText(tr("&Save"));
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionFileSaveAs->setText(tr("Save &As..."));
 
     // Menu Bar:
 
     menuFile->setTitle(tr("&File"));
+    //: Displayed as "Tab".
     menuTab->setTitle(tr("Ta&b"));
     menuTools->setTitle(tr("&Tools"));
     menuSettings->setTitle(tr("&Settings"));
@@ -402,6 +404,7 @@ void MainWindow::retranslate()
 
     actionApkSave->setText(tr("&Save APK..."));
     actionApkInstall->setText(tr("&Install APK..."));
+    //: Displayed as "Open Contents".
     actionApkExplore->setText(tr("O&pen Contents"));
     actionApkClose->setText(tr("&Close APK"));
 
