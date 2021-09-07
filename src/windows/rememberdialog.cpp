@@ -14,6 +14,7 @@ void RememberDialog::say(const QString &identifier, const QString &message, QWid
 
     QMessageBox dialog(parent);
     dialog.setText(message);
+    dialog.setTextFormat(Qt::RichText);
     dialog.setCheckBox(checkboxRemember);
     dialog.addButton(QMessageBox::Ok);
     dialog.setIcon(QMessageBox::Icon::Information);
