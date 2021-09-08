@@ -2,7 +2,6 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../windows/aboutdialog.cpp" line="28"/>
         <source>License</source>
         <translation>Licence</translation>
     </message>
@@ -10,7 +9,6 @@
 <context>
     <name>XmlNode</name>
     <message>
-        <location filename="../apk/xmlnode.cpp" line="43"/>
         <source>Color</source>
         <translation>Colour</translation>
     </message>
