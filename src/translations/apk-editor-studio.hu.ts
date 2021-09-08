@@ -10,6 +10,10 @@
         <translation>Készítők</translation>
     </message>
     <message>
+        <source>Donations</source>
+        <translation>Adományok</translation>
+    </message>
+    <message>
         <source>Version History</source>
         <translation>Verzióelőzmények</translation>
     </message>
@@ -36,6 +40,14 @@
     <message>
         <source>Translation:</source>
         <translation>Fordítás:</translation>
+    </message>
+    <message>
+        <source>Could not fetch the list of donations.</source>
+        <translation>Nem sikerült lekérni az adományok listáját.</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation>Újra</translation>
     </message>
 </context>
 <context>
@@ -67,6 +79,22 @@
     <message>
         <source>&amp;Install External APK...</source>
         <translation>Külső APK telepítése...</translation>
+    </message>
+    <message>
+        <source>&amp;Find</source>
+        <translation>Keresés</translation>
+    </message>
+    <message>
+        <source>Find &amp;Next</source>
+        <translation>Előző keresése</translation>
+    </message>
+    <message>
+        <source>Find Pre&amp;vious</source>
+        <translation>Következő keresése</translation>
+    </message>
+    <message>
+        <source>Find and &amp;Replace</source>
+        <translation>Keresés és csere</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -204,6 +232,68 @@
     </message>
 </context>
 <context>
+    <name>BaseEditableSheet</name>
+    <message>
+        <source>Save the changes?</source>
+        <translation>Mented a módosításokat?</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;Mentés</translation>
+    </message>
+</context>
+<context>
+    <name>BaseFileSheet</name>
+    <message>
+        <source>&amp;Replace Resource...</source>
+        <translation>Erőforrás &amp;cseréje...</translation>
+    </message>
+    <message>
+        <source>&amp;Save Resource</source>
+        <translation>Erőforrás &amp;mentése</translation>
+    </message>
+    <message>
+        <source>Save Resource &amp;As...</source>
+        <translation>Erőforrás mentése mint...</translation>
+    </message>
+    <message>
+        <source>&amp;Open Resource Directory</source>
+        <extracomment>This string refers to a single resource.</extracomment>
+        <translation>&amp;Erőforrás-könyvtár megnyitása</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSearchBar</name>
+    <message>
+        <source>No results</source>
+        <translation>Nincs találat</translation>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation>Találat:</translation>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation>Csere:</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Bezárás</translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation>Csere</translation>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation>Összes cseréje</translation>
+    </message>
+    <message>
+        <source>Hide the Replace Bar</source>
+        <translation>A csere-sáv elrejtése</translation>
+    </message>
+</context>
+<context>
     <name>DeviceItemsModel</name>
     <message>
         <source>Alias</source>
@@ -278,41 +368,10 @@
     </message>
 </context>
 <context>
-    <name>Editor</name>
-    <message>
-        <source>Save the changes?</source>
-        <translation>Mented a módosításokat?</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation>&amp;Mentés</translation>
-    </message>
-</context>
-<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
         <translation>Visszaállítás</translation>
-    </message>
-</context>
-<context>
-    <name>FileEditor</name>
-    <message>
-        <source>&amp;Replace Resource...</source>
-        <translation>Erőforrás &amp;cseréje...</translation>
-    </message>
-    <message>
-        <source>&amp;Save Resource</source>
-        <translation>Erőforrás &amp;mentése</translation>
-    </message>
-    <message>
-        <source>Save Resource &amp;As...</source>
-        <translation>Erőforrás mentése mint...</translation>
-    </message>
-    <message>
-        <source>&amp;Open Resource Directory</source>
-        <extracomment>This string refers to a single resource.</extracomment>
-        <translation>&amp;Erőforrás-könyvtár megnyitása</translation>
     </message>
 </context>
 <context>
@@ -347,7 +406,7 @@
     </message>
 </context>
 <context>
-    <name>ImageEditor</name>
+    <name>ImageSheet</name>
     <message>
         <source>Size</source>
         <translation>Méret</translation>
@@ -526,10 +585,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Welcome</source>
-        <translation>Üdvözöljük</translation>
-    </message>
-    <message>
         <source>Remove Temporary Files...</source>
         <translation>Ideiglenes fájlok törlése...</translation>
     </message>
@@ -563,6 +618,7 @@
     </message>
     <message>
         <source>Save &amp;As...</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
         <translation>Menté&amp;s másként...</translation>
     </message>
     <message>
@@ -570,8 +626,9 @@
         <translation>&amp;Fájl</translation>
     </message>
     <message>
-        <source>&amp;Editor</source>
-        <translation>&amp;Szerkesztés</translation>
+        <source>Ta&amp;b</source>
+        <extracomment>Displayed as &quot;Tab&quot;.</extracomment>
+        <translation>Fül</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -599,6 +656,7 @@
     </message>
     <message>
         <source>O&amp;pen Contents</source>
+        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
         <translation>&amp;Tartalom megnyitása</translation>
     </message>
     <message>
@@ -660,6 +718,10 @@
         <source>About &amp;Qt...</source>
         <extracomment>Don't translate the &quot;&amp;Qt&quot; part.</extracomment>
         <translation>A &amp;Qt névjegye...</translation>
+    </message>
+    <message>
+        <source>Welcome</source>
+        <translation>Üdvözöljük</translation>
     </message>
     <message>
         <source>You have unsaved changes.
@@ -772,15 +834,6 @@ Do you want to discard them and exit?</source>
         <translation>Maximális kupacméret:</translation>
     </message>
     <message>
-        <source>Decompile source code (smali)</source>
-        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation>A forráskód visszafejtése (smali)</translation>
-    </message>
-    <message>
-        <source>Decompile broken resources</source>
-        <translation>Sérült erőforrások visszafejtése</translation>
-    </message>
-    <message>
         <source>Apktool path:</source>
         <extracomment>&quot;Apktool&quot; is the name of the tool, don't translate it.</extracomment>
         <translation>Apktool elérési út:</translation>
@@ -792,6 +845,32 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Frameworks path:</source>
         <translation>Keretrendszerek elérési út:</translation>
+    </message>
+    <message>
+        <source>Unpacking</source>
+        <translation>Kibontás</translation>
+    </message>
+    <message>
+        <source>Decompile source code (smali)</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation>A forráskód visszafejtése (smali)</translation>
+    </message>
+    <message>
+        <source>Decompile broken resources</source>
+        <translation>Sérült erőforrások visszafejtése</translation>
+    </message>
+    <message>
+        <source>Packing</source>
+        <translation>Becsomagolás</translation>
+    </message>
+    <message>
+        <source>Use AAPT2</source>
+        <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
+        <translation>AAPT2 használata</translation>
+    </message>
+    <message>
+        <source>Pack for debugging</source>
+        <translation>Csomag hibakereséshez</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -825,22 +904,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>General</source>
         <translation>Általános</translation>
-    </message>
-    <message>
-        <source>Repacking</source>
-        <translation>Újracsomagolás</translation>
-    </message>
-    <message>
-        <source>Signing APK</source>
-        <translation>APK aláírása</translation>
-    </message>
-    <message>
-        <source>Optimizing APK</source>
-        <translation>APK optimalizálása</translation>
-    </message>
-    <message>
-        <source>Installing APK</source>
-        <translation>APK telepítése</translation>
     </message>
 </context>
 <context>
@@ -920,7 +983,19 @@ Do you want to discard them and exit?</source>
     </message>
 </context>
 <context>
-    <name>ProjectActionViewer</name>
+    <name>ProjectItemsModel</name>
+    <message>
+        <source>This APK is already open:
+%1
+Do you want to reopen it and lose any unsaved changes?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
+        <translation>A következő helyen lévő APK már meg van nyitva:
+%1
+Biztos újra akarod nyitni (ezzel minden nem mentett módosítás elvész)?</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectSheet</name>
     <message>
         <source>Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
@@ -929,10 +1004,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Edit APK</source>
         <translation>APK szerkesztése</translation>
-    </message>
-    <message>
-        <source>Edit Manifest</source>
-        <translation>Jegyzék szerkesztése</translation>
     </message>
     <message>
         <source>Application Title</source>
@@ -953,18 +1024,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Install APK</source>
         <translation>APK telepítése</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectItemsModel</name>
-    <message>
-        <source>This APK is already open:
-%1
-Do you want to reopen it and lose any unsaved changes?</source>
-        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>A következő helyen lévő APK már meg van nyitva:
-%1
-Biztos újra akarod nyitni (ezzel minden nem mentett módosítás elvész)?</translation>
     </message>
 </context>
 <context>
@@ -1073,6 +1132,10 @@ Any unsaved changes will be lost.</source>
 <context>
     <name>SignatureViewer</name>
     <message>
+        <source>Signatures</source>
+        <translation>Aláírások</translation>
+    </message>
+    <message>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
         <translation>JAR aláírás</translation>
@@ -1098,13 +1161,6 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>TitleEditor</name>
-    <message>
-        <source>Application Title</source>
-        <translation>Alkalmazásnév</translation>
-    </message>
-</context>
-<context>
     <name>TitleItemsModel</name>
     <message>
         <source>Application Title</source>
@@ -1122,6 +1178,13 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Path</source>
         <translation>Elérési út</translation>
+    </message>
+</context>
+<context>
+    <name>TitleSheet</name>
+    <message>
+        <source>Application Title</source>
+        <translation>Alkalmazásnév</translation>
     </message>
 </context>
 <context>
@@ -1199,7 +1262,7 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>WelcomeActionViewer</name>
+    <name>WelcomeSheet</name>
     <message>
         <source>Welcome to the APK Editor Studio.</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>

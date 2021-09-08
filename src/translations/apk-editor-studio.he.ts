@@ -10,6 +10,10 @@
         <translation>מחברים</translation>
     </message>
     <message>
+        <source>Donations</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Version History</source>
         <translation>גרסאות קודמות</translation>
     </message>
@@ -37,6 +41,14 @@
         <source>Translation:</source>
         <translation>תרגום:</translation>
     </message>
+    <message>
+        <source>Could not fetch the list of donations.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ActionProvider</name>
@@ -58,14 +70,30 @@
     </message>
     <message>
         <source>&amp;Optimize External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;בצע אופטימיזציה לAPK חיצוני...</translation>
     </message>
     <message>
         <source>&amp;Sign External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;חתום על APK חיצוני...</translation>
     </message>
     <message>
         <source>&amp;Install External APK...</source>
+        <translation>&amp;התקן APK חיצוני</translation>
+    </message>
+    <message>
+        <source>&amp;Find</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find &amp;Next</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find Pre&amp;vious</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find and &amp;Replace</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -204,6 +232,68 @@
     </message>
 </context>
 <context>
+    <name>BaseEditableSheet</name>
+    <message>
+        <source>Save the changes?</source>
+        <translation>האם לשמור את השינויים?</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;שמור</translation>
+    </message>
+</context>
+<context>
+    <name>BaseFileSheet</name>
+    <message>
+        <source>&amp;Replace Resource...</source>
+        <translation>ה&amp;חלף מקור...</translation>
+    </message>
+    <message>
+        <source>&amp;Save Resource</source>
+        <translation>שמור מקור</translation>
+    </message>
+    <message>
+        <source>Save Resource &amp;As...</source>
+        <translation>שמור מ&amp;קור כ...</translation>
+    </message>
+    <message>
+        <source>&amp;Open Resource Directory</source>
+        <extracomment>This string refers to a single resource.</extracomment>
+        <translation>פתח &amp;ספריית מקור</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSearchBar</name>
+    <message>
+        <source>No results</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide the Replace Bar</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DeviceItemsModel</name>
     <message>
         <source>Alias</source>
@@ -278,41 +368,10 @@
     </message>
 </context>
 <context>
-    <name>Editor</name>
-    <message>
-        <source>Save the changes?</source>
-        <translation>האם לשמור את השינויים?</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation>&amp;שמור</translation>
-    </message>
-</context>
-<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
         <translation>אפס</translation>
-    </message>
-</context>
-<context>
-    <name>FileEditor</name>
-    <message>
-        <source>&amp;Replace Resource...</source>
-        <translation>ה&amp;חלף מקור...</translation>
-    </message>
-    <message>
-        <source>&amp;Save Resource</source>
-        <translation>שמור מקור</translation>
-    </message>
-    <message>
-        <source>Save Resource &amp;As...</source>
-        <translation>שמור מ&amp;קור כ...</translation>
-    </message>
-    <message>
-        <source>&amp;Open Resource Directory</source>
-        <extracomment>This string refers to a single resource.</extracomment>
-        <translation>פתח &amp;ספריית מקור</translation>
     </message>
 </context>
 <context>
@@ -347,7 +406,7 @@
     </message>
 </context>
 <context>
-    <name>ImageEditor</name>
+    <name>ImageSheet</name>
     <message>
         <source>Size</source>
         <translation>גודל</translation>
@@ -526,10 +585,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Welcome</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Remove Temporary Files...</source>
         <translation>הסר קבצים זמניים...</translation>
     </message>
@@ -563,6 +618,7 @@
     </message>
     <message>
         <source>Save &amp;As...</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
         <translation>שמור &amp;כ...</translation>
     </message>
     <message>
@@ -570,8 +626,9 @@
         <translation>&amp;קבצים</translation>
     </message>
     <message>
-        <source>&amp;Editor</source>
-        <translation>&amp;עורך</translation>
+        <source>Ta&amp;b</source>
+        <extracomment>Displayed as &quot;Tab&quot;.</extracomment>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -599,6 +656,7 @@
     </message>
     <message>
         <source>O&amp;pen Contents</source>
+        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
         <translation>פתח תו&amp;כן</translation>
     </message>
     <message>
@@ -635,11 +693,11 @@
     <message>
         <source>Edit Package &amp;Name</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>ערוך ש&amp;ם חבילה</translation>
     </message>
     <message>
         <source>&amp;Clone APK</source>
-        <translation type="unfinished"/>
+        <translation>שכ&amp;פל APK</translation>
     </message>
     <message>
         <source>View &amp;Signatures</source>
@@ -660,6 +718,10 @@
         <source>About &amp;Qt...</source>
         <extracomment>Don't translate the &quot;&amp;Qt&quot; part.</extracomment>
         <translation>על &amp;Qt...</translation>
+    </message>
+    <message>
+        <source>Welcome</source>
+        <translation>ברוכים הבאים</translation>
     </message>
     <message>
         <source>You have unsaved changes.
@@ -738,12 +800,12 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Optimize</source>
-        <translation type="unfinished"/>
+        <translation>בצע אופטימיזציה</translation>
     </message>
     <message>
         <source>Sign</source>
         <extracomment>This is a verb.</extracomment>
-        <translation type="unfinished"/>
+        <translation>חתום</translation>
     </message>
     <message>
         <source>Extracted from environment variables by default</source>
@@ -773,15 +835,6 @@ Do you want to discard them and exit?</source>
         <translation>גודל הזיכרון המקסימלי:</translation>
     </message>
     <message>
-        <source>Decompile source code (smali)</source>
-        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation>פירוק קוד המקור (smali)</translation>
-    </message>
-    <message>
-        <source>Decompile broken resources</source>
-        <translation>הדר לאחור עבור משאבים שבורים</translation>
-    </message>
-    <message>
         <source>Apktool path:</source>
         <extracomment>&quot;Apktool&quot; is the name of the tool, don't translate it.</extracomment>
         <translation>נתיב Apktool:</translation>
@@ -793,6 +846,32 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Frameworks path:</source>
         <translation>נתיב שלד תוכנה:</translation>
+    </message>
+    <message>
+        <source>Unpacking</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decompile source code (smali)</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation>פירוק קוד המקור (smali)</translation>
+    </message>
+    <message>
+        <source>Decompile broken resources</source>
+        <translation>הדר לאחור עבור משאבים שבורים</translation>
+    </message>
+    <message>
+        <source>Packing</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use AAPT2</source>
+        <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Pack for debugging</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable</source>
@@ -826,22 +905,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>General</source>
         <translation>כללי</translation>
-    </message>
-    <message>
-        <source>Repacking</source>
-        <translation>ארוז מחדש</translation>
-    </message>
-    <message>
-        <source>Signing APK</source>
-        <translation>חתום על ה-APK</translation>
-    </message>
-    <message>
-        <source>Optimizing APK</source>
-        <translation>מטב APK</translation>
-    </message>
-    <message>
-        <source>Installing APK</source>
-        <translation>מתקין APK</translation>
     </message>
 </context>
 <context>
@@ -921,7 +984,19 @@ Do you want to discard them and exit?</source>
     </message>
 </context>
 <context>
-    <name>ProjectActionViewer</name>
+    <name>ProjectItemsModel</name>
+    <message>
+        <source>This APK is already open:
+%1
+Do you want to reopen it and lose any unsaved changes?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
+        <translation>ה-APK הזה כבר פתוח:
+%1
+האם ברצונך לפתוח אותו מחדש ולאבד שינויים שלא נשמרו?</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectSheet</name>
     <message>
         <source>Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
@@ -930,10 +1005,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Edit APK</source>
         <translation>ערוך את ה-APK</translation>
-    </message>
-    <message>
-        <source>Edit Manifest</source>
-        <translation>ערוך את המניפסט</translation>
     </message>
     <message>
         <source>Application Title</source>
@@ -957,18 +1028,6 @@ Do you want to discard them and exit?</source>
     </message>
 </context>
 <context>
-    <name>ProjectItemsModel</name>
-    <message>
-        <source>This APK is already open:
-%1
-Do you want to reopen it and lose any unsaved changes?</source>
-        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>ה-APK הזה כבר פתוח:
-%1
-האם ברצונך לפתוח אותו מחדש ולאבד שינויים שלא נשמרו?</translation>
-    </message>
-</context>
-<context>
     <name>ProjectWidget</name>
     <message>
         <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
@@ -988,15 +1047,15 @@ Do you want to reopen it and lose any unsaved changes?</source>
     </message>
     <message>
         <source>Package Name:</source>
-        <translation type="unfinished"/>
+        <translation>שם חבילה:</translation>
     </message>
     <message>
         <source>APK has been successfully cloned!</source>
-        <translation type="unfinished"/>
+        <translation>ה- APK שוכפל בהצלחה!</translation>
     </message>
     <message>
         <source>Could not clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>לא ניתן לשכפל את ה- APK.</translation>
     </message>
     <message>
         <source>Do you want to save changes before packing?</source>
@@ -1075,35 +1134,32 @@ Any unsaved changes will be lost.</source>
 <context>
     <name>SignatureViewer</name>
     <message>
+        <source>Signatures</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
-        <translation type="unfinished"/>
+        <translation>חתימת JAR</translation>
     </message>
     <message>
         <source>APK Signature Scheme v2</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v2</extracomment>
-        <translation type="unfinished"/>
+        <translation>תוכנית חתימות APK v2</translation>
     </message>
     <message>
         <source>APK Signature Scheme v3</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v3</extracomment>
-        <translation type="unfinished"/>
+        <translation>תוכנית חתימות APK v3</translation>
     </message>
     <message>
         <source>Signer #%1</source>
         <extracomment>&quot;%1&quot; will be replaced with a signer index number (e.g., &quot;Signer #1, Signer #7, Signer #42&quot;...).</extracomment>
-        <translation type="unfinished"/>
+        <translation>חותם #%1</translation>
     </message>
     <message>
         <source>Could not retrieve the list of certificates.</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>TitleEditor</name>
-    <message>
-        <source>Application Title</source>
-        <translation>כותרת היישום</translation>
+        <translation>לא ניתן לאחזר את רשימת האישורים.</translation>
     </message>
 </context>
 <context>
@@ -1127,25 +1183,32 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
+    <name>TitleSheet</name>
+    <message>
+        <source>Application Title</source>
+        <translation>כותרת היישום</translation>
+    </message>
+</context>
+<context>
     <name>Toolbar</name>
     <message>
         <source>Customize Toolbar...</source>
-        <translation type="unfinished"/>
+        <translation>התאם אישית את סרגל הכלים...</translation>
     </message>
 </context>
 <context>
     <name>ToolbarDialog</name>
     <message>
         <source>Toolbar Customization</source>
-        <translation type="unfinished"/>
+        <translation>התאמה אישית של סרגל הכלים</translation>
     </message>
     <message>
         <source>Current actions:</source>
-        <translation type="unfinished"/>
+        <translation>פעולות נוכחיות:</translation>
     </message>
     <message>
         <source>Available actions:</source>
-        <translation type="unfinished"/>
+        <translation>פעולות זמינות:</translation>
     </message>
     <message>
         <source>Separator</source>
@@ -1201,7 +1264,7 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>WelcomeActionViewer</name>
+    <name>WelcomeSheet</name>
     <message>
         <source>Welcome to the APK Editor Studio.</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
@@ -1217,7 +1280,7 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Support Us</source>
-        <translation type="unfinished"/>
+        <translation>תמוך בנו</translation>
     </message>
 </context>
 <context>

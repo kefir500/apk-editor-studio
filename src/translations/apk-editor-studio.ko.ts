@@ -10,6 +10,10 @@
         <translation>만든 이</translation>
     </message>
     <message>
+        <source>Donations</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Version History</source>
         <translation>버전 기록</translation>
     </message>
@@ -36,6 +40,14 @@
     <message>
         <source>Translation:</source>
         <translation>번역:</translation>
+    </message>
+    <message>
+        <source>Could not fetch the list of donations.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -67,6 +79,22 @@
     <message>
         <source>&amp;Install External APK...</source>
         <translation>외부 APK 설치</translation>
+    </message>
+    <message>
+        <source>&amp;Find</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find &amp;Next</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find Pre&amp;vious</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find and &amp;Replace</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -204,6 +232,68 @@
     </message>
 </context>
 <context>
+    <name>BaseEditableSheet</name>
+    <message>
+        <source>Save the changes?</source>
+        <translation>변경을 저장하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>저장</translation>
+    </message>
+</context>
+<context>
+    <name>BaseFileSheet</name>
+    <message>
+        <source>&amp;Replace Resource...</source>
+        <translation>리소스 바꾸기...</translation>
+    </message>
+    <message>
+        <source>&amp;Save Resource</source>
+        <translation>리소스 저장</translation>
+    </message>
+    <message>
+        <source>Save Resource &amp;As...</source>
+        <translation>다른 이름으로 리소스 저장</translation>
+    </message>
+    <message>
+        <source>&amp;Open Resource Directory</source>
+        <extracomment>This string refers to a single resource.</extracomment>
+        <translation>리소스 디렉토리 열기</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSearchBar</name>
+    <message>
+        <source>No results</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide the Replace Bar</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DeviceItemsModel</name>
     <message>
         <source>Alias</source>
@@ -278,41 +368,10 @@
     </message>
 </context>
 <context>
-    <name>Editor</name>
-    <message>
-        <source>Save the changes?</source>
-        <translation>변경을 저장하시겠습니까?</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation>저장</translation>
-    </message>
-</context>
-<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
         <translation>초기화</translation>
-    </message>
-</context>
-<context>
-    <name>FileEditor</name>
-    <message>
-        <source>&amp;Replace Resource...</source>
-        <translation>리소스 바꾸기...</translation>
-    </message>
-    <message>
-        <source>&amp;Save Resource</source>
-        <translation>리소스 저장</translation>
-    </message>
-    <message>
-        <source>Save Resource &amp;As...</source>
-        <translation>다른 이름으로 리소스 저장</translation>
-    </message>
-    <message>
-        <source>&amp;Open Resource Directory</source>
-        <extracomment>This string refers to a single resource.</extracomment>
-        <translation>리소스 디렉토리 열기</translation>
     </message>
 </context>
 <context>
@@ -347,7 +406,7 @@
     </message>
 </context>
 <context>
-    <name>ImageEditor</name>
+    <name>ImageSheet</name>
     <message>
         <source>Size</source>
         <translation>사이즈</translation>
@@ -526,10 +585,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Welcome</source>
-        <translation>환영합니다</translation>
-    </message>
-    <message>
         <source>Remove Temporary Files...</source>
         <translation>임시 파일 제거 ...</translation>
     </message>
@@ -563,6 +618,7 @@
     </message>
     <message>
         <source>Save &amp;As...</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
         <translation>다른이름으로 저장...</translation>
     </message>
     <message>
@@ -570,8 +626,9 @@
         <translation>파일</translation>
     </message>
     <message>
-        <source>&amp;Editor</source>
-        <translation>에디터</translation>
+        <source>Ta&amp;b</source>
+        <extracomment>Displayed as &quot;Tab&quot;.</extracomment>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -599,6 +656,7 @@
     </message>
     <message>
         <source>O&amp;pen Contents</source>
+        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
         <translation>내용 열기</translation>
     </message>
     <message>
@@ -660,6 +718,10 @@
         <source>About &amp;Qt...</source>
         <extracomment>Don't translate the &quot;&amp;Qt&quot; part.</extracomment>
         <translation>Qt 정보</translation>
+    </message>
+    <message>
+        <source>Welcome</source>
+        <translation>환영합니다</translation>
     </message>
     <message>
         <source>You have unsaved changes.
@@ -773,15 +835,6 @@ Do you want to discard them and exit?</source>
         <translation>최대 힙 크기:</translation>
     </message>
     <message>
-        <source>Decompile source code (smali)</source>
-        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation>디컴파일 소스 코드(smali)</translation>
-    </message>
-    <message>
-        <source>Decompile broken resources</source>
-        <translation>손상된 리소스 디컴파일</translation>
-    </message>
-    <message>
         <source>Apktool path:</source>
         <extracomment>&quot;Apktool&quot; is the name of the tool, don't translate it.</extracomment>
         <translation>Apktool 경로:</translation>
@@ -793,6 +846,32 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Frameworks path:</source>
         <translation>프레임워크 경로:</translation>
+    </message>
+    <message>
+        <source>Unpacking</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decompile source code (smali)</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation>디컴파일 소스 코드(smali)</translation>
+    </message>
+    <message>
+        <source>Decompile broken resources</source>
+        <translation>손상된 리소스 디컴파일</translation>
+    </message>
+    <message>
+        <source>Packing</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use AAPT2</source>
+        <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Pack for debugging</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable</source>
@@ -826,22 +905,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>General</source>
         <translation>일반</translation>
-    </message>
-    <message>
-        <source>Repacking</source>
-        <translation>재패키징</translation>
-    </message>
-    <message>
-        <source>Signing APK</source>
-        <translation>APK 서명</translation>
-    </message>
-    <message>
-        <source>Optimizing APK</source>
-        <translation>APK 최적화</translation>
-    </message>
-    <message>
-        <source>Installing APK</source>
-        <translation>APK 설치</translation>
     </message>
 </context>
 <context>
@@ -921,7 +984,19 @@ Do you want to discard them and exit?</source>
     </message>
 </context>
 <context>
-    <name>ProjectActionViewer</name>
+    <name>ProjectItemsModel</name>
+    <message>
+        <source>This APK is already open:
+%1
+Do you want to reopen it and lose any unsaved changes?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
+        <translation>이 APK는 이미 열려 있음: 
+%1
+다시 열어서 저장하지 않은 변경 내용을 삭제하시겠습니까?</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectSheet</name>
     <message>
         <source>Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
@@ -930,10 +1005,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Edit APK</source>
         <translation>APK 편집</translation>
-    </message>
-    <message>
-        <source>Edit Manifest</source>
-        <translation>매니페스트 편집</translation>
     </message>
     <message>
         <source>Application Title</source>
@@ -954,18 +1025,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Install APK</source>
         <translation>APK 설치</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectItemsModel</name>
-    <message>
-        <source>This APK is already open:
-%1
-Do you want to reopen it and lose any unsaved changes?</source>
-        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>이 APK는 이미 열려 있음: 
-%1
-다시 열어서 저장하지 않은 변경 내용을 삭제하시겠습니까?</translation>
     </message>
 </context>
 <context>
@@ -1075,6 +1134,10 @@ Any unsaved changes will be lost.</source>
 <context>
     <name>SignatureViewer</name>
     <message>
+        <source>Signatures</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
         <translation>JAR 서명</translation>
@@ -1100,13 +1163,6 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>TitleEditor</name>
-    <message>
-        <source>Application Title</source>
-        <translation>어플리케이션 타이틀</translation>
-    </message>
-</context>
-<context>
     <name>TitleItemsModel</name>
     <message>
         <source>Application Title</source>
@@ -1124,6 +1180,13 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Path</source>
         <translation>경로</translation>
+    </message>
+</context>
+<context>
+    <name>TitleSheet</name>
+    <message>
+        <source>Application Title</source>
+        <translation>어플리케이션 타이틀</translation>
     </message>
 </context>
 <context>
@@ -1201,7 +1264,7 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>WelcomeActionViewer</name>
+    <name>WelcomeSheet</name>
     <message>
         <source>Welcome to the APK Editor Studio.</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>

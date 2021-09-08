@@ -10,6 +10,10 @@
         <translation>Autori</translation>
     </message>
     <message>
+        <source>Donations</source>
+        <translation>Donazioni</translation>
+    </message>
+    <message>
         <source>Version History</source>
         <translation>Cronologia versioni</translation>
     </message>
@@ -36,6 +40,14 @@
     <message>
         <source>Translation:</source>
         <translation>Traduzioni:</translation>
+    </message>
+    <message>
+        <source>Could not fetch the list of donations.</source>
+        <translation>Impossibile recuperare elenco donazioni</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation>Riprova</translation>
     </message>
 </context>
 <context>
@@ -67,6 +79,22 @@
     <message>
         <source>&amp;Install External APK...</source>
         <translation>&amp;Installa APK esterna...</translation>
+    </message>
+    <message>
+        <source>&amp;Find</source>
+        <translation>&amp;Trova</translation>
+    </message>
+    <message>
+        <source>Find &amp;Next</source>
+        <translation>Trova &amp;successivo</translation>
+    </message>
+    <message>
+        <source>Find Pre&amp;vious</source>
+        <translation>Trova &amp;precedente</translation>
+    </message>
+    <message>
+        <source>Find and &amp;Replace</source>
+        <translation>Trova e &amp;sostituisci</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -204,6 +232,68 @@
     </message>
 </context>
 <context>
+    <name>BaseEditableSheet</name>
+    <message>
+        <source>Save the changes?</source>
+        <translation>Vuoi salvare le modifiche?</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;Salva</translation>
+    </message>
+</context>
+<context>
+    <name>BaseFileSheet</name>
+    <message>
+        <source>&amp;Replace Resource...</source>
+        <translation>Sostituisci &amp;risorsa...</translation>
+    </message>
+    <message>
+        <source>&amp;Save Resource</source>
+        <translation>&amp;Salva risorsa</translation>
+    </message>
+    <message>
+        <source>Save Resource &amp;As...</source>
+        <translation>S&amp;alva risorsa come...</translation>
+    </message>
+    <message>
+        <source>&amp;Open Resource Directory</source>
+        <extracomment>This string refers to a single resource.</extracomment>
+        <translation>&amp;Apri cartella risorse</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSearchBar</name>
+    <message>
+        <source>No results</source>
+        <translation>Nessun risultato</translation>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation>Trova:</translation>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation>Sostituisci:</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Chiudi</translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation>Sostituisci</translation>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation>Sostituisci tutto</translation>
+    </message>
+    <message>
+        <source>Hide the Replace Bar</source>
+        <translation>Nascondi barra sostituzione</translation>
+    </message>
+</context>
+<context>
     <name>DeviceItemsModel</name>
     <message>
         <source>Alias</source>
@@ -278,41 +368,10 @@
     </message>
 </context>
 <context>
-    <name>Editor</name>
-    <message>
-        <source>Save the changes?</source>
-        <translation>Vuoi salvare le modifiche?</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation>&amp;Salva</translation>
-    </message>
-</context>
-<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
         <translation>Ripristina</translation>
-    </message>
-</context>
-<context>
-    <name>FileEditor</name>
-    <message>
-        <source>&amp;Replace Resource...</source>
-        <translation>Sostituisci &amp;risorsa...</translation>
-    </message>
-    <message>
-        <source>&amp;Save Resource</source>
-        <translation>&amp;Salva risorsa</translation>
-    </message>
-    <message>
-        <source>Save Resource &amp;As...</source>
-        <translation>S&amp;alva risorsa come...</translation>
-    </message>
-    <message>
-        <source>&amp;Open Resource Directory</source>
-        <extracomment>This string refers to a single resource.</extracomment>
-        <translation>&amp;Apri cartella risorse</translation>
     </message>
 </context>
 <context>
@@ -347,7 +406,7 @@
     </message>
 </context>
 <context>
-    <name>ImageEditor</name>
+    <name>ImageSheet</name>
     <message>
         <source>Size</source>
         <translation>Dimensione</translation>
@@ -528,10 +587,6 @@ Per maggiori informazioni vedi i dettagli.</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Welcome</source>
-        <translation>Benvenuto</translation>
-    </message>
-    <message>
         <source>Remove Temporary Files...</source>
         <translation>Elimina file temporanei...</translation>
     </message>
@@ -565,6 +620,7 @@ Per maggiori informazioni vedi i dettagli.</translation>
     </message>
     <message>
         <source>Save &amp;As...</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
         <translation>&amp;Salva come...</translation>
     </message>
     <message>
@@ -572,8 +628,9 @@ Per maggiori informazioni vedi i dettagli.</translation>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <source>&amp;Editor</source>
-        <translation>&amp;Editor</translation>
+        <source>Ta&amp;b</source>
+        <extracomment>Displayed as &quot;Tab&quot;.</extracomment>
+        <translation>&amp;Schede</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -601,6 +658,7 @@ Per maggiori informazioni vedi i dettagli.</translation>
     </message>
     <message>
         <source>O&amp;pen Contents</source>
+        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
         <translation>A&amp;pri contenuto</translation>
     </message>
     <message>
@@ -662,6 +720,10 @@ Per maggiori informazioni vedi i dettagli.</translation>
         <source>About &amp;Qt...</source>
         <extracomment>Don't translate the &quot;&amp;Qt&quot; part.</extracomment>
         <translation>Info su &amp;QT...</translation>
+    </message>
+    <message>
+        <source>Welcome</source>
+        <translation>Benvenuto</translation>
     </message>
     <message>
         <source>You have unsaved changes.
@@ -775,15 +837,6 @@ Vuoi uscire senza salvare le modifiche?</translation>
         <translation>DImensione massima heap:</translation>
     </message>
     <message>
-        <source>Decompile source code (smali)</source>
-        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation>Decompila codice sorgente (smali)</translation>
-    </message>
-    <message>
-        <source>Decompile broken resources</source>
-        <translation>Decompila risorse danneggiate</translation>
-    </message>
-    <message>
         <source>Apktool path:</source>
         <extracomment>&quot;Apktool&quot; is the name of the tool, don't translate it.</extracomment>
         <translation>Percorso apktool:</translation>
@@ -795,6 +848,32 @@ Vuoi uscire senza salvare le modifiche?</translation>
     <message>
         <source>Frameworks path:</source>
         <translation>Percorso framework:</translation>
+    </message>
+    <message>
+        <source>Unpacking</source>
+        <translation>Decompressione</translation>
+    </message>
+    <message>
+        <source>Decompile source code (smali)</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation>Decompila codice sorgente (smali)</translation>
+    </message>
+    <message>
+        <source>Decompile broken resources</source>
+        <translation>Decompila risorse danneggiate</translation>
+    </message>
+    <message>
+        <source>Packing</source>
+        <translation>Compressione</translation>
+    </message>
+    <message>
+        <source>Use AAPT2</source>
+        <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
+        <translation>Usa AAPT2</translation>
+    </message>
+    <message>
+        <source>Pack for debugging</source>
+        <translation>Compressione per debug</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -828,22 +907,6 @@ Vuoi uscire senza salvare le modifiche?</translation>
     <message>
         <source>General</source>
         <translation>Generale</translation>
-    </message>
-    <message>
-        <source>Repacking</source>
-        <translation>Reimpacchettamento</translation>
-    </message>
-    <message>
-        <source>Signing APK</source>
-        <translation>Firma APK</translation>
-    </message>
-    <message>
-        <source>Optimizing APK</source>
-        <translation>Ottimizzazione APK</translation>
-    </message>
-    <message>
-        <source>Installing APK</source>
-        <translation>Installazione APK</translation>
     </message>
 </context>
 <context>
@@ -923,7 +986,19 @@ Vuoi uscire senza salvare le modifiche?</translation>
     </message>
 </context>
 <context>
-    <name>ProjectActionViewer</name>
+    <name>ProjectItemsModel</name>
+    <message>
+        <source>This APK is already open:
+%1
+Do you want to reopen it and lose any unsaved changes?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
+        <translation>Questo file APK è già aperto:
+%1
+Vuoi riaprirlo e perdere qualsiasi modifica non salvata?</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectSheet</name>
     <message>
         <source>Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
@@ -932,10 +1007,6 @@ Vuoi uscire senza salvare le modifiche?</translation>
     <message>
         <source>Edit APK</source>
         <translation>Modifica APK</translation>
-    </message>
-    <message>
-        <source>Edit Manifest</source>
-        <translation>Modifica Manifest</translation>
     </message>
     <message>
         <source>Application Title</source>
@@ -956,18 +1027,6 @@ Vuoi uscire senza salvare le modifiche?</translation>
     <message>
         <source>Install APK</source>
         <translation>Installa APK</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectItemsModel</name>
-    <message>
-        <source>This APK is already open:
-%1
-Do you want to reopen it and lose any unsaved changes?</source>
-        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>Questo file APK è già aperto:
-%1
-Vuoi riaprirlo e perdere qualsiasi modifica non salvata?</translation>
     </message>
 </context>
 <context>
@@ -1080,6 +1139,10 @@ Tutte le modifiche non salvate verranno perse.</translation>
 <context>
     <name>SignatureViewer</name>
     <message>
+        <source>Signatures</source>
+        <translation>Firme</translation>
+    </message>
+    <message>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
         <translation>Firma JAR</translation>
@@ -1105,13 +1168,6 @@ Tutte le modifiche non salvate verranno perse.</translation>
     </message>
 </context>
 <context>
-    <name>TitleEditor</name>
-    <message>
-        <source>Application Title</source>
-        <translation>Titolo applicazione</translation>
-    </message>
-</context>
-<context>
     <name>TitleItemsModel</name>
     <message>
         <source>Application Title</source>
@@ -1129,6 +1185,13 @@ Tutte le modifiche non salvate verranno perse.</translation>
     <message>
         <source>Path</source>
         <translation>Percorso</translation>
+    </message>
+</context>
+<context>
+    <name>TitleSheet</name>
+    <message>
+        <source>Application Title</source>
+        <translation>Titolo applicazione</translation>
     </message>
 </context>
 <context>
@@ -1208,7 +1271,7 @@ Vuoi scaricare ls nuova versione di APK Editor Studio??</translation>
     </message>
 </context>
 <context>
-    <name>WelcomeActionViewer</name>
+    <name>WelcomeSheet</name>
     <message>
         <source>Welcome to the APK Editor Studio.</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>

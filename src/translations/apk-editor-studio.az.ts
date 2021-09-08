@@ -10,6 +10,10 @@
         <translation>Qurucu</translation>
     </message>
     <message>
+        <source>Donations</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Version History</source>
         <translation>Versiya Tarixçəsi</translation>
     </message>
@@ -36,6 +40,14 @@
     <message>
         <source>Translation:</source>
         <translation>Çeviri:</translation>
+    </message>
+    <message>
+        <source>Could not fetch the list of donations.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -204,6 +216,68 @@
     </message>
 </context>
 <context>
+    <name>BaseEditableSheet</name>
+    <message>
+        <source>Save the changes?</source>
+        <translation>Dəyişiklikləri saxla?</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;Saxla</translation>
+    </message>
+</context>
+<context>
+    <name>BaseFileSheet</name>
+    <message>
+        <source>&amp;Replace Resource...</source>
+        <translation>&amp;Yenidənqur qaynaqları...</translation>
+    </message>
+    <message>
+        <source>&amp;Save Resource</source>
+        <translation>&amp;Saxla qaynaqları</translation>
+    </message>
+    <message>
+        <source>Save Resource &amp;As...</source>
+        <translation>Qaynaqları saxla &amp;Kimi...</translation>
+    </message>
+    <message>
+        <source>&amp;Open Resource Directory</source>
+        <extracomment>This string refers to a single resource.</extracomment>
+        <translation>&amp;Aç qaynaq qovluqunu</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSearchBar</name>
+    <message>
+        <source>No results</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide the Replace Bar</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DeviceItemsModel</name>
     <message>
         <source>Alias</source>
@@ -251,7 +325,7 @@
     </message>
     <message>
         <source>Could not fetch the device list.</source>
-        <translation type="unfinished"/>
+        <translation>Cihaz siyahısını əldə etmək alınmadı.</translation>
     </message>
     <message>
         <source>Select Device</source>
@@ -278,41 +352,10 @@
     </message>
 </context>
 <context>
-    <name>Editor</name>
-    <message>
-        <source>Save the changes?</source>
-        <translation>Dəyişiklikləri saxla?</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation>&amp;Saxla</translation>
-    </message>
-</context>
-<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
         <translation>Rese</translation>
-    </message>
-</context>
-<context>
-    <name>FileEditor</name>
-    <message>
-        <source>&amp;Replace Resource...</source>
-        <translation>&amp;Yenidənqur qaynaqları...</translation>
-    </message>
-    <message>
-        <source>&amp;Save Resource</source>
-        <translation>&amp;Saxla qaynaqları</translation>
-    </message>
-    <message>
-        <source>Save Resource &amp;As...</source>
-        <translation>Qaynaqları saxla &amp;Kimi...</translation>
-    </message>
-    <message>
-        <source>&amp;Open Resource Directory</source>
-        <extracomment>This string refers to a single resource.</extracomment>
-        <translation>&amp;Aç qaynaq qovluqunu</translation>
     </message>
 </context>
 <context>
@@ -347,7 +390,7 @@
     </message>
 </context>
 <context>
-    <name>ImageEditor</name>
+    <name>ImageSheet</name>
     <message>
         <source>Size</source>
         <translation>Ölçü</translation>
@@ -526,10 +569,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Welcome</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Remove Temporary Files...</source>
         <translation>Geçici faylları sil...</translation>
     </message>
@@ -563,6 +602,7 @@
     </message>
     <message>
         <source>Save &amp;As...</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
         <translation>Saxla &amp;Kimi...</translation>
     </message>
     <message>
@@ -570,8 +610,9 @@
         <translation>&amp;Fayl</translation>
     </message>
     <message>
-        <source>&amp;Editor</source>
-        <translation>&amp;Editor</translation>
+        <source>Ta&amp;b</source>
+        <extracomment>Displayed as &quot;Tab&quot;.</extracomment>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -599,6 +640,7 @@
     </message>
     <message>
         <source>O&amp;pen Contents</source>
+        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
         <translation>A&amp;ç içərikləri</translation>
     </message>
     <message>
@@ -635,21 +677,21 @@
     <message>
         <source>Edit Package &amp;Name</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>Paketi redaktə edin &amp;Name</translation>
     </message>
     <message>
         <source>&amp;Clone APK</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Clone APK</translation>
     </message>
     <message>
         <source>View &amp;Signatures</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>Bax &amp;Signatures</translation>
     </message>
     <message>
         <source>Open &amp;New Window</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>Aç &amp;New Window</translation>
     </message>
     <message>
         <source>&amp;About APK Editor Studio...</source>
@@ -660,6 +702,10 @@
         <source>About &amp;Qt...</source>
         <extracomment>Don't translate the &quot;&amp;Qt&quot; part.</extracomment>
         <translation>Haqqında &amp;Qt...</translation>
+    </message>
+    <message>
+        <source>Welcome</source>
+        <translation>Xoş gəldiniz</translation>
     </message>
     <message>
         <source>You have unsaved changes.
@@ -703,7 +749,7 @@ Bunlari silmək və çıxmaq istəyirsən?</translation>
     </message>
     <message>
         <source>Single-window mode</source>
-        <translation type="unfinished"/>
+        <translation>Tək pəncərə rejimi</translation>
     </message>
     <message>
         <source>Check for updates automatically</source>
@@ -720,17 +766,17 @@ Bunlari silmək və çıxmaq istəyirsən?</translation>
     <message>
         <source>Use APK Editor Studio for .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>.apk faylları üçün APK Editor Studio istifadə edin</translation>
     </message>
     <message>
         <source>Use APK Editor Studio to open .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>.apk fayllarını açmaq üçün APK Editor Studio istifadə edin</translation>
     </message>
     <message>
         <source>Add %1 action to Windows Explorer context menu</source>
         <extracomment>&quot;%1&quot; will be replaced with an action name (e.g., Install, Optimize, Sign, etc.).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Windows Explorer kontekst menyusuna %1 hərəkəti əlavə edin</translation>
     </message>
     <message>
         <source>Install</source>
@@ -738,12 +784,12 @@ Bunlari silmək və çıxmaq istəyirsən?</translation>
     </message>
     <message>
         <source>Optimize</source>
-        <translation type="unfinished"/>
+        <translation>Optimallaşdırın</translation>
     </message>
     <message>
         <source>Sign</source>
         <extracomment>This is a verb.</extracomment>
-        <translation type="unfinished"/>
+        <translation>İmza</translation>
     </message>
     <message>
         <source>Extracted from environment variables by default</source>
@@ -773,15 +819,6 @@ Bunlari silmək və çıxmaq istəyirsən?</translation>
         <translation>Maksimum yığın ölçüsü:</translation>
     </message>
     <message>
-        <source>Decompile source code (smali)</source>
-        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation>Qaynaq kodunu yenidən dərləndirin (smali)</translation>
-    </message>
-    <message>
-        <source>Decompile broken resources</source>
-        <translation>Qırlımış resursları yenidən dərləndirin</translation>
-    </message>
-    <message>
         <source>Apktool path:</source>
         <extracomment>&quot;Apktool&quot; is the name of the tool, don't translate it.</extracomment>
         <translation>Apktool yeri:</translation>
@@ -793,6 +830,32 @@ Bunlari silmək və çıxmaq istəyirsən?</translation>
     <message>
         <source>Frameworks path:</source>
         <translation>Frameworks yeri:</translation>
+    </message>
+    <message>
+        <source>Unpacking</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decompile source code (smali)</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation>Qaynaq kodunu yenidən dərləndirin (smali)</translation>
+    </message>
+    <message>
+        <source>Decompile broken resources</source>
+        <translation>Qırlımış resursları yenidən dərləndirin</translation>
+    </message>
+    <message>
+        <source>Packing</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use AAPT2</source>
+        <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Pack for debugging</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable</source>
@@ -826,22 +889,6 @@ Bunlari silmək və çıxmaq istəyirsən?</translation>
     <message>
         <source>General</source>
         <translation>Gənəl</translation>
-    </message>
-    <message>
-        <source>Repacking</source>
-        <translation>Yenidən packləmə</translation>
-    </message>
-    <message>
-        <source>Signing APK</source>
-        <translation>APK imzalama</translation>
-    </message>
-    <message>
-        <source>Optimizing APK</source>
-        <translation>APK optimizasiyası</translation>
-    </message>
-    <message>
-        <source>Installing APK</source>
-        <translation>APK Yüklə</translation>
     </message>
 </context>
 <context>
@@ -921,7 +968,19 @@ Bunlari silmək və çıxmaq istəyirsən?</translation>
     </message>
 </context>
 <context>
-    <name>ProjectActionViewer</name>
+    <name>ProjectItemsModel</name>
+    <message>
+        <source>This APK is already open:
+%1
+Do you want to reopen it and lose any unsaved changes?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
+        <translation>Bu apk hazırda açıqdır:
+%1
+Yenidən açmaq və qeyd olunmayan dəyişiklikləri itirmək istəyirsiniz?</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectSheet</name>
     <message>
         <source>Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
@@ -930,10 +989,6 @@ Bunlari silmək və çıxmaq istəyirsən?</translation>
     <message>
         <source>Edit APK</source>
         <translation>APK düzənlə</translation>
-    </message>
-    <message>
-        <source>Edit Manifest</source>
-        <translation>Bəlliləri düzənlə</translation>
     </message>
     <message>
         <source>Application Title</source>
@@ -957,46 +1012,34 @@ Bunlari silmək və çıxmaq istəyirsən?</translation>
     </message>
 </context>
 <context>
-    <name>ProjectItemsModel</name>
-    <message>
-        <source>This APK is already open:
-%1
-Do you want to reopen it and lose any unsaved changes?</source>
-        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>Bu apk hazırda açıqdır:
-%1
-Yenidən açmaq və qeyd olunmayan dəyişiklikləri itirmək istəyirsiniz?</translation>
-    </message>
-</context>
-<context>
     <name>ProjectWidget</name>
     <message>
         <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"/>
+        <translation>Paketin adının dəyişdirilməsi, mövcud vəziyyətində qəzalara və məlumatların itirilməsinə səbəb ola biləcək eksperimental bir funksiyadır. Müzakirəyə qatıla və &lt;a href=&quot;%1&quot;&gt;burada&lt;/a&gt; bu xüsusiyyəti təkmilləşdirməyimizə kömək edə bilərsiniz.</translation>
     </message>
     <message>
         <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-        <translation type="unfinished"/>
+        <translation>APK -nı klonlaşdırmaq üçün mənbə kodu dekompilyasiyasının açılmasını tələb edir. Davam edilsin?</translation>
     </message>
     <message>
         <source>Settings have been applied. Please, reopen this APK.</source>
-        <translation type="unfinished"/>
+        <translation>Ayarlar tətbiq edildi. Zəhmət olmasa bu APK -ı yenidən açın.</translation>
     </message>
     <message>
         <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>Zəhmət olmasa, mənbə kodunu açmaq və APK -ı klonlaşdırmaq üçün bu APK -ı yenidən açın.</translation>
     </message>
     <message>
         <source>Package Name:</source>
-        <translation type="unfinished"/>
+        <translation>Paket Adı:</translation>
     </message>
     <message>
         <source>APK has been successfully cloned!</source>
-        <translation type="unfinished"/>
+        <translation>APK uğurla klonlandı!</translation>
     </message>
     <message>
         <source>Could not clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>APK klonlaşdırıla bilmədi.</translation>
     </message>
     <message>
         <source>Do you want to save changes before packing?</source>
@@ -1075,35 +1118,32 @@ Saxlanmamış dəyişikliklər silinəcək.</translation>
 <context>
     <name>SignatureViewer</name>
     <message>
+        <source>Signatures</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
-        <translation type="unfinished"/>
+        <translation>JAR imzalanması</translation>
     </message>
     <message>
         <source>APK Signature Scheme v2</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v2</extracomment>
-        <translation type="unfinished"/>
+        <translation>APK İmza Şeması v2</translation>
     </message>
     <message>
         <source>APK Signature Scheme v3</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v3</extracomment>
-        <translation type="unfinished"/>
+        <translation>APK İmza Şeması v3</translation>
     </message>
     <message>
         <source>Signer #%1</source>
         <extracomment>&quot;%1&quot; will be replaced with a signer index number (e.g., &quot;Signer #1, Signer #7, Signer #42&quot;...).</extracomment>
-        <translation type="unfinished"/>
+        <translation>İmza atan #%1</translation>
     </message>
     <message>
         <source>Could not retrieve the list of certificates.</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>TitleEditor</name>
-    <message>
-        <source>Application Title</source>
-        <translation>Applikasiya başlığı</translation>
+        <translation>Sertifikatların siyahısını əldə etmək mümkün olmadı.</translation>
     </message>
 </context>
 <context>
@@ -1127,25 +1167,32 @@ Saxlanmamış dəyişikliklər silinəcək.</translation>
     </message>
 </context>
 <context>
+    <name>TitleSheet</name>
+    <message>
+        <source>Application Title</source>
+        <translation>Applikasiya başlığı</translation>
+    </message>
+</context>
+<context>
     <name>Toolbar</name>
     <message>
         <source>Customize Toolbar...</source>
-        <translation type="unfinished"/>
+        <translation>Alətlər panelini fərdiləşdirin ...</translation>
     </message>
 </context>
 <context>
     <name>ToolbarDialog</name>
     <message>
         <source>Toolbar Customization</source>
-        <translation type="unfinished"/>
+        <translation>Alətlər panelinin fərdiləşdirilməsi</translation>
     </message>
     <message>
         <source>Current actions:</source>
-        <translation type="unfinished"/>
+        <translation>Mövcud hərəkətlər:</translation>
     </message>
     <message>
         <source>Available actions:</source>
-        <translation type="unfinished"/>
+        <translation>Mövcud tədbirlər:</translation>
     </message>
     <message>
         <source>Separator</source>
@@ -1201,7 +1248,7 @@ Saxlanmamış dəyişikliklər silinəcək.</translation>
     </message>
 </context>
 <context>
-    <name>WelcomeActionViewer</name>
+    <name>WelcomeSheet</name>
     <message>
         <source>Welcome to the APK Editor Studio.</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
@@ -1217,7 +1264,7 @@ Saxlanmamış dəyişikliklər silinəcək.</translation>
     </message>
     <message>
         <source>Support Us</source>
-        <translation type="unfinished"/>
+        <translation>Bizi Dəstəkləyin</translation>
     </message>
 </context>
 <context>

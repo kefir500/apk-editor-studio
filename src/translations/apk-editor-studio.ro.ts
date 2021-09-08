@@ -10,6 +10,10 @@
         <translation>Autori</translation>
     </message>
     <message>
+        <source>Donations</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Version History</source>
         <translation>Istoria Versiuni</translation>
     </message>
@@ -36,6 +40,14 @@
     <message>
         <source>Translation:</source>
         <translation>Traducere:</translation>
+    </message>
+    <message>
+        <source>Could not fetch the list of donations.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -66,6 +78,22 @@
     </message>
     <message>
         <source>&amp;Install External APK...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Find</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find &amp;Next</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find Pre&amp;vious</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find and &amp;Replace</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -204,6 +232,68 @@
     </message>
 </context>
 <context>
+    <name>BaseEditableSheet</name>
+    <message>
+        <source>Save the changes?</source>
+        <translation>Salvează schimbările?</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;Salvează</translation>
+    </message>
+</context>
+<context>
+    <name>BaseFileSheet</name>
+    <message>
+        <source>&amp;Replace Resource...</source>
+        <translation>&amp;Inlocuieste Resursă...</translation>
+    </message>
+    <message>
+        <source>&amp;Save Resource</source>
+        <translation>&amp;Salvează Resursă</translation>
+    </message>
+    <message>
+        <source>Save Resource &amp;As...</source>
+        <translation>Salvează Resursă &amp;Ca...</translation>
+    </message>
+    <message>
+        <source>&amp;Open Resource Directory</source>
+        <extracomment>This string refers to a single resource.</extracomment>
+        <translation>&amp;Deschide Directorul Resursei</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSearchBar</name>
+    <message>
+        <source>No results</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide the Replace Bar</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DeviceItemsModel</name>
     <message>
         <source>Alias</source>
@@ -278,41 +368,10 @@
     </message>
 </context>
 <context>
-    <name>Editor</name>
-    <message>
-        <source>Save the changes?</source>
-        <translation>Salvează schimbările?</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation>&amp;Salvează</translation>
-    </message>
-</context>
-<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
         <translation>Resetează</translation>
-    </message>
-</context>
-<context>
-    <name>FileEditor</name>
-    <message>
-        <source>&amp;Replace Resource...</source>
-        <translation>&amp;Inlocuieste Resursă...</translation>
-    </message>
-    <message>
-        <source>&amp;Save Resource</source>
-        <translation>&amp;Salvează Resursă</translation>
-    </message>
-    <message>
-        <source>Save Resource &amp;As...</source>
-        <translation>Salvează Resursă &amp;Ca...</translation>
-    </message>
-    <message>
-        <source>&amp;Open Resource Directory</source>
-        <extracomment>This string refers to a single resource.</extracomment>
-        <translation>&amp;Deschide Directorul Resursei</translation>
     </message>
 </context>
 <context>
@@ -347,7 +406,7 @@
     </message>
 </context>
 <context>
-    <name>ImageEditor</name>
+    <name>ImageSheet</name>
     <message>
         <source>Size</source>
         <translation>Mărime</translation>
@@ -526,10 +585,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Welcome</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Remove Temporary Files...</source>
         <translation>Eliminare Fișiere Temporale...</translation>
     </message>
@@ -563,6 +618,7 @@
     </message>
     <message>
         <source>Save &amp;As...</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
         <translation>Salvează &amp;Ca...</translation>
     </message>
     <message>
@@ -570,8 +626,9 @@
         <translation>&amp;Fișier</translation>
     </message>
     <message>
-        <source>&amp;Editor</source>
-        <translation>&amp;Editor</translation>
+        <source>Ta&amp;b</source>
+        <extracomment>Displayed as &quot;Tab&quot;.</extracomment>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -599,6 +656,7 @@
     </message>
     <message>
         <source>O&amp;pen Contents</source>
+        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
         <translation>D&amp;eschidere Contenturi</translation>
     </message>
     <message>
@@ -660,6 +718,10 @@
         <source>About &amp;Qt...</source>
         <extracomment>Don't translate the &quot;&amp;Qt&quot; part.</extracomment>
         <translation>Despre &amp;Qt...</translation>
+    </message>
+    <message>
+        <source>Welcome</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You have unsaved changes.
@@ -773,15 +835,6 @@ Vrei să le anulezi si sa ieși?</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Decompile source code (smali)</source>
-        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation>Dezompilează codul sursa (smali)</translation>
-    </message>
-    <message>
-        <source>Decompile broken resources</source>
-        <translation>Decompileaza resurse stricate</translation>
-    </message>
-    <message>
         <source>Apktool path:</source>
         <extracomment>&quot;Apktool&quot; is the name of the tool, don't translate it.</extracomment>
         <translation>Potecă unealtăapk:</translation>
@@ -793,6 +846,32 @@ Vrei să le anulezi si sa ieși?</translation>
     <message>
         <source>Frameworks path:</source>
         <translation>Poteca frameworkului:</translation>
+    </message>
+    <message>
+        <source>Unpacking</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decompile source code (smali)</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation>Dezompilează codul sursa (smali)</translation>
+    </message>
+    <message>
+        <source>Decompile broken resources</source>
+        <translation>Decompileaza resurse stricate</translation>
+    </message>
+    <message>
+        <source>Packing</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use AAPT2</source>
+        <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Pack for debugging</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable</source>
@@ -826,22 +905,6 @@ Vrei să le anulezi si sa ieși?</translation>
     <message>
         <source>General</source>
         <translation>General</translation>
-    </message>
-    <message>
-        <source>Repacking</source>
-        <translation>Reimpachetare</translation>
-    </message>
-    <message>
-        <source>Signing APK</source>
-        <translation>Semnare APK</translation>
-    </message>
-    <message>
-        <source>Optimizing APK</source>
-        <translation>Optimizare APK</translation>
-    </message>
-    <message>
-        <source>Installing APK</source>
-        <translation>Instalare APK</translation>
     </message>
 </context>
 <context>
@@ -921,7 +984,19 @@ Vrei să le anulezi si sa ieși?</translation>
     </message>
 </context>
 <context>
-    <name>ProjectActionViewer</name>
+    <name>ProjectItemsModel</name>
+    <message>
+        <source>This APK is already open:
+%1
+Do you want to reopen it and lose any unsaved changes?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
+        <translation>Acest APK e deja deschis:
+%1
+Doresti să îl redeschizi si sa pierzi progres nesalvat?</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectSheet</name>
     <message>
         <source>Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
@@ -930,10 +1005,6 @@ Vrei să le anulezi si sa ieși?</translation>
     <message>
         <source>Edit APK</source>
         <translation>Editare APK</translation>
-    </message>
-    <message>
-        <source>Edit Manifest</source>
-        <translation>Editează Manifestarea</translation>
     </message>
     <message>
         <source>Application Title</source>
@@ -954,18 +1025,6 @@ Vrei să le anulezi si sa ieși?</translation>
     <message>
         <source>Install APK</source>
         <translation>Instaleaza APK</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectItemsModel</name>
-    <message>
-        <source>This APK is already open:
-%1
-Do you want to reopen it and lose any unsaved changes?</source>
-        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>Acest APK e deja deschis:
-%1
-Doresti să îl redeschizi si sa pierzi progres nesalvat?</translation>
     </message>
 </context>
 <context>
@@ -1075,6 +1134,10 @@ Orice schimbari nesalvate se vor pierde.</translation>
 <context>
     <name>SignatureViewer</name>
     <message>
+        <source>Signatures</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
         <translation type="unfinished"/>
@@ -1100,13 +1163,6 @@ Orice schimbari nesalvate se vor pierde.</translation>
     </message>
 </context>
 <context>
-    <name>TitleEditor</name>
-    <message>
-        <source>Application Title</source>
-        <translation>Titlul Aplicatiei</translation>
-    </message>
-</context>
-<context>
     <name>TitleItemsModel</name>
     <message>
         <source>Application Title</source>
@@ -1124,6 +1180,13 @@ Orice schimbari nesalvate se vor pierde.</translation>
     <message>
         <source>Path</source>
         <translation>Potecă</translation>
+    </message>
+</context>
+<context>
+    <name>TitleSheet</name>
+    <message>
+        <source>Application Title</source>
+        <translation>Titlul Aplicației</translation>
     </message>
 </context>
 <context>
@@ -1201,7 +1264,7 @@ Orice schimbari nesalvate se vor pierde.</translation>
     </message>
 </context>
 <context>
-    <name>WelcomeActionViewer</name>
+    <name>WelcomeSheet</name>
     <message>
         <source>Welcome to the APK Editor Studio.</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
@@ -1213,7 +1276,7 @@ Orice schimbari nesalvate se vor pierde.</translation>
     </message>
     <message>
         <source>Install APK</source>
-        <translation>Instalează apk</translation>
+        <translation>Instaleaza APK</translation>
     </message>
     <message>
         <source>Support Us</source>

@@ -43,7 +43,7 @@
     </message>
     <message>
         <source>Could not fetch the list of donations.</source>
-        <translation>Не удалось получить список пожертвований.</translation>
+        <translation>Не удалось загрузить список пожертвований.</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -79,6 +79,22 @@
     <message>
         <source>&amp;Install External APK...</source>
         <translation>&amp;Установить внешний APK...</translation>
+    </message>
+    <message>
+        <source>&amp;Find</source>
+        <translation>&amp;Найти</translation>
+    </message>
+    <message>
+        <source>Find &amp;Next</source>
+        <translation>Найти &amp;следующее</translation>
+    </message>
+    <message>
+        <source>Find Pre&amp;vious</source>
+        <translation>Найти &amp;предыдущее</translation>
+    </message>
+    <message>
+        <source>Find and &amp;Replace</source>
+        <translation>Найти и &amp;заменить</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -216,6 +232,68 @@
     </message>
 </context>
 <context>
+    <name>BaseEditableSheet</name>
+    <message>
+        <source>Save the changes?</source>
+        <translation>Сохранить изменения?</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;Сохранить</translation>
+    </message>
+</context>
+<context>
+    <name>BaseFileSheet</name>
+    <message>
+        <source>&amp;Replace Resource...</source>
+        <translation>&amp;Заменить ресурс...</translation>
+    </message>
+    <message>
+        <source>&amp;Save Resource</source>
+        <translation>&amp;Сохранить ресурс</translation>
+    </message>
+    <message>
+        <source>Save Resource &amp;As...</source>
+        <translation>Сохранить ресурс &amp;как...</translation>
+    </message>
+    <message>
+        <source>&amp;Open Resource Directory</source>
+        <extracomment>This string refers to a single resource.</extracomment>
+        <translation>&amp;Открыть директорию ресурса</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSearchBar</name>
+    <message>
+        <source>No results</source>
+        <translation>Нет результатов</translation>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation>Найти:</translation>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation>Заменить:</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Закрыть</translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation>Заменить</translation>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation>Заменить все</translation>
+    </message>
+    <message>
+        <source>Hide the Replace Bar</source>
+        <translation>Скрыть панель замены</translation>
+    </message>
+</context>
+<context>
     <name>DeviceItemsModel</name>
     <message>
         <source>Alias</source>
@@ -290,41 +368,10 @@
     </message>
 </context>
 <context>
-    <name>Editor</name>
-    <message>
-        <source>Save the changes?</source>
-        <translation>Сохранить изменения?</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation>&amp;Сохранить</translation>
-    </message>
-</context>
-<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
         <translation>Сбросить</translation>
-    </message>
-</context>
-<context>
-    <name>FileEditor</name>
-    <message>
-        <source>&amp;Replace Resource...</source>
-        <translation>&amp;Заменить ресурс...</translation>
-    </message>
-    <message>
-        <source>&amp;Save Resource</source>
-        <translation>&amp;Сохранить ресурс</translation>
-    </message>
-    <message>
-        <source>Save Resource &amp;As...</source>
-        <translation>Сохранить ресурс &amp;как...</translation>
-    </message>
-    <message>
-        <source>&amp;Open Resource Directory</source>
-        <extracomment>This string refers to a single resource.</extracomment>
-        <translation>&amp;Открыть директорию ресурса</translation>
     </message>
 </context>
 <context>
@@ -359,7 +406,7 @@
     </message>
 </context>
 <context>
-    <name>ImageEditor</name>
+    <name>ImageSheet</name>
     <message>
         <source>Size</source>
         <translation>Размер</translation>
@@ -538,10 +585,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Welcome</source>
-        <translation>Добро пожаловать</translation>
-    </message>
-    <message>
         <source>Remove Temporary Files...</source>
         <translation>Удалить временные файлы...</translation>
     </message>
@@ -575,6 +618,7 @@
     </message>
     <message>
         <source>Save &amp;As...</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
         <translation>Сохранить &amp;как...</translation>
     </message>
     <message>
@@ -582,8 +626,9 @@
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <source>&amp;Editor</source>
-        <translation>&amp;Редактор</translation>
+        <source>Ta&amp;b</source>
+        <extracomment>Displayed as &quot;Tab&quot;.</extracomment>
+        <translation>&amp;Вкладка</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -611,6 +656,7 @@
     </message>
     <message>
         <source>O&amp;pen Contents</source>
+        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
         <translation>Открыть со&amp;держимое</translation>
     </message>
     <message>
@@ -672,6 +718,10 @@
         <source>About &amp;Qt...</source>
         <extracomment>Don't translate the &quot;&amp;Qt&quot; part.</extracomment>
         <translation>Об инструментарии &amp;Qt...</translation>
+    </message>
+    <message>
+        <source>Welcome</source>
+        <translation>Добро пожаловать</translation>
     </message>
     <message>
         <source>You have unsaved changes.
@@ -785,15 +835,6 @@ Do you want to discard them and exit?</source>
         <translation>Максимальный размер кучи (heap):</translation>
     </message>
     <message>
-        <source>Decompile source code (smali)</source>
-        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation>Декомпилировать исходные коды (smali)</translation>
-    </message>
-    <message>
-        <source>Decompile broken resources</source>
-        <translation>Декомпилировать повреждённые ресурсы</translation>
-    </message>
-    <message>
         <source>Apktool path:</source>
         <extracomment>&quot;Apktool&quot; is the name of the tool, don't translate it.</extracomment>
         <translation>Путь к Apktool:</translation>
@@ -805,6 +846,32 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Frameworks path:</source>
         <translation>Путь фреймворков:</translation>
+    </message>
+    <message>
+        <source>Unpacking</source>
+        <translation>Распаковка</translation>
+    </message>
+    <message>
+        <source>Decompile source code (smali)</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation>Декомпилировать исходные коды (smali)</translation>
+    </message>
+    <message>
+        <source>Decompile broken resources</source>
+        <translation>Декомпилировать повреждённые ресурсы</translation>
+    </message>
+    <message>
+        <source>Packing</source>
+        <translation>Упаковка</translation>
+    </message>
+    <message>
+        <source>Use AAPT2</source>
+        <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
+        <translation>Использовать AAPT2</translation>
+    </message>
+    <message>
+        <source>Pack for debugging</source>
+        <translation>Упаковать для отладки</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -838,22 +905,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>General</source>
         <translation>Общие</translation>
-    </message>
-    <message>
-        <source>Repacking</source>
-        <translation>Переупаковка</translation>
-    </message>
-    <message>
-        <source>Signing APK</source>
-        <translation>Подпись APK</translation>
-    </message>
-    <message>
-        <source>Optimizing APK</source>
-        <translation>Оптимизация APK</translation>
-    </message>
-    <message>
-        <source>Installing APK</source>
-        <translation>Установка APK</translation>
     </message>
 </context>
 <context>
@@ -933,7 +984,19 @@ Do you want to discard them and exit?</source>
     </message>
 </context>
 <context>
-    <name>ProjectActionViewer</name>
+    <name>ProjectItemsModel</name>
+    <message>
+        <source>This APK is already open:
+%1
+Do you want to reopen it and lose any unsaved changes?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
+        <translation>Данный файл APK уже открыт:
+%1
+Вы хотите открыть его заново и потерять несохранённые изменения?</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectSheet</name>
     <message>
         <source>Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
@@ -942,10 +1005,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Edit APK</source>
         <translation>Редактировать APK</translation>
-    </message>
-    <message>
-        <source>Edit Manifest</source>
-        <translation>Редактировать манифест</translation>
     </message>
     <message>
         <source>Application Title</source>
@@ -966,18 +1025,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Install APK</source>
         <translation>Установить APK</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectItemsModel</name>
-    <message>
-        <source>This APK is already open:
-%1
-Do you want to reopen it and lose any unsaved changes?</source>
-        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>Данный файл APK уже открыт:
-%1
-Вы хотите открыть его заново и потерять несохранённые изменения?</translation>
     </message>
 </context>
 <context>
@@ -1087,6 +1134,10 @@ Any unsaved changes will be lost.</source>
 <context>
     <name>SignatureViewer</name>
     <message>
+        <source>Signatures</source>
+        <translation>Подписи</translation>
+    </message>
+    <message>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
         <translation>Подпись JAR</translation>
@@ -1112,13 +1163,6 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>TitleEditor</name>
-    <message>
-        <source>Application Title</source>
-        <translation>Имя приложения</translation>
-    </message>
-</context>
-<context>
     <name>TitleItemsModel</name>
     <message>
         <source>Application Title</source>
@@ -1136,6 +1180,13 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Path</source>
         <translation>Путь</translation>
+    </message>
+</context>
+<context>
+    <name>TitleSheet</name>
+    <message>
+        <source>Application Title</source>
+        <translation>Имя приложения</translation>
     </message>
 </context>
 <context>
@@ -1213,7 +1264,7 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>WelcomeActionViewer</name>
+    <name>WelcomeSheet</name>
     <message>
         <source>Welcome to the APK Editor Studio.</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>

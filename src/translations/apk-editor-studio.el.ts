@@ -10,6 +10,10 @@
         <translation>Συντάκτες</translation>
     </message>
     <message>
+        <source>Donations</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Version History</source>
         <translation>Ιστορικό Έκδοσης</translation>
     </message>
@@ -36,6 +40,14 @@
     <message>
         <source>Translation:</source>
         <translation>Μετάφραση:</translation>
+    </message>
+    <message>
+        <source>Could not fetch the list of donations.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -66,6 +78,22 @@
     </message>
     <message>
         <source>&amp;Install External APK...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Find</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find &amp;Next</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find Pre&amp;vious</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find and &amp;Replace</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -204,6 +232,68 @@
     </message>
 </context>
 <context>
+    <name>BaseEditableSheet</name>
+    <message>
+        <source>Save the changes?</source>
+        <translation>Αποθήκευση αλλαγών;</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;Αποθήκευση</translation>
+    </message>
+</context>
+<context>
+    <name>BaseFileSheet</name>
+    <message>
+        <source>&amp;Replace Resource...</source>
+        <translation>&amp;Αντικατάσταση Πόρου...</translation>
+    </message>
+    <message>
+        <source>&amp;Save Resource</source>
+        <translation>&amp;Αποθήκευση Πόρου</translation>
+    </message>
+    <message>
+        <source>Save Resource &amp;As...</source>
+        <translation>Αποθήκευση Πόρου &amp;Ως...</translation>
+    </message>
+    <message>
+        <source>&amp;Open Resource Directory</source>
+        <extracomment>This string refers to a single resource.</extracomment>
+        <translation>&amp;Άνοιγμα Καταλόγου Πόρου</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSearchBar</name>
+    <message>
+        <source>No results</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide the Replace Bar</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DeviceItemsModel</name>
     <message>
         <source>Alias</source>
@@ -278,41 +368,10 @@
     </message>
 </context>
 <context>
-    <name>Editor</name>
-    <message>
-        <source>Save the changes?</source>
-        <translation>Αποθήκευση αλλαγών;</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation>&amp;Αποθήκευση</translation>
-    </message>
-</context>
-<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
         <translation>Επαναφορά</translation>
-    </message>
-</context>
-<context>
-    <name>FileEditor</name>
-    <message>
-        <source>&amp;Replace Resource...</source>
-        <translation>&amp;Αντικατάσταση Πόρου...</translation>
-    </message>
-    <message>
-        <source>&amp;Save Resource</source>
-        <translation>&amp;Αποθήκευση Πόρου</translation>
-    </message>
-    <message>
-        <source>Save Resource &amp;As...</source>
-        <translation>Αποθήκευση Πόρου &amp;Ως...</translation>
-    </message>
-    <message>
-        <source>&amp;Open Resource Directory</source>
-        <extracomment>This string refers to a single resource.</extracomment>
-        <translation>&amp;Άνοιγμα Καταλόγου Πόρου</translation>
     </message>
 </context>
 <context>
@@ -347,7 +406,7 @@
     </message>
 </context>
 <context>
-    <name>ImageEditor</name>
+    <name>ImageSheet</name>
     <message>
         <source>Size</source>
         <translation>Μέγεθος</translation>
@@ -526,10 +585,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Welcome</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Remove Temporary Files...</source>
         <translation>Αφαίρεση προσωρινών αρχείων...</translation>
     </message>
@@ -563,6 +618,7 @@
     </message>
     <message>
         <source>Save &amp;As...</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
         <translation>Αποθήκευση &amp;Ως...</translation>
     </message>
     <message>
@@ -570,8 +626,9 @@
         <translation>&amp;Αρχείο</translation>
     </message>
     <message>
-        <source>&amp;Editor</source>
-        <translation>&amp;Επεξεργαστής</translation>
+        <source>Ta&amp;b</source>
+        <extracomment>Displayed as &quot;Tab&quot;.</extracomment>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -599,6 +656,7 @@
     </message>
     <message>
         <source>O&amp;pen Contents</source>
+        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
         <translation>Ά&amp;νοιγμα περιεχομένων</translation>
     </message>
     <message>
@@ -660,6 +718,10 @@
         <source>About &amp;Qt...</source>
         <extracomment>Don't translate the &quot;&amp;Qt&quot; part.</extracomment>
         <translation>Σχετικά με &amp;Qt...</translation>
+    </message>
+    <message>
+        <source>Welcome</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You have unsaved changes.
@@ -773,15 +835,6 @@ Do you want to discard them and exit?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Decompile source code (smali)</source>
-        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation>Αποσυσκευασία πηγαίου κώδικα (smali)</translation>
-    </message>
-    <message>
-        <source>Decompile broken resources</source>
-        <translation>Αποσυσκευασία κατεστραμένων πόρων</translation>
-    </message>
-    <message>
         <source>Apktool path:</source>
         <extracomment>&quot;Apktool&quot; is the name of the tool, don't translate it.</extracomment>
         <translation>Διαδρομή Apktool:</translation>
@@ -793,6 +846,32 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Frameworks path:</source>
         <translation>Διαδρομή frameworks:</translation>
+    </message>
+    <message>
+        <source>Unpacking</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decompile source code (smali)</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation>Αποσυσκευασία πηγαίου κώδικα (smali)</translation>
+    </message>
+    <message>
+        <source>Decompile broken resources</source>
+        <translation>Αποσυσκευασία κατεστραμένων πόρων</translation>
+    </message>
+    <message>
+        <source>Packing</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use AAPT2</source>
+        <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Pack for debugging</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable</source>
@@ -826,22 +905,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>General</source>
         <translation>Γενικά</translation>
-    </message>
-    <message>
-        <source>Repacking</source>
-        <translation>Επανασυσκευασία</translation>
-    </message>
-    <message>
-        <source>Signing APK</source>
-        <translation>Υπογραφή APK</translation>
-    </message>
-    <message>
-        <source>Optimizing APK</source>
-        <translation>Βελτιστοποίηση APK</translation>
-    </message>
-    <message>
-        <source>Installing APK</source>
-        <translation>Εγκατάσταση APK</translation>
     </message>
 </context>
 <context>
@@ -921,7 +984,17 @@ Do you want to discard them and exit?</source>
     </message>
 </context>
 <context>
-    <name>ProjectActionViewer</name>
+    <name>ProjectItemsModel</name>
+    <message>
+        <source>This APK is already open:
+%1
+Do you want to reopen it and lose any unsaved changes?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
+        <translation>Αυτό το APK είναι ήδη ανοιχτό: %1 Θέλετε να το ανοίξετε ξανά και να χάσετε τυχόν μη αποθηκευμένες αλλαγές;</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectSheet</name>
     <message>
         <source>Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
@@ -930,10 +1003,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Edit APK</source>
         <translation>Επεξεργασία APK</translation>
-    </message>
-    <message>
-        <source>Edit Manifest</source>
-        <translation>Επεξεργασία Δήλωσης</translation>
     </message>
     <message>
         <source>Application Title</source>
@@ -954,16 +1023,6 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Install APK</source>
         <translation>Εγκατάσταση APK</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectItemsModel</name>
-    <message>
-        <source>This APK is already open:
-%1
-Do you want to reopen it and lose any unsaved changes?</source>
-        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>Αυτό το APK είναι ήδη ανοιχτό: %1 Θέλετε να το ανοίξετε ξανά και να χάσετε τυχόν μη αποθηκευμένες αλλαγές;</translation>
     </message>
 </context>
 <context>
@@ -1073,6 +1132,10 @@ Any unsaved changes will be lost.</source>
 <context>
     <name>SignatureViewer</name>
     <message>
+        <source>Signatures</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
         <translation type="unfinished"/>
@@ -1098,13 +1161,6 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>TitleEditor</name>
-    <message>
-        <source>Application Title</source>
-        <translation>Τίτλος εφαρμογής</translation>
-    </message>
-</context>
-<context>
     <name>TitleItemsModel</name>
     <message>
         <source>Application Title</source>
@@ -1122,6 +1178,13 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Path</source>
         <translation>Διαδρομή</translation>
+    </message>
+</context>
+<context>
+    <name>TitleSheet</name>
+    <message>
+        <source>Application Title</source>
+        <translation>Τίτλος εφαρμογής</translation>
     </message>
 </context>
 <context>
@@ -1199,7 +1262,7 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>WelcomeActionViewer</name>
+    <name>WelcomeSheet</name>
     <message>
         <source>Welcome to the APK Editor Studio.</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
