@@ -9,20 +9,23 @@ void GradientWidget::paintEvent(QPaintEvent *event)
     const int h = height();
     const int min = qMin(w, h);
 
-    const QColor color1 = Utils::isLightTheme()
+    const QColor background = Utils::isLightTheme()
         ? QColor(250, 255, 230)
         : QPalette().color(QPalette::Window);
-    const QColor color2 = Utils::isLightTheme()
-        ? QColor(240, 245, 220)
-        : QPalette().color(QPalette::Window).lighter(120);
-    QLinearGradient gradient(QPoint(0, min), QPoint(min, 0));
-    gradient.setColorAt(0.1, color1);
-    gradient.setColorAt(0.5, color2);
-    gradient.setColorAt(1.0, color1);
 
     QPainter painter(this);
     painter.setPen(Qt::NoPen);
-    painter.fillRect(event->rect(), color1);
+    painter.fillRect(event->rect(), background);
+
+    if (Utils::isLightTheme()) {
+        QLinearGradient gradient(QPoint(0, min), QPoint(min, 0));
+        gradient.setColorAt(0.1, background);
+        gradient.setColorAt(0.5, QColor(240, 245, 220));
+        gradient.setColorAt(1.0, background);
+        painter.setBrush(gradient);
+    } else {
+        painter.setBrush(background.lighter(105));
+    }
 
     QVector<QPoint> points;
     points.append(QPoint(0, min));
@@ -32,6 +35,5 @@ void GradientWidget::paintEvent(QPaintEvent *event)
     points.append(QPoint(min, 0));
 
     painter.translate((w / 2.0 - min / 2.0), (h / 2.0 - min / 2.0));
-    painter.setBrush(gradient);
     painter.drawPolygon(QPolygon(points));
 }
