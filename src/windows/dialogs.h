@@ -8,6 +8,7 @@
 
 namespace Dialogs
 {
+    QString getOpenFilename(QWidget *parent = nullptr);
     QString getOpenFilename(const QString &defaultPath, QWidget *parent = nullptr);
     QString getOpenFilename(const QString &defaultPath, const FileFormatList &formats, QWidget *parent = nullptr);
     QString getSaveFilename(const QString &defaultPath, QWidget *parent = nullptr);

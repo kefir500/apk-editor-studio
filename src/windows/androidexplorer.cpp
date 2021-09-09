@@ -240,7 +240,7 @@ void AndroidExplorer::download(const QString &path)
 
 void AndroidExplorer::upload(const QString &path)
 {
-    const auto src = Dialogs::getOpenFilename({}, this);
+    const auto src = Dialogs::getOpenFilename(this);
     if (src.isEmpty()) {
         return;
     }

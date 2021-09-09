@@ -2,9 +2,9 @@
 #include "windows/devicemanager.h"
 #include "base/application.h"
 #include "base/utils.h"
-#include <QFileDialog>
 #include <QBoxLayout>
 #include <QDialogButtonBox>
+#include <QFileDialog>
 #include <QPlainTextEdit>
 #include <QPushButton>
 
@@ -19,6 +19,11 @@ namespace
     {
         return (formats.isEmpty() ? FileFormatList(FileFormat::fromFilename(path)) : formats).getFilterString();
     }
+}
+
+QString Dialogs::getOpenFilename(QWidget *parent)
+{
+    return getOpenFilename({}, FileFormatList(), parent);
 }
 
 QString Dialogs::getOpenFilename(const QString &defaultPath, QWidget *parent)
