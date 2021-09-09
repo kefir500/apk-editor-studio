@@ -20,10 +20,14 @@ bool LogModel::add(LogEntry *entry)
     return true;
 }
 
+bool LogModel::add(const QString &brief, LogEntry::Type type)
+{
+    return add(new LogEntry(brief, type));
+}
+
 bool LogModel::add(const QString &brief, const QString &descriptive, LogEntry::Type type)
 {
-    auto entry = new LogEntry(brief, descriptive, type);
-    return add(entry);
+    return add(new LogEntry(brief, descriptive, type));
 }
 
 void LogModel::clear()

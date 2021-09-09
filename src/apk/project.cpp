@@ -154,16 +154,6 @@ bool Project::setPackageName(const QString &packageName)
     return true;
 }
 
-void Project::journal(const QString &brief, LogEntry::Type type)
-{
-    logModel.add(brief, QString(), type);
-}
-
-void Project::journal(const QString &brief, const QString &descriptive, LogEntry::Type type)
-{
-    logModel.add(brief, descriptive, type);
-}
-
 Command *Project::createUnpackCommand()
 {
     QString target;
@@ -189,7 +179,7 @@ Command *Project::createUnpackCommand()
         if (success) {
             filesystemModel.setRootPath(getContentsPath());
         } else {
-            journal(tr("Error unpacking APK."), apktoolDecode->output(), LogEntry::Error);
+            logModel.add(tr("Error unpacking APK."), apktoolDecode->output(), LogEntry::Error);
         }
     });
 
@@ -198,7 +188,7 @@ Command *Project::createUnpackCommand()
     command->add(new LoadUnpackedCommand(this), true);
     connect(command, &Command::started, this, [=]() {
         qDebug() << qPrintable(QString("Unpacking\n  from: %1\n    to: %2\n").arg(source, target));
-        journal(tr("Unpacking APK..."));
+        logModel.add(tr("Unpacking APK..."));
         state.setCurrentStatus(ProjectState::Status::Unpacking);
     });
     connect(command, &Command::finished, this, [=](bool success) {
@@ -235,7 +225,7 @@ Command *Project::createPackCommand(const QString &target)
 
     connect(apktoolBuild, &Command::started, this, [=]() {
         qDebug() << qPrintable(QString("Packing\n  from: %1\n    to: %2\n").arg(source, target));
-        journal(tr("Packing APK..."));
+        logModel.add(tr("Packing APK..."));
         state.setCurrentStatus(ProjectState::Status::Packing);
     });
 
@@ -244,7 +234,7 @@ Command *Project::createPackCommand(const QString &target)
             originalPath = target;
             state.setModified(false);
         } else {
-            journal(tr("Error packing APK."), apktoolBuild->output(), LogEntry::Error);
+            logModel.add(tr("Error packing APK."), apktoolBuild->output(), LogEntry::Error);
         }
     });
 
@@ -256,13 +246,13 @@ Command *Project::createZipalignCommand(const QString &apk)
     auto zipalign = new Zipalign::Align(apk.isEmpty() ? getOriginalPath() : apk);
 
     connect(zipalign, &Command::started, this, [=]() {
-        journal(tr("Optimizing APK..."));
+        logModel.add(tr("Optimizing APK..."));
         state.setCurrentStatus(ProjectState::Status::Optimizing);
     });
 
     connect(zipalign, &Command::finished, this, [=](bool success) {
         if (!success) {
-            journal(tr("Error optimizing APK."), zipalign->output(), LogEntry::Error);
+            logModel.add(tr("Error optimizing APK."), zipalign->output(), LogEntry::Error);
         }
     });
 
@@ -274,13 +264,13 @@ Command *Project::createSignCommand(const Keystore *keystore, const QString &apk
     auto apksigner = new Apksigner::Sign(apk.isEmpty() ? getOriginalPath() : apk, keystore);
 
     connect(apksigner, &Command::started, this, [=]() {
-        journal(tr("Signing APK..."));
+        logModel.add(tr("Signing APK..."));
         state.setCurrentStatus(ProjectState::Status::Signing);
     });
 
     connect(apksigner, &Command::finished, this, [=](bool success) {
         if (!success) {
-            journal(tr("Error signing APK."), apksigner->output(), LogEntry::Error);
+            logModel.add(tr("Error signing APK."), apksigner->output(), LogEntry::Error);
         }
     });
 
@@ -292,13 +282,13 @@ Command *Project::createInstallCommand(const QString &serial, const QString &apk
     auto install = new Adb::Install(apk.isEmpty() ? getOriginalPath() : apk, serial);
 
     connect(install, &Command::started, this, [=]() {
-        journal(tr("Installing APK..."));
+        logModel.add(tr("Installing APK..."));
         state.setCurrentStatus(ProjectState::Status::Installing);
     });
 
     connect(install, &Command::finished, this, [=](bool success) {
         if (!success) {
-            journal(tr("Error installing APK."), install->output(), LogEntry::Error);
+            logModel.add(tr("Error installing APK."), install->output(), LogEntry::Error);
         }
     });
 
@@ -314,7 +304,7 @@ Project::ProjectCommand::ProjectCommand(Project *project)
     connect(this, &Command::finished, project, [project](bool success) {
         project->logModel.setLoadingState(false);
         if (success) {
-            project->journal(Project::tr("Done."), LogEntry::Success);
+            project->logModel.add(Project::tr("Done."), LogEntry::Success);
             project->state.setCurrentStatus(ProjectState::Status::Normal);
         } else {
             project->state.setCurrentStatus(ProjectState::Status::Errored);
@@ -329,7 +319,7 @@ void Project::LoadUnpackedCommand::run()
 
     const QString contentsPath = project->getContentsPath();
 
-    project->journal(Project::tr("Reading APK contents..."));
+    project->logModel.add(Project::tr("Reading APK contents..."));
     project->manifest = new Manifest(
         contentsPath + "/AndroidManifest.xml",
         contentsPath + "/apktool.yml");

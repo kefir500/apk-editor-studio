@@ -44,9 +44,6 @@ public:
     void setApplicationIcon(const QString &path, QWidget *parent = nullptr);
     bool setPackageName(const QString &packageName);
 
-    void journal(const QString &brief, LogEntry::Type type = LogEntry::Information);
-    void journal(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
-
     Manifest *manifest;
 
     ResourceItemsModel resourcesModel;

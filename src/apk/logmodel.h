@@ -19,8 +19,8 @@ public:
     ~LogModel() override;
 
     bool add(LogEntry *entry);
-    bool add(const QString &brief, const QString &descriptive, LogEntry::Type type);
-    bool add(const QString &brief, const QString &descriptive, const QColor &color);
+    bool add(const QString &brief, LogEntry::Type type = LogEntry::Information);
+    bool add(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
     void clear();
 
     void setLoadingState(bool state);

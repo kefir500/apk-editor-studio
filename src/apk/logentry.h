@@ -12,7 +12,9 @@ public:
         Error
     };
 
-    LogEntry(const QString &brief, const QString &descriptive, Type type)
+    LogEntry(const QString &brief, Type type = Information)
+        : brief(brief), type(type) {}
+    LogEntry(const QString &brief, const QString &descriptive, Type type = Information)
         : brief(brief), descriptive(descriptive), type(type) {}
 
     QString getBrief() const;
