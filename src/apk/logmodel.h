@@ -15,7 +15,7 @@ public:
         ColumnCount
     };
 
-    LogModel();
+    LogModel(QObject *parent = nullptr);
     ~LogModel() override;
 
     bool add(LogEntry *entry);

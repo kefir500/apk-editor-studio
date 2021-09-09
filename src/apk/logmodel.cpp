@@ -1,7 +1,7 @@
 #include "apk/logmodel.h"
 #include <QPalette>
 
-LogModel::LogModel()
+LogModel::LogModel(QObject *parent) : QAbstractListModel(parent)
 {
     isLoading = false;
 }
