@@ -86,6 +86,12 @@ target_compile_definitions(apk-editor-studio PRIVATE QTKEYCHAIN_NO_EXPORT)
 set(QAPPLICATION_CLASS QApplication CACHE STRING "Inheritance class for SingleApplication")
 add_subdirectory(lib/SingleApplication EXCLUDE_FROM_ALL)
 
+# DarkStyle
+target_sources(apk-editor-studio PRIVATE
+    lib/DarkStyle/DarkStyle.cpp
+    lib/DarkStyle/darkstyle.qrc
+)
+
 target_link_libraries(apk-editor-studio
     Qt5::Widgets
     Qt5::Xml

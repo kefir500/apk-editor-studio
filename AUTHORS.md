@@ -14,6 +14,7 @@
 - [The KDE Community](https://kde.org/community/whatiskde/) — KSyntaxHighlighting
 - [Frank Osterfeld](https://github.com/frankosterfeld) — QtKeychain
 - [Itay Grudev](https://github.com/itay-grudev) — SingleApplication
+- [Juergen Skrotzky](https://github.com/Jorgen-VikingGod) — DarkStyle
 - [Icons8](https://icons8.com) — Action icons
 - [Mark James](http://www.famfamfam.com) — Flag icons
 
