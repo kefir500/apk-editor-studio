@@ -1,6 +1,7 @@
 #include "tools/adb.h"
-#include "base/process.h"
 #include "base/application.h"
+#include "base/process.h"
+#include "base/settings.h"
 #include "base/utils.h"
 #include <QDebug>
 #include <QRegularExpression>

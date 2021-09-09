@@ -1,5 +1,6 @@
 #include "base/deviceitemsmodel.h"
 #include "base/application.h"
+#include "base/settings.h"
 #include "tools/adb.h"
 
 Device DeviceItemsModel::get(const QModelIndex &index) const

@@ -4,7 +4,6 @@
 #include "apk/projectitemsmodel.h"
 #include "base/actionprovider.h"
 #include "base/language.h"
-#include "base/settings.h"
 #include <SingleApplication>
 #include <KSyntaxHighlighting/Repository>
 #include <QTranslator>

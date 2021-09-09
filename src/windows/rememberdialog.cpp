@@ -1,5 +1,6 @@
 #include "windows/rememberdialog.h"
 #include "base/application.h"
+#include "base/settings.h"
 #include <QCheckBox>
 #include <QMessageBox>
 #include <QPushButton>

@@ -1,5 +1,6 @@
 #include "apk/project.h"
 #include "base/application.h"
+#include "base/settings.h"
 #include "base/utils.h"
 #include "tools/adb.h"
 #include "tools/apktool.h"

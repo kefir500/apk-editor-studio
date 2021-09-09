@@ -1,6 +1,7 @@
 #include "tools/apksigner.h"
 #include "base/jarprocess.h"
 #include "base/application.h"
+#include "base/settings.h"
 #include "base/utils.h"
 #include <QRegularExpression>
 

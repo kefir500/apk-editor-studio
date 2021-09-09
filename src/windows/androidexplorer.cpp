@@ -4,6 +4,7 @@
 #include "widgets/loadingwidget.h"
 #include "widgets/toolbar.h"
 #include "base/application.h"
+#include "base/settings.h"
 #include <QBoxLayout>
 #include <QDialogButtonBox>
 #include <QLineEdit>

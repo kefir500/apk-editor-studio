@@ -1,5 +1,6 @@
 #include "tools/keystore.h"
 #include "base/application.h"
+#include "base/settings.h"
 #include "windows/dialogs.h"
 #include "windows/keyselector.h"
 #include <QInputDialog>

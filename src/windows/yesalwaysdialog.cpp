@@ -1,5 +1,6 @@
 #include "windows/yesalwaysdialog.h"
 #include "base/application.h"
+#include "base/settings.h"
 #include "base/utils.h"
 #include <QBoxLayout>
 #include <QDialogButtonBox>

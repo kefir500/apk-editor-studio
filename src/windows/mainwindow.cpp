@@ -18,6 +18,7 @@
 #include "tools/keystore.h"
 #include "base/application.h"
 #include "base/extralistitemproxy.h"
+#include "base/settings.h"
 #include "base/updater.h"
 #include "apk/project.h"
 #include <QBoxLayout>

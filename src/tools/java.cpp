@@ -1,6 +1,7 @@
 #include "tools/java.h"
 #include "base/application.h"
 #include "base/process.h"
+#include "base/settings.h"
 #include <QDir>
 #include <QRegularExpression>
 

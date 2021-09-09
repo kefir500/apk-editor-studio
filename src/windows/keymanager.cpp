@@ -4,6 +4,7 @@
 #include "windows/dialogs.h"
 #include "base/application.h"
 #include "base/password.h"
+#include "base/settings.h"
 #include "tools/keytool.h"
 #include <QPushButton>
 #include <QLineEdit>
