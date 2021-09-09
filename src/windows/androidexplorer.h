@@ -3,18 +3,18 @@
 
 #include "base/androidfilesystemmodel.h"
 #include "base/clipboard.h"
-#include "widgets/deselectablelistview.h"
 #include <QDialog>
-#include <QLineEdit>
 
-class MainWindow;
+class DeselectableListView;
+class QLineEdit;
+class QToolButton;
 
 class AndroidExplorer : public QDialog
 {
     Q_OBJECT
 
 public:
-    AndroidExplorer(const QString &serial, MainWindow *parent);
+    AndroidExplorer(const QString &serial, QWidget *parent);
 
 protected:
     void changeEvent(QEvent *event);

@@ -1,21 +1,17 @@
 #include "sheets/welcomesheet.h"
-#include "windows/dialogs.h"
 #include "base/application.h"
+#include "windows/mainwindow.h"
 
-WelcomeSheet::WelcomeSheet(MainWindow *parent) : BaseActionSheet(parent)
+WelcomeSheet::WelcomeSheet(MainWindow *mainWindow) : BaseActionSheet(mainWindow)
 {
     btnOpen = addButton();
     btnInstall = addButton();
     btnExplorer = addButton();
     btnDonate = addButton();
-    connect(btnOpen, &QPushButton::clicked, parent, [parent]() {
-        app->actions.openApk(parent);
-    });
-    connect(btnInstall, &QPushButton::clicked, parent, [parent]() {
-        app->actions.installApk(parent);
-    });
-    connect(btnExplorer, &QPushButton::clicked, parent, [parent]() {
-        app->actions.openAndroidExplorer(parent);
+    connect(btnOpen, &QPushButton::clicked, mainWindow, &MainWindow::openExternalApk);
+    connect(btnInstall, &QPushButton::clicked, mainWindow, &MainWindow::installExternalApk);
+    connect(btnExplorer, &QPushButton::clicked, mainWindow, [mainWindow]() {
+        app->actions.openAndroidExplorer(mainWindow);
     });
     connect(btnDonate, &QPushButton::clicked, &app->actions, &ActionProvider::visitDonatePage);
 }

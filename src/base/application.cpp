@@ -1,8 +1,12 @@
 #include <QCommandLineParser>
 #include "base/application.h"
+#include "base/settings.h"
 #include "tools/apktool.h"
 #include "tools/keystore.h"
+#include "windows/androidexplorer.h"
 #include "windows/dialogs.h"
+#include "windows/mainwindow.h"
+#include <QFileOpenEvent>
 #include <QPixmapCache>
 
 Application::Application(int &argc, char **argv) : SingleApplication(argc, argv, true)
@@ -48,14 +52,13 @@ int Application::exec()
     settings = new Settings();
 
     Apktool::reset();
-
     QDir().mkpath(Apktool::getOutputPath());
     QDir().mkpath(Apktool::getFrameworksPath());
 
     setLanguage(settings->getLanguage());
 
     auto firstInstance = createNewInstance();
-    processArguments(arguments(), firstInstance);
+    firstInstance->processArguments(arguments());
     connect(this, &SingleApplication::receivedMessage, this, [this](quint32, QByteArray message) {
         MainWindow *instance = nullptr;
         if (settings->getSingleInstance()) {
@@ -67,7 +70,7 @@ int Application::exec()
         instance->activateWindow();
         instance->raise();
         if (!message.isEmpty()) {
-            processArguments(QStringList() << app->applicationFilePath() << QString(message).split('\n'), instance);
+            instance->processArguments(QStringList() << app->applicationFilePath() << QString(message).split('\n'));
         }
     });
 
@@ -122,7 +125,7 @@ bool Application::event(QEvent *event)
     switch (event->type()) {
     case QEvent::FileOpen: {
         const QString filePath = static_cast<QFileOpenEvent *>(event)->file();
-        actions.openApk(filePath, instances.last());
+        instances.last()->openApk(filePath);
         return true;
     }
     case QEvent::LanguageChange:
@@ -132,43 +135,4 @@ bool Application::event(QEvent *event)
         break;
     }
     return SingleApplication::event(event);
-}
-
-void Application::processArguments(const QStringList &arguments, MainWindow *window)
-{
-    QCommandLineParser cli;
-    QCommandLineOption optimizeOption(QStringList{"o", "optimize", "z", "zipalign"});
-    QCommandLineOption signOption(QStringList{"s", "sign"});
-    QCommandLineOption installOption(QStringList{"i", "install"});
-    cli.addOption(optimizeOption);
-    cli.addOption(signOption);
-    cli.addOption(installOption);
-    cli.parse(arguments);
-
-    for (const QString &path : cli.positionalArguments()) {
-        auto project = projects.add(path, window);
-        if (project) {
-            auto command = new Project::ProjectCommand(project);
-            if (!cli.isSet(optimizeOption) && !cli.isSet(signOption) && !cli.isSet(installOption)) {
-                command->add(project->createUnpackCommand(), true);
-            } else {
-                if (cli.isSet(optimizeOption)) {
-                    command->add(project->createZipalignCommand(), true);
-                }
-                if (cli.isSet(signOption)) {
-                    auto keystore = Keystore::get(window);
-                    if (keystore) {
-                        command->add(project->createSignCommand(keystore.get()), true);
-                    }
-                }
-                if (cli.isSet(installOption)) {
-                    const auto device = Dialogs::getInstallDevice(window);
-                    if (!device.isNull()) {
-                        command->add(project->createInstallCommand(device.getSerial()), true);
-                    }
-                }
-            }
-            command->run();
-        }
-    }
 }

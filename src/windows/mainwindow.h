@@ -1,11 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QActionGroup>
-#include <QDragEnterEvent>
-#include <QDropEvent>
 #include <QMainWindow>
-#include <QRubberBand>
+#include <QMap>
 
 class BaseSheet;
 class CentralWidget;
@@ -16,6 +13,10 @@ class Project;
 class ProjectItemsModel;
 class ProjectList;
 class ProjectWidget;
+class QActionGroup;
+class QDragEnterEvent;
+class QDropEvent;
+class QRubberBand;
 class ResourceAbstractView;
 class Toolbar;
 class WelcomeSheet;
@@ -27,6 +28,14 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(ProjectItemsModel &projects, QWidget *parent = nullptr);
     ~MainWindow();
+
+    void openApk(const QString &path);
+    void openExternalApk();
+    void optimizeExternalApk();
+    void signExternalApk();
+    void installExternalApk();
+
+    void processArguments(const QStringList &arguments);
 
     void setCurrentProject(Project *project);
 
@@ -51,6 +60,7 @@ private:
     void onProjectAboutToBeRemoved(const QModelIndex &parent, int first, int last);
     void onProjectSwitched(Project *project);
 
+    Project *addProject(const QString &path);
     Project *getCurrentProject() const;
     ProjectWidget *getCurrentProjectWidget() const;
     BaseSheet *getCurrentTab() const;

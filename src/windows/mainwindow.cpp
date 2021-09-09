@@ -1,3 +1,4 @@
+#include <QCommandLineParser>
 #include "windows/mainwindow.h"
 #include "windows/aboutdialog.h"
 #include "windows/dialogs.h"
@@ -14,6 +15,7 @@
 #include "widgets/toolbar.h"
 #include "sheets/basefilesheet.h"
 #include "sheets/welcomesheet.h"
+#include "tools/keystore.h"
 #include "base/application.h"
 #include "base/extralistitemproxy.h"
 #include "base/updater.h"
@@ -21,6 +23,7 @@
 #include <QBoxLayout>
 #include <QDebug>
 #include <QDockWidget>
+#include <QDropEvent>
 #include <QMenuBar>
 #include <QMimeData>
 #include <QMimeDatabase>
@@ -71,6 +74,106 @@ MainWindow::MainWindow(ProjectItemsModel &projects, QWidget *parent)
 MainWindow::~MainWindow()
 {
     --instances;
+}
+
+void MainWindow::openApk(const QString &path)
+{
+    if (auto project = addProject(path)) {
+        auto command = new Project::ProjectCommand(project);
+        command->add(project->createUnpackCommand(), true);
+        command->run();
+    }
+}
+
+void MainWindow::openExternalApk()
+{
+    const QStringList paths = Dialogs::getOpenApkFilenames(this);
+    for (const QString &path : paths) {
+        openApk(path);
+    }
+}
+
+void MainWindow::optimizeExternalApk()
+{
+    const QStringList paths = Dialogs::getOpenApkFilenames(this);
+    for (const QString &path : paths) {
+        if (auto project = addProject(path)) {
+            auto command = new Project::ProjectCommand(project);
+            command->add(project->createZipalignCommand(), true);
+            command->run();
+        }
+    }
+}
+
+void MainWindow::signExternalApk()
+{
+    const auto keystore = Keystore::get(this);
+    if (!keystore) {
+        return;
+    }
+    const QStringList paths = Dialogs::getOpenApkFilenames(this);
+    for (const QString &path : paths) {
+        if (auto project = addProject(path)) {
+            auto command = new Project::ProjectCommand(project);
+            command->add(project->createSignCommand(keystore.get()), true);
+            command->run();
+        }
+    }
+}
+
+void MainWindow::installExternalApk()
+{
+    const auto device = Dialogs::getInstallDevice(this);
+    if (device.isNull()) {
+        return;
+    }
+    const QStringList paths = Dialogs::getOpenApkFilenames(this);
+    for (const QString &path : paths) {
+        if (auto project = addProject(path)) {
+            auto command = new Project::ProjectCommand(project);
+            command->add(project->createInstallCommand(device.getSerial()), true);
+            command->run();
+        }
+    }
+}
+
+void MainWindow::processArguments(const QStringList &arguments)
+{
+    QCommandLineParser cli;
+    QCommandLineOption optimizeOption(QStringList{"o", "optimize", "z", "zipalign"});
+    QCommandLineOption signOption(QStringList{"s", "sign"});
+    QCommandLineOption installOption(QStringList{"i", "install"});
+    cli.addOption(optimizeOption);
+    cli.addOption(signOption);
+    cli.addOption(installOption);
+    cli.parse(arguments);
+
+    const auto positionalArguments = cli.positionalArguments();
+    for (const QString &path : positionalArguments) {
+        if (auto project = addProject(path)) {
+            auto command = new Project::ProjectCommand(project);
+            if (!cli.isSet(optimizeOption) && !cli.isSet(signOption) && !cli.isSet(installOption)) {
+                command->add(project->createUnpackCommand(), true);
+            } else {
+                if (cli.isSet(optimizeOption)) {
+                    command->add(project->createZipalignCommand(), true);
+                }
+                if (cli.isSet(signOption)) {
+                    auto keystore = Keystore::get(this);
+                    if (keystore) {
+                        command->add(project->createSignCommand(keystore.get()), true);
+                    }
+                }
+                if (cli.isSet(installOption)) {
+                    const auto device = Dialogs::getInstallDevice(this);
+                    if (!device.isNull()) {
+                        command->add(project->createInstallCommand(device.getSerial()), true);
+                    }
+                }
+            }
+            command->run();
+        }
+    }
 }
 
 void MainWindow::setCurrentProject(Project *project)
@@ -185,10 +288,17 @@ void MainWindow::initMenus()
     // File Menu:
 
     auto actionApkOpen = app->actions.getOpenApk(this);
+    connect(actionApkOpen, &QAction::triggered, this, &MainWindow::openExternalApk);
     actionApkSave = new QAction(QIcon::fromTheme("apk-save"), QString(), this);
     actionApkSave->setShortcut(QKeySequence("Ctrl+Alt+S"));
     actionApkInstall = new QAction(QIcon::fromTheme("apk-install"), QString(), this);
     actionApkInstall->setShortcut(QKeySequence("Ctrl+I"));
+    auto actionInstallExternal = app->actions.getInstallApk(this);
+    connect(actionInstallExternal, &QAction::triggered, this, &MainWindow::installExternalApk);
+    auto actionOptimizeExternal = app->actions.getOptimizeApk(this);
+    connect(actionOptimizeExternal, &QAction::triggered, this, &MainWindow::optimizeExternalApk);
+    auto actionSignExternal = app->actions.getSignApk(this);
+    connect(actionSignExternal, &QAction::triggered, this, &MainWindow::signExternalApk);
     actionApkExplore = new QAction(QIcon::fromTheme("folder-open"), QString(), this);
     actionApkExplore->setShortcut(QKeySequence("Ctrl+E"));
     actionApkClose = new QAction(QIcon::fromTheme("document-close"), QString(), this);
@@ -255,9 +365,9 @@ void MainWindow::initMenus()
     menuFile->addSeparator();
     menuFile->addAction(actionApkInstall);
     menuFile->addSeparator();
-    menuFile->addAction(app->actions.getInstallApk(this));
-    menuFile->addAction(app->actions.getOptimizeApk(this));
-    menuFile->addAction(app->actions.getSignApk(this));
+    menuFile->addAction(actionInstallExternal);
+    menuFile->addAction(actionOptimizeExternal);
+    menuFile->addAction(actionSignExternal);
     menuFile->addSeparator();
     menuFile->addAction(actionApkExplore);
     menuFile->addSeparator();
@@ -494,7 +604,7 @@ void MainWindow::updateRecentMenu()
         auto action = new QAction(recentEntry.thumbnail(), recentEntry.filename(), this);
         menuRecent->addAction(action);
         connect(action, &QAction::triggered, this, [=]() {
-            app->actions.openApk(recentEntry.filename(), this);
+            openApk(recentEntry.filename());
         });
     }
     menuRecent->addSeparator();
@@ -544,6 +654,23 @@ void MainWindow::onProjectSwitched(Project *project)
     manifestTable->setModel(project ? &project->manifestModel : nullptr);
 
     updateWindowForProject(project);
+}
+
+Project *MainWindow::addProject(const QString &path)
+{
+    if (auto existing = projects.existing(path)) {
+        //: "%1" will be replaced with a path to an APK.
+        const QString question = tr("This APK is already open:\n%1\nDo you want to reopen it and lose any unsaved changes?").arg(existing->getOriginalPath());
+        const int answer = QMessageBox::question(this, QString(), question);
+        if (answer != QMessageBox::Yes) {
+            return nullptr;
+        }
+        projects.close(existing);
+    }
+    auto project = new Project(path);
+    projects.add(project);
+    setCurrentProject(project);
+    return project;
 }
 
 Project *MainWindow::getCurrentProject() const
@@ -597,10 +724,10 @@ void MainWindow::dropEvent(QDropEvent *event)
     if (mimeData->hasUrls()) {
         QList<QUrl> urls = mimeData->urls();
         for (const QUrl &url : urls) {
-            const QString file = url.toLocalFile();
-            const QMimeType mime = QMimeDatabase().mimeTypeForFile(file);
+            const QString path = url.toLocalFile();
+            const QMimeType mime = QMimeDatabase().mimeTypeForFile(path);
             if (mime.inherits("application/zip")) {
-                app->actions.openApk(file, this);
+                openApk(path);
                 event->acceptProposedAction();
             }
         }
@@ -617,7 +744,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
             auto tabs = it.value();
             if (tabs->isUnsaved()) {
                 auto project = it.key();
-                projectList->setCurrentProject(project);
+                setCurrentProject(project);
                 const QString question = tr("You have unsaved changes.\nDo you want to discard them and exit?");
                 const int answer = QMessageBox::question(this, QString(), question, QMessageBox::Discard, QMessageBox::Cancel);
                 if (answer != QMessageBox::Discard) {

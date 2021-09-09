@@ -5,10 +5,12 @@
 #include "base/actionprovider.h"
 #include "base/language.h"
 #include "base/settings.h"
-#include "windows/mainwindow.h"
 #include <SingleApplication>
 #include <KSyntaxHighlighting/Repository>
 #include <QTranslator>
+
+class MainWindow;
+class Settings;
 
 class Application : public SingleApplication
 {
@@ -26,15 +28,13 @@ public:
     void setLanguage(const QString &locale);
 
     Settings *settings;
-    ActionProvider actions{projects};
+    ActionProvider actions;
     KSyntaxHighlighting::Repository highlightingRepository;
 
 protected:
     bool event(QEvent *event) override;
 
 private:
-    void processArguments(const QStringList &arguments, MainWindow *window = nullptr);
-
     QList<MainWindow *> instances;
     ProjectItemsModel projects;
     QTranslator translator;

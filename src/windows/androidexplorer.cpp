@@ -1,11 +1,12 @@
 #include "windows/androidexplorer.h"
 #include "windows/dialogs.h"
+#include "widgets/deselectablelistview.h"
 #include "widgets/loadingwidget.h"
 #include "widgets/toolbar.h"
-#include "tools/adb.h"
 #include "base/application.h"
 #include <QBoxLayout>
 #include <QDialogButtonBox>
+#include <QLineEdit>
 #include <QMenu>
 #include <QMessageBox>
 #include <QPushButton>
@@ -16,7 +17,7 @@
     #include <QDebug>
 #endif
 
-AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
+AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     : QDialog(parent)
     , serial(serial)
 {
@@ -95,7 +96,8 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
         remove(fileList->currentIndex());
     });
 
-    auto actionInstall = app->actions.getInstallApk(serial, parent);
+    auto actionInstall = app->actions.getInstallApk(this);
+    actionInstall->setEnabled(false); // TODO Temporarily
     auto actionScreenshot = app->actions.getTakeScreenshot(serial, this);
 
     auto toolbar = new Toolbar(this);
@@ -121,7 +123,6 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
     fileSelectionActions->addAction(actionDelete);
 
     pathUpButton = new QToolButton(this);
-    pathUpButton->setToolTip(pathUpButton->text());
     pathUpButton->setIcon(QIcon::fromTheme("go-up"));
     connect(pathUpButton, &QToolButton::clicked, this, &AndroidExplorer::goUp);
 
@@ -130,7 +131,6 @@ AndroidExplorer::AndroidExplorer(const QString &serial, MainWindow *parent)
     connect(pathUpShortcut, &QShortcut::activated, this, &AndroidExplorer::goUp);
 
     pathGoButton = new QToolButton(this);
-    pathGoButton->setToolTip(pathGoButton->text());
     pathGoButton->setIcon(QIcon::fromTheme(layoutDirection() == Qt::LeftToRight ? "go-next" : "go-previous"));
     connect(pathGoButton, &QToolButton::clicked, this, [this]() {
         go(pathInput->text());

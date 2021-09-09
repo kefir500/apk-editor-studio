@@ -2,6 +2,9 @@
 #include "windows/dialogs.h"
 #include "base/application.h"
 #include <QBoxLayout>
+#include <QDragEnterEvent>
+#include <QDragMoveEvent>
+#include <QDropEvent>
 #include <QDir>
 #include <QMimeData>
 

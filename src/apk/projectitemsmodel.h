@@ -23,7 +23,7 @@ public:
 
     ~ProjectItemsModel() override;
 
-    Project *add(const QString &path, MainWindow *window = nullptr);
+    void add(Project *project);
     bool close(Project *project);
 
     Project *at(int row) const;
