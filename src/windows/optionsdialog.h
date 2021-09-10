@@ -34,6 +34,8 @@ private:
     QListWidget *pageList;
     QStackedWidget *pageStack;
 
+    // General
+
     QCheckBox *checkboxSingleInstance;
     QCheckBox *checkboxUpdates;
     QSpinBox *spinboxRecent;
@@ -46,23 +48,33 @@ private:
     QCheckBox *checkboxExplorerSign;
 #endif
 
+    // Java
+
     FileBox *fileboxJava;
     QSpinBox *spinboxMinHeapSize;
     QSpinBox *spinboxMaxHeapSize;
 
+    // Apktool
+
     FileBox *fileboxApktool;
     FileBox *fileboxOutput;
     FileBox *fileboxFrameworks;
-    QCheckBox *checkboxAapt;
+    QCheckBox *checkboxAapt2;
     QCheckBox *checkboxDebuggable;
     QCheckBox *checkboxSources;
     QCheckBox *checkboxBrokenResources;
 
+    // Apksigner
+
     QGroupBox *groupSign;
-    QGroupBox *groupZipalign;
     FileBox *fileboxApksigner;
 
+    // Zipalign
+
+    QGroupBox *groupZipalign;
     FileBox *fileboxZipalign;
+
+    // ADB
 
     FileBox *fileboxAdb;
 };

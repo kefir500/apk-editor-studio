@@ -83,8 +83,8 @@ void OptionsDialog::load()
 
     // Languages
 
-    QList<Language> languages = app->getLanguages();
     comboLanguages->clear();
+    const QList<Language> languages = app->getLanguages();
     const QString currentLocale = app->settings->getLanguage();
     for (const Language &language : languages) {
         const QIcon flag = language.getFlag();
@@ -97,27 +97,27 @@ void OptionsDialog::load()
     }
     comboLanguages->setCurrentText(app->settings->getLanguage());
 
-    // Repacking
+    // Apktool
 
     fileboxApktool->setCurrentPath(app->settings->getApktoolPath());
     fileboxOutput->setCurrentPath(app->settings->getOutputDirectory());
     fileboxFrameworks->setCurrentPath(app->settings->getFrameworksDirectory());
-    checkboxAapt->setChecked(app->settings->getUseAapt2());
+    checkboxAapt2->setChecked(app->settings->getUseAapt2());
     checkboxDebuggable->setChecked(app->settings->getMakeDebuggable());
     checkboxSources->setChecked(app->settings->getDecompileSources());
     checkboxBrokenResources->setChecked(app->settings->getKeepBrokenResources());
 
-    // Signing
+    // Apksigner
 
     groupSign->setChecked(app->settings->getSignApk());
     fileboxApksigner->setCurrentPath(app->settings->getApksignerPath());
 
-    // Optimizing
+    // Zipalign
 
     groupZipalign->setChecked(app->settings->getOptimizeApk());
     fileboxZipalign->setCurrentPath(app->settings->getZipalignPath());
 
-    // Installing
+    // ADB
 
     fileboxAdb->setCurrentPath(app->settings->getAdbPath());
 }
@@ -148,27 +148,27 @@ void OptionsDialog::save()
     app->settings->setJavaMinHeapSize(spinboxMinHeapSize->value());
     app->settings->setJavaMaxHeapSize(spinboxMaxHeapSize->value());
 
-    // Repacking
+    // Apktool
 
     app->settings->setApktoolPath(fileboxApktool->getCurrentPath());
     app->settings->setOutputDirectory(fileboxOutput->getCurrentPath());
     app->settings->setFrameworksDirectory(fileboxFrameworks->getCurrentPath());
-    app->settings->setUseAapt2(checkboxAapt->isChecked());
+    app->settings->setUseAapt2(checkboxAapt2->isChecked());
     app->settings->setMakeDebuggable(checkboxDebuggable->isChecked());
     app->settings->setDecompileSources(checkboxSources->isChecked());
     app->settings->setKeepBrokenResources(checkboxBrokenResources->isChecked());
 
-    // Signing
+    // Apksigner
 
     app->settings->setSignApk(groupSign->isChecked());
     app->settings->setApksignerPath(fileboxApksigner->getCurrentPath());
 
-    // Optimizing
+    // Zipalign
 
     app->settings->setOptimizeApk(groupZipalign->isChecked());
     app->settings->setZipalignPath(fileboxZipalign->getCurrentPath());
 
-    // Installing
+    // ADB
 
     app->settings->setAdbPath(fileboxAdb->getCurrentPath());
 }
@@ -204,7 +204,7 @@ void OptionsDialog::initialize()
 
     // General
 
-    QFormLayout *pageGeneral = new QFormLayout;
+    auto pageGeneral = new QFormLayout;
     checkboxSingleInstance = new QCheckBox(tr("Single-window mode"), this);
     checkboxUpdates = new QCheckBox(tr("Check for updates automatically"), this);
     comboLanguages = new QComboBox(this);
@@ -251,7 +251,7 @@ void OptionsDialog::initialize()
 
     // Java
 
-    QFormLayout *pageJava = new QFormLayout;
+    auto pageJava = new QFormLayout;
     fileboxJava = new FileBox(true, this);
     fileboxJava->setDefaultPath("");
     fileboxJava->setPlaceholderText(tr("Extracted from environment variables by default"));
@@ -301,10 +301,10 @@ void OptionsDialog::initialize()
 
     auto groupPacking = new QGroupBox(tr("Packing"), this);
     //: "AAPT2" is the name of the tool, don't translate it.
-    checkboxAapt = new QCheckBox(tr("Use AAPT2"), this);
+    checkboxAapt2 = new QCheckBox(tr("Use AAPT2"), this);
     checkboxDebuggable = new QCheckBox(tr("Pack for debugging"), this);
     auto layoutPacking = new QVBoxLayout(groupPacking);
-    layoutPacking->addWidget(checkboxAapt);
+    layoutPacking->addWidget(checkboxAapt2);
     layoutPacking->addWidget(checkboxDebuggable);
 
     pageApktool->addLayout(formApktool, 0, 0, 1, 2);
