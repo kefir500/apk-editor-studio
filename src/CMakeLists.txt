@@ -39,6 +39,7 @@ target_sources(apk-editor-studio PRIVATE
     base/recentfile.cpp
     base/recentlist.cpp
     base/settings.cpp
+    base/themes.cpp
     base/treenode.cpp
     base/updater.cpp
     base/utils.cpp

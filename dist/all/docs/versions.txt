@@ -6,6 +6,7 @@
 - Added Find and Replace features to code editor.
 - Added code folding.
 - Added code indentation control (Tab, Shift+Tab).
+- Added custom dark theme for all platforms.
 - Added ability to build debuggable APKs.
 - Added Android 12 support.
 - Updated Apktool to 2.6.0.

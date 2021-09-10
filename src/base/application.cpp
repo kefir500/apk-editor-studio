@@ -1,6 +1,7 @@
 #include <QCommandLineParser>
 #include "base/application.h"
 #include "base/settings.h"
+#include "base/themes.h"
 #include "tools/apktool.h"
 #include "tools/keystore.h"
 #include "windows/androidexplorer.h"
@@ -36,8 +37,6 @@ Application::Application(int &argc, char **argv) : SingleApplication(argc, argv,
 #ifdef Q_OS_LINUX
     setWindowIcon(QIcon::fromTheme("apk-editor-studio"));
 #endif
-
-    QIcon::setThemeName(Utils::isLightTheme() ? "apk-editor-studio" : "apk-editor-studio-dark");
 }
 
 Application::~Application()
@@ -56,6 +55,7 @@ int Application::exec()
     QDir().mkpath(Apktool::getFrameworksPath());
 
     setLanguage(settings->getLanguage());
+    setTheme(settings->getTheme());
 
     auto firstInstance = createNewInstance();
     firstInstance->processArguments(arguments());
@@ -117,6 +117,11 @@ void Application::setLanguage(const QString &locale)
     } else {
         settings->setLanguage("en");
     }
+}
+
+void Application::setTheme(const QString &theme)
+{
+    ThemeRepository().getTheme(theme)->initialize();
 }
 
 bool Application::event(QEvent *event)

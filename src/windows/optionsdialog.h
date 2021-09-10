@@ -39,7 +39,6 @@ private:
     QCheckBox *checkboxSingleInstance;
     QCheckBox *checkboxUpdates;
     QSpinBox *spinboxRecent;
-    QComboBox *comboLanguages;
 #ifdef Q_OS_WIN
     QGroupBox *groupAssociate;
     QCheckBox *checkboxExplorerOpen;
@@ -47,6 +46,11 @@ private:
     QCheckBox *checkboxExplorerOptimize;
     QCheckBox *checkboxExplorerSign;
 #endif
+
+    // Appearance
+
+    QComboBox *comboLanguages;
+    QComboBox *comboThemes;
 
     // Java
 

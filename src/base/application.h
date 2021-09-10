@@ -25,6 +25,7 @@ public:
 
     MainWindow *createNewInstance();
     void setLanguage(const QString &locale);
+    void setTheme(const QString &theme);
 
     Settings *settings;
     ActionProvider actions;

@@ -200,6 +200,11 @@ QByteArray Settings::getMainWindowState() const
     return settings->value("MainWindow/State").toByteArray();
 }
 
+QString Settings::getTheme() const
+{
+    return settings->value("Appearance/Theme", "system").toString();
+}
+
 QStringList Settings::getAndroidExplorerToolbar() const
 {
     QStringList defaults;
@@ -420,6 +425,11 @@ void Settings::setMainWindowGeometry(const QByteArray &geometry)
 void Settings::setMainWindowState(const QByteArray &state)
 {
     settings->setValue("MainWindow/State", state);
+}
+
+void Settings::setTheme(const QString &theme)
+{
+    settings->setValue("Appearance/Theme", theme);
 }
 
 void Settings::setAndroidExplorerToolbar(const QStringList &actions)

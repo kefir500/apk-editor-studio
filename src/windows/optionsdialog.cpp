@@ -8,6 +8,7 @@
 #include "tools/zipalign.h"
 #include "base/application.h"
 #include "base/settings.h"
+#include "base/themes.h"
 #include "base/utils.h"
 #include <QAbstractButton>
 #include <QCheckBox>
@@ -16,13 +17,10 @@
 #include <QFormLayout>
 #include <QLabel>
 #include <QListWidget>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QSpinBox>
 #include <QStackedWidget>
-
-#ifdef Q_OS_WIN
-    #include <QMessageBox>
-#endif
 
 #ifdef QT_DEBUG
     #include <QDebug>
@@ -37,10 +35,10 @@ OptionsDialog::OptionsDialog(QWidget *parent) : QDialog(parent)
 
 void OptionsDialog::addPage(const QString &title, QLayout *page, bool stretch)
 {
-    QWidget *container = new QWidget(this);
-    QVBoxLayout *containerLayout = new QVBoxLayout(container);
-    QLabel *titleLabel = new QLabel(QString("%1").arg(title), this);
-    QFrame *titleLine = new QFrame(this);
+    auto container = new QWidget(this);
+    auto containerLayout = new QVBoxLayout(container);
+    auto titleLabel = new QLabel(QString("%1").arg(title), this);
+    auto titleLine = new QFrame(this);
     titleLine->setFrameShape(QFrame::HLine);
     titleLine->setFrameShadow(QFrame::Sunken);
     QFont titleFont = titleLabel->font();
@@ -75,13 +73,7 @@ void OptionsDialog::load()
     checkboxExplorerSign->setChecked(app->settings->getExplorerSignIntegration());
 #endif
 
-    // Java
-
-    fileboxJava->setCurrentPath(app->settings->getJavaPath());
-    spinboxMinHeapSize->setValue(app->settings->getJavaMinHeapSize());
-    spinboxMaxHeapSize->setValue(app->settings->getJavaMaxHeapSize());
-
-    // Languages
+    // Appearance
 
     comboLanguages->clear();
     const QList<Language> languages = app->getLanguages();
@@ -96,6 +88,15 @@ void OptionsDialog::load()
         }
     }
     comboLanguages->setCurrentText(app->settings->getLanguage());
+
+    const int themeIndex = comboThemes->findData(app->settings->getTheme());
+    comboThemes->setCurrentIndex(themeIndex != -1 ? themeIndex : 0);
+
+    // Java
+
+    fileboxJava->setCurrentPath(app->settings->getJavaPath());
+    spinboxMinHeapSize->setValue(app->settings->getJavaMinHeapSize());
+    spinboxMaxHeapSize->setValue(app->settings->getJavaMaxHeapSize());
 
     // Apktool
 
@@ -129,7 +130,6 @@ void OptionsDialog::save()
     app->settings->setSingleInstance(checkboxSingleInstance->isChecked());
     app->settings->setAutoUpdates(checkboxUpdates->isChecked());
     app->settings->setRecentLimit(spinboxRecent->value());
-    app->setLanguage(comboLanguages->currentData().toString());
 #ifdef Q_OS_WIN
     bool integrationSuccess =
         app->settings->setFileAssociation(groupAssociate->isChecked()) &&
@@ -141,6 +141,11 @@ void OptionsDialog::save()
         QMessageBox::warning(this, QString(), tr("Could not register file association."));
     }
 #endif
+
+    // Appearance
+
+    app->setLanguage(comboLanguages->currentData().toString());
+    app->settings->setTheme(comboThemes->currentData().toString());
 
     // Java
 
@@ -207,7 +212,6 @@ void OptionsDialog::initialize()
     auto pageGeneral = new QFormLayout;
     checkboxSingleInstance = new QCheckBox(tr("Single-window mode"), this);
     checkboxUpdates = new QCheckBox(tr("Check for updates automatically"), this);
-    comboLanguages = new QComboBox(this);
     spinboxRecent = new QSpinBox(this);
     spinboxRecent->setMinimum(0);
     spinboxRecent->setMaximum(50);
@@ -216,7 +220,6 @@ void OptionsDialog::initialize()
 #endif
     pageGeneral->addRow(checkboxSingleInstance);
     pageGeneral->addRow(checkboxUpdates);
-    pageGeneral->addRow(tr("Language:"), comboLanguages);
     pageGeneral->addRow(tr("Maximum recent files:"), spinboxRecent);
 
 #ifdef Q_OS_WIN
@@ -248,6 +251,21 @@ void OptionsDialog::initialize()
     layoutAssocate->addWidget(checkboxExplorerSign);
     pageGeneral->addRow(groupAssociate);
 #endif
+
+    // Appearance
+
+    comboLanguages = new QComboBox(this);
+
+    auto pageAppearance = new QFormLayout;
+    comboThemes = new QComboBox(this);
+    ThemeRepository themes;
+    const auto names = themes.getThemeNames();
+    for (const QString &name : names) {
+        comboThemes->addItem(themes.getTheme(name)->title(), name);
+    }
+
+    pageAppearance->addRow(tr("Language:"), comboLanguages);
+    pageAppearance->addRow(tr("Theme:"), comboThemes);
 
     // Java
 
@@ -373,6 +391,7 @@ void OptionsDialog::initialize()
     pageStack->setFrameShape(QFrame::StyledPanel);
     pageList = new QListWidget(this);
     addPage(tr("General"), pageGeneral);
+    addPage(tr("Appearance"), pageAppearance);
     addPage("Java", pageJava);
     addPage("Apktool", pageApktool);
     addPage("Apksigner", pageApksigner);
@@ -392,6 +411,9 @@ void OptionsDialog::initialize()
     load();
 
     connect(pageList, &QListWidget::currentRowChanged, pageStack, &QStackedWidget::setCurrentIndex);
+    connect(comboThemes, &QComboBox::currentTextChanged, this, [=]() {
+        QMessageBox::information(this, {}, tr("The changes will take effect after the application restart."));
+    });
     connect(buttons, &QDialogButtonBox::accepted, this, &OptionsDialog::accept);
     connect(buttons, &QDialogButtonBox::rejected, this, &OptionsDialog::reject);
     connect(btnApply, &QPushButton::clicked, this, &OptionsDialog::save);
