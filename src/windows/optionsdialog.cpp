@@ -10,10 +10,15 @@
 #include "base/settings.h"
 #include "base/utils.h"
 #include <QAbstractButton>
+#include <QCheckBox>
+#include <QComboBox>
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QLabel>
+#include <QListWidget>
 #include <QPushButton>
+#include <QSpinBox>
+#include <QStackedWidget>
 
 #ifdef Q_OS_WIN
     #include <QMessageBox>

@@ -1,16 +1,16 @@
 #ifndef OPTIONSDIALOG_H
 #define OPTIONSDIALOG_H
 
-#include "widgets/filebox.h"
-#include "widgets/poollistwidget.h"
 #include <QDialog>
-#include <QBoxLayout>
-#include <QListWidget>
-#include <QStackedWidget>
-#include <QGroupBox>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QSpinBox>
+
+class FileBox;
+class QGroupBox;
+class QCheckBox;
+class QComboBox;
+class QListWidget;
+class QSpinBox;
+class QStackedWidget;
+class QVBoxLayout;
 
 class OptionsDialog : public QDialog
 {
