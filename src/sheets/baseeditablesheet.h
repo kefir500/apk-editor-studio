@@ -2,7 +2,8 @@
 #define BASEEDITABLESHEET_H
 
 #include "sheets/basesheet.h"
-#include <QAction>
+
+class QAction;
 
 class BaseEditableSheet : public BaseSheet
 {

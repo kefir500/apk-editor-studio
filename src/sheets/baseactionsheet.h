@@ -2,12 +2,11 @@
 #define BASEACTIONSHEET_H
 
 #include "sheets/basesheet.h"
-#include "widgets/elidedlabel.h"
-#include <QPushButton>
 
-class QVBoxLayout;
-class QPushButton;
+class ElidedLabel;
 class GradientWidget;
+class QPushButton;
+class QVBoxLayout;
 
 class BaseActionSheet : public BaseSheet
 {

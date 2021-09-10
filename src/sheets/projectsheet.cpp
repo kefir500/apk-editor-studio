@@ -1,7 +1,9 @@
 #include "sheets/projectsheet.h"
 #include "windows/dialogs.h"
+#include "apk/project.h"
 #include "base/utils.h"
 #include <QEvent>
+#include <QPushButton>
 
 ProjectSheet::ProjectSheet(Project *project, QWidget *parent) : BaseActionSheet(parent)
 {

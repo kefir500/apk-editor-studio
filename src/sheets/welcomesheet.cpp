@@ -1,6 +1,7 @@
 #include "sheets/welcomesheet.h"
 #include "base/application.h"
 #include "windows/mainwindow.h"
+#include <QPushButton>
 
 WelcomeSheet::WelcomeSheet(MainWindow *mainWindow) : BaseActionSheet(mainWindow)
 {

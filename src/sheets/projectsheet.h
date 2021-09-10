@@ -2,7 +2,8 @@
 #define PROJECTSHEET_H
 
 #include "sheets/baseactionsheet.h"
-#include "apk/project.h"
+
+class Project;
 
 class ProjectSheet : public BaseActionSheet
 {

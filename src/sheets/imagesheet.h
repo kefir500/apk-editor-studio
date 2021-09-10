@@ -3,8 +3,9 @@
 
 #include "sheets/basefilesheet.h"
 #include <QGraphicsView>
-#include <QLabel>
-#include <QRubberBand>
+
+class QLabel;
+class QRubberBand;
 
 // GraphicsView
 

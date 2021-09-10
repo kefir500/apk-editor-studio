@@ -1,8 +1,10 @@
 #include "sheets/titlesheet.h"
 #include "widgets/loadingwidget.h"
+#include "apk/titleitemsmodel.h"
 #include <QBoxLayout>
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
+#include <QTableView>
 
 TitleSheet::TitleSheet(const Project *project, QWidget *parent) : BaseEditableSheet(parent)
 {

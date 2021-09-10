@@ -2,9 +2,11 @@
 #include "base/application.h"
 #include "base/utils.h"
 #include "widgets/gradientwidget.h"
+#include "widgets/elidedlabel.h"
 #include <QBoxLayout>
 #include <QPainter>
 #include <QPaintEvent>
+#include <QPushButton>
 
 #ifdef Q_OS_LINUX
     #include <QFontDatabase>

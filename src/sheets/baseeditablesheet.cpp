@@ -1,4 +1,5 @@
 #include "sheets/baseeditablesheet.h"
+#include <QAction>
 #include <QEvent>
 #include <QMessageBox>
 

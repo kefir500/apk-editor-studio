@@ -1,5 +1,6 @@
 #include "sheets/basefilesheet.h"
 #include "windows/dialogs.h"
+#include <QAction>
 
 BaseFileSheet::BaseFileSheet(const ResourceModelIndex &index, QWidget *parent) : BaseEditableSheet(parent), index(index)
 {

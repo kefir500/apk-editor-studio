@@ -5,7 +5,9 @@
 #include <QFormLayout>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+#include <QLabel>
 #include <QMimeData>
+#include <QRubberBand>
 #include <QToolButton>
 #include <QWheelEvent>
 

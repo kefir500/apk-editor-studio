@@ -3,6 +3,7 @@
 #include "widgets/codesearchbar.h"
 #include "base/application.h"
 #include <KSyntaxHighlighting/Definition>
+#include <QAction>
 #include <QBoxLayout>
 #include <QRegularExpression>
 #include <QScrollBar>

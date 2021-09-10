@@ -2,8 +2,10 @@
 #define TITLEEDITOR_H
 
 #include "sheets/baseeditablesheet.h"
-#include "apk/titleitemsmodel.h"
-#include <QTableView>
+
+class QTableView;
+class Project;
+class TitleItemsModel;
 
 class TitleSheet : public BaseEditableSheet
 {
