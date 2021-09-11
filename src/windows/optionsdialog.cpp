@@ -110,12 +110,12 @@ void OptionsDialog::load()
 
     // Apksigner
 
-    groupSign->setChecked(app->settings->getSignApk());
+    checkboxSign->setChecked(app->settings->getSignApk());
     fileboxApksigner->setCurrentPath(app->settings->getApksignerPath());
 
     // Zipalign
 
-    groupZipalign->setChecked(app->settings->getOptimizeApk());
+    checkboxZipalign->setChecked(app->settings->getOptimizeApk());
     fileboxZipalign->setCurrentPath(app->settings->getZipalignPath());
 
     // ADB
@@ -165,12 +165,12 @@ void OptionsDialog::save()
 
     // Apksigner
 
-    app->settings->setSignApk(groupSign->isChecked());
+    app->settings->setSignApk(checkboxSign->isChecked());
     app->settings->setApksignerPath(fileboxApksigner->getCurrentPath());
 
     // Zipalign
 
-    app->settings->setOptimizeApk(groupZipalign->isChecked());
+    app->settings->setOptimizeApk(checkboxZipalign->isChecked());
     app->settings->setZipalignPath(fileboxZipalign->getCurrentPath());
 
     // ADB
@@ -331,13 +331,11 @@ void OptionsDialog::initialize()
 
     // Apksigner
 
-    auto pageApksigner = new QVBoxLayout;
-    groupSign = new QGroupBox(tr("Enable"), this);
-    groupSign->setCheckable(true);
+    auto pageApksigner = new QFormLayout;
+    checkboxSign = new QCheckBox(tr("Sign APK after packing"), this);
     fileboxApksigner = new FileBox(false, this);
     fileboxApksigner->setDefaultPath("");
     fileboxApksigner->setPlaceholderText(Apksigner::getDefaultPath());
-    auto layoutSign = new QFormLayout(groupSign);
     //: This string refers to multiple keys (as in "Manager of keys").
     auto btnKeyManager = new QPushButton(tr("Open Key Manager"), this);
     btnKeyManager->setIcon(QIcon::fromTheme("apk-sign"));
@@ -346,25 +344,23 @@ void OptionsDialog::initialize()
         KeyManager keyManager(this);
         keyManager.exec();
     });
+    pageApksigner->addRow(checkboxSign);
     //: "Apksigner" is the name of the tool, don't translate it.
-    layoutSign->addRow(tr("Apksigner path:"), fileboxApksigner);
-    layoutSign->addRow(btnKeyManager);
-    layoutSign->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
-    pageApksigner->addWidget(groupSign);
+    pageApksigner->addRow(tr("Apksigner path:"), fileboxApksigner);
+    pageApksigner->addRow(btnKeyManager);
+    pageApksigner->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
     // Zipalign
 
-    auto pageZipalign = new QVBoxLayout;
-    groupZipalign = new QGroupBox(tr("Enable"), this);
-    groupZipalign->setCheckable(true);
+    auto pageZipalign = new QFormLayout;
+    checkboxZipalign = new QCheckBox(tr("Optimize APK after packing"), this);
     fileboxZipalign = new FileBox(false, this);
     fileboxZipalign->setDefaultPath("");
     fileboxZipalign->setPlaceholderText(Zipalign::getDefaultPath());
-    auto layoutZipalign = new QFormLayout(groupZipalign);
+    pageZipalign->addRow(checkboxZipalign);
     //: "Zipalign" is the name of the tool, don't translate it.
-    layoutZipalign->addRow(tr("Zipalign path:"), fileboxZipalign);
-    layoutZipalign->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
-    pageZipalign->addWidget(groupZipalign);
+    pageZipalign->addRow(tr("Zipalign path:"), fileboxZipalign);
+    pageZipalign->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
     // ADB
 

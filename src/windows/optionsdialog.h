@@ -70,12 +70,12 @@ private:
 
     // Apksigner
 
-    QGroupBox *groupSign;
+    QCheckBox *checkboxSign;
     FileBox *fileboxApksigner;
 
     // Zipalign
 
-    QGroupBox *groupZipalign;
+    QCheckBox *checkboxZipalign;
     FileBox *fileboxZipalign;
 
     // ADB
