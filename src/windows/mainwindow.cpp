@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QDockWidget>
 #include <QDropEvent>
+#include <QHeaderView>
 #include <QMenuBar>
 #include <QMimeData>
 #include <QMimeDatabase>
@@ -197,6 +198,8 @@ void MainWindow::initWidgets()
     setCentralWidget(centralWidget);
 
     resourceTree = new ResourceAbstractView(new ResourceTree, this);
+    resourceTree->setModel(dummyResourceModel = new ResourceItemsModel(nullptr, this)); // Always display header
+    resourceTree->getView<ResourceTree *>()->header()->restoreState(app->settings->getResourceTreeState());
     connect(resourceTree, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
         getCurrentProjectWidget()->openResourceTab(index);
     });
@@ -206,6 +209,8 @@ void MainWindow::initWidgets()
     resourceLayout->setMargin(0);
 
     filesystemTree = new ResourceAbstractView(new FileSystemTree, this);
+    filesystemTree->setModel(dummyFileSystemModel = new FileSystemModel(this)); // Always display header
+    filesystemTree->getView<FileSystemTree *>()->header()->restoreState(app->settings->getFileSystemTreeState());
     connect(filesystemTree, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
         getCurrentProjectWidget()->openResourceTab(index);
     });
@@ -648,8 +653,8 @@ void MainWindow::onProjectSwitched(Project *project)
         centralWidget->set(welcomePage);
     }
 
-    resourceTree->setModel(project ? &project->resourcesModel : nullptr);
-    filesystemTree->setModel(project ? &project->filesystemModel : nullptr);
+    resourceTree->setModel(project ? &project->resourcesModel : dummyResourceModel);
+    filesystemTree->setModel(project ? &project->filesystemModel : dummyFileSystemModel);
     iconList->setModel(project ? &project->iconsProxy : nullptr);
     logView->setModel(project ? &project->logModel : nullptr);
     manifestTable->setModel(project ? &project->manifestModel : nullptr);
@@ -758,5 +763,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
     app->settings->setMainWindowGeometry(saveGeometry());
     app->settings->setMainWindowState(saveState());
+    app->settings->setResourceTreeHeader(resourceTree->getView<ResourceTree *>()->header()->saveState());
+    app->settings->setFileSystemTreeState(filesystemTree->getView<FileSystemTree *>()->header()->saveState());
     event->accept();
 }

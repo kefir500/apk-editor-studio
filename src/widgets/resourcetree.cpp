@@ -1,5 +1,6 @@
 #include "widgets/resourcetree.h"
 #include "widgets/decorationsizedelegate.h"
+#include <QHeaderView>
 
 #ifdef QT_DEBUG
     #include <QDebug>
@@ -8,6 +9,7 @@
 ResourceTree::ResourceTree(QWidget *parent) : QTreeView(parent)
 {
     setSortingEnabled(true);
+    header()->setSortIndicator(0, Qt::AscendingOrder);
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setItemDelegate(new DecorationSizeDelegate(QSize(16, 16), this));
 
@@ -27,8 +29,4 @@ void ResourceTree::setModel(QAbstractItemModel *model)
         Q_ASSERT(qobject_cast<ResourceItemsModel *>(model));
     }
     sortProxy->setSourceModel(model);
-    sortByColumn(0, Qt::AscendingOrder);
-    setColumnWidth(ResourceItemsModel::CaptionColumn, 120);
-    setColumnWidth(ResourceItemsModel::LocaleColumn, 64);
-    setColumnWidth(ResourceItemsModel::PathColumn, 500);
 }

@@ -46,6 +46,8 @@ public:
     QStringList getMainWindowToolbar() const;
     QByteArray getMainWindowGeometry() const;
     QByteArray getMainWindowState() const;
+    QByteArray getResourceTreeState() const;
+    QByteArray getFileSystemTreeState() const;
     QString getTheme() const;
     QStringList getAndroidExplorerToolbar() const;
     bool hasRememberState(const QString &identifier) const;
@@ -90,6 +92,8 @@ public:
     void setMainWindowToolbar(const QStringList &actions);
     void setMainWindowGeometry(const QByteArray &geometry);
     void setMainWindowState(const QByteArray &state);
+    void setResourceTreeHeader(const QByteArray &state) const;
+    void setFileSystemTreeState(const QByteArray &state) const;
     void setTheme(const QString &theme);
     void setAndroidExplorerToolbar(const QStringList &actions);
     void setRememberState(const QString &identifier, bool state);

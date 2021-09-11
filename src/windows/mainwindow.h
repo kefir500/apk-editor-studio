@@ -7,12 +7,14 @@
 class BaseSheet;
 class CentralWidget;
 class ExtraListItemProxy;
+class FileSystemModel;
 class LogView;
 class ManifestView;
 class Project;
 class ProjectItemsModel;
 class ProjectList;
 class ProjectWidget;
+class ResourceItemsModel;
 class QActionGroup;
 class QDragEnterEvent;
 class QDropEvent;
@@ -107,11 +109,15 @@ private:
     QActionGroup *actionsLanguage;
     QRubberBand *rubberBand;
 
-    QByteArray defaultState;
-
     QMap<Project *, ProjectWidget *> projectWidgets;
     WelcomeSheet *welcomePage;
     ExtraListItemProxy *welcomeItemProxy;
+
+    QByteArray defaultState;
+
+    // Used to display resource view headers even without project
+    ResourceItemsModel *dummyResourceModel;
+    FileSystemModel *dummyFileSystemModel;
 };
 
 #endif // MAINWINDOW_H

@@ -200,6 +200,16 @@ QByteArray Settings::getMainWindowState() const
     return settings->value("MainWindow/State").toByteArray();
 }
 
+QByteArray Settings::getResourceTreeHeader() const
+{
+    return settings->value("MainWindow/ResourceTreeHeader").toByteArray();
+}
+
+QByteArray Settings::getFileSystemTreeHeader() const
+{
+    return settings->value("MainWindow/FileSystemTreeHeader").toByteArray();
+}
+
 QString Settings::getTheme() const
 {
     return settings->value("Appearance/Theme", "system").toString();
@@ -425,6 +435,16 @@ void Settings::setMainWindowGeometry(const QByteArray &geometry)
 void Settings::setMainWindowState(const QByteArray &state)
 {
     settings->setValue("MainWindow/State", state);
+}
+
+void Settings::setResourceTreeHeader(const QByteArray &state) const
+{
+    settings->setValue("MainWindow/ResourceTreeHeader", state);
+}
+
+void Settings::setFileSystemTreeHeader(const QByteArray &state) const
+{
+    settings->setValue("MainWindow/FileSystemTreeHeader", state);
 }
 
 void Settings::setTheme(const QString &theme)

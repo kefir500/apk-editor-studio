@@ -1,7 +1,6 @@
 # Version History
 
 ## 1.6.0
-- Migrated to a new syntax highlighter.
 - Added Smali syntax highlighting.
 - Added Find and Replace features to code editor.
 - Added code folding.
@@ -10,6 +9,8 @@
 - Added ability to build debuggable APKs.
 - Added Android 12 support.
 - Updated Apktool to 2.6.0.
+- Migrated to a new syntax highlighter.
+- Remember resource tree columns state.
 - Windows: Fixed WebP image format support.
 - Windows: Changed default editor font to Consolas.
 - Linux: Updated Qt to 5.15.2.
