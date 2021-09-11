@@ -10,7 +10,7 @@ QString Password::get()
     password.setKey(key);
 
     QEventLoop loop;
-    password.connect(&password, SIGNAL(finished(QKeychain::Job *)), &loop, SLOT(quit()));
+    password.connect(&password, &QKeychain::ReadPasswordJob::finished, &loop,  &QEventLoop::quit);
 
     password.start();
     loop.exec();
@@ -28,7 +28,7 @@ void Password::set(const QString &value)
     password.setTextData(value);
 
     QEventLoop loop;
-    password.connect(&password, SIGNAL(finished(QKeychain::Job *)), &loop, SLOT(quit()));
+    password.connect(&password, &QKeychain::WritePasswordJob::finished, &loop,  &QEventLoop::quit);
 
     password.start();
     loop.exec();
@@ -44,7 +44,7 @@ void Password::remove()
     password.setKey(key);
 
     QEventLoop loop;
-    password.connect(&password, SIGNAL(finished(QKeychain::Job *)), &loop, SLOT(quit()));
+    password.connect(&password, &QKeychain::DeletePasswordJob::finished, &loop,  &QEventLoop::quit);
 
     password.start();
     loop.exec();
