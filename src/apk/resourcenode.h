@@ -16,7 +16,6 @@ public:
     void setCaption(const QString &caption);
     void setFile(ResourceFile *file);
 
-    void addChild(ResourceNode *child);
     bool removeChild(int row) override;
     ResourceNode *getChild(int row) const;
     ResourceNode *getParent() const;

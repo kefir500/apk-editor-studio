@@ -37,11 +37,6 @@ void ResourceNode::setFile(ResourceFile *file)
     this->file = file;
 }
 
-void ResourceNode::addChild(ResourceNode *child)
-{
-    TreeNode::addChild(child);
-}
-
 bool ResourceNode::removeChild(int row)
 {
     auto child = getChild(row);

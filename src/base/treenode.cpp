@@ -36,17 +36,13 @@ void TreeNode::removeChildren()
 
 bool TreeNode::removeSelf()
 {
+    Q_ASSERT(parent);
     return parent->removeChild(row());
 }
 
 int TreeNode::childCount() const
 {
     return children.count();
-}
-
-QVector<TreeNode *> &TreeNode::getChildren()
-{
-    return children;
 }
 
 TreeNode *TreeNode::getChild(int row) const
@@ -57,6 +53,11 @@ TreeNode *TreeNode::getChild(int row) const
 TreeNode *TreeNode::getParent() const
 {
     return parent;
+}
+
+QVector<TreeNode *> &TreeNode::getChildren()
+{
+    return children;
 }
 
 int TreeNode::row() const
