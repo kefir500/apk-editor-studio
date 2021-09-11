@@ -723,7 +723,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 {
     const QMimeData *mimeData = event->mimeData();
     if (mimeData->hasUrls()) {
-        QList<QUrl> urls = mimeData->urls();
+        const auto urls = mimeData->urls();
         for (const QUrl &url : urls) {
             const QString path = url.toLocalFile();
             const QMimeType mime = QMimeDatabase().mimeTypeForFile(path);

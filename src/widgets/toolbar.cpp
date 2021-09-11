@@ -49,7 +49,8 @@ void Toolbar::initialize(const QStringList &actions)
 {
     // Remove actions:
 
-    for (auto *action : this->actions()) {
+    const QList<QAction *> toolbarActions = this->actions();
+    for (auto *action : toolbarActions) {
         const auto identifier = getIdentifier(action);
         if (identifier == "separator" || identifier == "spacer") {
             delete action;

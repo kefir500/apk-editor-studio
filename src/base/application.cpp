@@ -83,7 +83,7 @@ QList<Language> Application::getLanguages()
     languages.append(QString("%1.en.qm").arg(Utils::getAppTitleSlug()));
 
     const QDir directory(Utils::getSharedPath("resources/translations/"));
-    QStringList paths = directory.entryList({QString("%1.*.qm").arg(Utils::getAppTitleSlug())});
+    const QStringList paths = directory.entryList({QString("%1.*.qm").arg(Utils::getAppTitleSlug())});
     for (const QString &path : paths) {
         languages.append(Language(path));
     }

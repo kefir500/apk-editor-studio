@@ -7,7 +7,7 @@ Command::Command(QObject *parent) : QObject(parent)
 
 Commands::~Commands()
 {
-    for (auto command : commands) {
+    for (auto command : qAsConst(commands)) {
         command->deleteLater();
     }
 }

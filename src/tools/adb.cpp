@@ -237,7 +237,7 @@ void Adb::Devices::run()
         if (success) {
             QStringList lines = output.split('\n');
             lines.removeFirst();
-            for (const QString &line : lines) {
+            for (const QString &line : qAsConst(lines)) {
                 const QString serial = QRegularExpression("^(\\S+)\\s+device(\\s|$)").match(line).captured(1);
                 if (!serial.isEmpty()) {
                     const QString modelString = QRegularExpression("\\s+model:(\\S+)(\\s|$)").match(line).captured(1);

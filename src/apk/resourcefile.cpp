@@ -44,7 +44,7 @@ ResourceFile::ResourceFile(const QString &path)
     qualifiersParts = qualifiersParts.join('-').replace(QRegularExpression("(-r)(?=[A-Za-z]{2}(?=\\z|-))"), "_").split('-');
     this->readableQualifiers = qualifiersParts.join(" - ");
 
-    for (const QString &qualifier : qualifiersParts) {
+    for (const QString &qualifier : qAsConst(qualifiersParts)) {
         if (Qualifiers::layoutDirection.contains(qualifier)) {
             layoutDirection = qualifier;
         } else if (qualifier.contains(QRegularExpression("sw\\d+dp"))) {

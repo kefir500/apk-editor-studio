@@ -22,8 +22,8 @@ FileFormatList FileFormatList::forKeystore()
 FileFormatList FileFormatList::forReadableImages()
 {
     FileFormatList filter;
-    QList<QByteArray> mimeList = QImageReader::supportedMimeTypes();
     QMimeDatabase database;
+    const QList<QByteArray> mimeList = QImageReader::supportedMimeTypes();
     for (const QByteArray &entry : mimeList) {
         const QMimeType mimeType = database.mimeTypeForName(entry);
         filter.add(FileFormat::fromMime(mimeType));
@@ -34,7 +34,7 @@ FileFormatList FileFormatList::forReadableImages()
 FileFormatList FileFormatList::forWritableImages()
 {
     FileFormatList filter;
-    QList<QByteArray> mimeList = QImageWriter::supportedMimeTypes();
+    const QList<QByteArray> mimeList = QImageWriter::supportedMimeTypes();
     QMimeDatabase database;
     for (const QByteArray &entry : mimeList) {
         const QMimeType mimeType = database.mimeTypeForName(entry);
