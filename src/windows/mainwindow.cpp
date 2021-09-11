@@ -199,7 +199,7 @@ void MainWindow::initWidgets()
 
     resourceTree = new ResourceAbstractView(new ResourceTree, this);
     resourceTree->setModel(dummyResourceModel = new ResourceItemsModel(nullptr, this)); // Always display header
-    resourceTree->getView<ResourceTree *>()->header()->restoreState(app->settings->getResourceTreeState());
+    resourceTree->getView<ResourceTree *>()->header()->restoreState(app->settings->getResourceTreeHeader());
     connect(resourceTree, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
         getCurrentProjectWidget()->openResourceTab(index);
     });
@@ -210,7 +210,7 @@ void MainWindow::initWidgets()
 
     filesystemTree = new ResourceAbstractView(new FileSystemTree, this);
     filesystemTree->setModel(dummyFileSystemModel = new FileSystemModel(this)); // Always display header
-    filesystemTree->getView<FileSystemTree *>()->header()->restoreState(app->settings->getFileSystemTreeState());
+    filesystemTree->getView<FileSystemTree *>()->header()->restoreState(app->settings->getFileSystemTreeHeader());
     connect(filesystemTree, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
         getCurrentProjectWidget()->openResourceTab(index);
     });
@@ -764,6 +764,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
     app->settings->setMainWindowGeometry(saveGeometry());
     app->settings->setMainWindowState(saveState());
     app->settings->setResourceTreeHeader(resourceTree->getView<ResourceTree *>()->header()->saveState());
-    app->settings->setFileSystemTreeState(filesystemTree->getView<FileSystemTree *>()->header()->saveState());
+    app->settings->setFileSystemTreeHeader(filesystemTree->getView<FileSystemTree *>()->header()->saveState());
     event->accept();
 }
