@@ -63,5 +63,7 @@ QString FusionTheme::title() const
 void FusionTheme::initialize()
 {
     qApp->setStyle(QStringLiteral("Fusion"));
-    QIcon::setThemeName(QStringLiteral("apk-editor-studio"));
+    QIcon::setThemeName(Utils::isLightTheme()
+        ? QStringLiteral("apk-editor-studio")
+        : QStringLiteral("apk-editor-studio-dark"));
 }
