@@ -49,7 +49,8 @@ ResourceItemsModel *IconItemsModel::sourceModel() const
 QIcon IconItemsModel::getIcon() const
 {
     QIcon icon;
-    for (auto node : applicationNode->getChildren()) {
+    const auto iconNodes = applicationNode->getChildren();
+    for (auto node : iconNodes) {
         auto iconNode = static_cast<IconNode *>(node);
         if (iconNode->type == TypeIcon) {
             const QPixmap pixmap = Utils::iconToPixmap(proxyToSourceMap.value(iconNode).data(Qt::DecorationRole).value<QIcon>());
@@ -324,7 +325,8 @@ bool IconItemsModel::appendIcon(const QPersistentModelIndex &iconIndex, Manifest
         case ManifestScope::Type::Activity: {
             ActivityNode *activityNode = nullptr;
             // Try to find existing activity node:
-            for (auto node : activitiesNode->getChildren()) {
+            const auto iconNodes = activitiesNode->getChildren();
+            for (auto node : iconNodes) {
                 auto interimActivityNode = static_cast<ActivityNode *>(node);
                 if (scope == interimActivityNode->scope) {
                     activityNode = interimActivityNode;
@@ -373,7 +375,7 @@ void IconItemsModel::sourceRowsInserted(const QModelIndex &parent, int first, in
             auto resourceName = resource->getName();
             auto resourceType = resource->getType();
             if (!resourceName.isEmpty() && !resourceType.isEmpty()) {
-                for (ManifestScope *scope : apk()->manifest->scopes) {
+                for (ManifestScope *scope : qAsConst(apk()->manifest->scopes)) {
                     if (resourceName == scope->icon().getResourceName() && resourceType == scope->icon().getResourceType()) {
                         appendIcon(index, scope, TypeIcon);
                     } else if (resourceName == scope->roundIcon().getResourceName() && resourceType == scope->roundIcon().getResourceType()) {
