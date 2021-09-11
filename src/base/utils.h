@@ -36,6 +36,7 @@ namespace Utils
         ANDROID_28,
         ANDROID_29,
         ANDROID_30,
+        ANDROID_31,
         ANDROID_SDK_COUNT
     };
 
@@ -92,7 +93,6 @@ namespace Utils
     QIcon getLocaleFlag(const QLocale &locale);
 
     // URL utils:
-
 
     QString getWebsiteUrl();
     QString getWebsiteUtmUrl();
