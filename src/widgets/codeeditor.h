@@ -44,7 +44,7 @@ public:
     void setExtraSelectionGroup(ExtraSelectionGroup group, const QList<QTextEdit::ExtraSelection> &selection);
 
 signals:
-    void searchFinished(int totalResults, int currentResult = 0) const;
+    void searchFinished(int totalResults, int currentResult = 0);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
