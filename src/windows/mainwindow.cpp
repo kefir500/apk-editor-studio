@@ -712,7 +712,7 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
     const QMimeData *mimeData = event->mimeData();
     if (mimeData->hasUrls()) {
         event->acceptProposedAction();
-        const bool showRubberBand = mimeData->urls().first().toString().toLower().endsWith(".apk");
+        const bool showRubberBand = mimeData->urls().constFirst().toString().toLower().endsWith(".apk");
         rubberBand->setGeometry(rect());
         rubberBand->setVisible(showRubberBand);
     }
