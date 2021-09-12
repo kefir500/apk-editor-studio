@@ -67,6 +67,9 @@ void ProjectWidget::openTitlesTab()
 void ProjectWidget::openResourceTab(const ResourceModelIndex &index)
 {
     const QString path = index.path();
+    if (path.isEmpty()) {
+        return;
+    }
     const QString identifier = path;
     auto existing = getTabByIdentifier(identifier);
     if (existing) {
