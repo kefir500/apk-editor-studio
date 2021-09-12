@@ -226,12 +226,12 @@ int ResourceItemsModel::columnCount(const QModelIndex &parent) const
 
 bool ResourceItemsModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    auto node = parent.isValid() ? static_cast<ResourceNode *>(parent.internalPointer()) : root;
+    auto parentNode = parent.isValid() ? static_cast<ResourceNode *>(parent.internalPointer()) : root;
 
     // Check if the underlying files can actually be deleted
     int lastDeleteRow = -1;
     for (int i = row; i < row + count; ++i) {
-        if (!node->removeFile(row)) {
+        if (!parentNode->removeFile(row)) {
             break;
         }
         lastDeleteRow = i;
@@ -243,9 +243,20 @@ bool ResourceItemsModel::removeRows(int row, int count, const QModelIndex &paren
     // Proceed by removing the corresponsing rows
     beginRemoveRows(parent, row, lastDeleteRow);
     for (int i = row; i <= lastDeleteRow; ++i) {
-        node->removeChild(row);
+        parentNode->removeChild(row);
     }
     endRemoveRows();
+
+    // Remove parent node if empty
+    if (!hasChildren(parent)) {
+        auto grandparent = parent.parent();
+        if (grandparent.isValid()) {
+            beginRemoveRows(grandparent, parent.row(), parent.row());
+                auto grandparentNode = static_cast<ResourceNode *>(grandparent.internalPointer());
+                grandparentNode->removeChild(parent.row());
+            endRemoveRows();
+        }
+    }
 
     return lastDeleteRow == (row + count - 1);
 }
