@@ -26,6 +26,7 @@
 #include <QDockWidget>
 #include <QDropEvent>
 #include <QHeaderView>
+#include <QLineEdit>
 #include <QMenuBar>
 #include <QMimeData>
 #include <QMimeDatabase>
@@ -203,10 +204,16 @@ void MainWindow::initWidgets()
     connect(resourceTree, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
         getCurrentProjectWidget()->openResourceTab(index);
     });
+    resourceFilterInput = new QLineEdit(this);
+    resourceFilterInput->setClearButtonEnabled(true);
+    connect(resourceFilterInput, &QLineEdit::textChanged,
+            resourceTree->getView<ResourceTree *>(), &ResourceTree::setFilter);
     auto dockResourceWidget = new QWidget(this);
     auto resourceLayout = new QVBoxLayout(dockResourceWidget);
     resourceLayout->addWidget(resourceTree);
+    resourceLayout->addWidget(resourceFilterInput);
     resourceLayout->setMargin(0);
+    resourceLayout->setSpacing(2);
 
     filesystemTree = new ResourceAbstractView(new FileSystemTree, this);
     filesystemTree->setModel(dummyFileSystemModel = new FileSystemModel(this)); // Always display header
@@ -494,17 +501,14 @@ void MainWindow::retranslate()
 {
     tr("Remove Temporary Files..."); // TODO For future use
 
-    // Tool Bar:
+    // Docks:
 
-    toolbar->setWindowTitle(tr("Tools"));
     dockProjects->setWindowTitle(tr("Projects"));
     dockResources->setWindowTitle(tr("Resources"));
     dockFilesystem->setWindowTitle(tr("File System"));
     dockManifest->setWindowTitle(tr("Manifest"));
     dockIcons->setWindowTitle(tr("Icons"));
-    actionFileSave->setText(tr("&Save"));
-    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
-    actionFileSaveAs->setText(tr("Save &As..."));
+    resourceFilterInput->setPlaceholderText(tr("Filter"));
 
     // Menu Bar:
 
@@ -515,6 +519,12 @@ void MainWindow::retranslate()
     menuSettings->setTitle(tr("&Settings"));
     menuWindow->setTitle(tr("&Window"));
     menuHelp->setTitle(tr("&Help"));
+
+    // Tab Bar:
+
+    actionFileSave->setText(tr("&Save"));
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
+    actionFileSaveAs->setText(tr("Save &As..."));
 
     // File Menu:
 
@@ -562,6 +572,7 @@ void MainWindow::retranslate()
 
     // Miscellaneous:
 
+    toolbar->setWindowTitle(tr("Tools"));
     welcomeItemProxy->setData(welcomeItemProxy->index(0, 0), tr("Welcome"), Qt::DisplayRole);
 }
 

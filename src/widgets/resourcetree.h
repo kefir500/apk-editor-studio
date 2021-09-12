@@ -14,6 +14,7 @@ public:
 
     ResourceItemsModel *model() const;
     void setModel(QAbstractItemModel *model) override;
+    void setFilter(const QString &filter);
 
 private:
     SortFilterProxyModel *sortProxy;

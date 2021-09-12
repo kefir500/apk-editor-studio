@@ -10,11 +10,13 @@ ResourceTree::ResourceTree(QWidget *parent) : QTreeView(parent)
 {
     setSortingEnabled(true);
     header()->setSortIndicator(0, Qt::AscendingOrder);
+
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setItemDelegate(new DecorationSizeDelegate(QSize(16, 16), this));
 
     sortProxy = new SortFilterProxyModel(this);
     sortProxy->setSortRole(ResourceItemsModel::SortRole);
+    sortProxy->setRecursiveFilteringEnabled(true);
     QTreeView::setModel(sortProxy);
 }
 
@@ -29,4 +31,9 @@ void ResourceTree::setModel(QAbstractItemModel *model)
         Q_ASSERT(qobject_cast<ResourceItemsModel *>(model));
     }
     sortProxy->setSourceModel(model);
+}
+
+void ResourceTree::setFilter(const QString &filter)
+{
+    sortProxy->setFilterWildcard(filter);
 }

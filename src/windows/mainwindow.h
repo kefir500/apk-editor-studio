@@ -14,12 +14,13 @@ class Project;
 class ProjectItemsModel;
 class ProjectList;
 class ProjectWidget;
-class ResourceItemsModel;
 class QActionGroup;
 class QDragEnterEvent;
 class QDropEvent;
+class QLineEdit;
 class QRubberBand;
 class ResourceAbstractView;
+class ResourceItemsModel;
 class Toolbar;
 class WelcomeSheet;
 
@@ -75,6 +76,7 @@ private:
     LogView *logView;
     ManifestView *manifestTable;
     ResourceAbstractView *resourceTree;
+    QLineEdit *resourceFilterInput;
     ResourceAbstractView *filesystemTree;
     ResourceAbstractView *iconList;
     Toolbar *toolbar;
