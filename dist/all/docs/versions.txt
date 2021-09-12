@@ -11,6 +11,7 @@
 - Updated Apktool to 2.6.0.
 - Migrated to a new syntax highlighter.
 - Remember resource tree columns state.
+- Fixed erroneous resource item deletion on open file.
 - Windows: Fixed WebP image format support.
 - Windows: Changed default editor font to Consolas.
 - Linux: Updated Qt to 5.15.2.

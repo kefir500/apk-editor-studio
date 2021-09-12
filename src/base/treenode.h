@@ -13,9 +13,9 @@ public:
     bool hasChild(TreeNode *node) const;
     bool hasChildren() const;
 
-    virtual bool removeChild(int row);
+    virtual void removeChild(int row);
     void removeChildren();
-    bool removeSelf();
+    void removeSelf();
 
     int childCount() const;
     TreeNode *getChild(int row) const;

@@ -37,13 +37,10 @@ void ResourceNode::setFile(ResourceFile *file)
     this->file = file;
 }
 
-bool ResourceNode::removeChild(int row)
+bool ResourceNode::removeFile(int row)
 {
     auto child = getChild(row);
-    if (!QFile::remove(child->file->getFilePath())) {
-        return false;
-    }
-    return TreeNode::removeChild(row);
+    return QFile::remove(child->file->getFilePath());
 }
 
 ResourceNode *ResourceNode::getChild(int row) const

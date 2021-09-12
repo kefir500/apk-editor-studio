@@ -10,11 +10,11 @@
     #include <QDebug>
 #endif
 
-ResourceItemsModel::ResourceItemsModel(const Project *apk, QObject *parent) : QAbstractItemModel(parent)
-{
-    this->apk = apk;
-    root = new ResourceNode();
-}
+ResourceItemsModel::ResourceItemsModel(const Project *apk, QObject *parent)
+    : QAbstractItemModel(parent)
+    , root(new ResourceNode)
+    , apk(apk)
+{}
 
 ResourceItemsModel::~ResourceItemsModel()
 {
@@ -226,16 +226,28 @@ int ResourceItemsModel::columnCount(const QModelIndex &parent) const
 
 bool ResourceItemsModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    bool success = true;
     auto node = parent.isValid() ? static_cast<ResourceNode *>(parent.internalPointer()) : root;
-    beginRemoveRows(parent, row, row + count - 1);
+
+    // Check if the underlying files can actually be deleted
+    int lastDeleteRow = -1;
     for (int i = row; i < row + count; ++i) {
-        if (!node->removeChild(row)) {
-            success = false;
+        if (!node->removeFile(row)) {
+            break;
         }
+        lastDeleteRow = i;
+    }
+    if (row > lastDeleteRow) {
+        return false;
+    }
+
+    // Proceed by removing the corresponsing rows
+    beginRemoveRows(parent, row, lastDeleteRow);
+    for (int i = row; i <= lastDeleteRow; ++i) {
+        node->removeChild(row);
     }
     endRemoveRows();
-    return success;
+
+    return lastDeleteRow == (row + count - 1);
 }
 
 QModelIndex ResourceItemsModel::findIndex(const QString &path) const

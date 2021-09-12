@@ -21,11 +21,10 @@ bool TreeNode::hasChildren() const
     return !children.isEmpty();
 }
 
-bool TreeNode::removeChild(int row)
+void TreeNode::removeChild(int row)
 {
     delete children[row];
     children.remove(row);
-    return true;
 }
 
 void TreeNode::removeChildren()
@@ -34,10 +33,10 @@ void TreeNode::removeChildren()
     children.clear();
 }
 
-bool TreeNode::removeSelf()
+void TreeNode::removeSelf()
 {
     Q_ASSERT(parent);
-    return parent->removeChild(row());
+    parent->removeChild(row());
 }
 
 int TreeNode::childCount() const

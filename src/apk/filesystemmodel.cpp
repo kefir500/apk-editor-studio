@@ -59,7 +59,6 @@ QString FileSystemModel::getResourcePath(const QModelIndex &index) const
 
 bool FileSystemModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    Q_UNUSED(count)
     if (!sourceModel) {
         return false;
     }
