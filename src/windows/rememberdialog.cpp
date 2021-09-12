@@ -19,7 +19,7 @@ void RememberDialog::say(const QString &identifier, const QString &message, QWid
     dialog.setCheckBox(checkboxRemember);
     dialog.addButton(QMessageBox::Ok);
     dialog.setIcon(QMessageBox::Icon::Information);
-    dialog.connect(&dialog, &QDialog::accepted, [&]() {
+    dialog.connect(&dialog, &QDialog::accepted, &dialog, [&]() {
         if (checkboxRemember->isChecked()) {
             app->settings->setRememberState(identifier, true);
         }
@@ -43,7 +43,7 @@ bool RememberDialog::ask(const QString &identifier, const QString &question, QWi
     dialog.addButton(QMessageBox::Yes);
     dialog.addButton(QMessageBox::No);
     dialog.setIcon(QMessageBox::Icon::Question);
-    dialog.connect(&dialog, &QMessageBox::buttonClicked, [&](QAbstractButton *button) {
+    dialog.connect(&dialog, &QMessageBox::buttonClicked, &dialog, [&](QAbstractButton *button) {
         const auto clickedButton = dialog.standardButton(button);
         if (clickedButton == QMessageBox::Yes) {
             result = true;

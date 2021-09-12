@@ -40,7 +40,7 @@ SignatureViewer::SignatureViewer(const QString &apkPath, QWidget *parent) : QDia
 
     auto apksigner = new Apksigner::Verify(apkPath, this);
     apksigner->run();
-    connect(apksigner, &Command::finished, [=](bool success) {
+    connect(apksigner, &Command::finished, this, [=](bool success) {
         if (success) {
             v1SchemeValue->setChecked(apksigner->hasV1Scheme());
             v2SchemeValue->setChecked(apksigner->hasV2Scheme());
