@@ -53,7 +53,7 @@ and avoid direct editing of the language files in this repo.
 - [KSyntaxHighlighting](https://invent.kde.org/frameworks/syntax-highlighting)
 - [QtKeychain](https://github.com/frankosterfeld/qtkeychain)
 - [SingleApplication](https://github.com/itay-grudev/SingleApplication)
-- [DarkStyle](https://github.com/Jorgen-VikingGod)
+- [DarkStyle](https://github.com/Jorgen-VikingGod/Qt-Frameless-Window-DarkStyle)
 - [Android SDK Tools](https://android.googlesource.com)
 
 ## Notice
