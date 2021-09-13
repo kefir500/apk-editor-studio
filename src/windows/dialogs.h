@@ -1,10 +1,11 @@
 #ifndef DIALOGS_H
 #define DIALOGS_H
 
-#include "apk/project.h"
-#include "base/fileformatlist.h"
 #include "base/device.h"
 #include <QMessageBox>
+
+class FileFormatList;
+class Project;
 
 namespace Dialogs
 {

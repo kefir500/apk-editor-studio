@@ -3,6 +3,7 @@
 #include "base/application.h"
 #include "base/settings.h"
 #include "base/utils.h"
+#include <QFile>
 #include <QStringList>
 
 void Apktool::Decode::run()

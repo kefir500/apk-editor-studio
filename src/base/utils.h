@@ -3,7 +3,8 @@
 
 #include <QList>
 #include <QPixmap>
-#include <QFileInfo>
+
+class QFileInfo;
 
 namespace Utils
 {

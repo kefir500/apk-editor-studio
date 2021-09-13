@@ -1,5 +1,8 @@
 #include "widgets/logview.h"
+#include "widgets/logdelegate.h"
 #include "windows/dialogs.h"
+#include "apk/logmodel.h"
+#include "base/utils.h"
 
 LogView::LogView(QWidget *parent) : QListView(parent)
 {

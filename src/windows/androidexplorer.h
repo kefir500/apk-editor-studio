@@ -1,10 +1,10 @@
 #ifndef ANDROIDEXPLORER_H
 #define ANDROIDEXPLORER_H
 
-#include "base/androidfilesystemmodel.h"
 #include "base/clipboard.h"
 #include <QDialog>
 
+class AndroidFileSystemModel;
 class DeselectableListView;
 class QLineEdit;
 class QToolButton;

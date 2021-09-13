@@ -1,8 +1,9 @@
 #ifndef FILESYSTEMTREE_H
 #define FILESYSTEMTREE_H
 
-#include "apk/filesystemmodel.h"
 #include <QTreeView>
+
+class FileSystemModel;
 
 class FileSystemTree : public QTreeView
 {

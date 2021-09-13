@@ -7,6 +7,7 @@
 #include "sheets/imagesheet.h"
 #include "sheets/projectsheet.h"
 #include "sheets/titlesheet.h"
+#include "apk/project.h"
 #include "base/application.h"
 #include "base/settings.h"
 #include "base/utils.h"

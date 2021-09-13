@@ -1,12 +1,15 @@
 #include "widgets/filebox.h"
 #include "windows/dialogs.h"
 #include "base/application.h"
+#include "base/utils.h"
 #include <QBoxLayout>
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
 #include <QDropEvent>
 #include <QDir>
 #include <QMimeData>
+#include <QRubberBand>
+#include <QToolButton>
 
 FileBox::FileBox(const QString &currentPath, const QString &defaultPath, bool isDirectory, QWidget *parent) : QWidget(parent)
 {

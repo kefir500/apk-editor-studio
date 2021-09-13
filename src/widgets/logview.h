@@ -1,9 +1,10 @@
 #ifndef LOGVIEW_H
 #define LOGVIEW_H
 
-#include "apk/logmodel.h"
-#include "widgets/logdelegate.h"
 #include <QListView>
+
+class LogDelegate;
+class LogModel;
 
 class LogView : public QListView
 {

@@ -4,6 +4,7 @@
 #include "base/settings.h"
 #include "base/utils.h"
 #include <QDebug>
+#include <QFile>
 #include <QRegularExpression>
 
 void Adb::Cd::run()

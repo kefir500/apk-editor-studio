@@ -1,7 +1,7 @@
 #include "windows/optionsdialog.h"
 #include "windows/devicemanager.h"
 #include "windows/keymanager.h"
-#include "widgets/toolbar.h"
+#include "widgets/filebox.h"
 #include "tools/adb.h"
 #include "tools/apksigner.h"
 #include "tools/apktool.h"
@@ -15,6 +15,7 @@
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QFormLayout>
+#include <QGroupBox>
 #include <QLabel>
 #include <QListWidget>
 #include <QMessageBox>

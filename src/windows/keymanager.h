@@ -1,9 +1,12 @@
 #ifndef KEYMANAGER_H
 #define KEYMANAGER_H
 
-#include "widgets/filebox.h"
 #include <QDialog>
-#include <QGroupBox>
+
+class FileBox;
+class QGroupBox;
+class QLineEdit;
+class QToolButton;
 
 class KeyManager : public QDialog
 {

@@ -1,12 +1,12 @@
 #ifndef PROJECTWIDGET_H
 #define PROJECTWIDGET_H
 
-#include "apk/resourcemodelindex.h"
 #include <QTabWidget>
 
+class BaseSheet;
 class Project;
 class ProjectItemsModel;
-class BaseSheet;
+class ResourceModelIndex;
 
 class ProjectWidget : public QTabWidget
 {

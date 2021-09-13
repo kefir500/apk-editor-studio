@@ -1,4 +1,5 @@
 #include "widgets/filesystemtree.h"
+#include "apk/filesystemmodel.h"
 #include <QHeaderView>
 
 FileSystemTree::FileSystemTree(QWidget *parent) : QTreeView(parent)

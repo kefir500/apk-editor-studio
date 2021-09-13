@@ -3,8 +3,10 @@
 #include "widgets/deselectablelistview.h"
 #include "widgets/loadingwidget.h"
 #include "widgets/toolbar.h"
+#include "base/androidfilesystemmodel.h"
 #include "base/application.h"
 #include "base/settings.h"
+#include "base/utils.h"
 #include <QBoxLayout>
 #include <QDialogButtonBox>
 #include <QLineEdit>

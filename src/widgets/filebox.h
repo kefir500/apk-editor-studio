@@ -2,8 +2,9 @@
 #define FILEBOX_H
 
 #include <QLineEdit>
-#include <QToolButton>
-#include <QRubberBand>
+
+class QRubberBand;
+class QToolButton;
 
 class FileBox : public QWidget
 {

@@ -2,11 +2,13 @@
 #include "base/application.h"
 #include "base/settings.h"
 #include "base/themes.h"
+#include "base/utils.h"
 #include "tools/apktool.h"
 #include "tools/keystore.h"
 #include "windows/androidexplorer.h"
 #include "windows/dialogs.h"
 #include "windows/mainwindow.h"
+#include <QDir>
 #include <QFileOpenEvent>
 #include <QPixmapCache>
 

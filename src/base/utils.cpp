@@ -1,12 +1,12 @@
 #include "base/utils.h"
 #include "windows/dialogs.h"
+#include <QApplication>
 #include <QDesktopServices>
 #include <QDir>
 #include <QFileInfo>
 #include <QIcon>
 #include <QImageReader>
 #include <QImageWriter>
-#include <QApplication>
 #include <QProcess>
 #include <QScreen>
 #include <QtConcurrent/QtConcurrent>

@@ -2,6 +2,7 @@
 #include "base/application.h"
 #include "base/settings.h"
 #include "base/updater.h"
+#include "base/utils.h"
 #include "windows/androidexplorer.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
