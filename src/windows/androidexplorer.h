@@ -34,7 +34,7 @@ private:
 
     QString serial;
     QString currentPath;
-    AndroidFileSystemModel fileSystemModel{serial};
+    AndroidFileSystemModel *fileSystemModel;
     ClipboardEntry<QString> clipboard;
 
     QAction *actionDownload;

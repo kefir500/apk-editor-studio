@@ -23,6 +23,7 @@
 AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     : QDialog(parent)
     , serial(serial)
+    , fileSystemModel(new AndroidFileSystemModel(serial, this))
 {
     setWindowIcon(QIcon::fromTheme("tool-androidexplorer"));
     setWindowFlags(Qt::Window);
@@ -33,7 +34,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     connect(actionDownload, &QAction::triggered, this, [this]() {
         const auto index = fileList->currentIndex();
         if (index.isValid()) {
-            const auto path = fileSystemModel.getItemPath(index);
+            const auto path = fileSystemModel->getItemPath(index);
             download(path);
         }
     });
@@ -41,11 +42,11 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     actionUpload = new QAction(QIcon::fromTheme("upload"), {}, this);
     actionUpload->setShortcut(QKeySequence("Ctrl+U"));
     connect(actionUpload, &QAction::triggered, this, [this]() {
-        QString path = fileSystemModel.getCurrentPath();
+        QString path = fileSystemModel->getCurrentPath();
         const auto index = fileList->currentIndex();
         if (index.isValid()) {
-            if (fileSystemModel.getItemType(index) == AndroidFileSystemItem::AndroidFSDirectory) {
-                path = fileSystemModel.getItemPath(index);
+            if (fileSystemModel->getItemType(index) == AndroidFileSystemItem::AndroidFSDirectory) {
+                path = fileSystemModel->getItemPath(index);
             }
         }
         upload(path);
@@ -70,11 +71,11 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     actionPaste->setShortcut(QKeySequence::Paste);
     connect(actionPaste, &QAction::triggered, this, [this]() {
         const QString src = clipboard.data;
-        QString dst = fileSystemModel.getCurrentPath();
+        QString dst = fileSystemModel->getCurrentPath();
         const auto index = fileList->currentIndex();
         if (index.isValid()) {
-            if (fileSystemModel.getItemType(index) == AndroidFileSystemItem::AndroidFSDirectory) {
-                dst = fileSystemModel.getItemPath(index);
+            if (fileSystemModel->getItemType(index) == AndroidFileSystemItem::AndroidFSDirectory) {
+                dst = fileSystemModel->getItemPath(index);
             }
         }
         if (clipboard.move) {
@@ -150,12 +151,12 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     pathBar->addWidget(pathGoButton);
 
     fileList = new DeselectableListView(this);
-    fileList->setModel(&fileSystemModel);
+    fileList->setModel(fileSystemModel);
     fileList->setContextMenuPolicy(Qt::CustomContextMenu);
     fileList->setEditTriggers(QListView::SelectedClicked | QListView::EditKeyPressed);
     connect(fileList, &QListView::activated, this, [this](const QModelIndex &index) {
-        const auto type = fileSystemModel.getItemType(index);
-        const auto path = fileSystemModel.getItemPath(index);
+        const auto type = fileSystemModel->getItemType(index);
+        const auto path = fileSystemModel->getItemPath(index);
         switch (type) {
         case AndroidFileSystemItem::AndroidFSDirectory:
             go(path);
@@ -185,19 +186,19 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
 
     auto loading = new LoadingWidget(fileList);
 
-    connect(&fileSystemModel, &AndroidFileSystemModel::pathChanged, this, [=](const QString &path) {
+    connect(fileSystemModel, &AndroidFileSystemModel::pathChanged, this, [=](const QString &path) {
         pathInput->setText(path);
         fileSelectionActions->setEnabled(false);
     });
-    connect(&fileSystemModel, &AndroidFileSystemModel::modelAboutToBeReset, this, [=]() {
+    connect(fileSystemModel, &AndroidFileSystemModel::modelAboutToBeReset, this, [=]() {
         loading->show();
         fileSelectionActions->setEnabled(false);
     });
-    connect(&fileSystemModel, &AndroidFileSystemModel::modelReset, this, [=]() {
+    connect(fileSystemModel, &AndroidFileSystemModel::modelReset, this, [=]() {
         loading->hide();
         fileList->scrollToTop();
     });
-    connect(&fileSystemModel, &AndroidFileSystemModel::error, this, [this](const QString &error) {
+    connect(fileSystemModel, &AndroidFileSystemModel::error, this, [this](const QString &error) {
         QMessageBox::warning(this, QString(), error);
     });
 
@@ -224,7 +225,7 @@ void AndroidExplorer::changeEvent(QEvent *event)
 
 void AndroidExplorer::go(const QString &directory)
 {
-    fileSystemModel.cd(directory);
+    fileSystemModel->cd(directory);
 }
 
 void AndroidExplorer::goUp()
@@ -239,7 +240,7 @@ void AndroidExplorer::download(const QString &path)
         return;
     }
 
-    fileSystemModel.download(path, dst);
+    fileSystemModel->download(path, dst);
 }
 
 void AndroidExplorer::upload(const QString &path)
@@ -249,17 +250,17 @@ void AndroidExplorer::upload(const QString &path)
         return;
     }
 
-    fileSystemModel.upload(src, path);
+    fileSystemModel->upload(src, path);
 }
 
 void AndroidExplorer::copy(const QString &src, const QString &dst)
 {
-    fileSystemModel.copy(src, dst);
+    fileSystemModel->copy(src, dst);
 }
 
 void AndroidExplorer::move(const QString &src, const QString &dst)
 {
-    fileSystemModel.move(src, dst);
+    fileSystemModel->move(src, dst);
 }
 
 void AndroidExplorer::remove(const QModelIndex &index)
@@ -269,7 +270,7 @@ void AndroidExplorer::remove(const QModelIndex &index)
     }
 
     QString question;
-    switch (fileSystemModel.getItemType(index)) {
+    switch (fileSystemModel->getItemType(index)) {
     case AndroidFileSystemItem::AndroidFSFile:
         question = tr("Are you sure you want to delete this file?");
         break;
@@ -278,15 +279,15 @@ void AndroidExplorer::remove(const QModelIndex &index)
         break;
     }
     if (QMessageBox::question(this, {}, question) == QMessageBox::Yes) {
-        const auto path = fileSystemModel.getItemPath(index);
-        fileSystemModel.remove(path);
+        const auto path = fileSystemModel->getItemPath(index);
+        fileSystemModel->remove(path);
     }
 }
 
 void AndroidExplorer::setClipboard(const QModelIndex &index, bool move)
 {
     const bool isValid = index.isValid();
-    clipboard.data = isValid ? fileSystemModel.getItemPath(index) : QString();
+    clipboard.data = isValid ? fileSystemModel->getItemPath(index) : QString();
     clipboard.move = move;
     actionPaste->setEnabled(isValid);
 }
