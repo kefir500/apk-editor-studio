@@ -1,8 +1,11 @@
 #ifndef RESOURCEABSTRACTVIEW_H
 #define RESOURCEABSTRACTVIEW_H
 
-#include "apk/resourcemodelindex.h"
-#include <QAbstractItemView>
+#include <QMenu>
+
+class QAbstractItemModel;
+class QAbstractItemView;
+class ResourceModelIndex;
 
 class ResourceAbstractView : public QWidget
 {

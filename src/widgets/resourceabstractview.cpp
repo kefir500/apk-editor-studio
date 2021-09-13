@@ -1,7 +1,8 @@
 #include "widgets/resourceabstractview.h"
 #include "windows/dialogs.h"
+#include "apk/resourcemodelindex.h"
+#include <QAbstractItemView>
 #include <QBoxLayout>
-#include <QMenu>
 
 ResourceAbstractView::ResourceAbstractView(QAbstractItemView *view, QWidget *parent) : QWidget(parent), view(view)
 {
