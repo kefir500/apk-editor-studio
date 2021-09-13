@@ -155,6 +155,26 @@ bool Project::setPackageName(const QString &packageName)
     return true;
 }
 
+Commands *Project::createCommandChain()
+{
+    auto command = new Commands(this);
+    connect(command, &Commands::started, this, [this]() {
+        logModel.clear();
+        logModel.setLoadingState(true);
+    });
+    connect(command, &Commands::finished, this, [this](bool success) {
+        logModel.setLoadingState(false);
+        if (success) {
+            logModel.add(Project::tr("Done."), LogEntry::Success);
+            state.setCurrentStatus(ProjectState::Status::Normal);
+        } else {
+            state.setCurrentStatus(ProjectState::Status::Errored);
+        }
+        app->settings->addToRecent(this);
+    });
+    return command;
+}
+
 Command *Project::createUnpackCommand()
 {
     QString target;
@@ -294,24 +314,6 @@ Command *Project::createInstallCommand(const QString &serial, const QString &apk
     });
 
     return install;
-}
-
-Project::ProjectCommand::ProjectCommand(Project *project)
-{
-    connect(this, &Command::started, project, [project]() {
-        project->logModel.clear();
-        project->logModel.setLoadingState(true);
-    });
-    connect(this, &Command::finished, project, [project](bool success) {
-        project->logModel.setLoadingState(false);
-        if (success) {
-            project->logModel.add(Project::tr("Done."), LogEntry::Success);
-            project->state.setCurrentStatus(ProjectState::Status::Normal);
-        } else {
-            project->state.setCurrentStatus(ProjectState::Status::Errored);
-        }
-        app->settings->addToRecent(project);
-    });
 }
 
 void Project::LoadUnpackedCommand::run()

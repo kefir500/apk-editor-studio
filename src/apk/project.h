@@ -52,22 +52,7 @@ public:
     ManifestModel manifestModel;
     LogModel logModel;
 
-    class ProjectCommand : public Commands
-    {
-    public:
-        ProjectCommand(Project *project);
-    };
-
-    class LoadUnpackedCommand : public Command
-    {
-    public:
-        LoadUnpackedCommand(Project *project) : project(project) {}
-        void run() override;
-
-    private:
-        Project *project;
-    };
-
+    Commands *createCommandChain();
     Command *createUnpackCommand();
     Command *createPackCommand(const QString &target);
     Command *createZipalignCommand(const QString &apk = QString());
@@ -77,7 +62,16 @@ public:
 signals:
     void stateUpdated();
 
-private:
+private:    
+    class LoadUnpackedCommand : public Command
+    {
+    public:
+        LoadUnpackedCommand(Project *project) : project(project) {}
+        void run() override;
+    private:
+        Project *project;
+    };
+
     ProjectState state;
 
     QString originalPath;

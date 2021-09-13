@@ -82,7 +82,7 @@ MainWindow::~MainWindow()
 void MainWindow::openApk(const QString &path)
 {
     if (auto project = addProject(path)) {
-        auto command = new Project::ProjectCommand(project);
+        auto command = project->createCommandChain();
         command->add(project->createUnpackCommand(), true);
         command->run();
     }
@@ -101,7 +101,7 @@ void MainWindow::optimizeExternalApk()
     const QStringList paths = Dialogs::getOpenApkFilenames(this);
     for (const QString &path : paths) {
         if (auto project = addProject(path)) {
-            auto command = new Project::ProjectCommand(project);
+            auto command = project->createCommandChain();
             command->add(project->createZipalignCommand(), true);
             command->run();
         }
@@ -117,7 +117,7 @@ void MainWindow::signExternalApk()
     const QStringList paths = Dialogs::getOpenApkFilenames(this);
     for (const QString &path : paths) {
         if (auto project = addProject(path)) {
-            auto command = new Project::ProjectCommand(project);
+            auto command = project->createCommandChain();
             command->add(project->createSignCommand(keystore.get()), true);
             command->run();
         }
@@ -133,7 +133,7 @@ void MainWindow::installExternalApk()
     const QStringList paths = Dialogs::getOpenApkFilenames(this);
     for (const QString &path : paths) {
         if (auto project = addProject(path)) {
-            auto command = new Project::ProjectCommand(project);
+            auto command = project->createCommandChain();
             command->add(project->createInstallCommand(device.getSerial()), true);
             command->run();
         }
@@ -154,7 +154,7 @@ void MainWindow::processArguments(const QStringList &arguments)
     const auto positionalArguments = cli.positionalArguments();
     for (const QString &path : positionalArguments) {
         if (auto project = addProject(path)) {
-            auto command = new Project::ProjectCommand(project);
+            auto command = project->createCommandChain();
             if (!cli.isSet(optimizeOption) && !cli.isSet(signOption) && !cli.isSet(installOption)) {
                 command->add(project->createUnpackCommand(), true);
             } else {

@@ -175,7 +175,7 @@ bool ProjectWidget::saveProject()
     if (target.isEmpty()) {
         return false;
     }
-    auto command = new Project::ProjectCommand(project);
+    auto command = project->createCommandChain();
     command->add(project->createPackCommand(target), true);
     if (app->settings->getOptimizeApk()) {
         command->add(project->createZipalignCommand(target), false);
@@ -198,7 +198,7 @@ bool ProjectWidget::installProject()
     }
 
     QString target;
-    auto command = new Project::ProjectCommand(project);
+    auto command = project->createCommandChain();
 
     if (isUnsaved()) {
         const QString question = tr("Do you want to save changes and pack the APK before installing?");
