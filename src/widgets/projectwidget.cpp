@@ -13,6 +13,7 @@
 #include "base/utils.h"
 #include "tools/keystore.h"
 #include <QInputDialog>
+#include <QImageReader>
 #include <QDebug>
 
 ProjectWidget::ProjectWidget(Project *project, ProjectItemsModel &projects, QWidget *parent)
@@ -80,7 +81,7 @@ void ProjectWidget::openResourceTab(const ResourceModelIndex &index)
 
     BaseEditableSheet *editor = nullptr;
     const auto extension = QFileInfo(path).suffix();
-    if (FileFormatList::forReadableImages().getExtensions().contains(extension)) {
+    if (QImageReader::supportedImageFormats().contains(extension.toUtf8())) {
         editor = new ImageSheet(index, this);
     } else {
         editor = new CodeSheet(index, this);
