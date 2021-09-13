@@ -80,7 +80,7 @@ void ActionProvider::openAndroidExplorer(QWidget *parent) const
     if (device.isNull()) {
         return;
     }
-    auto explorer = new AndroidExplorer(device.getSerial(), parent);
+    auto explorer = new AndroidExplorer(device.getSerial());
     explorer->setAttribute(Qt::WA_DeleteOnClose);
     explorer->show();
 }

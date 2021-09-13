@@ -24,8 +24,9 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     : QDialog(parent)
     , serial(serial)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    resize(Utils::scale(500, 400));
+    setWindowIcon(QIcon::fromTheme("tool-androidexplorer"));
+    setWindowFlags(Qt::Window);
+    resize(Utils::scale(600, 540));
 
     actionDownload = new QAction(QIcon::fromTheme("download"), {}, this);
     actionDownload->setShortcut(QKeySequence::Save);

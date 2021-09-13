@@ -14,7 +14,7 @@ class AndroidExplorer : public QDialog
     Q_OBJECT
 
 public:
-    AndroidExplorer(const QString &serial, QWidget *parent);
+    AndroidExplorer(const QString &serial, QWidget *parent = nullptr);
 
 protected:
     void changeEvent(QEvent *event);
