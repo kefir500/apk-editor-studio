@@ -12,20 +12,25 @@ public:
         Error
     };
 
-    LogEntry(const QString &brief, Type type = Information)
-        : brief(brief), type(type) {}
-    LogEntry(const QString &brief, const QString &descriptive, Type type = Information)
-        : brief(brief), descriptive(descriptive), type(type) {}
+    LogEntry(const QString &brief, Type type = Information);
+    LogEntry(const QString &brief, const QString &descriptive, Type type = Information);
 
     QString getBrief() const;
     QString getDescriptive() const;
     Type getType() const;
+    bool getLoading() const;
     QColor getColor() const;
+
+    void setBrief(const QString &brief);
+    void setDescriptive(const QString &descriptive);
+    void setType(Type type);
+    void setLoading(bool loading);
 
 private:
     QString brief;
     QString descriptive;
     Type type;
+    bool loading = false;
 };
 
 #endif // LOGENTRY_H

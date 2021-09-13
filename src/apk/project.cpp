@@ -17,6 +17,7 @@ Project::Project(const QString &path) : resourcesModel(this)
     manifest = nullptr;
     filesystemModel.setSourceModel(&resourcesModel);
     iconsProxy.setSourceModel(&resourcesModel);
+    logModel.setExclusiveLoading(true);
     connect(&state, &ProjectState::changed, this, &Project::stateUpdated);
 }
 
@@ -158,12 +159,8 @@ bool Project::setPackageName(const QString &packageName)
 Commands *Project::createCommandChain()
 {
     auto command = new Commands(this);
-    connect(command, &Commands::started, this, [this]() {
-        logModel.clear();
-        logModel.setLoadingState(true);
-    });
+    connect(command, &Commands::started, &logModel, &LogModel::clear);
     connect(command, &Commands::finished, this, [this](bool success) {
-        logModel.setLoadingState(false);
         if (success) {
             logModel.add(Project::tr("Done."), LogEntry::Success);
             state.setCurrentStatus(ProjectState::Status::Normal);

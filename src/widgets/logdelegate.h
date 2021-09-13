@@ -10,7 +10,7 @@ class LogDelegate : public QStyledItemDelegate
 
 public:
     explicit LogDelegate(QObject *parent = nullptr);
-    void setLoading(bool loading);
+    void setSpinnerAnimated(bool loading);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;

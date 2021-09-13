@@ -15,16 +15,18 @@ public:
         ColumnCount
     };
 
-    LogModel(QObject *parent = nullptr);
+    LogModel(QObject *parent = nullptr) : QAbstractListModel(parent) {}
     ~LogModel() override;
 
-    bool add(LogEntry *entry);
-    bool add(const QString &brief, LogEntry::Type type = LogEntry::Information);
-    bool add(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
+    QModelIndex add(LogEntry *entry);
+    QModelIndex add(const QString &brief, LogEntry::Type type = LogEntry::Information);
+    QModelIndex add(const QString &brief, const QString &descriptive, LogEntry::Type type = LogEntry::Information);
+    void update(const QModelIndex &index, const QString &brief, const QString &descriptive = {}, LogEntry::Type type = LogEntry::Information);
+    void remove(const QModelIndex &index);
     void clear();
 
-    void setLoadingState(bool state);
-    bool getLoadingState() const;
+    bool hasLoadingEntries() const;
+    void setExclusiveLoading(bool exclusive);
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const override;
@@ -36,7 +38,7 @@ signals:
 
 private:
     QList<LogEntry *> entries;
-    bool isLoading;
+    bool exclusiveLoading = false;
 };
 
 #endif // LOGMODEL_H

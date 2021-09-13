@@ -28,19 +28,19 @@ void LogView::setModel(QAbstractItemModel *model)
     auto previousModel = this->model();
     if (previousModel) {
         disconnect(previousModel, &LogModel::added, this, nullptr);
-        disconnect(previousModel, &LogModel::loadingStateChanged, delegate, &LogDelegate::setLoading);
+        disconnect(previousModel, &LogModel::loadingStateChanged, delegate, &LogDelegate::setSpinnerAnimated);
     }
     QListView::setModel(model);
     if (model) {
         LogModel *logModel = qobject_cast<LogModel *>(model);
         Q_ASSERT(logModel);
-        delegate->setLoading(logModel->getLoadingState());
+        delegate->setSpinnerAnimated(logModel->hasLoadingEntries());
         connect(logModel, &LogModel::added, this, [this](LogEntry *entry) {
             if (entry->getType() != LogEntry::Information) {
                 activateWindow();
             }
         });
-        connect(logModel, &LogModel::loadingStateChanged, delegate, &LogDelegate::setLoading);
+        connect(logModel, &LogModel::loadingStateChanged, delegate, &LogDelegate::setSpinnerAnimated);
     }
 }
 

@@ -15,7 +15,7 @@ LogDelegate::LogDelegate(QObject *parent) : QStyledItemDelegate(parent)
     });
 }
 
-void LogDelegate::setLoading(bool loading)
+void LogDelegate::setSpinnerAnimated(bool loading)
 {
     loading
         ? spinnerTimer.start()
@@ -37,8 +37,7 @@ void LogDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
     const int x = option.rect.right() - w - margin;
     const int y = option.rect.center().y() - h / 2;
 
-    const auto model = static_cast<const LogModel *>(index.model());
-    const bool loading = (index.row() == model->rowCount() - 1) ? model->getLoadingState() : false;
+    const bool loading = static_cast<LogEntry *>(index.internalPointer())->getLoading();
     const QString message = index.sibling(index.row(), LogModel::DescriptiveColumn).data().toString();
 
     if (loading) {

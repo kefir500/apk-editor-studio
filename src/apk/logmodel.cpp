@@ -1,33 +1,53 @@
 #include "apk/logmodel.h"
 #include <QPalette>
 
-LogModel::LogModel(QObject *parent) : QAbstractListModel(parent)
-{
-    isLoading = false;
-}
-
 LogModel::~LogModel()
 {
     qDeleteAll(entries);
 }
 
-bool LogModel::add(LogEntry *entry)
+QModelIndex LogModel::add(LogEntry *entry)
 {
+    if (exclusiveLoading && !entries.isEmpty()) {
+        entries.last()->setLoading(false);
+    }
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
         entries.append(entry);
     endInsertRows();
     emit added(entry);
-    return true;
+    emit loadingStateChanged(hasLoadingEntries());
+    return createIndex(entries.count() - 1, 0, entry);
 }
 
-bool LogModel::add(const QString &brief, LogEntry::Type type)
+QModelIndex LogModel::add(const QString &brief, LogEntry::Type type)
 {
     return add(new LogEntry(brief, type));
 }
 
-bool LogModel::add(const QString &brief, const QString &descriptive, LogEntry::Type type)
+QModelIndex LogModel::add(const QString &brief, const QString &descriptive, LogEntry::Type type)
 {
     return add(new LogEntry(brief, descriptive, type));
+}
+
+void LogModel::update(const QModelIndex &index, const QString &brief, const QString &descriptive, LogEntry::Type type)
+{
+    Q_ASSERT(index.isValid());
+    auto entry = static_cast<LogEntry *>(index.internalPointer());
+    entry->setBrief(brief);
+    entry->setDescriptive(descriptive);
+    entry->setType(type);
+    emit dataChanged(index, index);
+    emit loadingStateChanged(hasLoadingEntries());
+}
+
+void LogModel::remove(const QModelIndex &index)
+{
+    Q_ASSERT(index.isValid());
+    auto entry = static_cast<LogEntry *>(index.internalPointer());
+    beginRemoveRows(QModelIndex(), index.row(), index.row());
+        delete entry;
+    endRemoveRows();
+    emit loadingStateChanged(hasLoadingEntries());
 }
 
 void LogModel::clear()
@@ -38,17 +58,22 @@ void LogModel::clear()
             entries.clear();
         endRemoveRows();
     }
+    emit loadingStateChanged(false);
 }
 
-void LogModel::setLoadingState(bool state)
+bool LogModel::hasLoadingEntries() const
 {
-    isLoading = state;
-    emit loadingStateChanged(state);
+    for (const auto entry : entries) {
+        if (entry->getLoading()) {
+            return true;
+        }
+    }
+    return false;
 }
 
-bool LogModel::getLoadingState() const
+void LogModel::setExclusiveLoading(bool exclusive)
 {
-    return isLoading;
+    exclusiveLoading = exclusive;
 }
 
 QVariant LogModel::data(const QModelIndex &index, int role) const
