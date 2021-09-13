@@ -36,6 +36,7 @@ void LogView::setModel(QAbstractItemModel *model)
         Q_ASSERT(logModel);
         delegate->setSpinnerAnimated(logModel->hasLoadingEntries());
         connect(logModel, &LogModel::added, this, [this](LogEntry *entry) {
+            scrollToBottom();
             if (entry->getType() != LogEntry::Information) {
                 activateWindow();
             }
