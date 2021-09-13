@@ -186,7 +186,7 @@ void MainWindow::setCurrentProject(Project *project)
 
 void MainWindow::setInitialSize()
 {
-    resize(Utils::scale(1100, 600));
+    resize(Utils::scale(1200, 700));
 }
 
 void MainWindow::initWidgets()
