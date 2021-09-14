@@ -209,10 +209,8 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     layout->addLayout(pathBar);
     layout->addWidget(fileList);
 
-    auto buttons = new QDialogButtonBox(QDialogButtonBox::Close, this);
-    buttons->button(QDialogButtonBox::Close)->setAutoDefault(false);
-    connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    layout->addWidget(buttons);
+    restoreGeometry(app->settings->getAndroidExplorerGeometry());
+    restoreState(app->settings->getAndroidExplorerState());
 
     retranslate();
 }
@@ -223,6 +221,12 @@ void AndroidExplorer::changeEvent(QEvent *event)
         retranslate();
     }
     QMainWindow::changeEvent(event);
+}
+
+void AndroidExplorer::closeEvent(QCloseEvent *event)
+{
+    app->settings->setAndroidExplorerGeometry(saveGeometry());
+    app->settings->setAndroidExplorerState(saveState());
 }
 
 void AndroidExplorer::go(const QString &directory)

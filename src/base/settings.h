@@ -50,6 +50,8 @@ public:
     QByteArray getFileSystemTreeHeader() const;
     QString getTheme() const;
     QStringList getAndroidExplorerToolbar() const;
+    QByteArray getAndroidExplorerGeometry() const;
+    QByteArray getAndroidExplorerState() const;
     bool hasRememberState(const QString &identifier) const;
     bool getRememberState(const QString &identifier) const;
 #ifdef Q_OS_WIN
@@ -96,6 +98,8 @@ public:
     void setFileSystemTreeHeader(const QByteArray &state) const;
     void setTheme(const QString &theme);
     void setAndroidExplorerToolbar(const QStringList &actions);
+    void setAndroidExplorerGeometry(const QByteArray &geometry);
+    void setAndroidExplorerState(const QByteArray &state);
     void setRememberState(const QString &identifier, bool state);
     void resetRememberState(const QString &identifier);
 #ifdef Q_OS_WIN

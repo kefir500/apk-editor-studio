@@ -225,6 +225,16 @@ QStringList Settings::getAndroidExplorerToolbar() const
     return settings->value("AndroidExplorer/Toolbar", defaults).toStringList();
 }
 
+QByteArray Settings::getAndroidExplorerGeometry() const
+{
+    return settings->value("AndroidExplorer/Geometry").toByteArray();
+}
+
+QByteArray Settings::getAndroidExplorerState() const
+{
+    return settings->value("AndroidExplorer/State").toByteArray();
+}
+
 bool Settings::hasRememberState(const QString &identifier) const
 {
     return settings->contains(QString("Remember/%1").arg(identifier));
@@ -455,6 +465,16 @@ void Settings::setTheme(const QString &theme)
 void Settings::setAndroidExplorerToolbar(const QStringList &actions)
 {
     settings->setValue("AndroidExplorer/Toolbar", actions);
+}
+
+void Settings::setAndroidExplorerGeometry(const QByteArray &geometry)
+{
+    settings->setValue("AndroidExplorer/Geometry", geometry);
+}
+
+void Settings::setAndroidExplorerState(const QByteArray &state)
+{
+    settings->setValue("AndroidExplorer/State", state);
 }
 
 void Settings::setRememberState(const QString &identifier, bool state)
