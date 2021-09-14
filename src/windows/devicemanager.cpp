@@ -79,7 +79,7 @@ DeviceManager::DeviceManager(QWidget *parent) : QDialog(parent)
     connect(dialogButtons, &QDialogButtonBox::accepted, this, &DeviceManager::accept);
     connect(dialogButtons, &QDialogButtonBox::rejected, this, &DeviceManager::reject);
     connect(this, &DeviceManager::accepted, &deviceModel, &DeviceItemsModel::save);
-    connect(&deviceModel, &DeviceItemsModel::fetched, [this](bool success) {
+    connect(&deviceModel, &DeviceItemsModel::fetched, this, [this](bool success) {
         if (!success) {
             QMessageBox::warning(this, {}, tr("Could not fetch the device list."));
         }
