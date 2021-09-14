@@ -136,6 +136,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     menuBar()->addMenu(menuWindow);
 
     toolbar = new Toolbar(this);
+    toolbar->setObjectName("Toolbar");
     toolbar->addActionToPool("download", actionDownload);
     toolbar->addActionToPool("upload", actionUpload);
     toolbar->addActionToPool("copy", actionCopy);
