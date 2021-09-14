@@ -6,6 +6,8 @@
 
 class AndroidFileSystemModel;
 class DeselectableListView;
+class LogModel;
+class QDockWidget;
 class QLineEdit;
 class QToolButton;
 class Toolbar;
@@ -29,7 +31,7 @@ private:
     void copy(const QString &src, const QString &dst);
     void move(const QString &src, const QString &dst);
     void remove(const QModelIndex &index);
-    void screenshot(const QString &path);
+    void install();
 
     void setClipboard(const QModelIndex &index, bool move = false);
     void retranslate();
@@ -37,6 +39,7 @@ private:
     QString serial;
     QString currentPath;
     AndroidFileSystemModel *fileSystemModel;
+    LogModel *logModel;
     ClipboardEntry<QString> clipboard;
 
     QAction *actionDownload;
@@ -51,6 +54,8 @@ private:
     QToolButton *pathUpButton;
     QToolButton *pathGoButton;
     DeselectableListView *fileList;
+
+    QDockWidget *logDock;
     Toolbar *toolbar;
 };
 

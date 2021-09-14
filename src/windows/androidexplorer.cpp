@@ -2,13 +2,16 @@
 #include "windows/dialogs.h"
 #include "widgets/deselectablelistview.h"
 #include "widgets/loadingwidget.h"
+#include "widgets/logview.h"
 #include "widgets/toolbar.h"
+#include "tools/adb.h"
+#include "apk/logmodel.h"
 #include "base/androidfilesystemmodel.h"
 #include "base/application.h"
 #include "base/settings.h"
 #include "base/utils.h"
 #include <QBoxLayout>
-#include <QDialogButtonBox>
+#include <QDockWidget>
 #include <QLineEdit>
 #include <QMenu>
 #include <QMessageBox>
@@ -104,7 +107,8 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     });
 
     auto actionInstall = app->actions.getInstallApk(this);
-    actionInstall->setEnabled(false); // TODO Temporarily
+    connect(actionInstall, &QAction::triggered, this, &AndroidExplorer::install);
+
     auto actionScreenshot = app->actions.getTakeScreenshot(serial, this);
 
     toolbar = new Toolbar(this);
@@ -205,6 +209,12 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
         QMessageBox::warning(this, QString(), error);
     });
 
+    auto logView = new LogView(this);
+    logView->setModel(logModel = new LogModel(this));
+    logDock = new QDockWidget(this);
+    logDock->setWidget(logView);
+    addDockWidget(Qt::BottomDockWidgetArea, logDock);
+
     auto layout = new QVBoxLayout(centralWidget());
     layout->addLayout(pathBar);
     layout->addWidget(fileList);
@@ -290,6 +300,32 @@ void AndroidExplorer::remove(const QModelIndex &index)
     }
 }
 
+void AndroidExplorer::install()
+{
+    const QStringList paths = Dialogs::getOpenApkFilenames(this);
+    for (const QString &path : paths) {
+        auto install = new Adb::Install(path, serial);
+        //: "%1" will be replaced with a path to the APK.
+        const QPersistentModelIndex entryIndex(logModel->add(tr("Installing %1...").arg(path)));
+        connect(install, &Command::finished, this, [=](bool success) {
+            if (success) {
+                if (entryIndex.isValid()) {
+                    //: "%1" will be replaced with a path to the APK.
+                    logModel->update(entryIndex, tr("Successfully installed %1").arg(path), {}, LogEntry::Success);
+                }
+            } else {
+                if (entryIndex.isValid()) {
+                    //: "%1" will be replaced with a path to the APK.
+                    logModel->update(entryIndex, tr("Could not install %1").arg(path),
+                                      install->output(), LogEntry::Error);
+                }
+            }
+            install->deleteLater();
+        });
+        install->run();
+    }
+}
+
 void AndroidExplorer::setClipboard(const QModelIndex &index, bool move)
 {
     const bool isValid = index.isValid();
@@ -314,5 +350,6 @@ void AndroidExplorer::retranslate()
     //: Navigate to a directory in a file manager.
     pathGoButton->setText(tr("Go"));
     pathGoButton->setToolTip(tr("Go"));
+    logDock->setWindowTitle(tr("Tasks"));
     toolbar->setWindowTitle(qApp->translate("MainWindow", "Tools"));
 }
