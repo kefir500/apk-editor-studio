@@ -2,14 +2,15 @@
 #define ANDROIDEXPLORER_H
 
 #include "base/clipboard.h"
-#include <QDialog>
+#include <QMainWindow>
 
 class AndroidFileSystemModel;
 class DeselectableListView;
 class QLineEdit;
 class QToolButton;
+class Toolbar;
 
-class AndroidExplorer : public QDialog
+class AndroidExplorer : public QMainWindow
 {
     Q_OBJECT
 
@@ -17,7 +18,7 @@ public:
     AndroidExplorer(const QString &serial, QWidget *parent = nullptr);
 
 protected:
-    void changeEvent(QEvent *event);
+    void changeEvent(QEvent *event) override;
 
 private:
     void go(const QString &directory);
@@ -49,6 +50,7 @@ private:
     QToolButton *pathUpButton;
     QToolButton *pathGoButton;
     DeselectableListView *fileList;
+    Toolbar *toolbar;
 };
 
 #endif // ANDROIDEXPLORER_H

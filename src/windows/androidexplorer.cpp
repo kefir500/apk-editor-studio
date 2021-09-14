@@ -21,10 +21,12 @@
 #endif
 
 AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
-    : QDialog(parent)
+    : QMainWindow(parent)
     , serial(serial)
     , fileSystemModel(new AndroidFileSystemModel(serial, this))
 {
+    setCentralWidget(new QWidget(this));
+
     setWindowIcon(QIcon::fromTheme("tool-androidexplorer"));
     setWindowFlags(Qt::Window);
     resize(Utils::scale(600, 540));
@@ -105,7 +107,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     actionInstall->setEnabled(false); // TODO Temporarily
     auto actionScreenshot = app->actions.getTakeScreenshot(serial, this);
 
-    auto toolbar = new Toolbar(this);
+    toolbar = new Toolbar(this);
     toolbar->addActionToPool("download", actionDownload);
     toolbar->addActionToPool("upload", actionUpload);
     toolbar->addActionToPool("copy", actionCopy);
@@ -116,6 +118,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     toolbar->addActionToPool("install", actionInstall);
     toolbar->addActionToPool("screenshot", actionScreenshot);
     toolbar->initialize(app->settings->getAndroidExplorerToolbar());
+    addToolBar(toolbar);
     connect(toolbar, &Toolbar::updated, app->settings, &Settings::setAndroidExplorerToolbar);
 
     auto fileSelectionActions = new QActionGroup(this);
@@ -202,8 +205,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
         QMessageBox::warning(this, QString(), error);
     });
 
-    auto layout = new QVBoxLayout(this);
-    layout->addWidget(toolbar);
+    auto layout = new QVBoxLayout(centralWidget());
     layout->addLayout(pathBar);
     layout->addWidget(fileList);
 
@@ -220,7 +222,7 @@ void AndroidExplorer::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
     }
-    QDialog::changeEvent(event);
+    QMainWindow::changeEvent(event);
 }
 
 void AndroidExplorer::go(const QString &directory)
@@ -308,4 +310,5 @@ void AndroidExplorer::retranslate()
     //: Navigate to a directory in a file manager.
     pathGoButton->setText(tr("Go"));
     pathGoButton->setToolTip(tr("Go"));
+    toolbar->setWindowTitle(qApp->translate("MainWindow", "Tools"));
 }
