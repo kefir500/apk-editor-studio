@@ -11,6 +11,7 @@
 #include <QDir>
 #include <QFileOpenEvent>
 #include <QPixmapCache>
+#include <QTimer>
 
 Application::Application(int &argc, char **argv) : SingleApplication(argc, argv, true)
 {
@@ -48,34 +49,12 @@ Application::~Application()
 
 int Application::exec()
 {
-    QPixmapCache::setCacheLimit(1024 * 100); // 100 MiB
-
+    Q_ASSERT(instances.isEmpty());
     settings = new Settings();
-
-    Apktool::reset();
-    QDir().mkpath(Apktool::getOutputPath());
-    QDir().mkpath(Apktool::getFrameworksPath());
-
     setLanguage(settings->getLanguage());
     setTheme(settings->getTheme());
-
-    auto firstInstance = createNewInstance();
-    firstInstance->processArguments(arguments());
-    connect(this, &SingleApplication::receivedMessage, this, [this](quint32, QByteArray message) {
-        MainWindow *instance = nullptr;
-        if (settings->getSingleInstance()) {
-            instance = instances.last();
-            instance->setWindowState((instance->windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
-        } else {
-            instance = createNewInstance();
-        }
-        instance->activateWindow();
-        instance->raise();
-        if (!message.isEmpty()) {
-            instance->processArguments(QStringList() << app->applicationFilePath() << QString(message).split('\n'));
-        }
-    });
-
+    connect(this, &SingleApplication::receivedMessage, this, &Application::start);
+    start();
     return QApplication::exec();
 }
 
@@ -142,4 +121,62 @@ bool Application::event(QEvent *event)
         break;
     }
     return SingleApplication::event(event);
+}
+
+void Application::start(quint32 instanceId, QByteArray message)
+{
+    const QStringList args = message.isEmpty()
+        ? arguments()
+        : QStringList(QString(message).split('\n'));
+    QCommandLineParser cli;
+    QCommandLineOption explorerOption(QStringList{"e", "explorer"});
+    cli.addOption(explorerOption);
+    cli.parse(args);
+    if (cli.isSet(explorerOption)) {
+        startExplorer();
+    } else if (instances.isEmpty()) {
+        startStudio(args);
+    } else {
+        startStudioInstance(args);
+    }
+}
+
+void Application::startStudio(const QStringList &args)
+{
+    qDebug() << "Starting APK Editor Studio Studio...";
+    Apktool::reset();
+    QDir().mkpath(Apktool::getOutputPath());
+    QDir().mkpath(Apktool::getFrameworksPath());
+    QPixmapCache::setCacheLimit(1024 * 100); // 100 MiB
+
+    auto firstInstance = createNewInstance();
+    firstInstance->processArguments(args);
+}
+
+void Application::startStudioInstance(const QStringList &args)
+{
+    qDebug() << "Starting APK Editor Studio instance...";
+    MainWindow *instance = nullptr;
+    if (settings->getSingleInstance()) {
+        instance = instances.last();
+        instance->setWindowState((instance->windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+    } else {
+        instance = createNewInstance();
+    }
+    instance->activateWindow();
+    instance->raise();
+    instance->processArguments(args);
+}
+
+void Application::startExplorer()
+{
+    qDebug() << "Starting Android Explorer...";
+    const auto device = Dialogs::getExplorerDevice();
+    if (!device.isNull()) {
+        auto explorer = new AndroidExplorer(device.getSerial());
+        explorer->setAttribute(Qt::WA_DeleteOnClose);
+        explorer->show();
+    } else if (allWindows().isEmpty()) {
+        QTimer::singleShot(0, this, &QApplication::quit);
+    }
 }

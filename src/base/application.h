@@ -35,6 +35,11 @@ protected:
     bool event(QEvent *event) override;
 
 private:
+    void start(quint32 instanceId = 0, QByteArray message = {});
+    void startStudio(const QStringList &args);
+    void startStudioInstance(const QStringList &args);
+    void startExplorer();
+
     QList<MainWindow *> instances;
     ProjectItemsModel projects;
     QTranslator translator;
