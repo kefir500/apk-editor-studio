@@ -7,7 +7,6 @@
 class AndroidFileSystemModel;
 class DeselectableListView;
 class LogModel;
-class QDockWidget;
 class QLineEdit;
 class QToolButton;
 class Toolbar;
@@ -55,8 +54,13 @@ private:
     QToolButton *pathGoButton;
     DeselectableListView *fileList;
 
-    QDockWidget *logDock;
+    QMenu *menuFile;
+    QMenu *menuEdit;
+    QMenu *menuTools;
+    QMenu *menuSettings;
+    QMenu *menuWindow;
     Toolbar *toolbar;
+    QDockWidget *logDock;
 };
 
 #endif // ANDROIDEXPLORER_H

@@ -13,7 +13,7 @@
 #include <QBoxLayout>
 #include <QDockWidget>
 #include <QLineEdit>
-#include <QMenu>
+#include <QMenuBar>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QShortcut>
@@ -29,9 +29,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     , fileSystemModel(new AndroidFileSystemModel(serial, this))
 {
     setCentralWidget(new QWidget(this));
-
     setWindowIcon(QIcon::fromTheme("tool-androidexplorer"));
-    setWindowFlags(Qt::Window);
     resize(Utils::scale(600, 540));
 
     actionDownload = new QAction(QIcon::fromTheme("download"), {}, this);
@@ -110,6 +108,32 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     connect(actionInstall, &QAction::triggered, this, &AndroidExplorer::install);
 
     auto actionScreenshot = app->actions.getTakeScreenshot(serial, this);
+
+    menuFile = new QMenu(this);
+    menuFile->addAction(actionDownload);
+    menuFile->addAction(actionUpload);
+    menuFile->addSeparator();
+    menuFile->addAction(actionInstall);
+    menuBar()->addMenu(menuFile);
+
+    menuEdit = new QMenu(this);
+    menuEdit->addAction(actionCopy);
+    menuEdit->addAction(actionCut);
+    menuEdit->addAction(actionPaste);
+    menuEdit->addAction(actionRename);
+    menuEdit->addAction(actionDelete);
+    menuBar()->addMenu(menuEdit);
+
+    menuTools = new QMenu(this);
+    menuTools->addAction(actionScreenshot);
+    menuBar()->addMenu(menuTools);
+
+    menuSettings = new QMenu(this);
+    menuSettings->addMenu(app->actions.getLanguages(this));
+    menuBar()->addMenu(menuSettings);
+
+    menuWindow = new QMenu(this);
+    menuBar()->addMenu(menuWindow);
 
     toolbar = new Toolbar(this);
     toolbar->addActionToPool("download", actionDownload);
@@ -213,6 +237,7 @@ AndroidExplorer::AndroidExplorer(const QString &serial, QWidget *parent)
     logView->setModel(logModel = new LogModel(this));
     logDock = new QDockWidget(this);
     logDock->setWidget(logView);
+    logDock->setObjectName("DockLog");
     addDockWidget(Qt::BottomDockWidgetArea, logDock);
 
     auto layout = new QVBoxLayout(centralWidget());
@@ -351,5 +376,13 @@ void AndroidExplorer::retranslate()
     pathGoButton->setText(tr("Go"));
     pathGoButton->setToolTip(tr("Go"));
     logDock->setWindowTitle(tr("Tasks"));
+
+    menuFile->setTitle(qApp->translate("MainWindow", "&File"));
+    menuEdit->setTitle(tr("&Edit"));
+    menuTools->setTitle(qApp->translate("MainWindow", "&Tools"));
+    menuSettings->setTitle(qApp->translate("MainWindow", "&Settings"));
+    menuWindow->setTitle(qApp->translate("MainWindow", "&Window"));
+    menuWindow->clear();
+    menuWindow->addActions(createPopupMenu()->actions());
     toolbar->setWindowTitle(qApp->translate("MainWindow", "Tools"));
 }
