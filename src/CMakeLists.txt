@@ -18,7 +18,6 @@ target_sources(apk-editor-studio PRIVATE
     apk/sortfilterproxymodel.cpp
     apk/titleitemsmodel.cpp
     apk/titlenode.cpp
-    apk/xmlmodel.cpp
     apk/xmlnode.cpp
     base/actionprovider.cpp
     base/androidfilesystemitem.cpp
