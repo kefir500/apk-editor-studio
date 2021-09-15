@@ -6,6 +6,7 @@
 - Added code folding.
 - Added code indentation control (Tab, Shift+Tab).
 - Added custom dark theme for all platforms.
+- Added stand-alone version of Android Explorer.
 - Added ability to build debuggable APKs.
 - Added Android 12 support.
 - Updated Apktool to 2.6.0.

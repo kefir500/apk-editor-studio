@@ -6,6 +6,7 @@ IDI_ICON1 ICON DISCARDABLE "icons\\other\\application.ico"
 IDI_ICON2 ICON DISCARDABLE "icons\\other\\verb-install.ico"
 IDI_ICON3 ICON DISCARDABLE "icons\\other\\verb-optimize.ico"
 IDI_ICON4 ICON DISCARDABLE "icons\\other\\verb-sign.ico"
+IDI_ICON5 ICON DISCARDABLE "icons\\other\\android-explorer.ico"
 
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION RC_VERSION

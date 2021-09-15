@@ -238,15 +238,20 @@
         </Directory>
       </Directory>
       <Directory Id="DesktopFolder">
-        <Component Id="DesktopComponent">
-          <Shortcut Id="DesktopExecutableShortcut" Name="$(var.ProductName)" Description="Start $(var.ProductName)" Target="[!Executable]" WorkingDirectory="INSTALLFOLDER" />
-          <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+        <Component Id="StudioDesktopShortcutComponent">
+          <Shortcut Id="StudioDesktopShortcut" Name="$(var.ProductName)" Description="Start $(var.ProductName)" Target="[!Executable]" WorkingDirectory="INSTALLFOLDER" />
+          <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="StudioDesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+        </Component>
+        <Component Id="ExplorerDesktopShortcutComponent">
+          <Shortcut Id="ExplorerDesktopShortcut" Name="Android Explorer" Icon="Icon" IconIndex="4" Description="Start Android Explorer" Target="[!Executable]" Arguments="-e" WorkingDirectory="INSTALLFOLDER" />
+          <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="ExplorerDesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
         </Component>
       </Directory>
       <Directory Id="ProgramMenuFolder">
         <Directory Id="StartmenuFolder" Name="$(var.ProductName)">
           <Component Id="StartmenuComponent">
             <Shortcut Id="StartmenuExecutableShortcut" Name="$(var.ProductName)" Description="Start $(var.ProductName)" Target="[!Executable]" WorkingDirectory="INSTALLFOLDER" />
+            <Shortcut Id="StartmenuExplorerShortcut" Name="Android Explorer" Icon="Icon" IconIndex="4" Description="Start Android Explorer" Target="[!Executable]" Arguments="-e" WorkingDirectory="INSTALLFOLDER" />
             <Shortcut Id="StartmenuUninstallShortcut" Name="Uninstall $(var.ProductName)" Description="Uninstall $(var.ProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" WorkingDirectory="SystemFolder" />
             <RemoveFolder Id="RemoveShortcutsFolder" On="uninstall" />
             <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="StartmenuFolder" Type="integer" Value="1" KeyPath="yes" />
@@ -424,8 +429,13 @@
       </Feature>
     </Feature>
     <Feature Id="ShortcutsFeature" Title="Shortcuts" Description="Create $(var.ProductName) shortcuts.">
-      <Feature Id="DesktopFeature" Title="Desktop Shortcut" Description="Add $(var.ProductName) shortcut to desktop.">
-        <ComponentRef Id="DesktopComponent" />
+      <Feature Id="DesktopShortcutsFeature" Title="Desktop Shortcuts" Description="Add $(var.ProductName) shortcut to desktop.">
+        <Feature Id="StudioDesktopShortcutFeature" Title="APK Editor Studio Shortcut" Description="Add APK Editor Studio shortcut to desktop.">
+          <ComponentRef Id="StudioDesktopShortcutComponent" />
+        </Feature>
+        <Feature Id="ExplorerShortcutFeature" Title="Android Explorer Shortcut" Description="Add Android Explorer shortcut to desktop.">
+          <ComponentRef Id="ExplorerDesktopShortcutComponent" />
+        </Feature>
       </Feature>
       <Feature Id="StartmenuFeature" Title="Start Menu Shortcuts" Description="Add $(var.ProductName) shortcut to start menu.">
         <ComponentRef Id="StartmenuComponent" />
