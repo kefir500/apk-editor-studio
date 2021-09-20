@@ -63,9 +63,9 @@ public:
 private:
     struct IconNode : public TreeNode
     {
-        IconNode(IconType type) : type(type) {}
+        IconNode(IconType iconType) : iconType(iconType) {}
         void addChild(TreeNode *node) = delete;
-        const IconType type;
+        const IconType iconType;
     };
 
     struct ActivityNode : public TreeNode
