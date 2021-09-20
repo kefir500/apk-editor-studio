@@ -32,5 +32,5 @@ ManifestScope::Type ManifestScope::type() const
     } else if (node.tagName() == "activity") {
         return Type::Activity;
     }
-    return Type::Invalid;
+    return Type::Unknown;
 }

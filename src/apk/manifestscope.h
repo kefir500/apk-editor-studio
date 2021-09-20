@@ -7,7 +7,7 @@ class ManifestScope
 {
 public:
     enum class Type {
-        Invalid,
+        Unknown,
         Application,
         Activity
     };
