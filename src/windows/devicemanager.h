@@ -3,9 +3,12 @@
 
 #include "base/deviceitemsmodel.h"
 #include <QDialog>
-#include <QLabel>
-#include <QListView>
-#include <QDialogButtonBox>
+#include <QIcon>
+
+class QDialogButtonBox;
+class QLabel;
+class QLineEdit;
+class QListView;
 
 class DeviceManager : public QDialog
 {

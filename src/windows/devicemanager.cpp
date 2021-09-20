@@ -1,10 +1,13 @@
 #include "windows/devicemanager.h"
 #include "widgets/loadingwidget.h"
 #include "base/utils.h"
+#include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QHeaderView>
+#include <QLabel>
 #include <QLineEdit>
+#include <QListView>
 #include <QMessageBox>
 #include <QPushButton>
 
