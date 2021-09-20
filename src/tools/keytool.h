@@ -24,7 +24,7 @@ namespace Keytool
 
     signals:
         void success();
-        void error(ErrorType errorType, const QString &brief, const QString &detailed);
+        void error(Keytool::Genkey::ErrorType errorType, const QString &brief, const QString &detailed);
 
     private:
         const Keystore keystore;
@@ -49,7 +49,7 @@ namespace Keytool
 
     signals:
         void success(const QStringList &aliases);
-        void error(ErrorType errorType, const QString &brief, const QString &detailed);
+        void error(Keytool::Aliases::ErrorType errorType, const QString &brief, const QString &detailed);
 
     private:
         const QString keystore;
