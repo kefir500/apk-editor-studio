@@ -25,11 +25,12 @@ Project::~Project()
 {
     delete manifest;
 
-    const QString contentsPath = getContentsPath();
-    qDebug() << qPrintable(QString("Removing \"%1\"...\n").arg(contentsPath));
-    // Additional check to prevent accidental recursive deletion of the wrong directory:
-    const bool recursive = QFile::exists(QString("%1/%2").arg(contentsPath, "AndroidManifest.xml"));
-    Utils::rmdir(contentsPath, recursive);
+    if (!contentsPath.isEmpty()) {
+        qDebug() << qPrintable(QString("Removing \"%1\"...\n").arg(contentsPath));
+        // Additional check to prevent accidental recursive deletion of the wrong directory:
+        const bool recursive = QFile::exists(QString("%1/%2").arg(contentsPath, "AndroidManifest.xml"));
+        Utils::rmdir(contentsPath, recursive);
+    }
 }
 
 QString Project::getTitle() const
@@ -44,7 +45,7 @@ QString Project::getOriginalPath() const
 
 QString Project::getContentsPath() const
 {
-    return contentsPath.get();
+    return QDir::toNativeSeparators(contentsPath);
 }
 
 QString Project::getPackageName() const
@@ -190,7 +191,8 @@ Command *Project::createUnpackCommand()
     QDir().mkpath(target);
     QDir().mkpath(frameworks);
 
-    contentsPath.set(target);
+    contentsPath = target;
+    Q_ASSERT(!contentsPath.isEmpty());
 
     auto apktoolDecode = new Apktool::Decode(source, target, frameworks, withResources, withSources, withBrokenResources);
     connect(apktoolDecode, &Command::finished, this, [=](bool success) {
@@ -331,21 +333,4 @@ void Project::LoadUnpackedCommand::run()
         emit finished(true);
     });
     initResourcesFutureWatcher->setFuture(initResourcesFuture);
-}
-
-ProjectContentsPath::ProjectContentsPath(const QString &path)
-{
-    set(path);
-}
-
-QString ProjectContentsPath::get() const
-{
-    Q_ASSERT(!path.isEmpty());
-    return QDir::toNativeSeparators(path);
-}
-
-void ProjectContentsPath::set(const QString &path_)
-{
-    Q_ASSERT(!path_.isEmpty() && QFile::exists(path_));
-    path = path_;
 }
