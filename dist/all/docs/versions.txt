@@ -15,6 +15,7 @@
 - Remember resource tree columns state.
 - Remove empty resource tree nodes.
 - Fixed erroneous resource item deletion on open file.
+- Added explicit warning for default keystore.
 - Windows: Fixed WebP image format support.
 - Windows: Changed default editor font to Consolas.
 - Linux: Updated Qt to 5.15.2.

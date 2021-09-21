@@ -4,6 +4,7 @@
 #include "base/utils.h"
 #include "windows/dialogs.h"
 #include "windows/keyselector.h"
+#include "windows/rememberdialog.h"
 #include <QInputDialog>
 
 std::unique_ptr<const Keystore> Keystore::get(QWidget *parent)
@@ -49,7 +50,12 @@ std::unique_ptr<const Keystore> Keystore::get(QWidget *parent)
             }
         }
     } else {
-        // This keystore is provided for demonstrational purposes.
+        RememberDialog::say("demo-keystore", tr(
+            "You are using the built-in keystore provided for demonstrational "
+            "purposes. It can be practical for testing or personal usage. "
+            "However, if you plan to distribute this APK, we recommend you to "
+            "specify/create your own keystore via Key Manager."
+        ), parent);
         keystore->keystorePath = Utils::getSharedPath("tools/demo.jks");
         keystore->keystorePassword = "123456";
         keystore->keyAlias = "demo";
