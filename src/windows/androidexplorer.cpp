@@ -379,6 +379,7 @@ void AndroidExplorer::retranslate()
     logDock->setWindowTitle(tr("Tasks"));
 
     menuFile->setTitle(qApp->translate("MainWindow", "&File"));
+    //: Refers to a menu bar (along with File, View, Window, Help, and similar items).
     menuEdit->setTitle(tr("&Edit"));
     menuTools->setTitle(qApp->translate("MainWindow", "&Tools"));
     menuSettings->setTitle(qApp->translate("MainWindow", "&Settings"));

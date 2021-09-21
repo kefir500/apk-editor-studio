@@ -512,12 +512,17 @@ void MainWindow::retranslate()
 
     // Menu Bar:
 
+    //: Refers to a menu bar (along with Edit, View, Window, Help, and similar items).
     menuFile->setTitle(tr("&File"));
-    //: Displayed as "Tab".
+    //: Displayed as "Tab". Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).
     menuTab->setTitle(tr("Ta&b"));
+    //: Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).
     menuTools->setTitle(tr("&Tools"));
+    //: Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).
     menuSettings->setTitle(tr("&Settings"));
+    //: Refers to a menu bar (along with File, Edit, View, Help, and similar items).
     menuWindow->setTitle(tr("&Window"));
+    //: Refers to a menu bar (along with File, Edit, View, Window, and similar items).
     menuHelp->setTitle(tr("&Help"));
 
     // Tab Bar:
