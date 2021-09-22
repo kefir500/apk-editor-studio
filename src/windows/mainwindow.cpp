@@ -202,7 +202,7 @@ void MainWindow::initWidgets()
     setCentralWidget(centralWidget);
 
     resourceTree = new ResourceAbstractView(new ResourceTree, this);
-    resourceTree->setModel(dummyResourceModel = new ResourceItemsModel(nullptr, this)); // Always display header
+    resourceTree->setModel(dummyResourceModel = new ResourceItemsModel(this)); // Always display header
     resourceTree->getView<ResourceTree *>()->header()->restoreState(app->settings->getResourceTreeHeader());
     connect(resourceTree, &ResourceAbstractView::editRequested, this, [this](const ResourceModelIndex &index) {
         getCurrentProjectWidget()->openResourceTab(index);
