@@ -31,6 +31,9 @@
 #include <QMimeData>
 #include <QMimeDatabase>
 #include <QTimer>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 int MainWindow::instances = 0;
 
@@ -68,7 +71,7 @@ MainWindow::MainWindow(ProjectItemsModel &projects, QWidget *parent)
             timer->deleteLater();
         });
         timer->setSingleShot(true);
-        timer->start(1000);
+        timer->start(1s);
     }
 
     qDebug();

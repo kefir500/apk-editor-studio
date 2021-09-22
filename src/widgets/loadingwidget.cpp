@@ -2,6 +2,9 @@
 #include "base/utils.h"
 #include <QResizeEvent>
 #include <QPainter>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 LoadingWidget::LoadingWidget(int size, QWidget *parent) : QWidget(parent), spinnerSize(size)
 {
@@ -12,7 +15,7 @@ LoadingWidget::LoadingWidget(int size, QWidget *parent) : QWidget(parent), spinn
         spinnerAngle = (spinnerAngle > 0) ? spinnerAngle - 80 : 5760;
         update();
     });
-    spinnerTimer.setInterval(15);
+    spinnerTimer.setInterval(15ms);
 }
 
 void LoadingWidget::paintEvent(QPaintEvent *event)

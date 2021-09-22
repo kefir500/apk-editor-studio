@@ -3,12 +3,15 @@
 #include "base/utils.h"
 #include <QApplication>
 #include <QPainter>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 LogDelegate::LogDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
     spinnerAngle = 0;
     iconExpand = QIcon::fromTheme("emblem-information");
-    spinnerTimer.setInterval(25);
+    spinnerTimer.setInterval(25ms);
     connect(&spinnerTimer, &QTimer::timeout, this, [this]() {
         spinnerAngle = (spinnerAngle > 0) ? spinnerAngle - 160 : 5760;
         emit updated();

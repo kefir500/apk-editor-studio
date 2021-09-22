@@ -1,10 +1,13 @@
 #include "apk/filesystemmodel.h"
 #include "apk/resourcemodelindex.h"
 #include <QTimer>
+#include <chrono>
 
 #ifdef QT_DEBUG
     #include <QDebug>
 #endif
+
+using namespace std::chrono_literals;
 
 void FileSystemModel::setSourceModel(ResourceItemsModel *model)
 {
@@ -89,5 +92,5 @@ void FileSystemModel::updated(const QModelIndex &from, const QModelIndex &to, co
         timer->deleteLater();
     });
     timer->setSingleShot(true);
-    timer->start(10);
+    timer->start(10ms);
 }
