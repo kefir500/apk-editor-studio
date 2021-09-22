@@ -30,9 +30,7 @@ Process::Process(QObject *parent) : QObject(parent)
         process.deleteLater();
     });
 
-    connect(&process, static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::error),
-            this, [=](QProcess::ProcessError processError)
-    {
+    connect(&process, &QProcess::errorOccurred, this, [=](QProcess::ProcessError processError) {
         Q_UNUSED(processError)
         const auto error = QStringLiteral("%1: %2").arg(process.program(), process.errorString());
         emit finished(false, error);
