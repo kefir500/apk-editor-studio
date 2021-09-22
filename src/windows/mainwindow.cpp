@@ -247,7 +247,7 @@ void MainWindow::initWidgets()
 
     logView = new LogView(this);
     projectList = new ProjectList(this);
-    connect(projectList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [this]() {
+    connect(projectList, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this]() {
         onProjectSwitched(getCurrentProject());
     });
     welcomeItemProxy = new ExtraListItemProxy(this);
