@@ -31,11 +31,7 @@ QString Java::getInstallationPath()
     if (!userPath.isEmpty()) {
         return userPath;
     }
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     const QString envPath = qEnvironmentVariable("JAVA_HOME");
-#else
-    const QString envPath = qgetenv("JAVA_HOME");
-#endif
     if (!envPath.isEmpty()) {
         return envPath;
     }
