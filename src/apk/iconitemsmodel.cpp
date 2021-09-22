@@ -1,5 +1,5 @@
 #include "apk/iconitemsmodel.h"
-#include "apk/project.h"
+#include "apk/manifestscope.h"
 #include "apk/resourcefile.h"
 #include "base/application.h"
 #include "base/utils.h"
@@ -39,6 +39,12 @@ void IconItemsModel::setSourceModel(QAbstractItemModel *newSourceModel)
         connect(sourceModel(), &QAbstractItemModel::dataChanged, this, &IconItemsModel::sourceDataChanged);
         connect(sourceModel(), &QAbstractItemModel::modelReset, this, &IconItemsModel::sourceModelReset);
     }
+}
+
+void IconItemsModel::setManifestScopes(const QList<ManifestScope *> &scopes)
+{
+    this->scopes = scopes;
+    sourceModelReset();
 }
 
 ResourceItemsModel *IconItemsModel::sourceModel() const
@@ -154,14 +160,15 @@ QVariant IconItemsModel::data(const QModelIndex &index, int role) const
                 auto node = static_cast<TreeNode *>(index.internalPointer());
                 if (node == applicationNode) {
                     return tr("Application");
-                } else if (node == activitiesNode) {
+                }
+                if (node == activitiesNode) {
                     //: This string refers to the Android activities (https://developer.android.com/guide/components/activities).
                     return tr("Activities");
-                } else if (activitiesNode->hasChild(node)) {
-                    return static_cast<ActivityNode *>(node)->scope->name();
-                } else {
-                    return getIconCaption(index);
                 }
+                if (activitiesNode->hasChild(node)) {
+                    return static_cast<ActivityNode *>(node)->scope->name();
+                }
+                return getIconCaption(index);
             }
             case PathColumn:
                 return getIconPath(index);
@@ -375,7 +382,7 @@ void IconItemsModel::sourceRowsInserted(const QModelIndex &parent, int first, in
             auto resourceName = resource->getName();
             auto resourceType = resource->getType();
             if (!resourceName.isEmpty() && !resourceType.isEmpty()) {
-                for (ManifestScope *scope : qAsConst(apk()->manifest->scopes)) {
+                for (ManifestScope *scope : qAsConst(scopes)) {
                     if (resourceName == scope->icon().getResourceName() && resourceType == scope->icon().getResourceType()) {
                         appendIcon(index, scope, TypeIcon);
                     } else if (resourceName == scope->roundIcon().getResourceName() && resourceType == scope->roundIcon().getResourceType()) {
@@ -420,11 +427,6 @@ void IconItemsModel::sourceModelReset()
     activitiesNode->removeChildren();
     populateFromSource();
     endResetModel();
-}
-
-const Project *IconItemsModel::apk() const
-{
-    return sourceModel()->getApk();
 }
 
 void IconItemsModel::ActivityNode::addChild(IconItemsModel::IconNode *node)

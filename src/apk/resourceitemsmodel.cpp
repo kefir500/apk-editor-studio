@@ -10,10 +10,9 @@
     #include <QDebug>
 #endif
 
-ResourceItemsModel::ResourceItemsModel(const Project *apk, QObject *parent)
+ResourceItemsModel::ResourceItemsModel(QObject *parent)
     : QAbstractItemModel(parent)
     , root(new ResourceNode)
-    , apk(apk)
 {}
 
 ResourceItemsModel::~ResourceItemsModel()
@@ -289,9 +288,4 @@ const ResourceFile *ResourceItemsModel::getResourceFile(const QModelIndex &index
     const ResourceNode *node = static_cast<ResourceNode *>(index.internalPointer());
     ResourceFile *resource = node->getFile();
     return resource;
-}
-
-const Project *ResourceItemsModel::getApk() const
-{
-    return apk;
 }

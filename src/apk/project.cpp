@@ -11,7 +11,7 @@
 #include <QUuid>
 #include <QDebug>
 
-Project::Project(const QString &path) : resourcesModel(this)
+Project::Project(const QString &path)
 {
     originalPath = QFileInfo(path).absoluteFilePath();
     manifest = nullptr;
@@ -326,6 +326,7 @@ void Project::LoadUnpackedCommand::run()
         contentsPath + "/AndroidManifest.xml",
         contentsPath + "/apktool.yml");
     project->manifestModel.initialize(project->manifest);
+    project->iconsProxy.setManifestScopes(project->manifest->scopes);
 
     auto initResourcesFuture = project->resourcesModel.initialize(contentsPath + "/res/");
     auto initResourcesFutureWatcher = new QFutureWatcher<void>(this);

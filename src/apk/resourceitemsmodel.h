@@ -31,7 +31,7 @@ public:
         SortRole = Qt::UserRole + 1
     };
 
-    ResourceItemsModel(const Project *apk, QObject *parent = nullptr);
+    ResourceItemsModel(QObject *parent = nullptr);
     ~ResourceItemsModel() override;
 
     QFuture<void> initialize(const QString &path);
@@ -51,10 +51,8 @@ public:
     QModelIndex findIndex(const QString &path) const;
     QModelIndex findIndex(const QString &path, const QModelIndex &parent) const;
     const ResourceFile *getResourceFile(const QModelIndex &index) const;
-    const Project *getApk() const;
 
 private:
-    const Project *apk;
     ResourceNode *root;
     QFileIconProvider iconProvider;
 };

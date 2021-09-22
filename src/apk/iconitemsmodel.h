@@ -3,8 +3,9 @@
 
 #include <QAbstractProxyModel>
 #include "apk/resourceitemsmodel.h"
-#include "apk/manifestscope.h"
 #include "base/treenode.h"
+
+class ManifestScope;
 
 class IconItemsModel : public QAbstractProxyModel, public IResourceItemsModel
 {
@@ -35,6 +36,7 @@ public:
     ~IconItemsModel() override;
 
     void setSourceModel(QAbstractItemModel *sourceModel) override;
+    void setManifestScopes(const QList<ManifestScope *> &scopes);
     ResourceItemsModel *sourceModel() const;
 
     QIcon getIcon() const;
@@ -43,7 +45,6 @@ public:
     QString getIconCaption(const QModelIndex &index) const;
     IconType getIconType(const QModelIndex &index) const;
 
-    void createIcon(const QString &qualifiers);
     bool replaceApplicationIcons(const QString &path, QWidget *parent = nullptr);
     bool replaceResource(const QModelIndex &index, const QString &path = QString(), QWidget *parent = nullptr) override;
     bool removeResource(const QModelIndex &index) override;
@@ -81,8 +82,8 @@ private:
     void sourceRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
     void sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
     void sourceModelReset();
-    const Project *apk() const;
 
+    QList<ManifestScope *> scopes;
     QHash<QPersistentModelIndex, IconNode *> sourceToProxyMap;
     QHash<IconNode *, QPersistentModelIndex> proxyToSourceMap;
     TreeNode *root;
