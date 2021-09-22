@@ -21,7 +21,7 @@ public:
     explicit TitleItemsModel(const Project *apk, QObject *parent = nullptr);
     ~TitleItemsModel() override;
 
-    bool save() const;
+    void save() const;
 
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

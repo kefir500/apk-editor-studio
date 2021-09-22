@@ -37,9 +37,10 @@ TitleSheet::TitleSheet(const Project *project, QWidget *parent) : BaseEditableSh
 bool TitleSheet::save(const QString &as)
 {
     Q_UNUSED(as)
-    if (!model || !model->save()) {
+    if (!model) {
         return false;
     }
+    model->save();
     setModified(false);
     emit saved();
     return true;

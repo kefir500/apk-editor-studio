@@ -80,12 +80,11 @@ TitleItemsModel::~TitleItemsModel()
     qDeleteAll(nodes);
 }
 
-bool TitleItemsModel::save() const
+void TitleItemsModel::save() const
 {
     for (const TitleNode *title : nodes) {
         title->save();
     }
-    return true;
 }
 
 bool TitleItemsModel::setData(const QModelIndex &index, const QVariant &value, int role)
