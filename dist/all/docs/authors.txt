@@ -58,7 +58,7 @@
 - [Gyuha Shin](https://www.transifex.com/user/profile/gyuha/)
 
 ## Kurdish
-- [Erfan Ski](https://www.transifex.com/user/profile/erfan13/)
+- [Erfan Sci](https://www.transifex.com/user/profile/erfan13/)
 
 ## Persian
 - [SSLRI](https://www.transifex.com/user/profile/sslri/)
