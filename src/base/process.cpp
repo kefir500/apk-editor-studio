@@ -15,7 +15,7 @@ Process::Process(QObject *parent) : QObject(parent)
 
     connect(&process, &QProcess::started, this, &Process::started);
 
-    connect(&process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+    connect(&process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
             this, [=](int exitCode, QProcess::ExitStatus exitStatus)
     {
         const QString output = process.readAll().replace("\r\n", "\n").trimmed();
