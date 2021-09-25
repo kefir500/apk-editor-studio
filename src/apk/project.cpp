@@ -328,7 +328,7 @@ BaseSheet *Project::getTabByIdentifier(const QString &identifier) const
 {
     for (int index = 0; index < tabWidget->count(); ++index) {
         auto tab = static_cast<BaseSheet *>(tabWidget->widget(index));
-        if (tab->property("identifier").compare(identifier) == 0) {
+        if (tab->property("identifier") == identifier) {
             return tab;
         }
     }
