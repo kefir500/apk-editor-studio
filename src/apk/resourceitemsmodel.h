@@ -6,7 +6,6 @@
 #include <QFileIconProvider>
 #include <QFuture>
 
-class Project;
 class ResourceFile;
 class ResourceNode;
 

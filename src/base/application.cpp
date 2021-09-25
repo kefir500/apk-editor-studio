@@ -74,7 +74,7 @@ QList<Language> Application::getLanguages()
 
 MainWindow *Application::createNewInstance()
 {
-    auto instance = new MainWindow(projects);
+    auto instance = new MainWindow(packages);
     instance->show();
     instances.append(instance);
     connect(instance, &MainWindow::destroyed, this, [=]() {

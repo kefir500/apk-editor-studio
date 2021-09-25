@@ -4,7 +4,7 @@
 #include "sheets/baseeditablesheet.h"
 
 class QTableView;
-class Project;
+class Package;
 class TitleItemsModel;
 
 class TitleSheet : public BaseEditableSheet
@@ -12,7 +12,7 @@ class TitleSheet : public BaseEditableSheet
     Q_OBJECT
 
 public:
-    TitleSheet(const Project *project, QWidget *parent = nullptr);
+    TitleSheet(const Package *package, QWidget *parent = nullptr);
     bool save(const QString &as = QString()) override;
 
 private:

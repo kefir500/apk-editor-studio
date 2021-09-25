@@ -1,7 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "apk/projectitemsmodel.h"
+#include "apk/packagelistmodel.h"
 #include "base/actionprovider.h"
 #include "base/language.h"
 #include <SingleApplication>
@@ -41,7 +41,7 @@ private:
     void startExplorer();
 
     QList<MainWindow *> instances;
-    ProjectItemsModel projects;
+    PackageListModel packages;
     QTranslator translator;
     QTranslator translatorQt;
 };

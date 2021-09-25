@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QtConcurrent/QtConcurrent>
 
-TitleItemsModel::TitleItemsModel(const Project *apk, QObject *parent) : QAbstractTableModel(parent)
+TitleItemsModel::TitleItemsModel(const Package *apk, QObject *parent) : QAbstractTableModel(parent)
 {
     // Parse application label attribute (android:label):
 

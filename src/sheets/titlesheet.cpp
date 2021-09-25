@@ -6,7 +6,7 @@
 #include <QSortFilterProxyModel>
 #include <QTableView>
 
-TitleSheet::TitleSheet(const Project *project, QWidget *parent) : BaseEditableSheet(parent)
+TitleSheet::TitleSheet(const Package *package, QWidget *parent) : BaseEditableSheet(parent)
 {
     title = tr("Application Title");
     icon = QIcon::fromTheme("tool-titleeditor");
@@ -20,7 +20,7 @@ TitleSheet::TitleSheet(const Project *project, QWidget *parent) : BaseEditableSh
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(table);
 
-    model = new TitleItemsModel(project, this);
+    model = new TitleItemsModel(package, this);
     connect(model, &TitleItemsModel::initialized, this, [=]() {
         auto sortProxy = new QSortFilterProxyModel(this);
         sortProxy->setSourceModel(model);

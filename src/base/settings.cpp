@@ -2,7 +2,7 @@
 #include "base/fileassociation.h"
 #include "base/utils.h"
 #include "base/password.h"
-#include "apk/project.h"
+#include "apk/package.h"
 #include "tools/apktool.h"
 #include <QApplication>
 #include <QDir>
@@ -279,10 +279,10 @@ bool Settings::getExplorerSignIntegration() const
 
 // Setters:
 
-void Settings::addToRecent(const Project *project)
+void Settings::addToRecent(const Package *package)
 {
-    const auto path = project->getOriginalPath();
-    const auto icon = project->getThumbnail().pixmap(Utils::scale(32, 32));
+    const auto path = package->getOriginalPath();
+    const auto icon = package->getThumbnail().pixmap(Utils::scale(32, 32));
     recent->add(path, icon);
     emit recentListUpdated();
 }

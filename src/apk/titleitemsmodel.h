@@ -1,7 +1,7 @@
 #ifndef TITLEITEMSMODEL_H
 #define TITLEITEMSMODEL_H
 
-#include "apk/project.h"
+#include "apk/package.h"
 #include "apk/titlenode.h"
 #include <QAbstractTableModel>
 
@@ -18,7 +18,7 @@ public:
         ColumnCount
     };
 
-    explicit TitleItemsModel(const Project *apk, QObject *parent = nullptr);
+    explicit TitleItemsModel(const Package *apk, QObject *parent = nullptr);
     ~TitleItemsModel() override;
 
     void save() const;

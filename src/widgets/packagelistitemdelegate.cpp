@@ -1,11 +1,11 @@
-#include "widgets/projectlistitemdelegate.h"
-#include "apk/projectitemsmodel.h"
+#include "widgets/packagelistitemdelegate.h"
+#include "apk/packagelistmodel.h"
 #include <QApplication>
 #include <QPainter>
 
 // TODO Add indicator for unsaved projects
 
-void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void PackageListItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     const bool ltr = QApplication::layoutDirection() == Qt::LeftToRight;
 
@@ -22,7 +22,7 @@ void ProjectListItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 
     // Prepare status icon:
 
-    const QModelIndex statusIndex = index.sibling(index.row(), ProjectItemsModel::StatusColumn);
+    const QModelIndex statusIndex = index.sibling(index.row(), PackageListModel::StatusColumn);
     const QIcon statusIcon = statusIndex.data(Qt::DecorationRole).value<QIcon>();
     const int statusIconSideMaximum = option.rect.height() - 2;
     const QSize statusIconSize = statusIcon.actualSize(QSize(statusIconSideMaximum, statusIconSideMaximum));

@@ -8,9 +8,10 @@ target_sources(apk-editor-studio PRIVATE
     apk/manifestmodel.cpp
     apk/manifestscope.cpp
     apk/permission.cpp
+    apk/package.cpp
+    apk/packagelistmodel.cpp
+    apk/packagestate.cpp
     apk/project.cpp
-    apk/projectitemsmodel.cpp
-    apk/projectstate.cpp
     apk/resourcefile.cpp
     apk/resourceitemsmodel.cpp
     apk/resourcemodelindex.cpp
@@ -59,7 +60,6 @@ target_sources(apk-editor-studio PRIVATE
     tools/keystore.cpp
     tools/keytool.cpp
     tools/zipalign.cpp
-    widgets/centralwidget.cpp
     widgets/codeeditor.cpp
     widgets/codesearchbar.cpp
     widgets/codesidebar.cpp
@@ -75,10 +75,10 @@ target_sources(apk-editor-studio PRIVATE
     widgets/logdelegate.cpp
     widgets/logview.cpp
     widgets/manifestview.cpp
+    widgets/packagelist.cpp
+    widgets/packagelistitemdelegate.cpp
     widgets/poollistwidget.cpp
-    widgets/projectlist.cpp
-    widgets/projectlistitemdelegate.cpp
-    widgets/projectwidget.cpp
+    widgets/projectmanager.cpp
     widgets/readonlycheckbox.cpp
     widgets/resourceabstractview.cpp
     widgets/resourcetree.cpp

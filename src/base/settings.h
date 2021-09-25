@@ -3,7 +3,7 @@
 
 #include "base/recentlist.h"
 
-class Project;
+class Package;
 class QSettings;
 
 class Settings : public QObject
@@ -62,7 +62,7 @@ public:
     bool getExplorerSignIntegration() const;
 #endif
 
-    void addToRecent(const Project *project);
+    void addToRecent(const Package *package);
     void clearRecentList();
     void setJavaPath(const QString &path);
     void setJavaMinHeapSize(int size);

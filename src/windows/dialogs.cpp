@@ -1,6 +1,6 @@
 #include "windows/dialogs.h"
 #include "windows/devicemanager.h"
-#include "apk/project.h"
+#include "apk/package.h"
 #include "base/application.h"
 #include "base/fileformatlist.h"
 #include "base/settings.h"
@@ -90,9 +90,9 @@ QStringList Dialogs::getOpenApkFilenames(QWidget *parent)
     return paths;
 }
 
-QString Dialogs::getSaveApkFilename(const Project *project, QWidget *parent)
+QString Dialogs::getSaveApkFilename(const Package *package, QWidget *parent)
 {
-    const QString defaultPath = project->getOriginalPath();
+    const QString defaultPath = package->getOriginalPath();
     return Dialogs::getSaveFilename(defaultPath, FileFormatList::forApk(), parent);
 }
 

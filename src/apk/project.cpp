@@ -1,337 +1,341 @@
 #include "apk/project.h"
+#include "apk/package.h"
 #include "base/application.h"
 #include "base/settings.h"
 #include "base/utils.h"
-#include "tools/adb.h"
-#include "tools/apktool.h"
-#include "tools/apksigner.h"
+#include "sheets/codesheet.h"
+#include "sheets/imagesheet.h"
+#include "sheets/projectsheet.h"
+#include "sheets/titlesheet.h"
+#include "windows/devicemanager.h"
+#include "windows/dialogs.h"
+#include "windows/rememberdialog.h"
+#include "windows/permissioneditor.h"
+#include "windows/signatureviewer.h"
 #include "tools/keystore.h"
-#include "tools/zipalign.h"
-#include <QFutureWatcher>
-#include <QUuid>
+#include <QInputDialog>
+#include <QImageReader>
 #include <QDebug>
 
-Project::Project(const QString &path)
+Project::Project(Package *package, QWidget *parent)
+    : QObject(parent)
+    , package(package)
 {
-    originalPath = QFileInfo(path).absoluteFilePath();
-    manifest = nullptr;
-    filesystemModel.setSourceModel(&resourcesModel);
-    iconsProxy.setSourceModel(&resourcesModel);
-    logModel.setExclusiveLoading(true);
-    connect(&state, &ProjectState::changed, this, &Project::stateUpdated);
+    tabWidget = new QTabWidget(parent);
+    tabWidget->setMovable(true);
+    tabWidget->setTabsClosable(true);
+
+    connect(tabWidget, &QTabWidget::currentChanged, this, [this]() {
+        emit currentTabChanged(getCurrentTab());
+    });
+    connect(tabWidget, &QTabWidget::tabCloseRequested, this, [this](int index) {
+        closeTab(static_cast<BaseSheet *>(tabWidget->widget(index)));
+    });
+
+    openProjectTab();
 }
 
-Project::~Project()
+void Project::openProjectTab()
 {
-    delete manifest;
-
-    if (!contentsPath.isEmpty()) {
-        qDebug() << qPrintable(QString("Removing \"%1\"...\n").arg(contentsPath));
-        // Additional check to prevent accidental recursive deletion of the wrong directory:
-        const bool recursive = QFile::exists(QString("%1/%2").arg(contentsPath, "AndroidManifest.xml"));
-        Utils::rmdir(contentsPath, recursive);
-    }
-}
-
-QString Project::getTitle() const
-{
-    return QFileInfo(originalPath).fileName();
-}
-
-QString Project::getOriginalPath() const
-{
-    return QDir::toNativeSeparators(originalPath);
-}
-
-QString Project::getContentsPath() const
-{
-    return QDir::toNativeSeparators(contentsPath);
-}
-
-QString Project::getPackageName() const
-{
-    return manifest->getPackageName();
-}
-
-QIcon Project::getThumbnail() const
-{
-    QIcon thumbnail = iconsProxy.getIcon();
-    return !thumbnail.isNull() ? thumbnail : QIcon::fromTheme("apk-editor-studio");
-}
-
-const ProjectState &Project::getState() const
-{
-    return state;
-}
-
-bool Project::hasSourcesUnpacked() const
-{
-    return withSources;
-}
-
-void Project::setApplicationIcon(const QString &path, QWidget *parent)
-{
-    iconsProxy.replaceApplicationIcons(path, parent);
-}
-
-bool Project::setPackageName(const QString &packageName)
-{
-    if (!withSources) {
-        return false;
+    const QString identifier = "project";
+    auto existing = getTabByIdentifier(identifier);
+    if (existing) {
+        setCurrentTab(existing);
+        return;
     }
 
-    auto packagePath = packageName;
-    packagePath.replace('.', '/');
+    auto tab = new ProjectSheet(package, parentWidget());
+    tab->setProperty("identifier", identifier);
+    connect(tab, &ProjectSheet::titleEditorRequested, this, &Project::openTitlesTab);
+    connect(tab, &ProjectSheet::apkSaveRequested, this, &Project::saveProject);
+    connect(tab, &ProjectSheet::apkInstallRequested, this, &Project::installProject);
+    addTab(tab);
+}
 
-    const auto originalPackageName = getPackageName();
-    auto originalPackagePath = getPackageName();
-    originalPackagePath.replace('.', '/');
-
-    const auto contentsPath = getContentsPath();
-
-    if (packagePath.isEmpty() || originalPackagePath.isEmpty()) {
-        return false;
+void Project::openTitlesTab()
+{
+    const QString identifier = "titles";
+    auto existing = getTabByIdentifier(identifier);
+    if (existing) {
+        setCurrentTab(existing);
+        return;
     }
 
-    // Update manifest:
+    auto editor = new TitleSheet(package, parentWidget());
+    editor->setProperty("identifier", identifier);
+    addTab(editor);
+}
 
-    manifest->setPackageName(packageName);
+void Project::openResourceTab(const ResourceModelIndex &index)
+{
+    const QString path = index.path();
+    if (path.isEmpty()) {
+        return;
+    }
+    const QString identifier = path;
+    auto existing = getTabByIdentifier(identifier);
+    if (existing) {
+        setCurrentTab(existing);
+        return;
+    }
 
-    // Update references in resources:
+    BaseEditableSheet *editor = nullptr;
+    const auto extension = QFileInfo(path).suffix();
+    if (QImageReader::supportedImageFormats().contains(extension.toUtf8())) {
+        editor = new ImageSheet(index, parentWidget());
+    } else {
+        editor = new CodeSheet(index, parentWidget());
+    }
+    editor->setProperty("identifier", identifier);
+    addTab(editor);
+}
 
-    const auto resourcesPath = contentsPath + "/res/";
-    QDirIterator files(resourcesPath, QDir::Files, QDirIterator::Subdirectories);
-    while (files.hasNext()) {
-        const QString path(files.next());
-        QFile file(path);
-        if (file.open(QFile::ReadWrite)) {
-            const QString data(file.readAll());
-            QString newData(data);
-            newData.replace(originalPackageName, packageName);
-            if (newData != data) {
-                file.resize(0);
-                file.write(newData.toUtf8());
-            }
-            file.close();
+void Project::openPermissionEditor()
+{
+    PermissionEditor permissionEditor(package->manifest, parentWidget());
+    permissionEditor.exec();
+}
+
+void Project::openPackageRenamer()
+{
+    RememberDialog::say("experimental-rename-package", tr(
+        "Package renaming is an experimental function which, in its current state, "
+        "may lead to crashes and data loss. You can join the discussion and help us "
+        "improve this feature <a href=\"%1\">here</a>."
+    ).arg("https://github.com/kefir500/apk-editor-studio/discussions/39"), parentWidget());
+
+    if (!app->settings->getDecompileSources() && !package->hasSourcesUnpacked()) {
+        const QString question = tr(
+            "Cloning the APK requires the source code decompilation to be turned on. "
+            "Proceed?");
+        if (QMessageBox::question(parentWidget(), {}, question) == QMessageBox::Yes) {
+            app->settings->setDecompileSources(true);
+            QMessageBox::information(parentWidget(), {}, tr("Settings have been applied. Please, reopen this APK."));
+        }
+        return;
+    }
+
+    if (!package->hasSourcesUnpacked()) {
+        QMessageBox::warning(parentWidget(), {}, tr(
+            "Please, reopen this APK in order to unpack the source code and clone the APK."));
+        return;
+    }
+
+    const auto inputDialogFlags = QDialog().windowFlags() & ~Qt::WindowContextHelpButtonHint;
+    const QString newPackageName = QInputDialog::getText(parentWidget(), {}, tr("Package Name:"),
+                                                         QLineEdit::Normal, package->getPackageName(),
+                                                         nullptr, inputDialogFlags);
+    if (newPackageName.isEmpty()) {
+        return;
+    }
+
+    if (!package->setPackageName(newPackageName)) {
+        QMessageBox::warning(parentWidget(), {}, tr("Could not clone the APK."));
+        return;
+    }
+
+    QMessageBox::information(parentWidget(), {}, tr("APK has been successfully cloned!"));
+}
+
+void Project::openSignatureViewer()
+{
+    SignatureViewer signatureViewer(package->getOriginalPath(), parentWidget());
+    signatureViewer.exec();
+}
+
+bool Project::saveTabs()
+{
+    bool result = true;
+    for (int index = 0; index < tabWidget->count(); ++index) {
+        auto tab = qobject_cast<BaseEditableSheet *>(tabWidget->widget(index));
+        if (tab && !tab->save()) {
+            result = false;
         }
     }
+    return result;
+}
 
-    const auto smaliDirs = QDir(contentsPath).entryList({"smali*"}, QDir::Dirs);
-    for (const auto &smaliDir : smaliDirs) {
-
-        const auto smaliPath = QString("%1/%2/").arg(contentsPath, smaliDir);
-
-        // Update references in smali:
-
-        QDirIterator files(smaliPath, QDir::Files, QDirIterator::Subdirectories);
-        while (files.hasNext()) {
-            const QString path(files.next());
-            QFile file(path);
-            if (file.open(QFile::ReadWrite)) {
-                const QString data(file.readAll());
-                QString newData(data);
-                newData.replace('L' + originalPackagePath, 'L' + packagePath);
-                newData.replace(originalPackageName, packageName);
-                if (newData != data) {
-                    file.resize(0);
-                    file.write(newData.toUtf8());
-                }
-                file.close();
-            }
-        }
-
-        // Update directory structure:
-
-        const auto fullPackagePath = smaliPath + packagePath;
-        const auto fullOriginalPackagePath = smaliPath + originalPackagePath;
-        if (!QDir().exists(fullOriginalPackagePath)) {
-            continue;
-        }
-        QDir().mkpath(QFileInfo(fullPackagePath).path());
-        if (!QDir().rename(fullOriginalPackagePath, fullPackagePath)) {
+bool Project::saveProject()
+{
+    if (hasUnsavedTabs()) {
+        const QString question = tr("Do you want to save changes before packing?");
+        const int answer = QMessageBox::question(parentWidget(), QString(), question, QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        switch (answer) {
+        case QMessageBox::Yes:
+        case QMessageBox::Save:
+            saveTabs();
+            break;
+        case QMessageBox::No:
+        case QMessageBox::Discard:
+            break;
+        default:
             return false;
         }
     }
 
-    state.setModified(true);
+    const QString target = Dialogs::getSaveApkFilename(package, parentWidget());
+    if (target.isEmpty()) {
+        return false;
+    }
+    auto command = package->createCommandChain();
+    command->add(package->createPackCommand(target), true);
+    if (app->settings->getOptimizeApk()) {
+        command->add(package->createZipalignCommand(target), false);
+    }
+    if (app->settings->getSignApk()) {
+        auto keystore = Keystore::get(parentWidget());
+        if (keystore) {
+            command->add(package->createSignCommand(keystore.get(), target), false);
+        }
+    }
+    command->run();
     return true;
 }
 
-Commands *Project::createCommandChain()
+bool Project::installProject()
 {
-    auto command = new Commands(this);
-    connect(command, &Commands::started, &logModel, &LogModel::clear);
-    connect(command, &Commands::finished, this, [this](bool success) {
-        if (success) {
-            logModel.add(Project::tr("Done."), LogEntry::Success);
-            state.setCurrentStatus(ProjectState::Status::Normal);
-        } else {
-            state.setCurrentStatus(ProjectState::Status::Errored);
-        }
-        app->settings->addToRecent(this);
-    });
-    return command;
-}
+    const auto device = Dialogs::getInstallDevice(parentWidget());
+    if (device.isNull()) {
+        return false;
+    }
 
-Command *Project::createUnpackCommand()
-{
     QString target;
-    do {
-        const QString uuid = QUuid::createUuid().toString();
-        target = QDir::toNativeSeparators(QString("%1/%2").arg(Apktool::getOutputPath(), uuid));
-    } while (target.isEmpty() || QDir(target).exists());
+    auto command = package->createCommandChain();
 
-    const QString source(getOriginalPath());
-    const QString frameworks = Apktool::getFrameworksPath();
-
-    withResources = true;
-    withSources = app->settings->getDecompileSources();
-    withBrokenResources = app->settings->getKeepBrokenResources();
-
-    QDir().mkpath(target);
-    QDir().mkpath(frameworks);
-
-    contentsPath = target;
-    Q_ASSERT(!contentsPath.isEmpty());
-
-    auto apktoolDecode = new Apktool::Decode(source, target, frameworks, withResources, withSources, withBrokenResources);
-    connect(apktoolDecode, &Command::finished, this, [=](bool success) {
-        if (success) {
-            filesystemModel.setRootPath(getContentsPath());
-        } else {
-            logModel.add(tr("Error unpacking APK."), apktoolDecode->output(), LogEntry::Error);
-        }
-    });
-
-    auto command = new Commands(this);
-    command->add(apktoolDecode, true);
-    command->add(new LoadUnpackedCommand(this), true);
-    connect(command, &Command::started, this, [=]() {
-        qDebug() << qPrintable(QString("Unpacking\n  from: %1\n    to: %2\n").arg(source, target));
-        logModel.add(tr("Unpacking APK..."));
-        state.setCurrentStatus(ProjectState::Status::Unpacking);
-    });
-    connect(command, &Command::finished, this, [=](bool success) {
-        if (success) {
-            connect(&resourcesModel, &ResourceItemsModel::dataChanged, this, [=]() {
-                state.setModified(true);
-            });
-            connect(&filesystemModel, &QFileSystemModel::dataChanged, this, [=]() {
-                state.setModified(true);
-            });
-            connect(&iconsProxy, &IconItemsModel::dataChanged, this, [=]() {
-                state.setModified(true);
-            });
-            connect(&manifestModel, &ManifestModel::dataChanged, this,
-                    [=](const QModelIndex &, const QModelIndex &, const QVector<int> &roles) {
-                if (!(roles.count() == 1 && roles.contains(Qt::UserRole))) {
-                    state.setModified(true);
+    if (isUnsaved()) {
+        const QString question = tr("Do you want to save changes and pack the APK before installing?");
+        const int answer = QMessageBox::question(parentWidget(), QString(), question, QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        switch (answer) {
+        case QMessageBox::Yes:
+        case QMessageBox::Save: {
+            saveTabs();
+            target = Dialogs::getSaveApkFilename(package, parentWidget());
+            if (target.isEmpty()) {
+                delete command;
+                return false;
+            }
+            command->add(package->createPackCommand(target), true);
+            if (app->settings->getOptimizeApk()) {
+                command->add(package->createZipalignCommand(target), false);
+            }
+            if (app->settings->getSignApk()) {
+                auto keystore = Keystore::get(parentWidget());
+                if (keystore) {
+                    command->add(package->createSignCommand(keystore.get(), target), false);
                 }
-            });
+            }
+            break;
         }
-        state.setUnpacked(success);
-    });
-    return command;
+        case QMessageBox::No:
+        case QMessageBox::Discard:
+            break;
+        default:
+            return false;
+        }
+    }
+
+    command->add(package->createInstallCommand(device.getSerial(), target));
+    command->run();
+    return true;
 }
 
-Command *Project::createPackCommand(const QString &target)
+bool Project::exploreProject()
 {
-    const QString source = getContentsPath();
-    const QString frameworks = Apktool::getFrameworksPath();
-    const bool aapt2 = app->settings->getUseAapt2();
-    const bool debuggable = app->settings->getMakeDebuggable();
-
-    auto apktoolBuild = new Apktool::Build(source, target, frameworks, aapt2, debuggable);
-
-    connect(apktoolBuild, &Command::started, this, [=]() {
-        qDebug() << qPrintable(QString("Packing\n  from: %1\n    to: %2\n").arg(source, target));
-        logModel.add(tr("Packing APK..."));
-        state.setCurrentStatus(ProjectState::Status::Packing);
-    });
-
-    connect(apktoolBuild, &Command::finished, this, [=](bool success) {
-        if (success) {
-            originalPath = target;
-            state.setModified(false);
-        } else {
-            logModel.add(tr("Error packing APK."), apktoolBuild->output(), LogEntry::Error);
-        }
-    });
-
-    return apktoolBuild;
+    return Utils::explore(package->getContentsPath());
 }
 
-Command *Project::createZipalignCommand(const QString &apk)
+Package *Project::getPackage() const
 {
-    auto zipalign = new Zipalign::Align(apk.isEmpty() ? getOriginalPath() : apk);
-
-    connect(zipalign, &Command::started, this, [=]() {
-        logModel.add(tr("Optimizing APK..."));
-        state.setCurrentStatus(ProjectState::Status::Optimizing);
-    });
-
-    connect(zipalign, &Command::finished, this, [=](bool success) {
-        if (!success) {
-            logModel.add(tr("Error optimizing APK."), zipalign->output(), LogEntry::Error);
-        }
-    });
-
-    return zipalign;
+    return package;
 }
 
-Command *Project::createSignCommand(const Keystore *keystore, const QString &apk)
+BaseSheet *Project::getCurrentTab() const
 {
-    auto apksigner = new Apksigner::Sign(apk.isEmpty() ? getOriginalPath() : apk, keystore);
-
-    connect(apksigner, &Command::started, this, [=]() {
-        logModel.add(tr("Signing APK..."));
-        state.setCurrentStatus(ProjectState::Status::Signing);
-    });
-
-    connect(apksigner, &Command::finished, this, [=](bool success) {
-        if (!success) {
-            logModel.add(tr("Error signing APK."), apksigner->output(), LogEntry::Error);
-        }
-    });
-
-    return apksigner;
+    return static_cast<BaseSheet *>(tabWidget->currentWidget());
 }
 
-Command *Project::createInstallCommand(const QString &serial, const QString &apk)
+QTabWidget *Project::tabs() const
 {
-    auto install = new Adb::Install(apk.isEmpty() ? getOriginalPath() : apk, serial);
-
-    connect(install, &Command::started, this, [=]() {
-        logModel.add(tr("Installing APK..."));
-        state.setCurrentStatus(ProjectState::Status::Installing);
-    });
-
-    connect(install, &Command::finished, this, [=](bool success) {
-        if (!success) {
-            logModel.add(tr("Error installing APK."), install->output(), LogEntry::Error);
-        }
-    });
-
-    return install;
+    return tabWidget;
 }
 
-void Project::LoadUnpackedCommand::run()
+bool Project::isUnsaved() const
 {
-    emit started();
+    return package->getState().isModified() || hasUnsavedTabs();
+}
 
-    const QString contentsPath = project->getContentsPath();
-
-    project->logModel.add(Project::tr("Reading APK contents..."));
-    project->manifest = new Manifest(
-        contentsPath + "/AndroidManifest.xml",
-        contentsPath + "/apktool.yml");
-    project->manifestModel.initialize(project->manifest);
-    project->iconsProxy.setManifestScopes(project->manifest->scopes);
-
-    auto initResourcesFuture = project->resourcesModel.initialize(contentsPath + "/res/");
-    auto initResourcesFutureWatcher = new QFutureWatcher<void>(this);
-    connect(initResourcesFutureWatcher, &QFutureWatcher<void>::finished, this, [=]() {
-        emit finished(true);
+int Project::addTab(BaseSheet *tab)
+{
+    // TODO Tab title is not retranslated on language change
+    const int tabIndex = tabWidget->addTab(tab, tab->getIcon(), tab->getTitle());
+    tabWidget->setCurrentIndex(tabIndex);
+    auto editor = qobject_cast<BaseEditableSheet *>(tab);
+    if (editor) {
+        connect(editor, &BaseEditableSheet::saved, this, [this]() {
+            // Project save indicator:
+            const_cast<PackageState &>(package->getState()).setModified(true);
+        });
+        connect(editor, &BaseEditableSheet::modifiedStateChanged, this, [=](bool modified) {
+            // Tab save indicator:
+            const QString indicator = QString("%1 ").arg(QChar(0x2022));
+            const int tabIndex = tabWidget->indexOf(editor);
+            QString tabTitle = tabWidget->tabText(tabIndex);
+            const bool titleHasModifiedMark = tabTitle.startsWith(indicator);
+            if (modified && !titleHasModifiedMark) {
+                tabTitle.prepend(indicator);
+                tabWidget->setTabText(tabIndex, tabTitle);
+            } else if (!modified && titleHasModifiedMark) {
+                tabTitle.remove(0, indicator.length());
+                tabWidget->setTabText(tabIndex, tabTitle);
+            }
+        });
+    }
+    connect(tab, &BaseSheet::titleChanged, this, [=](const QString &title) {
+        tabWidget->setTabText(tabWidget->indexOf(tab), title);
     });
-    initResourcesFutureWatcher->setFuture(initResourcesFuture);
+    connect(tab, &BaseSheet::iconChanged, this, [=](const QIcon &icon) {
+        tabWidget->setTabIcon(tabWidget->indexOf(tab), icon);
+    });
+    return tabIndex;
+}
+
+bool Project::closeTab(BaseSheet *tab)
+{
+    if (!tab->finalize()) {
+        return false;
+    }
+    delete tab;
+    return true;
+}
+
+void Project::setCurrentTab(BaseSheet *tab)
+{
+    tabWidget->setCurrentIndex(tabWidget->indexOf(tab));
+}
+
+bool Project::hasUnsavedTabs() const
+{
+    for (int index = 0; index < tabWidget->count(); ++index) {
+        auto editor = qobject_cast<BaseEditableSheet *>(tabWidget->widget(index));
+        if (editor && editor->isModified()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+BaseSheet *Project::getTabByIdentifier(const QString &identifier) const
+{
+    for (int index = 0; index < tabWidget->count(); ++index) {
+        auto tab = static_cast<BaseSheet *>(tabWidget->widget(index));
+        if (tab->property("identifier").compare(identifier) == 0) {
+            return tab;
+        }
+    }
+    return nullptr;
+}
+
+QWidget *Project::parentWidget() const
+{
+    return static_cast<QWidget *>(parent());
 }

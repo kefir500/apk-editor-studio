@@ -1,16 +1,16 @@
 #include "sheets/projectsheet.h"
 #include "windows/dialogs.h"
-#include "apk/project.h"
+#include "apk/package.h"
 #include "base/utils.h"
 #include <QEvent>
 #include <QPushButton>
 
-ProjectSheet::ProjectSheet(Project *project, QWidget *parent) : BaseActionSheet(parent)
+ProjectSheet::ProjectSheet(Package *package, QWidget *parent) : BaseActionSheet(parent)
 {
     //: This string refers to a single project (as in "Manager of a project").
     this->title = tr("Project Manager");
     this->icon = QIcon::fromTheme("tool-projectmanager");
-    this->project = project;
+    this->package = package;
 
     btnEditTitle = addButton();
     connect(btnEditTitle, &QPushButton::clicked, this, [this]() {
@@ -18,14 +18,14 @@ ProjectSheet::ProjectSheet(Project *project, QWidget *parent) : BaseActionSheet(
     });
 
     btnEditIcon = addButton();
-    connect(btnEditIcon, &QPushButton::clicked, project, [project, this]() {
+    connect(btnEditIcon, &QPushButton::clicked, package, [package, this]() {
         const QString iconSource(Dialogs::getOpenImageFilename(this));
-        project->setApplicationIcon(iconSource, this);
+        package->setApplicationIcon(iconSource, this);
     });
 
     btnExplore = addButton();
-    connect(btnExplore, &QPushButton::clicked, project, [project]() {
-        Utils::explore(project->getContentsPath());
+    connect(btnExplore, &QPushButton::clicked, package, [package]() {
+        Utils::explore(package->getContentsPath());
     });
 
     btnSave = addButton();
@@ -38,9 +38,9 @@ ProjectSheet::ProjectSheet(Project *project, QWidget *parent) : BaseActionSheet(
         emit apkInstallRequested();
     });
 
-    connect(project, &Project::stateUpdated, this, &ProjectSheet::onProjectUpdated, Qt::QueuedConnection);
+    connect(package, &Package::stateUpdated, this, &ProjectSheet::onPackageUpdated, Qt::QueuedConnection);
 
-    onProjectUpdated();
+    onPackageUpdated();
     retranslate();
 }
 
@@ -52,19 +52,19 @@ void ProjectSheet::changeEvent(QEvent *event)
     BaseActionSheet::changeEvent(event);
 }
 
-void ProjectSheet::onProjectUpdated()
+void ProjectSheet::onPackageUpdated()
 {
-    setTitle(project->getTitle());
-    btnEditTitle->setEnabled(project->getState().canEdit());
-    btnEditIcon->setEnabled(project->getState().canEdit());
-    btnExplore->setEnabled(project->getState().canExplore());
-    btnSave->setEnabled(project->getState().canSave());
-    btnInstall->setEnabled(project->getState().canInstall());
+    setTitle(package->getTitle());
+    btnEditTitle->setEnabled(package->getState().canEdit());
+    btnEditIcon->setEnabled(package->getState().canEdit());
+    btnExplore->setEnabled(package->getState().canExplore());
+    btnSave->setEnabled(package->getState().canSave());
+    btnInstall->setEnabled(package->getState().canInstall());
 }
 
 void ProjectSheet::retranslate()
 {
-    setTitle(project->getTitle());
+    setTitle(package->getTitle());
     tr("Edit APK"); // TODO For future use
     btnEditTitle->setText(tr("Application Title"));
     btnEditIcon->setText(tr("Application Icon"));

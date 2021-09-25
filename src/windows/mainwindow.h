@@ -4,16 +4,15 @@
 #include <QMainWindow>
 #include <QMap>
 
-class BaseSheet;
-class CentralWidget;
+class ProjectManager;
 class ExtraListItemProxy;
 class FileSystemModel;
 class LogView;
 class ManifestView;
+class Package;
+class PackageListModel;
 class Project;
-class ProjectItemsModel;
-class ProjectList;
-class ProjectWidget;
+class PackageList;
 class QActionGroup;
 class QDragEnterEvent;
 class QDropEvent;
@@ -22,14 +21,13 @@ class QRubberBand;
 class ResourceAbstractView;
 class ResourceItemsModel;
 class Toolbar;
-class WelcomeSheet;
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(ProjectItemsModel &projects, QWidget *parent = nullptr);
+    MainWindow(PackageListModel &packages, QWidget *parent = nullptr);
     ~MainWindow();
 
     void openApk(const QString &path);
@@ -40,7 +38,7 @@ public:
 
     void processArguments(const QStringList &arguments);
 
-    void setCurrentProject(Project *project);
+    void setCurrentPackage(Package *package);
 
 protected:
     void changeEvent(QEvent *event) override;
@@ -55,24 +53,26 @@ private:
     void initMenus();
     void retranslate();
 
-    void updateWindowForProject(Project *project);
-    void updateWindowForTab(BaseSheet *tab);
+    Package *addPackage(const QString &path);
+
+    void updateWindowForPackage(Package *package);
     void updateRecentMenu();
+    void onPackageSwitched(Package *package);
 
-    void onProjectAdded(const QModelIndex &parent, int first, int last);
-    void onProjectAboutToBeRemoved(const QModelIndex &parent, int first, int last);
-    void onProjectSwitched(Project *project);
-
-    Project *addProject(const QString &path);
     Project *getCurrentProject() const;
-    ProjectWidget *getCurrentProjectWidget() const;
-    BaseSheet *getCurrentTab() const;
 
     static int instances;
-    ProjectItemsModel &projects;
 
-    CentralWidget *centralWidget;
-    ProjectList *projectList;
+    PackageListModel &packages;
+    ExtraListItemProxy *welcomeItemProxy;
+    QByteArray defaultState;
+
+    // Used to display resource view headers even without project
+    ResourceItemsModel *dummyResourceModel;
+    FileSystemModel *dummyFileSystemModel;
+
+    ProjectManager *projectManager;
+    PackageList *packageList;
     LogView *logView;
     ManifestView *manifestTable;
     ResourceAbstractView *resourceTree;
@@ -87,39 +87,17 @@ private:
     QDockWidget *dockIcons;
     QMenu *menuFile;
     QMenu *menuRecent;
-    QMenu *menuTab;
     QMenu *menuTools;
     QMenu *menuSettings;
     QMenu *menuWindow;
     QMenu *menuHelp;
-    QAction *actionApkSave;
-    QAction *actionApkInstall;
-    QAction *actionApkExplore;
-    QAction *actionApkClose;
-    QAction *actionFileSave;
-    QAction *actionFileSaveAs;
     QAction *actionRecentClear;
     QAction *actionRecentNone;
-    QAction *actionProjectManager;
-    QAction *actionTitleEditor;
-    QAction *actionPermissionEditor;
-    QAction *actionViewSignatures;
-    QAction *actionCloneApk;
     QAction *actionNewWindow;
     QAction *actionAboutQt;
     QAction *actionAbout;
     QActionGroup *actionsLanguage;
     QRubberBand *rubberBand;
-
-    QMap<Project *, ProjectWidget *> projectWidgets;
-    WelcomeSheet *welcomePage;
-    ExtraListItemProxy *welcomeItemProxy;
-
-    QByteArray defaultState;
-
-    // Used to display resource view headers even without project
-    ResourceItemsModel *dummyResourceModel;
-    FileSystemModel *dummyFileSystemModel;
 };
 
 #endif // MAINWINDOW_H

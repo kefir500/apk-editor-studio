@@ -1,12 +1,12 @@
-#ifndef PROJECTITEMSMODEL_H
-#define PROJECTITEMSMODEL_H
+#ifndef PACKAGELISTMODEL_H
+#define PACKAGELISTMODEL_H
 
 #include <QAbstractListModel>
 
 class MainWindow;
-class Project;
+class Package;
 
-class ProjectItemsModel : public QAbstractListModel
+class PackageListModel : public QAbstractListModel
 {
     Q_OBJECT
 
@@ -21,20 +21,20 @@ public:
         ColumnCount
     };
 
-    ~ProjectItemsModel() override;
+    ~PackageListModel() override;
 
-    void add(Project *project);
-    bool close(Project *project);
+    void add(Package *package);
+    bool close(Package *package);
 
-    Project *at(int row) const;
-    Project *existing(const QString &filename) const;
+    Package *at(int row) const;
+    Package *existing(const QString &filename) const;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
-    QList<Project *> projects;
+    QList<Package *> packages;
 };
 
-#endif // PROJECTITEMSMODEL_H
+#endif // PACKAGELISTMODEL_H

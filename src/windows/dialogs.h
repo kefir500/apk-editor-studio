@@ -5,7 +5,7 @@
 #include <QMessageBox>
 
 class FileFormatList;
-class Project;
+class Package;
 
 namespace Dialogs
 {
@@ -22,7 +22,7 @@ namespace Dialogs
     QStringList getOpenImageFilenames(const QString &defaultPath, QWidget *parent = nullptr);
 
     QStringList getOpenApkFilenames(QWidget *parent = nullptr);
-    QString getSaveApkFilename(const Project *project, QWidget *parent = nullptr);
+    QString getSaveApkFilename(const Package *package, QWidget *parent = nullptr);
 
     QString getOpenKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);
     QString getSaveKeystoreFilename(const QString &defaultPath = QString(), QWidget *parent = nullptr);

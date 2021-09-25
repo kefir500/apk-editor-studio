@@ -16,6 +16,8 @@ protected:
     void changeEvent(QEvent *event) override;
 
 private:
+    void retranslate();
+
     QPushButton *btnOpen;
     QPushButton *btnInstall;
     QPushButton *btnExplorer;

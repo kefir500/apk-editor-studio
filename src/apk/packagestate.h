@@ -1,9 +1,9 @@
-#ifndef PROJECTSTATE_H
-#define PROJECTSTATE_H
+#ifndef PACKAGESTATE_H
+#define PACKAGESTATE_H
 
 #include <QObject>
 
-class ProjectState : public QObject
+class PackageState : public QObject
 {
     Q_OBJECT
 
@@ -18,7 +18,7 @@ public:
         Installing
     };
 
-    ProjectState();
+    PackageState();
 
     void setCurrentStatus(const Status &status);
     void setUnpacked(bool unpacked);
@@ -44,4 +44,4 @@ private:
     Status status;
 };
 
-#endif // PROJECTSTATE_H
+#endif // PACKAGESTATE_H

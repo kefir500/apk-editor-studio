@@ -3,14 +3,14 @@
 
 #include "sheets/baseactionsheet.h"
 
-class Project;
+class Package;
 
 class ProjectSheet : public BaseActionSheet
 {
     Q_OBJECT
 
 public:
-    explicit ProjectSheet(Project *project, QWidget *parent = nullptr);
+    explicit ProjectSheet(Package *package, QWidget *parent = nullptr);
 
 signals:
     void apkSaveRequested();
@@ -21,10 +21,10 @@ protected:
     void changeEvent(QEvent *event) override;
 
 private:
-    void onProjectUpdated();
+    void onPackageUpdated();
     void retranslate();
 
-    Project *project;
+    Package *package;
 
     QPushButton *btnEditIcon;
     QPushButton *btnEditTitle;
