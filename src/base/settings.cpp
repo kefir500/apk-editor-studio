@@ -125,7 +125,7 @@ QString Settings::getApktoolVersion() const
 
 bool Settings::getUseAapt2() const
 {
-    return settings->value("Apktool/Aapt2", false).toBool();
+    return settings->value("Apktool/Aapt2", true).toBool();
 }
 
 bool Settings::getMakeDebuggable() const

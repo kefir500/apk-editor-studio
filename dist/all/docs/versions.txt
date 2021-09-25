@@ -12,6 +12,7 @@
 - Added Android 12 support.
 - Updated Apktool to 2.6.0.
 - Migrated to a new syntax highlighter.
+- Set AAPT2 as a default option.
 - Remember resource tree columns state.
 - Remove empty resource tree nodes.
 - Fixed erroneous resource item deletion on open file.
