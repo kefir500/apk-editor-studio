@@ -162,6 +162,21 @@
         <translation>آیا مطمئن هستید که می خواهید این فهرست را حذف کنید؟</translation>
     </message>
     <message>
+        <source>Installing %1...</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully installed %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not install %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Download</source>
         <translation>دانلود</translation>
     </message>
@@ -198,6 +213,15 @@
         <source>Go</source>
         <extracomment>Navigate to a directory in a file manager.</extracomment>
         <translation>برو</translation>
+    </message>
+    <message>
+        <source>Tasks</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <extracomment>Refers to a menu bar (along with File, View, Window, Help, and similar items).</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -536,6 +560,10 @@
         <source>Enter the key password:</source>
         <translation>رمز ورود را وارد کنید:</translation>
     </message>
+    <message>
+        <source>You are using the built-in keystore provided for demonstrational purposes. It can be practical for testing or personal usage. However, if you plan to distribute this APK, we recommend you to specify/create your own keystore via Key Manager.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>KeystoreCreator</name>
@@ -585,12 +613,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Remove Temporary Files...</source>
-        <translation>حذف پرونده های موقت ...</translation>
+        <source>&amp;File</source>
+        <extracomment>Refers to a menu bar (along with Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>&amp;فایل</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>&amp;ابزارها</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>&amp;تنظیمات</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Help, and similar items).</extracomment>
+        <translation>&amp;نمایش</translation>
     </message>
     <message>
         <source>Tools</source>
         <translation>ابزار ها</translation>
+    </message>
+    <message>
+        <source>Remove Temporary Files...</source>
+        <translation>حذف پرونده های موقت ...</translation>
     </message>
     <message>
         <source>Projects</source>
@@ -613,55 +661,13 @@
         <translation>آیکون ها</translation>
     </message>
     <message>
-        <source>&amp;Save</source>
-        <translation>&amp;ذخیره</translation>
-    </message>
-    <message>
-        <source>Save &amp;As...</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>ذخیره &amp;به عنوان...</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation>&amp;فایل</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b</source>
-        <extracomment>Displayed as &quot;Tab&quot;.</extracomment>
+        <source>Filter</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&amp;Tools</source>
-        <translation>&amp;ابزارها</translation>
-    </message>
-    <message>
-        <source>&amp;Settings</source>
-        <translation>&amp;تنظیمات</translation>
-    </message>
-    <message>
-        <source>&amp;Window</source>
-        <translation>&amp;نمایش</translation>
-    </message>
-    <message>
         <source>&amp;Help</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Window, and similar items).</extracomment>
         <translation>&amp;کمک</translation>
-    </message>
-    <message>
-        <source>&amp;Save APK...</source>
-        <translation>&amp;ذخیره APK...</translation>
-    </message>
-    <message>
-        <source>&amp;Install APK...</source>
-        <translation>&amp;نصب APK...</translation>
-    </message>
-    <message>
-        <source>O&amp;pen Contents</source>
-        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
-        <translation>باز کردن &amp;مطالب</translation>
-    </message>
-    <message>
-        <source>&amp;Close APK</source>
-        <translation>&amp;بستن APK</translation>
     </message>
     <message>
         <source>Open &amp;Recent</source>
@@ -674,35 +680,6 @@
     <message>
         <source>No Recent Files</source>
         <translation>هیچ پرونده قبلی وجود ندارد</translation>
-    </message>
-    <message>
-        <source>&amp;Project Manager</source>
-        <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
-        <translation>&amp;مدیر پروژه</translation>
-    </message>
-    <message>
-        <source>Edit Application &amp;Title</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>ویرایش &amp;عنوان برنامه</translation>
-    </message>
-    <message>
-        <source>Edit Application &amp;Permissions</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>ویرایش &amp;مجوز های برنامه</translation>
-    </message>
-    <message>
-        <source>Edit Package &amp;Name</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>ویرایش بسته &amp;نام</translation>
-    </message>
-    <message>
-        <source>&amp;Clone APK</source>
-        <translation>&amp;کلون APK</translation>
-    </message>
-    <message>
-        <source>View &amp;Signatures</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>مشاهده &amp;امضا</translation>
     </message>
     <message>
         <source>Open &amp;New Window</source>
@@ -722,6 +699,15 @@
     <message>
         <source>Welcome</source>
         <translation>خوش آمدی</translation>
+    </message>
+    <message>
+        <source>This APK is already open:
+%1
+Do you want to reopen it and lose any unsaved changes?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
+        <translation>این پکیج از قبل باز بوده:
+%1
+آیا می خواهید دوباره آن را باز کنید . تغییرات ذخیره نشده را از دست می دهید؟</translation>
     </message>
     <message>
         <source>You have unsaved changes.
@@ -768,12 +754,13 @@ Do you want to discard them and exit?</source>
         <translation>حالت تک پنجره ای</translation>
     </message>
     <message>
-        <source>Check for updates automatically</source>
-        <translation>به روزرسانی ها را به صورت خودکار بررسی کنید</translation>
+        <source>Open .apk files in an existing window</source>
+        <extracomment>Don't translate the &quot;.apk&quot; part.</extracomment>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Language:</source>
-        <translation>زبان :</translation>
+        <source>Check for updates automatically</source>
+        <translation>به روزرسانی ها را به صورت خودکار بررسی کنید</translation>
     </message>
     <message>
         <source>Maximum recent files:</source>
@@ -806,6 +793,14 @@ Do you want to discard them and exit?</source>
         <source>Sign</source>
         <extracomment>This is a verb.</extracomment>
         <translation>امضاء</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation>زبان :</translation>
+    </message>
+    <message>
+        <source>Theme:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Extracted from environment variables by default</source>
@@ -874,8 +869,8 @@ Do you want to discard them and exit?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Enable</source>
-        <translation>فعال کردن</translation>
+        <source>Sign APK after packing</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open Key Manager</source>
@@ -886,6 +881,10 @@ Do you want to discard them and exit?</source>
         <source>Apksigner path:</source>
         <extracomment>&quot;Apksigner&quot; is the name of the tool, don't translate it.</extracomment>
         <translation>مسیر امضای پکیج:</translation>
+    </message>
+    <message>
+        <source>Optimize APK after packing</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Zipalign path:</source>
@@ -906,34 +905,21 @@ Do you want to discard them and exit?</source>
         <source>General</source>
         <translation>عمومی</translation>
     </message>
-</context>
-<context>
-    <name>PermissionEditor</name>
     <message>
-        <source>Permission Editor</source>
-        <extracomment>This string refers to multiple permissions (as in &quot;Editor of permissions&quot;).</extracomment>
-        <translation>ویرایشگر مجوز</translation>
+        <source>Appearance</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Add</source>
-        <translation>اضافه کردن</translation>
-    </message>
-    <message>
-        <source>Documentation</source>
-        <translation>مستندات</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>برداشتن</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove the %1 permission?</source>
-        <extracomment>%1 will be replaced with a programmatic Android permission name (e.g., &quot;android.permission.SEND_SMS&quot;, &quot;android.permission.CAMERA&quot;, etc.).</extracomment>
-        <translation>آیا مطمئن هستید که می خواهید مجوز %1 را حذف کنید؟</translation>
+        <source>The changes will take effect after the application restart.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
-    <name>Project</name>
+    <name>Package</name>
+    <message>
+        <source>Done.</source>
+        <translation>انجام شده.</translation>
+    </message>
     <message>
         <source>Error unpacking APK.</source>
         <translation>خطا در باز کردن APK.</translation>
@@ -975,24 +961,142 @@ Do you want to discard them and exit?</source>
         <translation>خطا هنگام نصب APK</translation>
     </message>
     <message>
-        <source>Done.</source>
-        <translation>انجام شده.</translation>
-    </message>
-    <message>
         <source>Reading APK contents...</source>
         <translation>خواندن محتوای APK...</translation>
     </message>
 </context>
 <context>
-    <name>ProjectItemsModel</name>
+    <name>PermissionEditor</name>
     <message>
-        <source>This APK is already open:
-%1
-Do you want to reopen it and lose any unsaved changes?</source>
-        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>این پکیج از قبل باز بوده:
-%1
-آیا می خواهید دوباره آن را باز کنید . تغییرات ذخیره نشده را از دست می دهید؟</translation>
+        <source>Permission Editor</source>
+        <extracomment>This string refers to multiple permissions (as in &quot;Editor of permissions&quot;).</extracomment>
+        <translation>ویرایشگر مجوز</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>اضافه کردن</translation>
+    </message>
+    <message>
+        <source>Documentation</source>
+        <translation>مستندات</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>برداشتن</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the %1 permission?</source>
+        <extracomment>%1 will be replaced with a programmatic Android permission name (e.g., &quot;android.permission.SEND_SMS&quot;, &quot;android.permission.CAMERA&quot;, etc.).</extracomment>
+        <translation>آیا مطمئن هستید که می خواهید مجوز %1 را حذف کنید؟</translation>
+    </message>
+</context>
+<context>
+    <name>Project</name>
+    <message>
+        <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
+        <translation>تغییر نام بسته عملکردی آزمایشی است که در حالت فعلی ممکن است منجر به خرابی و از بین رفتن اطلاعات شود. شما می توانید به بحث بپیوندید و به ما در بهبود این ویژگی کمک کنید 
+&lt;a href=&quot;%1&quot;&gt;اینجا&lt;/a&gt;.</translation>
+    </message>
+    <message>
+        <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
+        <translation>شبیه سازی APK به روشن کردن کد منبع منبع نیاز دارد. ادامه می دهید؟</translation>
+    </message>
+    <message>
+        <source>Settings have been applied. Please, reopen this APK.</source>
+        <translation>تنظیمات اعمال شده است لطفاً APK را دوباره باز کنید.</translation>
+    </message>
+    <message>
+        <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
+        <translation>لطفاً برای بازکردن کد منبع و شبیه سازی APK ، این APK را دوباره باز کنید.</translation>
+    </message>
+    <message>
+        <source>Package Name:</source>
+        <translation>نام بسته:</translation>
+    </message>
+    <message>
+        <source>Could not clone the APK.</source>
+        <translation>نمی توان APK را شبیه سازی کرد.</translation>
+    </message>
+    <message>
+        <source>APK has been successfully cloned!</source>
+        <translation>APK با موفقیت کلون شد!</translation>
+    </message>
+    <message>
+        <source>Do you want to save changes before packing?</source>
+        <translation>آیا می خواهید قبل از بسته بندی تغییرات را ذخیره کنید؟</translation>
+    </message>
+    <message>
+        <source>Do you want to save changes and pack the APK before installing?</source>
+        <translation>آیا می خواهید قبل از نصب تغییرات را ذخیره کرده و APK را بسته بندی کنید؟</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectManager</name>
+    <message>
+        <source>Are you sure you want to close this APK?
+Any unsaved changes will be lost.</source>
+        <translation>آیا مطمئن هستید که می خواهید این APK را ببندید؟
+هرگونه تغییر ذخیره نشده از بین خواهد رفت.</translation>
+    </message>
+    <message>
+        <source>&amp;Save APK...</source>
+        <translation>&amp;ذخیره APK...</translation>
+    </message>
+    <message>
+        <source>&amp;Install APK...</source>
+        <translation>&amp;نصب APK...</translation>
+    </message>
+    <message>
+        <source>O&amp;pen Contents</source>
+        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
+        <translation>باز کردن &amp;مطالب</translation>
+    </message>
+    <message>
+        <source>&amp;Close APK</source>
+        <translation>&amp;بستن APK</translation>
+    </message>
+    <message>
+        <source>&amp;Project Manager</source>
+        <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
+        <translation>&amp;مدیر پروژه</translation>
+    </message>
+    <message>
+        <source>Edit Application &amp;Title</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>ویرایش &amp;عنوان برنامه</translation>
+    </message>
+    <message>
+        <source>Edit Application &amp;Permissions</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>ویرایش &amp;مجوز های برنامه</translation>
+    </message>
+    <message>
+        <source>Edit Package &amp;Name</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>ویرایش بسته &amp;نام</translation>
+    </message>
+    <message>
+        <source>&amp;Clone APK</source>
+        <translation>&amp;کلون APK</translation>
+    </message>
+    <message>
+        <source>View &amp;Signatures</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>مشاهده &amp;امضا</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;ذخیره</translation>
+    </message>
+    <message>
+        <source>Save &amp;As...</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>ذخیره &amp;به عنوان...</translation>
+    </message>
+    <message>
+        <source>Ta&amp;b</source>
+        <extracomment>Displayed as &quot;Tab&quot;. Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1025,52 +1129,6 @@ Do you want to reopen it and lose any unsaved changes?</source>
     <message>
         <source>Install APK</source>
         <translation>پکیج را نصب کنید</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectWidget</name>
-    <message>
-        <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
-        <translation>تغییر نام بسته عملکردی آزمایشی است که در حالت فعلی ممکن است منجر به خرابی و از بین رفتن اطلاعات شود. شما می توانید به بحث بپیوندید و به ما در بهبود این ویژگی کمک کنید 
-&lt;a href=&quot;%1&quot;&gt;اینجا&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-        <translation>شبیه سازی APK به روشن کردن کد منبع منبع نیاز دارد. ادامه می دهید؟</translation>
-    </message>
-    <message>
-        <source>Settings have been applied. Please, reopen this APK.</source>
-        <translation>تنظیمات اعمال شده است لطفاً APK را دوباره باز کنید.</translation>
-    </message>
-    <message>
-        <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
-        <translation>لطفاً برای بازکردن کد منبع و شبیه سازی APK ، این APK را دوباره باز کنید.</translation>
-    </message>
-    <message>
-        <source>Package Name:</source>
-        <translation>نام بسته:</translation>
-    </message>
-    <message>
-        <source>APK has been successfully cloned!</source>
-        <translation>APK با موفقیت کلون شد!</translation>
-    </message>
-    <message>
-        <source>Could not clone the APK.</source>
-        <translation>نمی توان APK را شبیه سازی کرد.</translation>
-    </message>
-    <message>
-        <source>Do you want to save changes before packing?</source>
-        <translation>آیا می خواهید قبل از بسته بندی تغییرات را ذخیره کنید؟</translation>
-    </message>
-    <message>
-        <source>Do you want to save changes and pack the APK before installing?</source>
-        <translation>آیا می خواهید قبل از نصب تغییرات را ذخیره کرده و APK را بسته بندی کنید؟</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to close this APK?
-Any unsaved changes will be lost.</source>
-        <translation>آیا مطمئن هستید که می خواهید این APK را ببندید؟
-هرگونه تغییر ذخیره نشده از بین خواهد رفت.</translation>
     </message>
 </context>
 <context>
@@ -1161,6 +1219,13 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Could not retrieve the list of certificates.</source>
         <translation>لیست گواهی ها بازیابی نمی شود.</translation>
+    </message>
+</context>
+<context>
+    <name>SystemTheme</name>
+    <message>
+        <source>System Theme</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1330,17 +1395,6 @@ Any unsaved changes will be lost.</source>
         <source>Array</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#TypedArray).</extracomment>
         <translation>آرایه</translation>
-    </message>
-</context>
-<context>
-    <name>XmlResourceModel</name>
-    <message>
-        <source>Key</source>
-        <translation>کلید</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation>مقدار</translation>
     </message>
 </context>
 <context>

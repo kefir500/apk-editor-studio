@@ -162,6 +162,21 @@
         <translation>Biztos vagy benne, hogy törlöd ezt a mappát?</translation>
     </message>
     <message>
+        <source>Installing %1...</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
+        <translation>%1 telepítése...</translation>
+    </message>
+    <message>
+        <source>Successfully installed %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
+        <translation>A(z) %1 sikeresen telepítve</translation>
+    </message>
+    <message>
+        <source>Could not install %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
+        <translation>A(z) %1 telepítése sikertelen</translation>
+    </message>
+    <message>
         <source>Download</source>
         <translation>Letöltés</translation>
     </message>
@@ -198,6 +213,15 @@
         <source>Go</source>
         <extracomment>Navigate to a directory in a file manager.</extracomment>
         <translation>Ugrás</translation>
+    </message>
+    <message>
+        <source>Tasks</source>
+        <translation>Feladatok</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <extracomment>Refers to a menu bar (along with File, View, Window, Help, and similar items).</extracomment>
+        <translation>Szerkesztés</translation>
     </message>
 </context>
 <context>
@@ -536,6 +560,10 @@
         <source>Enter the key password:</source>
         <translation>Add meg a kulcs jelszavát:</translation>
     </message>
+    <message>
+        <source>You are using the built-in keystore provided for demonstrational purposes. It can be practical for testing or personal usage. However, if you plan to distribute this APK, we recommend you to specify/create your own keystore via Key Manager.</source>
+        <translation>A beépített kulcstárat használja, ami demonstrációs célokra készült. Praktikus lehet tesztelésre vagy személyes használatra. Ha azonban ezt az APK -t terjeszteni is kívánja, javasoljuk, hogy adja meg / hozza létre saját kulcstárolóját a Kulcskezelőn keresztül.</translation>
+    </message>
 </context>
 <context>
     <name>KeystoreCreator</name>
@@ -585,12 +613,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Remove Temporary Files...</source>
-        <translation>Ideiglenes fájlok törlése...</translation>
+        <source>&amp;File</source>
+        <extracomment>Refers to a menu bar (along with Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>&amp;Fájl</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>&amp;Eszközök</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>&amp;Beállítások</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Help, and similar items).</extracomment>
+        <translation>&amp;Ablak</translation>
     </message>
     <message>
         <source>Tools</source>
         <translation>Eszközök</translation>
+    </message>
+    <message>
+        <source>Remove Temporary Files...</source>
+        <translation>Ideiglenes fájlok törlése...</translation>
     </message>
     <message>
         <source>Projects</source>
@@ -613,55 +661,13 @@
         <translation>Ikonok</translation>
     </message>
     <message>
-        <source>&amp;Save</source>
-        <translation>&amp;Mentés</translation>
-    </message>
-    <message>
-        <source>Save &amp;As...</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Menté&amp;s másként...</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation>&amp;Fájl</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b</source>
-        <extracomment>Displayed as &quot;Tab&quot;.</extracomment>
-        <translation>Fül</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation>&amp;Eszközök</translation>
-    </message>
-    <message>
-        <source>&amp;Settings</source>
-        <translation>&amp;Beállítások</translation>
-    </message>
-    <message>
-        <source>&amp;Window</source>
-        <translation>&amp;Ablak</translation>
+        <source>Filter</source>
+        <translation>Szűrő</translation>
     </message>
     <message>
         <source>&amp;Help</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Window, and similar items).</extracomment>
         <translation>&amp;Súgó</translation>
-    </message>
-    <message>
-        <source>&amp;Save APK...</source>
-        <translation>APK &amp;mentése...</translation>
-    </message>
-    <message>
-        <source>&amp;Install APK...</source>
-        <translation>APK &amp;telepítése...</translation>
-    </message>
-    <message>
-        <source>O&amp;pen Contents</source>
-        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
-        <translation>&amp;Tartalom megnyitása</translation>
-    </message>
-    <message>
-        <source>&amp;Close APK</source>
-        <translation>APK &amp;bezárása</translation>
     </message>
     <message>
         <source>Open &amp;Recent</source>
@@ -674,35 +680,6 @@
     <message>
         <source>No Recent Files</source>
         <translation>Nincsenek legutóbbi fájlok</translation>
-    </message>
-    <message>
-        <source>&amp;Project Manager</source>
-        <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
-        <translation>&amp;Projektkezelő</translation>
-    </message>
-    <message>
-        <source>Edit Application &amp;Title</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Alkalmazás&amp;név szerkesztése</translation>
-    </message>
-    <message>
-        <source>Edit Application &amp;Permissions</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Alkalmazás&amp;engedélyek szerkesztése</translation>
-    </message>
-    <message>
-        <source>Edit Package &amp;Name</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Csomagnév szerkesztése</translation>
-    </message>
-    <message>
-        <source>&amp;Clone APK</source>
-        <translation>APK klónozása</translation>
-    </message>
-    <message>
-        <source>View &amp;Signatures</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Aláírások megtekintése</translation>
     </message>
     <message>
         <source>Open &amp;New Window</source>
@@ -722,6 +699,15 @@
     <message>
         <source>Welcome</source>
         <translation>Üdvözöljük</translation>
+    </message>
+    <message>
+        <source>This APK is already open:
+%1
+Do you want to reopen it and lose any unsaved changes?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
+        <translation>A következő helyen lévő APK már meg van nyitva:
+%1
+Biztos újra akarod nyitni (ezzel minden nem mentett módosítás elvész)?</translation>
     </message>
     <message>
         <source>You have unsaved changes.
@@ -767,12 +753,13 @@ Do you want to discard them and exit?</source>
         <translation>Egyablakos mód</translation>
     </message>
     <message>
-        <source>Check for updates automatically</source>
-        <translation>Frissítések automatikus ellenőrzése</translation>
+        <source>Open .apk files in an existing window</source>
+        <extracomment>Don't translate the &quot;.apk&quot; part.</extracomment>
+        <translation>Apk fájlok megnyitása egy meglévő ablakban</translation>
     </message>
     <message>
-        <source>Language:</source>
-        <translation>Nyelv:</translation>
+        <source>Check for updates automatically</source>
+        <translation>Frissítések automatikus ellenőrzése</translation>
     </message>
     <message>
         <source>Maximum recent files:</source>
@@ -805,6 +792,14 @@ Do you want to discard them and exit?</source>
         <source>Sign</source>
         <extracomment>This is a verb.</extracomment>
         <translation>Aláírás</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation>Nyelv:</translation>
+    </message>
+    <message>
+        <source>Theme:</source>
+        <translation>Téma:</translation>
     </message>
     <message>
         <source>Extracted from environment variables by default</source>
@@ -873,8 +868,8 @@ Do you want to discard them and exit?</source>
         <translation>Csomag hibakereséshez</translation>
     </message>
     <message>
-        <source>Enable</source>
-        <translation>Engedélyezés</translation>
+        <source>Sign APK after packing</source>
+        <translation>APK aláírása a becsomagolás után</translation>
     </message>
     <message>
         <source>Open Key Manager</source>
@@ -885,6 +880,10 @@ Do you want to discard them and exit?</source>
         <source>Apksigner path:</source>
         <extracomment>&quot;Apksigner&quot; is the name of the tool, don't translate it.</extracomment>
         <translation>Apksigner elérési út:</translation>
+    </message>
+    <message>
+        <source>Optimize APK after packing</source>
+        <translation>APK optimalizálása a becsomagolás után</translation>
     </message>
     <message>
         <source>Zipalign path:</source>
@@ -905,34 +904,21 @@ Do you want to discard them and exit?</source>
         <source>General</source>
         <translation>Általános</translation>
     </message>
-</context>
-<context>
-    <name>PermissionEditor</name>
     <message>
-        <source>Permission Editor</source>
-        <extracomment>This string refers to multiple permissions (as in &quot;Editor of permissions&quot;).</extracomment>
-        <translation>Engedélyszerkesztő</translation>
+        <source>Appearance</source>
+        <translation>Megjelenés</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation>Hozzáadás</translation>
-    </message>
-    <message>
-        <source>Documentation</source>
-        <translation>Dokumentáció</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Eltávolítás</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove the %1 permission?</source>
-        <extracomment>%1 will be replaced with a programmatic Android permission name (e.g., &quot;android.permission.SEND_SMS&quot;, &quot;android.permission.CAMERA&quot;, etc.).</extracomment>
-        <translation>Biztosan eltávolítod az alábbi engedélyt: %1?</translation>
+        <source>The changes will take effect after the application restart.</source>
+        <translation>A módosítások az alkalmazás újraindítása után lépnek életbe.</translation>
     </message>
 </context>
 <context>
-    <name>Project</name>
+    <name>Package</name>
+    <message>
+        <source>Done.</source>
+        <translation>Kész.</translation>
+    </message>
     <message>
         <source>Error unpacking APK.</source>
         <translation>Hiba az APK kibontásakor.</translation>
@@ -974,24 +960,140 @@ Do you want to discard them and exit?</source>
         <translation>APK telepítési hiba.</translation>
     </message>
     <message>
-        <source>Done.</source>
-        <translation>Kész.</translation>
-    </message>
-    <message>
         <source>Reading APK contents...</source>
         <translation>APK tartalmának kiolvasása...</translation>
     </message>
 </context>
 <context>
-    <name>ProjectItemsModel</name>
+    <name>PermissionEditor</name>
     <message>
-        <source>This APK is already open:
-%1
-Do you want to reopen it and lose any unsaved changes?</source>
-        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>A következő helyen lévő APK már meg van nyitva:
-%1
-Biztos újra akarod nyitni (ezzel minden nem mentett módosítás elvész)?</translation>
+        <source>Permission Editor</source>
+        <extracomment>This string refers to multiple permissions (as in &quot;Editor of permissions&quot;).</extracomment>
+        <translation>Engedélyszerkesztő</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Hozzáadás</translation>
+    </message>
+    <message>
+        <source>Documentation</source>
+        <translation>Dokumentáció</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eltávolítás</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the %1 permission?</source>
+        <extracomment>%1 will be replaced with a programmatic Android permission name (e.g., &quot;android.permission.SEND_SMS&quot;, &quot;android.permission.CAMERA&quot;, etc.).</extracomment>
+        <translation>Biztosan eltávolítod az alábbi engedélyt: %1?</translation>
+    </message>
+</context>
+<context>
+    <name>Project</name>
+    <message>
+        <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
+        <translation>A csomagok átnevezése egy kísérleti funkció, amely jelenlegi állapotában összeomlásokhoz és adatvesztéshez vezethet. Csatlakozhatsz a beszélgetéshez és segíthetsz nekünk a funkció javításában &lt;a href=&quot;%1&quot;&gt;itt&lt;/a&gt;.</translation>
+    </message>
+    <message>
+        <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
+        <translation>Az APK klónozásához be kell kapcsolni a forráskód dekompilálását. Folytatás?</translation>
+    </message>
+    <message>
+        <source>Settings have been applied. Please, reopen this APK.</source>
+        <translation>A beállítások alkalmazásra kerültek. Nyisd meg újra ezt az APK-t.</translation>
+    </message>
+    <message>
+        <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
+        <translation>Kérjük, nyisd meg újra ezt az APK-t a forráskód kicsomagolásához és az APK klónozásához.</translation>
+    </message>
+    <message>
+        <source>Package Name:</source>
+        <translation>Csomagnév:</translation>
+    </message>
+    <message>
+        <source>Could not clone the APK.</source>
+        <translation>Az APK klónozása sikertelen.</translation>
+    </message>
+    <message>
+        <source>APK has been successfully cloned!</source>
+        <translation>Az APK sikeresen klónozva!</translation>
+    </message>
+    <message>
+        <source>Do you want to save changes before packing?</source>
+        <translation>Elmented a változásokat a becsomagolás előtt?</translation>
+    </message>
+    <message>
+        <source>Do you want to save changes and pack the APK before installing?</source>
+        <translation>Elmented a változásokat és becsomagolod az APK fájlt a telepítés előtt?</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectManager</name>
+    <message>
+        <source>Are you sure you want to close this APK?
+Any unsaved changes will be lost.</source>
+        <translation>Biztosan bezárod ezt az APK fájlt? A mentetlen változások elvesznek.</translation>
+    </message>
+    <message>
+        <source>&amp;Save APK...</source>
+        <translation>APK &amp;mentése...</translation>
+    </message>
+    <message>
+        <source>&amp;Install APK...</source>
+        <translation>APK &amp;telepítése...</translation>
+    </message>
+    <message>
+        <source>O&amp;pen Contents</source>
+        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
+        <translation>&amp;Tartalom megnyitása</translation>
+    </message>
+    <message>
+        <source>&amp;Close APK</source>
+        <translation>APK &amp;bezárása</translation>
+    </message>
+    <message>
+        <source>&amp;Project Manager</source>
+        <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
+        <translation>&amp;Projektkezelő</translation>
+    </message>
+    <message>
+        <source>Edit Application &amp;Title</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>Alkalmazás&amp;név szerkesztése</translation>
+    </message>
+    <message>
+        <source>Edit Application &amp;Permissions</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>Alkalmazás&amp;engedélyek szerkesztése</translation>
+    </message>
+    <message>
+        <source>Edit Package &amp;Name</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>Csomagnév szerkesztése</translation>
+    </message>
+    <message>
+        <source>&amp;Clone APK</source>
+        <translation>APK klónozása</translation>
+    </message>
+    <message>
+        <source>View &amp;Signatures</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>Aláírások megtekintése</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;Mentés</translation>
+    </message>
+    <message>
+        <source>Save &amp;As...</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>Menté&amp;s másként...</translation>
+    </message>
+    <message>
+        <source>Ta&amp;b</source>
+        <extracomment>Displayed as &quot;Tab&quot;. Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>Fül</translation>
     </message>
 </context>
 <context>
@@ -1024,50 +1126,6 @@ Biztos újra akarod nyitni (ezzel minden nem mentett módosítás elvész)?</tra
     <message>
         <source>Install APK</source>
         <translation>APK telepítése</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectWidget</name>
-    <message>
-        <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
-        <translation>A csomagok átnevezése egy kísérleti funkció, amely jelenlegi állapotában összeomlásokhoz és adatvesztéshez vezethet. Csatlakozhatsz a beszélgetéshez és segíthetsz nekünk a funkció javításában &lt;a href=&quot;%1&quot;&gt;itt&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-        <translation>Az APK klónozásához be kell kapcsolni a forráskód dekompilálását. Folytatás?</translation>
-    </message>
-    <message>
-        <source>Settings have been applied. Please, reopen this APK.</source>
-        <translation>A beállítások alkalmazásra kerültek. Nyisd meg újra ezt az APK-t.</translation>
-    </message>
-    <message>
-        <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
-        <translation>Kérjük, nyisd meg újra ezt az APK-t a forráskód kicsomagolásához és az APK klónozásához.</translation>
-    </message>
-    <message>
-        <source>Package Name:</source>
-        <translation>Csomagnév:</translation>
-    </message>
-    <message>
-        <source>APK has been successfully cloned!</source>
-        <translation>Az APK sikeresen klónozva!</translation>
-    </message>
-    <message>
-        <source>Could not clone the APK.</source>
-        <translation>Az APK klónozása sikertelen.</translation>
-    </message>
-    <message>
-        <source>Do you want to save changes before packing?</source>
-        <translation>Elmented a változásokat a becsomagolás előtt?</translation>
-    </message>
-    <message>
-        <source>Do you want to save changes and pack the APK before installing?</source>
-        <translation>Elmented a változásokat és becsomagolod az APK fájlt a telepítés előtt?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to close this APK?
-Any unsaved changes will be lost.</source>
-        <translation>Biztosan bezárod ezt az APK fájlt? A mentetlen változások elvesznek.</translation>
     </message>
 </context>
 <context>
@@ -1158,6 +1216,13 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Could not retrieve the list of certificates.</source>
         <translation>Nem sikerült beolvasni a tanúsítványok listáját.</translation>
+    </message>
+</context>
+<context>
+    <name>SystemTheme</name>
+    <message>
+        <source>System Theme</source>
+        <translation>Rendszertéma</translation>
     </message>
 </context>
 <context>
@@ -1327,17 +1392,6 @@ Any unsaved changes will be lost.</source>
         <source>Array</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#TypedArray).</extracomment>
         <translation>Tömb</translation>
-    </message>
-</context>
-<context>
-    <name>XmlResourceModel</name>
-    <message>
-        <source>Key</source>
-        <translation>Kulcs</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation>Érték</translation>
     </message>
 </context>
 <context>

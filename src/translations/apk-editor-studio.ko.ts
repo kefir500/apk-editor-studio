@@ -162,6 +162,21 @@
         <translation>이 디렉토리를 삭제 하시겠습니까?</translation>
     </message>
     <message>
+        <source>Installing %1...</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully installed %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not install %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Download</source>
         <translation>다운로드</translation>
     </message>
@@ -198,6 +213,15 @@
         <source>Go</source>
         <extracomment>Navigate to a directory in a file manager.</extracomment>
         <translation>Go</translation>
+    </message>
+    <message>
+        <source>Tasks</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <extracomment>Refers to a menu bar (along with File, View, Window, Help, and similar items).</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -536,6 +560,10 @@
         <source>Enter the key password:</source>
         <translation>키 비밀번호 입력:</translation>
     </message>
+    <message>
+        <source>You are using the built-in keystore provided for demonstrational purposes. It can be practical for testing or personal usage. However, if you plan to distribute this APK, we recommend you to specify/create your own keystore via Key Manager.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>KeystoreCreator</name>
@@ -585,12 +613,32 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Remove Temporary Files...</source>
-        <translation>임시 파일 제거 ...</translation>
+        <source>&amp;File</source>
+        <extracomment>Refers to a menu bar (along with Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>파일</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation> 도구</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>설정</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Help, and similar items).</extracomment>
+        <translation>윈도우</translation>
     </message>
     <message>
         <source>Tools</source>
         <translation> 도구</translation>
+    </message>
+    <message>
+        <source>Remove Temporary Files...</source>
+        <translation>임시 파일 제거 ...</translation>
     </message>
     <message>
         <source>Projects</source>
@@ -613,55 +661,13 @@
         <translation>아이콘</translation>
     </message>
     <message>
-        <source>&amp;Save</source>
-        <translation>저장</translation>
-    </message>
-    <message>
-        <source>Save &amp;As...</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>다른이름으로 저장...</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation>파일</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b</source>
-        <extracomment>Displayed as &quot;Tab&quot;.</extracomment>
+        <source>Filter</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&amp;Tools</source>
-        <translation> 도구</translation>
-    </message>
-    <message>
-        <source>&amp;Settings</source>
-        <translation>설정</translation>
-    </message>
-    <message>
-        <source>&amp;Window</source>
-        <translation>윈도우</translation>
-    </message>
-    <message>
         <source>&amp;Help</source>
+        <extracomment>Refers to a menu bar (along with File, Edit, View, Window, and similar items).</extracomment>
         <translation>도움말</translation>
-    </message>
-    <message>
-        <source>&amp;Save APK...</source>
-        <translation>APK 저장</translation>
-    </message>
-    <message>
-        <source>&amp;Install APK...</source>
-        <translation>APK 설치</translation>
-    </message>
-    <message>
-        <source>O&amp;pen Contents</source>
-        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
-        <translation>내용 열기</translation>
-    </message>
-    <message>
-        <source>&amp;Close APK</source>
-        <translation>APK 닫기</translation>
     </message>
     <message>
         <source>Open &amp;Recent</source>
@@ -674,35 +680,6 @@
     <message>
         <source>No Recent Files</source>
         <translation>최근 파일 없음</translation>
-    </message>
-    <message>
-        <source>&amp;Project Manager</source>
-        <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
-        <translation>프로젝트 관리자</translation>
-    </message>
-    <message>
-        <source>Edit Application &amp;Title</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>어플리케이션 타이틀 편집</translation>
-    </message>
-    <message>
-        <source>Edit Application &amp;Permissions</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>어플리케이션 권한 편집</translation>
-    </message>
-    <message>
-        <source>Edit Package &amp;Name</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>패키지 이름 편집</translation>
-    </message>
-    <message>
-        <source>&amp;Clone APK</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>View &amp;Signatures</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>서명 보기</translation>
     </message>
     <message>
         <source>Open &amp;New Window</source>
@@ -722,6 +699,15 @@
     <message>
         <source>Welcome</source>
         <translation>환영합니다</translation>
+    </message>
+    <message>
+        <source>This APK is already open:
+%1
+Do you want to reopen it and lose any unsaved changes?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
+        <translation>이 APK는 이미 열려 있음: 
+%1
+다시 열어서 저장하지 않은 변경 내용을 삭제하시겠습니까?</translation>
     </message>
     <message>
         <source>You have unsaved changes.
@@ -768,12 +754,13 @@ Do you want to discard them and exit?</source>
         <translation>단일 윈도우 모드</translation>
     </message>
     <message>
-        <source>Check for updates automatically</source>
-        <translation>자동 업데이트 확인</translation>
+        <source>Open .apk files in an existing window</source>
+        <extracomment>Don't translate the &quot;.apk&quot; part.</extracomment>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Language:</source>
-        <translation>언어:</translation>
+        <source>Check for updates automatically</source>
+        <translation>자동 업데이트 확인</translation>
     </message>
     <message>
         <source>Maximum recent files:</source>
@@ -806,6 +793,14 @@ Do you want to discard them and exit?</source>
         <source>Sign</source>
         <extracomment>This is a verb.</extracomment>
         <translation>서명</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation>언어:</translation>
+    </message>
+    <message>
+        <source>Theme:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Extracted from environment variables by default</source>
@@ -874,8 +869,8 @@ Do you want to discard them and exit?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Enable</source>
-        <translation>사용</translation>
+        <source>Sign APK after packing</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open Key Manager</source>
@@ -886,6 +881,10 @@ Do you want to discard them and exit?</source>
         <source>Apksigner path:</source>
         <extracomment>&quot;Apksigner&quot; is the name of the tool, don't translate it.</extracomment>
         <translation>Apksigner 경로:</translation>
+    </message>
+    <message>
+        <source>Optimize APK after packing</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Zipalign path:</source>
@@ -906,34 +905,21 @@ Do you want to discard them and exit?</source>
         <source>General</source>
         <translation>일반</translation>
     </message>
-</context>
-<context>
-    <name>PermissionEditor</name>
     <message>
-        <source>Permission Editor</source>
-        <extracomment>This string refers to multiple permissions (as in &quot;Editor of permissions&quot;).</extracomment>
-        <translation>권한 에디터</translation>
+        <source>Appearance</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Add</source>
-        <translation>추가</translation>
-    </message>
-    <message>
-        <source>Documentation</source>
-        <translation>문서</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>제거</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to remove the %1 permission?</source>
-        <extracomment>%1 will be replaced with a programmatic Android permission name (e.g., &quot;android.permission.SEND_SMS&quot;, &quot;android.permission.CAMERA&quot;, etc.).</extracomment>
-        <translation>%1 권한을 제거 하시겠습니까?</translation>
+        <source>The changes will take effect after the application restart.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
-    <name>Project</name>
+    <name>Package</name>
+    <message>
+        <source>Done.</source>
+        <translation>완료</translation>
+    </message>
     <message>
         <source>Error unpacking APK.</source>
         <translation>APK 언패키징 오류.</translation>
@@ -975,24 +961,141 @@ Do you want to discard them and exit?</source>
         <translation>APK 설치 오류.</translation>
     </message>
     <message>
-        <source>Done.</source>
-        <translation>완료</translation>
-    </message>
-    <message>
         <source>Reading APK contents...</source>
         <translation>APK 내용 읽기...</translation>
     </message>
 </context>
 <context>
-    <name>ProjectItemsModel</name>
+    <name>PermissionEditor</name>
     <message>
-        <source>This APK is already open:
-%1
-Do you want to reopen it and lose any unsaved changes?</source>
-        <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>이 APK는 이미 열려 있음: 
-%1
-다시 열어서 저장하지 않은 변경 내용을 삭제하시겠습니까?</translation>
+        <source>Permission Editor</source>
+        <extracomment>This string refers to multiple permissions (as in &quot;Editor of permissions&quot;).</extracomment>
+        <translation>권한 에디터</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>추가</translation>
+    </message>
+    <message>
+        <source>Documentation</source>
+        <translation>문서</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>제거</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the %1 permission?</source>
+        <extracomment>%1 will be replaced with a programmatic Android permission name (e.g., &quot;android.permission.SEND_SMS&quot;, &quot;android.permission.CAMERA&quot;, etc.).</extracomment>
+        <translation>%1 권한을 제거 하시겠습니까?</translation>
+    </message>
+</context>
+<context>
+    <name>Project</name>
+    <message>
+        <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
+        <translation>패키지 이름 변경은 현재 상태에서 충돌 및 데이터 손실로 이어질 수있는 실험적인 기능입니다.  &lt;a href=&quot;%1&quot;&gt;여기&lt;/a&gt;에서 토론에 참여하여이 기능을 개선 할 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Settings have been applied. Please, reopen this APK.</source>
+        <translation>설정을 적용되었습니다. 이 APK를 다시 여세요.</translation>
+    </message>
+    <message>
+        <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Package Name:</source>
+        <translation>패지지 이름:</translation>
+    </message>
+    <message>
+        <source>Could not clone the APK.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>APK has been successfully cloned!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to save changes before packing?</source>
+        <translation>패키징하기 전 변경 사항을 저장 하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Do you want to save changes and pack the APK before installing?</source>
+        <translation>설치하기 전에 변경 사항을 저장하고 패키징 하시겠습니까?</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectManager</name>
+    <message>
+        <source>Are you sure you want to close this APK?
+Any unsaved changes will be lost.</source>
+        <translation>이 APK를 닫으시겠습니까?
+저장되지 않은 변경 사항은 손실됩니다.</translation>
+    </message>
+    <message>
+        <source>&amp;Save APK...</source>
+        <translation>APK 저장</translation>
+    </message>
+    <message>
+        <source>&amp;Install APK...</source>
+        <translation>APK 설치</translation>
+    </message>
+    <message>
+        <source>O&amp;pen Contents</source>
+        <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
+        <translation>내용 열기</translation>
+    </message>
+    <message>
+        <source>&amp;Close APK</source>
+        <translation>APK 닫기</translation>
+    </message>
+    <message>
+        <source>&amp;Project Manager</source>
+        <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
+        <translation>프로젝트 관리자</translation>
+    </message>
+    <message>
+        <source>Edit Application &amp;Title</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>어플리케이션 타이틀 편집</translation>
+    </message>
+    <message>
+        <source>Edit Application &amp;Permissions</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>어플리케이션 권한 편집</translation>
+    </message>
+    <message>
+        <source>Edit Package &amp;Name</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>패키지 이름 편집</translation>
+    </message>
+    <message>
+        <source>&amp;Clone APK</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>View &amp;Signatures</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>서명 보기</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>저장</translation>
+    </message>
+    <message>
+        <source>Save &amp;As...</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>다른이름으로 저장...</translation>
+    </message>
+    <message>
+        <source>Ta&amp;b</source>
+        <extracomment>Displayed as &quot;Tab&quot;. Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1025,51 +1128,6 @@ Do you want to reopen it and lose any unsaved changes?</source>
     <message>
         <source>Install APK</source>
         <translation>APK 설치</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectWidget</name>
-    <message>
-        <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
-        <translation>패키지 이름 변경은 현재 상태에서 충돌 및 데이터 손실로 이어질 수있는 실험적인 기능입니다.  &lt;a href=&quot;%1&quot;&gt;여기&lt;/a&gt;에서 토론에 참여하여이 기능을 개선 할 수 있습니다.</translation>
-    </message>
-    <message>
-        <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Settings have been applied. Please, reopen this APK.</source>
-        <translation>설정을 적용되었습니다. 이 APK를 다시 여세요.</translation>
-    </message>
-    <message>
-        <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Package Name:</source>
-        <translation>패지지 이름:</translation>
-    </message>
-    <message>
-        <source>APK has been successfully cloned!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not clone the APK.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you want to save changes before packing?</source>
-        <translation>패키징하기 전 변경 사항을 저장 하시겠습니까?</translation>
-    </message>
-    <message>
-        <source>Do you want to save changes and pack the APK before installing?</source>
-        <translation>설치하기 전에 변경 사항을 저장하고 패키징 하시겠습니까?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to close this APK?
-Any unsaved changes will be lost.</source>
-        <translation>이 APK를 닫으시겠습니까?
-저장되지 않은 변경 사항은 손실됩니다.</translation>
     </message>
 </context>
 <context>
@@ -1160,6 +1218,13 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Could not retrieve the list of certificates.</source>
         <translation>인증서 목록을 검색 할 수 없습니다.</translation>
+    </message>
+</context>
+<context>
+    <name>SystemTheme</name>
+    <message>
+        <source>System Theme</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1329,17 +1394,6 @@ Any unsaved changes will be lost.</source>
         <source>Array</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#TypedArray).</extracomment>
         <translation>배열</translation>
-    </message>
-</context>
-<context>
-    <name>XmlResourceModel</name>
-    <message>
-        <source>Key</source>
-        <translation>키</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation>값</translation>
     </message>
 </context>
 <context>
