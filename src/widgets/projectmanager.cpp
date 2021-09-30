@@ -221,12 +221,12 @@ QMenu *ProjectManager::getTabMenu() const
     return menuTab;
 }
 
-bool ProjectManager::event(QEvent *event)
+void ProjectManager::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         retranslate();
     }
-    return QObject::event(event);
+    QWidget::changeEvent(event);
 }
 
 void ProjectManager::onPackageAdded(const QModelIndex &, int first, int last)

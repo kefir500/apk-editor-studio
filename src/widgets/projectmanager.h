@@ -42,7 +42,7 @@ signals:
     void currentPackageStateChanged(Package *package);
 
 protected:
-    bool event(QEvent *event) override;
+    void changeEvent(QEvent *event) override;
 
 private:
     void onPackageAdded(const QModelIndex &parent, int first, int last);
