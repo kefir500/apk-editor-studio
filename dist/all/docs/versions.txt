@@ -6,8 +6,8 @@
 - Added code folding.
 - Added code indentation control (Tab, Shift+Tab).
 - Added custom dark theme for all platforms.
-- Added ability to filter resource tree.
 - Added stand-alone version of Android Explorer.
+- Added ability to filter resource tree.
 - Added ability to build debuggable APKs.
 - Added Android 12 support.
 - Updated Apktool to 2.6.0.
@@ -15,10 +15,12 @@
 - Set AAPT2 as a default option.
 - Remember resource tree columns state.
 - Remove empty resource tree nodes.
+- Improved Android Explorer window.
 - Fixed erroneous resource item deletion on open file.
 - Added explicit warning for default keystore.
 - Windows: Fixed WebP image format support.
 - Windows: Changed default editor font to Consolas.
+- Linux: Dropped DEB package.
 - Linux: Updated Qt to 5.15.2.
 
 ## 1.5.0
