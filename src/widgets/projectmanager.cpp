@@ -100,6 +100,7 @@ ProjectManager::ProjectManager(PackageListModel &packages, QWidget *parent)
     menuTab = new QMenu(this);
     menuTab->setEnabled(false);
 
+    onPackageAdded({}, 0, packages.rowCount() - 1);
     connect(&packages, &PackageListModel::rowsInserted, this, &ProjectManager::onPackageAdded);
     connect(&packages, &PackageListModel::rowsAboutToBeRemoved, this, &ProjectManager::onPackageAboutToBeRemoved);
 
