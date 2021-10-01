@@ -300,6 +300,11 @@ QIcon Utils::getLocaleFlag(const QLocale &locale)
     if (localeSegments.count() <= 1) {
         return QPixmap();
     }
+    const QString languageCode = localeSegments.at(0);
+    if (languageCode == "ckb") {
+        // Override the flag icon for Kurdistan
+        return QIcon::fromTheme(QStringLiteral("flag-ku"));
+    }
     const QString countryCode = localeSegments.at(1).toLower();
     return QIcon::fromTheme(QString("flag-%1").arg(countryCode));
 }
