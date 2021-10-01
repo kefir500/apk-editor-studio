@@ -139,7 +139,13 @@ void ProjectManager::setCurrentProject(Project *project)
 
 void ProjectManager::setCurrentProject(Package *package)
 {
-    setCurrentProject(projects.value(package, nullptr));
+    if (package) {
+        auto project = projects.value(package);
+        Q_ASSERT(project);
+        setCurrentProject(project);
+    } else {
+        setCurrentProject(static_cast<Project *>(nullptr));
+    }
 }
 
 void ProjectManager::setDefaultWidget(QWidget *defaultWidget)
