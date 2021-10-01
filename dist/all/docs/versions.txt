@@ -16,6 +16,7 @@
 - Remember resource tree columns state.
 - Remove empty resource tree nodes.
 - Improved Android Explorer window.
+- Improved dynamic GUI translation.
 - Fixed erroneous resource item deletion on open file.
 - Added explicit warning for default keystore.
 - Windows: Fixed WebP image format support.
