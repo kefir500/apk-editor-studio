@@ -29,14 +29,16 @@ ImageSheet::ImageSheet(const ResourceModelIndex &index, QWidget *parent) : BaseF
     rubberBand = new QRubberBand(QRubberBand::Rectangle, view);
 
     zoomGroup = new ZoomGroup(this);
-    labelSize = new QLabel(this);
+    sizeValueLabel = new QLabel(this);
 
-    QWidget *controls = new QWidget(this);
-    QFormLayout *controlsLayout = new QFormLayout(controls);
-    controlsLayout->addRow(tr("Size"), labelSize);
-    controlsLayout->addRow(tr("Zoom"), zoomGroup);
+    auto controls = new QWidget(this);
+    auto controlsLayout = new QFormLayout(controls);
+    sizeLabel = new QLabel(this);
+    zoomLabel = new QLabel(this);
+    controlsLayout->addRow(sizeLabel, sizeValueLabel);
+    controlsLayout->addRow(zoomLabel, zoomGroup);
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    auto layout = new QVBoxLayout(this);
     layout->addWidget(view);
     layout->addWidget(controls);
     layout->setMargin(0);
@@ -46,6 +48,7 @@ ImageSheet::ImageSheet(const ResourceModelIndex &index, QWidget *parent) : BaseF
     connect(zoomGroup, &ZoomGroup::zoomReset, view, &GraphicsView::zoomReset);
     connect(view, &GraphicsView::zoomed, zoomGroup, &ZoomGroup::setZoomInfo);
 
+    retranslate();
     load();
 }
 
@@ -105,12 +108,26 @@ bool ImageSheet::saveAs()
 
 void ImageSheet::setSizeInfo(int width, int height)
 {
-    labelSize->setText(QString("%1x%2").arg(width).arg(height));
+    sizeValueLabel->setText(QString("%1x%2").arg(width).arg(height));
 }
 
 void ImageSheet::setSizeInfo(const QSize &size)
 {
     setSizeInfo(size.width(), size.height());
+}
+
+void ImageSheet::retranslate()
+{
+    sizeLabel->setText(tr("Size"));
+    zoomLabel->setText(tr("Zoom"));
+}
+
+void ImageSheet::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        retranslate();
+    }
+    BaseFileSheet::changeEvent(event);
 }
 
 void ImageSheet::dragEnterEvent(QDragEnterEvent *event)

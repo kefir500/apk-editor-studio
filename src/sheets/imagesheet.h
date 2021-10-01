@@ -64,6 +64,7 @@ public:
     bool saveAs() override;
 
 protected:
+    void changeEvent(QEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragLeaveEvent(QDragLeaveEvent *event) override;
     void dropEvent(QDropEvent *event) override;
@@ -74,10 +75,14 @@ private:
     void setSizeInfo(int width, int height);
     void setSizeInfo(const QSize &size);
 
+    void retranslate();
+
     GraphicsView *view;
     QGraphicsScene *scene;
     QGraphicsPixmapItem *pixmapItem;
-    QLabel *labelSize;
+    QLabel *sizeLabel;
+    QLabel *sizeValueLabel;
+    QLabel *zoomLabel;
     ZoomGroup *zoomGroup;
     QRubberBand *rubberBand;
 };
