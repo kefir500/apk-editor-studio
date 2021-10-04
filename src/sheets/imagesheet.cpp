@@ -1,7 +1,9 @@
 #include "sheets/imagesheet.h"
+#include "base/application.h"
 #include "base/fileformatlist.h"
 #include "base/utils.h"
 #include "windows/dialogs.h"
+#include <QAction>
 #include <QFormLayout>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
@@ -27,25 +29,52 @@ ImageSheet::ImageSheet(const ResourceModelIndex &index, QWidget *parent) : BaseF
     view->setScene(scene);
     rubberBand = new QRubberBand(QRubberBand::Rectangle, view);
 
-    zoomGroup = new ZoomGroup(this);
+    auto actionZoomIn = app->actions.getZoomIn(this);
+    auto actionZoomOut = app->actions.getZoomOut(this);
+    auto actionZoomReset = app->actions.getZoomReset(this);
+
+    connect(actionZoomIn, &QAction::triggered, view, &GraphicsView::zoomIn);
+    connect(actionZoomOut, &QAction::triggered, view, &GraphicsView::zoomOut);
+    connect(actionZoomReset, &QAction::triggered, view, &GraphicsView::zoomReset);
+
+    addActionSeparator();
+    addAction(actionZoomIn);
+    addAction(actionZoomOut);
+    addAction(actionZoomReset);
+
+    sizeLabel = new QLabel(this);
     sizeValueLabel = new QLabel(this);
+
+    zoomLabel = new QLabel(this);
+    auto zoomValueLabel = new QLabel(this);
+    auto btnZoomIn = new QToolButton(this);
+    auto btnZoomOut = new QToolButton(this);
+    auto btnZoomReset = new QToolButton(this);
+    btnZoomIn->setDefaultAction(actionZoomIn);
+    btnZoomOut->setDefaultAction(actionZoomOut);
+    btnZoomReset->setDefaultAction(actionZoomReset);
+    auto zoomControlsLayout = new QHBoxLayout;
+    zoomControlsLayout->setMargin(0);
+    zoomControlsLayout->addWidget(btnZoomIn);
+    zoomControlsLayout->addWidget(btnZoomReset);
+    zoomControlsLayout->addWidget(btnZoomOut);
+    zoomControlsLayout->addWidget(zoomValueLabel);
+    zoomControlsLayout->addStretch();
 
     auto controls = new QWidget(this);
     auto controlsLayout = new QFormLayout(controls);
-    sizeLabel = new QLabel(this);
-    zoomLabel = new QLabel(this);
     controlsLayout->addRow(sizeLabel, sizeValueLabel);
-    controlsLayout->addRow(zoomLabel, zoomGroup);
+    controlsLayout->addRow(zoomLabel, zoomControlsLayout);
 
     auto layout = new QVBoxLayout(this);
     layout->addWidget(view);
     layout->addWidget(controls);
     layout->setMargin(0);
 
-    connect(zoomGroup, &ZoomGroup::zoomIn, view, &GraphicsView::zoomIn);
-    connect(zoomGroup, &ZoomGroup::zoomOut, view, &GraphicsView::zoomOut);
-    connect(zoomGroup, &ZoomGroup::zoomReset, view, &GraphicsView::zoomReset);
-    connect(view, &GraphicsView::zoomed, zoomGroup, &ZoomGroup::setZoomInfo);
+    connect(view, &GraphicsView::zoomed, this, [zoomValueLabel](qreal factor) {
+        const int percentage = static_cast<int>(factor * 100);
+        zoomValueLabel->setText(QString("%1%").arg(percentage));
+    });
 
     retranslate();
     load();
@@ -63,16 +92,6 @@ bool ImageSheet::load()
     setModified(false);
 
     return true;
-}
-
-void ImageSheet::setImage(const QPixmap &image)
-{
-    scene->clear();
-    view->zoomReset();
-    view->setSceneRect(0, 0, image.width(), image.height());
-    pixmapItem = scene->addPixmap(image);
-    pixmapItem->setTransformationMode(Qt::SmoothTransformation);
-    setSizeInfo(image.size());
 }
 
 bool ImageSheet::save(const QString &as)
@@ -97,22 +116,6 @@ bool ImageSheet::saveAs()
         return false;
     }
     return save(destination);
-}
-
-void ImageSheet::setSizeInfo(int width, int height)
-{
-    sizeValueLabel->setText(QString("%1x%2").arg(width).arg(height));
-}
-
-void ImageSheet::setSizeInfo(const QSize &size)
-{
-    setSizeInfo(size.width(), size.height());
-}
-
-void ImageSheet::retranslate()
-{
-    sizeLabel->setText(tr("Size"));
-    zoomLabel->setText(tr("Zoom"));
 }
 
 void ImageSheet::changeEvent(QEvent *event)
@@ -162,36 +165,20 @@ void ImageSheet::resizeEvent(QResizeEvent *event)
     rubberBand->setGeometry(geometry());
 }
 
-// ZoomGroup
-
-ZoomGroup::ZoomGroup(QWidget *parent) : QWidget(parent)
+void ImageSheet::setImage(const QPixmap &image)
 {
-    QToolButton *btnZoomIn = new QToolButton(this);
-    QToolButton *btnZoomOut = new QToolButton(this);
-    QToolButton *btnZoomNormal = new QToolButton(this);
-    btnZoomIn->setIcon(QIcon::fromTheme("zoom-in"));
-    btnZoomOut->setIcon(QIcon::fromTheme("zoom-out"));
-    btnZoomNormal->setIcon(QIcon::fromTheme("zoom-normal"));
-
-    labelZoom = new QLabel(this);
-
-    QHBoxLayout *layoutZoom = new QHBoxLayout(this);
-    layoutZoom->setMargin(0);
-    layoutZoom->addWidget(btnZoomIn);
-    layoutZoom->addWidget(btnZoomNormal);
-    layoutZoom->addWidget(btnZoomOut);
-    layoutZoom->addWidget(labelZoom);
-    layoutZoom->addStretch();
-
-    connect(btnZoomIn, &QToolButton::clicked, this, &ZoomGroup::zoomIn);
-    connect(btnZoomOut, &QToolButton::clicked, this, &ZoomGroup::zoomOut);
-    connect(btnZoomNormal, &QToolButton::clicked, this, &ZoomGroup::zoomReset);
+    scene->clear();
+    view->zoomReset();
+    view->setSceneRect(0, 0, image.width(), image.height());
+    pixmapItem = scene->addPixmap(image);
+    pixmapItem->setTransformationMode(Qt::SmoothTransformation);
+    sizeValueLabel->setText(QString("%1x%2").arg(image.width()).arg(image.height()));
 }
 
-void ZoomGroup::setZoomInfo(qreal factor)
+void ImageSheet::retranslate()
 {
-    const int percentage = static_cast<int>(factor * 100);
-    labelZoom->setText(QString("%1%").arg(percentage));
+    sizeLabel->setText(tr("Size"));
+    zoomLabel->setText(tr("Zoom"));
 }
 
 // GraphicsView

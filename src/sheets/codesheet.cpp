@@ -38,7 +38,7 @@ CodeSheet::CodeSheet(const ResourceModelIndex &index, QWidget *parent) : BaseFil
 
     // Initialize actions:
 
-    addSeparator();
+    addActionSeparator();
 
     auto actionFind = app->actions.getFind(this);
     addAction(actionFind);

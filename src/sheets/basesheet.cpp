@@ -28,7 +28,7 @@ void BaseSheet::setSheetIcon(const QIcon &icon)
     emit iconChanged(icon);
 }
 
-void BaseSheet::addSeparator()
+void BaseSheet::addActionSeparator()
 {
     auto separator = new QAction(this);
     separator->setSeparator(true);

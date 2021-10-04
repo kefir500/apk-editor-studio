@@ -39,6 +39,10 @@ public:
     QAction *getFindPrevious(QWidget *parent) const;
     QAction *getReplace(QWidget *parent) const;
 
+    QAction *getZoomIn(QWidget *parent) const;
+    QAction *getZoomOut(QWidget *parent) const;
+    QAction *getZoomReset(QWidget *parent) const;
+
     QAction *getVisitWebPage(QObject *parent = nullptr) const;
     QAction *getVisitSourcePage(QObject *parent = nullptr) const;
     QAction *getVisitDonatePage(QObject *parent = nullptr) const;

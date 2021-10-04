@@ -210,6 +210,45 @@ QAction *ActionProvider::getReplace(QWidget *parent) const
     return action;
 }
 
+QAction *ActionProvider::getZoomIn(QWidget *parent) const
+{
+    auto action = new QAction(QIcon::fromTheme("zoom-in"), {}, parent);
+    action->setShortcut(QKeySequence::ZoomIn);
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+
+    auto translate = [=]() { action->setText(tr("Zoom In")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    return action;
+}
+
+QAction *ActionProvider::getZoomOut(QWidget *parent) const
+{
+    auto action = new QAction(QIcon::fromTheme("zoom-out"), {}, parent);
+    action->setShortcut(QKeySequence::ZoomOut);
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+
+    auto translate = [=]() { action->setText(tr("Zoom Out")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    return action;
+}
+
+QAction *ActionProvider::getZoomReset(QWidget *parent) const
+{
+    auto action = new QAction(QIcon::fromTheme("zoom-normal"), {}, parent);
+    action->setShortcut(QKeySequence("Ctrl+/"));
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+
+    auto translate = [=]() { action->setText(tr("Reset Zoom")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    return action;
+}
+
 QAction *ActionProvider::getVisitWebPage(QObject *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("help-website"), {}, parent);

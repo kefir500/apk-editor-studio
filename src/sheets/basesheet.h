@@ -23,7 +23,7 @@ signals:
 protected:
     void setSheetTitle(const QString &title);
     void setSheetIcon(const QIcon &icon);
-    void addSeparator();
+    void addActionSeparator();
 
 private:
     QString title;

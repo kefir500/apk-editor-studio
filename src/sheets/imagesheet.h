@@ -31,25 +31,6 @@ private:
     const qreal zoomDelta = 1.25;
 };
 
-// ZoomGroup
-
-class ZoomGroup : public QWidget
-{
-    Q_OBJECT
-
-public:
-    explicit ZoomGroup(QWidget *parent = nullptr);
-    void setZoomInfo(qreal factor);
-
-signals:
-    void zoomIn();
-    void zoomOut();
-    void zoomReset();
-
-private:
-    QLabel *labelZoom;
-};
-
 // ImageSheet
 
 class ImageSheet : public BaseFileSheet
@@ -72,9 +53,6 @@ protected:
 
 private:
     void setImage(const QPixmap &image);
-    void setSizeInfo(int width, int height);
-    void setSizeInfo(const QSize &size);
-
     void retranslate();
 
     GraphicsView *view;
@@ -83,7 +61,7 @@ private:
     QLabel *sizeLabel;
     QLabel *sizeValueLabel;
     QLabel *zoomLabel;
-    ZoomGroup *zoomGroup;
+    QLabel *zoomValueLabel;
     QRubberBand *rubberBand;
 };
 

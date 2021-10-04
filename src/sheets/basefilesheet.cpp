@@ -33,10 +33,10 @@ BaseFileSheet::BaseFileSheet(const ResourceModelIndex &index, QWidget *parent) :
     connect(actionExplore, &QAction::triggered, this, &BaseFileSheet::explore);
 
     addAction(actionReplace);
-    addSeparator();
+    addActionSeparator();
     addAction(actionSave);
     addAction(actionSaveAs);
-    addSeparator();
+    addActionSeparator();
     addAction(actionExplore);
 
     retranslate();
