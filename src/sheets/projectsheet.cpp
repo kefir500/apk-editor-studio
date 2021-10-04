@@ -7,9 +7,7 @@
 
 ProjectSheet::ProjectSheet(Package *package, QWidget *parent) : BaseActionSheet(parent)
 {
-    //: This string refers to a single project (as in "Manager of a project").
-    this->title = tr("Project Manager");
-    this->icon = QIcon::fromTheme("tool-projectmanager");
+    setSheetIcon(QIcon::fromTheme("tool-projectmanager"));
     this->package = package;
 
     btnEditTitle = addButton();
@@ -54,7 +52,7 @@ void ProjectSheet::changeEvent(QEvent *event)
 
 void ProjectSheet::onPackageUpdated()
 {
-    setTitle(package->getTitle());
+    setHeading(package->getTitle());
     btnEditTitle->setEnabled(package->getState().canEdit());
     btnEditIcon->setEnabled(package->getState().canEdit());
     btnExplore->setEnabled(package->getState().canExplore());
@@ -64,7 +62,8 @@ void ProjectSheet::onPackageUpdated()
 
 void ProjectSheet::retranslate()
 {
-    setTitle(package->getTitle());
+    //: This string refers to a single project (as in "Manager of a project").
+    setSheetTitle(tr("Project Manager"));
     tr("Edit APK"); // TODO For future use
     btnEditTitle->setText(tr("Application Title"));
     btnEditIcon->setText(tr("Application Icon"));

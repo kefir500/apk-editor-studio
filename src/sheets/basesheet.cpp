@@ -16,6 +16,18 @@ bool BaseSheet::finalize()
     return true;
 }
 
+void BaseSheet::setSheetTitle(const QString &title)
+{
+    this->title = title;
+    emit titleChanged(title);
+}
+
+void BaseSheet::setSheetIcon(const QIcon &icon)
+{
+    this->icon = icon;
+    emit iconChanged(icon);
+}
+
 void BaseSheet::addSeparator()
 {
     auto separator = new QAction(this);

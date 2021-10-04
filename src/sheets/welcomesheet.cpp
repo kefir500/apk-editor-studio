@@ -31,7 +31,7 @@ void WelcomeSheet::changeEvent(QEvent *event)
 void WelcomeSheet::retranslate()
 {
     //: Don't translate the "APK Editor Studio" part.
-    setTitle(tr("Welcome to the APK Editor Studio."));
+    setHeading(tr("Welcome to the APK Editor Studio."));
     btnOpen->setText(tr("Open APK"));
     btnInstall->setText(tr("Install APK"));
     btnExplorer->setText(app->translate("AndroidExplorer", "Android Explorer"));

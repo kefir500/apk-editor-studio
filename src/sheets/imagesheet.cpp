@@ -19,8 +19,7 @@
 
 ImageSheet::ImageSheet(const ResourceModelIndex &index, QWidget *parent) : BaseFileSheet(index, parent)
 {
-    title = index.path().section('/', -2);
-
+    setSheetTitle(index.path().section('/', -2));
     setAcceptDrops(true);
 
     scene = new QGraphicsScene(this);
@@ -59,15 +58,9 @@ bool ImageSheet::load()
         return false;
     }
 
-    // Set image:
     setImage(pixmap);
+    setSheetIcon(pixmap);
     setModified(false);
-
-    // Set tab icon:
-    QIcon icon;
-    icon.addPixmap(pixmap);
-    this->icon = icon;
-    emit iconChanged(icon);
 
     return true;
 }

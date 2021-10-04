@@ -15,7 +15,12 @@ public:
     TitleSheet(const Package *package, QWidget *parent = nullptr);
     bool save(const QString &as = QString()) override;
 
+protected:
+    void changeEvent(QEvent *event) override;
+
 private:
+    void retranslate();
+
     QTableView *table;
     TitleItemsModel *model = nullptr;
 };

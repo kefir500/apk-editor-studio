@@ -5,7 +5,7 @@
 
 BaseFileSheet::BaseFileSheet(const ResourceModelIndex &index, QWidget *parent) : BaseEditableSheet(parent), index(index)
 {
-    icon = index.icon();
+    setSheetIcon(index.icon());
 
     // Initialize file watcher:
 

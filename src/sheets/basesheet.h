@@ -21,8 +21,11 @@ signals:
     void iconChanged(const QIcon &icon);
 
 protected:
+    void setSheetTitle(const QString &title);
+    void setSheetIcon(const QIcon &icon);
     void addSeparator();
 
+private:
     QString title;
     QIcon icon;
 };

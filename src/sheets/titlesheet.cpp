@@ -8,8 +8,7 @@
 
 TitleSheet::TitleSheet(const Package *package, QWidget *parent) : BaseEditableSheet(parent)
 {
-    title = tr("Application Title");
-    icon = QIcon::fromTheme("tool-titleeditor");
+    setSheetIcon(QIcon::fromTheme("tool-titleeditor"));
 
     table = new QTableView(this);
     table->setAlternatingRowColors(true);
@@ -32,6 +31,8 @@ TitleSheet::TitleSheet(const Package *package, QWidget *parent) : BaseEditableSh
     connect(model, &TitleItemsModel::dataChanged, this, [this]() {
         setModified(true);
     });
+
+    retranslate();
 }
 
 bool TitleSheet::save(const QString &as)
@@ -44,4 +45,17 @@ bool TitleSheet::save(const QString &as)
     setModified(false);
     emit saved();
     return true;
+}
+
+void TitleSheet::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        retranslate();
+    }
+    BaseEditableSheet::changeEvent(event);
+}
+
+void TitleSheet::retranslate()
+{
+    setSheetTitle(tr("Application Title"));
 }

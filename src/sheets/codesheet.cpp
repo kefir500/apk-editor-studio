@@ -12,12 +12,13 @@
 CodeSheet::CodeSheet(const ResourceModelIndex &index, QWidget *parent) : BaseFileSheet(index, parent)
 {
     const QString filename = index.path();
-    title = filename.section('/', -2);
+    QString sheetTitle = filename.section('/', -2);
     QRegularExpression guid("^{\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}}");
-    if (guid.match(title).hasMatch()) {
-        title = title.split('/').last();
+    if (guid.match(sheetTitle).hasMatch()) {
+        sheetTitle = sheetTitle.split('/').last();
     }
-    icon = index.icon();
+    setSheetTitle(sheetTitle);
+    setSheetIcon(index.icon());
 
     editor = new CodeEditor(this);
     editor->setDefinition(app->highlightingRepository.definitionForFileName(filename));

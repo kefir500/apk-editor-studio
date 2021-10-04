@@ -14,7 +14,7 @@ class BaseActionSheet : public BaseSheet
 
 public:
     explicit BaseActionSheet(QWidget *parent = nullptr);
-    void setTitle(const QString &title);
+    void setHeading(const QString &title);
 
 protected:
     void addWidget(QWidget *widget);

@@ -38,7 +38,7 @@ BaseActionSheet::BaseActionSheet(QWidget *parent) : BaseSheet(parent)
     layout->addStretch();
 }
 
-void BaseActionSheet::setTitle(const QString &title)
+void BaseActionSheet::setHeading(const QString &title)
 {
     label->setText(title);
 }
