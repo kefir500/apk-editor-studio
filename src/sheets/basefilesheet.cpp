@@ -13,6 +13,7 @@ BaseFileSheet::BaseFileSheet(const ResourceModelIndex &index, QWidget *parent) :
     connect(&watcher, &QFileSystemWatcher::fileChanged, this, [this]() {
         if (this->index.isValid()) {
             this->index.update();
+            watcher.addPath(this->index.path()); // Re-add watcher if the file was deleted
             if (!isModified()) {
                 load();
             }
