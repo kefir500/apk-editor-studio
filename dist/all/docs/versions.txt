@@ -1,5 +1,8 @@
 # Version History
 
+## 1.7.0
+- Fixed error while saving the currently open resource.
+
 ## 1.6.0
 - Added Smali syntax highlighting.
 - Added Find and Replace features to code editor.

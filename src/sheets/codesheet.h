@@ -5,7 +5,6 @@
 
 class CodeEditor;
 class CodeSearchBar;
-class QFile;
 
 class CodeSheet : public BaseFileSheet
 {
@@ -22,7 +21,6 @@ private:
     void findSelectedText();
     void replaceSelectedText();
 
-    QFile *file;
     QTextCodec *codec;
     CodeEditor *editor;
     CodeSearchBar *searchBar;

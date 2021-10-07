@@ -32,7 +32,6 @@ CodeSheet::CodeSheet(const ResourceModelIndex &index, QWidget *parent) : BaseFil
     layout->setMargin(0);
     layout->setSpacing(0);
 
-    file = new QFile(filename, this);
     load();
     connect(editor, &QPlainTextEdit::modificationChanged, this, &CodeSheet::setModified);
 
@@ -65,40 +64,33 @@ CodeSheet::CodeSheet(const ResourceModelIndex &index, QWidget *parent) : BaseFil
 
 bool CodeSheet::load()
 {
-    file->close();
-    if (file->open(QFile::ReadWrite)) {
-        QTextStream stream(file);
-        stream.setCodec("UTF-8");
+    QFile file(index.path());
+    if (file.open(QFile::ReadOnly)) {
+        QTextStream stream(&file);
+        stream.setCodec("UTF-8"); // Fallback if no codec is detected on further read
         auto cursor = editor->textCursor();
         const int selectionStart = cursor.selectionStart();
         const int selectionEnd = cursor.selectionEnd();
         const int scrollPosition = editor->verticalScrollBar()->value();
         editor->setPlainText(stream.readAll());
-        codec = stream.codec();
+        codec = stream.codec(); // Qt automatically deletes the codec on exit
         cursor.setPosition(selectionStart);
         cursor.setPosition(selectionEnd, QTextCursor::KeepAnchor);
         editor->setTextCursor(cursor);
         editor->verticalScrollBar()->setValue(scrollPosition);
         setModified(false);
         return true;
-    } else {
-        qWarning() << "Error: Could not open code resource file";
-        return false;
     }
+    qWarning() << "Error: Could not open code resource file";
+    return false;
 }
 
 bool CodeSheet::save(const QString &as)
 {
-    QFile *file = this->file;
-    if (!as.isEmpty()) {
-        file = new QFile(as, this);
-        file->open(QFile::WriteOnly);
-    }
-
-    bool result;
-    if (file->isWritable()) {
-        file->resize(0);
-        QTextStream stream(file);
+    QFile file(as.isEmpty() ? index.path() : as);
+    if (file.open(QFile::WriteOnly)) {
+        file.resize(0);
+        QTextStream stream(&file);
         stream.setCodec(codec);
         stream.setGenerateByteOrderMark(codec->name() != "UTF-8");
         stream << editor->toPlainText();
@@ -106,16 +98,10 @@ bool CodeSheet::save(const QString &as)
             setModified(false);
             emit saved();
         }
-        result = true;
-    } else {
-        qWarning() << "Error: Could not save code resource file";
-        result = false;
+        return true;
     }
-
-    if (!as.isEmpty()) {
-        delete file;
-    }
-    return result;
+    qWarning() << "Error: Could not save code resource file";
+    return false;
 }
 
 void CodeSheet::keyPressEvent(QKeyEvent *event)
