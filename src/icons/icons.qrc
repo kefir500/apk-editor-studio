@@ -90,6 +90,7 @@
         <file>apk-editor-studio/actions/30x30/zoom-out.png</file>
         <file>apk-editor-studio/actions/32x32/dialog-close.png</file>
         <file>apk-editor-studio/actions/32x32/edit-find-case-sensitive.png</file>
+        <file>apk-editor-studio/actions/32x32/edit-find-regex.png</file>
         <file>apk-editor-studio/actions/32x32/edit-find-replace.png</file>
         <file>apk-editor-studio/actions/32x32/edit-find-replace-all.png</file>
         <file>apk-editor-studio/actions/32x32/go-down-search.png</file>
@@ -411,6 +412,7 @@
         <file>apk-editor-studio-dark/actions/30x30/toolbar-spacer.png</file>
         <file>apk-editor-studio-dark/actions/32x32/dialog-close.png</file>
         <file>apk-editor-studio-dark/actions/32x32/edit-find-case-sensitive.png</file>
+        <file>apk-editor-studio-dark/actions/32x32/edit-find-regex.png</file>
         <file>apk-editor-studio-dark/actions/32x32/edit-find-replace.png</file>
         <file>apk-editor-studio-dark/actions/32x32/edit-find-replace-all.png</file>
         <file>apk-editor-studio-dark/actions/32x32/go-down-search.png</file>

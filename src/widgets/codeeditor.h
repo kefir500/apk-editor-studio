@@ -37,6 +37,7 @@ public:
 
     void setSearchQuery(const QString &query);
     void setSearchCaseSensitive(bool enabled);
+    void setSearchByRegex(bool enabled);
     void nextSearchQuery(bool skipCurrent = true);
     void prevSearchQuery();
 
@@ -63,6 +64,7 @@ private:
     QMap<ExtraSelectionGroup, QList<QTextEdit::ExtraSelection>> extraSelections;
     QString searchQuery;
     bool searchCaseSensitive = false;
+    bool searchByRegex = false;
     QList<QTextCursor> searchResultCursors;
 };
 

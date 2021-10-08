@@ -40,6 +40,7 @@ public:
     QAction *getReplace(QWidget *parent) const;
 
     QAction *getSearchCaseSensitive(QWidget *parent) const;
+    QAction *getSearchByRegex(QWidget *parent) const;
 
     QAction *getZoomIn(QWidget *parent) const;
     QAction *getZoomOut(QWidget *parent) const;

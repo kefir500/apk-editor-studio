@@ -118,8 +118,17 @@ void CodeEditor::replaceOne(const QString &with)
     if (searchQuery.isEmpty()) {
         return;
     }
-    if (textCursor().selectedText() == searchQuery) {
-        textCursor().insertText(with);
+    const QString selectedText = textCursor().selectedText();
+    if (!selectedText.isEmpty()) {
+        if (!searchByRegex) {
+            if (selectedText == searchQuery) {
+                textCursor().insertText(with);
+            }
+        } else {
+            if (QRegularExpression(searchQuery).match(selectedText).captured() == selectedText) {
+                textCursor().insertText(with);
+            }
+        }
     }
     nextSearchQuery();
 }
@@ -156,6 +165,12 @@ void CodeEditor::setSearchQuery(const QString &query)
 void CodeEditor::setSearchCaseSensitive(bool enabled)
 {
     searchCaseSensitive = enabled;
+    setSearchQuery(searchQuery);
+}
+
+void CodeEditor::setSearchByRegex(bool enabled)
+{
+    searchByRegex = enabled;
     setSearchQuery(searchQuery);
 }
 
@@ -285,6 +300,9 @@ QTextCursor CodeEditor::find(int from, bool backward)
     QTextDocument::FindFlags options;
     options.setFlag(QTextDocument::FindCaseSensitively, searchCaseSensitive);
     options.setFlag(QTextDocument::FindBackward, backward);
+    if (searchByRegex && !searchQuery.isEmpty()) {
+        return document()->find(QRegularExpression(searchQuery), from, options);
+    }
     return document()->find(searchQuery, from, options);
 }
 

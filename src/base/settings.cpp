@@ -215,6 +215,11 @@ bool Settings::getSearchCaseSensitive() const
     return settings->value("CodeEditor/SearchCaseSensitive", false).toBool();
 }
 
+bool Settings::getSearchByRegex() const
+{
+    return settings->value("CodeEditor/SearchByRegex", false).toBool();
+}
+
 QString Settings::getTheme() const
 {
     return settings->value("Appearance/Theme", "system").toString();
@@ -465,6 +470,11 @@ void Settings::setFileSystemTreeHeader(const QByteArray &state) const
 void Settings::setSearchCaseSensitive(bool enabled) const
 {
     settings->setValue("CodeEditor/SearchCaseSensitive", enabled);
+}
+
+void Settings::setSearchByRegex(bool enabled) const
+{
+    settings->setValue("CodeEditor/SearchByRegex", enabled);
 }
 
 void Settings::setTheme(const QString &theme)

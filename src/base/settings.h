@@ -49,6 +49,7 @@ public:
     QByteArray getResourceTreeHeader() const;
     QByteArray getFileSystemTreeHeader() const;
     bool getSearchCaseSensitive() const;
+    bool getSearchByRegex() const;
     QString getTheme() const;
     QStringList getAndroidExplorerToolbar() const;
     QByteArray getAndroidExplorerGeometry() const;
@@ -98,6 +99,7 @@ public:
     void setResourceTreeHeader(const QByteArray &state) const;
     void setFileSystemTreeHeader(const QByteArray &state) const;
     void setSearchCaseSensitive(bool enabled) const;
+    void setSearchByRegex(bool enabled) const;
     void setTheme(const QString &theme);
     void setAndroidExplorerToolbar(const QStringList &actions);
     void setAndroidExplorerGeometry(const QByteArray &geometry);

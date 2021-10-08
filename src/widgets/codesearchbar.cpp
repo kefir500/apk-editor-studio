@@ -54,6 +54,16 @@ CodeSearchBar::CodeSearchBar(CodeEditor *parent)
     btnCaseSensitive->setDefaultAction(actionCaseSensitive);
     findLayout->addWidget(btnCaseSensitive);
 
+    auto actionRegex = app->actions.getSearchByRegex(this);
+    connect(actionRegex, &QAction::toggled, editor, [this](bool enabled) {
+        editor->setSearchByRegex(enabled);
+        app->settings->setSearchByRegex(enabled);
+    });
+    actionRegex->setChecked(app->settings->getSearchByRegex());
+    auto btnRegex = new QToolButton(this);
+    btnRegex->setDefaultAction(actionRegex);
+    findLayout->addWidget(btnRegex);
+
     btnOpenReplaceBar = new QToolButton(this);
     btnOpenReplaceBar->setDefaultAction(app->actions.getReplace(this));
     connect(btnOpenReplaceBar, &QToolButton::clicked, this, [=]() {
