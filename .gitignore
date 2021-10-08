@@ -5,9 +5,7 @@ zipalign
 .vs/
 .vscode/
 *.app/
-*.ai
 *.autosave
-*.deb
 *.dll
 *.dmg
 *.exe
@@ -16,7 +14,6 @@ zipalign
 *.o
 *.obj
 *.pdb
-*.psd
 *.rc
 *.res
 *.user
