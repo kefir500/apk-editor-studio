@@ -36,6 +36,7 @@ public:
     void replaceAll(const QString &with);
 
     void setSearchQuery(const QString &query);
+    void setSearchCaseSensitive(bool enabled);
     void nextSearchQuery(bool skipCurrent = true);
     void prevSearchQuery();
 
@@ -51,6 +52,9 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
 private:
+    QTextCursor find(int from = 0, bool backward = false);
+    QTextCursor find(const QTextCursor &cursor, bool backward = false);
+
     void highlightCurrentLine();
     void highlightSearchResults();
 
@@ -58,6 +62,7 @@ private:
     KSyntaxHighlighting::SyntaxHighlighter *highlighter;
     QMap<ExtraSelectionGroup, QList<QTextEdit::ExtraSelection>> extraSelections;
     QString searchQuery;
+    bool searchCaseSensitive = false;
     QList<QTextCursor> searchResultCursors;
 };
 

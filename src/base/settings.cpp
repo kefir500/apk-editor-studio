@@ -210,6 +210,11 @@ QByteArray Settings::getFileSystemTreeHeader() const
     return settings->value("MainWindow/FileSystemTreeHeader").toByteArray();
 }
 
+bool Settings::getSearchCaseSensitive() const
+{
+    return settings->value("CodeEditor/SearchCaseSensitive", false).toBool();
+}
+
 QString Settings::getTheme() const
 {
     return settings->value("Appearance/Theme", "system").toString();
@@ -455,6 +460,11 @@ void Settings::setResourceTreeHeader(const QByteArray &state) const
 void Settings::setFileSystemTreeHeader(const QByteArray &state) const
 {
     settings->setValue("MainWindow/FileSystemTreeHeader", state);
+}
+
+void Settings::setSearchCaseSensitive(bool enabled) const
+{
+    settings->setValue("CodeEditor/SearchCaseSensitive", enabled);
 }
 
 void Settings::setTheme(const QString &theme)

@@ -20,6 +20,7 @@
         <file>apk-editor-studio/actions/16x16/edit-cut.png</file>
         <file>apk-editor-studio/actions/16x16/edit-delete.png</file>
         <file>apk-editor-studio/actions/16x16/edit-find.png</file>
+        <file>apk-editor-studio/actions/16x16/edit-find-case-sensitive.png</file>
         <file>apk-editor-studio/actions/16x16/edit-paste.png</file>
         <file>apk-editor-studio/actions/16x16/edit-rename.png</file>
         <file>apk-editor-studio/actions/16x16/folder-open.png</file>
@@ -88,6 +89,7 @@
         <file>apk-editor-studio/actions/30x30/zoom-normal.png</file>
         <file>apk-editor-studio/actions/30x30/zoom-out.png</file>
         <file>apk-editor-studio/actions/32x32/dialog-close.png</file>
+        <file>apk-editor-studio/actions/32x32/edit-find-case-sensitive.png</file>
         <file>apk-editor-studio/actions/32x32/edit-find-replace.png</file>
         <file>apk-editor-studio/actions/32x32/edit-find-replace-all.png</file>
         <file>apk-editor-studio/actions/32x32/go-down-search.png</file>
@@ -400,6 +402,7 @@
         <file>apk-editor-studio/status/20x20/apk-opening.png</file>
         <file>apk-editor-studio/status/20x20/apk-saving.png</file>
         <file>apk-editor-studio-dark/index.theme</file>
+        <file>apk-editor-studio-dark/actions/16x16/edit-find-case-sensitive.png</file>
         <file>apk-editor-studio-dark/actions/16x16/help-source.png</file>
         <file>apk-editor-studio-dark/actions/24x24/go-next.png</file>
         <file>apk-editor-studio-dark/actions/24x24/go-previous.png</file>
@@ -407,6 +410,7 @@
         <file>apk-editor-studio-dark/actions/30x30/toolbar-separator.png</file>
         <file>apk-editor-studio-dark/actions/30x30/toolbar-spacer.png</file>
         <file>apk-editor-studio-dark/actions/32x32/dialog-close.png</file>
+        <file>apk-editor-studio-dark/actions/32x32/edit-find-case-sensitive.png</file>
         <file>apk-editor-studio-dark/actions/32x32/edit-find-replace.png</file>
         <file>apk-editor-studio-dark/actions/32x32/edit-find-replace-all.png</file>
         <file>apk-editor-studio-dark/actions/32x32/go-down-search.png</file>

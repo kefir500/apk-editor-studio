@@ -129,14 +129,14 @@ void CodeEditor::replaceAll(const QString &with)
     if (searchQuery.isEmpty()) {
         return;
     }
-    auto replaceCursor = document()->find(searchQuery);
+    auto replaceCursor = find();
     if (replaceCursor.isNull()) {
         return;
     }
     replaceCursor.beginEditBlock();
     forever {
         replaceCursor.insertText(with);
-        const auto nextCursor = document()->find(searchQuery, replaceCursor);
+        const auto nextCursor = find(replaceCursor);
         if (nextCursor.isNull()) {
             break;
         }
@@ -153,6 +153,12 @@ void CodeEditor::setSearchQuery(const QString &query)
     nextSearchQuery(false);
 }
 
+void CodeEditor::setSearchCaseSensitive(bool enabled)
+{
+    searchCaseSensitive = enabled;
+    setSearchQuery(searchQuery);
+}
+
 void CodeEditor::nextSearchQuery(bool skipCurrent)
 {
     const int totalResults = searchResultCursors.count();
@@ -163,13 +169,13 @@ void CodeEditor::nextSearchQuery(bool skipCurrent)
 
     QTextCursor resultCursor;
     if (skipCurrent) {
-        resultCursor = document()->find(searchQuery, textCursor());
+        resultCursor = find(textCursor());
     } else {
-        resultCursor = document()->find(searchQuery, textCursor().selectionStart());
+        resultCursor = find(textCursor().selectionStart());
     }
     if (resultCursor.isNull()) {
         // Reached the end of the document, start from the beginning
-        resultCursor = document()->find(searchQuery, 0);
+        resultCursor = find(0);
     }
     setTextCursor(resultCursor);
 
@@ -185,10 +191,10 @@ void CodeEditor::prevSearchQuery()
         return;
     }
 
-    auto resultCursor = document()->find(searchQuery, textCursor(), QTextDocument::FindBackward);
+    auto resultCursor = find(textCursor(), true);
     if (resultCursor.isNull()) {
         // Reached the beginning of the document, start from the end
-        resultCursor = document()->find(searchQuery, document()->characterCount(), QTextDocument::FindBackward);
+        resultCursor = find(document()->characterCount(), true);
     }
     setTextCursor(resultCursor);
 
@@ -274,6 +280,23 @@ void CodeEditor::keyPressEvent(QKeyEvent *event)
     QPlainTextEdit::keyPressEvent(event);
 }
 
+QTextCursor CodeEditor::find(int from, bool backward)
+{
+    QTextDocument::FindFlags options;
+    options.setFlag(QTextDocument::FindCaseSensitively, searchCaseSensitive);
+    options.setFlag(QTextDocument::FindBackward, backward);
+    return document()->find(searchQuery, from, options);
+}
+
+QTextCursor CodeEditor::find(const QTextCursor &cursor, bool backward)
+{
+    int from = 0;
+    if (!cursor.isNull()) {
+        from = backward ? cursor.selectionStart() : cursor.selectionEnd();
+    }
+    return find(from, backward);
+}
+
 void CodeEditor::highlightCurrentLine()
 {
     QTextEdit::ExtraSelection selection;
@@ -289,19 +312,15 @@ void CodeEditor::highlightSearchResults()
 {
     searchResultCursors.clear();
     QList<QTextEdit::ExtraSelection> resultHighlights;
-    int currentResult = 0;
-    auto resultCursor = document()->find(searchQuery);
-    while (!resultCursor.isNull()) {
+    auto resultCursor = find();
+    while (!resultCursor.isNull() && resultCursor.hasSelection()) {
         searchResultCursors << resultCursor;
         QTextEdit::ExtraSelection resultHighlight;
         resultHighlight.format.setForeground(QColor(getTextColor(KSyntaxHighlighting::Theme::Normal)));
         resultHighlight.format.setBackground(QColor(getEditorColor(KSyntaxHighlighting::Theme::SearchHighlight)));
         resultHighlight.cursor = resultCursor;
         resultHighlights << resultHighlight;
-        resultCursor = document()->find(searchQuery, resultCursor);
-        if (resultCursor == textCursor()) {
-            currentResult = searchResultCursors.count();
-        }
+        resultCursor = find(resultCursor);
     }
     setExtraSelectionGroup(ExtraSelectionGroup::SearchResultSelection, resultHighlights);
     const int totalResults = searchResultCursors.count();

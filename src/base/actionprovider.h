@@ -39,6 +39,8 @@ public:
     QAction *getFindPrevious(QWidget *parent) const;
     QAction *getReplace(QWidget *parent) const;
 
+    QAction *getSearchCaseSensitive(QWidget *parent) const;
+
     QAction *getZoomIn(QWidget *parent) const;
     QAction *getZoomOut(QWidget *parent) const;
     QAction *getZoomReset(QWidget *parent) const;

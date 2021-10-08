@@ -1,6 +1,8 @@
 #include "widgets/codesearchbar.h"
 #include "widgets/codeeditor.h"
 #include "base/application.h"
+#include "base/settings.h"
+#include <QAction>
 #include <QFormLayout>
 #include <QLabel>
 #include <QLineEdit>
@@ -41,6 +43,16 @@ CodeSearchBar::CodeSearchBar(CodeEditor *parent)
         editor->nextSearchQuery(true);
     });
     findLayout->addWidget(btnFindNext);
+
+    auto actionCaseSensitive = app->actions.getSearchCaseSensitive(this);
+    connect(actionCaseSensitive, &QAction::toggled, editor, [this](bool enabled) {
+        editor->setSearchCaseSensitive(enabled);
+        app->settings->setSearchCaseSensitive(enabled);
+    });
+    actionCaseSensitive->setChecked(app->settings->getSearchCaseSensitive());
+    auto btnCaseSensitive = new QToolButton(this);
+    btnCaseSensitive->setDefaultAction(actionCaseSensitive);
+    findLayout->addWidget(btnCaseSensitive);
 
     btnOpenReplaceBar = new QToolButton(this);
     btnOpenReplaceBar->setDefaultAction(app->actions.getReplace(this));

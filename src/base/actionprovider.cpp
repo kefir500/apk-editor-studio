@@ -210,6 +210,19 @@ QAction *ActionProvider::getReplace(QWidget *parent) const
     return action;
 }
 
+QAction *ActionProvider::getSearchCaseSensitive(QWidget *parent) const
+{
+    auto action = new QAction(QIcon::fromTheme("edit-find-case-sensitive"), {}, parent);
+    action->setCheckable(true);
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+
+    auto translate = [=]() { action->setText(tr("Case Sensitive")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    return action;
+}
+
 QAction *ActionProvider::getZoomIn(QWidget *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("zoom-in"), {}, parent);
