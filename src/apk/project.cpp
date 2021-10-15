@@ -85,7 +85,6 @@ void Project::openResourceTab(const ResourceModelIndex &index)
         editor = new ImageSheet(index, parentWidget());
     } else if (QMimeDatabase().mimeTypeForFile(path).inherits("text/plain")) {
         editor = new CodeSheet(index, parentWidget());
-        static_cast<CodeSheet *>(editor)->setTextCursor(lineNumber, columnNumber);
     } else {
         QMessageBox::warning(parentWidget(), {}, tr("The format is not supported."));
         return;
