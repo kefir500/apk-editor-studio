@@ -13,9 +13,9 @@
 #include "windows/permissioneditor.h"
 #include "windows/signatureviewer.h"
 #include "tools/keystore.h"
-#include <QInputDialog>
 #include <QImageReader>
-#include <QDebug>
+#include <QInputDialog>
+#include <QMimeDatabase>
 
 Project::Project(Package *package, QWidget *parent)
     : QObject(parent)
@@ -83,8 +83,12 @@ void Project::openResourceTab(const ResourceModelIndex &index)
     const auto extension = QFileInfo(path).suffix();
     if (QImageReader::supportedImageFormats().contains(extension.toUtf8())) {
         editor = new ImageSheet(index, parentWidget());
-    } else {
+    } else if (QMimeDatabase().mimeTypeForFile(path).inherits("text/plain")) {
         editor = new CodeSheet(index, parentWidget());
+        static_cast<CodeSheet *>(editor)->setTextCursor(lineNumber, columnNumber);
+    } else {
+        QMessageBox::warning(parentWidget(), {}, tr("The format is not supported."));
+        return;
     }
     editor->setProperty("identifier", identifier);
     addTab(editor);
