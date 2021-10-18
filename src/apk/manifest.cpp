@@ -1,17 +1,21 @@
 #include "apk/manifest.h"
-#include <QTextStream>
 #include <QDebug>
+#include <QFile>
+#include <QTextStream>
+
 
 Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
+    : xmlPath(xmlPath)
+    , ymlPath(ymlPath)
 {
     // XML:
 
-    xmlFile = new QFile(xmlPath);
-    if (xmlFile->open(QFile::ReadWrite)) {
-        QTextStream stream(xmlFile);
+    QFile xmlFile(xmlPath);
+    if (xmlFile.open(QFile::ReadOnly)) {
+        QTextStream stream(&xmlFile);
         stream.setCodec("UTF-8");
-        xml.setContent(stream.readAll());
-        manifestNode = xml.firstChildElement("manifest");
+        xmlDom.setContent(stream.readAll());
+        manifestNode = xmlDom.firstChildElement("manifest");
         auto applicationNode = manifestNode.firstChildElement("application");
         scopes.append(new ManifestScope(applicationNode));
         auto applicationChild = applicationNode.firstChildElement();
@@ -26,6 +30,9 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
             applicationChild = applicationChild.nextSiblingElement();
         }
         packageName = manifestNode.attribute("package");
+        xmlFile.close();
+    } else {
+        qWarning() << "Error: Could not read AndroidManifest.xml";
     }
 
     // YAML:
@@ -39,22 +46,23 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
     regexVersionCode.setPattern("(?<=^  versionCode: ')\\d+(?='$)");
     regexVersionName.setPattern("(?<=^  versionName: ).+(?=$)");
 
-    ymlFile = new QFile(ymlPath);
-    if (ymlFile->open(QFile::ReadWrite)) {
-        QTextStream stream(ymlFile);
+    QFile ymlFile(ymlPath);
+    if (ymlFile.open(QFile::ReadOnly)) {
+        QTextStream stream(&ymlFile);
         stream.setCodec("UTF-8");
-        yml = stream.readAll();
-        minSdk = regexMinSdk.match(yml).captured().toInt();
-        targetSdk = regexTargetSdk.match(yml).captured().toInt();
-        versionCode = regexVersionCode.match(yml).captured().toInt();
-        versionName = regexVersionName.match(yml).captured();
+        ymlContents = stream.readAll();
+        minSdk = regexMinSdk.match(ymlContents).captured().toInt();
+        targetSdk = regexTargetSdk.match(ymlContents).captured().toInt();
+        versionCode = regexVersionCode.match(ymlContents).captured().toInt();
+        versionName = regexVersionName.match(ymlContents).captured();
+        ymlFile.close();
+    } else {
+        qWarning() << "Error: Could not read apktool.yml";
     }
 }
 
 Manifest::~Manifest()
 {
-    delete xmlFile;
-    delete ymlFile;
     qDeleteAll(scopes);
 }
 
@@ -83,56 +91,62 @@ const QString &Manifest::getPackageName() const
     return packageName;
 }
 
-void Manifest::setApplicationLabel(const QString &value)
+bool Manifest::setApplicationLabel(const QString &value)
 {
     scopes.first()->label().setValue(value);
-    saveXml();
+    return saveXml();
 }
 
-void Manifest::setMinSdk(int value)
+bool Manifest::setMinSdk(int value)
 {
     value = qMax(0, value);
     minSdk = value;
-    yml.replace(regexMinSdk, QString::number(value));
-    saveYml();
+    ymlContents.replace(regexMinSdk, QString::number(value));
+    return saveYml();
 }
 
-void Manifest::setTargetSdk(int value)
+bool Manifest::setTargetSdk(int value)
 {
     value = qMax(1, value);
     targetSdk = value;
-    yml.replace(regexTargetSdk, QString::number(value));
-    saveYml();
+    ymlContents.replace(regexTargetSdk, QString::number(value));
+    return saveYml();
 }
 
-void Manifest::setVersionCode(int value)
+bool Manifest::setVersionCode(int value)
 {
     value = qMax(0, value);
     versionCode = value;
-    yml.replace(regexVersionCode, QString::number(value));
-    saveYml();
+    ymlContents.replace(regexVersionCode, QString::number(value));
+    return saveYml();
 }
 
-void Manifest::setVersionName(const QString &value)
+bool Manifest::setVersionName(const QString &value)
 {
     versionName = value;
-    yml.replace(regexVersionName, value);
-    saveYml();
+    ymlContents.replace(regexVersionName, value);
+    return saveYml();
 }
 
-void Manifest::setPackageName(const QString &newPackageName)
+bool Manifest::setPackageName(const QString &newPackageName)
 {
     const auto originalPackageName = getPackageName();
-    xmlFile->seek(0);
-    const QString data(xmlFile->readAll());
-    QString newData(data);
-    newData.replace(originalPackageName, newPackageName);
-    if (newData != data) {
-        xmlFile->resize(0);
-        xmlFile->write(newData.toUtf8());
-        xmlFile->flush();
+    QFile xmlFile(xmlPath);
+    if (!xmlFile.open(QFile::ReadWrite)) {
+        qWarning() << "Error: Could not save AndroidManifest.xml";
+        return false;
+    }
+    xmlFile.seek(0);
+    const QString xmlContents(xmlFile.readAll());
+    QString newContents(xmlContents);
+    newContents.replace(originalPackageName, newPackageName);
+    if (newContents != xmlContents) {
+        xmlFile.resize(0);
+        xmlFile.write(newContents.toUtf8());
+        xmlFile.flush();
     }
     packageName = newPackageName;
+    return true;
 }
 
 QList<Permission> Manifest::getPermissionList() const
@@ -150,7 +164,7 @@ QList<Permission> Manifest::getPermissionList() const
 
 Permission Manifest::addPermission(const QString &permission)
 {
-    auto element = xml.createElement("uses-permission");
+    auto element = xmlDom.createElement("uses-permission");
     element.setAttribute("android:name", permission);
     manifestNode.appendChild(element);
     saveXml();
@@ -165,27 +179,27 @@ void Manifest::removePermission(const Permission &permission)
 
 bool Manifest::saveXml()
 {
-    if (xmlFile->isWritable()) {
-        xmlFile->resize(0);
-        QTextStream stream(xmlFile);
-        xml.save(stream, 4);
-        return true;
-    } else {
+    QFile xmlFile(xmlPath);
+    if (!xmlFile.open(QFile::WriteOnly)) {
         qWarning() << "Error: Could not save AndroidManifest.xml";
         return false;
     }
+    xmlFile.resize(0);
+    QTextStream stream(&xmlFile);
+    xmlDom.save(stream, 4);
+    return true;
 }
 
 bool Manifest::saveYml()
 {
-    if (ymlFile->isWritable()) {
-        ymlFile->resize(0);
-        QTextStream stream(ymlFile);
-        stream.setCodec("UTF-8");
-        stream << yml;
-        return true;
-    } else {
+    QFile ymlFile(ymlPath);
+    if (!ymlFile.open(QFile::WriteOnly)) {
         qWarning() << "Error: Could not save apktool.yml";
         return false;
     }
+    ymlFile.resize(0);
+    QTextStream stream(&ymlFile);
+    stream.setCodec("UTF-8");
+    stream << ymlContents;
+    return true;
 }

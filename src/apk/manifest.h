@@ -1,7 +1,6 @@
 #ifndef MANIFEST_H
 #define MANIFEST_H
 
-#include <QFile>
 #include <QDomDocument>
 #include <QRegularExpression>
 #include "apk/manifestscope.h"
@@ -19,12 +18,12 @@ public:
     const QString &getVersionName() const;
     const QString &getPackageName() const;
 
-    void setApplicationLabel(const QString &value);
-    void setMinSdk(int value);
-    void setTargetSdk(int value);
-    void setVersionCode(int value);
-    void setVersionName(const QString &value);
-    void setPackageName(const QString &newPackageName);
+    bool setApplicationLabel(const QString &value);
+    bool setMinSdk(int value);
+    bool setTargetSdk(int value);
+    bool setVersionCode(int value);
+    bool setVersionName(const QString &value);
+    bool setPackageName(const QString &newPackageName);
 
     QList<Permission> getPermissionList() const;
     Permission addPermission(const QString &permission);
@@ -36,12 +35,13 @@ private:
     bool saveXml();
     bool saveYml();
 
-    QFile *xmlFile;
-    QDomDocument xml;
+    QString xmlPath;
+    QDomDocument xmlDom;
+
     QDomElement manifestNode;
 
-    QString yml;
-    QFile *ymlFile;
+    QString ymlPath;
+    QString ymlContents;
 
     int minSdk;
     int targetSdk;
