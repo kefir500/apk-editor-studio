@@ -11,7 +11,7 @@ TitleItemsModel::TitleItemsModel(const Package *apk, QObject *parent) : QAbstrac
 
     auto finishedFuture = QtConcurrent::run([=]() -> QList<TitleNode *> {
         QList<TitleNode *> result;
-        QString labelAttribute = apk->manifest->scopes.first()->label().getValue();
+        QString labelAttribute = apk->manifest->applicationScope->label().getValue();
         if (!labelAttribute.startsWith("@string/")) {
             return {};
         }
@@ -169,7 +169,6 @@ Qt::ItemFlags TitleItemsModel::flags(const QModelIndex &index) const
 {
     if (index.column() == 0) {
         return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
-    } else {
-        return QAbstractItemModel::flags(index);
     }
+    return QAbstractItemModel::flags(index);
 }
