@@ -37,14 +37,12 @@ bool FileSystemModel::replaceResource(const QModelIndex &index, const QString &f
     const auto resourceIndex = sourceModel->findIndex(path);
     if (resourceIndex.isValid()) {
         return sourceModel->replaceResource(resourceIndex, file, parent);
-    } else {
-        if (Utils::replaceFile(path, parent)) {
-            updated(index.sibling(index.row(), 0),
-                    index.sibling(index.row(), columnCount() - 1));
-            return true;
-        }
-        return false;
     }
+    if (Utils::replaceFile(path, parent)) {
+        updated(index.sibling(index.row(), 0), index.sibling(index.row(), columnCount() - 1));
+        return true;
+    }
+    return false;
 }
 
 bool FileSystemModel::removeResource(const QModelIndex &index)

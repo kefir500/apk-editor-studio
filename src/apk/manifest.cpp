@@ -155,10 +155,12 @@ QList<Permission> Manifest::getPermissionList() const
 {
     QList<Permission> permissions;
     const auto manifestChildNodes = manifestNode.childNodes();
-    for (int i = 0; i < manifestChildNodes.count(); ++i) {
+    const int nodeCount = manifestChildNodes.count();
+    permissions.reserve(nodeCount);
+    for (int i = 0; i < nodeCount; ++i) {
         const auto element = manifestChildNodes.at(i).toElement();
         if (element.tagName() == "uses-permission") {
-            permissions.append(Permission(element));
+            permissions << Permission(element);
         }
     }
     return permissions;

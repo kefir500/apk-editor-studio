@@ -6,6 +6,7 @@
 #include "windows/androidexplorer.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
+#include "windows/frameworkmanager.h"
 #include "windows/keymanager.h"
 #include "windows/optionsdialog.h"
 #include "windows/rememberdialog.h"
@@ -66,6 +67,12 @@ void ActionProvider::openDeviceManager(QWidget *parent) const
 {
     DeviceManager deviceManager(parent);
     deviceManager.exec();
+}
+
+void ActionProvider::openFrameworkManager(QWidget *parent) const
+{
+    FrameworkManager frameworkManager(parent);
+    frameworkManager.exec();
 }
 
 void ActionProvider::openKeyManager(QWidget *parent) const
@@ -384,6 +391,22 @@ QAction *ActionProvider::getOpenDeviceManager(QWidget *parent) const
 
     connect(action, &QAction::triggered, parent, [=]() {
         openDeviceManager(parent);
+    });
+
+    return action;
+}
+
+QAction *ActionProvider::getOpenFrameworkManager(QWidget *parent) const
+{
+    auto action = new QAction(QIcon::fromTheme("tool-frameworkmanager"), {}, parent);
+
+    //: This string refers to multiple frameworks (as in "Manager of frameworks").
+    auto translate = [=]() { action->setText(tr("&Framework Manager...")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    connect(action, &QAction::triggered, parent, [=]() {
+        openFrameworkManager(parent);
     });
 
     return action;

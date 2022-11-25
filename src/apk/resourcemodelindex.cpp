@@ -3,10 +3,6 @@
 #include "base/utils.h"
 #include <QIcon>
 
-#ifdef QT_DEBUG
-    #include <QDebug>
-#endif
-
 QString ResourceModelIndex::path() const
 {
     return qobject_cast<IResourceItemsModel *>(model())->getResourcePath(*this);

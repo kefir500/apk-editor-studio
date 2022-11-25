@@ -103,9 +103,8 @@ bool ImageSheet::save(const QString &as)
         setModified(false);
         emit saved();
         return true;
-    } else {
-        return pixmapItem->pixmap().save(as);
     }
+    return pixmapItem->pixmap().save(as);
 }
 
 bool ImageSheet::saveAs()

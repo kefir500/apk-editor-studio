@@ -8,11 +8,12 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.13.0
+        uses: jurplel/install-qt-action@v3
         with:
           version: 5.15.2
           arch: win32_msvc2019
           tools: tools_openssl_x86,1.1.1,qt.tools.openssl.win_x86
+          cache: true
       - name: Checkout Repo
         uses: actions/checkout@v2
       - name: Download Tools
@@ -43,11 +44,12 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.13.0
+        uses: jurplel/install-qt-action@v3
         with:
           version: 5.15.2
           arch: win32_msvc2019
           tools: tools_openssl_x86,1.1.1,qt.tools.openssl.win_x86
+          cache: true
       - name: Checkout Repo
         uses: actions/checkout@v2
       - name: Download Tools
@@ -107,9 +109,10 @@ jobs:
     runs-on: macos-10.15
     steps:
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.13.0
+        uses: jurplel/install-qt-action@v3
         with:
           version: 5.15.2
+          cache: true
       - name: Checkout Repo
         uses: actions/checkout@v2
       - name: Download Tools

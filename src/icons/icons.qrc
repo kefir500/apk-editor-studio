@@ -32,10 +32,11 @@
         <file>apk-editor-studio/actions/16x16/list-add.png</file>
         <file>apk-editor-studio/actions/16x16/list-remove.png</file>
         <file>apk-editor-studio/actions/16x16/tool-androidexplorer.png</file>
-        <file>apk-editor-studio/actions/16x16/toolbar-customize.png</file>
+        <file>apk-editor-studio/actions/16x16/tool-frameworkmanager.png</file>
         <file>apk-editor-studio/actions/16x16/tool-permissioneditor.png</file>
         <file>apk-editor-studio/actions/16x16/tool-projectmanager.png</file>
         <file>apk-editor-studio/actions/16x16/tool-titleeditor.png</file>
+        <file>apk-editor-studio/actions/16x16/toolbar-customize.png</file>
         <file>apk-editor-studio/actions/16x16/upload.png</file>
         <file>apk-editor-studio/actions/16x16/view-certificate.png</file>
         <file>apk-editor-studio/actions/16x16/view-refresh.png</file>
@@ -75,12 +76,13 @@
         <file>apk-editor-studio/actions/30x30/list-add.png</file>
         <file>apk-editor-studio/actions/30x30/list-remove.png</file>
         <file>apk-editor-studio/actions/30x30/tool-androidexplorer.png</file>
-        <file>apk-editor-studio/actions/30x30/toolbar-customize.png</file>
-        <file>apk-editor-studio/actions/30x30/toolbar-separator.png</file>
-        <file>apk-editor-studio/actions/30x30/toolbar-spacer.png</file>
+        <file>apk-editor-studio/actions/30x30/tool-frameworkmanager.png</file>
         <file>apk-editor-studio/actions/30x30/tool-permissioneditor.png</file>
         <file>apk-editor-studio/actions/30x30/tool-projectmanager.png</file>
         <file>apk-editor-studio/actions/30x30/tool-titleeditor.png</file>
+        <file>apk-editor-studio/actions/30x30/toolbar-customize.png</file>
+        <file>apk-editor-studio/actions/30x30/toolbar-separator.png</file>
+        <file>apk-editor-studio/actions/30x30/toolbar-spacer.png</file>
         <file>apk-editor-studio/actions/30x30/upload.png</file>
         <file>apk-editor-studio/actions/30x30/view-certificate.png</file>
         <file>apk-editor-studio/actions/30x30/view-refresh.png</file>
@@ -126,10 +128,11 @@
         <file>apk-editor-studio/actions/40x40/list-add.png</file>
         <file>apk-editor-studio/actions/40x40/list-remove.png</file>
         <file>apk-editor-studio/actions/40x40/tool-androidexplorer.png</file>
-        <file>apk-editor-studio/actions/40x40/toolbar-customize.png</file>
+        <file>apk-editor-studio/actions/40x40/tool-frameworkmanager.png</file>
         <file>apk-editor-studio/actions/40x40/tool-permissioneditor.png</file>
         <file>apk-editor-studio/actions/40x40/tool-projectmanager.png</file>
         <file>apk-editor-studio/actions/40x40/tool-titleeditor.png</file>
+        <file>apk-editor-studio/actions/40x40/toolbar-customize.png</file>
         <file>apk-editor-studio/actions/40x40/upload.png</file>
         <file>apk-editor-studio/actions/40x40/view-certificate.png</file>
         <file>apk-editor-studio/actions/40x40/view-refresh.png</file>

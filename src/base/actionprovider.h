@@ -24,6 +24,7 @@ public:
 
     void openOptions(QWidget *parent = nullptr) const;
     void openDeviceManager(QWidget *parent = nullptr) const;
+    void openFrameworkManager(QWidget *parent = nullptr) const;
     void openKeyManager(QWidget *parent = nullptr) const;
     void openAndroidExplorer(QWidget *parent = nullptr) const;
     void takeScreenshot(QWidget *parent) const;
@@ -55,6 +56,7 @@ public:
     QAction *getResetSettings(QWidget *parent) const;
     QAction *getOpenOptions(QWidget *parent) const;
     QAction *getOpenDeviceManager(QWidget *parent) const;
+    QAction *getOpenFrameworkManager(QWidget *parent) const;
     QAction *getOpenKeyManager(QWidget *parent) const;
     QAction *getOpenAndroidExplorer(QWidget *parent) const;
     QAction *getTakeScreenshot(QWidget *parent) const;

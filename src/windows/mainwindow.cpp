@@ -328,6 +328,7 @@ void MainWindow::initMenus()
     auto actionDeviceManager = app->actions.getOpenDeviceManager(this);
     auto actionAndroidExplorer = app->actions.getOpenAndroidExplorer(this);
     auto actionScreenshot = app->actions.getTakeScreenshot(this);
+    auto actionFrameworkManager = app->actions.getOpenFrameworkManager(this);
     auto actionProjectPage = projectManager->getActionOpenProjectPage();
     auto actionTitleEditor = projectManager->getActionEditTitles();
     auto actionPermissionEditor = projectManager->getActionEditPermissions();
@@ -385,6 +386,8 @@ void MainWindow::initMenus()
     menuTools->addAction(actionAndroidExplorer);
     menuTools->addAction(actionScreenshot);
     menuTools->addSeparator();
+    menuTools->addAction(actionFrameworkManager);
+    menuTools->addSeparator();
     menuTools->addAction(actionProjectPage);
     menuTools->addSeparator();
     menuTools->addAction(actionTitleEditor);
@@ -432,6 +435,7 @@ void MainWindow::initMenus()
     toolbar->addActionToPool("android-explorer", actionAndroidExplorer);
     toolbar->addActionToPool("screenshot", actionScreenshot);
     toolbar->addActionToPool("key-manager", actionKeyManager);
+    toolbar->addActionToPool("framework-manager", actionFrameworkManager);
     toolbar->addActionToPool("new-window", actionNewWindow);
     toolbar->addActionToPool("settings", actionOptions);
     toolbar->addActionToPool("donate", actionDonate);
