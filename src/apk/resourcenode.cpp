@@ -31,9 +31,7 @@ void ResourceNode::setCaption(const QString &caption)
 
 void ResourceNode::setFile(ResourceFile *file)
 {
-    if (this->file) {
-        delete this->file;
-    }
+    delete this->file;
     this->file = file;
 }
 

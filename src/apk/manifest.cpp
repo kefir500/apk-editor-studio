@@ -17,7 +17,8 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
         xmlDom.setContent(stream.readAll());
         manifestNode = xmlDom.firstChildElement("manifest");
         auto applicationNode = manifestNode.firstChildElement("application");
-        scopes.append(new ManifestScope(applicationNode));
+        applicationScope = new ManifestScope(applicationNode);
+        scopes.append(applicationScope);
         auto applicationChild = applicationNode.firstChildElement();
         while (!applicationChild.isNull()) {
             if (QStringList({"application", "activity"}).contains(applicationChild.nodeName())) {
@@ -93,7 +94,8 @@ const QString &Manifest::getPackageName() const
 
 bool Manifest::setApplicationLabel(const QString &value)
 {
-    scopes.first()->label().setValue(value);
+    auto label = applicationScope->label();
+    label.setValue(value);
     return saveXml();
 }
 
@@ -153,10 +155,12 @@ QList<Permission> Manifest::getPermissionList() const
 {
     QList<Permission> permissions;
     const auto manifestChildNodes = manifestNode.childNodes();
-    for (int i = 0; i < manifestChildNodes.count(); ++i) {
+    const int nodeCount = manifestChildNodes.count();
+    permissions.reserve(nodeCount);
+    for (int i = 0; i < nodeCount; ++i) {
         const auto element = manifestChildNodes.at(i).toElement();
         if (element.tagName() == "uses-permission") {
-            permissions.append(Permission(element));
+            permissions << Permission(element);
         }
     }
     return permissions;

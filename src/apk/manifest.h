@@ -30,6 +30,7 @@ public:
     void removePermission(const Permission &permission);
 
     QList<ManifestScope *> scopes;
+    ManifestScope *applicationScope;
 
 private:
     bool saveXml();
