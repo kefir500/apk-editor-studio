@@ -56,6 +56,24 @@ namespace Apktool
         QString resultOutput;
     };
 
+    class InstallFramework : public Command
+    {
+    public:
+        InstallFramework(const QString &source, const QString &destination, QObject *parent = nullptr)
+            : Command(parent)
+            , source(source)
+            , destination(destination)
+        {}
+
+        void run() override;
+        const QString &output() const;
+
+    private:
+        const QString source;
+        const QString destination;
+        QString resultOutput;
+    };
+
     class Version : public Command
     {
     public:

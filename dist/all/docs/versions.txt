@@ -1,6 +1,7 @@
 # Version History
 
 ## 1.7.0
+- Added framework manager.
 - Added search case sensitivity option.
 - Added search by regular expression option.
 - Fixed error while saving the currently open resource.

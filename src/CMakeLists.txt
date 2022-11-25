@@ -88,6 +88,7 @@ target_sources(apk-editor-studio PRIVATE
     windows/androidexplorer.cpp
     windows/devicemanager.cpp
     windows/dialogs.cpp
+    windows/frameworkmanager.cpp
     windows/keycreator.cpp
     windows/keymanager.cpp
     windows/keyselector.cpp

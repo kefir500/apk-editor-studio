@@ -73,6 +73,28 @@ const QString &Apktool::Build::output() const
     return resultOutput;
 }
 
+void Apktool::InstallFramework::run()
+{
+    emit started();
+
+    QStringList arguments;
+    arguments << "install-framework" << source;
+    arguments << "--frame-path" << destination;
+
+    auto process = new JarProcess(this);
+    connect(process, &JarProcess::finished, this, [=](bool success, const QString &output) {
+        resultOutput = output;
+        emit finished(success);
+        process->deleteLater();
+    });
+    process->run(getPath(), arguments);
+}
+
+const QString &Apktool::InstallFramework::output() const
+{
+    return resultOutput;
+}
+
 void Apktool::Version::run()
 {
     emit started();
