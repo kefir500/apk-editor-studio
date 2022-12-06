@@ -38,6 +38,8 @@ namespace Utils
         ANDROID_29,
         ANDROID_30,
         ANDROID_31,
+        ANDROID_32,
+        ANDROID_33,
         ANDROID_SDK_COUNT
     };
 
