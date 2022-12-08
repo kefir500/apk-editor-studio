@@ -15,7 +15,7 @@ jobs:
           tools: tools_openssl_x86
           cache: true
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download Tools
         run: python scripts\download.py
       - name: Build MSI Package
@@ -51,7 +51,7 @@ jobs:
           tools: tools_openssl_x86
           cache: true
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download Tools
         run: python scripts\download.py
       - name: Build ZIP Package
@@ -76,7 +76,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
   build-linux-appimage:
     name: Linux Build (AppImage)
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Install Dependencies
         run: |
@@ -84,7 +84,7 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install qt515base qt515imageformats qt515svg qt515tools libgl1-mesa-dev libsecret-1-dev adb zipalign
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download Tools
         run: python3 scripts/download.py
       - name: Build AppImage Package
@@ -106,7 +106,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
   build-macos:
     name: macOS Build (APP, DMG)
-    runs-on: macos-10.15
+    runs-on: macos-latest
     steps:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
@@ -114,7 +114,7 @@ jobs:
           version: 5.15.2
           cache: true
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download Tools
         run: python3 scripts/download.py
       - name: Build APP/DMG Package
