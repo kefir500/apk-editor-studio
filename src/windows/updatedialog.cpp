@@ -41,13 +41,19 @@ UpdateDialog::UpdateDialog(QWidget *parent) : QDialog(parent)
 
     for (int row = 0; row < updatesModel->rowCount(); ++row) {
         auto btnWhatsNew = new QLabel(this);
+        auto btnWhatsNewPalette = btnWhatsNew->palette();
+        btnWhatsNewPalette.setBrush(QPalette::Base, table->palette().base());
+        btnWhatsNew->setPalette(btnWhatsNewPalette);
         btnWhatsNew->setAutoFillBackground(true);
         btnWhatsNew->setOpenExternalLinks(true);
-        btnWhatsNew->setContentsMargins(0, 0, 16, 0);
+        btnWhatsNew->setContentsMargins(8, 0, 8, 0);
         table->setIndexWidget(table->model()->index(row, UpdateItemsModel::WhatsNewUrlColumn), btnWhatsNew);
         refreshWhatsNewButton(row);
 
         auto btnUpdate = new QPushButton(tr("Update"));
+        auto btnUpdatePalette = btnUpdate->palette();
+        btnUpdatePalette.setBrush(QPalette::Button,table->palette().base());
+        btnUpdate->setPalette(btnUpdatePalette);
         btnUpdate->setAutoFillBackground(true);
         table->setIndexWidget(table->model()->index(row, UpdateItemsModel::HasUpdatesColumn), btnUpdate);
         refreshUpdateButton(row);
