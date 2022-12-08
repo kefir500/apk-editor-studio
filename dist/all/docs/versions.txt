@@ -3,8 +3,9 @@
 ## 1.7.0
 - Added automatic Apktool updater.
 - Added framework manager.
-- Added search case sensitivity option.
-- Added search by regular expression option.
+- Added code search case sensitivity option.
+- Added code search by regular expression option.
+- Updated default Apktool to 2.7.0.
 - Fixed error while saving the currently open resource.
 
 ## 1.6.0
