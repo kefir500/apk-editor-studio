@@ -68,6 +68,7 @@ private:
     bool withSources = false;
     bool withResources = false;
     bool withBrokenResources = false;
+    bool withOnlyMainClasses = false;
 };
 
 #endif // PACKAGE_H

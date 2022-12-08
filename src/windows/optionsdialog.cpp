@@ -107,6 +107,7 @@ void OptionsDialog::load()
     checkboxAapt2->setChecked(app->settings->getUseAapt2());
     checkboxDebuggable->setChecked(app->settings->getMakeDebuggable());
     checkboxSources->setChecked(app->settings->getDecompileSources());
+    checkboxOnlyMainClasses->setChecked(app->settings->getDecompileOnlyMainClasses());
     checkboxBrokenResources->setChecked(app->settings->getKeepBrokenResources());
 
     // Apksigner
@@ -162,6 +163,7 @@ void OptionsDialog::save()
     app->settings->setUseAapt2(checkboxAapt2->isChecked());
     app->settings->setMakeDebuggable(checkboxDebuggable->isChecked());
     app->settings->setDecompileSources(checkboxSources->isChecked());
+    app->settings->setDecompileOnlyMainClasses(checkboxOnlyMainClasses->isChecked());
     app->settings->setKeepBrokenResources(checkboxBrokenResources->isChecked());
 
     // Apksigner
@@ -313,9 +315,11 @@ void OptionsDialog::initialize()
     auto groupUnpacking = new QGroupBox(tr("Unpacking"), this);
     //: "Smali" is the name of the tool/format, don't translate it.
     checkboxSources = new QCheckBox(tr("Decompile source code (smali)"), this);
+    checkboxOnlyMainClasses = new QCheckBox(tr("Decompile only main classes"), this);
     checkboxBrokenResources = new QCheckBox(tr("Decompile broken resources"), this);
     auto layoutUnpacking = new QVBoxLayout(groupUnpacking);
     layoutUnpacking->addWidget(checkboxSources);
+    layoutUnpacking->addWidget(checkboxOnlyMainClasses);
     layoutUnpacking->addWidget(checkboxBrokenResources);
 
     auto groupPacking = new QGroupBox(tr("Packing"), this);

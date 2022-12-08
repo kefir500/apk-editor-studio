@@ -23,7 +23,10 @@ void Apktool::Decode::run()
     if (!sources) {
         arguments << "--no-src";
     }
-    if (keepBroken) {
+    if (onlyMainClasses) {
+        arguments << "--only-main-classes";
+    }
+    if (keepBrokenResources) {
         arguments << "--keep-broken-res";
     }
 

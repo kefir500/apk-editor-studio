@@ -35,6 +35,7 @@ public:
     bool getUseAapt2() const;
     bool getMakeDebuggable() const;
     bool getDecompileSources() const;
+    bool getDecompileOnlyMainClasses() const;
     bool getKeepBrokenResources() const;
     QString getDeviceAlias(const QString &serial) const;
     QString getLastDirectory() const;
@@ -86,6 +87,7 @@ public:
     void setUseAapt2(bool aapt2);
     void setMakeDebuggable(bool debuggable);
     void setDecompileSources(bool smali);
+    void setDecompileOnlyMainClasses(bool onlyMain);
     void setKeepBrokenResources(bool keepBroken);
     void setDeviceAlias(const QString &serial, const QString &alias);
     void setLastDirectory(const QString &directory);

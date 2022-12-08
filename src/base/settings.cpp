@@ -138,6 +138,11 @@ bool Settings::getDecompileSources() const
     return settings->value("Apktool/Sources", false).toBool();
 }
 
+bool Settings::getDecompileOnlyMainClasses() const
+{
+    return settings->value("Apktool/OnlyMainClasses", false).toBool();
+}
+
 bool Settings::getKeepBrokenResources() const
 {
     return settings->value("Apktool/KeepBroken", false).toBool();
@@ -403,6 +408,11 @@ void Settings::setMakeDebuggable(bool debuggable)
 void Settings::setDecompileSources(bool smali)
 {
     settings->setValue("Apktool/Sources", smali);
+}
+
+void Settings::setDecompileOnlyMainClasses(bool onlyMain)
+{
+    settings->setValue("Apktool/OnlyMainClasses", onlyMain);
 }
 
 void Settings::setKeepBrokenResources(bool keepBroken)

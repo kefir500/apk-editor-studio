@@ -66,6 +66,7 @@ private:
     QCheckBox *checkboxAapt2;
     QCheckBox *checkboxDebuggable;
     QCheckBox *checkboxSources;
+    QCheckBox *checkboxOnlyMainClasses;
     QCheckBox *checkboxBrokenResources;
 
     // Apksigner
