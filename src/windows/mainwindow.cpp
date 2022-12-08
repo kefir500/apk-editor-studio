@@ -2,6 +2,7 @@
 #include "windows/mainwindow.h"
 #include "windows/aboutdialog.h"
 #include "windows/dialogs.h"
+#include "windows/updatedialog.h"
 #include "widgets/projectmanager.h"
 #include "widgets/filesystemtree.h"
 #include "widgets/iconlist.h"
@@ -13,11 +14,11 @@
 #include "widgets/toolbar.h"
 #include "sheets/basefilesheet.h"
 #include "sheets/welcomesheet.h"
+#include "tools/apktool.h"
 #include "tools/keystore.h"
 #include "base/application.h"
 #include "base/extralistitemproxy.h"
 #include "base/settings.h"
-#include "base/updater.h"
 #include "apk/package.h"
 #include "apk/project.h"
 #include <QBoxLayout>
@@ -61,16 +62,12 @@ MainWindow::MainWindow(PackageListModel &packages, QWidget *parent)
     QEvent languageChangeEvent(QEvent::LanguageChange);
     app->sendEvent(this, &languageChangeEvent);
 
-    if (app->settings->getAutoUpdates()) {
-        // Delay to prevent uninitialized window render
-        auto timer = new QTimer(this);
-        connect(timer, &QTimer::timeout, this, [=]() {
-            Updater::check(false, this);
-            timer->deleteLater();
-        });
-        timer->setSingleShot(true);
-        timer->start(1000);
-    }
+    QTimer::singleShot(1000, this, [this]() {
+        checkToolsAvailable();
+        if (app->settings->getAutoUpdates()) {
+            updateDialog->checkUpdates();
+        }
+    });
 
     qDebug();
 }
@@ -349,12 +346,21 @@ void MainWindow::initMenus()
     // Help Menu:
 
     auto actionDonate = app->actions.getVisitDonatePage();
+
+    updateDialog = new UpdateDialog(this);
+    actionCheckUpdates = new QAction(QIcon::fromTheme("help-update"), QString(), this);
+    connect(actionCheckUpdates, &QAction::triggered, this, [this]() {
+        updateDialog->checkUpdates();
+        updateDialog->open();
+    });
+
     actionAbout = new QAction(QIcon::fromTheme("apk-editor-studio"), QString(), this);
     actionAbout->setMenuRole(QAction::AboutRole);
     connect(actionAbout, &QAction::triggered, this, [this]() {
         AboutDialog about(this);
         about.exec();
     });
+
     actionAboutQt = new QAction(QIcon::fromTheme("qt"), QString(), this);
     actionAboutQt->setMenuRole(QAction::AboutQtRole);
     connect(actionAboutQt, &QAction::triggered, app, &Application::aboutQt);
@@ -407,7 +413,7 @@ void MainWindow::initMenus()
     menuHelp->addAction(app->actions.getVisitSourcePage());
     menuHelp->addAction(actionDonate);
     menuHelp->addSeparator();
-    menuHelp->addAction(app->actions.getCheckUpdates(this));
+    menuHelp->addAction(actionCheckUpdates);
     menuHelp->addSeparator();
     menuHelp->addAction(actionAboutQt);
     menuHelp->addAction(actionAbout);
@@ -438,10 +444,24 @@ void MainWindow::initMenus()
     toolbar->addActionToPool("framework-manager", actionFrameworkManager);
     toolbar->addActionToPool("new-window", actionNewWindow);
     toolbar->addActionToPool("settings", actionOptions);
+    toolbar->addActionToPool("check-updates", actionCheckUpdates);
     toolbar->addActionToPool("donate", actionDonate);
     toolbar->initialize(app->settings->getMainWindowToolbar());
     addToolBar(toolbar);
     connect(toolbar, &Toolbar::updated, app->settings, &Settings::setMainWindowToolbar);
+}
+
+void MainWindow::checkToolsAvailable()
+{
+    //: "%1" will be replaced with a tool name.
+    const QString question(tr("%1 not found. Restore the default path?"));
+
+    const auto apktoolPath = Utils::toAbsolutePath(app->settings->getApktoolPath());
+    if (!apktoolPath.isEmpty() && !QFile::exists(apktoolPath)) {
+        if (QMessageBox::question(this, {}, question.arg("Apktool")) == QMessageBox::Yes) {
+            app->settings->setApktoolPath({});
+        }
+    }
 }
 
 void MainWindow::retranslate()
@@ -487,6 +507,7 @@ void MainWindow::retranslate()
 
     // Help Menu:
 
+    actionCheckUpdates->setText(app->translate("ActionProvider", "Check for &Updates"));
     //: Don't translate the "APK Editor Studio" part.
     actionAbout->setText(tr("&About APK Editor Studio..."));
     //: Don't translate the "&Qt" part.

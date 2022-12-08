@@ -21,6 +21,7 @@ class QRubberBand;
 class ResourceAbstractView;
 class ResourceItemsModel;
 class Toolbar;
+class UpdateDialog;
 
 class MainWindow : public QMainWindow
 {
@@ -51,6 +52,7 @@ private:
     void setInitialSize();
     void initWidgets();
     void initMenus();
+    void checkToolsAvailable();
     void retranslate();
 
     Package *addPackage(const QString &path);
@@ -71,6 +73,7 @@ private:
     ResourceItemsModel *dummyResourceModel;
     FileSystemModel *dummyFileSystemModel;
 
+    UpdateDialog *updateDialog;
     ProjectManager *projectManager;
     PackageList *packageList;
     LogView *logView;
@@ -94,6 +97,7 @@ private:
     QAction *actionRecentClear;
     QAction *actionRecentNone;
     QAction *actionNewWindow;
+    QAction *actionCheckUpdates;
     QAction *actionAboutQt;
     QAction *actionAbout;
     QActionGroup *actionsLanguage;

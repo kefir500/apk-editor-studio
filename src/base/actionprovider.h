@@ -17,9 +17,7 @@ public:
     void visitSourcePage() const;
     void visitDonatePage() const;
     void visitUpdatePage() const;
-    void visitBlogPage(const QString &post) const;
 
-    void checkUpdates(QWidget *parent = nullptr) const;
     bool resetSettings(QWidget *parent = nullptr) const;
 
     void openOptions(QWidget *parent = nullptr) const;
@@ -52,7 +50,6 @@ public:
     QAction *getVisitDonatePage(QObject *parent = nullptr) const;
     QAction *getExit(QWidget *widget) const;
 
-    QAction *getCheckUpdates(QWidget *parent) const;
     QAction *getResetSettings(QWidget *parent) const;
     QAction *getOpenOptions(QWidget *parent) const;
     QAction *getOpenDeviceManager(QWidget *parent) const;

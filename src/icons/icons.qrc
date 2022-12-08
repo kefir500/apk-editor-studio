@@ -144,11 +144,14 @@
         <file>apk-editor-studio/actions/48x48/go-previous.png</file>
         <file>apk-editor-studio/actions/48x48/go-up.png</file>
         <file>apk-editor-studio/apps/16x16/apk-editor-studio.png</file>
+        <file>apk-editor-studio/apps/16x16/apktool.png</file>
         <file>apk-editor-studio/apps/16x16/qt.png</file>
         <file>apk-editor-studio/apps/20x20/apk-editor-studio.png</file>
         <file>apk-editor-studio/apps/32x32/apk-editor-studio.png</file>
+        <file>apk-editor-studio/apps/32x32/apktool.png</file>
         <file>apk-editor-studio/apps/32x32/qt.png</file>
         <file>apk-editor-studio/apps/48x48/apk-editor-studio.png</file>
+        <file>apk-editor-studio/apps/48x48/apktool.png</file>
         <file>apk-editor-studio/apps/256x256/apk-editor-studio.png</file>
         <file>apk-editor-studio/devices/16x16/camera-photo.png</file>
         <file>apk-editor-studio/devices/16x16/smartphone.png</file>

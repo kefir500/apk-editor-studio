@@ -1,7 +1,6 @@
 #include "base/actionprovider.h"
 #include "base/application.h"
 #include "base/settings.h"
-#include "base/updater.h"
 #include "base/utils.h"
 #include "windows/androidexplorer.h"
 #include "windows/devicemanager.h"
@@ -34,16 +33,6 @@ void ActionProvider::visitDonatePage() const
 void ActionProvider::visitUpdatePage() const
 {
     QDesktopServices::openUrl(Utils::getUpdateUrl());
-}
-
-void ActionProvider::visitBlogPage(const QString &post) const
-{
-    QDesktopServices::openUrl(Utils::getBlogPostUrl(post));
-}
-
-void ActionProvider::checkUpdates(QWidget *parent) const
-{
-    Updater::check(true, parent);
 }
 
 bool ActionProvider::resetSettings(QWidget *parent) const
@@ -329,21 +318,6 @@ QAction *ActionProvider::getExit(QWidget *widget) const
     translate();
 
     connect(action, &QAction::triggered, widget, &QWidget::close);
-    return action;
-}
-
-QAction *ActionProvider::getCheckUpdates(QWidget *parent) const
-{
-    auto action = new QAction(QIcon::fromTheme("help-update"), {}, parent);
-
-    auto translate = [=]() { action->setText(tr("Check for &Updates")); };
-    connect(this, &ActionProvider::languageChanged, action, translate);
-    translate();
-
-    connect(action, &QAction::triggered, parent, [=]() {
-        checkUpdates(parent);
-    });
-
     return action;
 }
 

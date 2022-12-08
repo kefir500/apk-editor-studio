@@ -1,6 +1,7 @@
 # Version History
 
 ## 1.7.0
+- Added automatic Apktool updater.
 - Added framework manager.
 - Added search case sensitivity option.
 - Added search by regular expression option.

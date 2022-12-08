@@ -23,10 +23,13 @@ target_sources(apk-editor-studio PRIVATE
     base/actionprovider.cpp
     base/androidfilesystemitem.cpp
     base/androidfilesystemmodel.cpp
+    base/apktoolupdateinfo.cpp
     base/application.cpp
+    base/applicationupdateinfo.cpp
     base/command.cpp
     base/device.cpp
     base/deviceitemsmodel.cpp
+    base/emptyitemproxymodel.cpp
     base/extralistitemproxy.cpp
     base/fileassociation.cpp
     base/fileformat.cpp
@@ -34,6 +37,7 @@ target_sources(apk-editor-studio PRIVATE
     base/jarprocess.cpp
     base/language.cpp
     base/main.cpp
+    base/iupdateinfo.cpp
     base/password.cpp
     base/process.cpp
     base/recentfile.cpp
@@ -41,7 +45,7 @@ target_sources(apk-editor-studio PRIVATE
     base/settings.cpp
     base/themes.cpp
     base/treenode.cpp
-    base/updater.cpp
+    base/updateitemsmodel.cpp
     base/utils.cpp
     sheets/basesheet.cpp
     sheets/baseactionsheet.cpp
@@ -88,6 +92,7 @@ target_sources(apk-editor-studio PRIVATE
     windows/androidexplorer.cpp
     windows/devicemanager.cpp
     windows/dialogs.cpp
+    windows/downloader.cpp
     windows/frameworkmanager.cpp
     windows/keycreator.cpp
     windows/keymanager.cpp
@@ -100,6 +105,7 @@ target_sources(apk-editor-studio PRIVATE
     windows/selectdialog.cpp
     windows/signatureviewer.cpp
     windows/toolbardialog.cpp
+    windows/updatedialog.cpp
     windows/yesalwaysdialog.cpp
     icons/icons.qrc
 )
