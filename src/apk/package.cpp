@@ -168,7 +168,7 @@ Commands *Package::createCommandChain()
         } else {
             state.setCurrentStatus(PackageState::Status::Errored);
         }
-        app->settings->addToRecent(this);
+        app->settings->addRecentApk(this);
     });
     return command;
 }

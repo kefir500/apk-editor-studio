@@ -1,7 +1,10 @@
 #include "apk/resourcemodelindex.h"
 #include "apk/iresourceitemsmodel.h"
 #include "base/utils.h"
+#include <QDesktopServices>
 #include <QIcon>
+#include <QProcess>
+#include <QUrl>
 
 QString ResourceModelIndex::path() const
 {
@@ -31,6 +34,13 @@ bool ResourceModelIndex::remove()
 bool ResourceModelIndex::explore() const
 {
     return Utils::explore(path());
+}
+
+bool ResourceModelIndex::openWith(const QString &executable) const
+{
+    return executable.isEmpty()
+        ? QDesktopServices::openUrl(QUrl::fromLocalFile(path()))
+        : QProcess::startDetached(executable, {path()});
 }
 
 void ResourceModelIndex::update() const

@@ -313,10 +313,10 @@ void MainWindow::initMenus()
     menuRecent = new QMenu(this);
     menuRecent->setIcon(QIcon::fromTheme("document-recent"));
     actionRecentClear = new QAction(QIcon::fromTheme("edit-delete"), QString(), this);
-    connect(actionRecentClear, &QAction::triggered, app->settings, &Settings::clearRecentList);
+    connect(actionRecentClear, &QAction::triggered, app->settings, &Settings::clearRecentApkList);
     actionRecentNone = new QAction(this);
     actionRecentNone->setEnabled(false);
-    connect(app->settings, &Settings::recentListUpdated, this, &MainWindow::updateRecentMenu);
+    connect(app->settings, &Settings::recentApkListUpdated, this, &MainWindow::updateRecentMenu);
     updateRecentMenu();
 
     // Tools Menu:
@@ -549,7 +549,7 @@ void MainWindow::updateWindowForPackage(Package *package)
 void MainWindow::updateRecentMenu()
 {
     menuRecent->clear();
-    auto recentList = app->settings->getRecentList();
+    auto recentList = app->settings->getRecentApkList();
     for (const RecentFile &recentEntry : recentList) {
         auto action = new QAction(recentEntry.thumbnail(), recentEntry.filename(), this);
         menuRecent->addAction(action);

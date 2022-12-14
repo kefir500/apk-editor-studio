@@ -15,21 +15,23 @@ Settings::Settings()
 #else
     settings = new QSettings(Utils::getLocalConfigPath("config/config.ini"), QSettings::IniFormat, this);
 #endif
-    recent = new RecentList("apk", getRecentLimit(), this);
+    recentApk = new RecentList("apk", getRecentApkLimit(), this);
+    recentApps = new RecentList("apps", 5, this);
 }
 
 void Settings::reset()
 {
     Apktool::reset();
     settings->clear();
-    recent->clear();
+    recentApk->clear();
+    recentApps->clear();
     QDir().mkpath(Apktool::getOutputPath());
     QDir().mkpath(Apktool::getFrameworksPath());
     Password passwordKeystore("keystore");
     Password passwordKey("key");
     passwordKeystore.remove();
     passwordKey.remove();
-    emit recentListUpdated();
+    emit recentApkListUpdated();
     emit resetDone();
 }
 
@@ -168,12 +170,17 @@ bool Settings::getAutoUpdates() const
     return settings->value("Preferences/AutoUpdates", true).toBool();
 }
 
-const QList<RecentFile> &Settings::getRecentList() const
+const QList<RecentFile> &Settings::getRecentApkList() const
 {
-    return recent->all();
+    return recentApk->all();
 }
 
-int Settings::getRecentLimit() const
+const QList<RecentFile> &Settings::getRecentAppList() const
+{
+    return recentApps->all();
+}
+
+int Settings::getRecentApkLimit() const
 {
     return settings->value("Preferences/MaxRecent", 10).toInt();
 }
@@ -294,18 +301,23 @@ bool Settings::getExplorerSignIntegration() const
 
 // Setters:
 
-void Settings::addToRecent(const Package *package)
+void Settings::addRecentApk(const Package *package)
 {
     const auto path = package->getOriginalPath();
     const auto icon = package->getThumbnail().pixmap(Utils::scale(32, 32));
-    recent->add(path, icon);
-    emit recentListUpdated();
+    recentApk->add(path, icon);
+    emit recentApkListUpdated();
 }
 
-void Settings::clearRecentList()
+void Settings::addRecentApp(const QString &executable)
 {
-    recent->clear();
-    emit recentListUpdated();
+    recentApps->add(executable);
+}
+
+void Settings::clearRecentApkList()
+{
+    recentApk->clear();
+    emit recentApkListUpdated();
 }
 
 void Settings::setJavaPath(const QString &path)
@@ -440,11 +452,11 @@ void Settings::setAutoUpdates(bool value)
     settings->setValue("Preferences/AutoUpdates", value);
 }
 
-void Settings::setRecentLimit(int limit)
+void Settings::setRecentApkLimit(int limit)
 {
     settings->setValue("Preferences/MaxRecent", limit);
-    recent->setLimit(limit);
-    emit recentListUpdated();
+    recentApk->setLimit(limit);
+    emit recentApkListUpdated();
 }
 
 void Settings::setLanguage(const QString &locale)

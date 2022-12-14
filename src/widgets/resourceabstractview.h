@@ -26,6 +26,7 @@ signals:
 
 private:
     QSharedPointer<QMenu> generateContextMenu(ResourceModelIndex &resourceIndex);
+    QMenu *generateOpenWithMenu(ResourceModelIndex &resourceIndex, QWidget *parent = nullptr);
 
     QAbstractItemView *view;
 };

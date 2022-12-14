@@ -15,6 +15,7 @@ public:
     bool replace(QWidget *parent = nullptr);
     bool remove();
     bool explore() const;
+    bool openWith(const QString &executable = {}) const;
     void update() const;
 };
 

@@ -41,8 +41,9 @@ public:
     QString getLastDirectory() const;
     bool getSingleInstance() const;
     bool getAutoUpdates() const;
-    const QList<RecentFile> &getRecentList() const;
-    int getRecentLimit() const;
+    const QList<RecentFile> &getRecentApkList() const;
+    const QList<RecentFile> &getRecentAppList() const;
+    int getRecentApkLimit() const;
     QString getLanguage() const;
     QStringList getMainWindowToolbar() const;
     QByteArray getMainWindowGeometry() const;
@@ -65,8 +66,9 @@ public:
     bool getExplorerSignIntegration() const;
 #endif
 
-    void addToRecent(const Package *package);
-    void clearRecentList();
+    void addRecentApk(const Package *package);
+    void addRecentApp(const QString &executable);
+    void clearRecentApkList();
     void setJavaPath(const QString &path);
     void setJavaMinHeapSize(int size);
     void setJavaMaxHeapSize(int size);
@@ -93,7 +95,7 @@ public:
     void setLastDirectory(const QString &directory);
     void setSingleInstance(bool value);
     void setAutoUpdates(bool value);
-    void setRecentLimit(int limit);
+    void setRecentApkLimit(int limit);
     void setLanguage(const QString &locale);
     void setMainWindowToolbar(const QStringList &actions);
     void setMainWindowGeometry(const QByteArray &geometry);
@@ -117,12 +119,13 @@ public:
 #endif
 
 signals:
-    void recentListUpdated();
+    void recentApkListUpdated();
     void resetDone();
 
 private:
     QSettings *settings;
-    RecentList *recent;
+    RecentList *recentApk;
+    RecentList *recentApps;
 };
 
 #endif // SETTINGS_H

@@ -5,6 +5,7 @@
 - Added framework manager.
 - Added code search case sensitivity option.
 - Added code search by regular expression option.
+- Added ability to open resources in an external app.
 - Updated default Apktool to 2.7.0.
 - Fixed error while saving the currently open resource.
 

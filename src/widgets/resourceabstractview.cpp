@@ -1,6 +1,8 @@
 #include "widgets/resourceabstractview.h"
-#include "windows/dialogs.h"
 #include "apk/resourcemodelindex.h"
+#include "base/application.h"
+#include "base/settings.h"
+#include "windows/dialogs.h"
 #include <QAbstractItemView>
 #include <QBoxLayout>
 
@@ -68,6 +70,7 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(ResourceModelInd
     });
 
     menu->addSeparator();
+    menu->addMenu(generateOpenWithMenu(resourceIndex, menu));
 
     //: This string refers to a single resource.
     QAction *actionExplore = menu->addAction(QIcon::fromTheme("folder-open"), tr("Open Resource Directory"));
@@ -76,4 +79,42 @@ QSharedPointer<QMenu> ResourceAbstractView::generateContextMenu(ResourceModelInd
     });
 
     return QSharedPointer<QMenu>(menu);
+}
+
+QMenu *ResourceAbstractView::generateOpenWithMenu(ResourceModelIndex &resourceIndex, QWidget *parent)
+{
+    auto menuOpenWith = new QMenu(tr("Open With"), parent);
+    menuOpenWith->setIcon(QIcon::fromTheme("document-external"));
+
+    auto actionOpenWithDefault = menuOpenWith->addAction(QIcon::fromTheme("document-external"), tr("Open With Default Application"));
+    connect(actionOpenWithDefault, &QAction::triggered, this, [=]() {
+        resourceIndex.openWith();
+    });
+
+    auto recentApps = app->settings->getRecentAppList();
+    if (!recentApps.isEmpty()) {
+        menuOpenWith->addSeparator();
+        for (const auto &recentApp : recentApps) {
+            auto action = new QAction(recentApp.thumbnail(), recentApp.filename(), this);
+            menuOpenWith->addAction(action);
+            connect(action, &QAction::triggered, this, [=]() {
+                const auto executable = recentApp.filename();
+                if (resourceIndex.openWith(executable)) {
+                    app->settings->addRecentApp(executable);
+                }
+            });
+        }
+    }
+
+    menuOpenWith->addSeparator();
+
+    auto actionOpenWithBrowse = menuOpenWith->addAction(QIcon::fromTheme("document-open"), tr("Choose Another App..."));
+    connect(actionOpenWithBrowse, &QAction::triggered, this, [&]() {
+        const auto executable = Dialogs::getOpenFilename(this);
+        if (!executable.isEmpty() && resourceIndex.openWith(executable)) {
+            app->settings->addRecentApp(executable);
+        }
+    });
+
+    return menuOpenWith;
 }

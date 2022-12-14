@@ -20,10 +20,14 @@ RecentList::RecentList(const QString &identifier, int limit, QObject *parent)
     }
 }
 
-bool RecentList::add(const QString &filename, const QPixmap &thumbnail)
+bool RecentList::add(const QString &filename, QPixmap thumbnail)
 {
     if (filename.isEmpty()) {
         return false;
+    }
+
+    if (thumbnail.isNull()) {
+        thumbnail = iconProvider.icon(filename).pixmap(Utils::scale(32, 32));
     }
 
     // Save cached thumbnail:

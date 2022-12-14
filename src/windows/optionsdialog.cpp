@@ -65,7 +65,7 @@ void OptionsDialog::load()
 
     checkboxSingleInstance->setChecked(app->settings->getSingleInstance());
     checkboxUpdates->setChecked(app->settings->getAutoUpdates());
-    spinboxRecent->setValue(app->settings->getRecentLimit());
+    spinboxRecent->setValue(app->settings->getRecentApkLimit());
 #ifdef Q_OS_WIN
     groupAssociate->setChecked(app->settings->getFileAssociation());
     checkboxExplorerOpen->setChecked(app->settings->getExplorerOpenIntegration());
@@ -131,7 +131,7 @@ void OptionsDialog::save()
 
     app->settings->setSingleInstance(checkboxSingleInstance->isChecked());
     app->settings->setAutoUpdates(checkboxUpdates->isChecked());
-    app->settings->setRecentLimit(spinboxRecent->value());
+    app->settings->setRecentApkLimit(spinboxRecent->value());
 #ifdef Q_OS_WIN
     bool integrationSuccess =
         app->settings->setFileAssociation(groupAssociate->isChecked()) &&

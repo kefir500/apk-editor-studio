@@ -10,6 +10,7 @@
         <file>apk-editor-studio/actions/16x16/document-close.png</file>
         <file>apk-editor-studio/actions/16x16/document-delete.png</file>
         <file>apk-editor-studio/actions/16x16/document-edit.png</file>
+        <file>apk-editor-studio/actions/16x16/document-external.png</file>
         <file>apk-editor-studio/actions/16x16/document-open.png</file>
         <file>apk-editor-studio/actions/16x16/document-recent.png</file>
         <file>apk-editor-studio/actions/16x16/document-save.png</file>
@@ -56,6 +57,7 @@
         <file>apk-editor-studio/actions/30x30/document-close.png</file>
         <file>apk-editor-studio/actions/30x30/document-delete.png</file>
         <file>apk-editor-studio/actions/30x30/document-edit.png</file>
+        <file>apk-editor-studio/actions/30x30/document-external.png</file>
         <file>apk-editor-studio/actions/30x30/document-open.png</file>
         <file>apk-editor-studio/actions/30x30/document-recent.png</file>
         <file>apk-editor-studio/actions/30x30/document-save.png</file>
@@ -108,6 +110,7 @@
         <file>apk-editor-studio/actions/40x40/document-close.png</file>
         <file>apk-editor-studio/actions/40x40/document-delete.png</file>
         <file>apk-editor-studio/actions/40x40/document-edit.png</file>
+        <file>apk-editor-studio/actions/40x40/document-external.png</file>
         <file>apk-editor-studio/actions/40x40/document-open.png</file>
         <file>apk-editor-studio/actions/40x40/document-recent.png</file>
         <file>apk-editor-studio/actions/40x40/document-save.png</file>

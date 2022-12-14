@@ -2,13 +2,14 @@
 #define RECENTLIST_H
 
 #include "base/recentfile.h"
+#include <QFileIconProvider>
 
 class RecentList : public QObject
 {
 public:
     RecentList(const QString &identifier, int limit = 10, QObject *parent = nullptr);
 
-    bool add(const QString &filename, const QPixmap &thumbnail);
+    bool add(const QString &filename, QPixmap thumbnail = {});
     bool remove(int index);
     void clear();
 
@@ -27,6 +28,7 @@ private:
     QString identifier;
     QString thumbsPath;
     int limit;
+    QFileIconProvider iconProvider;
 };
 
 #endif // RECENTLIST_H
