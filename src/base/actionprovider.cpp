@@ -225,7 +225,7 @@ QAction *ActionProvider::getSearchByRegex(QWidget *parent) const
     action->setCheckable(true);
     action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 
-    auto translate = [=]() { action->setText(tr("Use Regular Expression")); };
+    auto translate = [=]() { action->setText(tr("Regular Expression")); };
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
 

@@ -91,6 +91,13 @@ ProjectManager::ProjectManager(PackageListModel &packages, QWidget *parent)
         currentProject->openPackageRenamer();
     });
 
+    actionSearch = new QAction(this);
+    actionSearch->setIcon(QIcon::fromTheme("edit-find"));
+    actionSearch->setShortcut(QKeySequence("Ctrl+Shift+F"));
+    connect(actionSearch, &QAction::triggered, this, [this]() {
+        currentProject->openSearchTab();
+    });
+
     actionViewSignatures = new QAction(this);
     actionViewSignatures->setIcon(QIcon::fromTheme("view-certificate"));
     connect(actionViewSignatures, &QAction::triggered, this, [this]() {
@@ -223,6 +230,11 @@ QAction *ProjectManager::getActionOpenProjectPage() const
     return actionOpenProjectPage;
 }
 
+QAction *ProjectManager::getActionSearch() const
+{
+    return actionSearch;
+}
+
 QMenu *ProjectManager::getTabMenu() const
 {
     return menuTab;
@@ -266,6 +278,7 @@ void ProjectManager::updateActionsForProject(Project *project)
     actionEditTitles->setEnabled(state ? state->canEdit() : false);
     actionEditPermissions->setEnabled(state ? state->canEdit() : false);
     actionClonePackage->setEnabled(state ? state->canEdit() : false);
+    actionSearch->setEnabled(state ? state->canExplore() : false);
     actionViewSignatures->setEnabled(package);
     actionOpenProjectPage->setEnabled(package);
     updateActionsForTab(project ? project->getCurrentTab() : nullptr);
@@ -298,9 +311,8 @@ void ProjectManager::retranslate()
     actionEditTitles->setText(tr("Edit Application &Title"));
     //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionEditPermissions->setText(tr("Edit Application &Permissions"));
-    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
-    tr("Edit Package &Name"); // For possible future use
     actionClonePackage->setText(tr("&Clone APK"));
+    actionSearch->setText(tr("&Search in Project"));
     //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     actionViewSignatures->setText(tr("View &Signatures"));
     actionSaveFile->setText(tr("&Save"));

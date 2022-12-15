@@ -327,6 +327,7 @@ void MainWindow::initMenus()
     auto actionScreenshot = app->actions.getTakeScreenshot(this);
     auto actionFrameworkManager = app->actions.getOpenFrameworkManager(this);
     auto actionProjectPage = projectManager->getActionOpenProjectPage();
+    auto actionSearchInProject = projectManager->getActionSearch();
     auto actionTitleEditor = projectManager->getActionEditTitles();
     auto actionPermissionEditor = projectManager->getActionEditPermissions();
     auto actionClonePackage = projectManager->getActionClonePackage();
@@ -395,6 +396,7 @@ void MainWindow::initMenus()
     menuTools->addAction(actionFrameworkManager);
     menuTools->addSeparator();
     menuTools->addAction(actionProjectPage);
+    menuTools->addAction(actionSearchInProject);
     menuTools->addSeparator();
     menuTools->addAction(actionTitleEditor);
     menuTools->addAction(actionPermissionEditor);
@@ -433,6 +435,7 @@ void MainWindow::initMenus()
     toolbar->addActionToPool("save", actionSaveFile);
     toolbar->addActionToPool("save-as", actionSaveFileAs);
     toolbar->addActionToPool("project-manager", actionProjectPage);
+    toolbar->addActionToPool("search-project", actionSearchInProject);
     toolbar->addActionToPool("title-editor", actionTitleEditor);
     toolbar->addActionToPool("permission-editor", actionPermissionEditor);
     toolbar->addActionToPool("rename-package", actionClonePackage);

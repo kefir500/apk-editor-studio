@@ -42,6 +42,8 @@ target_sources(apk-editor-studio PRIVATE
     base/process.cpp
     base/recentfile.cpp
     base/recentlist.cpp
+    base/searchmodel.cpp
+    base/searchresult.cpp
     base/settings.cpp
     base/themes.cpp
     base/treenode.cpp
@@ -54,6 +56,7 @@ target_sources(apk-editor-studio PRIVATE
     sheets/codesheet.cpp
     sheets/imagesheet.cpp
     sheets/projectsheet.cpp
+    sheets/searchsheet.cpp
     sheets/titlesheet.cpp
     sheets/welcomesheet.cpp
     tools/adb.cpp
@@ -86,6 +89,8 @@ target_sources(apk-editor-studio PRIVATE
     widgets/readonlycheckbox.cpp
     widgets/resourceabstractview.cpp
     widgets/resourcetree.cpp
+    widgets/searchresultdelegate.cpp
+    widgets/searchresultview.cpp
     widgets/spacer.cpp
     widgets/toolbar.cpp
     windows/aboutdialog.cpp

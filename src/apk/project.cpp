@@ -6,6 +6,7 @@
 #include "sheets/codesheet.h"
 #include "sheets/imagesheet.h"
 #include "sheets/projectsheet.h"
+#include "sheets/searchsheet.h"
 #include "sheets/titlesheet.h"
 #include "windows/devicemanager.h"
 #include "windows/dialogs.h"
@@ -72,6 +73,7 @@ void Project::openResourceTab(const ResourceModelIndex &index)
     if (path.isEmpty()) {
         return;
     }
+
     const QString identifier = path;
     auto existing = getTabByIdentifier(identifier);
     if (existing) {
@@ -80,6 +82,7 @@ void Project::openResourceTab(const ResourceModelIndex &index)
     }
 
     BaseEditableSheet *editor = nullptr;
+
     const auto extension = QFileInfo(path).suffix();
     if (QImageReader::supportedImageFormats().contains(extension.toUtf8())) {
         editor = new ImageSheet(index, parentWidget());
@@ -89,8 +92,41 @@ void Project::openResourceTab(const ResourceModelIndex &index)
         QMessageBox::warning(parentWidget(), {}, tr("The format is not supported."));
         return;
     }
+
     editor->setProperty("identifier", identifier);
     addTab(editor);
+}
+
+void Project::openResourceTab(const QString &filePath)
+{
+    const auto index = package->filesystemModel.index(filePath);
+    Q_ASSERT(index.isValid());
+    openResourceTab(index);
+}
+
+void Project::openCodeSheetTab(const QString &filePath, int lineNumber, int columnNumber, int selectionLength)
+{
+    const auto index = package->filesystemModel.index(filePath);
+    Q_ASSERT(index.isValid());
+
+    const QString identifier = filePath;
+
+    auto existing = getTabByIdentifier(identifier);
+    if (existing) {
+        setCurrentTab(existing);
+        auto codeEditor = qobject_cast<CodeSheet *>(existing);
+        if (codeEditor && lineNumber != -1 && columnNumber != -1) {
+            codeEditor->setTextCursor(lineNumber, columnNumber, selectionLength);
+        }
+        return;
+    }
+
+    auto codeEditor = new CodeSheet(index, parentWidget());
+    codeEditor->setProperty("identifier", identifier);
+    if (lineNumber != -1 && columnNumber != -1) {
+        codeEditor->setTextCursor(lineNumber, columnNumber, selectionLength);
+    }
+    addTab(codeEditor);
 }
 
 void Project::openPermissionEditor()
@@ -140,6 +176,22 @@ void Project::openPackageRenamer()
     QMessageBox::information(parentWidget(), {}, tr("APK has been successfully cloned!"));
 }
 
+void Project::openSearchTab()
+{
+    const QString identifier = "search";
+    auto existing = getTabByIdentifier(identifier);
+    if (existing) {
+        setCurrentTab(existing);
+        return;
+    }
+
+    auto tab = new SearchSheet(parentWidget());
+    tab->setSearchPath(package->getContentsPath());
+    tab->setProperty("identifier", identifier);
+    connect(tab, &SearchSheet::editRequested, this, &Project::openCodeSheetTab);
+    addTab(tab);
+}
+
 void Project::openSignatureViewer()
 {
     SignatureViewer signatureViewer(package->getOriginalPath(), parentWidget());
@@ -162,7 +214,8 @@ bool Project::saveProject()
 {
     if (hasUnsavedTabs()) {
         const QString question = tr("Do you want to save changes before packing?");
-        const int answer = QMessageBox::question(parentWidget(), QString(), question, QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        const int answer = QMessageBox::question(parentWidget(), {}, question,
+                                                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
         switch (answer) {
         case QMessageBox::Yes:
         case QMessageBox::Save:
@@ -207,7 +260,8 @@ bool Project::installProject()
 
     if (isUnsaved()) {
         const QString question = tr("Do you want to save changes and pack the APK before installing?");
-        const int answer = QMessageBox::question(parentWidget(), QString(), question, QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        const int answer = QMessageBox::question(parentWidget(), {}, question,
+                                                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
         switch (answer) {
         case QMessageBox::Yes:
         case QMessageBox::Save: {

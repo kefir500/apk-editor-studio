@@ -18,8 +18,11 @@ public:
     void openProjectTab();
     void openTitlesTab();
     void openResourceTab(const ResourceModelIndex &index);
+    void openResourceTab(const QString &filePath);
+    void openCodeSheetTab(const QString &filePath, int lineNumber, int columnNumber, int selectionLength);
     void openPermissionEditor();
     void openPackageRenamer();
+    void openSearchTab();
     void openSignatureViewer();
 
     bool saveTabs();

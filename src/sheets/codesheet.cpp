@@ -9,7 +9,8 @@
 #include <QScrollBar>
 #include <QTextCodec>
 
-CodeSheet::CodeSheet(const ResourceModelIndex &index, QWidget *parent) : BaseFileSheet(index, parent)
+CodeSheet::CodeSheet(const ResourceModelIndex &index, QWidget *parent)
+    : BaseFileSheet(index, parent)
 {
     const QString filename = index.path();
     QString sheetTitle = filename.section('/', -2);
@@ -18,9 +19,9 @@ CodeSheet::CodeSheet(const ResourceModelIndex &index, QWidget *parent) : BaseFil
         sheetTitle = sheetTitle.split('/').last();
     }
     setSheetTitle(sheetTitle);
-    setSheetIcon(index.icon());
 
     editor = new CodeEditor(this);
+    editor->setCenterOnScroll(true);
     editor->setDefinition(app->highlightingRepository.definitionForFileName(filename));
 
     searchBar = new CodeSearchBar(editor);
@@ -102,6 +103,18 @@ bool CodeSheet::save(const QString &as)
     }
     qWarning() << "Error: Could not save code resource file";
     return false;
+}
+
+void CodeSheet::setTextCursor(int lineNumber, int columnNumber, int selectionLength)
+{
+    auto cursor = editor->textCursor();
+    cursor.movePosition(QTextCursor::Start);
+    cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, lineNumber - 1);
+    cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::MoveAnchor, columnNumber);
+    if (selectionLength > 0) {
+        cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, selectionLength);
+    }
+    editor->setTextCursor(cursor);
 }
 
 void CodeSheet::keyPressEvent(QKeyEvent *event)

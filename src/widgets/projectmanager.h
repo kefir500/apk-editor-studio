@@ -35,6 +35,7 @@ public:
     QAction *getActionClonePackage() const;
     QAction *getActionViewSignatures() const;
     QAction *getActionOpenProjectPage() const;
+    QAction *getActionSearch() const;
     QMenu *getTabMenu() const;
 
 signals:
@@ -69,6 +70,7 @@ private:
     QAction *actionClonePackage;
     QAction *actionViewSignatures;
     QAction *actionOpenProjectPage;
+    QAction *actionSearch;
     QMenu *menuTab;
 };
 

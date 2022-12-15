@@ -3,6 +3,7 @@
 ## 1.7.0
 - Added automatic Apktool updater.
 - Added framework manager.
+- Added global Find and Replace.
 - Added code search case sensitivity option.
 - Added code search by regular expression option.
 - Added ability to open resources in an external app.
