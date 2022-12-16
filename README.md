@@ -1,6 +1,6 @@
 # APK Editor Studio
 
-[![Build Status (GitHub Actions)](https://img.shields.io/github/workflow/status/kefir500/apk-editor-studio/Build)](https://github.com/kefir500/apk-editor-studio/actions/workflows/build.yml)
+[![Build Status (GitHub Actions)](https://img.shields.io/github/actions/workflow/status/kefir500/apk-editor-studio/build.yml?branch=1.7.0)](https://github.com/kefir500/apk-editor-studio/actions/workflows/build.yml)
 [![Latest Release](https://img.shields.io/github/release/kefir500/apk-editor-studio.svg?maxAge=86400)](https://github.com/kefir500/apk-editor-studio/releases/latest)
 [![Download Count](https://img.shields.io/github/downloads/kefir500/apk-editor-studio/total?color=blue)](https://github.com/kefir500/apk-editor-studio/releases)
 [![License](https://img.shields.io/github/license/kefir500/apk-editor-studio?color=blue)](https://raw.githubusercontent.com/kefir500/apk-editor-studio/master/LICENSE)
