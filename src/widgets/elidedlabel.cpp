@@ -10,7 +10,7 @@ void ElidedLabel::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     QFontMetrics fontMetrics = this->fontMetrics();
-    if (fontMetrics.width(text()) > contentsRect().width()) {
+    if (fontMetrics.horizontalAdvance(text()) > contentsRect().width()) {
         QString elidedText = fontMetrics.elidedText(text().trimmed(), Qt::ElideRight, width());
         painter.drawText(rect(), elidedText);
     } else {
