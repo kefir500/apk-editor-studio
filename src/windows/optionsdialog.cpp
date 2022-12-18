@@ -1,5 +1,6 @@
 #include "windows/optionsdialog.h"
 #include "windows/devicemanager.h"
+#include "windows/frameworkmanager.h"
 #include "windows/keymanager.h"
 #include "widgets/filebox.h"
 #include "tools/adb.h"
@@ -312,6 +313,14 @@ void OptionsDialog::initialize()
     formApktool->addRow(tr("Frameworks path:"), fileboxFrameworks);
     formApktool->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
+    auto btnFrameworkManager = new QPushButton(tr("Open Framework Manager"), this);
+    btnFrameworkManager->setIcon(QIcon::fromTheme("tool-frameworkmanager"));
+    btnFrameworkManager->setMinimumHeight(Utils::scale(30));
+    connect(btnFrameworkManager, &QPushButton::clicked, this, [this]() {
+        FrameworkManager frameworkManager(this);
+        frameworkManager.exec();
+    });
+
     auto groupUnpacking = new QGroupBox(tr("Unpacking"), this);
     //: "Smali" is the name of the tool/format, don't translate it.
     checkboxSources = new QCheckBox(tr("Decompile source code (smali)"), this);
@@ -331,8 +340,9 @@ void OptionsDialog::initialize()
     layoutPacking->addWidget(checkboxDebuggable);
 
     pageApktool->addLayout(formApktool, 0, 0, 1, 2);
-    pageApktool->addWidget(groupUnpacking, 1, 0);
-    pageApktool->addWidget(groupPacking, 1, 1);
+    pageApktool->addWidget(btnFrameworkManager, 1, 0, 1, 2);
+    pageApktool->addWidget(groupUnpacking, 2, 0);
+    pageApktool->addWidget(groupPacking, 2, 1);
 
     // Apksigner
 
