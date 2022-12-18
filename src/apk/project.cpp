@@ -8,10 +8,10 @@
 #include "sheets/projectsheet.h"
 #include "sheets/searchsheet.h"
 #include "sheets/titlesheet.h"
-#include "windows/devicemanager.h"
 #include "windows/dialogs.h"
 #include "windows/rememberdialog.h"
 #include "windows/permissioneditor.h"
+#include "windows/progressdialog.h"
 #include "windows/signatureviewer.h"
 #include "tools/keystore.h"
 #include <QImageReader>
@@ -135,7 +135,7 @@ void Project::openPermissionEditor()
     permissionEditor.exec();
 }
 
-void Project::openPackageRenamer()
+void Project::openPackageCloner()
 {
     RememberDialog::say("experimental-rename-package", tr(
         "Package renaming is an experimental function which, in its current state, "
@@ -168,12 +168,26 @@ void Project::openPackageRenamer()
         return;
     }
 
-    if (!package->setPackageName(newPackageName)) {
-        QMessageBox::warning(parentWidget(), {}, tr("Could not clone the APK."));
-        return;
-    }
+    auto progressDialog = new ProgressDialog(parentWidget());
+    progressDialog->setWindowTitle(tr("Cloning APK"));
+    connect(package, &Package::cloningStarted, progressDialog, [progressDialog]() {
+        progressDialog->open();
+    });
+    connect(package, &Package::cloningProgressed, progressDialog, [progressDialog](const QString &stage, const QString &filename) {
+        progressDialog->setPrimaryText(stage);
+        progressDialog->setSecondaryText(filename);
+    });
+    connect(package, &Package::cloningFinished, progressDialog, [this, progressDialog](bool success) {
+        progressDialog->close();
+        progressDialog->deleteLater();
+        if (success) {
+            QMessageBox::information(parentWidget(), {}, tr("APK has been successfully cloned!"));
+        } else {
+            QMessageBox::warning(parentWidget(), {}, tr("Could not clone the APK."));
+        }
+    });
 
-    QMessageBox::information(parentWidget(), {}, tr("APK has been successfully cloned!"));
+    package->setPackageName(newPackageName);
 }
 
 void Project::openSearchTab()

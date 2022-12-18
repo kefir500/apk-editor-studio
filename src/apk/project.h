@@ -21,7 +21,7 @@ public:
     void openResourceTab(const QString &filePath);
     void openCodeSheetTab(const QString &filePath, int lineNumber, int columnNumber, int selectionLength);
     void openPermissionEditor();
-    void openPackageRenamer();
+    void openPackageCloner();
     void openSearchTab();
     void openSignatureViewer();
 

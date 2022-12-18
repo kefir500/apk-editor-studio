@@ -29,7 +29,7 @@ public:
     bool hasSourcesUnpacked() const;
 
     void setApplicationIcon(const QString &path, QWidget *parent = nullptr);
-    bool setPackageName(const QString &packageName);
+    void setPackageName(const QString &packageName);
 
     Manifest *manifest;
 
@@ -49,7 +49,11 @@ public:
 signals:
     void stateUpdated();
 
-private:    
+    void cloningStarted();
+    void cloningProgressed(const QString &stage, const QString &filename);
+    void cloningFinished(bool success);
+
+private:
     class LoadUnpackedCommand : public Command
     {
     public:

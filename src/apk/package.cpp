@@ -1,4 +1,5 @@
 #include "apk/package.h"
+#include "apk/apkcloner.h"
 #include "base/application.h"
 #include "base/settings.h"
 #include "base/utils.h"
@@ -74,87 +75,26 @@ void Package::setApplicationIcon(const QString &path, QWidget *parent)
     iconsProxy.replaceApplicationIcons(path, parent);
 }
 
-bool Package::setPackageName(const QString &packageName)
+void Package::setPackageName(const QString &packageName)
 {
     if (!withSources) {
-        return false;
+        qWarning() << "Warning: Changing the package name requires the sources to be decompiled";
+        return;
     }
 
-    auto packagePath = packageName;
-    packagePath.replace('.', '/');
-
-    const auto originalPackageName = getPackageName();
-    auto originalPackagePath = getPackageName();
-    originalPackagePath.replace('.', '/');
-
-    const auto contentsPath = getContentsPath();
-
-    if (packagePath.isEmpty() || originalPackagePath.isEmpty()) {
-        return false;
-    }
-
-    // Update manifest:
-
-    manifest->setPackageName(packageName);
-
-    // Update references in resources:
-
-    const auto resourcesPath = contentsPath + "/res/";
-    QDirIterator files(resourcesPath, QDir::Files, QDirIterator::Subdirectories);
-    while (files.hasNext()) {
-        const QString path(files.next());
-        QFile file(path);
-        if (file.open(QFile::ReadWrite)) {
-            const QString data(file.readAll());
-            QString newData(data);
-            newData.replace(originalPackageName, packageName);
-            if (newData != data) {
-                file.resize(0);
-                file.write(newData.toUtf8());
-            }
-            file.close();
+    auto cloner = new ApkCloner(getContentsPath(), getPackageName(), packageName, this);
+    connect(cloner, &ApkCloner::started, this, &Package::cloningStarted);
+    connect(cloner, &ApkCloner::progressed, this, &Package::cloningProgressed);
+    connect(cloner, &ApkCloner::finished, this, &Package::cloningFinished);
+    connect(cloner, &ApkCloner::finished, this, [=](bool success) {
+        if (success) {
+            state.setModified(true);
+            manifest->setPackageName(packageName);
         }
-    }
+        cloner->deleteLater();
+    });
+    cloner->start();
 
-    const auto smaliDirs = QDir(contentsPath).entryList({"smali*"}, QDir::Dirs);
-    for (const auto &smaliDir : smaliDirs) {
-
-        const auto smaliPath = QString("%1/%2/").arg(contentsPath, smaliDir);
-
-        // Update references in smali:
-
-        QDirIterator files(smaliPath, QDir::Files, QDirIterator::Subdirectories);
-        while (files.hasNext()) {
-            const QString path(files.next());
-            QFile file(path);
-            if (file.open(QFile::ReadWrite)) {
-                const QString data(file.readAll());
-                QString newData(data);
-                newData.replace('L' + originalPackagePath, 'L' + packagePath);
-                newData.replace(originalPackageName, packageName);
-                if (newData != data) {
-                    file.resize(0);
-                    file.write(newData.toUtf8());
-                }
-                file.close();
-            }
-        }
-
-        // Update directory structure:
-
-        const auto fullPackagePath = smaliPath + packagePath;
-        const auto fullOriginalPackagePath = smaliPath + originalPackagePath;
-        if (!QDir().exists(fullOriginalPackagePath)) {
-            continue;
-        }
-        QDir().mkpath(QFileInfo(fullPackagePath).path());
-        if (!QDir().rename(fullOriginalPackagePath, fullPackagePath)) {
-            return false;
-        }
-    }
-
-    state.setModified(true);
-    return true;
 }
 
 Commands *Package::createCommandChain()

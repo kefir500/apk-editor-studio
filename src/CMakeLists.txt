@@ -1,4 +1,5 @@
 target_sources(apk-editor-studio PRIVATE
+    apk/apkcloner.cpp
     apk/filesystemmodel.cpp
     apk/iconitemsmodel.cpp
     apk/logentry.cpp
@@ -106,6 +107,7 @@ target_sources(apk-editor-studio PRIVATE
     windows/mainwindow.cpp
     windows/optionsdialog.cpp
     windows/permissioneditor.cpp
+    windows/progressdialog.cpp
     windows/rememberdialog.cpp
     windows/selectdialog.cpp
     windows/signatureviewer.cpp

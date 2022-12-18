@@ -88,7 +88,7 @@ ProjectManager::ProjectManager(PackageListModel &packages, QWidget *parent)
     actionClonePackage->setIcon(QIcon::fromTheme("edit-copy"));
     actionClonePackage->setShortcut(QKeySequence("Ctrl+Shift+R"));
     connect(actionClonePackage, &QAction::triggered, this, [this]() {
-        currentProject->openPackageRenamer();
+        currentProject->openPackageCloner();
     });
 
     actionSearch = new QAction(this);
