@@ -10,6 +10,7 @@ ProgressDialog::ProgressDialog(QWidget *parent) : QDialog(parent)
 
     primaryLabel = new QLabel(this);
     secondaryLabel = new ElidedLabel(this);
+    secondaryLabel->hide();
 
     progressBar = new QProgressBar(this);
     progressBar->setMinimum(0);
@@ -49,4 +50,5 @@ void ProgressDialog::setPrimaryText(const QString &text)
 void ProgressDialog::setSecondaryText(const QString &text)
 {
     secondaryLabel->setText(text);
+    secondaryLabel->setVisible(!text.isEmpty());
 }

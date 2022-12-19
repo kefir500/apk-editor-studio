@@ -13,6 +13,7 @@ target_sources(KSyntaxHighlighting PRIVATE
     src/context.cpp
     src/contextswitch.cpp
     src/definition.cpp
+    src/definitiondownloader.cpp
     src/foldingregion.cpp
     src/format.cpp
     src/htmlhighlighter.cpp
@@ -39,6 +40,7 @@ target_include_directories(KSyntaxHighlighting
 target_link_libraries(KSyntaxHighlighting
     Qt5::Core
     Qt5::Widgets
+    Qt5::Network
 )
 
 include(GenerateExportHeader)
