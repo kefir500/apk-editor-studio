@@ -8,6 +8,7 @@
 - Added code search by regular expression option.
 - Added syntax definition downloader.
 - Added ability to open resources in an external app.
+- Added ability to disassemble only main DEX classes.
 - Added progress indication for APK cloning.
 - Updated default Apktool to 2.7.0.
 - Updated Android SDK Build Tools to 33.0.1.
