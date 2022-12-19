@@ -59,10 +59,10 @@ elif sys.platform == 'darwin':
 urlretrieve(buildToolsUrl, 'build-tools.zip', progress)
 
 with ZipFile('build-tools.zip') as z:
-    unzip(z, 'android-10/lib/apksigner.jar', resolvePath('../dist/all/tools/'))
-    unzip(z, resolveExecutableName('android-10/zipalign'), resolvePlatformPath(), True)
+    unzip(z, 'android-13/lib/apksigner.jar', resolvePath('../dist/all/tools/'))
+    unzip(z, resolveExecutableName('android-13/zipalign'), resolvePlatformPath(), True)
     if sys.platform == 'win32':
-        unzip(z, 'android-10/libwinpthread-1.dll', resolvePlatformPath())
+        unzip(z, 'android-13/libwinpthread-1.dll', resolvePlatformPath())
 os.remove('build-tools.zip')
 
 # Download and unpack Android SDK Platform Tools
