@@ -29,17 +29,17 @@ ProgressDialog::ProgressDialog(QWidget *parent) : QDialog(parent)
 
 void ProgressDialog::setProgressMinimum(int minimum)
 {
-    progressBar->setMinimum(0);
+    progressBar->setMinimum(minimum);
 }
 
 void ProgressDialog::setProgressMaximum(int maximum)
 {
-    progressBar->setMaximum(0);
+    progressBar->setMaximum(maximum);
 }
 
 void ProgressDialog::setProgressValue(int value)
 {
-    progressBar->setValue(0);
+    progressBar->setValue(value);
 }
 
 void ProgressDialog::setPrimaryText(const QString &text)
