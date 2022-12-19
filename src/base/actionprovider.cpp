@@ -98,7 +98,7 @@ void ActionProvider::takeScreenshot(const QString &serial, QWidget *parent) cons
         auto screenshot = new Adb::Screenshot(dst, serial, parent);
         app->connect(screenshot, &Adb::Screenshot::finished, parent, [=](bool success) {
             if (success) {
-                RememberDialog::say("ScreenshotSuccess", tr("Screenshot has been successfully created!"), parent);
+                RememberDialog::say("screenshot-success", tr("Screenshot has been successfully created!"), parent);
             } else {
                 QMessageBox::warning(parent, {}, tr("Could not take a screenshot."));
             }
