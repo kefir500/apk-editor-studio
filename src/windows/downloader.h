@@ -1,10 +1,10 @@
 #ifndef DOWNLOADER_H
 #define DOWNLOADER_H
 
-#include <QDialog>
+#include "windows/progressdialog.h"
 #include <QNetworkAccessManager>
 
-class Downloader : public QDialog
+class Downloader : public ProgressDialog
 {
     Q_OBJECT
 

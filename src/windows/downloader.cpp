@@ -1,33 +1,18 @@
 #include "windows/downloader.h"
 #include "base/utils.h"
-#include <QBoxLayout>
-#include <QDialogButtonBox>
 #include <QDir>
 #include <QFile>
-#include <QLabel>
 #include <QMessageBox>
 #include <QNetworkReply>
-#include <QProgressBar>
 
 Downloader::Downloader(const QString &title, const QUrl &downloadUrl, const QString &outputDirectory, QWidget *parent)
-    : QDialog(parent)
+    : ProgressDialog(parent)
 {
     setWindowTitle(tr("Downloading"));
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     //: "%1" will be replaced with a title of the downloaded file.
-    auto description = new QLabel(tr("Downloading %1...").arg(title), this);
-
-    auto progress = new QProgressBar(this);
-    progress->setValue(0);
-
-    auto buttons = new QDialogButtonBox(QDialogButtonBox::Cancel, this);
-    connect(buttons, &QDialogButtonBox::rejected, this, &Downloader::reject);
-
-    auto layout = new QVBoxLayout(this);
-    layout->addWidget(description);
-    layout->addWidget(progress);
-    layout->addWidget(buttons);
+    setPrimaryText(tr("Downloading %1...").arg(title));
+    setProgressMaximum(1);
 
     QNetworkRequest request;
     request.setUrl(downloadUrl);
@@ -57,8 +42,8 @@ Downloader::Downloader(const QString &title, const QUrl &downloadUrl, const QStr
     });
 
     connect(reply, &QNetworkReply::downloadProgress, this, [=](qint64 bytesReceived, qint64 bytesTotal) {
-        progress->setMaximum(bytesTotal);
-        progress->setValue(bytesReceived);
+        setProgressMaximum(bytesTotal);
+        setProgressValue(bytesReceived);
     });
 
     adjustSize();

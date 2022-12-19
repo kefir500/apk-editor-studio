@@ -170,6 +170,7 @@ void Project::openPackageCloner()
 
     auto progressDialog = new ProgressDialog(parentWidget());
     progressDialog->setWindowTitle(tr("Cloning APK"));
+    progressDialog->setCancelEnabled(false);
     connect(package, &Package::cloningStarted, progressDialog, [progressDialog]() {
         progressDialog->open();
     });

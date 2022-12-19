@@ -4,6 +4,7 @@
 #include <QDialog>
 
 class ElidedLabel;
+class QDialogButtonBox;
 class QLabel;
 class QProgressBar;
 
@@ -20,11 +21,13 @@ public:
 
     void setPrimaryText(const QString &text);
     void setSecondaryText(const QString &text);
+    void setCancelEnabled(bool value);
 
 private:
     QProgressBar *progressBar;
     QLabel *primaryLabel;
     ElidedLabel *secondaryLabel;
+    QDialogButtonBox *buttons;
 };
 
 #endif // PROGRESSDIALOG_H

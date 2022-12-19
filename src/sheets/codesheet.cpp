@@ -202,6 +202,7 @@ void CodeSheet::downloadDefinitions()
 {
     auto progressDialog = new ProgressDialog(this);
     progressDialog->setPrimaryText(tr("Downloading syntax definitions..."));
+    progressDialog->setCancelEnabled(false);
     progressDialog->show();
 
     auto downloader = new KSyntaxHighlighting::DefinitionDownloader(&app->highlightingRepository);
