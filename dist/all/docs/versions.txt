@@ -10,6 +10,7 @@
 - Added ability to open resources in an external app.
 - Added progress indication for APK cloning.
 - Updated default Apktool to 2.7.0.
+- Updated Android SDK Build Tools to 33.0.1.
 - Fixed error while saving the currently open resource.
 
 ## 1.6.0
