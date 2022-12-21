@@ -9,7 +9,9 @@
 - Added syntax definition downloader.
 - Added ability to open resources in an external app.
 - Added ability to disassemble only main DEX classes.
+- Added ability to disassemble without debug info.
 - Added progress indication for APK cloning.
+- Added Android 13 support.
 - Updated default Apktool to 2.7.0.
 - Updated Android SDK Build Tools to 33.0.1.
 - Fixed error while saving the currently open resource.

@@ -9,7 +9,7 @@ namespace Apktool
     {
     public:
         Decode(const QString &source, const QString &destination, const QString &frameworks,
-               bool resources, bool sources, bool onlyMainClasses, bool keepBrokenResources,
+               bool resources, bool sources, bool noDebugInfo, bool onlyMainClasses, bool keepBrokenResources,
                QObject *parent = nullptr)
             : Command(parent)
             , source(source)
@@ -17,6 +17,7 @@ namespace Apktool
             , frameworks(frameworks)
             , resources(resources)
             , sources(sources)
+            , noDebugInfo(noDebugInfo)
             , onlyMainClasses(onlyMainClasses)
             , keepBrokenResources(keepBrokenResources) {}
 
@@ -29,6 +30,7 @@ namespace Apktool
         const QString frameworks;
         const bool resources;
         const bool sources;
+        const bool noDebugInfo;
         const bool onlyMainClasses;
         const bool keepBrokenResources;
         QString resultOutput;

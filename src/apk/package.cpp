@@ -127,6 +127,7 @@ Command *Package::createUnpackCommand()
     withResources = true;
     withSources = app->settings->getDecompileSources();
     withBrokenResources = app->settings->getKeepBrokenResources();
+    withNoDebugInfo = app->settings->getDecompileNoDebugInfo();
     withOnlyMainClasses = app->settings->getDecompileOnlyMainClasses();
 
     QDir().mkpath(target);
@@ -135,7 +136,7 @@ Command *Package::createUnpackCommand()
     contentsPath = target;
     Q_ASSERT(!contentsPath.isEmpty());
 
-    auto apktoolDecode = new Apktool::Decode(source, target, frameworks, withResources, withSources, withOnlyMainClasses, withBrokenResources);
+    auto apktoolDecode = new Apktool::Decode(source, target, frameworks, withResources, withSources, withNoDebugInfo, withOnlyMainClasses, withBrokenResources);
     connect(apktoolDecode, &Command::finished, this, [=](bool success) {
         if (success) {
             filesystemModel.setRootPath(getContentsPath());

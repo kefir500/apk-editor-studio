@@ -23,6 +23,9 @@ void Apktool::Decode::run()
     if (!sources) {
         arguments << "--no-src";
     }
+    if (noDebugInfo) {
+        arguments << "--no-debug-info";
+    }
     if (onlyMainClasses) {
         arguments << "--only-main-classes";
     }

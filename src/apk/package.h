@@ -72,6 +72,7 @@ private:
     bool withSources = false;
     bool withResources = false;
     bool withBrokenResources = false;
+    bool withNoDebugInfo = false;
     bool withOnlyMainClasses = false;
 };
 
