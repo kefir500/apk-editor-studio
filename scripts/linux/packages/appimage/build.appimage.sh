@@ -15,7 +15,6 @@ cmake --install build --prefix=appdir/usr || exit
 
 cp /usr/bin/adb appdir/usr/bin/
 cp /usr/bin/zipalign appdir/usr/bin/
-ln -sf appdir/usr/share/icons/hicolor/256x256/apps/apk-editor-studio.png appdir/apk-editor-studio.png
 
 # Package
 
