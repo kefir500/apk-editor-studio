@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="he" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="he">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -43,11 +43,11 @@
     </message>
     <message>
         <source>Could not fetch the list of donations.</source>
-        <translation type="unfinished"/>
+        <translation>לא ניתן היה להביא את רשימת התרומות.</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation type="unfinished"/>
+        <translation>נסה שוב</translation>
     </message>
 </context>
 <context>
@@ -63,10 +63,6 @@
     <message>
         <source>Could not take a screenshot.</source>
         <translation>לא ניתן ליצור צילום מסך.</translation>
-    </message>
-    <message>
-        <source>&amp;Open APK...</source>
-        <translation>&amp;פתח APK...</translation>
     </message>
     <message>
         <source>&amp;Optimize External APK...</source>
@@ -94,6 +90,18 @@
     </message>
     <message>
         <source>Find and &amp;Replace</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -146,6 +154,23 @@
         <source>&amp;Language</source>
         <translation>&amp;שפה</translation>
     </message>
+    <message>
+        <source>&amp;Open APK...</source>
+        <translation>&amp;פתח APK...</translation>
+    </message>
+    <message>
+        <source>Case Sensitive</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Regular Expression</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Framework Manager...</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AndroidExplorer</name>
@@ -164,17 +189,17 @@
     <message>
         <source>Installing %1...</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>מתקין %1...</translation>
     </message>
     <message>
         <source>Successfully installed %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation> %1 הותקן</translation>
     </message>
     <message>
         <source>Could not install %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>התקנת %1 נכשלה</translation>
     </message>
     <message>
         <source>Download</source>
@@ -256,6 +281,22 @@
     </message>
 </context>
 <context>
+    <name>ApkCloner</name>
+    <message>
+        <source>Updating resource references...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Updating Smali references...</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Updating directory structure...</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>BaseEditableSheet</name>
     <message>
         <source>Save the changes?</source>
@@ -302,18 +343,33 @@
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>סגור</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>החלף</translation>
     </message>
     <message>
         <source>Replace All</source>
-        <translation type="unfinished"/>
+        <translation>החלף הכל</translation>
     </message>
     <message>
         <source>Hide the Replace Bar</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>CodeSheet</name>
+    <message>
+        <source>Would you like to download syntax definitions for this and other formats?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading syntax definitions...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download Syntax Definitions</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -392,6 +448,28 @@
     </message>
 </context>
 <context>
+    <name>Downloader</name>
+    <message>
+        <source>Downloading</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not save %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the saved file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not download %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
@@ -407,6 +485,37 @@
     <message>
         <source>All files</source>
         <translation>כל הקבצים</translation>
+    </message>
+</context>
+<context>
+    <name>FrameworkManager</name>
+    <message>
+        <source>Framework Manager</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Install</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>הסר</translation>
+    </message>
+    <message>
+        <source>Open Directory</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not install the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not remove the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -662,7 +771,7 @@
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"/>
+        <translation>מסננים</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -714,6 +823,11 @@ Do you want to reopen it and lose any unsaved changes?</source>
 Do you want to discard them and exit?</source>
         <translation>יש לך שינויים שלא נשמרו.
 האם אתה רוצה להשליך אותם ולצאת?</translation>
+    </message>
+    <message>
+        <source>%1 not found. Restore the default path?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a tool name.</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -800,7 +914,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Theme:</source>
-        <translation type="unfinished"/>
+        <translation>ערכת נושא:</translation>
     </message>
     <message>
         <source>Extracted from environment variables by default</source>
@@ -911,6 +1025,14 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>The changes will take effect after the application restart.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Framework Manager</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decompile only main classes</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1028,6 +1150,14 @@ Do you want to discard them and exit?</source>
         <source>Do you want to save changes and pack the APK before installing?</source>
         <translation>האם ברצונך לשמור שינויים ולארוז את ה-APK לפני ההתקנה?</translation>
     </message>
+    <message>
+        <source>The format is not supported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cloning APK</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ProjectManager</name>
@@ -1070,11 +1200,6 @@ Any unsaved changes will be lost.</source>
         <translation>ערו&amp;ך הרשאות יישום</translation>
     </message>
     <message>
-        <source>Edit Package &amp;Name</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>ערוך ש&amp;ם חבילה</translation>
-    </message>
-    <message>
         <source>&amp;Clone APK</source>
         <translation>שכ&amp;פל APK</translation>
     </message>
@@ -1095,6 +1220,10 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Ta&amp;b</source>
         <extracomment>Displayed as &quot;Tab&quot;. Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Search in Project</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1164,6 +1293,18 @@ Any unsaved changes will be lost.</source>
         <extracomment>This string refers to a single resource.</extracomment>
         <translation>פתח את מדריך המשאב</translation>
     </message>
+    <message>
+        <source>Open With</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open With Default Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Choose Another App...</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ResourceItemsModel</name>
@@ -1187,6 +1328,73 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Path</source>
         <translation>נתיב</translation>
+    </message>
+</context>
+<context>
+    <name>SearchModel</name>
+    <message>
+        <source>%1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SearchSheet</name>
+    <message>
+        <source>Searching in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replacing in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Some occurrences were not replaced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Found %1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No results found</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Nothing has been replaced</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search in Project</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace with:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Replace</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1287,34 +1495,38 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>Updater</name>
+    <name>UpdateDialog</name>
     <message>
-        <source>You are using the latest version of APK Editor Studio.</source>
-        <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>אתה משתמש בגרסה האחרונה של APK Editor Studio.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates: invalid format.</source>
-        <translation>לא ניתן לבדוק אם קיימים עדכונים: פורמט לא חוקי.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates (error %1).</source>
-        <extracomment>%1 will be replaced with an error code.</extracomment>
-        <translation>לא ניתן לבדוק אם קיימים עדכונים: (שגיאה: %1).</translation>
+        <source>Updates</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Update</source>
-        <extracomment>This is a noun.</extracomment>
+        <extracomment>This is a verb.</extracomment>
         <translation>עדכן</translation>
     </message>
     <message>
-        <source>APK Editor Studio v%1 is available. Download?</source>
-        <extracomment>&quot;v%1&quot; will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>APK Editor Studio v%1 זמין כעת. האם להוריד?</translation>
+        <source>Could not check for updates:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>What&apos;s New</source>
         <translation>מה חדש?</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateItemsModel</name>
+    <message>
+        <source>Application</source>
+        <translation>יישום</translation>
+    </message>
+    <message>
+        <source>Current Version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Latest Version</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

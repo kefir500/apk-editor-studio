@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="hu" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="hu">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -65,10 +65,6 @@
         <translation>Nem lehetett képernyőképet készíteni.</translation>
     </message>
     <message>
-        <source>&amp;Open APK...</source>
-        <translation>APK &amp;megnyitása...</translation>
-    </message>
-    <message>
         <source>&amp;Optimize External APK...</source>
         <translation>Külső APK optimalizálása...</translation>
     </message>
@@ -95,6 +91,18 @@
     <message>
         <source>Find and &amp;Replace</source>
         <translation>Keresés és csere</translation>
+    </message>
+    <message>
+        <source>Zoom In</source>
+        <translation>Nagyítás</translation>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation>Kicsinyítés</translation>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
+        <translation>Nagyítás alaphelyzetbe</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -145,6 +153,23 @@
     <message>
         <source>&amp;Language</source>
         <translation>&amp;Nyelv</translation>
+    </message>
+    <message>
+        <source>&amp;Open APK...</source>
+        <translation>APK &amp;megnyitása...</translation>
+    </message>
+    <message>
+        <source>Case Sensitive</source>
+        <translation>Nagybetű-érzékeny</translation>
+    </message>
+    <message>
+        <source>Regular Expression</source>
+        <translation>Reguláris kifejezés</translation>
+    </message>
+    <message>
+        <source>&amp;Framework Manager...</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation>&amp;Keretrendszer kezelő...</translation>
     </message>
 </context>
 <context>
@@ -256,6 +281,22 @@
     </message>
 </context>
 <context>
+    <name>ApkCloner</name>
+    <message>
+        <source>Updating resource references...</source>
+        <translation>Erőforrás-hivatkozások frissítése...</translation>
+    </message>
+    <message>
+        <source>Updating Smali references...</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation>Smali hivatkozások frissítése...</translation>
+    </message>
+    <message>
+        <source>Updating directory structure...</source>
+        <translation>Könyvtárstruktúra frissítése...</translation>
+    </message>
+</context>
+<context>
     <name>BaseEditableSheet</name>
     <message>
         <source>Save the changes?</source>
@@ -315,6 +356,21 @@
     <message>
         <source>Hide the Replace Bar</source>
         <translation>A csere-sáv elrejtése</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSheet</name>
+    <message>
+        <source>Would you like to download syntax definitions for this and other formats?</source>
+        <translation>Szeretnéd letölteni ennek és más formátumoknak a szintaxisdefinícióit?</translation>
+    </message>
+    <message>
+        <source>Downloading syntax definitions...</source>
+        <translation>Szintaxisdefiníciók letöltése...</translation>
+    </message>
+    <message>
+        <source>Download Syntax Definitions</source>
+        <translation>Szintaxisdefiníciók letöltése</translation>
     </message>
 </context>
 <context>
@@ -392,6 +448,28 @@
     </message>
 </context>
 <context>
+    <name>Downloader</name>
+    <message>
+        <source>Downloading</source>
+        <translation>Letöltés...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation>%1 letöltése...</translation>
+    </message>
+    <message>
+        <source>Could not save %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the saved file.</extracomment>
+        <translation>%1 nem volt menthető:</translation>
+    </message>
+    <message>
+        <source>Could not download %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation>%1 nem volt letölthető:</translation>
+    </message>
+</context>
+<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
@@ -407,6 +485,37 @@
     <message>
         <source>All files</source>
         <translation>Összes fájl</translation>
+    </message>
+</context>
+<context>
+    <name>FrameworkManager</name>
+    <message>
+        <source>Framework Manager</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation>Keretrendszer kezelő</translation>
+    </message>
+    <message>
+        <source>&amp;Install</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>&amp;Telepítés</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eltávolítás</translation>
+    </message>
+    <message>
+        <source>Open Directory</source>
+        <translation>Könyvtár megnyitása</translation>
+    </message>
+    <message>
+        <source>Could not install the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation>Nem lehetett telepíteni a(z) &quot;%1&quot; keretrendszert.</translation>
+    </message>
+    <message>
+        <source>Could not remove the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation>Nem lehetett eltávolítani a(z) &quot;%1&quot; keretrendszert.</translation>
     </message>
 </context>
 <context>
@@ -714,6 +823,11 @@ Biztos újra akarod nyitni (ezzel minden nem mentett módosítás elvész)?</tra
 Do you want to discard them and exit?</source>
         <translation>Mentetlen módosításaid vannak. Elveted őket és kilépsz?</translation>
     </message>
+    <message>
+        <source>%1 not found. Restore the default path?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a tool name.</extracomment>
+        <translation>%1 nem található. Alapértelmezett elérési út visszaállítása?</translation>
+    </message>
 </context>
 <context>
     <name>ManifestModel</name>
@@ -912,6 +1026,14 @@ Do you want to discard them and exit?</source>
         <source>The changes will take effect after the application restart.</source>
         <translation>A módosítások az alkalmazás újraindítása után lépnek életbe.</translation>
     </message>
+    <message>
+        <source>Open Framework Manager</source>
+        <translation>Keretrendszer kezelő megnyitása</translation>
+    </message>
+    <message>
+        <source>Decompile only main classes</source>
+        <translation>Csak a fő osztályok dekompilálása</translation>
+    </message>
 </context>
 <context>
     <name>Package</name>
@@ -1027,6 +1149,14 @@ Do you want to discard them and exit?</source>
         <source>Do you want to save changes and pack the APK before installing?</source>
         <translation>Elmented a változásokat és becsomagolod az APK fájlt a telepítés előtt?</translation>
     </message>
+    <message>
+        <source>The format is not supported.</source>
+        <translation>A formátum nem támogatott</translation>
+    </message>
+    <message>
+        <source>Cloning APK</source>
+        <translation>APK klónozása</translation>
+    </message>
 </context>
 <context>
     <name>ProjectManager</name>
@@ -1068,11 +1198,6 @@ Any unsaved changes will be lost.</source>
         <translation>Alkalmazás&amp;engedélyek szerkesztése</translation>
     </message>
     <message>
-        <source>Edit Package &amp;Name</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Csomagnév szerkesztése</translation>
-    </message>
-    <message>
         <source>&amp;Clone APK</source>
         <translation>APK klónozása</translation>
     </message>
@@ -1094,6 +1219,10 @@ Any unsaved changes will be lost.</source>
         <source>Ta&amp;b</source>
         <extracomment>Displayed as &quot;Tab&quot;. Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
         <translation>Fül</translation>
+    </message>
+    <message>
+        <source>&amp;Search in Project</source>
+        <translation>&amp;Keresés a projektben</translation>
     </message>
 </context>
 <context>
@@ -1162,6 +1291,18 @@ Any unsaved changes will be lost.</source>
         <extracomment>This string refers to a single resource.</extracomment>
         <translation>Erőforrás-könyvtár megnyitása</translation>
     </message>
+    <message>
+        <source>Open With</source>
+        <translation>Megnyitás ezzel...</translation>
+    </message>
+    <message>
+        <source>Open With Default Application</source>
+        <translation>Megnyitás az alapértelmezett alkalmazással</translation>
+    </message>
+    <message>
+        <source>Choose Another App...</source>
+        <translation>Másik alkalmazás választása...</translation>
+    </message>
 </context>
 <context>
     <name>ResourceItemsModel</name>
@@ -1185,6 +1326,73 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Path</source>
         <translation>Elérési út</translation>
+    </message>
+</context>
+<context>
+    <name>SearchModel</name>
+    <message>
+        <source>%1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation>%1 találat %2 fájlban</translation>
+    </message>
+</context>
+<context>
+    <name>SearchSheet</name>
+    <message>
+        <source>Searching in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation>Keresés ebben: %1</translation>
+    </message>
+    <message>
+        <source>Replacing in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation>Csere ebben: %1</translation>
+    </message>
+    <message>
+        <source>Some occurrences were not replaced.</source>
+        <translation>Néhány előfordulás nem lett cserélve.</translation>
+    </message>
+    <message>
+        <source>Found %1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation>%1 található %2 fájlban</translation>
+    </message>
+    <message>
+        <source>No results found</source>
+        <translation>Nincs találat</translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation>%1 előfordulás cserélve %2 fájlban</translation>
+    </message>
+    <message>
+        <source>Nothing has been replaced</source>
+        <translation>Semmi nem lett cserélve</translation>
+    </message>
+    <message>
+        <source>Search in Project</source>
+        <translation>Keresés a projektben</translation>
+    </message>
+    <message>
+        <source>Search for:</source>
+        <translation>Keresés erre:</translation>
+    </message>
+    <message>
+        <source>Replace with:</source>
+        <translation>Csere erre:</translation>
+    </message>
+    <message>
+        <source>&amp;Search</source>
+        <translation>&amp;Keresés</translation>
+    </message>
+    <message>
+        <source>&amp;Replace</source>
+        <translation>&amp;Csere</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Leállítás</translation>
     </message>
 </context>
 <context>
@@ -1285,34 +1493,38 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>Updater</name>
+    <name>UpdateDialog</name>
     <message>
-        <source>You are using the latest version of APK Editor Studio.</source>
-        <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>Az APK Editor Studio legfrissebb verzióját használod.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates: invalid format.</source>
-        <translation>A frissítések nem voltak ellenőrizhetőek: érvénytelen formátum.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates (error %1).</source>
-        <extracomment>%1 will be replaced with an error code.</extracomment>
-        <translation>A frissítések nem voltak ellenőrizhetőek (hibakód: %1).</translation>
+        <source>Updates</source>
+        <translation>Frissítések</translation>
     </message>
     <message>
         <source>Update</source>
-        <extracomment>This is a noun.</extracomment>
+        <extracomment>This is a verb.</extracomment>
         <translation>Frissítés</translation>
     </message>
     <message>
-        <source>APK Editor Studio v%1 is available. Download?</source>
-        <extracomment>&quot;v%1&quot; will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>Elérhető az APK Editor Studio %1 verziója. Letöltöd?</translation>
+        <source>Could not check for updates:</source>
+        <translation>A frissítések nem voltak ellenőrizhetőek:</translation>
     </message>
     <message>
         <source>What&apos;s New</source>
         <translation>Újdonságok</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateItemsModel</name>
+    <message>
+        <source>Application</source>
+        <translation>Alkalmazás</translation>
+    </message>
+    <message>
+        <source>Current Version</source>
+        <translation>Jelenlegi verzió</translation>
+    </message>
+    <message>
+        <source>Latest Version</source>
+        <translation>Legfrissebb verzió</translation>
     </message>
 </context>
 <context>

@@ -23,6 +23,7 @@
 
 ## Chinese (Simplified)
 - [Wang Chenxu](http://www.dayanzai.me)
+- [Chen Xiang Fang](https://www.transifex.com/user/profile/chenxiangfang/)
 
 ## Czech
 - [Michal Mrnka](https://www.transifex.com/user/profile/Mimrixerix/)
@@ -36,9 +37,11 @@
 
 ## Greek
 - [Spiros Kaparos](https://www.transifex.com/user/profile/spkprs/)
+- [Theodoros Asimakopoulos](https://www.transifex.com/user/profile/theoasima/)
 
 ## Hebrew
 - [Tomer Shami](https://www.transifex.com/user/profile/PointApps/)
+- [yoeliko](https://www.transifex.com/user/profile/July./)
 
 ## Hungarian
 - [Egyed Ferenc](https://www.transifex.com/user/profile/efi99/)

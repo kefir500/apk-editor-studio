@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="tr" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="tr">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Donations</source>
-        <translation type="unfinished"/>
+        <translation>Yapılan Bağışlar</translation>
     </message>
     <message>
         <source>Version History</source>
@@ -43,11 +43,11 @@
     </message>
     <message>
         <source>Could not fetch the list of donations.</source>
-        <translation type="unfinished"/>
+        <translation>Yapılan bağışların listesi alınamadı.</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation type="unfinished"/>
+        <translation>Tekrar dene</translation>
     </message>
 </context>
 <context>
@@ -65,35 +65,43 @@
         <translation>Ekran görüntüsü alınamadı.</translation>
     </message>
     <message>
-        <source>&amp;Open APK...</source>
-        <translation>APK&apos;yı aç...</translation>
-    </message>
-    <message>
         <source>&amp;Optimize External APK...</source>
-        <translation type="unfinished"/>
+        <translation>Harici APK&apos;yı Optimize Et...</translation>
     </message>
     <message>
         <source>&amp;Sign External APK...</source>
-        <translation type="unfinished"/>
+        <translation>Harici APK&apos;yı İmzala...</translation>
     </message>
     <message>
         <source>&amp;Install External APK...</source>
-        <translation type="unfinished"/>
+        <translation>Harici APK&apos;yı Yükle...</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation type="unfinished"/>
+        <translation>Bul</translation>
     </message>
     <message>
         <source>Find &amp;Next</source>
-        <translation type="unfinished"/>
+        <translation>Sonrakini Bul</translation>
     </message>
     <message>
         <source>Find Pre&amp;vious</source>
-        <translation type="unfinished"/>
+        <translation>Öncekini Bul</translation>
     </message>
     <message>
         <source>Find and &amp;Replace</source>
+        <translation>Bul ve Değiştir</translation>
+    </message>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -146,6 +154,23 @@
         <source>&amp;Language</source>
         <translation>Dil</translation>
     </message>
+    <message>
+        <source>&amp;Open APK...</source>
+        <translation>APK&apos;yı aç...</translation>
+    </message>
+    <message>
+        <source>Case Sensitive</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Regular Expression</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Framework Manager...</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AndroidExplorer</name>
@@ -164,17 +189,17 @@
     <message>
         <source>Installing %1...</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>%1 yükleniyor...</translation>
     </message>
     <message>
         <source>Successfully installed %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>%1 başarıyla yüklendi</translation>
     </message>
     <message>
         <source>Could not install %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>%1 yüklenemedi</translation>
     </message>
     <message>
         <source>Download</source>
@@ -216,12 +241,12 @@
     </message>
     <message>
         <source>Tasks</source>
-        <translation type="unfinished"/>
+        <translation>Görevler</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
         <extracomment>Refers to a menu bar (along with File, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Düzenle</translation>
     </message>
 </context>
 <context>
@@ -253,6 +278,22 @@
     <message>
         <source>Could not upload the file.</source>
         <translation>Dosya yüklenemedi.</translation>
+    </message>
+</context>
+<context>
+    <name>ApkCloner</name>
+    <message>
+        <source>Updating resource references...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Updating Smali references...</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Updating directory structure...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -290,30 +331,45 @@
     <name>CodeSearchBar</name>
     <message>
         <source>No results</source>
-        <translation type="unfinished"/>
+        <translation>Sonuç yok</translation>
     </message>
     <message>
         <source>Find:</source>
-        <translation type="unfinished"/>
+        <translation>Bul:</translation>
     </message>
     <message>
         <source>Replace:</source>
-        <translation type="unfinished"/>
+        <translation>Değiştir:</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Kapat</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>Değiştir</translation>
     </message>
     <message>
         <source>Replace All</source>
-        <translation type="unfinished"/>
+        <translation>Hepsini Değiştir</translation>
     </message>
     <message>
         <source>Hide the Replace Bar</source>
+        <translation>Değiştir Çubuğunu Gizle</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSheet</name>
+    <message>
+        <source>Would you like to download syntax definitions for this and other formats?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading syntax definitions...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download Syntax Definitions</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -392,6 +448,28 @@
     </message>
 </context>
 <context>
+    <name>Downloader</name>
+    <message>
+        <source>Downloading</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not save %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the saved file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not download %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
@@ -407,6 +485,37 @@
     <message>
         <source>All files</source>
         <translation>Tüm dosyalar</translation>
+    </message>
+</context>
+<context>
+    <name>FrameworkManager</name>
+    <message>
+        <source>Framework Manager</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Install</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Kaldır</translation>
+    </message>
+    <message>
+        <source>Open Directory</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not install the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not remove the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -562,7 +671,7 @@
     </message>
     <message>
         <source>You are using the built-in keystore provided for demonstrational purposes. It can be practical for testing or personal usage. However, if you plan to distribute this APK, we recommend you to specify/create your own keystore via Key Manager.</source>
-        <translation type="unfinished"/>
+        <translation>Deneme amacıyla sağlanan yerleşik anahtar deposunu kullanıyorsunuz. Test veya kişisel kullanım için pratik olabilir. Ancak, bu APK&apos;yı dağıtmayı planlıyorsanız, Anahtar Yöneticisi aracılığıyla kendi anahtar deponuzu kullanmanızı/oluşturmanızı öneririz.</translation>
     </message>
 </context>
 <context>
@@ -662,7 +771,7 @@
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"/>
+        <translation>Filtrele</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -715,6 +824,11 @@ Do you want to discard them and exit?</source>
         <translation>Kaydedilmemiş değişiklikleriniz mevcut.
 Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
     </message>
+    <message>
+        <source>%1 not found. Restore the default path?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a tool name.</extracomment>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManifestModel</name>
@@ -751,12 +865,12 @@ Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
     </message>
     <message>
         <source>Single-window mode</source>
-        <translation type="unfinished"/>
+        <translation>Tek pencere modu</translation>
     </message>
     <message>
         <source>Open .apk files in an existing window</source>
         <extracomment>Don't translate the &quot;.apk&quot; part.</extracomment>
-        <translation type="unfinished"/>
+        <translation>.apk dosyalarını mevcut bir pencerede açın</translation>
     </message>
     <message>
         <source>Check for updates automatically</source>
@@ -800,7 +914,7 @@ Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
     </message>
     <message>
         <source>Theme:</source>
-        <translation type="unfinished"/>
+        <translation>Tema:</translation>
     </message>
     <message>
         <source>Extracted from environment variables by default</source>
@@ -844,7 +958,7 @@ Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
     </message>
     <message>
         <source>Unpacking</source>
-        <translation type="unfinished"/>
+        <translation>Çıkartılıyor</translation>
     </message>
     <message>
         <source>Decompile source code (smali)</source>
@@ -857,20 +971,20 @@ Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
     </message>
     <message>
         <source>Packing</source>
-        <translation type="unfinished"/>
+        <translation>Paketleniyor</translation>
     </message>
     <message>
         <source>Use AAPT2</source>
         <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
-        <translation type="unfinished"/>
+        <translation>AAPT2 Kullan</translation>
     </message>
     <message>
         <source>Pack for debugging</source>
-        <translation type="unfinished"/>
+        <translation>Hata ayıklama için paketle</translation>
     </message>
     <message>
         <source>Sign APK after packing</source>
-        <translation type="unfinished"/>
+        <translation>Paketledikten sonra APK&apos;yı imzala</translation>
     </message>
     <message>
         <source>Open Key Manager</source>
@@ -884,7 +998,7 @@ Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
     </message>
     <message>
         <source>Optimize APK after packing</source>
-        <translation type="unfinished"/>
+        <translation>Paketledikten sonra APK&apos;yı optimize et</translation>
     </message>
     <message>
         <source>Zipalign path:</source>
@@ -907,10 +1021,18 @@ Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
     </message>
     <message>
         <source>Appearance</source>
-        <translation type="unfinished"/>
+        <translation>Görünüm</translation>
     </message>
     <message>
         <source>The changes will take effect after the application restart.</source>
+        <translation>Değişiklikler, uygulama yeniden başlatıldıktan sonra geçerli olacaktır.</translation>
+    </message>
+    <message>
+        <source>Open Framework Manager</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decompile only main classes</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -994,31 +1116,31 @@ Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
     <name>Project</name>
     <message>
         <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"/>
+        <translation>Paket yeniden adlandırma, mevcut durumunda çökmelere ve veri kaybına neden olabilecek deneysel bir işlevdir. &lt;a href=&quot;%1&quot;&gt;Buradan&lt;/a&gt; tartışma grubumuza katılabilir ve bu özelliği geliştirmemize yardımcı olabilirsiniz.</translation>
     </message>
     <message>
         <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-        <translation type="unfinished"/>
+        <translation>APK&apos;nın klonlanması, kaynak kodu tersine derlemenin açık olmasını gerektiriyor. Devam edilsin mi?</translation>
     </message>
     <message>
         <source>Settings have been applied. Please, reopen this APK.</source>
-        <translation type="unfinished"/>
+        <translation>Ayarlar uygulandı. Lütfen bu APK&apos;yı yeniden açın.</translation>
     </message>
     <message>
         <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>Kaynak kodunu çıkarmak ve APK&apos;yı klonlamak için lütfen bu APK&apos;yı yeniden açın.</translation>
     </message>
     <message>
         <source>Package Name:</source>
-        <translation type="unfinished"/>
+        <translation>Paket ismi:</translation>
     </message>
     <message>
         <source>Could not clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>APK klonlanamadı.</translation>
     </message>
     <message>
         <source>APK has been successfully cloned!</source>
-        <translation type="unfinished"/>
+        <translation>APK başarıyla klonlandı!</translation>
     </message>
     <message>
         <source>Do you want to save changes before packing?</source>
@@ -1027,6 +1149,14 @@ Yine de kaydetmeden çıkmak istiyor musunuz?</translation>
     <message>
         <source>Do you want to save changes and pack the APK before installing?</source>
         <translation>Yüklemeden önce değişiklikleri kaydetmek ve APK&apos;yı paketlemek ister misiniz?</translation>
+    </message>
+    <message>
+        <source>The format is not supported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cloning APK</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1070,11 +1200,6 @@ Kaydedilmemiş değişiklikler kaybolacak.</translation>
         <translation>Uygulama İzinlerini Düzenle</translation>
     </message>
     <message>
-        <source>Edit Package &amp;Name</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Paket İsmini Düzenle</translation>
-    </message>
-    <message>
         <source>&amp;Clone APK</source>
         <translation>APK&apos;yı Klonla</translation>
     </message>
@@ -1095,6 +1220,10 @@ Kaydedilmemiş değişiklikler kaybolacak.</translation>
     <message>
         <source>Ta&amp;b</source>
         <extracomment>Displayed as &quot;Tab&quot;. Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>Sekme</translation>
+    </message>
+    <message>
+        <source>&amp;Search in Project</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1164,6 +1293,18 @@ Kaydedilmemiş değişiklikler kaybolacak.</translation>
         <extracomment>This string refers to a single resource.</extracomment>
         <translation>Kaynağın Dosya Yolunu Aç</translation>
     </message>
+    <message>
+        <source>Open With</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open With Default Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Choose Another App...</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ResourceItemsModel</name>
@@ -1190,41 +1331,108 @@ Kaydedilmemiş değişiklikler kaybolacak.</translation>
     </message>
 </context>
 <context>
+    <name>SearchModel</name>
+    <message>
+        <source>%1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SearchSheet</name>
+    <message>
+        <source>Searching in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replacing in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Some occurrences were not replaced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Found %1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No results found</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Nothing has been replaced</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search in Project</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace with:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Replace</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>SignatureViewer</name>
     <message>
         <source>Signatures</source>
-        <translation type="unfinished"/>
+        <translation>İmzalar</translation>
     </message>
     <message>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
-        <translation type="unfinished"/>
+        <translation>JAR imzalama</translation>
     </message>
     <message>
         <source>APK Signature Scheme v2</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v2</extracomment>
-        <translation type="unfinished"/>
+        <translation>APK İmza Şeması v2</translation>
     </message>
     <message>
         <source>APK Signature Scheme v3</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v3</extracomment>
-        <translation type="unfinished"/>
+        <translation>APK İmza Şeması v3</translation>
     </message>
     <message>
         <source>Signer #%1</source>
         <extracomment>&quot;%1&quot; will be replaced with a signer index number (e.g., &quot;Signer #1, Signer #7, Signer #42&quot;...).</extracomment>
-        <translation type="unfinished"/>
+        <translation>İmzalayan #%1</translation>
     </message>
     <message>
         <source>Could not retrieve the list of certificates.</source>
-        <translation type="unfinished"/>
+        <translation>Sertifika listesi alınamadı.</translation>
     </message>
 </context>
 <context>
     <name>SystemTheme</name>
     <message>
         <source>System Theme</source>
-        <translation type="unfinished"/>
+        <translation>Sistem Teması</translation>
     </message>
 </context>
 <context>
@@ -1258,22 +1466,22 @@ Kaydedilmemiş değişiklikler kaybolacak.</translation>
     <name>Toolbar</name>
     <message>
         <source>Customize Toolbar...</source>
-        <translation type="unfinished"/>
+        <translation>Araç Çubuğunu Özelleştir...</translation>
     </message>
 </context>
 <context>
     <name>ToolbarDialog</name>
     <message>
         <source>Toolbar Customization</source>
-        <translation type="unfinished"/>
+        <translation>Araç Çubuğu Özelleştirme</translation>
     </message>
     <message>
         <source>Current actions:</source>
-        <translation type="unfinished"/>
+        <translation>Şu anki işlemler:</translation>
     </message>
     <message>
         <source>Available actions:</source>
-        <translation type="unfinished"/>
+        <translation>Kullanılabilir işlemler:</translation>
     </message>
     <message>
         <source>Separator</source>
@@ -1287,34 +1495,38 @@ Kaydedilmemiş değişiklikler kaybolacak.</translation>
     </message>
 </context>
 <context>
-    <name>Updater</name>
+    <name>UpdateDialog</name>
     <message>
-        <source>You are using the latest version of APK Editor Studio.</source>
-        <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>APK Editor Studio&apos;nun en güncel versiyonunu kullanıyorsunuz.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates: invalid format.</source>
-        <translation>Güncellemeler denetlenemedi: geçersiz format.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates (error %1).</source>
-        <extracomment>%1 will be replaced with an error code.</extracomment>
-        <translation>Güncellemeler denetlenemedi (%1 hatası).</translation>
+        <source>Updates</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Update</source>
-        <extracomment>This is a noun.</extracomment>
+        <extracomment>This is a verb.</extracomment>
         <translation>Güncelleme</translation>
     </message>
     <message>
-        <source>APK Editor Studio v%1 is available. Download?</source>
-        <extracomment>&quot;v%1&quot; will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>APK Editor Studio v%1 sürümü indirilmeye müsait. İndirilsin mi?</translation>
+        <source>Could not check for updates:</source>
+        <translation>Güncellemeler denetlenemedi:</translation>
     </message>
     <message>
         <source>What&apos;s New</source>
         <translation>Yenilikler</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateItemsModel</name>
+    <message>
+        <source>Application</source>
+        <translation>Uygulama</translation>
+    </message>
+    <message>
+        <source>Current Version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Latest Version</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1345,7 +1557,7 @@ Kaydedilmemiş değişiklikler kaybolacak.</translation>
     </message>
     <message>
         <source>Support Us</source>
-        <translation type="unfinished"/>
+        <translation>Bizi Destekleyin</translation>
     </message>
 </context>
 <context>

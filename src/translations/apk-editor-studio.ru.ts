@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ru">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -65,10 +65,6 @@
         <translation>Не удалось сделать снимок экрана.</translation>
     </message>
     <message>
-        <source>&amp;Open APK...</source>
-        <translation>&amp;Открыть APK...</translation>
-    </message>
-    <message>
         <source>&amp;Optimize External APK...</source>
         <translation>&amp;Оптимизировать внешний APK...</translation>
     </message>
@@ -95,6 +91,18 @@
     <message>
         <source>Find and &amp;Replace</source>
         <translation>Найти и &amp;заменить</translation>
+    </message>
+    <message>
+        <source>Zoom In</source>
+        <translation>Приблизить</translation>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation>Отдалить</translation>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
+        <translation>Сбросить масштаб</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -145,6 +153,23 @@
     <message>
         <source>&amp;Language</source>
         <translation>&amp;Язык</translation>
+    </message>
+    <message>
+        <source>&amp;Open APK...</source>
+        <translation>&amp;Открыть APK...</translation>
+    </message>
+    <message>
+        <source>Case Sensitive</source>
+        <translation>Учитывать регистр</translation>
+    </message>
+    <message>
+        <source>Regular Expression</source>
+        <translation>Регулярное выражение</translation>
+    </message>
+    <message>
+        <source>&amp;Framework Manager...</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation>Менеджер &amp;фреймворков...</translation>
     </message>
 </context>
 <context>
@@ -256,6 +281,22 @@
     </message>
 </context>
 <context>
+    <name>ApkCloner</name>
+    <message>
+        <source>Updating resource references...</source>
+        <translation>Обновление структуры ресурсов...</translation>
+    </message>
+    <message>
+        <source>Updating Smali references...</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation>Обновление структуры Smali...</translation>
+    </message>
+    <message>
+        <source>Updating directory structure...</source>
+        <translation>Обновление структуры директорий...</translation>
+    </message>
+</context>
+<context>
     <name>BaseEditableSheet</name>
     <message>
         <source>Save the changes?</source>
@@ -315,6 +356,21 @@
     <message>
         <source>Hide the Replace Bar</source>
         <translation>Скрыть панель замены</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSheet</name>
+    <message>
+        <source>Would you like to download syntax definitions for this and other formats?</source>
+        <translation>Вы хотите скачать определения синтаксиса для текущего и других форматов?</translation>
+    </message>
+    <message>
+        <source>Downloading syntax definitions...</source>
+        <translation>Скачивание определений синтаксиса...</translation>
+    </message>
+    <message>
+        <source>Download Syntax Definitions</source>
+        <translation>Скачать определения синтаксиса</translation>
     </message>
 </context>
 <context>
@@ -392,6 +448,28 @@
     </message>
 </context>
 <context>
+    <name>Downloader</name>
+    <message>
+        <source>Downloading</source>
+        <translation>Скачивание</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation>Скачивание %1...</translation>
+    </message>
+    <message>
+        <source>Could not save %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the saved file.</extracomment>
+        <translation>Не удалось сохранить %1:</translation>
+    </message>
+    <message>
+        <source>Could not download %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation>Не удалось скачать %1:</translation>
+    </message>
+</context>
+<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
@@ -407,6 +485,37 @@
     <message>
         <source>All files</source>
         <translation>Все файлы</translation>
+    </message>
+</context>
+<context>
+    <name>FrameworkManager</name>
+    <message>
+        <source>Framework Manager</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation>Менеджер фреймворков</translation>
+    </message>
+    <message>
+        <source>&amp;Install</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>&amp;Установить</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>Open Directory</source>
+        <translation>Открыть директорию</translation>
+    </message>
+    <message>
+        <source>Could not install the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation>Не удалось установить фреймворк &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Could not remove the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation>Не удалось удалить фреймворк &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -715,6 +824,11 @@ Do you want to discard them and exit?</source>
         <translation>У вас есть несохранённые изменения.
 Вы действительно хотите отклонить их и выйти?</translation>
     </message>
+    <message>
+        <source>%1 not found. Restore the default path?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a tool name.</extracomment>
+        <translation>%1 не найден. Восстановить путь по умолчанию?</translation>
+    </message>
 </context>
 <context>
     <name>ManifestModel</name>
@@ -913,6 +1027,14 @@ Do you want to discard them and exit?</source>
         <source>The changes will take effect after the application restart.</source>
         <translation>Изменения вступят в силу после перезапуска программы.</translation>
     </message>
+    <message>
+        <source>Open Framework Manager</source>
+        <translation>Открыть менеджер фреймворков</translation>
+    </message>
+    <message>
+        <source>Decompile only main classes</source>
+        <translation>Декомпилировать только основные классы</translation>
+    </message>
 </context>
 <context>
     <name>Package</name>
@@ -1028,6 +1150,14 @@ Do you want to discard them and exit?</source>
         <source>Do you want to save changes and pack the APK before installing?</source>
         <translation>Вы хотите сохранить изменения и упаковать APK перед установкой?</translation>
     </message>
+    <message>
+        <source>The format is not supported.</source>
+        <translation>Данный формат не поддерживается.</translation>
+    </message>
+    <message>
+        <source>Cloning APK</source>
+        <translation>Клонирование APK</translation>
+    </message>
 </context>
 <context>
     <name>ProjectManager</name>
@@ -1070,11 +1200,6 @@ Any unsaved changes will be lost.</source>
         <translation>Редактировать &amp;разрешения приложения</translation>
     </message>
     <message>
-        <source>Edit Package &amp;Name</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Редактировать имя &amp;пакета</translation>
-    </message>
-    <message>
         <source>&amp;Clone APK</source>
         <translation>&amp;Клонировать APK</translation>
     </message>
@@ -1096,6 +1221,10 @@ Any unsaved changes will be lost.</source>
         <source>Ta&amp;b</source>
         <extracomment>Displayed as &quot;Tab&quot;. Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
         <translation>&amp;Вкладка</translation>
+    </message>
+    <message>
+        <source>&amp;Search in Project</source>
+        <translation>&amp;Найти в проекте</translation>
     </message>
 </context>
 <context>
@@ -1164,6 +1293,18 @@ Any unsaved changes will be lost.</source>
         <extracomment>This string refers to a single resource.</extracomment>
         <translation>Открыть директорию ресурса</translation>
     </message>
+    <message>
+        <source>Open With</source>
+        <translation>Открыть с помощью</translation>
+    </message>
+    <message>
+        <source>Open With Default Application</source>
+        <translation>Открыть в приложении по умолчанию</translation>
+    </message>
+    <message>
+        <source>Choose Another App...</source>
+        <translation>Выбрать другое приложение...</translation>
+    </message>
 </context>
 <context>
     <name>ResourceItemsModel</name>
@@ -1187,6 +1328,73 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Path</source>
         <translation>Путь</translation>
+    </message>
+</context>
+<context>
+    <name>SearchModel</name>
+    <message>
+        <source>%1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation>Результаты (%1); Файлы (%2)</translation>
+    </message>
+</context>
+<context>
+    <name>SearchSheet</name>
+    <message>
+        <source>Searching in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation>Поиск в %1</translation>
+    </message>
+    <message>
+        <source>Replacing in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation>Замена в %1</translation>
+    </message>
+    <message>
+        <source>Some occurrences were not replaced.</source>
+        <translation>Некоторые вхождения не были заменены</translation>
+    </message>
+    <message>
+        <source>Found %1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation>Поиск завершён. Найдено результатов: %1. Файлов с вхождениями: %2.</translation>
+    </message>
+    <message>
+        <source>No results found</source>
+        <translation>Нет результатов</translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation>Замена завершена. Заменено вхождений: %1. Затронуто файлов: %2.</translation>
+    </message>
+    <message>
+        <source>Nothing has been replaced</source>
+        <translation>Ничего не было заменено</translation>
+    </message>
+    <message>
+        <source>Search in Project</source>
+        <translation>Найти в проекте</translation>
+    </message>
+    <message>
+        <source>Search for:</source>
+        <translation>Найти:</translation>
+    </message>
+    <message>
+        <source>Replace with:</source>
+        <translation>Заменить на:</translation>
+    </message>
+    <message>
+        <source>&amp;Search</source>
+        <translation>&amp;Найти</translation>
+    </message>
+    <message>
+        <source>&amp;Replace</source>
+        <translation>&amp;Заменить</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Остановить</translation>
     </message>
 </context>
 <context>
@@ -1287,34 +1495,38 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>Updater</name>
+    <name>UpdateDialog</name>
     <message>
-        <source>You are using the latest version of APK Editor Studio.</source>
-        <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>Вы используете последнюю версию APK Editor Studio.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates: invalid format.</source>
-        <translation>Не удалось проверить обновления: неверный формат.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates (error %1).</source>
-        <extracomment>%1 will be replaced with an error code.</extracomment>
-        <translation>Не удалось проверить наличие обновлений (ошибка %1).</translation>
+        <source>Updates</source>
+        <translation>Обновления</translation>
     </message>
     <message>
         <source>Update</source>
-        <extracomment>This is a noun.</extracomment>
-        <translation>Обновление</translation>
+        <extracomment>This is a verb.</extracomment>
+        <translation>Обновить</translation>
     </message>
     <message>
-        <source>APK Editor Studio v%1 is available. Download?</source>
-        <extracomment>&quot;v%1&quot; will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>Доступен APK Editor Studio v%1. Скачать?</translation>
+        <source>Could not check for updates:</source>
+        <translation>Не удалось проверить наличие обновлений:</translation>
     </message>
     <message>
         <source>What&apos;s New</source>
         <translation>Что нового</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateItemsModel</name>
+    <message>
+        <source>Application</source>
+        <translation>Приложение</translation>
+    </message>
+    <message>
+        <source>Current Version</source>
+        <translation>Текущая версия</translation>
+    </message>
+    <message>
+        <source>Latest Version</source>
+        <translation>Последняя версия</translation>
     </message>
 </context>
 <context>

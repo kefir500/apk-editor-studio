@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Donations</source>
-        <translation type="unfinished"/>
+        <translation>捐赠</translation>
     </message>
     <message>
         <source>Version History</source>
@@ -43,11 +43,11 @@
     </message>
     <message>
         <source>Could not fetch the list of donations.</source>
-        <translation type="unfinished"/>
+        <translation>无法获取捐赠列表。</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation type="unfinished"/>
+        <translation>重试</translation>
     </message>
 </context>
 <context>
@@ -65,86 +65,111 @@
         <translation>无法截图。</translation>
     </message>
     <message>
-        <source>&amp;Open APK...</source>
-        <translation>打开 APK...</translation>
-    </message>
-    <message>
         <source>&amp;Optimize External APK...</source>
-        <translation>优化外部 APK...</translation>
+        <translation>优化外部 APK(&amp;O)...</translation>
     </message>
     <message>
         <source>&amp;Sign External APK...</source>
-        <translation>签署外部 APK...</translation>
+        <translation>签署外部 APK(&amp;S)...</translation>
     </message>
     <message>
         <source>&amp;Install External APK...</source>
-        <translation>安装外部 APK...</translation>
+        <translation>安装外部 APK(&amp;I)...</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation type="unfinished"/>
+        <translation>查找(&amp;F)</translation>
     </message>
     <message>
         <source>Find &amp;Next</source>
-        <translation type="unfinished"/>
+        <translation>查找下一个(&amp;N)</translation>
     </message>
     <message>
         <source>Find Pre&amp;vious</source>
-        <translation type="unfinished"/>
+        <translation>查找上一个(&amp;V)</translation>
     </message>
     <message>
         <source>Find and &amp;Replace</source>
+        <translation>查找并替换(&amp;R)</translation>
+    </message>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Visit &amp;Website</source>
-        <translation>访问网站</translation>
+        <translation>访问网站(&amp;W)</translation>
     </message>
     <message>
         <source>&amp;Source Code</source>
-        <translation>源代码</translation>
+        <translation>源代码(&amp;S)</translation>
     </message>
     <message>
         <source>Make a &amp;Donation</source>
-        <translation>捐赠</translation>
+        <translation>捐赠(&amp;D)</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation>退出</translation>
+        <translation>退出(&amp;X)</translation>
     </message>
     <message>
         <source>Check for &amp;Updates</source>
-        <translation>检查更新</translation>
+        <translation>检查更新(&amp;U)</translation>
     </message>
     <message>
         <source>&amp;Reset Settings...</source>
-        <translation>重置设置...</translation>
+        <translation>重置设置(&amp;R)...</translation>
     </message>
     <message>
         <source>&amp;Options...</source>
-        <translation>选项...</translation>
+        <translation>选项(&amp;O)...</translation>
     </message>
     <message>
         <source>&amp;Device Manager...</source>
         <extracomment>This string refers to multiple devices (as in &quot;Manager of devices&quot;).</extracomment>
-        <translation>设备管理器...</translation>
+        <translation>设备管理器(&amp;D)...</translation>
     </message>
     <message>
         <source>&amp;Key Manager...</source>
         <extracomment>This string refers to multiple keys (as in &quot;Manager of keys&quot;).</extracomment>
-        <translation>密钥管理器...</translation>
+        <translation>密钥管理器(&amp;K)...</translation>
     </message>
     <message>
         <source>&amp;Android Explorer...</source>
-        <translation>Android 资源管理器...</translation>
+        <translation>Android 资源管理器(&amp;A)...</translation>
     </message>
     <message>
         <source>Take &amp;Screenshot...</source>
-        <translation>截图...</translation>
+        <translation>截图(&amp;S)...</translation>
     </message>
     <message>
         <source>&amp;Language</source>
-        <translation>语言</translation>
+        <translation>语言(&amp;L)</translation>
+    </message>
+    <message>
+        <source>&amp;Open APK...</source>
+        <translation>打开 APK(&amp;O)...</translation>
+    </message>
+    <message>
+        <source>Case Sensitive</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Regular Expression</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Framework Manager...</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -164,17 +189,17 @@
     <message>
         <source>Installing %1...</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>正在安装 %1 ...</translation>
     </message>
     <message>
         <source>Successfully installed %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>%1 已安装成功</translation>
     </message>
     <message>
         <source>Could not install %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>无法安装 %1</translation>
     </message>
     <message>
         <source>Download</source>
@@ -216,12 +241,12 @@
     </message>
     <message>
         <source>Tasks</source>
-        <translation type="unfinished"/>
+        <translation>任务</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
         <extracomment>Refers to a menu bar (along with File, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>编辑(&amp;E)</translation>
     </message>
 </context>
 <context>
@@ -256,6 +281,22 @@
     </message>
 </context>
 <context>
+    <name>ApkCloner</name>
+    <message>
+        <source>Updating resource references...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Updating Smali references...</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Updating directory structure...</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>BaseEditableSheet</name>
     <message>
         <source>Save the changes?</source>
@@ -263,57 +304,72 @@
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>保存</translation>
+        <translation>保存(&amp;S)</translation>
     </message>
 </context>
 <context>
     <name>BaseFileSheet</name>
     <message>
         <source>&amp;Replace Resource...</source>
-        <translation>替换资源...</translation>
+        <translation>替换资源(&amp;R)...</translation>
     </message>
     <message>
         <source>&amp;Save Resource</source>
-        <translation>保存资源</translation>
+        <translation>保存资源(&amp;S)</translation>
     </message>
     <message>
         <source>Save Resource &amp;As...</source>
-        <translation>资源另存为...</translation>
+        <translation>资源另存为(&amp;A)...</translation>
     </message>
     <message>
         <source>&amp;Open Resource Directory</source>
         <extracomment>This string refers to a single resource.</extracomment>
-        <translation>打开资源目录</translation>
+        <translation>打开资源目录(&amp;O)</translation>
     </message>
 </context>
 <context>
     <name>CodeSearchBar</name>
     <message>
         <source>No results</source>
-        <translation type="unfinished"/>
+        <translation>没有结果</translation>
     </message>
     <message>
         <source>Find:</source>
-        <translation type="unfinished"/>
+        <translation>查找：</translation>
     </message>
     <message>
         <source>Replace:</source>
-        <translation type="unfinished"/>
+        <translation>替换：</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>替换</translation>
     </message>
     <message>
         <source>Replace All</source>
-        <translation type="unfinished"/>
+        <translation>全部替换</translation>
     </message>
     <message>
         <source>Hide the Replace Bar</source>
+        <translation>隐藏替换栏</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSheet</name>
+    <message>
+        <source>Would you like to download syntax definitions for this and other formats?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading syntax definitions...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download Syntax Definitions</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -392,6 +448,28 @@
     </message>
 </context>
 <context>
+    <name>Downloader</name>
+    <message>
+        <source>Downloading</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not save %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the saved file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not download %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
@@ -407,6 +485,37 @@
     <message>
         <source>All files</source>
         <translation>所有文件</translation>
+    </message>
+</context>
+<context>
+    <name>FrameworkManager</name>
+    <message>
+        <source>Framework Manager</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Install</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>移除</translation>
+    </message>
+    <message>
+        <source>Open Directory</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not install the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not remove the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -562,7 +671,7 @@
     </message>
     <message>
         <source>You are using the built-in keystore provided for demonstrational purposes. It can be practical for testing or personal usage. However, if you plan to distribute this APK, we recommend you to specify/create your own keystore via Key Manager.</source>
-        <translation type="unfinished"/>
+        <translation>您正在使用为演示目的提供的内置密钥库。 它可以用于测试或个人使用。 但是，如果您计划分发此 APK，我们建议您通过密钥管理器指定/创建您自己的密钥库。</translation>
     </message>
 </context>
 <context>
@@ -615,22 +724,22 @@
     <message>
         <source>&amp;File</source>
         <extracomment>Refers to a menu bar (along with Edit, View, Window, Help, and similar items).</extracomment>
-        <translation>文件</translation>
+        <translation>文件(&amp;F)</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
         <extracomment>Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
-        <translation>工具</translation>
+        <translation>工具(&amp;T)</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
         <extracomment>Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
-        <translation>设置</translation>
+        <translation>设置(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Window</source>
         <extracomment>Refers to a menu bar (along with File, Edit, View, Help, and similar items).</extracomment>
-        <translation>窗口</translation>
+        <translation>窗口(&amp;W)</translation>
     </message>
     <message>
         <source>Tools</source>
@@ -662,20 +771,20 @@
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"/>
+        <translation>过滤</translation>
     </message>
     <message>
         <source>&amp;Help</source>
         <extracomment>Refers to a menu bar (along with File, Edit, View, Window, and similar items).</extracomment>
-        <translation>帮助</translation>
+        <translation>帮助(&amp;H)</translation>
     </message>
     <message>
         <source>Open &amp;Recent</source>
-        <translation>打开最近文件</translation>
+        <translation>打开最近文件(&amp;R)</translation>
     </message>
     <message>
         <source>&amp;Clear List</source>
-        <translation>清除列表</translation>
+        <translation>清除列表(&amp;C)</translation>
     </message>
     <message>
         <source>No Recent Files</source>
@@ -684,17 +793,17 @@
     <message>
         <source>Open &amp;New Window</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>打开新窗口</translation>
+        <translation>打开新窗口(&amp;N)</translation>
     </message>
     <message>
         <source>&amp;About APK Editor Studio...</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>关于 APK Editor Studio...</translation>
+        <translation>关于 APK Editor Studio(&amp;A)...</translation>
     </message>
     <message>
         <source>About &amp;Qt...</source>
         <extracomment>Don't translate the &quot;&amp;Qt&quot; part.</extracomment>
-        <translation>关于 Qt...</translation>
+        <translation>关于 Qt(&amp;Q)...</translation>
     </message>
     <message>
         <source>Welcome</source>
@@ -714,6 +823,11 @@ Do you want to reopen it and lose any unsaved changes?</source>
 Do you want to discard them and exit?</source>
         <translation>您尚未保存更改。
 你想放弃他们并退出吗?</translation>
+    </message>
+    <message>
+        <source>%1 not found. Restore the default path?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a tool name.</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -756,7 +870,7 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Open .apk files in an existing window</source>
         <extracomment>Don't translate the &quot;.apk&quot; part.</extracomment>
-        <translation type="unfinished"/>
+        <translation>在当前窗口打开 .apk 文件</translation>
     </message>
     <message>
         <source>Check for updates automatically</source>
@@ -800,7 +914,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Theme:</source>
-        <translation type="unfinished"/>
+        <translation>主题:</translation>
     </message>
     <message>
         <source>Extracted from environment variables by default</source>
@@ -844,7 +958,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Unpacking</source>
-        <translation type="unfinished"/>
+        <translation>解包中</translation>
     </message>
     <message>
         <source>Decompile source code (smali)</source>
@@ -857,20 +971,20 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Packing</source>
-        <translation type="unfinished"/>
+        <translation>打包中</translation>
     </message>
     <message>
         <source>Use AAPT2</source>
         <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
-        <translation type="unfinished"/>
+        <translation>使用 AAPT2</translation>
     </message>
     <message>
         <source>Pack for debugging</source>
-        <translation type="unfinished"/>
+        <translation>打包调试</translation>
     </message>
     <message>
         <source>Sign APK after packing</source>
-        <translation type="unfinished"/>
+        <translation>打包后签名 APK</translation>
     </message>
     <message>
         <source>Open Key Manager</source>
@@ -884,7 +998,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Optimize APK after packing</source>
-        <translation type="unfinished"/>
+        <translation>打包后优化 APK</translation>
     </message>
     <message>
         <source>Zipalign path:</source>
@@ -907,10 +1021,18 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Appearance</source>
-        <translation type="unfinished"/>
+        <translation>外观</translation>
     </message>
     <message>
         <source>The changes will take effect after the application restart.</source>
+        <translation>更改将在应用程序重新启动后生效。</translation>
+    </message>
+    <message>
+        <source>Open Framework Manager</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decompile only main classes</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1028,6 +1150,14 @@ Do you want to discard them and exit?</source>
         <source>Do you want to save changes and pack the APK before installing?</source>
         <translation>您是否要保存更改并在安装前打包 APK?</translation>
     </message>
+    <message>
+        <source>The format is not supported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cloning APK</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ProjectManager</name>
@@ -1039,40 +1169,35 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>&amp;Save APK...</source>
-        <translation>保存 APK...</translation>
+        <translation>保存 APK(&amp;S)...</translation>
     </message>
     <message>
         <source>&amp;Install APK...</source>
-        <translation>安装 APK...</translation>
+        <translation>安装 APK(&amp;I)...</translation>
     </message>
     <message>
         <source>O&amp;pen Contents</source>
         <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
-        <translation>打开内容</translation>
+        <translation>打开内容(&amp;P)</translation>
     </message>
     <message>
         <source>&amp;Close APK</source>
-        <translation>关闭 APK</translation>
+        <translation>关闭 APK(&amp;C)</translation>
     </message>
     <message>
         <source>&amp;Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
-        <translation>项目管理</translation>
+        <translation>项目管理器(&amp;P)</translation>
     </message>
     <message>
         <source>Edit Application &amp;Title</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>编辑应用程序标题</translation>
+        <translation>编辑应用程序标题(&amp;T)</translation>
     </message>
     <message>
         <source>Edit Application &amp;Permissions</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>编辑应用程序权限</translation>
-    </message>
-    <message>
-        <source>Edit Package &amp;Name</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>编辑包名称(&amp;N)</translation>
+        <translation>编辑应用程序权限(&amp;P)</translation>
     </message>
     <message>
         <source>&amp;Clone APK</source>
@@ -1085,16 +1210,20 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>保存</translation>
+        <translation>保存(&amp;S)</translation>
     </message>
     <message>
         <source>Save &amp;As...</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>另存为...</translation>
+        <translation>另存为(&amp;A)...</translation>
     </message>
     <message>
         <source>Ta&amp;b</source>
         <extracomment>Displayed as &quot;Tab&quot;. Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>标签(&amp;B)</translation>
+    </message>
+    <message>
+        <source>&amp;Search in Project</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1103,7 +1232,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
-        <translation>项目管理</translation>
+        <translation>项目管理器</translation>
     </message>
     <message>
         <source>Edit APK</source>
@@ -1164,6 +1293,18 @@ Any unsaved changes will be lost.</source>
         <extracomment>This string refers to a single resource.</extracomment>
         <translation>打开资源目录</translation>
     </message>
+    <message>
+        <source>Open With</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open With Default Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Choose Another App...</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ResourceItemsModel</name>
@@ -1190,10 +1331,77 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
+    <name>SearchModel</name>
+    <message>
+        <source>%1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SearchSheet</name>
+    <message>
+        <source>Searching in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replacing in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Some occurrences were not replaced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Found %1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No results found</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Nothing has been replaced</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search in Project</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace with:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Replace</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>SignatureViewer</name>
     <message>
         <source>Signatures</source>
-        <translation type="unfinished"/>
+        <translation>签名</translation>
     </message>
     <message>
         <source>JAR signing</source>
@@ -1224,7 +1432,7 @@ Any unsaved changes will be lost.</source>
     <name>SystemTheme</name>
     <message>
         <source>System Theme</source>
-        <translation type="unfinished"/>
+        <translation>系统主题</translation>
     </message>
 </context>
 <context>
@@ -1287,34 +1495,38 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>Updater</name>
+    <name>UpdateDialog</name>
     <message>
-        <source>You are using the latest version of APK Editor Studio.</source>
-        <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>您正在使用最新版本的 APK Editor Studio。</translation>
-    </message>
-    <message>
-        <source>Could not check for updates: invalid format.</source>
-        <translation>无法检查更新：格式无效。</translation>
-    </message>
-    <message>
-        <source>Could not check for updates (error %1).</source>
-        <extracomment>%1 will be replaced with an error code.</extracomment>
-        <translation>无法检查更新（错误 %1）。</translation>
+        <source>Updates</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Update</source>
-        <extracomment>This is a noun.</extracomment>
+        <extracomment>This is a verb.</extracomment>
         <translation>更新</translation>
     </message>
     <message>
-        <source>APK Editor Studio v%1 is available. Download?</source>
-        <extracomment>&quot;v%1&quot; will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>APK Editor Studio v%1 可用，下载吗?</translation>
+        <source>Could not check for updates:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>What&apos;s New</source>
         <translation>新功能</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateItemsModel</name>
+    <message>
+        <source>Application</source>
+        <translation>应用程序</translation>
+    </message>
+    <message>
+        <source>Current Version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Latest Version</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1401,7 +1613,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Yes, &amp;Always</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>是，始终</translation>
+        <translation>是，始终(&amp;A)</translation>
     </message>
 </context>
 </TS>

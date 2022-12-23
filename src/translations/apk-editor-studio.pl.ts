@@ -1,9 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pl" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pl">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About</source>
-        <translation>O programie</translation>
+        <translation>O</translation>
     </message>
     <message>
         <source>Authors</source>
@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Donations</source>
-        <translation type="unfinished"/>
+        <translation>Darowizny</translation>
     </message>
     <message>
         <source>Version History</source>
@@ -43,11 +43,11 @@
     </message>
     <message>
         <source>Could not fetch the list of donations.</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się pobrać listy darowizn.</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation type="unfinished"/>
+        <translation>Powtórz</translation>
     </message>
 </context>
 <context>
@@ -58,42 +58,50 @@
     </message>
     <message>
         <source>Screenshot has been successfully created!</source>
-        <translation>Zrzut ekranu został pomyślnie wykonany!</translation>
+        <translation>Zrzut ekranu został pomyślnie utworzony!</translation>
     </message>
     <message>
         <source>Could not take a screenshot.</source>
-        <translation>Nie można zrobić zrzutu ekranu.</translation>
-    </message>
-    <message>
-        <source>&amp;Open APK...</source>
-        <translation>&amp;Otwórz APK...</translation>
+        <translation>Nie udało się zrobić zrzutu ekranu.</translation>
     </message>
     <message>
         <source>&amp;Optimize External APK...</source>
-        <translation type="unfinished"/>
+        <translation>Opty&amp;malizuj zewnętrzny plik APK...</translation>
     </message>
     <message>
         <source>&amp;Sign External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Podpisz zewnętrzny plik APK...</translation>
     </message>
     <message>
         <source>&amp;Install External APK...</source>
-        <translation type="unfinished"/>
+        <translation>Z&amp;ainstaluj zewnętrzny pakiet APK...</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Szukaj</translation>
     </message>
     <message>
         <source>Find &amp;Next</source>
-        <translation type="unfinished"/>
+        <translation>Znajdź &amp;następny</translation>
     </message>
     <message>
         <source>Find Pre&amp;vious</source>
-        <translation type="unfinished"/>
+        <translation>Znajdź &amp;poprzedni</translation>
     </message>
     <message>
         <source>Find and &amp;Replace</source>
+        <translation>Znaj&amp;dź i zastąp</translation>
+    </message>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -140,11 +148,28 @@
     </message>
     <message>
         <source>Take &amp;Screenshot...</source>
-        <translation>&amp;Robienie zrzutu ekranu...</translation>
+        <translation>Wykonaj &amp;zrzut ekranu...</translation>
     </message>
     <message>
         <source>&amp;Language</source>
         <translation>&amp;Język</translation>
+    </message>
+    <message>
+        <source>&amp;Open APK...</source>
+        <translation>&amp;Otwórz APK...</translation>
+    </message>
+    <message>
+        <source>Case Sensitive</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Regular Expression</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Framework Manager...</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -164,25 +189,25 @@
     <message>
         <source>Installing %1...</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Instalowanie %1...</translation>
     </message>
     <message>
         <source>Successfully installed %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Pomyślnie zainstalowano %1</translation>
     </message>
     <message>
         <source>Could not install %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Nie można zainstalować %1</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation>Pobieranie</translation>
+        <translation>Ściągnij</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation>Przesyłanie pliku</translation>
+        <translation>Prześlij</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -216,27 +241,27 @@
     </message>
     <message>
         <source>Tasks</source>
-        <translation type="unfinished"/>
+        <translation>Zadania</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
         <extracomment>Refers to a menu bar (along with File, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;Edytuj</translation>
     </message>
 </context>
 <context>
     <name>AndroidFileSystemModel</name>
     <message>
         <source>Could not open the directory.</source>
-        <translation>Nie można otworzyć katalogu.</translation>
+        <translation>Nie udało się otworzyć katalogu.</translation>
     </message>
     <message>
         <source>Could not copy the file or directory.</source>
-        <translation>Nie można skopiować pliku lub katalogu.</translation>
+        <translation>Nie udało się skopiować pliku lub katalogu.</translation>
     </message>
     <message>
         <source>Could not move the file or directory.</source>
-        <translation>Nie można przenieść pliku lub katalogu.</translation>
+        <translation>Nie udało się przenieść pliku lub katalogu.</translation>
     </message>
     <message>
         <source>Could not rename the file or directory.</source>
@@ -244,15 +269,31 @@
     </message>
     <message>
         <source>Could not delete the file or directory.</source>
-        <translation>Nie można usunąć pliku lub katalogu.</translation>
+        <translation>Nie udało się usunąć pliku lub katalogu.</translation>
     </message>
     <message>
         <source>Could not download the file or directory.</source>
-        <translation>Nie można pobrać pliku lub katalogu.</translation>
+        <translation>Nie udało się pobrać pliku lub katalogu.</translation>
     </message>
     <message>
         <source>Could not upload the file.</source>
-        <translation>Nie można przesłać pliku.</translation>
+        <translation>Nie udało się przesłać pliku.</translation>
+    </message>
+</context>
+<context>
+    <name>ApkCloner</name>
+    <message>
+        <source>Updating resource references...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Updating Smali references...</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Updating directory structure...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -270,7 +311,7 @@
     <name>BaseFileSheet</name>
     <message>
         <source>&amp;Replace Resource...</source>
-        <translation>&amp;Zastąp zasób ...</translation>
+        <translation>Zastąp zasó&amp;b...</translation>
     </message>
     <message>
         <source>&amp;Save Resource</source>
@@ -290,30 +331,45 @@
     <name>CodeSearchBar</name>
     <message>
         <source>No results</source>
-        <translation type="unfinished"/>
+        <translation>Brak wyników</translation>
     </message>
     <message>
         <source>Find:</source>
-        <translation type="unfinished"/>
+        <translation>Znajdź:</translation>
     </message>
     <message>
         <source>Replace:</source>
-        <translation type="unfinished"/>
+        <translation>Zastąp:</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Zamknij</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>Zastąp</translation>
     </message>
     <message>
         <source>Replace All</source>
-        <translation type="unfinished"/>
+        <translation>Zastąp wszystko</translation>
     </message>
     <message>
         <source>Hide the Replace Bar</source>
+        <translation>Ukryj pasek zamiany</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSheet</name>
+    <message>
+        <source>Would you like to download syntax definitions for this and other formats?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading syntax definitions...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download Syntax Definitions</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -321,7 +377,7 @@
     <name>DeviceItemsModel</name>
     <message>
         <source>Alias</source>
-        <translation>Alias</translation>
+        <translation>Nazwa</translation>
     </message>
     <message>
         <source>Serial Number</source>
@@ -365,7 +421,7 @@
     </message>
     <message>
         <source>Could not fetch the device list.</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się pobrać listy urządzeń.</translation>
     </message>
     <message>
         <source>Select Device</source>
@@ -392,6 +448,28 @@
     </message>
 </context>
 <context>
+    <name>Downloader</name>
+    <message>
+        <source>Downloading</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not save %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the saved file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not download %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>FileBox</name>
     <message>
         <source>Reset</source>
@@ -407,6 +485,37 @@
     <message>
         <source>All files</source>
         <translation>Wsz. pliki</translation>
+    </message>
+</context>
+<context>
+    <name>FrameworkManager</name>
+    <message>
+        <source>Framework Manager</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Install</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <source>Open Directory</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not install the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not remove the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -448,7 +557,7 @@
     </message>
     <message>
         <source>Alias</source>
-        <translation>Alias</translation>
+        <translation>Nazwa</translation>
     </message>
     <message>
         <source>Key Password</source>
@@ -588,7 +697,8 @@
     </message>
     <message>
         <source>Could not read keystore. See details for more information.</source>
-        <translation>Nie można odczytać magazynu kluczy. Zobacz szczegóły, aby uzyskać więcej informacji.</translation>
+        <translation>Nie udało się odczytać magazynu kluczy. Zobacz szczegóły, aby uzyskać
+                więcej informacji.</translation>
     </message>
 </context>
 <context>
@@ -599,7 +709,8 @@
     </message>
     <message>
         <source>Could not write to keystore. See details for more information.</source>
-        <translation>Nie można napisać do magazynu kluczy. Zobacz szczegóły, aby uzyskać więcej informacji.</translation>
+        <translation>Nie można wpisać do magazynu kluczy. Zobacz szczegóły, aby uzyskać więcej
+                informacji.</translation>
     </message>
 </context>
 <context>
@@ -607,7 +718,7 @@
     <message>
         <source>Log</source>
         <extracomment>&quot;Log&quot; as in event log, message log, etc.</extracomment>
-        <translation>Log</translation>
+        <translation>Dziennik</translation>
     </message>
 </context>
 <context>
@@ -662,7 +773,7 @@
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"/>
+        <translation>Filtr</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -684,7 +795,7 @@
     <message>
         <source>Open &amp;New Window</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>Otwórz &amp;nowe okno</translation>
     </message>
     <message>
         <source>&amp;About APK Editor Studio...</source>
@@ -698,7 +809,7 @@
     </message>
     <message>
         <source>Welcome</source>
-        <translation type="unfinished"/>
+        <translation>Witamy</translation>
     </message>
     <message>
         <source>This APK is already open:
@@ -714,6 +825,11 @@ Czy chcesz go ponownie otworzyć i utracić niezapisane zmiany?</translation>
 Do you want to discard them and exit?</source>
         <translation>Masz niezapisane zmiany.
 Czy chcesz je odrzucić i wyjść?</translation>
+    </message>
+    <message>
+        <source>%1 not found. Restore the default path?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a tool name.</extracomment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -743,7 +859,7 @@ Czy chcesz je odrzucić i wyjść?</translation>
     <name>OptionsDialog</name>
     <message>
         <source>Could not register file association.</source>
-        <translation>Nie można zarejestrować powiązania pliku.</translation>
+        <translation>Nie można zarejestrować skojarzenia plików.</translation>
     </message>
     <message>
         <source>Options</source>
@@ -751,12 +867,12 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>Single-window mode</source>
-        <translation type="unfinished"/>
+        <translation>Tryb jednego okna</translation>
     </message>
     <message>
         <source>Open .apk files in an existing window</source>
         <extracomment>Don't translate the &quot;.apk&quot; part.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Otwórz pliki .apk w istniejącym oknie</translation>
     </message>
     <message>
         <source>Check for updates automatically</source>
@@ -769,17 +885,17 @@ Czy chcesz je odrzucić i wyjść?</translation>
     <message>
         <source>Use APK Editor Studio for .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Użyj APK Editor Studio dla plików .apk</translation>
     </message>
     <message>
         <source>Use APK Editor Studio to open .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Użyj APK Editor Studio, aby otworzyć pliki .apk</translation>
     </message>
     <message>
         <source>Add %1 action to Windows Explorer context menu</source>
         <extracomment>&quot;%1&quot; will be replaced with an action name (e.g., Install, Optimize, Sign, etc.).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Dodaj akcję %1 do menu kontekstowego Eksploratora Windows</translation>
     </message>
     <message>
         <source>Install</source>
@@ -787,12 +903,12 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>Optimize</source>
-        <translation type="unfinished"/>
+        <translation>Optymalizuj</translation>
     </message>
     <message>
         <source>Sign</source>
         <extracomment>This is a verb.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Podpisywanie</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -800,7 +916,7 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>Theme:</source>
-        <translation type="unfinished"/>
+        <translation>Motyw:</translation>
     </message>
     <message>
         <source>Extracted from environment variables by default</source>
@@ -813,7 +929,7 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>Domyślna</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <source>Java path:</source>
@@ -822,12 +938,12 @@ Czy chcesz je odrzucić i wyjść?</translation>
     <message>
         <source>Initial heap size:</source>
         <extracomment>&quot;Heap&quot; refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.</extracomment>
-        <translation>Inicjalna wielkość stosu:</translation>
+        <translation>Początkowy rozmiar stosu:</translation>
     </message>
     <message>
         <source>Maximum heap size:</source>
         <extracomment>&quot;Heap&quot; refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.</extracomment>
-        <translation>Maksymalna wielkość stosu:</translation>
+        <translation>Maksymalny rozmiar stosu:</translation>
     </message>
     <message>
         <source>Apktool path:</source>
@@ -844,7 +960,7 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>Unpacking</source>
-        <translation type="unfinished"/>
+        <translation>Rozpakowywanie</translation>
     </message>
     <message>
         <source>Decompile source code (smali)</source>
@@ -857,20 +973,20 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>Packing</source>
-        <translation type="unfinished"/>
+        <translation>Pakowanie</translation>
     </message>
     <message>
         <source>Use AAPT2</source>
         <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Użyj AAPT2</translation>
     </message>
     <message>
         <source>Pack for debugging</source>
-        <translation type="unfinished"/>
+        <translation>Pakiet do debugowania</translation>
     </message>
     <message>
         <source>Sign APK after packing</source>
-        <translation type="unfinished"/>
+        <translation>Podpisz APK po spakowaniu</translation>
     </message>
     <message>
         <source>Open Key Manager</source>
@@ -884,7 +1000,7 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>Optimize APK after packing</source>
-        <translation type="unfinished"/>
+        <translation>Zoptymalizuj pakiet APK po spakowaniu</translation>
     </message>
     <message>
         <source>Zipalign path:</source>
@@ -907,10 +1023,18 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>Appearance</source>
-        <translation type="unfinished"/>
+        <translation>Wygląd</translation>
     </message>
     <message>
         <source>The changes will take effect after the application restart.</source>
+        <translation>Zmiany zaczną obowiązywać po ponownym uruchomieniu aplikacji.</translation>
+    </message>
+    <message>
+        <source>Open Framework Manager</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decompile only main classes</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -998,27 +1122,28 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-        <translation type="unfinished"/>
+        <translation>Klonowanie APK wymaga włączenia dekompilacji kodu źródłowego. Kontynuować?</translation>
     </message>
     <message>
         <source>Settings have been applied. Please, reopen this APK.</source>
-        <translation type="unfinished"/>
+        <translation>Zastosowano ustawienia. Proszę ponownie otworzyć ten pakiet APK.</translation>
     </message>
     <message>
         <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>Otwórz ponownie ten plik APK, aby rozpakować kod źródłowy i sklonować plik
+                APK.</translation>
     </message>
     <message>
         <source>Package Name:</source>
-        <translation type="unfinished"/>
+        <translation>Nazwa pakietu:</translation>
     </message>
     <message>
         <source>Could not clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się sklonować APK.</translation>
     </message>
     <message>
         <source>APK has been successfully cloned!</source>
-        <translation type="unfinished"/>
+        <translation>APK został pomyślnie sklonowany!</translation>
     </message>
     <message>
         <source>Do you want to save changes before packing?</source>
@@ -1027,6 +1152,14 @@ Czy chcesz je odrzucić i wyjść?</translation>
     <message>
         <source>Do you want to save changes and pack the APK before installing?</source>
         <translation>Czy chcesz zapisać zmiany i spakować pakiet APK przed instalacją?</translation>
+    </message>
+    <message>
+        <source>The format is not supported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cloning APK</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1070,18 +1203,13 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
         <translation>&amp;Edytuj uprawnienia aplikacji</translation>
     </message>
     <message>
-        <source>Edit Package &amp;Name</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>&amp;Clone APK</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Klonowanie APK</translation>
     </message>
     <message>
         <source>View &amp;Signatures</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>Wyświetl &amp;podpisy</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -1095,6 +1223,10 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     <message>
         <source>Ta&amp;b</source>
         <extracomment>Displayed as &quot;Tab&quot;. Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
+        <translation>Ta&amp;b</translation>
+    </message>
+    <message>
+        <source>&amp;Search in Project</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1164,6 +1296,18 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
         <extracomment>This string refers to a single resource.</extracomment>
         <translation>Otwórz katalog zasobów</translation>
     </message>
+    <message>
+        <source>Open With</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open With Default Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Choose Another App...</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ResourceItemsModel</name>
@@ -1190,41 +1334,108 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     </message>
 </context>
 <context>
+    <name>SearchModel</name>
+    <message>
+        <source>%1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>SearchSheet</name>
+    <message>
+        <source>Searching in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replacing in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Some occurrences were not replaced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Found %1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No results found</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Nothing has been replaced</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search in Project</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Replace with:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Replace</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>SignatureViewer</name>
     <message>
         <source>Signatures</source>
-        <translation type="unfinished"/>
+        <translation>Podpisy</translation>
     </message>
     <message>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
-        <translation type="unfinished"/>
+        <translation>Podpisywanie JAR</translation>
     </message>
     <message>
         <source>APK Signature Scheme v2</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v2</extracomment>
-        <translation type="unfinished"/>
+        <translation>Schemat podpisu APK v2</translation>
     </message>
     <message>
         <source>APK Signature Scheme v3</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v3</extracomment>
-        <translation type="unfinished"/>
+        <translation>Schemat podpisu APK v3</translation>
     </message>
     <message>
         <source>Signer #%1</source>
         <extracomment>&quot;%1&quot; will be replaced with a signer index number (e.g., &quot;Signer #1, Signer #7, Signer #42&quot;...).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Osoba podpisująca #%1</translation>
     </message>
     <message>
         <source>Could not retrieve the list of certificates.</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się pobrać listy certyfikatów.</translation>
     </message>
 </context>
 <context>
     <name>SystemTheme</name>
     <message>
         <source>System Theme</source>
-        <translation type="unfinished"/>
+        <translation>Motyw systemu</translation>
     </message>
 </context>
 <context>
@@ -1258,22 +1469,22 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     <name>Toolbar</name>
     <message>
         <source>Customize Toolbar...</source>
-        <translation type="unfinished"/>
+        <translation>Dostosuj pasek narzędzi...</translation>
     </message>
 </context>
 <context>
     <name>ToolbarDialog</name>
     <message>
         <source>Toolbar Customization</source>
-        <translation type="unfinished"/>
+        <translation>Dostosowywanie paska narzędzi</translation>
     </message>
     <message>
         <source>Current actions:</source>
-        <translation type="unfinished"/>
+        <translation>Bieżące akcje:</translation>
     </message>
     <message>
         <source>Available actions:</source>
-        <translation type="unfinished"/>
+        <translation>Możliwe akcje:</translation>
     </message>
     <message>
         <source>Separator</source>
@@ -1287,34 +1498,38 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     </message>
 </context>
 <context>
-    <name>Updater</name>
+    <name>UpdateDialog</name>
     <message>
-        <source>You are using the latest version of APK Editor Studio.</source>
-        <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>Używasz najnowszej wersji APK Editor Studio.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates: invalid format.</source>
-        <translation>Nie można sprawdzić dostępności aktualizacji: nieprawidłowy format.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates (error %1).</source>
-        <extracomment>%1 will be replaced with an error code.</extracomment>
-        <translation>Nie można sprawdzić aktualizacji (błąd %1).</translation>
+        <source>Updates</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Update</source>
-        <extracomment>This is a noun.</extracomment>
+        <extracomment>This is a verb.</extracomment>
         <translation>Aktualizacja</translation>
     </message>
     <message>
-        <source>APK Editor Studio v%1 is available. Download?</source>
-        <extracomment>&quot;v%1&quot; will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>APK Editor Studio v%1 jest dostępne. Ściągnąć?</translation>
+        <source>Could not check for updates:</source>
+        <translation>Nie można sprawdzić aktualizacji:</translation>
     </message>
     <message>
         <source>What&apos;s New</source>
         <translation>Co nowego</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateItemsModel</name>
+    <message>
+        <source>Application</source>
+        <translation>Aplikacja</translation>
+    </message>
+    <message>
+        <source>Current Version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Latest Version</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1345,7 +1560,7 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     </message>
     <message>
         <source>Support Us</source>
-        <translation type="unfinished"/>
+        <translation>Wesprzyj nas</translation>
     </message>
 </context>
 <context>

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="el" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="el">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -11,11 +11,11 @@
     </message>
     <message>
         <source>Donations</source>
-        <translation type="unfinished"/>
+        <translation>Δωρεές</translation>
     </message>
     <message>
         <source>Version History</source>
-        <translation>Ιστορικό Έκδοσης</translation>
+        <translation>Ιστορικό εκδόσεων</translation>
     </message>
     <message>
         <source>Technologies</source>
@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>License</source>
-        <translation>Άδεια</translation>
+        <translation>Άδεια χρήσης</translation>
     </message>
     <message>
         <source>Author:</source>
@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>Bug Tracker:</source>
-        <translation>Tracker Σφαλμάτων:</translation>
+        <translation>Παρακολούθηση σφαλμάτων:</translation>
     </message>
     <message>
         <source>Translation:</source>
@@ -43,11 +43,11 @@
     </message>
     <message>
         <source>Could not fetch the list of donations.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατή η λήψη της λίστας δωρεών.</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation type="unfinished"/>
+        <translation>Επανάληψη</translation>
     </message>
 </context>
 <context>
@@ -58,55 +58,63 @@
     </message>
     <message>
         <source>Screenshot has been successfully created!</source>
-        <translation type="unfinished"/>
+        <translation>Το στιγμιότυπο οθόνης έχει δημιουργηθεί με επιτυχία!</translation>
     </message>
     <message>
         <source>Could not take a screenshot.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&amp;Open APK...</source>
-        <translation>&amp;Άνοιγμα APK...</translation>
+        <translation>Δεν ήταν δυνατή η λήψη στιγμιότυπου οθόνης.</translation>
     </message>
     <message>
         <source>&amp;Optimize External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Βελτιστοποίηση εξωτερικού APK...</translation>
     </message>
     <message>
         <source>&amp;Sign External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Υπογραφή εξωτερικού APK...</translation>
     </message>
     <message>
         <source>&amp;Install External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Εγκατάσταση εξωτερικού APK...</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Εύρεση</translation>
     </message>
     <message>
         <source>Find &amp;Next</source>
-        <translation type="unfinished"/>
+        <translation>Εύρεση &amp;επόμενου</translation>
     </message>
     <message>
         <source>Find Pre&amp;vious</source>
-        <translation type="unfinished"/>
+        <translation>Εύρεση προη&amp;γούμενου</translation>
     </message>
     <message>
         <source>Find and &amp;Replace</source>
-        <translation type="unfinished"/>
+        <translation>Εύρεση και &amp;Αντικατάσταση</translation>
+    </message>
+    <message>
+        <source>Zoom In</source>
+        <translation>Μεγέθυνση</translation>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation>Σμίκρυνση</translation>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
+        <translation>Επανφορά ζουμ</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
-        <translation>Επίσκεψη &amp;Ιστοτόπου</translation>
+        <translation>Επίσκεψη &amp;ιστότοπου</translation>
     </message>
     <message>
         <source>&amp;Source Code</source>
-        <translation>&amp;Πηγαίος Κώδικας</translation>
+        <translation>&amp;Πηγαίος κώδικας</translation>
     </message>
     <message>
         <source>Make a &amp;Donation</source>
-        <translation>Δημιουργία &amp;δωρεάς</translation>
+        <translation>Κάντε μια &amp;δωρεά</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -114,11 +122,11 @@
     </message>
     <message>
         <source>Check for &amp;Updates</source>
-        <translation>Έλεγχος για &amp;Ενημερώσεις</translation>
+        <translation>Έλεγχος για &amp;ενημερώσεις</translation>
     </message>
     <message>
         <source>&amp;Reset Settings...</source>
-        <translation>&amp;Επαναφορά Ρυθμίσεων...</translation>
+        <translation>&amp;Επαναφορά ρυθμίσεων...</translation>
     </message>
     <message>
         <source>&amp;Options...</source>
@@ -140,126 +148,159 @@
     </message>
     <message>
         <source>Take &amp;Screenshot...</source>
-        <translation type="unfinished"/>
+        <translation>Λήψη &amp;στιγμιότυπου οθόνης...</translation>
     </message>
     <message>
         <source>&amp;Language</source>
         <translation>&amp;Γλώσσα</translation>
+    </message>
+    <message>
+        <source>&amp;Open APK...</source>
+        <translation>&amp;Άνοιγμα APK...</translation>
+    </message>
+    <message>
+        <source>Case Sensitive</source>
+        <translation>Διάκριση πεζών-κεφαλαίων</translation>
+    </message>
+    <message>
+        <source>Regular Expression</source>
+        <translation>Κανονική έκφραση</translation>
+    </message>
+    <message>
+        <source>&amp;Framework Manager...</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation>Διαχείριση &amp;Framework...</translation>
     </message>
 </context>
 <context>
     <name>AndroidExplorer</name>
     <message>
         <source>Android Explorer</source>
-        <translation>Εξερευνητής Android</translation>
+        <translation>Εξερεύνηση Android</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this file?</source>
-        <translation type="unfinished"/>
+        <translation>Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το αρχείο;</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this directory?</source>
-        <translation type="unfinished"/>
+        <translation>Είστε σίγουροι ότι θέλετε να διαγράψετε αυτόν τον κατάλογο;</translation>
     </message>
     <message>
         <source>Installing %1...</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Εγκατάσταση %1...</translation>
     </message>
     <message>
         <source>Successfully installed %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Εγκαταστάθηκε επιτυχώς %1</translation>
     </message>
     <message>
         <source>Could not install %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατή η εγκατάσταση %1</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>Λήψη</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished"/>
+        <translation>Μεταφόρτωση</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"/>
+        <translation>Αποκοπή</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Επικόλληση</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"/>
+        <translation>Μετονομασία</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Διαγραφή</translation>
     </message>
     <message>
         <source>Up</source>
         <extracomment>Navigate up one directory in a file manager hierarchy.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Επάνω</translation>
     </message>
     <message>
         <source>Go</source>
         <extracomment>Navigate to a directory in a file manager.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Μετάβαση</translation>
     </message>
     <message>
         <source>Tasks</source>
-        <translation type="unfinished"/>
+        <translation>Εργασίες</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
         <extracomment>Refers to a menu bar (along with File, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;Επεξεργασία</translation>
     </message>
 </context>
 <context>
     <name>AndroidFileSystemModel</name>
     <message>
         <source>Could not open the directory.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατό το άνοιγμα του καταλόγου.</translation>
     </message>
     <message>
         <source>Could not copy the file or directory.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατή η αντιγραφή του αρχείου ή του καταλόγου.</translation>
     </message>
     <message>
         <source>Could not move the file or directory.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατή η μετακίνηση του αρχείου ή του καταλόγου.</translation>
     </message>
     <message>
         <source>Could not rename the file or directory.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατή η μετονομασία του αρχείου ή του καταλόγου.</translation>
     </message>
     <message>
         <source>Could not delete the file or directory.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατή η διαγραφή του αρχείου ή του καταλόγου.</translation>
     </message>
     <message>
         <source>Could not download the file or directory.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατή η λήψη του αρχείου ή του καταλόγου.</translation>
     </message>
     <message>
         <source>Could not upload the file.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατή η μεταφόρτωση του αρχείου.</translation>
+    </message>
+</context>
+<context>
+    <name>ApkCloner</name>
+    <message>
+        <source>Updating resource references...</source>
+        <translation>Ενημέρωση αναφορών πόρων...</translation>
+    </message>
+    <message>
+        <source>Updating Smali references...</source>
+        <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
+        <translation>Ενημέρωση αναφορών Smali...</translation>
+    </message>
+    <message>
+        <source>Updating directory structure...</source>
+        <translation>Ενημέρωση δομής καταλόγου...</translation>
     </message>
 </context>
 <context>
     <name>BaseEditableSheet</name>
     <message>
         <source>Save the changes?</source>
-        <translation>Αποθήκευση αλλαγών;</translation>
+        <translation>Αποθήκευση των αλλαγών;</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -270,51 +311,66 @@
     <name>BaseFileSheet</name>
     <message>
         <source>&amp;Replace Resource...</source>
-        <translation>&amp;Αντικατάσταση Πόρου...</translation>
+        <translation>&amp;Αντικατάσταση πόρου...</translation>
     </message>
     <message>
         <source>&amp;Save Resource</source>
-        <translation>&amp;Αποθήκευση Πόρου</translation>
+        <translation>&amp;Αποθήκευση πόρου</translation>
     </message>
     <message>
         <source>Save Resource &amp;As...</source>
-        <translation>Αποθήκευση Πόρου &amp;Ως...</translation>
+        <translation>Αποθήκευση πόρου &amp;ως...</translation>
     </message>
     <message>
         <source>&amp;Open Resource Directory</source>
         <extracomment>This string refers to a single resource.</extracomment>
-        <translation>&amp;Άνοιγμα Καταλόγου Πόρου</translation>
+        <translation>&amp;Άνοιγμα καταλόγου πόρων</translation>
     </message>
 </context>
 <context>
     <name>CodeSearchBar</name>
     <message>
         <source>No results</source>
-        <translation type="unfinished"/>
+        <translation>Δεν βρέθηκαν αποτελέσματα</translation>
     </message>
     <message>
         <source>Find:</source>
-        <translation type="unfinished"/>
+        <translation>Εύρεση:</translation>
     </message>
     <message>
         <source>Replace:</source>
-        <translation type="unfinished"/>
+        <translation>Αντικατάσταση:</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Κλείσιμο</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>Αντικατάσταση</translation>
     </message>
     <message>
         <source>Replace All</source>
-        <translation type="unfinished"/>
+        <translation>Αντικατάσταση όλων</translation>
     </message>
     <message>
         <source>Hide the Replace Bar</source>
-        <translation type="unfinished"/>
+        <translation>Απόκρυψη της γραμμής αντικατάστασης</translation>
+    </message>
+</context>
+<context>
+    <name>CodeSheet</name>
+    <message>
+        <source>Would you like to download syntax definitions for this and other formats?</source>
+        <translation>Θα θέλατε να κάνετε λήψη ορισμών σύνταξης για αυτήν και για άλλες μορφές;</translation>
+    </message>
+    <message>
+        <source>Downloading syntax definitions...</source>
+        <translation>Λήψη ορισμών σύνταξης...</translation>
+    </message>
+    <message>
+        <source>Download Syntax Definitions</source>
+        <translation>Λήψη ορισμών σύνταξης</translation>
     </message>
 </context>
 <context>
@@ -325,11 +381,11 @@
     </message>
     <message>
         <source>Serial Number</source>
-        <translation>Σειριακός Αριθμός</translation>
+        <translation>Σειριακός αριθμός</translation>
     </message>
     <message>
         <source>Product</source>
-        <translation>Προιόν</translation>
+        <translation>Προϊόν</translation>
     </message>
     <message>
         <source>Model</source>
@@ -345,7 +401,7 @@
     <message>
         <source>Device Manager</source>
         <extracomment>This string refers to multiple devices (as in &quot;Manager of devices&quot;).</extracomment>
-        <translation>Διαχειριστής Συσκευής</translation>
+        <translation>Διαχείριση Συσκευών</translation>
     </message>
     <message>
         <source>Select a device:</source>
@@ -361,15 +417,15 @@
     </message>
     <message>
         <source>Device Information</source>
-        <translation>Πληροφορίες Συσκευής</translation>
+        <translation>Πληροφορίες συσκευής</translation>
     </message>
     <message>
         <source>Could not fetch the device list.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατή η λήψη της λίστας συσκευών.</translation>
     </message>
     <message>
         <source>Select Device</source>
-        <translation type="unfinished"/>
+        <translation>Επιλογή συσκευής</translation>
     </message>
 </context>
 <context>
@@ -384,11 +440,33 @@
     </message>
     <message>
         <source>Screenshot</source>
-        <translation type="unfinished"/>
+        <translation>Στιγμιότυπο οθόνης</translation>
     </message>
     <message>
         <source>Copy to Clipboard</source>
-        <translation>Αντιγραφή στο Πρόχειρο</translation>
+        <translation>Αντιγραφή στο πρόχειρο</translation>
+    </message>
+</context>
+<context>
+    <name>Downloader</name>
+    <message>
+        <source>Downloading</source>
+        <translation>Λήψη</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation>Λήψη του %1...</translation>
+    </message>
+    <message>
+        <source>Could not save %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the saved file.</extracomment>
+        <translation>Δεν ήταν δυνατή η αποθήκευση του %1:</translation>
+    </message>
+    <message>
+        <source>Could not download %1:</source>
+        <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
+        <translation>Δεν ήταν δυνατή η λήψη του %1:</translation>
     </message>
 </context>
 <context>
@@ -410,6 +488,37 @@
     </message>
 </context>
 <context>
+    <name>FrameworkManager</name>
+    <message>
+        <source>Framework Manager</source>
+        <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
+        <translation>Διαχείριση Framework</translation>
+    </message>
+    <message>
+        <source>&amp;Install</source>
+        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
+        <translation>&amp;Εγκατάσταση</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Αφαίρεση</translation>
+    </message>
+    <message>
+        <source>Open Directory</source>
+        <translation>Άνοιγμα καταλόγου</translation>
+    </message>
+    <message>
+        <source>Could not install the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation>Δεν ήταν δυνατή η εγκατάσταση του Framework &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Could not remove the &quot;%1&quot; framework.</source>
+        <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
+        <translation>Δεν ήταν δυνατή η αφαίρεση του Framework &quot;%1&quot;.</translation>
+    </message>
+</context>
+<context>
     <name>IconItemsModel</name>
     <message>
         <source>Round icon</source>
@@ -417,7 +526,7 @@
     </message>
     <message>
         <source>TV banner</source>
-        <translation>Διαφημιστικό πλαίσιο TV</translation>
+        <translation>Τηλεοπτικό διαφημιστικό</translation>
     </message>
     <message>
         <source>Application</source>
@@ -444,7 +553,7 @@
     <name>KeyCreator</name>
     <message>
         <source>Create Key</source>
-        <translation type="unfinished"/>
+        <translation>Δημιουργία κλειδιού</translation>
     </message>
     <message>
         <source>Alias</source>
@@ -456,7 +565,7 @@
     </message>
     <message>
         <source>Confirm Password</source>
-        <translation>Επιβεβαίωση Κωδικού</translation>
+        <translation>Επιβεβαίωση κωδικού πρόσβασης</translation>
     </message>
     <message>
         <source>First and Last Name</source>
@@ -464,7 +573,7 @@
     </message>
     <message>
         <source>Organizational Unit</source>
-        <translation>Οργανωτική Μονάδα</translation>
+        <translation>Οργανική μονάδα</translation>
     </message>
     <message>
         <source>Organization</source>
@@ -472,11 +581,11 @@
     </message>
     <message>
         <source>City or Locality</source>
-        <translation>Πόλη ή τοποθεσία</translation>
+        <translation>Πόλη ή Τοποθεσία</translation>
     </message>
     <message>
         <source>State or Province</source>
-        <translation>Νομός ή επαρχία</translation>
+        <translation>Νομός ή Επαρχία</translation>
     </message>
     <message>
         <source>Country Code</source>
@@ -484,11 +593,11 @@
     </message>
     <message>
         <source>Password</source>
-        <translation>Κωδικός</translation>
+        <translation>Κωδικός πρόσβασης</translation>
     </message>
     <message>
         <source>Validity (Years)</source>
-        <translation>Ισχύς (έτη)</translation>
+        <translation>Ισχύς (Έτη)</translation>
     </message>
     <message>
         <source>Key</source>
@@ -496,7 +605,7 @@
     </message>
     <message>
         <source>Key has been successfully created!</source>
-        <translation>Το κλειδί δημιουργήθηκε με επιτυχία!</translation>
+        <translation>Το κλειδί έχει δημιουργηθεί με επιτυχία!</translation>
     </message>
     <message>
         <source>Password must be at least 6 characters.</source>
@@ -508,7 +617,7 @@
     </message>
     <message>
         <source>Please fill out the required fields.</source>
-        <translation>Συμπληρώστε τα απαιτούμενα πεδία.</translation>
+        <translation>Παρακαλώ συμπληρώστε τα απαιτούμενα πεδία.</translation>
     </message>
 </context>
 <context>
@@ -516,11 +625,11 @@
     <message>
         <source>Key Manager</source>
         <extracomment>This string refers to multiple keys (as in &quot;Manager of keys&quot;).</extracomment>
-        <translation>Διαχειριστής κλειδιών</translation>
+        <translation>Διαχείριση Kλειδιών</translation>
     </message>
     <message>
         <source>Custom Keystore</source>
-        <translation>Προσαρμογή χώρου αποθήκευσης κλειδιών</translation>
+        <translation>Προσαρμοσμένος χώρος αποθήκευσης κλειδιών</translation>
     </message>
     <message>
         <source>Create</source>
@@ -532,7 +641,7 @@
     </message>
     <message>
         <source>Keystore password:</source>
-        <translation>Κωδικός χώρου αποθήκευσης κλειδιών:</translation>
+        <translation>Κωδικός πρόσβασης χώρου αποθήκευσης κλειδιών:</translation>
     </message>
     <message>
         <source>Key alias:</source>
@@ -558,48 +667,48 @@
     </message>
     <message>
         <source>Enter the key password:</source>
-        <translation>Εισάγετε τον κωδικό του κλειδιού:</translation>
+        <translation>Εισάγετε τον κωδικό πρόσβασης του κλειδιού:</translation>
     </message>
     <message>
         <source>You are using the built-in keystore provided for demonstrational purposes. It can be practical for testing or personal usage. However, if you plan to distribute this APK, we recommend you to specify/create your own keystore via Key Manager.</source>
-        <translation type="unfinished"/>
+        <translation>Χρησιμοποιείτε τον ενσωματωμένο χώρο αποθήκευσης κλειδιών που παρέχεται για σκοπούς επίδειξης. Μπορεί να είναι πρακτικό για δοκιμές ή προσωπική χρήση. Ωστόσο, εάν σκοπεύετε να διανείμετε αυτό το APK, σας συνιστούμε να καθορίσετε/δημιουργήσετε τον δικό σας χώρο αποθήκευσης κλειδιών μέσω της διαχείρισης κλειδιών.</translation>
     </message>
 </context>
 <context>
     <name>KeystoreCreator</name>
     <message>
         <source>Create Keystore</source>
-        <translation type="unfinished"/>
+        <translation>Δημιουργία χώρου αποθήκευσης κλειδιών</translation>
     </message>
     <message>
         <source>Keystore Password</source>
-        <translation>Κωδικός Αποθ. Κλειδιού</translation>
+        <translation>Κωδικός πρόσβασης χώρου αποθήκευσης κλειδιών</translation>
     </message>
     <message>
         <source>Keystore has been successfully created!</source>
-        <translation>Ο χώρος αποθήκευσης κλειδιών δημιουργήθηκε με επιτυχία!</translation>
+        <translation>Ο χώρος αποθήκευσης κλειδιών έχει δημιουργηθεί με επιτυχία!</translation>
     </message>
 </context>
 <context>
     <name>Keytool::Aliases</name>
     <message>
         <source>Could not read keystore: incorrect password.</source>
-        <translation>Αδύνατη η ανάγνωση του χώρου αποθήκευσης κλειδιών: εσφαλμένος κωδικός πρόσβασης.</translation>
+        <translation>Δεν ήταν δυνατή η ανάγνωση του χώρου αποθήκευσης κλειδιών: εσφαλμένος κωδικός πρόσβασης.</translation>
     </message>
     <message>
         <source>Could not read keystore. See details for more information.</source>
-        <translation>Αδύνατη η ανάγνωση του χώρου αποθήκευσης κλειδιών. Δείτε λεπτομέρειες για περισσότερες πληροφορίες.</translation>
+        <translation>Δεν ήταν δυνατή η ανάγνωση του χώρου αποθήκευσης κλειδιών. Δείτε λεπτομέρειες για περισσότερες πληροφορίες.</translation>
     </message>
 </context>
 <context>
     <name>Keytool::Genkey</name>
     <message>
         <source>Could not write to keystore: alias already exists.</source>
-        <translation>Αδύνατη η εγγραφή στο χώρο αποθήκευσης κλειδιών: το ψευδώνυμο υπάρχει ήδη.</translation>
+        <translation>Δεν ήταν δυνατή η εγγραφή στο χώρο αποθήκευσης κλειδιών: το ψευδώνυμο υπάρχει ήδη.</translation>
     </message>
     <message>
         <source>Could not write to keystore. See details for more information.</source>
-        <translation>Αδύνατη η εγγραφή στο χώρο αποθήκευσης κλειδιών. Δείτε λεπτομέρειες για περισσότερες πληροφορίες.</translation>
+        <translation>Δεν ήταν δυνατή η εγγραφή στο χώρο αποθήκευσης κλειδιών. Δείτε λεπτομέρειες για περισσότερες πληροφορίες.</translation>
     </message>
 </context>
 <context>
@@ -642,7 +751,7 @@
     </message>
     <message>
         <source>Projects</source>
-        <translation>Εργασία</translation>
+        <translation>Έργα</translation>
     </message>
     <message>
         <source>Resources</source>
@@ -662,7 +771,7 @@
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"/>
+        <translation>Φίλτρο</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -671,7 +780,7 @@
     </message>
     <message>
         <source>Open &amp;Recent</source>
-        <translation>Άνοιγμα &amp;Πρόσφατων</translation>
+        <translation>Άνοιγμα &amp;πρόσφατων</translation>
     </message>
     <message>
         <source>&amp;Clear List</source>
@@ -684,7 +793,7 @@
     <message>
         <source>Open &amp;New Window</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα &amp;νέου παραθύρου</translation>
     </message>
     <message>
         <source>&amp;About APK Editor Studio...</source>
@@ -694,24 +803,29 @@
     <message>
         <source>About &amp;Qt...</source>
         <extracomment>Don't translate the &quot;&amp;Qt&quot; part.</extracomment>
-        <translation>Σχετικά με &amp;Qt...</translation>
+        <translation>Σχετικά με το &amp;Qt...</translation>
     </message>
     <message>
         <source>Welcome</source>
-        <translation type="unfinished"/>
+        <translation>Καλώς ορίσατε</translation>
     </message>
     <message>
         <source>This APK is already open:
 %1
 Do you want to reopen it and lose any unsaved changes?</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>Αυτό το APK είναι ήδη ανοιχτό: %1 Θέλετε να το ανοίξετε ξανά και να χάσετε τυχόν μη αποθηκευμένες αλλαγές;</translation>
+        <translation>Αυτό το APK είναι ήδη ανοικτό: %1 Θέλετε να το ανοίξετε ξανά και να χάσετε τυχόν μη αποθηκευμένες αλλαγές;</translation>
     </message>
     <message>
         <source>You have unsaved changes.
 Do you want to discard them and exit?</source>
         <translation>Έχετε μη αποθηκευμένες αλλαγές. 
-Θέλετε Απόρριψη και έξοδο;</translation>
+Θέλετε να τις απορρίψετε και να εξέλθετε;</translation>
+    </message>
+    <message>
+        <source>%1 not found. Restore the default path?</source>
+        <extracomment>&quot;%1&quot; will be replaced with a tool name.</extracomment>
+        <translation>Το %1 δεν βρέθηκε. Επαναφορά της προεπιλεγμένης διαδρομής;</translation>
     </message>
 </context>
 <context>
@@ -749,12 +863,12 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Single-window mode</source>
-        <translation type="unfinished"/>
+        <translation>Λειτουργία ενός παραθύρου</translation>
     </message>
     <message>
         <source>Open .apk files in an existing window</source>
         <extracomment>Don't translate the &quot;.apk&quot; part.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα αρχείων .apk σε υπάρχον παράθυρο</translation>
     </message>
     <message>
         <source>Check for updates automatically</source>
@@ -767,17 +881,17 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Use APK Editor Studio for .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Χρήση του APK Editor Studio για αρχεία .apk</translation>
     </message>
     <message>
         <source>Use APK Editor Studio to open .apk files</source>
         <extracomment>Don't translate the &quot;APK Editor Studio&quot; and &quot;.apk&quot; parts.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Χρήση του APK Editor Studio για άνοιγμα αρχείων .apk</translation>
     </message>
     <message>
         <source>Add %1 action to Windows Explorer context menu</source>
         <extracomment>&quot;%1&quot; will be replaced with an action name (e.g., Install, Optimize, Sign, etc.).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη της ενέργειας %1 στο μενού περιβάλλοντος της Εξερεύνησης των Windows</translation>
     </message>
     <message>
         <source>Install</source>
@@ -785,12 +899,12 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Optimize</source>
-        <translation type="unfinished"/>
+        <translation>Βελτιστοποίηση</translation>
     </message>
     <message>
         <source>Sign</source>
         <extracomment>This is a verb.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Υπογραφή</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -798,7 +912,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Theme:</source>
-        <translation type="unfinished"/>
+        <translation>Θέμα:</translation>
     </message>
     <message>
         <source>Extracted from environment variables by default</source>
@@ -807,11 +921,11 @@ Do you want to discard them and exit?</source>
     <message>
         <source>MB</source>
         <extracomment>Megabytes</extracomment>
-        <translation type="unfinished"/>
+        <translation>MB</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Προεπιλογή</translation>
     </message>
     <message>
         <source>Java path:</source>
@@ -820,12 +934,12 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Initial heap size:</source>
         <extracomment>&quot;Heap&quot; refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Αρχικό μέγεθος heap:</translation>
     </message>
     <message>
         <source>Maximum heap size:</source>
         <extracomment>&quot;Heap&quot; refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Μέγιστο μέγεθος heap:</translation>
     </message>
     <message>
         <source>Apktool path:</source>
@@ -842,7 +956,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Unpacking</source>
-        <translation type="unfinished"/>
+        <translation>Αποσυσκευασία</translation>
     </message>
     <message>
         <source>Decompile source code (smali)</source>
@@ -855,25 +969,25 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Packing</source>
-        <translation type="unfinished"/>
+        <translation>Συσκευασία</translation>
     </message>
     <message>
         <source>Use AAPT2</source>
         <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Χρήση AAPT2</translation>
     </message>
     <message>
         <source>Pack for debugging</source>
-        <translation type="unfinished"/>
+        <translation>Πακέτο για εντοπισμό σφαλμάτων</translation>
     </message>
     <message>
         <source>Sign APK after packing</source>
-        <translation type="unfinished"/>
+        <translation>Υπογραφή APK μετά τη συσκευασία</translation>
     </message>
     <message>
         <source>Open Key Manager</source>
         <extracomment>This string refers to multiple keys (as in &quot;Manager of keys&quot;).</extracomment>
-        <translation>Άνοιγμα διαχειριστή κλειδιών</translation>
+        <translation>Άνοιγμα διαχείρισης κλειδιών</translation>
     </message>
     <message>
         <source>Apksigner path:</source>
@@ -882,7 +996,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Optimize APK after packing</source>
-        <translation type="unfinished"/>
+        <translation>Βελτιστοποίηση APK μετά τη συσκευασία</translation>
     </message>
     <message>
         <source>Zipalign path:</source>
@@ -905,22 +1019,30 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Appearance</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση</translation>
     </message>
     <message>
         <source>The changes will take effect after the application restart.</source>
-        <translation type="unfinished"/>
+        <translation>Οι αλλαγές θα τεθούν σε ισχύ μετά την επανεκκίνηση της εφαρμογής.</translation>
+    </message>
+    <message>
+        <source>Open Framework Manager</source>
+        <translation>Άνοιγμα διαχείρισης framework</translation>
+    </message>
+    <message>
+        <source>Decompile only main classes</source>
+        <translation>Αποσυσκευασία μόνο κύριων κλάσεων</translation>
     </message>
 </context>
 <context>
     <name>Package</name>
     <message>
         <source>Done.</source>
-        <translation>Ολοκληρώθηκε.</translation>
+        <translation>Τέλος.</translation>
     </message>
     <message>
         <source>Error unpacking APK.</source>
-        <translation>Σφάλμα κατά την αποσυσκευασία του APK.</translation>
+        <translation>Σφάλμα αποσυσκευασίας APK.</translation>
     </message>
     <message>
         <source>Unpacking APK...</source>
@@ -956,7 +1078,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Error installing APK.</source>
-        <translation>Σφάλμα κατά την εγκατάσταση του APK.</translation>
+        <translation>Σφάλμα εγκατάστασης APK.</translation>
     </message>
     <message>
         <source>Reading APK contents...</source>
@@ -985,38 +1107,38 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Are you sure you want to remove the %1 permission?</source>
         <extracomment>%1 will be replaced with a programmatic Android permission name (e.g., &quot;android.permission.SEND_SMS&quot;, &quot;android.permission.CAMERA&quot;, etc.).</extracomment>
-        <translation>Είστε βέβαιοι ότι θέλετε να καταργήσετε το %1 δικαίωμα;</translation>
+        <translation>Είστε βέβαιοι ότι θέλετε να αφαιρέσετε το δικαίωμα %1;</translation>
     </message>
 </context>
 <context>
     <name>Project</name>
     <message>
         <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"/>
+        <translation>Η μετονομασία πακέτων είναι μια πειραματική λειτουργία η οποία, στην τρέχουσα κατάστασή της, μπορεί να οδηγήσει σε καταρρεύσεις και απώλεια δεδομένων. Μπορείτε να συμμετάσχετε στη συζήτηση και να μας βοηθήσετε να βελτιώσουμε αυτήν τη λειτουργία &lt;a href=&quot;%1&quot;&gt;εδώ&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-        <translation type="unfinished"/>
+        <translation>Η κλωνοποίηση του APK απαιτεί την ενεργοποίηση της αποσυμπίεσης του πηγαίου κώδικα. Συνέχεια;</translation>
     </message>
     <message>
         <source>Settings have been applied. Please, reopen this APK.</source>
-        <translation type="unfinished"/>
+        <translation>Οι ρυθμίσεις έχουν εφαρμοστεί. Παρακαλώ, ανοίξτε ξανά αυτό το APK.</translation>
     </message>
     <message>
         <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>Παρακαλώ, ανοίξτε ξανά αυτό το APK προκειμένου να αποσυμπιέσετε τον πηγαίο κώδικα και να κλωνοποιήσετε το APK.</translation>
     </message>
     <message>
         <source>Package Name:</source>
-        <translation type="unfinished"/>
+        <translation>Όνομα πακέτου:</translation>
     </message>
     <message>
         <source>Could not clone the APK.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατή η κλωνοποίηση του APK.</translation>
     </message>
     <message>
         <source>APK has been successfully cloned!</source>
-        <translation type="unfinished"/>
+        <translation>Το APK κλωνοποιήθηκε με επιτυχία!</translation>
     </message>
     <message>
         <source>Do you want to save changes before packing?</source>
@@ -1025,6 +1147,14 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Do you want to save changes and pack the APK before installing?</source>
         <translation>Θέλετε να αποθηκεύσετε τις αλλαγές και να συσκευάσετε το APK πριν από την εγκατάσταση;</translation>
+    </message>
+    <message>
+        <source>The format is not supported.</source>
+        <translation>Η μορφή δεν υποστηρίζεται.</translation>
+    </message>
+    <message>
+        <source>Cloning APK</source>
+        <translation>Κλωνοποίηση APK</translation>
     </message>
 </context>
 <context>
@@ -1055,7 +1185,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>&amp;Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
-        <translation>&amp;Διαχείριση Εργασίας</translation>
+        <translation>&amp;Διαχείριση Έργων</translation>
     </message>
     <message>
         <source>Edit Application &amp;Title</source>
@@ -1068,18 +1198,13 @@ Any unsaved changes will be lost.</source>
         <translation>Επεξεργασία &amp;δικαιωμάτων εφαρμογής</translation>
     </message>
     <message>
-        <source>Edit Package &amp;Name</source>
-        <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>&amp;Clone APK</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Κλωνοποίηση APK</translation>
     </message>
     <message>
         <source>View &amp;Signatures</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>Προβολή &amp;υπογραφών</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -1088,12 +1213,16 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Save &amp;As...</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Αποθήκευση &amp;Ως...</translation>
+        <translation>Αποθήκευση &amp;ως...</translation>
     </message>
     <message>
         <source>Ta&amp;b</source>
         <extracomment>Displayed as &quot;Tab&quot;. Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Καρ&amp;τέλα</translation>
+    </message>
+    <message>
+        <source>&amp;Search in Project</source>
+        <translation>&amp;Αναζήτηση στο έργο</translation>
     </message>
 </context>
 <context>
@@ -1101,7 +1230,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
-        <translation>Διαχειριστής Εργασίας</translation>
+        <translation>Διαχείριση Έργων</translation>
     </message>
     <message>
         <source>Edit APK</source>
@@ -1132,7 +1261,7 @@ Any unsaved changes will be lost.</source>
     <name>RememberDialog</name>
     <message>
         <source>Don&apos;t show again</source>
-        <translation type="unfinished"/>
+        <translation>Να μην εμφανιστεί ξανά</translation>
     </message>
 </context>
 <context>
@@ -1155,12 +1284,24 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Could not remove the resource.</source>
-        <translation>Δεν ήταν δυνατή η κατάργηση του πόρου.</translation>
+        <translation>Δεν ήταν δυνατή η αφαίρεση του πόρου.</translation>
     </message>
     <message>
         <source>Open Resource Directory</source>
         <extracomment>This string refers to a single resource.</extracomment>
-        <translation>Άνοιγμα καταλόγου πόρου</translation>
+        <translation>Άνοιγμα καταλόγου πόρων</translation>
+    </message>
+    <message>
+        <source>Open With</source>
+        <translation>Άνοιγμα με</translation>
+    </message>
+    <message>
+        <source>Open With Default Application</source>
+        <translation>Άνοιγμα με προεπιλεγμένη εφαρμογή</translation>
+    </message>
+    <message>
+        <source>Choose Another App...</source>
+        <translation>Επιλογή άλλης εφαρμογής...</translation>
     </message>
 </context>
 <context>
@@ -1188,41 +1329,108 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
+    <name>SearchModel</name>
+    <message>
+        <source>%1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation>%1 αποτέλεσμα(α) σε %2 αρχείο(α)</translation>
+    </message>
+</context>
+<context>
+    <name>SearchSheet</name>
+    <message>
+        <source>Searching in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation>Αναζήτηση στο %1</translation>
+    </message>
+    <message>
+        <source>Replacing in %1</source>
+        <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
+        <translation>Αντικατάσταση στο %1</translation>
+    </message>
+    <message>
+        <source>Some occurrences were not replaced.</source>
+        <translation>Ορισμένες εμφανίσεις δεν αντικαταστάθηκαν.</translation>
+    </message>
+    <message>
+        <source>Found %1 result(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation>Βρέθηκαν %1 αποτέλεσμα(τα) σε %2 αρχείο(α)</translation>
+    </message>
+    <message>
+        <source>No results found</source>
+        <translation>Δεν βρέθηκαν αποτελέσματα</translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s) in %2 file(s)</source>
+        <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
+        <translation>Αντικαταστάθηκαν %1 εμφάνιση(εις) σε %2 αρχείο(α)</translation>
+    </message>
+    <message>
+        <source>Nothing has been replaced</source>
+        <translation>Τίποτα δεν έχει αντικατασταθεί</translation>
+    </message>
+    <message>
+        <source>Search in Project</source>
+        <translation>Αναζήτηση στο έργο</translation>
+    </message>
+    <message>
+        <source>Search for:</source>
+        <translation>Αναζήτηση για:</translation>
+    </message>
+    <message>
+        <source>Replace with:</source>
+        <translation>Αντικατάσταση με:</translation>
+    </message>
+    <message>
+        <source>&amp;Search</source>
+        <translation>&amp;Αναζήτηση</translation>
+    </message>
+    <message>
+        <source>&amp;Replace</source>
+        <translation>&amp;Αντικατάσταση</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Διακοπή</translation>
+    </message>
+</context>
+<context>
     <name>SignatureViewer</name>
     <message>
         <source>Signatures</source>
-        <translation type="unfinished"/>
+        <translation>Υπογραφές</translation>
     </message>
     <message>
         <source>JAR signing</source>
         <extracomment>Read more: https://source.android.com/security/apksigning#v1</extracomment>
-        <translation type="unfinished"/>
+        <translation>Υπογραφή JAR</translation>
     </message>
     <message>
         <source>APK Signature Scheme v2</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v2</extracomment>
-        <translation type="unfinished"/>
+        <translation>Σχήμα υπογραφής APK v2</translation>
     </message>
     <message>
         <source>APK Signature Scheme v3</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v3</extracomment>
-        <translation type="unfinished"/>
+        <translation>Σχήμα υπογραφής APK v3</translation>
     </message>
     <message>
         <source>Signer #%1</source>
         <extracomment>&quot;%1&quot; will be replaced with a signer index number (e.g., &quot;Signer #1, Signer #7, Signer #42&quot;...).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Υπογράφων #%1</translation>
     </message>
     <message>
         <source>Could not retrieve the list of certificates.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατή η ανάκτηση της λίστας πιστοποιητικών.</translation>
     </message>
 </context>
 <context>
     <name>SystemTheme</name>
     <message>
         <source>System Theme</source>
-        <translation type="unfinished"/>
+        <translation>Θέμα συστήματος</translation>
     </message>
 </context>
 <context>
@@ -1256,22 +1464,22 @@ Any unsaved changes will be lost.</source>
     <name>Toolbar</name>
     <message>
         <source>Customize Toolbar...</source>
-        <translation type="unfinished"/>
+        <translation>Προσαρμογή γραμμής εργαλείων...</translation>
     </message>
 </context>
 <context>
     <name>ToolbarDialog</name>
     <message>
         <source>Toolbar Customization</source>
-        <translation type="unfinished"/>
+        <translation>Προσαρμογή γραμμής εργαλείων</translation>
     </message>
     <message>
         <source>Current actions:</source>
-        <translation type="unfinished"/>
+        <translation>Τρέχουσες ενέργειες:</translation>
     </message>
     <message>
         <source>Available actions:</source>
-        <translation type="unfinished"/>
+        <translation>Διαθέσιμες ενέργειες:</translation>
     </message>
     <message>
         <source>Separator</source>
@@ -1285,34 +1493,38 @@ Any unsaved changes will be lost.</source>
     </message>
 </context>
 <context>
-    <name>Updater</name>
+    <name>UpdateDialog</name>
     <message>
-        <source>You are using the latest version of APK Editor Studio.</source>
-        <extracomment>Don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>Χρησιμοποιείτε την πιο πρόσφατη έκδοση του APK Editor Studio.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates: invalid format.</source>
-        <translation>Δεν ήταν δυνατός ο έλεγχος για ενημερώσεις: μη έγκυρη μορφή.</translation>
-    </message>
-    <message>
-        <source>Could not check for updates (error %1).</source>
-        <extracomment>%1 will be replaced with an error code.</extracomment>
-        <translation>Δεν ήταν δυνατός ο έλεγχος για ενημερώσεις (σφάλμα %1).</translation>
+        <source>Updates</source>
+        <translation>Ενημερώσεις</translation>
     </message>
     <message>
         <source>Update</source>
-        <extracomment>This is a noun.</extracomment>
+        <extracomment>This is a verb.</extracomment>
         <translation>Ενημέρωση</translation>
     </message>
     <message>
-        <source>APK Editor Studio v%1 is available. Download?</source>
-        <extracomment>&quot;v%1&quot; will be replaced with a software version (e.g., v1.0.0, v2.1.2...). Also, don't translate the &quot;APK Editor Studio&quot; part.</extracomment>
-        <translation>APK Editor Studio v%1 είναι διαθέσιμο. Λήψη;</translation>
+        <source>Could not check for updates:</source>
+        <translation>Δεν ήταν δυνατός ο έλεγχος για ενημερώσεις:</translation>
     </message>
     <message>
         <source>What&apos;s New</source>
         <translation>Τι νέο υπάρχει</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateItemsModel</name>
+    <message>
+        <source>Application</source>
+        <translation>Εφαρμογή</translation>
+    </message>
+    <message>
+        <source>Current Version</source>
+        <translation>Τρέχουσα έκδοση</translation>
+    </message>
+    <message>
+        <source>Latest Version</source>
+        <translation>Τελευταία έκδοση</translation>
     </message>
 </context>
 <context>
@@ -1343,7 +1555,7 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Support Us</source>
-        <translation type="unfinished"/>
+        <translation>Υποστηρίξτε μας</translation>
     </message>
 </context>
 <context>
@@ -1351,12 +1563,12 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>String</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/string-resource).</extracomment>
-        <translation>String</translation>
+        <translation>Συμβολοσειρά</translation>
     </message>
     <message>
         <source>String array</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/string-resource#StringArray).</extracomment>
-        <translation>String array</translation>
+        <translation>Πίνακας συμβολοσειρών</translation>
     </message>
     <message>
         <source>Color</source>
@@ -1371,22 +1583,22 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Plurals</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/string-resource#Plurals).</extracomment>
-        <translation>Plurals</translation>
+        <translation>Πληθυντικός</translation>
     </message>
     <message>
         <source>ID</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#Id).</extracomment>
-        <translation>ID</translation>
+        <translation>Αναγνωριστικό</translation>
     </message>
     <message>
         <source>Integer</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#Integer).</extracomment>
-        <translation>Integer</translation>
+        <translation>Ακέραιος</translation>
     </message>
     <message>
         <source>Integer Array</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#IntegerArray).</extracomment>
-        <translation>Integer Array</translation>
+        <translation>Πίνακας ακεραίων</translation>
     </message>
     <message>
         <source>Array</source>
@@ -1399,7 +1611,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Yes, &amp;Always</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Ναι, &amp;Πάντα</translation>
+        <translation>Ναι, &amp;πάντα</translation>
     </message>
 </context>
 </TS>
