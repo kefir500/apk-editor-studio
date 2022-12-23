@@ -60,6 +60,7 @@ set(TS_FILES
     src/translations/apk-editor-studio.pt.ts
     src/translations/apk-editor-studio.ro.ts
     src/translations/apk-editor-studio.ru.ts
+    src/translations/apk-editor-studio.sv.ts
     src/translations/apk-editor-studio.tr.ts
     src/translations/apk-editor-studio.zh_CN.ts
 )

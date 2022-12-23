@@ -163,6 +163,9 @@
               <Component Id="SpanishQtComponent">
                 <File Name="qt.es.qm" />
               </Component>
+              <Component Id="SwedishComponent">
+                <File Name="apk-editor-studio.sv.qm" />
+              </Component>
               <Component Id="TurkishComponent">
                 <File Name="apk-editor-studio.tr.qm" />
               </Component>
@@ -423,6 +426,9 @@
       <Feature Id="SpanishFeature" Title="Spanish" Description="Spanish translation.">
         <ComponentRef Id="SpanishComponent" />
         <ComponentRef Id="SpanishQtComponent" />
+      </Feature>
+      <Feature Id="SwedishFeature" Title="Swedish" Description="Swedish translation.">
+        <ComponentRef Id="SwedishComponent" />
       </Feature>
       <Feature Id="TurkishFeature" Title="Turkish" Description="Turkish translation.">
         <ComponentRef Id="TurkishComponent" />

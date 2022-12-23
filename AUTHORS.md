@@ -82,6 +82,9 @@
 - [Francisco Zamorano](https://www.transifex.com/user/profile/Paco_Zamo/)
 - [Jose Osuna](https://www.transifex.com/user/profile/itp.osuna/)
 
+#### Swedish
+- [Åke Engelbrektson](https://www.transifex.com/user/profile/eson/)
+
 #### Turkish
 - [emre1393](https://www.transifex.com/user/profile/emre1393/)
 

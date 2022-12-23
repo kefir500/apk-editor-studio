@@ -12,6 +12,7 @@
 - Added ability to disassemble without debug info.
 - Added progress indication for APK cloning.
 - Added Android 13 support.
+- Added Swedish translation.
 - Updated default Apktool to 2.7.0.
 - Updated Android SDK Build Tools to 33.0.1.
 - Fixed error while saving the currently open resource.
