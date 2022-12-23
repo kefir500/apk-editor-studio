@@ -31,11 +31,13 @@ Downloader::Downloader(const QString &title, const QUrl &downloadUrl, const QStr
                 emit success(outputPath);
             } else {
                 //: "%1" will be replaced with a title of the saved file.
-                QMessageBox::warning(parent, {}, QString("%1\n%2").arg(tr("Could not save %1:").arg(title), output.errorString()));
+                const QString message(tr("Could not save %1:"));
+                QMessageBox::warning(parent, {}, QString("%1\n%2").arg(message.arg(title), output.errorString()));
             }
         } else {
             //: "%1" will be replaced with a title of the downloaded file.
-            QMessageBox::warning(parent, {}, QString("%1\n%2").arg(tr("Could not download %1:").arg(title), reply->errorString()));
+            const QString message(tr("Could not download %1:"));
+            QMessageBox::warning(parent, {}, QString("%1\n%2").arg(message.arg(title), reply->errorString()));
         }
         reply->deleteLater();
         close();

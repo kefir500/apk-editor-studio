@@ -50,6 +50,7 @@ UpdateDialog::UpdateDialog(QWidget *parent) : QDialog(parent)
         table->setIndexWidget(table->model()->index(row, UpdateItemsModel::WhatsNewUrlColumn), btnWhatsNew);
         refreshWhatsNewButton(row);
 
+        //: This is a verb.
         auto btnUpdate = new QPushButton(tr("Update"));
         auto btnUpdatePalette = btnUpdate->palette();
         btnUpdatePalette.setBrush(QPalette::Button,table->palette().base());

@@ -4,7 +4,6 @@
 #include "base/themes.h"
 #include "base/utils.h"
 #include "tools/apktool.h"
-#include "tools/keystore.h"
 #include "windows/androidexplorer.h"
 #include "windows/dialogs.h"
 #include "windows/mainwindow.h"
@@ -143,7 +142,7 @@ void Application::start(quint32 instanceId, QByteArray message)
 
 void Application::startStudio(const QStringList &args)
 {
-    qDebug() << "Starting APK Editor Studio Studio...";
+    qDebug() << "Starting APK Editor Studio...";
     Apktool::reset();
     QDir().mkpath(Apktool::getOutputPath());
     QDir().mkpath(Apktool::getFrameworksPath());

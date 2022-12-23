@@ -10,7 +10,7 @@
 
 FrameworkManager::FrameworkManager(QWidget *parent) : QDialog{parent}
 {
-    //: This string refers to multiple framework (as in "Manager of frameworks").
+    //: This string refers to multiple frameworks (as in "Manager of frameworks").
     setWindowTitle(tr("Framework Manager"));
     setWindowIcon(QIcon::fromTheme("tool-frameworkmanager"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -124,6 +124,7 @@ void FrameworkManager::removeFramework(const QString &name)
 {
     if (!QFile::remove(QString("%1/%2").arg(Apktool::getFrameworksPath(), name))) {
         //: "%1" will be replaced with a framework file name.
-        QMessageBox::warning(this, {}, tr("Could not remove the \"%1\" framework.").arg(name));
+        const QString message(tr("Could not remove the \"%1\" framework."));
+        QMessageBox::warning(this, {}, message.arg(name));
     }
 }

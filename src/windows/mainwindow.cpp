@@ -14,7 +14,6 @@
 #include "widgets/toolbar.h"
 #include "sheets/basefilesheet.h"
 #include "sheets/welcomesheet.h"
-#include "tools/apktool.h"
 #include "tools/keystore.h"
 #include "base/application.h"
 #include "base/extralistitemproxy.h"
