@@ -1032,6 +1032,10 @@ Do you want to discard them and exit?</source>
         <translation>Открыть менеджер фреймворков</translation>
     </message>
     <message>
+        <source>Decompile without debug info</source>
+        <translation>Декомпилировать без отладочной информации</translation>
+    </message>
+    <message>
         <source>Decompile only main classes</source>
         <translation>Декомпилировать только основные классы</translation>
     </message>

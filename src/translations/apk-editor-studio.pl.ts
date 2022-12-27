@@ -697,8 +697,7 @@
     </message>
     <message>
         <source>Could not read keystore. See details for more information.</source>
-        <translation>Nie udało się odczytać magazynu kluczy. Zobacz szczegóły, aby uzyskać
-                więcej informacji.</translation>
+        <translation>Nie udało się odczytać magazynu kluczy. Zobacz szczegóły, aby uzyskać więcej informacji.</translation>
     </message>
 </context>
 <context>
@@ -709,8 +708,7 @@
     </message>
     <message>
         <source>Could not write to keystore. See details for more information.</source>
-        <translation>Nie można wpisać do magazynu kluczy. Zobacz szczegóły, aby uzyskać więcej
-                informacji.</translation>
+        <translation>Nie można wpisać do magazynu kluczy. Zobacz szczegóły, aby uzyskać więcej informacji.</translation>
     </message>
 </context>
 <context>
@@ -1034,6 +1032,10 @@ Czy chcesz je odrzucić i wyjść?</translation>
         <translation>Otwórz menedżera Framework</translation>
     </message>
     <message>
+        <source>Decompile without debug info</source>
+        <translation>Dekompiluj bez informacji o debugowaniu</translation>
+    </message>
+    <message>
         <source>Decompile only main classes</source>
         <translation>Dekompiluj tylko główne sekcje</translation>
     </message>
@@ -1130,8 +1132,7 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
-        <translation>Otwórz ponownie ten plik APK, aby rozpakować kod źródłowy i sklonować plik
-                APK.</translation>
+        <translation>Otwórz ponownie ten plik APK, aby rozpakować kod źródłowy i sklonować plik APK.</translation>
     </message>
     <message>
         <source>Package Name:</source>
@@ -1155,7 +1156,7 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>The format is not supported.</source>
-        <translation>Nie obsługiwany format.</translation>
+        <translation>Format nie jest obsługiwany.</translation>
     </message>
     <message>
         <source>Cloning APK</source>
@@ -1298,7 +1299,7 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     </message>
     <message>
         <source>Open With</source>
-        <translation>Otwórz z</translation>
+        <translation>Otwierać z</translation>
     </message>
     <message>
         <source>Open With Default Application</source>
@@ -1321,7 +1322,7 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     </message>
     <message>
         <source>Locale</source>
-        <translation>Locale</translation>
+        <translation>Lokalizacja</translation>
     </message>
     <message>
         <source>Qualifiers</source>
@@ -1510,7 +1511,7 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     </message>
     <message>
         <source>Could not check for updates:</source>
-        <translation>Nie można sprawdzić aktualizacji:</translation>
+        <translation>Nie można sprawdzić dostępności aktualizacji:</translation>
     </message>
     <message>
         <source>What&apos;s New</source>
