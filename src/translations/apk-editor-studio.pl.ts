@@ -3,7 +3,7 @@
     <name>AboutDialog</name>
     <message>
         <source>About</source>
-        <translation>O</translation>
+        <translation>O programie</translation>
     </message>
     <message>
         <source>Authors</source>
@@ -94,15 +94,15 @@
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>Powiększ</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>Pomniejsz</translation>
     </message>
     <message>
         <source>Reset Zoom</source>
-        <translation type="unfinished"/>
+        <translation>Resetuj zoom</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -160,16 +160,16 @@
     </message>
     <message>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>Wielkość liter ma znaczenie</translation>
     </message>
     <message>
         <source>Regular Expression</source>
-        <translation type="unfinished"/>
+        <translation>Wyrażenie regularne</translation>
     </message>
     <message>
         <source>&amp;Framework Manager...</source>
         <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;Menedżer Framework...</translation>
     </message>
 </context>
 <context>
@@ -284,16 +284,16 @@
     <name>ApkCloner</name>
     <message>
         <source>Updating resource references...</source>
-        <translation type="unfinished"/>
+        <translation>Aktualizowanie referencji do zasobów...</translation>
     </message>
     <message>
         <source>Updating Smali references...</source>
         <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Aktualizowanie referencji w Smalli...</translation>
     </message>
     <message>
         <source>Updating directory structure...</source>
-        <translation type="unfinished"/>
+        <translation>Aktualizowanie struktury katalogów...</translation>
     </message>
 </context>
 <context>
@@ -362,15 +362,15 @@
     <name>CodeSheet</name>
     <message>
         <source>Would you like to download syntax definitions for this and other formats?</source>
-        <translation type="unfinished"/>
+        <translation>Czy chcesz pobrać definicje składni dla tego i innych formatów?</translation>
     </message>
     <message>
         <source>Downloading syntax definitions...</source>
-        <translation type="unfinished"/>
+        <translation>Pobieranie definicji składni...</translation>
     </message>
     <message>
         <source>Download Syntax Definitions</source>
-        <translation type="unfinished"/>
+        <translation>Pobierz definicje składni</translation>
     </message>
 </context>
 <context>
@@ -451,22 +451,22 @@
     <name>Downloader</name>
     <message>
         <source>Downloading</source>
-        <translation type="unfinished"/>
+        <translation>Pobieranie</translation>
     </message>
     <message>
         <source>Downloading %1...</source>
         <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Pobieranie %1...</translation>
     </message>
     <message>
         <source>Could not save %1:</source>
         <extracomment>&quot;%1&quot; will be replaced with a title of the saved file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Nie można zapisać %1:</translation>
     </message>
     <message>
         <source>Could not download %1:</source>
         <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Nie można pobrać %1:</translation>
     </message>
 </context>
 <context>
@@ -492,12 +492,12 @@
     <message>
         <source>Framework Manager</source>
         <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Menedżer frameworka</translation>
     </message>
     <message>
         <source>&amp;Install</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;Instaluj</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -505,17 +505,17 @@
     </message>
     <message>
         <source>Open Directory</source>
-        <translation type="unfinished"/>
+        <translation>Otwórz katalog</translation>
     </message>
     <message>
         <source>Could not install the &quot;%1&quot; framework.</source>
         <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Nie można zainstalować frameworka &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Could not remove the &quot;%1&quot; framework.</source>
         <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Nie można usunąć frameworka &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -671,7 +671,7 @@
     </message>
     <message>
         <source>You are using the built-in keystore provided for demonstrational purposes. It can be practical for testing or personal usage. However, if you plan to distribute this APK, we recommend you to specify/create your own keystore via Key Manager.</source>
-        <translation type="unfinished"/>
+        <translation>Używasz wbudowanego magazynu kluczy udostępnionego do celów demonstracyjnych. Może być praktyczny do testowania lub użytku osobistego. Jeśli jednak planujesz rozpowszechniać ten pakiet APK, zalecamy określenie/utworzenie własnego magazynu kluczy za pomocą Menedżera kluczy.</translation>
     </message>
 </context>
 <context>
@@ -829,7 +829,7 @@ Czy chcesz je odrzucić i wyjść?</translation>
     <message>
         <source>%1 not found. Restore the default path?</source>
         <extracomment>&quot;%1&quot; will be replaced with a tool name.</extracomment>
-        <translation type="unfinished"/>
+        <translation>%1 nie znaleziono. Przywrócić domyślną ścieżkę?</translation>
     </message>
 </context>
 <context>
@@ -1031,11 +1031,11 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>Open Framework Manager</source>
-        <translation type="unfinished"/>
+        <translation>Otwórz menedżera Framework</translation>
     </message>
     <message>
         <source>Decompile only main classes</source>
-        <translation type="unfinished"/>
+        <translation>Dekompiluj tylko główne sekcje</translation>
     </message>
 </context>
 <context>
@@ -1118,7 +1118,7 @@ Czy chcesz je odrzucić i wyjść?</translation>
     <name>Project</name>
     <message>
         <source>Package renaming is an experimental function which, in its current state, may lead to crashes and data loss. You can join the discussion and help us improve this feature &lt;a href=&quot;%1&quot;&gt;here&lt;/a&gt;.</source>
-        <translation type="unfinished"/>
+        <translation>Zmiana nazwy pakietu to funkcja eksperymentalna, która w obecnym stanie może prowadzić do awarii i utraty danych. Możesz dołączyć do dyskusji i pomóc nam ulepszyć tę funkcję &lt;a href=&quot;%1&quot;&gt;tutaj&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
@@ -1155,11 +1155,11 @@ Czy chcesz je odrzucić i wyjść?</translation>
     </message>
     <message>
         <source>The format is not supported.</source>
-        <translation type="unfinished"/>
+        <translation>Nie obsługiwany format.</translation>
     </message>
     <message>
         <source>Cloning APK</source>
-        <translation type="unfinished"/>
+        <translation>Klonowanie pliku APK</translation>
     </message>
 </context>
 <context>
@@ -1227,7 +1227,7 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     </message>
     <message>
         <source>&amp;Search in Project</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Wyszukaj w projekcie</translation>
     </message>
 </context>
 <context>
@@ -1298,15 +1298,15 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     </message>
     <message>
         <source>Open With</source>
-        <translation type="unfinished"/>
+        <translation>Otwórz z</translation>
     </message>
     <message>
         <source>Open With Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Otwórz za pomocą domyślnej aplikacji</translation>
     </message>
     <message>
         <source>Choose Another App...</source>
-        <translation type="unfinished"/>
+        <translation>Wybierz inną aplikację...</translation>
     </message>
 </context>
 <context>
@@ -1338,7 +1338,7 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     <message>
         <source>%1 result(s) in %2 file(s)</source>
         <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
-        <translation type="unfinished"/>
+        <translation>%1 wyników w %2 plikach</translation>
     </message>
 </context>
 <context>
@@ -1346,58 +1346,58 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     <message>
         <source>Searching in %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Wyszukiwanie w %1</translation>
     </message>
     <message>
         <source>Replacing in %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Zastępowanie w %1</translation>
     </message>
     <message>
         <source>Some occurrences were not replaced.</source>
-        <translation type="unfinished"/>
+        <translation>Niektóre wystąpienia nie zostały zastąpione.</translation>
     </message>
     <message>
         <source>Found %1 result(s) in %2 file(s)</source>
         <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Znaleziono %1 wyników w %2 plikach</translation>
     </message>
     <message>
         <source>No results found</source>
-        <translation type="unfinished"/>
+        <translation>Nie znaleziono wyników</translation>
     </message>
     <message>
         <source>Replaced %1 occurrence(s) in %2 file(s)</source>
         <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Zastąpiono wystąpienia %1 w plikach %2</translation>
     </message>
     <message>
         <source>Nothing has been replaced</source>
-        <translation type="unfinished"/>
+        <translation>Nic nie zostało zastąpione</translation>
     </message>
     <message>
         <source>Search in Project</source>
-        <translation type="unfinished"/>
+        <translation>Szukaj w projekcie</translation>
     </message>
     <message>
         <source>Search for:</source>
-        <translation type="unfinished"/>
+        <translation>Szukaj:</translation>
     </message>
     <message>
         <source>Replace with:</source>
-        <translation type="unfinished"/>
+        <translation>Zamień z:</translation>
     </message>
     <message>
         <source>&amp;Search</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Szukaj</translation>
     </message>
     <message>
         <source>&amp;Replace</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Zastąp</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>Stop</translation>
     </message>
 </context>
 <context>
@@ -1501,7 +1501,7 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     <name>UpdateDialog</name>
     <message>
         <source>Updates</source>
-        <translation type="unfinished"/>
+        <translation>Aktualizacje</translation>
     </message>
     <message>
         <source>Update</source>
@@ -1525,11 +1525,11 @@ Wszelkie niezapisane zmiany zostaną utracone.</translation>
     </message>
     <message>
         <source>Current Version</source>
-        <translation type="unfinished"/>
+        <translation>Obecna wersja</translation>
     </message>
     <message>
         <source>Latest Version</source>
-        <translation type="unfinished"/>
+        <translation>Ostatnia wersja</translation>
     </message>
 </context>
 <context>

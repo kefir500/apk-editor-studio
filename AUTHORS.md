@@ -61,6 +61,7 @@
 
 #### Korean
 - [Gyuha Shin](https://www.transifex.com/user/profile/gyuha/)
+- [VenusGirl](https://www.transifex.com/user/profile/VenusGirl/)
 
 #### Kurdish
 - [Erfan Sci](https://www.transifex.com/user/profile/erfan13/)
@@ -70,7 +71,7 @@
 - [Milad19s](https://www.transifex.com/user/profile/Milad19s/)
 
 #### Polish
-- [Jerzy Puczek](https://www.transifex.com/user/profile/Jurek04/)
+- [Jerzy Puczek](https://www.transifex.com/user/profile/puczek.jerzy/)
 
 #### Portuguese
 - [Giancarlo Molinari](https://www.transifex.com/user/profile/pombimsjb/)

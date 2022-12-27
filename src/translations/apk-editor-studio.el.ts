@@ -90,7 +90,7 @@
     </message>
     <message>
         <source>Find and &amp;Replace</source>
-        <translation>Εύρεση και &amp;Αντικατάσταση</translation>
+        <translation>Εύρεση και &amp;αντικατάσταση</translation>
     </message>
     <message>
         <source>Zoom In</source>
@@ -102,7 +102,7 @@
     </message>
     <message>
         <source>Reset Zoom</source>
-        <translation>Επανφορά ζουμ</translation>
+        <translation>Επαναφορά ζουμ</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -144,7 +144,7 @@
     </message>
     <message>
         <source>&amp;Android Explorer...</source>
-        <translation>&amp;Εξερεύνηση Android...</translation>
+        <translation>Εξερεύνηση &amp;Android...</translation>
     </message>
     <message>
         <source>Take &amp;Screenshot...</source>
@@ -169,7 +169,7 @@
     <message>
         <source>&amp;Framework Manager...</source>
         <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
-        <translation>Διαχείριση &amp;Framework...</translation>
+        <translation>Διαχείριση &amp;framework...</translation>
     </message>
 </context>
 <context>
@@ -194,7 +194,7 @@
     <message>
         <source>Successfully installed %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation>Εγκαταστάθηκε επιτυχώς %1</translation>
+        <translation>Εγκαταστάθηκε με επιτυχία %1</translation>
     </message>
     <message>
         <source>Could not install %1</source>
@@ -289,7 +289,7 @@
     <message>
         <source>Updating Smali references...</source>
         <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation>Ενημέρωση αναφορών Smali...</translation>
+        <translation>Ενημέρωση αναφορών smali...</translation>
     </message>
     <message>
         <source>Updating directory structure...</source>
@@ -401,7 +401,7 @@
     <message>
         <source>Device Manager</source>
         <extracomment>This string refers to multiple devices (as in &quot;Manager of devices&quot;).</extracomment>
-        <translation>Διαχείριση Συσκευών</translation>
+        <translation>Διαχείριση συσκευών</translation>
     </message>
     <message>
         <source>Select a device:</source>
@@ -492,7 +492,7 @@
     <message>
         <source>Framework Manager</source>
         <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
-        <translation>Διαχείριση Framework</translation>
+        <translation>Διαχείριση framework</translation>
     </message>
     <message>
         <source>&amp;Install</source>
@@ -510,12 +510,12 @@
     <message>
         <source>Could not install the &quot;%1&quot; framework.</source>
         <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
-        <translation>Δεν ήταν δυνατή η εγκατάσταση του Framework &quot;%1&quot;.</translation>
+        <translation>Δεν ήταν δυνατή η εγκατάσταση του framework &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Could not remove the &quot;%1&quot; framework.</source>
         <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
-        <translation>Δεν ήταν δυνατή η αφαίρεση του Framework &quot;%1&quot;.</translation>
+        <translation>Δεν ήταν δυνατή η αφαίρεση του framework &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -763,7 +763,7 @@
     </message>
     <message>
         <source>Manifest</source>
-        <translation>Δεδηλωμένα</translation>
+        <translation>Διακήρυξη</translation>
     </message>
     <message>
         <source>Icons</source>
@@ -832,7 +832,7 @@ Do you want to discard them and exit?</source>
     <name>ManifestModel</name>
     <message>
         <source>Application Title</source>
-        <translation>Τίτλος εφαρμογής</translation>
+        <translation>Τίτλος Eφαρμογής</translation>
     </message>
     <message>
         <source>Version Code</source>
@@ -863,7 +863,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Single-window mode</source>
-        <translation>Λειτουργία ενός παραθύρου</translation>
+        <translation>Λειτουργία μονού παραθύρου</translation>
     </message>
     <message>
         <source>Open .apk files in an existing window</source>
@@ -1090,7 +1090,7 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Permission Editor</source>
         <extracomment>This string refers to multiple permissions (as in &quot;Editor of permissions&quot;).</extracomment>
-        <translation>Επεξεργαστής δικαιωμάτων</translation>
+        <translation>Επεξεργαστής Δικαιωμάτων</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1321,7 +1321,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Qualifiers</source>
         <extracomment>This string refers to the Android qualifiers (https://developer.android.com/guide/topics/resources/providing-resources).</extracomment>
-        <translation>Προσδιορισμοί</translation>
+        <translation>Προσδιοριστικά</translation>
     </message>
     <message>
         <source>Path</source>
@@ -1333,7 +1333,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>%1 result(s) in %2 file(s)</source>
         <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
-        <translation>%1 αποτέλεσμα(α) σε %2 αρχείο(α)</translation>
+        <translation>%1 αποτέλεσμα(τα) σε %2 αρχείο(α)</translation>
     </message>
 </context>
 <context>
@@ -1446,7 +1446,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Qualifiers</source>
         <extracomment>This string refers to the Android qualifiers (https://developer.android.com/guide/topics/resources/providing-resources).</extracomment>
-        <translation>Προσδιορισμοί</translation>
+        <translation>Προσδιοριστικά</translation>
     </message>
     <message>
         <source>Path</source>
@@ -1489,7 +1489,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Spacer</source>
         <extracomment>Spacer is a toolbar element which divides buttons with an empty space.</extracomment>
-        <translation>Αποστάτης</translation>
+        <translation>Απόσταση</translation>
     </message>
 </context>
 <context>
@@ -1603,7 +1603,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Array</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#TypedArray).</extracomment>
-        <translation>Array</translation>
+        <translation>Πίνακας</translation>
     </message>
 </context>
 <context>
