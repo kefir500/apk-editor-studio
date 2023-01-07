@@ -28,7 +28,7 @@ BEGIN
 			VALUE "CompanyName", "Alexander Gorishnyak\0"
 			VALUE "FileDescription", "APK Editor Studio v@VERSION@\0"
 			VALUE "FileVersion", "@VERSION@.0\0"
-			VALUE "LegalCopyright", "Copyright (C) 2019-2022\0"
+			VALUE "LegalCopyright", "Copyright (C) 2019-2023\0"
 			VALUE "OriginalFilename", "apk-editor-studio.exe\0"
 			VALUE "ProductName", "APK Editor Studio\0"
 			VALUE "ProductVersion", "@VERSION@.0\0"

@@ -1,5 +1,8 @@
 # Version History
 
+## 1.8.0
+- Windows: Improved Java path detection.
+
 ## 1.7.0
 - Added automatic Apktool updater.
 - Added framework manager.
