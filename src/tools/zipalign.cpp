@@ -12,6 +12,7 @@ void Zipalign::Align::run()
     const QString tempApk = apk + ".aligned";
 
     QStringList arguments;
+    arguments << "-p";
     arguments << "-f";
     arguments << "4";
     arguments << apk;
