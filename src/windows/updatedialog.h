@@ -3,6 +3,7 @@
 
 #include <QDialog>
 
+class QCheckBox;
 class QTableView;
 class UpdateItemsModel;
 
@@ -15,12 +16,18 @@ public:
 
     void checkUpdates();
 
+protected:
+    void changeEvent(QEvent *event);
+
 private:
     void refreshUpdateButton(int row);
     void refreshWhatsNewButton(int row);
+    void retranslate();
 
     UpdateItemsModel *updatesModel;
     QTableView *table;
+    QPushButton *btnRefresh;
+    QCheckBox *checkboxAutoUpdate;
 };
 
 #endif // UPDATEDIALOG_H

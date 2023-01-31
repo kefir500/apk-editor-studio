@@ -20,7 +20,6 @@
 
 UpdateDialog::UpdateDialog(QWidget *parent) : QDialog(parent)
 {
-    setWindowTitle(tr("Updates"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     resize(Utils::scale(700, 240));
 
@@ -51,7 +50,7 @@ UpdateDialog::UpdateDialog(QWidget *parent) : QDialog(parent)
         refreshWhatsNewButton(row);
 
         //: This is a verb.
-        auto btnUpdate = new QPushButton(tr("Update"));
+        auto btnUpdate = new QPushButton(this);
         auto btnUpdatePalette = btnUpdate->palette();
         btnUpdatePalette.setBrush(QPalette::Button,table->palette().base());
         btnUpdate->setPalette(btnUpdatePalette);
@@ -83,13 +82,11 @@ UpdateDialog::UpdateDialog(QWidget *parent) : QDialog(parent)
 
     table->resizeColumnsToContents();
 
-    auto btnRefresh = new QPushButton(this);
-    btnRefresh->setText(app->translate("ActionProvider", "Check for &Updates"));
+    btnRefresh = new QPushButton(this);
     btnRefresh->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     connect(btnRefresh, &QPushButton::clicked, updatesModel, &UpdateItemsModel::refresh);
 
-    auto checkboxAutoUpdate = new QCheckBox(this);
-    checkboxAutoUpdate->setText(app->translate("OptionsDialog", "Check for updates automatically"));
+    checkboxAutoUpdate = new QCheckBox(this);
     checkboxAutoUpdate->setChecked(app->settings->getAutoUpdates());
 
     auto layoutConfig = new QHBoxLayout;
@@ -108,6 +105,8 @@ UpdateDialog::UpdateDialog(QWidget *parent) : QDialog(parent)
     connect(this, &UpdateDialog::accepted, this, [=]() {
         app->settings->setAutoUpdates(checkboxAutoUpdate->isChecked());
     });
+
+    retranslate();
 }
 
 void UpdateDialog::checkUpdates()
@@ -115,11 +114,20 @@ void UpdateDialog::checkUpdates()
     updatesModel->refresh();
 }
 
+void UpdateDialog::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        retranslate();
+    }
+    QDialog::changeEvent(event);
+}
+
 void UpdateDialog::refreshUpdateButton(int row)
 {
     const auto updateIndex = table->model()->index(row, UpdateItemsModel::HasUpdatesColumn);
     const bool hasUpdates = updateIndex.data(Qt::UserRole).toBool();
     const auto btnUpdate = qobject_cast<QPushButton *>(table->indexWidget(updateIndex));
+    btnUpdate->setText(tr("Update"));
     btnUpdate->setEnabled(hasUpdates);
     if (hasUpdates) {
         open();
@@ -133,4 +141,17 @@ void UpdateDialog::refreshWhatsNewButton(int row)
     const auto btnWhatsNew = qobject_cast<QLabel *>(table->indexWidget(whatsNewIndex));
     btnWhatsNew->setText(QString("<a href=\"%1\">%2</a>").arg(whatsNewUrl, tr("What's New")));
     btnWhatsNew->setEnabled(!whatsNewUrl.isEmpty());
+}
+
+void UpdateDialog::retranslate()
+{
+    setWindowTitle(tr("Updates"));
+
+    btnRefresh->setText(app->translate("ActionProvider", "Check for &Updates"));
+    checkboxAutoUpdate->setText(app->translate("OptionsDialog", "Check for updates automatically"));
+
+    for (int row = 0; row < updatesModel->rowCount(); ++row) {
+        refreshUpdateButton(row);
+        refreshWhatsNewButton(row);
+    }
 }
