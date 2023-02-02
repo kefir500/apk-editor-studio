@@ -64,6 +64,9 @@
           </Directory>
           <Directory Id="ResourcesFolder" Name="resources">
             <Directory Id="LanguagesFolder" Name="translations">
+              <Component Id="ArabicComponent">
+                <File Name="apk-editor-studio.ar.qm" />
+              </Component>
               <Component Id="AzerbaijaniComponent">
                 <File Name="apk-editor-studio.az.qm" />
               </Component>
@@ -357,6 +360,9 @@
       </Feature>
     </Feature>
     <Feature Id="TranslationsFeature" Title="Translations" Description="Install additional translations. English is included by default.">
+      <Feature Id="ArabicFeature" Title="Arabic" Description="Arabic translation.">
+        <ComponentRef Id="ArabicComponent" />
+      </Feature>
       <Feature Id="AzerbaijaniFeature" Title="Azerbaijani" Description="Azerbaijani translation.">
         <ComponentRef Id="AzerbaijaniComponent" />
       </Feature>

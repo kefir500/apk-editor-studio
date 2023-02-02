@@ -41,6 +41,7 @@ if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 set(TS_FILES
+    src/translations/apk-editor-studio.ar.ts
     src/translations/apk-editor-studio.az.ts
     src/translations/apk-editor-studio.ckb.ts
     src/translations/apk-editor-studio.cs.ts

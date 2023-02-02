@@ -20,6 +20,11 @@
 
 ### Translators:
 
+#### Arabic
+- [SWxEng](https://github.com/SWxEng)
+- [Ammar Salem](https://www.transifex.com/user/profile/amar0876/)
+- [Salih Ail](https://www.transifex.com/user/profile/rrrfff444/)
+
 #### Azerbaijani
 - [Emin Huseynzade](https://www.transifex.com/user/profile/ehsynze/)
 
