@@ -79,3 +79,12 @@ void ApktoolUpdateInfo::refresh()
     });
     apktool->run();
 }
+
+bool ApktoolUpdateInfo::hasUpdates() const
+{
+    if (getCurrentVersion().isEmpty() && QFile::exists(Apktool::getPath())) {
+        return false;
+    }
+
+    return IUpdateInfo::hasUpdates();
+}

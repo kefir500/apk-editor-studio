@@ -2,7 +2,6 @@
 #define APKTOOLUPDATEINFO_H
 
 #include "base/iupdateinfo.h"
-#include <QNetworkAccessManager>
 
 class ApktoolUpdateInfo final : public IUpdateInfo
 {
@@ -16,10 +15,10 @@ public:
     QIcon getApplicationIcon() const override;
     void download(QWidget *parent = nullptr) override;
     void refresh() override;
+    bool hasUpdates() const override;
 
 private:
     QString currentVersion;
-    QNetworkAccessManager http;
 };
 
 #endif // APKTOOLUPDATEINFO_H

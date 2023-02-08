@@ -2,6 +2,7 @@
 
 ## 1.8.0
 - Added support for optimizing shared libraries.
+- Fixed Apktool update loop when Java is not found.
 - Windows: Improved Java path detection.
 
 ## 1.7.0

@@ -455,11 +455,10 @@ void MainWindow::initMenus()
 
 void MainWindow::checkToolsAvailable()
 {
-    //: "%1" will be replaced with a tool name.
-    const QString question(tr("%1 not found. Restore the default path?"));
-
     const auto apktoolPath = Utils::toAbsolutePath(app->settings->getApktoolPath());
     if (!apktoolPath.isEmpty() && !QFile::exists(apktoolPath)) {
+        //: "%1" will be replaced with a tool name.
+        const QString question(tr("%1 not found. Restore the default path?"));
         if (QMessageBox::question(this, {}, question.arg("Apktool")) == QMessageBox::Yes) {
             app->settings->setApktoolPath({});
         }

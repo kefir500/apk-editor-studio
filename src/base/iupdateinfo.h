@@ -18,8 +18,8 @@ public:
     virtual QIcon getApplicationIcon() const = 0;
     virtual void download(QWidget *parent = nullptr) = 0;
     virtual void refresh() {};
+    virtual bool hasUpdates() const;
 
-    bool hasUpdates() const;
     void setMetadata(const QByteArray &metadata);
 
 signals:
