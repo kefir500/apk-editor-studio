@@ -1,7 +1,9 @@
 # Version History
 
-## 1.8.0
+## 1.7.1
 - Added support for optimizing shared libraries.
+- Added Arabic translation.
+- Added Spanish (Mexican) translation.
 - Fixed Apktool update loop when Java is not found.
 - Windows: Improved Java path detection.
 
