@@ -49,6 +49,7 @@ set(TS_FILES
     src/translations/apk-editor-studio.el.ts
     src/translations/apk-editor-studio.en_GB.ts
     src/translations/apk-editor-studio.es.ts
+    src/translations/apk-editor-studio.es_MX.ts
     src/translations/apk-editor-studio.fa.ts
     src/translations/apk-editor-studio.fr.ts
     src/translations/apk-editor-studio.he.ts
