@@ -89,11 +89,15 @@
 - [Francisco Zamorano](https://www.transifex.com/user/profile/Paco_Zamo/)
 - [Jose Osuna](https://www.transifex.com/user/profile/itp.osuna/)
 
+## Spanish (Mexican)
+- [Robert Huerta](https://www.transifex.com/user/profile/lazarito/)
+
 ## Swedish
 - [Åke Engelbrektson](https://www.transifex.com/user/profile/eson/)
 
 ## Turkish
 - [emre1393](https://www.transifex.com/user/profile/emre1393/)
+- [Adam L. Wilson](https://twitter.com/ataharekat)
 
 # Testers:
 
