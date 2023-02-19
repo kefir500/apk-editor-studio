@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Donations</source>
-        <translation>기부하기</translation>
+        <translation>기부자</translation>
     </message>
     <message>
         <source>Version History</source>
