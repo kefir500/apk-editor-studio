@@ -1,6 +1,7 @@
 #include "widgets/codeeditor.h"
 #include "widgets/codesidebar.h"
 #include "base/application.h"
+#include "base/settings.h"
 #include "base/utils.h"
 #include <KSyntaxHighlighting/Definition>
 #include <KSyntaxHighlighting/SyntaxHighlighter>
@@ -11,8 +12,6 @@ CodeEditor::CodeEditor(QWidget *parent)
     , sidebar(new CodeSideBar(this))
     , highlighter(new KSyntaxHighlighting::SyntaxHighlighter(document()))
 {
-    setLineWrapMode(CodeEditor::NoWrap);
-
     const auto defaultTheme = app->highlightingRepository.defaultTheme(Utils::isDarkTheme()
         ? KSyntaxHighlighting::Repository::DarkTheme
         : KSyntaxHighlighting::Repository::LightTheme);
@@ -30,6 +29,10 @@ CodeEditor::CodeEditor(QWidget *parent)
 #endif
     setFont(font);
     sidebar->setFont(font);
+
+    setWordWrapMode(app->settings->getWordWrap()
+        ? QTextOption::WrapAtWordBoundaryOrAnywhere
+        : QTextOption::NoWrap);
 
     connect(this, &CodeEditor::cursorPositionChanged, this, &CodeEditor::highlightCurrentLine);
     connect(this, &CodeEditor::textChanged, this, &CodeEditor::highlightSearchResults);
@@ -51,6 +54,11 @@ QRgb CodeEditor::getEditorColor(KSyntaxHighlighting::Theme::EditorColorRole role
 QRgb CodeEditor::getTextColor(KSyntaxHighlighting::Theme::TextStyle role) const
 {
     return highlighter->theme().textColor(role);
+}
+
+bool CodeEditor::getWordWrap() const
+{
+    return wordWrapMode() == QTextOption::WrapAtWordBoundaryOrAnywhere;
 }
 
 QTextBlock CodeEditor::blockAtPosition(int y) const
@@ -109,7 +117,11 @@ void CodeEditor::toggleFold(const QTextBlock &startBlock)
             block = block.next();
         }
     }
-    document()->markContentsDirty(startBlock.position(), endBlock.position() - startBlock.position() + 1);
+    const int dirtyFrom = startBlock.position();
+    const int dirtyTo = endBlock.isValid()
+        ? (endBlock.position() - startBlock.position() + 1)
+        : startBlock.length();
+    document()->markContentsDirty(dirtyFrom, dirtyTo);
     emit document()->documentLayout()->documentSizeChanged(document()->documentLayout()->documentSize());
 }
 
@@ -242,6 +254,13 @@ void CodeEditor::setExtraSelectionGroup(ExtraSelectionGroup group, const QList<Q
         allSelections << selection;
     }
     setExtraSelections(allSelections);
+}
+
+void CodeEditor::setWordWrap(bool enabled)
+{
+    setWordWrapMode(enabled ? QTextOption::WrapAtWordBoundaryOrAnywhere : QTextOption::NoWrap);
+    sidebar->updateSidebarGeometry();
+    app->settings->setWordWrap(enabled);
 }
 
 void CodeEditor::resizeEvent(QResizeEvent *event)

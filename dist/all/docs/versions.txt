@@ -1,5 +1,8 @@
 # Version History
 
+## 1.8.0
+- Added word wrap support to code editor.
+
 ## 1.7.1
 - Added support for optimizing shared libraries.
 - Added Arabic translation.

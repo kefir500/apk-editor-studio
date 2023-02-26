@@ -237,6 +237,11 @@ bool Settings::getSearchByRegex() const
     return settings->value("CodeEditor/SearchByRegex", false).toBool();
 }
 
+bool Settings::getWordWrap() const
+{
+    return settings->value("CodeEditor/WordWrap", false).toBool();
+}
+
 QString Settings::getTheme() const
 {
     return settings->value("Appearance/Theme", "system").toString();
@@ -507,6 +512,11 @@ void Settings::setSearchCaseSensitive(bool enabled) const
 void Settings::setSearchByRegex(bool enabled) const
 {
     settings->setValue("CodeEditor/SearchByRegex", enabled);
+}
+
+void Settings::setWordWrap(bool enabled) const
+{
+    settings->setValue("CodeEditor/WordWrap", enabled);
 }
 
 void Settings::setTheme(const QString &theme)

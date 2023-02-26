@@ -59,6 +59,13 @@ CodeSheet::CodeSheet(const ResourceModelIndex &index, QWidget *parent)
 
     addActionSeparator();
 
+    auto actionWordWrap = app->actions.getWordWrap(this);
+    actionWordWrap->setChecked(editor->getWordWrap());
+    addAction(actionWordWrap);
+    connect(actionWordWrap, &QAction::triggered, editor, &CodeEditor::setWordWrap);
+
+    addActionSeparator();
+
     auto actionFind = app->actions.getFind(this);
     addAction(actionFind);
     connect(actionFind, &QAction::triggered, this, &CodeSheet::findSelectedText);

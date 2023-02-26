@@ -232,6 +232,18 @@ QAction *ActionProvider::getSearchByRegex(QWidget *parent) const
     return action;
 }
 
+QAction *ActionProvider::getWordWrap(QWidget *parent) const
+{
+    auto action = new QAction(parent);
+    action->setCheckable(true);
+
+    auto translate = [=]() { action->setText(tr("Word Wrap")); };
+    connect(this, &ActionProvider::languageChanged, action, translate);
+    translate();
+
+    return action;
+}
+
 QAction *ActionProvider::getZoomIn(QWidget *parent) const
 {
     auto action = new QAction(QIcon::fromTheme("zoom-in"), {}, parent);

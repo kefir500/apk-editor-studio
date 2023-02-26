@@ -26,6 +26,7 @@ public:
     int getTabWidth() const;
     QRgb getEditorColor(KSyntaxHighlighting::Theme::EditorColorRole) const;
     QRgb getTextColor(KSyntaxHighlighting::Theme::TextStyle) const;
+    bool getWordWrap() const;
 
     QTextBlock blockAtPosition(int y) const;
     bool isFoldable(const QTextBlock &block) const;
@@ -44,6 +45,8 @@ public:
     void setTheme(const KSyntaxHighlighting::Theme &theme);
     void setDefinition(const KSyntaxHighlighting::Definition &definition);
     void setExtraSelectionGroup(ExtraSelectionGroup group, const QList<QTextEdit::ExtraSelection> &selection);
+
+    void setWordWrap(bool enabled);
 
 signals:
     void searchFinished(int totalResults, int currentResult = 0);
