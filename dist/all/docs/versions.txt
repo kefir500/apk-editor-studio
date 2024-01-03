@@ -2,7 +2,7 @@
 
 ## 1.8.0
 - Added word wrap support to code editor.
-- Updated default Apktool to 2.8.1.
+- Updated default Apktool to 2.9.1.
 
 ## 1.7.1
 - Added support for optimizing shared libraries.
