@@ -58,8 +58,8 @@ void Apktool::Build::run()
     if (!frameworks.isEmpty()) {
         arguments << "--frame-path" << frameworks;
     }
-    if (aapt2) {
-        arguments << "--use-aapt2";
+    if (aapt1) {
+        arguments << "--use-aapt1";
     }
     if (debuggable) {
         arguments << "--debug";

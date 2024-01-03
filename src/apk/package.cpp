@@ -180,10 +180,10 @@ Command *Package::createPackCommand(const QString &target)
 {
     const QString source = getContentsPath();
     const QString frameworks = Apktool::getFrameworksPath();
-    const bool aapt2 = app->settings->getUseAapt2();
+    const bool aapt1 = app->settings->getUseAapt1();
     const bool debuggable = app->settings->getMakeDebuggable();
 
-    auto apktoolBuild = new Apktool::Build(source, target, frameworks, aapt2, debuggable);
+    auto apktoolBuild = new Apktool::Build(source, target, frameworks, aapt1, debuggable);
 
     connect(apktoolBuild, &Command::started, this, [=]() {
         qDebug() << qPrintable(QString("Packing\n  from: %1\n    to: %2\n").arg(source, target));

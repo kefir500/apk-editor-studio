@@ -32,7 +32,7 @@ public:
     QString getKeyAlias() const;
     QString getKeyPassword() const;
     QString getApktoolVersion() const;
-    bool getUseAapt2() const;
+    bool getUseAapt1() const;
     bool getMakeDebuggable() const;
     bool getDecompileSources() const;
     bool getDecompileNoDebugInfo() const;
@@ -88,7 +88,7 @@ public:
     void setKeyAlias(const QString &alias);
     void setKeyPassword(const QString &password);
     void setApktoolVersion(const QString &version);
-    void setUseAapt2(bool aapt2);
+    void setUseAapt1(bool aapt1);
     void setMakeDebuggable(bool debuggable);
     void setDecompileSources(bool smali);
     void setDecompileNoDebugInfo(bool noDebugInfo);

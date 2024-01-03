@@ -40,12 +40,12 @@ namespace Apktool
     {
     public:
         Build(const QString &source, const QString &destination,
-              const QString &frameworks, bool aapt2, bool debuggable, QObject *parent = nullptr)
+              const QString &frameworks, bool aapt1, bool debuggable, QObject *parent = nullptr)
             : Command(parent)
             , source(source)
             , destination(destination)
             , frameworks(frameworks)
-            , aapt2(aapt2)
+            , aapt1(aapt1)
             , debuggable(debuggable)
         {}
 
@@ -56,7 +56,7 @@ namespace Apktool
         const QString source;
         const QString destination;
         const QString frameworks;
-        const bool aapt2;
+        const bool aapt1;
         const bool debuggable;
         QString resultOutput;
     };

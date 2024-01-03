@@ -125,9 +125,9 @@ QString Settings::getApktoolVersion() const
     return settings->value("Apktool/Version").toString();
 }
 
-bool Settings::getUseAapt2() const
+bool Settings::getUseAapt1() const
 {
-    return settings->value("Apktool/Aapt2", true).toBool();
+    return settings->value("Apktool/Aapt1", false).toBool();
 }
 
 bool Settings::getMakeDebuggable() const
@@ -417,9 +417,9 @@ void Settings::setApktoolVersion(const QString &version)
     settings->setValue("Apktool/Version", version);
 }
 
-void Settings::setUseAapt2(bool aapt2)
+void Settings::setUseAapt1(bool aapt1)
 {
-    settings->setValue("Apktool/Aapt2", aapt2);
+    settings->setValue("Apktool/Aapt1", aapt1);
 }
 
 void Settings::setMakeDebuggable(bool debuggable)

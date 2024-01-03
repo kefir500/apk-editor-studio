@@ -105,7 +105,7 @@ void OptionsDialog::load()
     fileboxApktool->setCurrentPath(app->settings->getApktoolPath());
     fileboxOutput->setCurrentPath(app->settings->getOutputDirectory());
     fileboxFrameworks->setCurrentPath(app->settings->getFrameworksDirectory());
-    checkboxAapt2->setChecked(app->settings->getUseAapt2());
+    checkboxAapt1->setChecked(app->settings->getUseAapt1());
     checkboxDebuggable->setChecked(app->settings->getMakeDebuggable());
     checkboxSources->setChecked(app->settings->getDecompileSources());
     checkboxOnlyMainClasses->setChecked(app->settings->getDecompileOnlyMainClasses());
@@ -162,7 +162,7 @@ void OptionsDialog::save()
     app->settings->setApktoolPath(fileboxApktool->getCurrentPath());
     app->settings->setOutputDirectory(fileboxOutput->getCurrentPath());
     app->settings->setFrameworksDirectory(fileboxFrameworks->getCurrentPath());
-    app->settings->setUseAapt2(checkboxAapt2->isChecked());
+    app->settings->setUseAapt1(checkboxAapt1->isChecked());
     app->settings->setMakeDebuggable(checkboxDebuggable->isChecked());
     app->settings->setDecompileSources(checkboxSources->isChecked());
     app->settings->setDecompileOnlyMainClasses(checkboxOnlyMainClasses->isChecked());
@@ -336,11 +336,11 @@ void OptionsDialog::initialize()
     layoutUnpacking->addWidget(checkboxBrokenResources);
 
     auto groupPacking = new QGroupBox(tr("Packing"), this);
-    //: "AAPT2" is the name of the tool, don't translate it.
-    checkboxAapt2 = new QCheckBox(tr("Use AAPT2"), this);
+    //: "AAPT1" is the name of the tool, don't translate it.
+    checkboxAapt1 = new QCheckBox(tr("Use AAPT1"), this);
     checkboxDebuggable = new QCheckBox(tr("Pack for debugging"), this);
     auto layoutPacking = new QVBoxLayout(groupPacking);
-    layoutPacking->addWidget(checkboxAapt2);
+    layoutPacking->addWidget(checkboxAapt1);
     layoutPacking->addWidget(checkboxDebuggable);
 
     pageApktool->addLayout(formApktool, 0, 0, 1, 2);
