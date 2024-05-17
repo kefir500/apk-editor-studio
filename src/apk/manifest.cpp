@@ -42,9 +42,9 @@ Manifest::Manifest(const QString &xmlPath, const QString &ymlPath)
     regexTargetSdk.setPatternOptions(QRegularExpression::MultilineOption);
     regexVersionCode.setPatternOptions(QRegularExpression::MultilineOption);
     regexVersionName.setPatternOptions(QRegularExpression::MultilineOption);
-    regexMinSdk.setPattern("(?<=^  minSdkVersion: ')\\d+(?='$)");
-    regexTargetSdk.setPattern("(?<=^  targetSdkVersion: ')\\d+(?='$)");
-    regexVersionCode.setPattern("(?<=^  versionCode: ')\\d+(?='$)");
+    regexMinSdk.setPattern("(?<=^  minSdkVersion: )\\d+(?=$)");
+    regexTargetSdk.setPattern("(?<=^  targetSdkVersion: )\\d+(?=$)");
+    regexVersionCode.setPattern("(?<=^  versionCode: )\\d+(?=$)");
     regexVersionName.setPattern("(?<=^  versionName: ).+(?=$)");
 
     QFile ymlFile(ymlPath);
