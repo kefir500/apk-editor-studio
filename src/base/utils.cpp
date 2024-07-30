@@ -425,6 +425,10 @@ QString Utils::getAndroidCodename(int api)
         return "Android 12L";
     case ANDROID_33:
         return "Android 13";
+    case ANDROID_34:
+        return "Android 14";
+    case ANDROID_35:
+        return "Android 15";
     }
     return QString();
 }
