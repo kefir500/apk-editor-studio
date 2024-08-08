@@ -56,8 +56,8 @@ void SearchModelWorker::search(const QString &query, const QString &directory)
                                 regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
                             }
                             const auto match = regex.match(line, matchOffset);
-                            matchStart = match.capturedStart(1);
-                            matchLength = match.capturedLength(1);
+                            matchStart = match.capturedStart(0);
+                            matchLength = match.capturedLength(0);
                         }
 
                         if (matchStart == -1) {
