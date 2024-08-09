@@ -63,7 +63,7 @@ private:
     FileBox *fileboxApktool;
     FileBox *fileboxOutput;
     FileBox *fileboxFrameworks;
-    QCheckBox *checkboxAapt1;
+    QCheckBox *checkboxAapt2;
     QCheckBox *checkboxDebuggable;
     QCheckBox *checkboxSources;
     QCheckBox *checkboxNoDebugInfo;
