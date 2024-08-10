@@ -45,6 +45,7 @@ endif()
 set(TS_FILES
     src/translations/apk-editor-studio.ar.ts
     src/translations/apk-editor-studio.az.ts
+    src/translations/apk-editor-studio.bqi.ts
     src/translations/apk-editor-studio.ckb.ts
     src/translations/apk-editor-studio.cs.ts
     src/translations/apk-editor-studio.de.ts
@@ -66,6 +67,8 @@ set(TS_FILES
     src/translations/apk-editor-studio.ru.ts
     src/translations/apk-editor-studio.sv.ts
     src/translations/apk-editor-studio.tr.ts
+    src/translations/apk-editor-studio.uk.ts
+    src/translations/apk-editor-studio.vi.ts
     src/translations/apk-editor-studio.zh_CN.ts
 )
 
