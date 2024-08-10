@@ -136,6 +136,9 @@
               <Component Id="KurdishComponent">
                 <File Name="apk-editor-studio.ckb.qm" />
               </Component>
+              <Component Id="LuriBakhtiariComponent">
+                <File Name="apk-editor-studio.bqi.qm" />
+              </Component>
               <Component Id="PersianComponent">
                 <File Name="apk-editor-studio.fa.qm" />
               </Component>
@@ -174,6 +177,12 @@
               </Component>
               <Component Id="TurkishComponent">
                 <File Name="apk-editor-studio.tr.qm" />
+              </Component>
+              <Component Id="UkrainianComponent">
+                <File Name="apk-editor-studio.uk.qm" />
+              </Component>
+              <Component Id="VietnameseComponent">
+                <File Name="apk-editor-studio.vi.qm" />
               </Component>
             </Directory>
           </Directory>
@@ -414,6 +423,9 @@
       <Feature Id="KurdishFeature" Title="Kurdish" Description="Kurdish translation.">
         <ComponentRef Id="KurdishComponent" />
       </Feature>
+      <Feature Id="LuriBakhtiariFeature" Title="Luri (Bakhtiari)" Description="Luri (Bakhtiari) translation.">
+        <ComponentRef Id="LuriBakhtiariComponent" />
+      </Feature>
       <Feature Id="PersianFeature" Title="Persian" Description="Persian translation.">
         <ComponentRef Id="PersianComponent" />
       </Feature>
@@ -445,6 +457,12 @@
       </Feature>
       <Feature Id="TurkishFeature" Title="Turkish" Description="Turkish translation.">
         <ComponentRef Id="TurkishComponent" />
+      </Feature>
+      <Feature Id="UkrainianFeature" Title="Ukrainian" Description="Ukrainian translation.">
+        <ComponentRef Id="UkrainianComponent" />
+      </Feature>
+      <Feature Id="VietnameseFeature" Title="Vietnamese" Description="Vietnamese translation.">
+        <ComponentRef Id="VietnameseComponent" />
       </Feature>
     </Feature>
     <Feature Id="ShortcutsFeature" Title="Shortcuts" Description="Create $(var.ProductName) shortcuts.">

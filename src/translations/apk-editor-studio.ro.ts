@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Donations</source>
-        <translation type="unfinished"/>
+        <translation>Donații</translation>
     </message>
     <message>
         <source>Version History</source>
@@ -43,11 +43,11 @@
     </message>
     <message>
         <source>Could not fetch the list of donations.</source>
-        <translation type="unfinished"/>
+        <translation>Nu s-a putut încărca lista de donații.</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation type="unfinished"/>
+        <translation>Reîncearcă</translation>
     </message>
 </context>
 <context>
@@ -58,51 +58,51 @@
     </message>
     <message>
         <source>Screenshot has been successfully created!</source>
-        <translation type="unfinished"/>
+        <translation>Captură de ecran creată cu succes!</translation>
     </message>
     <message>
         <source>Could not take a screenshot.</source>
-        <translation type="unfinished"/>
+        <translation>Nu s-a putut face o captură de ecran.</translation>
     </message>
     <message>
         <source>&amp;Optimize External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Optimizare APK Extern...</translation>
     </message>
     <message>
         <source>&amp;Sign External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Semnează APK Extern...</translation>
     </message>
     <message>
         <source>&amp;Install External APK...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Instalează APK Extern...</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation type="unfinished"/>
+        <translation>Caută(&amp;F)</translation>
     </message>
     <message>
         <source>Find &amp;Next</source>
-        <translation type="unfinished"/>
+        <translation>Caută Următorul(&amp;N)</translation>
     </message>
     <message>
         <source>Find Pre&amp;vious</source>
-        <translation type="unfinished"/>
+        <translation>Caută Anterior(&amp;V)</translation>
     </message>
     <message>
         <source>Find and &amp;Replace</source>
-        <translation type="unfinished"/>
+        <translation>Caută și înlocuiește(&amp;R)</translation>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>Mărește</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>Micșorează</translation>
     </message>
     <message>
         <source>Reset Zoom</source>
-        <translation type="unfinished"/>
+        <translation>Resetează mărimea</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -148,7 +148,7 @@
     </message>
     <message>
         <source>Take &amp;Screenshot...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Captură de ecran</translation>
     </message>
     <message>
         <source>&amp;Language</source>
@@ -180,34 +180,34 @@
     </message>
     <message>
         <source>Are you sure you want to delete this file?</source>
-        <translation type="unfinished"/>
+        <translation>Ești sigur că dorești să ștergi acest fișier?</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this directory?</source>
-        <translation type="unfinished"/>
+        <translation>Ești sigur că dorești să ștergi acest director?</translation>
     </message>
     <message>
         <source>Installing %1...</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Instalare %1...</translation>
     </message>
     <message>
         <source>Successfully installed %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Instalare cu succes %1</translation>
     </message>
     <message>
         <source>Could not install %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Nu s-a putut instala %1</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>Descarcă</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished"/>
+        <translation>Încarcă</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -227,7 +227,7 @@
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Șterge</translation>
     </message>
     <message>
         <source>Up</source>
@@ -246,7 +246,7 @@
     <message>
         <source>&amp;Edit</source>
         <extracomment>Refers to a menu bar (along with File, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;Editează</translation>
     </message>
 </context>
 <context>

@@ -61,6 +61,7 @@
 
 ## Japanese
 - [Sakai Hiroki](https://www.transifex.com/user/profile/m07jp/)
+- [nikkorin.yuki](https://www.transifex.com/user/profile/nikkorin.yuki/)
 
 ## Korean
 - [Gyuha Shin](https://www.transifex.com/user/profile/gyuha/)
@@ -68,6 +69,9 @@
 
 ## Kurdish
 - [Erfan Sci](https://www.transifex.com/user/profile/erfan13/)
+
+## Luri (Bakhtiari)
+- [hosêyň abāspanā](https://www.transifex.com/user/profile/hosseinabaspanah/)
 
 ## Persian
 - [SSLRI](https://www.transifex.com/user/profile/sslri/)
@@ -81,6 +85,7 @@
 
 ## Romanian
 - [Codrut X](https://www.transifex.com/user/profile/codrut2020/)
+- [Octavian Lupu](https://www.transifex.com/user/profile/octavian09/)
 
 ## Russian
 - [Alexander Gorishnyak](https://www.transifex.com/user/profile/kefir500/)
@@ -98,6 +103,12 @@
 ## Turkish
 - [emre1393](https://www.transifex.com/user/profile/emre1393/)
 - [Adam L. Wilson](https://twitter.com/ataharekat)
+
+## Ukrainian
+- [Oleh Hishak](https://www.transifex.com/user/profile/hishak/)
+
+## Vietnamese
+- [Tâm Doãn Bắc](https://www.transifex.com/user/profile/iamsyr.vn/)
 
 # Testers:
 

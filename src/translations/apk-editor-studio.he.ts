@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Donations</source>
-        <translation type="unfinished"/>
+        <translation>תרומות</translation>
     </message>
     <message>
         <source>Version History</source>
@@ -82,7 +82,7 @@
     </message>
     <message>
         <source>Find &amp;Next</source>
-        <translation type="unfinished"/>
+        <translation>מצא &amp;הבא</translation>
     </message>
     <message>
         <source>Find Pre&amp;vious</source>

@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Donations</source>
-        <translation>حمایت مالی </translation>
+        <translation>حمایت مالی</translation>
     </message>
     <message>
         <source>Version History</source>
@@ -66,43 +66,43 @@
     </message>
     <message>
         <source>&amp;Optimize External APK...</source>
-        <translation>&amp;بهینه سازی APK خارجی...</translation>
+        <translation>&amp;بهینه کردن APK خارجی</translation>
     </message>
     <message>
         <source>&amp;Sign External APK...</source>
-        <translation>&amp;امضا APK خارجی...</translation>
+        <translation>&amp;امضا APK خارجی</translation>
     </message>
     <message>
         <source>&amp;Install External APK...</source>
-        <translation>&amp;نصب APK خارجی...</translation>
+        <translation>&amp;نصب APK خارجی</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation type="unfinished"/>
+        <translation>&amp;پیدا کردن</translation>
     </message>
     <message>
         <source>Find &amp;Next</source>
-        <translation type="unfinished"/>
+        <translation>&amp;بعدی را پیدا کنید</translation>
     </message>
     <message>
         <source>Find Pre&amp;vious</source>
-        <translation type="unfinished"/>
+        <translation>موارد قبلی را پیدا کنید</translation>
     </message>
     <message>
         <source>Find and &amp;Replace</source>
-        <translation type="unfinished"/>
+        <translation>پیدا و جایگزین کنید</translation>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>بزرگنمایی</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>کوچک نمایی</translation>
     </message>
     <message>
         <source>Reset Zoom</source>
-        <translation type="unfinished"/>
+        <translation>بزرگنمایی را بازنشانی کنید</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -126,29 +126,29 @@
     </message>
     <message>
         <source>&amp;Reset Settings...</source>
-        <translation>&amp;بازنشانی تنظیمات...</translation>
+        <translation>&amp;بازنشانی تنظیمات</translation>
     </message>
     <message>
         <source>&amp;Options...</source>
-        <translation>&amp;گزینه ها...</translation>
+        <translation>&amp;گزینه ها</translation>
     </message>
     <message>
         <source>&amp;Device Manager...</source>
         <extracomment>This string refers to multiple devices (as in &quot;Manager of devices&quot;).</extracomment>
-        <translation>&amp;مدیریت دستگاه...</translation>
+        <translation>&amp;مدیریت دستگاه</translation>
     </message>
     <message>
         <source>&amp;Key Manager...</source>
         <extracomment>This string refers to multiple keys (as in &quot;Manager of keys&quot;).</extracomment>
-        <translation>&amp;مدیریت کلیدها...</translation>
+        <translation>&amp;مدیریت کلیدها</translation>
     </message>
     <message>
         <source>&amp;Android Explorer...</source>
-        <translation>&amp;مدیریت فایل اندروید...</translation>
+        <translation>&amp;مدیریت فایل اندروید</translation>
     </message>
     <message>
         <source>Take &amp;Screenshot...</source>
-        <translation>گرفتن عکس از &amp;صفحه...</translation>
+        <translation>گرفتن عکس از &amp;صفحه</translation>
     </message>
     <message>
         <source>&amp;Language</source>
@@ -156,20 +156,20 @@
     </message>
     <message>
         <source>&amp;Open APK...</source>
-        <translation>&amp;بازکردن APK...</translation>
+        <translation>&amp;بازکردن APK</translation>
     </message>
     <message>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>حساس به حروف کوچک و بزرگ</translation>
     </message>
     <message>
         <source>Regular Expression</source>
-        <translation type="unfinished"/>
+        <translation>عبارت منظم</translation>
     </message>
     <message>
         <source>&amp;Framework Manager...</source>
         <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
-        <translation type="unfinished"/>
+        <translation>مدیرت &amp;چارچوب</translation>
     </message>
 </context>
 <context>
@@ -189,17 +189,17 @@
     <message>
         <source>Installing %1...</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>در حال نصب %1...</translation>
     </message>
     <message>
         <source>Successfully installed %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>%1 با موفقیت نصب شد</translation>
     </message>
     <message>
         <source>Could not install %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation type="unfinished"/>
+        <translation>%1 نصب نشد</translation>
     </message>
     <message>
         <source>Download</source>
@@ -241,12 +241,12 @@
     </message>
     <message>
         <source>Tasks</source>
-        <translation type="unfinished"/>
+        <translation>وظایف</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
         <extracomment>Refers to a menu bar (along with File, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;ویرایش</translation>
     </message>
 </context>
 <context>
@@ -257,11 +257,11 @@
     </message>
     <message>
         <source>Could not copy the file or directory.</source>
-        <translation>پرونده یا فهرست را نمی توان کپی کرد.</translation>
+        <translation>نمی توان فایل یا فهرست را کپی کرد.</translation>
     </message>
     <message>
         <source>Could not move the file or directory.</source>
-        <translation>پرونده یا فهرست قابل انتقال نیست.</translation>
+        <translation>نمی توان فایل یا فهرست را جابجا کرد.</translation>
     </message>
     <message>
         <source>Could not rename the file or directory.</source>
@@ -269,42 +269,42 @@
     </message>
     <message>
         <source>Could not delete the file or directory.</source>
-        <translation>پرونده یا فهرست حذف نشد.</translation>
+        <translation>فایل یا فهرست حذف نشد.</translation>
     </message>
     <message>
         <source>Could not download the file or directory.</source>
-        <translation>پرونده یا فهرست بارگیری نشد.</translation>
+        <translation>نمی توان فایل یا فهرست را دانلود کرد.</translation>
     </message>
     <message>
         <source>Could not upload the file.</source>
-        <translation>پرونده بارگذاری نشد.</translation>
+        <translation>نمی توان فایل را آپلود کرد.</translation>
     </message>
 </context>
 <context>
     <name>ApkCloner</name>
     <message>
         <source>Updating resource references...</source>
-        <translation type="unfinished"/>
+        <translation>در حال به روز رسانی مراجع منابع...</translation>
     </message>
     <message>
         <source>Updating Smali references...</source>
         <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation type="unfinished"/>
+        <translation>در حال به روز رسانی منابع زبان کوچک...</translation>
     </message>
     <message>
         <source>Updating directory structure...</source>
-        <translation type="unfinished"/>
+        <translation>به روز رسانی ساختار فهرست...</translation>
     </message>
 </context>
 <context>
     <name>BaseEditableSheet</name>
     <message>
         <source>Save the changes?</source>
-        <translation>آیا تغییرات ذخیره شود؟</translation>
+        <translation>تغییرات را ذخیره کنیم؟</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;ذخیره</translation>
+        <translation>&amp;ذخیره کنید</translation>
     </message>
 </context>
 <context>
@@ -324,53 +324,53 @@
     <message>
         <source>&amp;Open Resource Directory</source>
         <extracomment>This string refers to a single resource.</extracomment>
-        <translation>&amp;فهرست منابع را باز کنید</translation>
+        <translation>&amp;باز کردن فهرست منابع</translation>
     </message>
 </context>
 <context>
     <name>CodeSearchBar</name>
     <message>
         <source>No results</source>
-        <translation type="unfinished"/>
+        <translation>هیچ نتیجه ای وجود ندارد</translation>
     </message>
     <message>
         <source>Find:</source>
-        <translation type="unfinished"/>
+        <translation>یافتن:</translation>
     </message>
     <message>
         <source>Replace:</source>
-        <translation type="unfinished"/>
+        <translation>جایگزین کنید:</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>ببند</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>جایگزین کنید</translation>
     </message>
     <message>
         <source>Replace All</source>
-        <translation type="unfinished"/>
+        <translation>جایگزین همه</translation>
     </message>
     <message>
         <source>Hide the Replace Bar</source>
-        <translation type="unfinished"/>
+        <translation>نوار جایگزینی را پنهان کنید</translation>
     </message>
 </context>
 <context>
     <name>CodeSheet</name>
     <message>
         <source>Would you like to download syntax definitions for this and other formats?</source>
-        <translation type="unfinished"/>
+        <translation>آیا می خواهید تعاریف نحوی را برای این قالب و سایر فرمت ها بارگیری کنید؟</translation>
     </message>
     <message>
         <source>Downloading syntax definitions...</source>
-        <translation type="unfinished"/>
+        <translation>در حال دانلود تعاریف سینتکس...</translation>
     </message>
     <message>
         <source>Download Syntax Definitions</source>
-        <translation type="unfinished"/>
+        <translation>تعاریف سینتکس را دانلود کنید</translation>
     </message>
 </context>
 <context>
@@ -451,22 +451,22 @@
     <name>Downloader</name>
     <message>
         <source>Downloading</source>
-        <translation type="unfinished"/>
+        <translation>در حال دانلود</translation>
     </message>
     <message>
         <source>Downloading %1...</source>
         <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>در حال دانلود %1...</translation>
     </message>
     <message>
         <source>Could not save %1:</source>
         <extracomment>&quot;%1&quot; will be replaced with a title of the saved file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>ذخیره نشد %1:</translation>
     </message>
     <message>
         <source>Could not download %1:</source>
         <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>نمی توان %1 را دانلود کرد</translation>
     </message>
 </context>
 <context>
@@ -492,12 +492,12 @@
     <message>
         <source>Framework Manager</source>
         <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
-        <translation type="unfinished"/>
+        <translation>مدیریت فریم ورک</translation>
     </message>
     <message>
         <source>&amp;Install</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;نصب کردن</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -505,17 +505,17 @@
     </message>
     <message>
         <source>Open Directory</source>
-        <translation type="unfinished"/>
+        <translation>فهرست را باز کنید</translation>
     </message>
     <message>
         <source>Could not install the &quot;%1&quot; framework.</source>
         <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
-        <translation type="unfinished"/>
+        <translation>فریم ورک &quot;%1&quot; نصب نشد.</translation>
     </message>
     <message>
         <source>Could not remove the &quot;%1&quot; framework.</source>
         <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
-        <translation type="unfinished"/>
+        <translation>فریم ورک &quot;%1&quot; حذف نشد.</translation>
     </message>
 </context>
 <context>
@@ -671,7 +671,7 @@
     </message>
     <message>
         <source>You are using the built-in keystore provided for demonstrational purposes. It can be practical for testing or personal usage. However, if you plan to distribute this APK, we recommend you to specify/create your own keystore via Key Manager.</source>
-        <translation type="unfinished"/>
+        <translation>شما از فروشگاه کلید داخلی ارائه شده برای اهداف نمایشی استفاده می کنید. این می تواند برای آزمایش یا استفاده شخصی کاربردی باشد. با این حال، اگر قصد دارید این APK را توزیع کنید، به شما توصیه می‌کنیم که از طریق مدیریت کلیدها فروشگاه کلید خود را مشخص/ایجاد کنید.</translation>
     </message>
 </context>
 <context>
@@ -771,7 +771,7 @@
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"/>
+        <translation>فیلتر کردن</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -807,7 +807,7 @@
     </message>
     <message>
         <source>Welcome</source>
-        <translation>خوش آمدی</translation>
+        <translation>خوش اومدی</translation>
     </message>
     <message>
         <source>This APK is already open:
@@ -827,7 +827,7 @@ Do you want to discard them and exit?</source>
     <message>
         <source>%1 not found. Restore the default path?</source>
         <extracomment>&quot;%1&quot; will be replaced with a tool name.</extracomment>
-        <translation type="unfinished"/>
+        <translation>%1 پیدا نشد. بازیابی مسیر پیش فرض؟</translation>
     </message>
 </context>
 <context>
@@ -870,7 +870,7 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Open .apk files in an existing window</source>
         <extracomment>Don't translate the &quot;.apk&quot; part.</extracomment>
-        <translation type="unfinished"/>
+        <translation>فایل‌های apk. را در پنجره‌ای موجود باز کنید</translation>
     </message>
     <message>
         <source>Check for updates automatically</source>
@@ -914,7 +914,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Theme:</source>
-        <translation type="unfinished"/>
+        <translation>تم:</translation>
     </message>
     <message>
         <source>Extracted from environment variables by default</source>
@@ -954,11 +954,11 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Frameworks path:</source>
-        <translation>مسیر چارچوب ها:</translation>
+        <translation>مسیر فریم ورک ها:</translation>
     </message>
     <message>
         <source>Unpacking</source>
-        <translation type="unfinished"/>
+        <translation>باز کردن بسته بندی</translation>
     </message>
     <message>
         <source>Decompile source code (smali)</source>
@@ -971,20 +971,20 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Packing</source>
-        <translation type="unfinished"/>
+        <translation>بسته بندی</translation>
     </message>
     <message>
         <source>Use AAPT2</source>
         <extracomment>&quot;AAPT2&quot; is the name of the tool, don't translate it.</extracomment>
-        <translation type="unfinished"/>
+        <translation>از AAPT2 استفاده کنید</translation>
     </message>
     <message>
         <source>Pack for debugging</source>
-        <translation type="unfinished"/>
+        <translation>بسته برای رفع اشکال</translation>
     </message>
     <message>
         <source>Sign APK after packing</source>
-        <translation type="unfinished"/>
+        <translation>بعد از بسته بندی APK را امضا کنید</translation>
     </message>
     <message>
         <source>Open Key Manager</source>
@@ -998,7 +998,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Optimize APK after packing</source>
-        <translation type="unfinished"/>
+        <translation>پس از بسته بندی APK را بهینه کنید</translation>
     </message>
     <message>
         <source>Zipalign path:</source>
@@ -1021,19 +1021,19 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Appearance</source>
-        <translation type="unfinished"/>
+        <translation>شکل ظاهری</translation>
     </message>
     <message>
         <source>The changes will take effect after the application restart.</source>
-        <translation type="unfinished"/>
+        <translation>تغییرات پس از راه اندازی مجدد برنامه اعمال خواهند شد.</translation>
     </message>
     <message>
         <source>Open Framework Manager</source>
-        <translation type="unfinished"/>
+        <translation>مدیریت فریم ورک را باز کنید</translation>
     </message>
     <message>
         <source>Decompile only main classes</source>
-        <translation type="unfinished"/>
+        <translation>فقط کلاس های اصلی را دیکامپایل کنید</translation>
     </message>
 </context>
 <context>
@@ -1121,7 +1121,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-        <translation>شبیه سازی APK به روشن کردن کد منبع منبع نیاز دارد. ادامه می دهید؟</translation>
+        <translation>برای شبیه‌سازی APK نیاز به فعال کردن کامپایل کد منبع دارد. ادامه می دهید؟</translation>
     </message>
     <message>
         <source>Settings have been applied. Please, reopen this APK.</source>
@@ -1153,11 +1153,11 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>The format is not supported.</source>
-        <translation type="unfinished"/>
+        <translation>فرمت پشتیبانی نمی شود</translation>
     </message>
     <message>
         <source>Cloning APK</source>
-        <translation type="unfinished"/>
+        <translation>کلون کردن APK</translation>
     </message>
 </context>
 <context>
@@ -1188,7 +1188,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>&amp;Project Manager</source>
         <extracomment>This string refers to a single project (as in &quot;Manager of a project&quot;).</extracomment>
-        <translation>&amp;مدیر پروژه</translation>
+        <translation>&amp;مدیریت پروژه</translation>
     </message>
     <message>
         <source>Edit Application &amp;Title</source>
@@ -1221,11 +1221,11 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Ta&amp;b</source>
         <extracomment>Displayed as &quot;Tab&quot;. Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>برگه</translation>
     </message>
     <message>
         <source>&amp;Search in Project</source>
-        <translation type="unfinished"/>
+        <translation>&amp;جستجو در پروژه</translation>
     </message>
 </context>
 <context>
@@ -1296,15 +1296,15 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Open With</source>
-        <translation type="unfinished"/>
+        <translation>بازکردن با</translation>
     </message>
     <message>
         <source>Open With Default Application</source>
-        <translation type="unfinished"/>
+        <translation>با برنامه پیش فرض باز کنید</translation>
     </message>
     <message>
         <source>Choose Another App...</source>
-        <translation type="unfinished"/>
+        <translation>انتخاب یک برنامه دیگر...</translation>
     </message>
 </context>
 <context>
@@ -1336,7 +1336,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>%1 result(s) in %2 file(s)</source>
         <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
-        <translation type="unfinished"/>
+        <translation>%1 نتیجه(ها) در %2 فایل (ها)</translation>
     </message>
 </context>
 <context>
@@ -1344,65 +1344,65 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Searching in %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>جستجو در %1</translation>
     </message>
     <message>
         <source>Replacing in %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>جایگزینی در %1</translation>
     </message>
     <message>
         <source>Some occurrences were not replaced.</source>
-        <translation type="unfinished"/>
+        <translation>برخی از اتفاقات جایگزین نشدند.</translation>
     </message>
     <message>
         <source>Found %1 result(s) in %2 file(s)</source>
         <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
-        <translation type="unfinished"/>
+        <translation>یافت شدن %1 نتیجه(ها) در%2 فایل(ها)</translation>
     </message>
     <message>
         <source>No results found</source>
-        <translation type="unfinished"/>
+        <translation>هیچ نتیجه ای یافت نشد</translation>
     </message>
     <message>
         <source>Replaced %1 occurrence(s) in %2 file(s)</source>
         <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
-        <translation type="unfinished"/>
+        <translation>جایگزین شدن%1 رخداد(ها) در %2 فایل(ها)</translation>
     </message>
     <message>
         <source>Nothing has been replaced</source>
-        <translation type="unfinished"/>
+        <translation>چیزی جایگزین نشده است</translation>
     </message>
     <message>
         <source>Search in Project</source>
-        <translation type="unfinished"/>
+        <translation>جستجو در پروژه</translation>
     </message>
     <message>
         <source>Search for:</source>
-        <translation type="unfinished"/>
+        <translation>جستجو برای:</translation>
     </message>
     <message>
         <source>Replace with:</source>
-        <translation type="unfinished"/>
+        <translation>جایگزین کردن با:</translation>
     </message>
     <message>
         <source>&amp;Search</source>
-        <translation type="unfinished"/>
+        <translation>&amp;جستجو کردن</translation>
     </message>
     <message>
         <source>&amp;Replace</source>
-        <translation type="unfinished"/>
+        <translation>&amp;جایگزین کردن</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>متوقف کردن</translation>
     </message>
 </context>
 <context>
     <name>SignatureViewer</name>
     <message>
         <source>Signatures</source>
-        <translation type="unfinished"/>
+        <translation>امضاء</translation>
     </message>
     <message>
         <source>JAR signing</source>
@@ -1412,12 +1412,12 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>APK Signature Scheme v2</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v2</extracomment>
-        <translation>طرح امضا APK v2</translation>
+        <translation>طرح امضای نسخه 2 فایل APK</translation>
     </message>
     <message>
         <source>APK Signature Scheme v3</source>
         <extracomment>Read more: https://source.android.com/security/apksigning/v3</extracomment>
-        <translation>طرح امضا APK v3</translation>
+        <translation>طرح امضای نسخه 3 فایل APK</translation>
     </message>
     <message>
         <source>Signer #%1</source>
@@ -1426,14 +1426,14 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Could not retrieve the list of certificates.</source>
-        <translation>لیست گواهی ها بازیابی نمی شود.</translation>
+        <translation>لیست گواهی ها بازیابی نشد</translation>
     </message>
 </context>
 <context>
     <name>SystemTheme</name>
     <message>
         <source>System Theme</source>
-        <translation type="unfinished"/>
+        <translation>رنگ زمینه سیستم</translation>
     </message>
 </context>
 <context>
@@ -1478,11 +1478,11 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Current actions:</source>
-        <translation>اقدامات فعلی:</translation>
+        <translation>فعالیت های فعلی :</translation>
     </message>
     <message>
         <source>Available actions:</source>
-        <translation>اقدامات قابل انجام:</translation>
+        <translation>فعالیت های قابل انجام :</translation>
     </message>
     <message>
         <source>Separator</source>
@@ -1499,46 +1499,46 @@ Any unsaved changes will be lost.</source>
     <name>UpdateDialog</name>
     <message>
         <source>Updates</source>
-        <translation type="unfinished"/>
+        <translation>به روز رسانی ها</translation>
     </message>
     <message>
         <source>Update</source>
         <extracomment>This is a verb.</extracomment>
-        <translation>بروزرسانی</translation>
+        <translation>به روز رسانی</translation>
     </message>
     <message>
         <source>Could not check for updates:</source>
-        <translation type="unfinished"/>
+        <translation>نمیتوان به‌ روز رسانی‌ ها را بررسی کرد :</translation>
     </message>
     <message>
         <source>What&apos;s New</source>
-        <translation>چه خبر</translation>
+        <translation>ویژگی های جدید</translation>
     </message>
 </context>
 <context>
     <name>UpdateItemsModel</name>
     <message>
         <source>Application</source>
-        <translation>برنامه کاربردی</translation>
+        <translation>برنامه</translation>
     </message>
     <message>
         <source>Current Version</source>
-        <translation type="unfinished"/>
+        <translation>نسخه فعلی</translation>
     </message>
     <message>
         <source>Latest Version</source>
-        <translation type="unfinished"/>
+        <translation>آخرین نسخه</translation>
     </message>
 </context>
 <context>
     <name>Utils</name>
     <message>
         <source>Could not save the file.</source>
-        <translation>پرونده ذخیره نشد.</translation>
+        <translation>فایل ذخیره نشد</translation>
     </message>
     <message>
         <source>Could not replace the file.</source>
-        <translation>پرونده جایگزین نمی شود.</translation>
+        <translation>فایل جایگزین نشد</translation>
     </message>
 </context>
 <context>
@@ -1554,7 +1554,7 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Install APK</source>
-        <translation>پکیج را نصب کنید</translation>
+        <translation>فایل APK را نصب کنید</translation>
     </message>
     <message>
         <source>Support Us</source>
@@ -1614,7 +1614,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Yes, &amp;Always</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>بله, &amp;همیشه</translation>
+        <translation>بله همیشه</translation>
     </message>
 </context>
 </TS>

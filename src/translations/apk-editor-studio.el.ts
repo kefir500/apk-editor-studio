@@ -184,7 +184,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete this directory?</source>
-        <translation>Είστε σίγουροι ότι θέλετε να διαγράψετε αυτόν τον κατάλογο;</translation>
+        <translation>Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτόν τον κατάλογο;</translation>
     </message>
     <message>
         <source>Installing %1...</source>
@@ -814,12 +814,14 @@
 %1
 Do you want to reopen it and lose any unsaved changes?</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to an APK.</extracomment>
-        <translation>Αυτό το APK είναι ήδη ανοικτό: %1 Θέλετε να το ανοίξετε ξανά και να χάσετε τυχόν μη αποθηκευμένες αλλαγές;</translation>
+        <translation>Αυτό το APK είναι ήδη ανοικτό:
+%1
+Θέλετε να το ανοίξετε ξανά και να χάσετε τυχόν μη αποθηκευμένες αλλαγές;</translation>
     </message>
     <message>
         <source>You have unsaved changes.
 Do you want to discard them and exit?</source>
-        <translation>Έχετε μη αποθηκευμένες αλλαγές. 
+        <translation>Έχετε μη αποθηκευμένες αλλαγές.
 Θέλετε να τις απορρίψετε και να εξέλθετε;</translation>
     </message>
     <message>
@@ -1138,7 +1140,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>APK has been successfully cloned!</source>
-        <translation>Το APK κλωνοποιήθηκε με επιτυχία!</translation>
+        <translation>Το APK έχει κλωνοποιηθεί με επιτυχία!</translation>
     </message>
     <message>
         <source>Do you want to save changes before packing?</source>

@@ -94,11 +94,11 @@
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>نزیک خستنەوە</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>دوورخستنەوە</translation>
     </message>
     <message>
         <source>Reset Zoom</source>

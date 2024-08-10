@@ -94,15 +94,15 @@
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>放大</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>缩小</translation>
     </message>
     <message>
         <source>Reset Zoom</source>
-        <translation type="unfinished"/>
+        <translation>重置缩放</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -160,16 +160,16 @@
     </message>
     <message>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>区分大小写</translation>
     </message>
     <message>
         <source>Regular Expression</source>
-        <translation type="unfinished"/>
+        <translation>正则表达式</translation>
     </message>
     <message>
         <source>&amp;Framework Manager...</source>
         <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
-        <translation type="unfinished"/>
+        <translation>框架管理器​​(&amp;F)...</translation>
     </message>
 </context>
 <context>
@@ -284,16 +284,16 @@
     <name>ApkCloner</name>
     <message>
         <source>Updating resource references...</source>
-        <translation type="unfinished"/>
+        <translation>正在更新资源参考...</translation>
     </message>
     <message>
         <source>Updating Smali references...</source>
         <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation type="unfinished"/>
+        <translation>正在更新 Smali 参考...</translation>
     </message>
     <message>
         <source>Updating directory structure...</source>
-        <translation type="unfinished"/>
+        <translation>正在更新目录结构...</translation>
     </message>
 </context>
 <context>
@@ -362,15 +362,15 @@
     <name>CodeSheet</name>
     <message>
         <source>Would you like to download syntax definitions for this and other formats?</source>
-        <translation type="unfinished"/>
+        <translation>您想下载此格式和其他格式的语法定义吗？</translation>
     </message>
     <message>
         <source>Downloading syntax definitions...</source>
-        <translation type="unfinished"/>
+        <translation>正在下载语法定义...</translation>
     </message>
     <message>
         <source>Download Syntax Definitions</source>
-        <translation type="unfinished"/>
+        <translation>下载语法定义</translation>
     </message>
 </context>
 <context>
@@ -451,22 +451,22 @@
     <name>Downloader</name>
     <message>
         <source>Downloading</source>
-        <translation type="unfinished"/>
+        <translation>正在下载</translation>
     </message>
     <message>
         <source>Downloading %1...</source>
         <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>正在下载 %1...</translation>
     </message>
     <message>
         <source>Could not save %1:</source>
         <extracomment>&quot;%1&quot; will be replaced with a title of the saved file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>无法保存 %1：</translation>
     </message>
     <message>
         <source>Could not download %1:</source>
         <extracomment>&quot;%1&quot; will be replaced with a title of the downloaded file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>无法下载 %1：</translation>
     </message>
 </context>
 <context>
@@ -492,12 +492,12 @@
     <message>
         <source>Framework Manager</source>
         <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
-        <translation type="unfinished"/>
+        <translation>框架管理器</translation>
     </message>
     <message>
         <source>&amp;Install</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation type="unfinished"/>
+        <translation>安装(&amp;I)</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -505,17 +505,17 @@
     </message>
     <message>
         <source>Open Directory</source>
-        <translation type="unfinished"/>
+        <translation>打开目录</translation>
     </message>
     <message>
         <source>Could not install the &quot;%1&quot; framework.</source>
         <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
-        <translation type="unfinished"/>
+        <translation>无法安装“%1”框架。</translation>
     </message>
     <message>
         <source>Could not remove the &quot;%1&quot; framework.</source>
         <extracomment>&quot;%1&quot; will be replaced with a framework file name.</extracomment>
-        <translation type="unfinished"/>
+        <translation>无法删除“%1”框架。</translation>
     </message>
 </context>
 <context>
@@ -771,7 +771,7 @@
     </message>
     <message>
         <source>Filter</source>
-        <translation>过滤</translation>
+        <translation>筛选</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -827,7 +827,7 @@ Do you want to discard them and exit?</source>
     <message>
         <source>%1 not found. Restore the default path?</source>
         <extracomment>&quot;%1&quot; will be replaced with a tool name.</extracomment>
-        <translation type="unfinished"/>
+        <translation>未找到 %1。恢复默认路径吗？</translation>
     </message>
 </context>
 <context>
@@ -1029,11 +1029,11 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Open Framework Manager</source>
-        <translation type="unfinished"/>
+        <translation>打开框架管理器</translation>
     </message>
     <message>
         <source>Decompile only main classes</source>
-        <translation type="unfinished"/>
+        <translation>仅反编译主类</translation>
     </message>
 </context>
 <context>
@@ -1152,11 +1152,11 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>The format is not supported.</source>
-        <translation type="unfinished"/>
+        <translation>不支持该格式。</translation>
     </message>
     <message>
         <source>Cloning APK</source>
-        <translation type="unfinished"/>
+        <translation>正在克隆 APK</translation>
     </message>
 </context>
 <context>
@@ -1224,7 +1224,7 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>&amp;Search in Project</source>
-        <translation type="unfinished"/>
+        <translation>在项目中搜索(&amp;S)</translation>
     </message>
 </context>
 <context>
@@ -1295,15 +1295,15 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Open With</source>
-        <translation type="unfinished"/>
+        <translation>打开使用</translation>
     </message>
     <message>
         <source>Open With Default Application</source>
-        <translation type="unfinished"/>
+        <translation>使用默认应用程序打开</translation>
     </message>
     <message>
         <source>Choose Another App...</source>
-        <translation type="unfinished"/>
+        <translation>选择其他应用程序...</translation>
     </message>
 </context>
 <context>
@@ -1335,7 +1335,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>%1 result(s) in %2 file(s)</source>
         <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
-        <translation type="unfinished"/>
+        <translation>%2 个文件中有 %1 个结果</translation>
     </message>
 </context>
 <context>
@@ -1343,58 +1343,58 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Searching in %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>在 %1 中搜索</translation>
     </message>
     <message>
         <source>Replacing in %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the file.</extracomment>
-        <translation type="unfinished"/>
+        <translation>正在 %1 中替换</translation>
     </message>
     <message>
         <source>Some occurrences were not replaced.</source>
-        <translation type="unfinished"/>
+        <translation>有些事件没有被替换。</translation>
     </message>
     <message>
         <source>Found %1 result(s) in %2 file(s)</source>
         <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
-        <translation type="unfinished"/>
+        <translation>在 %2 个文件中找到 %1 个结果</translation>
     </message>
     <message>
         <source>No results found</source>
-        <translation type="unfinished"/>
+        <translation>未找到结果</translation>
     </message>
     <message>
         <source>Replaced %1 occurrence(s) in %2 file(s)</source>
         <extracomment>&quot;%1&quot; and &quot;%2&quot; will be replaced with arbitrary numbers representing the search results.</extracomment>
-        <translation type="unfinished"/>
+        <translation>已替换 %2 个文件中的 %1 个匹配项</translation>
     </message>
     <message>
         <source>Nothing has been replaced</source>
-        <translation type="unfinished"/>
+        <translation>没有任何东西被替换</translation>
     </message>
     <message>
         <source>Search in Project</source>
-        <translation type="unfinished"/>
+        <translation>在项目中搜索</translation>
     </message>
     <message>
         <source>Search for:</source>
-        <translation type="unfinished"/>
+        <translation>搜索：</translation>
     </message>
     <message>
         <source>Replace with:</source>
-        <translation type="unfinished"/>
+        <translation>替换为：</translation>
     </message>
     <message>
         <source>&amp;Search</source>
-        <translation type="unfinished"/>
+        <translation>搜索(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Replace</source>
-        <translation type="unfinished"/>
+        <translation>替换(&amp;R)</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>停止</translation>
     </message>
 </context>
 <context>
@@ -1498,7 +1498,7 @@ Any unsaved changes will be lost.</source>
     <name>UpdateDialog</name>
     <message>
         <source>Updates</source>
-        <translation type="unfinished"/>
+        <translation>更新</translation>
     </message>
     <message>
         <source>Update</source>
@@ -1507,7 +1507,7 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Could not check for updates:</source>
-        <translation type="unfinished"/>
+        <translation>无法检查更新：</translation>
     </message>
     <message>
         <source>What&apos;s New</source>
@@ -1522,11 +1522,11 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Current Version</source>
-        <translation type="unfinished"/>
+        <translation>当前版本</translation>
     </message>
     <message>
         <source>Latest Version</source>
-        <translation type="unfinished"/>
+        <translation>最新版本</translation>
     </message>
 </context>
 <context>

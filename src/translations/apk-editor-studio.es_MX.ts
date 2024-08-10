@@ -78,19 +78,19 @@
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation>&amp;Buscar...</translation>
+        <translation>&amp;Buscar</translation>
     </message>
     <message>
         <source>Find &amp;Next</source>
-        <translation>Buscar &amp;Siguiente...</translation>
+        <translation>Buscar &amp;Siguiente</translation>
     </message>
     <message>
         <source>Find Pre&amp;vious</source>
-        <translation>Buscar An&amp;terior...</translation>
+        <translation>Buscar An&amp;terior</translation>
     </message>
     <message>
         <source>Find and &amp;Replace</source>
-        <translation>Buscar y &amp;Reemplazar...</translation>
+        <translation>Buscar y &amp;Reemplazar</translation>
     </message>
     <message>
         <source>Zoom In</source>
@@ -954,7 +954,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Frameworks path:</source>
-        <translation>Ruta de los Framework</translation>
+        <translation>Ruta de los Framework:</translation>
     </message>
     <message>
         <source>Unpacking</source>
