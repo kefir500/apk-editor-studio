@@ -6,6 +6,8 @@ list(GET VERSION_LIST 0 VERSION_MAJOR)
 list(GET VERSION_LIST 1 VERSION_MINOR)
 list(GET VERSION_LIST 2 VERSION_PATCH)
 
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum macOS version" FORCE)
+
 project(apk-editor-studio
     VERSION ${VERSION}
     HOMEPAGE_URL https://qwertycube.com/apk-editor-studio/
