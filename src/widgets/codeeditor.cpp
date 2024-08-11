@@ -30,6 +30,10 @@ CodeEditor::CodeEditor(QWidget *parent)
         app->settings->setEditorFontSize(newSize);
     });
 
+    new QShortcut(QKeySequence("Ctrl+="), this, this, [this]() {
+        app->settings->resetEditorFont();
+    });
+
     setWordWrapMode(app->settings->getWordWrap()
         ? QTextOption::WrapAtWordBoundaryOrAnywhere
         : QTextOption::NoWrap);

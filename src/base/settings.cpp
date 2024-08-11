@@ -547,6 +547,13 @@ void Settings::setEditorFontSize(int size)
     emit editorFontChanged(getEditorFont());
 }
 
+void Settings::resetEditorFont()
+{
+    settings->remove("CodeEditor/FontFamily");
+    settings->remove("CodeEditor/FontSize");
+    emit editorFontChanged(getEditorFont());
+}
+
 void Settings::setSearchCaseSensitive(bool enabled) const
 {
     settings->setValue("CodeEditor/SearchCaseSensitive", enabled);

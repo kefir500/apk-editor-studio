@@ -110,6 +110,7 @@ public:
     void setFileSystemTreeHeader(const QByteArray &state) const;
     void setEditorFontFamily(const QString &family);
     void setEditorFontSize(int size);
+    void resetEditorFont();
     void setSearchCaseSensitive(bool enabled) const;
     void setSearchByRegex(bool enabled) const;
     void setWordWrap(bool enabled) const;
