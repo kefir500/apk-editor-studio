@@ -46,6 +46,7 @@ public:
     void setDefinition(const KSyntaxHighlighting::Definition &definition);
     void setExtraSelectionGroup(ExtraSelectionGroup group, const QList<QTextEdit::ExtraSelection> &selection);
 
+    void setFont(const QFont &font);
     void setWordWrap(bool enabled);
 
 signals:

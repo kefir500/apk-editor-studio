@@ -87,23 +87,26 @@ void CodeSideBar::paintEvent(QPaintEvent *event)
 
         // Folding marker
         if (block.isVisible() && editor->highlighter->startsFoldingRegion(block)) {
+            const int coord1 = foldingMarkerSize / 3.6;
+            const int coord2 = foldingMarkerSize / 2.57;
+            const int penWidth = (foldingMarkerSize / 14) + 1;
             QPainterPath foldingMarker;
             if (!editor->isFolded(block)) {
-                foldingMarker.moveTo(5, 7);
-                foldingMarker.lineTo(foldingMarkerSize / 2, foldingMarkerSize - 7);
-                foldingMarker.lineTo(foldingMarkerSize - 5, 7);
+                foldingMarker.moveTo(coord1, coord2);
+                foldingMarker.lineTo(foldingMarkerSize / 2, foldingMarkerSize - coord2);
+                foldingMarker.lineTo(foldingMarkerSize - coord1, coord2);
             } else if (layoutDirection() == Qt::LeftToRight) {
-                foldingMarker.moveTo(7, 5);
-                foldingMarker.lineTo(foldingMarkerSize - 7, foldingMarkerSize / 2);
-                foldingMarker.lineTo(7, foldingMarkerSize - 5);
+                foldingMarker.moveTo(coord2, coord1);
+                foldingMarker.lineTo(foldingMarkerSize - coord2, foldingMarkerSize / 2);
+                foldingMarker.lineTo(coord2, foldingMarkerSize - coord1);
             } else if (layoutDirection() == Qt::RightToLeft) {
-                foldingMarker.moveTo(foldingMarkerSize - 7, 5);
-                foldingMarker.lineTo(7, foldingMarkerSize / 2);
-                foldingMarker.lineTo(foldingMarkerSize - 7, foldingMarkerSize - 5);
+                foldingMarker.moveTo(foldingMarkerSize - coord2, coord1);
+                foldingMarker.lineTo(coord2, foldingMarkerSize / 2);
+                foldingMarker.lineTo(foldingMarkerSize - coord2, foldingMarkerSize - coord1);
             }
             painter.save();
             painter.setRenderHint(QPainter::Antialiasing);
-            painter.setPen(QPen(QColor(editor->getEditorColor(KSyntaxHighlighting::Theme::LineNumbers)), 2));
+            painter.setPen(QPen(QColor(editor->getEditorColor(KSyntaxHighlighting::Theme::LineNumbers)), penWidth));
             painter.translate(layoutDirection() == Qt::LeftToRight ? width() - foldingMarkerSize : 0, top);
             painter.drawPath(foldingMarker);
             painter.restore();

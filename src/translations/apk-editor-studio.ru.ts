@@ -917,6 +917,14 @@ Do you want to discard them and exit?</source>
         <translation>Тема:</translation>
     </message>
     <message>
+        <source>Code Editor Font:</source>
+        <translation>Шрифт редактора кода:</translation>
+    </message>
+    <message>
+        <source>Code Editor Font Size:</source>
+        <translation>Размер шрифта редактора кода:</translation>
+    </message>
+    <message>
         <source>Extracted from environment variables by default</source>
         <translation>По умолчанию извлекается из переменных окружения</translation>
     </message>
@@ -936,12 +944,12 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Initial heap size:</source>
         <extracomment>&quot;Heap&quot; refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.</extracomment>
-        <translation>Начальный размер кучи (heap):</translation>
+        <translation>Начальный размер «кучи» (heap):</translation>
     </message>
     <message>
         <source>Maximum heap size:</source>
         <extracomment>&quot;Heap&quot; refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.</extracomment>
-        <translation>Максимальный размер кучи (heap):</translation>
+        <translation>Максимальный размер «кучи» (heap):</translation>
     </message>
     <message>
         <source>Apktool path:</source>

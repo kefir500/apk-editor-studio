@@ -6,6 +6,8 @@
 #include "tools/apktool.h"
 #include <QApplication>
 #include <QDir>
+#include <QFont>
+#include <QFontDatabase>
 #include <QSettings>
 
 Settings::Settings()
@@ -225,6 +227,35 @@ QByteArray Settings::getResourceTreeHeader() const
 QByteArray Settings::getFileSystemTreeHeader() const
 {
     return settings->value("MainWindow/FileSystemTreeHeader").toByteArray();
+}
+
+QFont Settings::getEditorFont() const
+{
+    const auto fontFamily = this->getEditorFontFamily();
+    const auto fontSize = this->getEditorFontSize();
+    return QFont(fontFamily, fontSize);
+}
+
+QString Settings::getEditorFontFamily() const
+{
+#if defined(Q_OS_WIN)
+    const QString defaultFamily("Consolas");
+#else
+    const QString defaultFamily(QFontDatabase::systemFont(QFontDatabase::FixedFont).family());
+#endif
+    return settings->value("CodeEditor/FontFamily", defaultFamily).toString();
+}
+
+int Settings::getEditorFontSize() const
+{
+#if defined(Q_OS_WIN)
+    const int defaultSize = 11;
+#elif defined(Q_OS_MACOS)
+    const int defaultSize = 12;
+#elif defined(Q_OS_LINUX)
+    const int defaultSize = 10;
+#endif
+    return settings->value("CodeEditor/FontSize", defaultSize).toInt();
 }
 
 bool Settings::getSearchCaseSensitive() const
@@ -502,6 +533,18 @@ void Settings::setResourceTreeHeader(const QByteArray &state) const
 void Settings::setFileSystemTreeHeader(const QByteArray &state) const
 {
     settings->setValue("MainWindow/FileSystemTreeHeader", state);
+}
+
+void Settings::setEditorFontFamily(const QString &family)
+{
+    settings->setValue("CodeEditor/FontFamily", family);
+    emit editorFontChanged(getEditorFont());
+}
+
+void Settings::setEditorFontSize(int size)
+{
+    settings->setValue("CodeEditor/FontSize", qBound(5, size, 35));
+    emit editorFontChanged(getEditorFont());
 }
 
 void Settings::setSearchCaseSensitive(bool enabled) const

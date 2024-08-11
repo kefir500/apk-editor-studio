@@ -15,6 +15,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDialogButtonBox>
+#include <QFontDatabase>
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QLabel>
@@ -94,6 +95,9 @@ void OptionsDialog::load()
     const int themeIndex = comboThemes->findData(app->settings->getTheme());
     comboThemes->setCurrentIndex(themeIndex != -1 ? themeIndex : 0);
 
+    comboFontFamily->setCurrentText(app->settings->getEditorFontFamily());
+    spinboxFontSize->setValue(app->settings->getEditorFontSize());
+
     // Java
 
     fileboxJava->setCurrentPath(app->settings->getJavaPath());
@@ -150,6 +154,8 @@ void OptionsDialog::save()
 
     app->setLanguage(comboLanguages->currentData().toString());
     app->settings->setTheme(comboThemes->currentData().toString());
+    app->settings->setEditorFontFamily(comboFontFamily->currentText());
+    app->settings->setEditorFontSize(spinboxFontSize->value());
 
     // Java
 
@@ -263,6 +269,7 @@ void OptionsDialog::initialize()
     comboLanguages = new QComboBox(this);
 
     auto pageAppearance = new QFormLayout;
+
     comboThemes = new QComboBox(this);
     ThemeRepository themes;
     const auto names = themes.getThemeNames();
@@ -270,8 +277,18 @@ void OptionsDialog::initialize()
         comboThemes->addItem(themes.getTheme(name)->title(), name);
     }
 
+    comboFontFamily = new QComboBox(this);
+    const auto fonts = QFontDatabase().families(QFontDatabase::Any);
+    comboFontFamily->addItems(fonts);
+
+    spinboxFontSize = new QSpinBox(this);
+    spinboxFontSize->setMinimum(5);
+    spinboxFontSize->setMaximum(35);
+
     pageAppearance->addRow(tr("Language:"), comboLanguages);
     pageAppearance->addRow(tr("Theme:"), comboThemes);
+    pageAppearance->addRow(tr("Code Editor Font:"), comboFontFamily);
+    pageAppearance->addRow(tr("Code Editor Font Size:"), spinboxFontSize);
 
     // Java
 

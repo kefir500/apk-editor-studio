@@ -51,6 +51,9 @@ public:
     QByteArray getMainWindowState() const;
     QByteArray getResourceTreeHeader() const;
     QByteArray getFileSystemTreeHeader() const;
+    QFont getEditorFont() const;
+    QString getEditorFontFamily() const;
+    int getEditorFontSize() const;
     bool getSearchCaseSensitive() const;
     bool getSearchByRegex() const;
     bool getWordWrap() const;
@@ -105,6 +108,8 @@ public:
     void setMainWindowState(const QByteArray &state);
     void setResourceTreeHeader(const QByteArray &state) const;
     void setFileSystemTreeHeader(const QByteArray &state) const;
+    void setEditorFontFamily(const QString &family);
+    void setEditorFontSize(int size);
     void setSearchCaseSensitive(bool enabled) const;
     void setSearchByRegex(bool enabled) const;
     void setWordWrap(bool enabled) const;
@@ -123,6 +128,7 @@ public:
 #endif
 
 signals:
+    void editorFontChanged(const QFont &font);
     void recentApkListUpdated();
     void resetDone();
 

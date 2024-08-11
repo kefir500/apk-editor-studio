@@ -6,6 +6,7 @@
 #include <KSyntaxHighlighting/Definition>
 #include <KSyntaxHighlighting/SyntaxHighlighter>
 #include <QRegularExpression>
+#include <QShortcut>
 
 CodeEditor::CodeEditor(QWidget *parent)
     : QPlainTextEdit(parent)
@@ -17,18 +18,17 @@ CodeEditor::CodeEditor(QWidget *parent)
         : KSyntaxHighlighting::Repository::LightTheme);
     setTheme(defaultTheme);
 
-#if defined(Q_OS_WIN)
-    QFont font("Consolas");
-    font.setPointSize(11);
-#elif defined(Q_OS_MACOS)
-    QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
-    font.setPointSize(12);
-#elif defined(Q_OS_LINUX)
-    QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
-    font.setPointSize(10);
-#endif
-    setFont(font);
-    sidebar->setFont(font);
+    setFont(app->settings->getEditorFont());
+
+    new QShortcut(QKeySequence(QKeySequence::ZoomIn), this, this, [this]() {
+        const int newSize = this->font().pointSize() + 2;
+        app->settings->setEditorFontSize(newSize);
+    });
+
+    new QShortcut(QKeySequence(QKeySequence::ZoomOut), this, this, [this]() {
+        const int newSize = this->font().pointSize() - 2;
+        app->settings->setEditorFontSize(newSize);
+    });
 
     setWordWrapMode(app->settings->getWordWrap()
         ? QTextOption::WrapAtWordBoundaryOrAnywhere
@@ -36,6 +36,7 @@ CodeEditor::CodeEditor(QWidget *parent)
 
     connect(this, &CodeEditor::cursorPositionChanged, this, &CodeEditor::highlightCurrentLine);
     connect(this, &CodeEditor::textChanged, this, &CodeEditor::highlightSearchResults);
+    connect(app->settings, &Settings::editorFontChanged, this, &CodeEditor::setFont);
 }
 
 int CodeEditor::getTabWidth() const
@@ -254,6 +255,13 @@ void CodeEditor::setExtraSelectionGroup(ExtraSelectionGroup group, const QList<Q
         allSelections << selection;
     }
     setExtraSelections(allSelections);
+}
+
+void CodeEditor::setFont(const QFont &font)
+{
+    QPlainTextEdit::setFont(font);
+    sidebar->setFont(font);
+    emit blockCountChanged(blockCount());
 }
 
 void CodeEditor::setWordWrap(bool enabled)

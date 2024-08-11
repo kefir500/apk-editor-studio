@@ -51,6 +51,8 @@ private:
 
     QComboBox *comboLanguages;
     QComboBox *comboThemes;
+    QComboBox *comboFontFamily;
+    QSpinBox *spinboxFontSize;
 
     // Java
 
