@@ -19,6 +19,16 @@ During the run-time, APK Editor Studio uses these third-party tools which are no
 
 Running the `scripts/download.py` script will automatically download the needed tools.
 
+## Clone and get submodules
+
+If initially cloning:
+
+- Run `git clone --recurse-submodules https://github.com/kefir500/apk-editor-studio`
+
+If in an existing repo:
+
+- Run `git submodule update --init --recursive`
+
 ## Building
 
 - Run `cmake -B your/build/path -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="path/to/qt"`
