@@ -15,6 +15,8 @@ jobs:
           cache: true
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Download Tools
         run: python scripts\download.py
       - name: Download OpenSSL
@@ -52,6 +54,8 @@ jobs:
           cache: true
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Download Tools
         run: python scripts\download.py
       - name: Download OpenSSL
@@ -76,8 +80,8 @@ jobs:
           prerelease: true
           tag: development
           token: ${{ secrets.GITHUB_TOKEN }}
-  build-linux-appimage:
-    name: Linux Build (AppImage)
+  build-linux:
+    name: Linux Build (AppImage and source archive)
     runs-on: ubuntu-20.04
     steps:
       - name: Install Dependencies
@@ -87,6 +91,12 @@ jobs:
           sudo apt-get install qt515base qt515imageformats qt515svg qt515tools libgl1-mesa-dev libsecret-1-dev adb zipalign
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Create Source Archives
+        run: |
+          scripts/git-archive-all.sh --format tar.gz apk-editor-studio_source_${{ env.VERSION }}.tar.gz
+          scripts/git-archive-all.sh --format zip apk-editor-studio_source_${{ env.VERSION }}.zip
       - name: Download Tools
         run: python3 scripts/download.py
       - name: Build AppImage Package
@@ -98,7 +108,9 @@ jobs:
       - name: Upload Assets
         uses: ncipollo/release-action@v1
         with:
-          artifacts: scripts/linux/packages/appimage/apk-editor-studio_linux_${{ env.VERSION }}.AppImage
+          artifacts: "scripts/linux/packages/appimage/apk-editor-studio_linux_${{ env.VERSION }}.AppImage,\
+                      apk-editor-studio_source_${{ env.VERSION }}.tar.gz,\
+                      apk-editor-studio_source_${{ env.VERSION }}.zip"
           artifactErrorsFailBuild: true
           allowUpdates: true
           omitName: true
@@ -117,6 +129,8 @@ jobs:
           cache: true
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Download Tools
         run: python3 scripts/download.py
       - name: Build APP/DMG Package
