@@ -4,9 +4,17 @@
 Language::Language(const QString &path)
 {
     code = path.split('.').at(1);
-    locale = QLocale(code);
-    title = Utils::capitalize(locale.nativeLanguageName());
+    locale = (code == "bqi")
+         ? QLocale(QLocale::NorthernLuri, QLocale::Iran)
+         : QLocale(code);
     flag = Utils::getLocaleFlag(locale);
+
+    if (code == "bqi") {
+        // Provide the missing language title for Luri (Bakhtiari)
+        title = "بختیاری";
+    } else {
+        title = Utils::capitalize(locale.nativeLanguageName());
+    }
 }
 
 QString Language::getTitle() const

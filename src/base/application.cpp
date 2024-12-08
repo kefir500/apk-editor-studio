@@ -92,7 +92,11 @@ void Application::setLanguage(const QString &locale)
         translatorQt.load(QString("qt.%1").arg(locale), path);
         installTranslator(&translator);
         installTranslator(&translatorQt);
-        setLayoutDirection(QLocale(locale).textDirection());
+        if (locale == "bqi") {
+            setLayoutDirection(Qt::RightToLeft);
+        } else {
+            setLayoutDirection(QLocale(locale).textDirection());
+        }
         settings->setLanguage(locale);
     } else {
         settings->setLanguage("en");
