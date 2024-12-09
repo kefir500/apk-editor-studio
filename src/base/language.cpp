@@ -11,7 +11,7 @@ Language::Language(const QString &path)
 
     if (code == "bqi") {
         // Provide the missing language title for Luri (Bakhtiari)
-        title = "بختیاری";
+        title = "لۊری بختیاری";
     } else {
         title = Utils::capitalize(locale.nativeLanguageName());
     }
