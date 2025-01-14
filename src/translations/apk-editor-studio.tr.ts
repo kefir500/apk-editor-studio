@@ -94,15 +94,15 @@
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"/>
+        <translation>Yakınlaştır</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"/>
+        <translation>Uzaklaştır</translation>
     </message>
     <message>
         <source>Reset Zoom</source>
-        <translation type="unfinished"/>
+        <translation>Yakınlaştırmayı Sıfırla</translation>
     </message>
     <message>
         <source>Visit &amp;Website</source>
@@ -160,16 +160,16 @@
     </message>
     <message>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>Büyük/Küçük Harfe Duyarlı</translation>
     </message>
     <message>
         <source>Regular Expression</source>
-        <translation type="unfinished"/>
+        <translation>Düzenli İfade</translation>
     </message>
     <message>
         <source>&amp;Framework Manager...</source>
         <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Framework Yöneticisi...</translation>
     </message>
 </context>
 <context>
@@ -284,16 +284,16 @@
     <name>ApkCloner</name>
     <message>
         <source>Updating resource references...</source>
-        <translation type="unfinished"/>
+        <translation>Kaynak referansları güncelleniyor...</translation>
     </message>
     <message>
         <source>Updating Smali references...</source>
         <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Smali referansları güncelleniyor...</translation>
     </message>
     <message>
         <source>Updating directory structure...</source>
-        <translation type="unfinished"/>
+        <translation>Dizin yapısı güncelleniyor...</translation>
     </message>
 </context>
 <context>
@@ -1498,12 +1498,12 @@ Kaydedilmemiş değişiklikler kaybolacak.</translation>
     <name>UpdateDialog</name>
     <message>
         <source>Updates</source>
-        <translation type="unfinished"/>
+        <translation>Güncellemeler</translation>
     </message>
     <message>
         <source>Update</source>
         <extracomment>This is a verb.</extracomment>
-        <translation>Güncelleme</translation>
+        <translation>Güncelle</translation>
     </message>
     <message>
         <source>Could not check for updates:</source>

@@ -126,11 +126,11 @@
     </message>
     <message>
         <source>&amp;Reset Settings...</source>
-        <translation>&amp;Επαναφορά ρυθμίσεων...</translation>
+        <translation>Επαναφο&amp;ρά ρυθμίσεων...</translation>
     </message>
     <message>
         <source>&amp;Options...</source>
-        <translation>&amp;Επιλογές...</translation>
+        <translation>Επιλ&amp;ογές...</translation>
     </message>
     <message>
         <source>&amp;Device Manager...</source>
@@ -140,7 +140,7 @@
     <message>
         <source>&amp;Key Manager...</source>
         <extracomment>This string refers to multiple keys (as in &quot;Manager of keys&quot;).</extracomment>
-        <translation>&amp;Διαχείριση κλειδιών...</translation>
+        <translation>Διαχείριση &amp;κλειδιών...</translation>
     </message>
     <message>
         <source>&amp;Android Explorer...</source>
@@ -152,11 +152,11 @@
     </message>
     <message>
         <source>&amp;Language</source>
-        <translation>&amp;Γλώσσα</translation>
+        <translation>Γ&amp;λώσσα</translation>
     </message>
     <message>
         <source>&amp;Open APK...</source>
-        <translation>&amp;Άνοιγμα APK...</translation>
+        <translation>Άν&amp;οιγμα APK...</translation>
     </message>
     <message>
         <source>Case Sensitive</source>
@@ -189,17 +189,17 @@
     <message>
         <source>Installing %1...</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation>Εγκατάσταση %1...</translation>
+        <translation>Εγκατάσταση του %1...</translation>
     </message>
     <message>
         <source>Successfully installed %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation>Εγκαταστάθηκε με επιτυχία %1</translation>
+        <translation>Εγκαταστάθηκε με επιτυχία το %1</translation>
     </message>
     <message>
         <source>Could not install %1</source>
         <extracomment>&quot;%1&quot; will be replaced with a path to the APK.</extracomment>
-        <translation>Δεν ήταν δυνατή η εγκατάσταση %1</translation>
+        <translation>Δεν ήταν δυνατή η εγκατάσταση του %1</translation>
     </message>
     <message>
         <source>Download</source>
@@ -304,34 +304,34 @@
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;Αποθήκευση</translation>
+        <translation>Αποθήκευ&amp;ση</translation>
     </message>
 </context>
 <context>
     <name>BaseFileSheet</name>
     <message>
         <source>&amp;Replace Resource...</source>
-        <translation>&amp;Αντικατάσταση πόρου...</translation>
+        <translation>Αντικατάσταση πό&amp;ρου...</translation>
     </message>
     <message>
         <source>&amp;Save Resource</source>
-        <translation>&amp;Αποθήκευση πόρου</translation>
+        <translation>Αποθήκευ&amp;ση πόρου</translation>
     </message>
     <message>
         <source>Save Resource &amp;As...</source>
-        <translation>Αποθήκευση πόρου &amp;ως...</translation>
+        <translation>&amp;Αποθήκευση πόρου ως...</translation>
     </message>
     <message>
         <source>&amp;Open Resource Directory</source>
         <extracomment>This string refers to a single resource.</extracomment>
-        <translation>&amp;Άνοιγμα καταλόγου πόρων</translation>
+        <translation>Άν&amp;οιγμα καταλόγου πόρων</translation>
     </message>
 </context>
 <context>
     <name>CodeSearchBar</name>
     <message>
         <source>No results</source>
-        <translation>Δεν βρέθηκαν αποτελέσματα</translation>
+        <translation>Δεν υπάρχουν αποτελέσματα</translation>
     </message>
     <message>
         <source>Find:</source>
@@ -569,11 +569,11 @@
     </message>
     <message>
         <source>First and Last Name</source>
-        <translation>Όνομα και Επώνυμο</translation>
+        <translation>Όνομα και επώνυμο</translation>
     </message>
     <message>
         <source>Organizational Unit</source>
-        <translation>Οργανική μονάδα</translation>
+        <translation>Οργανωτική μονάδα</translation>
     </message>
     <message>
         <source>Organization</source>
@@ -581,11 +581,11 @@
     </message>
     <message>
         <source>City or Locality</source>
-        <translation>Πόλη ή Τοποθεσία</translation>
+        <translation>Πόλη ή τοποθεσία</translation>
     </message>
     <message>
         <source>State or Province</source>
-        <translation>Νομός ή Επαρχία</translation>
+        <translation>Νομός ή επαρχία</translation>
     </message>
     <message>
         <source>Country Code</source>
@@ -734,7 +734,7 @@
     <message>
         <source>&amp;Settings</source>
         <extracomment>Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
-        <translation>&amp;Ρυθμίσεις</translation>
+        <translation>Ρυθμί&amp;σεις</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -784,7 +784,7 @@
     </message>
     <message>
         <source>&amp;Clear List</source>
-        <translation>&amp;Εκκαθάριση λίστας</translation>
+        <translation>Ε&amp;κκαθάριση λίστας</translation>
     </message>
     <message>
         <source>No Recent Files</source>
@@ -822,7 +822,7 @@ Do you want to reopen it and lose any unsaved changes?</source>
         <source>You have unsaved changes.
 Do you want to discard them and exit?</source>
         <translation>Έχετε μη αποθηκευμένες αλλαγές.
-Θέλετε να τις απορρίψετε και να εξέλθετε;</translation>
+Θέλετε να τις απορρίψετε και να βγείτε;</translation>
     </message>
     <message>
         <source>%1 not found. Restore the default path?</source>
@@ -936,12 +936,12 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Initial heap size:</source>
         <extracomment>&quot;Heap&quot; refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.</extracomment>
-        <translation>Αρχικό μέγεθος heap:</translation>
+        <translation>Αρχικό μέγεθος σωρού:</translation>
     </message>
     <message>
         <source>Maximum heap size:</source>
         <extracomment>&quot;Heap&quot; refers to a memory heap. If there is no clear translation in your language, you may also put the original English word in the parentheses.</extracomment>
-        <translation>Μέγιστο μέγεθος heap:</translation>
+        <translation>Μέγιστο μέγεθος σωρού:</translation>
     </message>
     <message>
         <source>Apktool path:</source>
@@ -963,11 +963,11 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Decompile source code (smali)</source>
         <extracomment>&quot;Smali&quot; is the name of the tool/format, don't translate it.</extracomment>
-        <translation>Αποσυσκευασία πηγαίου κώδικα (smali)</translation>
+        <translation>Απομεταγλώττιση πηγαίου κώδικα (smali)</translation>
     </message>
     <message>
         <source>Decompile broken resources</source>
-        <translation>Αποσυσκευασία κατεστραμένων πόρων</translation>
+        <translation>Απομεταγλώττιση κατεστραμένων πόρων</translation>
     </message>
     <message>
         <source>Packing</source>
@@ -1120,7 +1120,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-        <translation>Η κλωνοποίηση του APK απαιτεί την ενεργοποίηση της αποσυμπίεσης του πηγαίου κώδικα. Συνέχεια;</translation>
+        <translation>Η κλωνοποίηση του APK απαιτεί την ενεργοποίηση της απομεταγλώττιση του πηγαίου κώδικα. Συνέχεια;</translation>
     </message>
     <message>
         <source>Settings have been applied. Please, reopen this APK.</source>
@@ -1128,7 +1128,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Please, reopen this APK in order to unpack the source code and clone the APK.</source>
-        <translation>Παρακαλώ, ανοίξτε ξανά αυτό το APK προκειμένου να αποσυμπιέσετε τον πηγαίο κώδικα και να κλωνοποιήσετε το APK.</translation>
+        <translation>Παρακαλώ, ανοίξτε ξανά αυτό το APK προκειμένου να αποσυσκευάσετε τον πηγαίο κώδικα και να κλωνοποιήσετε το APK.</translation>
     </message>
     <message>
         <source>Package Name:</source>
@@ -1164,12 +1164,12 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Are you sure you want to close this APK?
 Any unsaved changes will be lost.</source>
-        <translation>Είστε βέβαιοι ότι θέλετε να κλείσετε αυτό το APK; 
+        <translation>Είστε βέβαιοι ότι θέλετε να κλείσετε αυτό το APK;
 Τυχόν μη αποθηκευμένες αλλαγές θα χαθούν.</translation>
     </message>
     <message>
         <source>&amp;Save APK...</source>
-        <translation>&amp;Αποθήκευση APK...</translation>
+        <translation>Αποθήκευ&amp;ση APK...</translation>
     </message>
     <message>
         <source>&amp;Install APK...</source>
@@ -1178,7 +1178,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>O&amp;pen Contents</source>
         <extracomment>Displayed as &quot;Open Contents&quot;.</extracomment>
-        <translation>Ά&amp;νοιγμα περιεχομένων</translation>
+        <translation>Άνοιγμα &amp;περιεχομένων</translation>
     </message>
     <message>
         <source>&amp;Close APK</source>
@@ -1210,12 +1210,12 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;Αποθήκευση</translation>
+        <translation>Αποθήκευ&amp;ση</translation>
     </message>
     <message>
         <source>Save &amp;As...</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Αποθήκευση &amp;ως...</translation>
+        <translation>&amp;Αποθήκευση ως...</translation>
     </message>
     <message>
         <source>Ta&amp;b</source>
@@ -1224,7 +1224,7 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>&amp;Search in Project</source>
-        <translation>&amp;Αναζήτηση στο έργο</translation>
+        <translation>Αναζήτη&amp;ση στο έργο</translation>
     </message>
 </context>
 <context>
@@ -1386,7 +1386,7 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>&amp;Search</source>
-        <translation>&amp;Αναζήτηση</translation>
+        <translation>Αναζήτη&amp;ση</translation>
     </message>
     <message>
         <source>&amp;Replace</source>
@@ -1600,7 +1600,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Integer Array</source>
         <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#IntegerArray).</extracomment>
-        <translation>Πίνακας ακεραίων</translation>
+        <translation>Πίνακας ακέραιων</translation>
     </message>
     <message>
         <source>Array</source>
@@ -1613,7 +1613,7 @@ Any unsaved changes will be lost.</source>
     <message>
         <source>Yes, &amp;Always</source>
         <extracomment>The &quot;&amp;&quot; is a shortcut key prefix, not an &quot;and&quot; conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts</extracomment>
-        <translation>Ναι, &amp;πάντα</translation>
+        <translation>Ναι, πάντ&amp;α</translation>
     </message>
 </context>
 </TS>

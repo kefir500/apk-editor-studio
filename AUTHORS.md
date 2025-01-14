@@ -105,6 +105,7 @@
 #### Turkish
 - [emre1393](https://www.transifex.com/user/profile/emre1393/)
 - [Adam L. Wilson](https://twitter.com/ataharekat)
+- [Serhat Öktem](https://www.transifex.com/user/profile/DeliDolu/)
 
 #### Ukrainian
 - [Oleh Hishak](https://www.transifex.com/user/profile/hishak/)

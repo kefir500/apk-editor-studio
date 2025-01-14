@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Technologies</source>
-        <translation type="unfinished"/>
+        <translation>Công nghệ</translation>
     </message>
     <message>
         <source>License</source>
@@ -110,7 +110,7 @@
     </message>
     <message>
         <source>&amp;Source Code</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Mã nguồn</translation>
     </message>
     <message>
         <source>Make a &amp;Donation</source>
@@ -241,12 +241,12 @@
     </message>
     <message>
         <source>Tasks</source>
-        <translation type="unfinished"/>
+        <translation>Nhiệm vụ</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
         <extracomment>Refers to a menu bar (along with File, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;Chỉnh sửa</translation>
     </message>
 </context>
 <context>
@@ -300,7 +300,7 @@
     <name>BaseEditableSheet</name>
     <message>
         <source>Save the changes?</source>
-        <translation type="unfinished"/>
+        <translation>Lưu thay đổi?</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -385,7 +385,7 @@
     </message>
     <message>
         <source>Product</source>
-        <translation type="unfinished"/>
+        <translation>Sản phẩm</translation>
     </message>
     <message>
         <source>Model</source>
@@ -484,7 +484,7 @@
     </message>
     <message>
         <source>All files</source>
-        <translation type="unfinished"/>
+        <translation>Tất cả tệp tin</translation>
     </message>
 </context>
 <context>
@@ -535,14 +535,14 @@
     <message>
         <source>Activities</source>
         <extracomment>This string refers to the Android activities (https://developer.android.com/guide/components/activities).</extracomment>
-        <translation type="unfinished"/>
+        <translation>Hoạt động</translation>
     </message>
 </context>
 <context>
     <name>ImageSheet</name>
     <message>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Kích thước</translation>
     </message>
     <message>
         <source>Zoom</source>
@@ -565,7 +565,7 @@
     </message>
     <message>
         <source>Confirm Password</source>
-        <translation type="unfinished"/>
+        <translation>Xác nhận mật khẩu</translation>
     </message>
     <message>
         <source>First and Last Name</source>
@@ -593,7 +593,7 @@
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"/>
+        <translation>Mật khẩu</translation>
     </message>
     <message>
         <source>Validity (Years)</source>
@@ -716,7 +716,7 @@
     <message>
         <source>Log</source>
         <extracomment>&quot;Log&quot; as in event log, message log, etc.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Nhật ký</translation>
     </message>
 </context>
 <context>
@@ -724,26 +724,26 @@
     <message>
         <source>&amp;File</source>
         <extracomment>Refers to a menu bar (along with Edit, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;Tệp tin</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
         <extracomment>Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;Công cụ</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
         <extracomment>Refers to a menu bar (along with File, Edit, View, Window, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;Cài đặt</translation>
     </message>
     <message>
         <source>&amp;Window</source>
         <extracomment>Refers to a menu bar (along with File, Edit, View, Help, and similar items).</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;Cửa sổ</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>Công cụ</translation>
     </message>
     <message>
         <source>Remove Temporary Files...</source>
@@ -759,7 +759,7 @@
     </message>
     <message>
         <source>File System</source>
-        <translation type="unfinished"/>
+        <translation>Tệp tin hệ thống</translation>
     </message>
     <message>
         <source>Manifest</source>
@@ -835,11 +835,11 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Version Code</source>
-        <translation type="unfinished"/>
+        <translation>Mã phiên bản</translation>
     </message>
     <message>
         <source>Version Name</source>
-        <translation type="unfinished"/>
+        <translation>Tên phiên bản</translation>
     </message>
     <message>
         <source>Minimum SDK</source>
@@ -858,7 +858,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Thiết lập</translation>
     </message>
     <message>
         <source>Single-window mode</source>
@@ -903,7 +903,7 @@ Do you want to discard them and exit?</source>
     <message>
         <source>Sign</source>
         <extracomment>This is a verb.</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ký</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -1014,7 +1014,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Chung</translation>
     </message>
     <message>
         <source>Appearance</source>
@@ -1037,7 +1037,7 @@ Do you want to discard them and exit?</source>
     <name>Package</name>
     <message>
         <source>Done.</source>
-        <translation type="unfinished"/>
+        <translation>Xong.</translation>
     </message>
     <message>
         <source>Error unpacking APK.</source>
@@ -1093,11 +1093,11 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Thêm</translation>
     </message>
     <message>
         <source>Documentation</source>
-        <translation type="unfinished"/>
+        <translation>Tài liệu</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1240,7 +1240,7 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Application Icon</source>
-        <translation type="unfinished"/>
+        <translation>Biểu tượng ứng dụng </translation>
     </message>
     <message>
         <source>Open Contents</source>
@@ -1310,7 +1310,7 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Ngôn ngữ</translation>
     </message>
     <message>
         <source>Locale</source>
@@ -1439,7 +1439,7 @@ Any unsaved changes will be lost.</source>
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Ngôn ngữ</translation>
     </message>
     <message>
         <source>Qualifiers</source>
