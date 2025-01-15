@@ -167,6 +167,10 @@
         <translation>Регулярное выражение</translation>
     </message>
     <message>
+        <source>Word Wrap</source>
+        <translation>Перенос слов</translation>
+    </message>
+    <message>
         <source>&amp;Framework Manager...</source>
         <extracomment>This string refers to multiple frameworks (as in &quot;Manager of frameworks&quot;).</extracomment>
         <translation>Менеджер &amp;фреймворков...</translation>
