@@ -173,6 +173,7 @@ QAction *ActionProvider::getFindNext(QWidget *parent) const
     action->setShortcut(QKeySequence::FindNext);
     action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     auto translate = [=]() { action->setText(tr("Find &Next")); };
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
@@ -186,6 +187,7 @@ QAction *ActionProvider::getFindPrevious(QWidget *parent) const
     action->setShortcut(QKeySequence::FindPrevious);
     action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     auto translate = [=]() { action->setText(tr("Find Pre&vious")); };
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
@@ -199,6 +201,7 @@ QAction *ActionProvider::getReplace(QWidget *parent) const
     action->setShortcut(QKeySequence::Replace);
     action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
 
+    //: The "&" is a shortcut key prefix, not an "and" conjunction. Details: https://github.com/kefir500/apk-editor-studio/wiki/Translation-Guide#shortcuts
     auto translate = [=]() { action->setText(tr("Find and &Replace")); };
     connect(this, &ActionProvider::languageChanged, action, translate);
     translate();
