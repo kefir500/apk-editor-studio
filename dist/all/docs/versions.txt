@@ -1,8 +1,17 @@
 # Version History
 
-## 1.8.0
+## 1.7.2
+- Fixed manifest parsing for newer Apktool versions.
+- Fixed AAPT 1/2 switch for newer Apktool versions.
+- Fixed regular expression search by whole match.
 - Added word wrap support to code editor.
-- Updated default Apktool to 2.9.1.
+- Added font configuration to code editor.
+- Added Android 14 and 15 support.
+- Added Luri (Bakhtiari) translation.
+- Added Ukrainian translation.
+- Added Vietnamese translation.
+- Updated default Apktool to 2.11.0.
+- macOS: Fixed minimum version to be 10.13 (High Sierra).
 
 ## 1.7.1
 - Added support for optimizing shared libraries.
