@@ -10,7 +10,7 @@ cmake "%~dp0\..\..\..\.." ^
     -B build ^
     -DCMAKE_BUILD_TYPE=Release ^
     -DCMAKE_PREFIX_PATH="%QTDIR%" ^
-    -DOPENSSL_ROOT_DIR=%OPENSSL% ^
+    -DOPENSSL_ROOT_DIR="%OPENSSL%" ^
     -DPORTABLE=ON
 cmake --build build --config Release || exit /b
 cmake --install build --prefix "%FOLDER%"

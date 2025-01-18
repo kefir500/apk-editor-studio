@@ -18,13 +18,13 @@ jobs:
       - name: Download Tools
         run: python scripts\download.py
       - name: Download OpenSSL
-        run: choco install -y openssl.light --version=1.1.1.20181020 --x86 --params "/InstallDir:C:\OpenSSL"
+        run: choco install -y openssl --version=1.1.1.2100 --x86
       - name: Build MSI Package
         id: build
         shell: cmd
         run: |
-          set QTDIR=%Qt5_DIR%
-          set OPENSSL=C:\OpenSSL
+          set "QTDIR=%Qt5_DIR%"
+          set "OPENSSL=C:\Program Files (x86)\OpenSSL-Win32"
           set PATH=%PATH%;C:\Program Files (x86)\WiX Toolset v3.11\bin
           call scripts\windows\packages\msi\build.msi.bat || exit
           set /p VERSION=<VERSION
@@ -55,13 +55,13 @@ jobs:
       - name: Download Tools
         run: python scripts\download.py
       - name: Download OpenSSL
-        run: choco install -y openssl.light --version=1.1.1.20181020 --x86 --params "/InstallDir:C:\OpenSSL"
+        run: choco install -y openssl --version=1.1.1.2100 --x86
       - name: Build ZIP Package
         id: build
         shell: cmd
         run: |
-          set QTDIR=%Qt5_DIR%
-          set OPENSSL=C:\OpenSSL
+          set "QTDIR=%Qt5_DIR%"
+          set "OPENSSL=C:\Program Files (x86)\OpenSSL-Win32"
           call "scripts\windows\packages\zip\build.zip.bat" || exit
           set /p VERSION=<VERSION
           echo VERSION=%VERSION%>>%GITHUB_ENV%
