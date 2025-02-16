@@ -1122,7 +1122,7 @@ Do you want to discard them and exit?</source>
     </message>
     <message>
       <source>Cloning the APK requires the source code decompilation to be turned on. Proceed?</source>
-      <translation>APK をクローンするには、ソースコードの逆コンパイルをオンにする必要があります。続行しますか？</translation>
+      <translation>APK をクローンするには、ソースコードのデコンパイルをオンにする必要があります。続行しますか？</translation>
     </message>
     <message>
       <source>Settings have been applied. Please, reopen this APK.</source>
