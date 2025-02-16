@@ -383,7 +383,7 @@
     </message>
     <message>
       <source>Serial Number</source>
-      <translation>シリアルナンバー</translation>
+      <translation>シリアル番号</translation>
     </message>
     <message>
       <source>Product</source>
