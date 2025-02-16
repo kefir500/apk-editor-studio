@@ -1607,7 +1607,7 @@ Any unsaved changes will be lost.</source>
     <message>
       <source>Array</source>
       <extracomment>This string refers to the Android resource type (https://developer.android.com/guide/topics/resources/more-resources#TypedArray).</extracomment>
-      <translation>配列</translation>
+      <translation>Array</translation>
     </message>
   </context>
   <context>
