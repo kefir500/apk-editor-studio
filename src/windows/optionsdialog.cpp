@@ -115,6 +115,7 @@ void OptionsDialog::load()
     checkboxOnlyMainClasses->setChecked(app->settings->getDecompileOnlyMainClasses());
     checkboxNoDebugInfo->setChecked(app->settings->getDecompileNoDebugInfo());
     checkboxBrokenResources->setChecked(app->settings->getKeepBrokenResources());
+    checkboxDecompiledFolderRandomName->setChecked(app->settings->getDecompiledFolderRandomName());
 
     // Apksigner
 
@@ -174,6 +175,7 @@ void OptionsDialog::save()
     app->settings->setDecompileOnlyMainClasses(checkboxOnlyMainClasses->isChecked());
     app->settings->setDecompileNoDebugInfo(checkboxNoDebugInfo->isChecked());
     app->settings->setKeepBrokenResources(checkboxBrokenResources->isChecked());
+    app->settings->setDecompiledFolderRandomName(checkboxDecompiledFolderRandomName->isChecked());
 
     // Apksigner
 
@@ -346,11 +348,14 @@ void OptionsDialog::initialize()
     checkboxOnlyMainClasses = new QCheckBox(tr("Decompile only main classes"), this);
     checkboxNoDebugInfo = new QCheckBox(tr("Decompile without debug info"), this);
     checkboxBrokenResources = new QCheckBox(tr("Decompile broken resources"), this);
+    checkboxDecompiledFolderRandomName = new QCheckBox(tr("Decompiled folder random name"), this);
+
     auto layoutUnpacking = new QVBoxLayout(groupUnpacking);
     layoutUnpacking->addWidget(checkboxSources);
     layoutUnpacking->addWidget(checkboxOnlyMainClasses);
     layoutUnpacking->addWidget(checkboxNoDebugInfo);
     layoutUnpacking->addWidget(checkboxBrokenResources);
+    layoutUnpacking->addWidget(checkboxDecompiledFolderRandomName);
 
     auto groupPacking = new QGroupBox(tr("Packing"), this);
     //: "AAPT2" is the name of the tool, don't translate it.

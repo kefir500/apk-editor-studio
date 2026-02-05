@@ -74,6 +74,7 @@ private:
     bool withBrokenResources = false;
     bool withNoDebugInfo = false;
     bool withOnlyMainClasses = false;
+    bool withDecompiledFolderRandomName = false;
 };
 
 #endif // PACKAGE_H

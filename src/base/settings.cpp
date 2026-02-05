@@ -157,6 +157,11 @@ bool Settings::getKeepBrokenResources() const
     return settings->value("Apktool/KeepBroken", false).toBool();
 }
 
+bool Settings::getDecompiledFolderRandomName() const
+{
+    return settings->value("Apktool/DecompiledFolderRandomName", false).toBool();
+}
+
 QString Settings::getDeviceAlias(const QString &serial) const
 {
     return settings->value(QString("Devices/%1").arg(serial)).toString();
@@ -476,6 +481,10 @@ void Settings::setDecompileOnlyMainClasses(bool onlyMain)
 void Settings::setKeepBrokenResources(bool keepBroken)
 {
     settings->setValue("Apktool/KeepBroken", keepBroken);
+}
+
+void Settings::setDecompiledFolderRandomName(const bool randomName) {
+    settings->setValue("Apktool/DecompiledFolderRandomName", randomName);
 }
 
 void Settings::setDeviceAlias(const QString &serial, const QString &alias)

@@ -38,6 +38,7 @@ public:
     bool getDecompileNoDebugInfo() const;
     bool getDecompileOnlyMainClasses() const;
     bool getKeepBrokenResources() const;
+    bool getDecompiledFolderRandomName() const;
     QString getDeviceAlias(const QString &serial) const;
     QString getLastDirectory() const;
     bool getSingleInstance() const;
@@ -97,6 +98,7 @@ public:
     void setDecompileNoDebugInfo(bool noDebugInfo);
     void setDecompileOnlyMainClasses(bool onlyMain);
     void setKeepBrokenResources(bool keepBroken);
+    void setDecompiledFolderRandomName(bool randomName);
     void setDeviceAlias(const QString &serial, const QString &alias);
     void setLastDirectory(const QString &directory);
     void setSingleInstance(bool value);

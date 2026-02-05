@@ -71,6 +71,7 @@ private:
     QCheckBox *checkboxNoDebugInfo;
     QCheckBox *checkboxOnlyMainClasses;
     QCheckBox *checkboxBrokenResources;
+    QCheckBox *checkboxDecompiledFolderRandomName;
 
     // Apksigner
 

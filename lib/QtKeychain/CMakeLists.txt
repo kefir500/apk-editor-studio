@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.5)
 
 set(QTKEYCHAIN_VERSION 0.12.90)
 set(QTKEYCHAIN_SOVERSION 1)
